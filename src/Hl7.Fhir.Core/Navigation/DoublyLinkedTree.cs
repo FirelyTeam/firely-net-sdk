@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Navigation
     public interface IDoublyLinkedTree : IDoublyLinkedTree<DoublyLinkedTree> { }
 
     /// <summary>Abstract base class for doubly linked tree items.</summary>
-    public abstract class DoublyLinkedTree : IDoublyLinkedTree, ILinkedTreeBuilder<DoublyLinkedTree>
+    public abstract class DoublyLinkedTree : IDoublyLinkedTree, ILinkedTreeBuilder<DoublyLinkedTree>, IValue
     {
         /// <summary>Static factory method. Creates a new tree node with the specified name.</summary>
         /// <param name="name">The name of the node.</param>
@@ -84,6 +84,12 @@ namespace Hl7.Fhir.Navigation
 
         /// <summary>Returns <c>true</c> if the item represents a root node, i.e. if the item <see cref="Parent"/> reference equals <c>null</c>.</summary>
         public bool IsRoot { get { return Parent == null; } }
+
+        #endregion
+
+        #region IValue
+
+        abstract public Type ValueType { get; }
 
         #endregion
 
@@ -179,6 +185,8 @@ namespace Hl7.Fhir.Navigation
 
             public override DoublyLinkedTree FirstChild { get; protected set; }
 
+            public override Type ValueType { get { throw new InvalidOperationException("A tree node does not have a value"); } }
+
             public override string ToString() { return string.Format("({0}) {1}", ReflectionHelper.PrettyTypeName(GetType()), Name); }
         }
 
@@ -196,9 +204,9 @@ namespace Hl7.Fhir.Navigation
                 protected set { throw new InvalidOperationException("You cannot add children to a tree leaf item."); }
             }
 
-            #region IValue
+            public override Type ValueType { get { return typeof(V); } }
 
-            public Type ValueType { get { return typeof(V); } }
+            #region IValue<T>
 
             public V Value { get; }
 

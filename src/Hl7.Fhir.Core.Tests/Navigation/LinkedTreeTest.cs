@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Navigation
                     .AddLastSibling("value", "0123456789")
                     .AddLastSibling("period")
                         .AddLastChild("start", "20151127 12:00")
-                        .AddLastSibling("end", "20151130 18:00")
+                        .AddLastSibling("end", "20151127 18:00")
                     .Parent
                     .AddLastSibling("assigner", "Dr. House")
                 .Parent
@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_CreateFromAnonymousObject()
         {
+
             var Patient =
                 new
                 {
@@ -92,7 +93,10 @@ namespace Hl7.Fhir.Navigation
                         {
                             start = "[start]",
                             end = "[end]"
-                        },
+                        }
+
+
+                        // , test = new Model.FhirBoolean(true)
                     }
                 };
 
@@ -268,5 +272,48 @@ namespace Hl7.Fhir.Navigation
             var maxNode = start_values.First(n => n.Value == maxStart);
             Debug.Print("Max start = {0}", maxNode.Value);
         }
+
+        [TestMethod]
+        public void Test_Tree_LinqExpression()
+        {
+            var root = CreatePatientTree();
+            var nodeSet = Enumerable.Repeat(root, 1); // By lack of Enumerable.FromValue<T>
+
+            var result = nodeSet
+                .SelectMany(n => n.Descendants());
+            var result2 = from node in nodeSet
+                          from d in node.Descendants()
+                          select d;
+            Assert.IsTrue(result.SequenceEqual(result2));
+
+
+            // var f = root.EvaluateFhirPath("");
+            // var result = f(resource, context);
+
+            const string startNode = "start";
+            result = nodeSet
+                .SelectMany(n => n.Descendants())
+                .Where(n => n.Name == startNode);
+            result2 = from node in nodeSet
+                      from d in node.Descendants()
+                      where d.Name == startNode
+                      select d;
+            Assert.IsTrue(result.SequenceEqual(result2));
+            Assert.AreEqual(result.Count(), 2);
+
+            const string periodNode = "period";
+            const string endNode = "end";
+            result = nodeSet.SelectMany(n => n.Descendants())
+                .Where(n => n.Name == periodNode)
+                .Where(
+                    n => string.Compare(
+                            n.Children().Where(child => child.Name == startNode).FirstOrDefault().GetValue<string>(),
+                            n.Children().Where(child => child.Name == endNode).FirstOrDefault().GetValue<string>()
+                    ) > 0
+                );
+            Assert.AreEqual(result.Count(), 1);
+        }
+
     }
+
 }
