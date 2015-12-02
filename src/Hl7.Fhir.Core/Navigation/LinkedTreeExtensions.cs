@@ -73,6 +73,31 @@ namespace Hl7.Fhir.Navigation
             yield break;
         }
 
+        /// <summary>Enumerate the direct children of the current tree node that comply with the specified predicate.</summary>
+        /// <typeparam name="T">The type of a tree node.</typeparam>
+        /// <param name="node">A tree node instance.</param>
+        /// <param name="predicate">A predicate to select the relevant nodes.</param>
+        /// <returns>An enumerator for tree nodes of type <typeparamref name="T"/>.</returns>
+        public static IEnumerable<T> Children<T>(this T node, Func<T, bool> predicate) where T : ILinkedTree<T>
+        {
+            return node.Children().Where(predicate);
+        }
+
+        private readonly static StringComparer nodeNameComparer = StringComparer.Ordinal;
+
+        /// <summary>Enumerate the direct children of the current tree node with the specified node name.</summary>
+        /// <typeparam name="T">The type of a tree node.</typeparam>
+        /// <param name="node">A tree node instance.</param>
+        /// <param name="nodeName">The name of the target node.</param>
+        /// <returns>An enumerator for tree nodes of type <typeparamref name="T"/>.</returns>
+        public static IEnumerable<T> Children<T>(this T node, string nodeName) where T : ILinkedTree<T>
+        {
+            return node.Children().Where(n => nodeNameComparer.Compare(n.Name, nodeName) == 0);
+        }
+
+        // TODO: Indexer - cannot implement indexer as an extension method
+        // public static IEnumerable<T> this<T>(this T node, string name) { }
+
         /// <summary>Enumerate the descendants of the current tree node.</summary>
         /// <typeparam name="T">The type of a tree node.</typeparam>
         /// <param name="node">A tree node instance.</param>

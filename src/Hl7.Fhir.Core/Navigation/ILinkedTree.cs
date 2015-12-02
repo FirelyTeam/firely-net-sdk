@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Navigation
 {
@@ -36,6 +37,11 @@ namespace Hl7.Fhir.Navigation
 
         /// <summary>Returns a reference to the first child tree item.</summary>
         T FirstChild { get; }
+
+        /// <summary>Indexer property. Enumerates the child items with the specified name.</summary>
+        /// <param name="name">An item name.</param>
+        /// <returns>A tree item.</returns>
+        IEnumerable<T> this[string name] { get; }
 
         /// <summary>Returns <c>true</c> if the instance is an internal tree node, i.e. if the item has at least one child.</summary>
         bool IsInternal { get; }

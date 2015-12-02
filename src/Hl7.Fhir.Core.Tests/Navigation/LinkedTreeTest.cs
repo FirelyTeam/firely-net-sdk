@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Navigation
                             end = "[end]"
                         }
 
-
+                        , test = 3
                         // , test = new Model.FhirBoolean(true)
                     }
                 };
@@ -277,8 +277,9 @@ namespace Hl7.Fhir.Navigation
         public void Test_Tree_LinqExpression()
         {
             var root = CreatePatientTree();
-            var nodeSet = Enumerable.Repeat(root, 1); // By lack of Enumerable.FromValue<T>
+            var nodeSet = Enumerable.Repeat(root, 1); // By lack of Enumerable.FromValue<T> or Unit in Monad speak
 
+            // Test 1: get all descendants
             var result = nodeSet
                 .SelectMany(n => n.Descendants());
             var result2 = from node in nodeSet
@@ -286,14 +287,12 @@ namespace Hl7.Fhir.Navigation
                           select d;
             Assert.IsTrue(result.SequenceEqual(result2));
 
-
-            // var f = root.EvaluateFhirPath("");
-            // var result = f(resource, context);
-
+            // Test 1: get all start nodes
             const string startNode = "start";
             result = nodeSet
                 .SelectMany(n => n.Descendants())
                 .Where(n => n.Name == startNode);
+
             result2 = from node in nodeSet
                       from d in node.Descendants()
                       where d.Name == startNode
@@ -301,19 +300,70 @@ namespace Hl7.Fhir.Navigation
             Assert.IsTrue(result.SequenceEqual(result2));
             Assert.AreEqual(result.Count(), 2);
 
+            // Test 1: get all period nodes having start.value > end.value
+            // TODO: use datetime values
             const string periodNode = "period";
             const string endNode = "end";
             result = nodeSet.SelectMany(n => n.Descendants())
                 .Where(n => n.Name == periodNode)
                 .Where(
                     n => string.Compare(
-                            n.Children().Where(child => child.Name == startNode).FirstOrDefault().GetValue<string>(),
-                            n.Children().Where(child => child.Name == endNode).FirstOrDefault().GetValue<string>()
+                            n[startNode].FirstOrDefault().GetValue<string>(),
+                            n[endNode].FirstOrDefault().GetValue<string>()
                     ) > 0
                 );
             Assert.AreEqual(result.Count(), 1);
+
+            // Example expressions:
+
+            // 1. primitive constant: int, boolean, string
+            // 2. item: return all items from the context (input) with name = 'item'
+            // 3. parent.child: 
+            //     a. enumerate all items from the context (input) with name = 'parent'
+            //     b. enumerate all items from the context (result) with name = 'child'
+            // 4. item[.item[.item[...]]]
+            //     * enumerate all items from the context (input) with name = '[item]'
+            //     * recursively enumerate terms and match deeper items from context = intermediate result
+            // 5. function(expr): stand-alone function on a constant expression, e.g. string-length()
+            // 6. item.(x | y): binary set operation on nodesets
+            // 7. nodeSet.function(): instance function on a result set, e.g. nodes.count()
+
+
+            // context: DiagnosticReport
+            // result.resolve().(referenceRange | component.referenceRange).where(meaning.coding.where(system = %sct and code = "123456").any()).text
+
+            var global_sct = "%sct"; // resolve variables from global evaluation context
+            var result3 = from node in nodeSet
+                          from resultElem in node["result"]
+                          from observation in resultElem.Resolve()
+                          from range in observation["referenceRange"].Union(
+                                from component in observation["component"]
+                                from componentRange in component["referenceRange"]
+                                select componentRange
+                          )
+                          where (
+                                    from meaning in range["meaning"]
+                                    from coding in meaning["coding"]
+                                    where (
+                                        (
+                                            // Rule: compare sequence to scalar => sequence.Any(scalar)
+                                            from system in coding["system"]    // 0...1
+                                            from code in coding["code"]        // 0...1
+                                            where system.GetValue<string>() == global_sct
+                                                  && code.GetValue<string>() == "123456"
+                                            select system
+                                        ).Any()
+                                    )
+                                    select coding
+                                ).Any()
+                          select range.GetValue<string>();
         }
 
+    }
+
+    static class TestExtensions
+    {
+        public static IEnumerable<DoublyLinkedTree> Resolve(this DoublyLinkedTree tree) { throw new NotImplementedException(); }
     }
 
 }
