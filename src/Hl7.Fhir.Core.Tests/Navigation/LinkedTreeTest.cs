@@ -352,7 +352,36 @@ namespace Hl7.Fhir.Navigation
             // context: DiagnosticReport
             // result.resolve().(referenceRange | component.referenceRange).where(meaning.coding.where(system = %sct and code = "123456").any()).text
 
-            var global_sct = "%sct"; // resolve variables from global evaluation context
+
+            // SNIP===========8<================8<==========
+            // EK: This is my suggestion for the "ideal" API. See how far we can get ;-)
+            // (context: DiagnosticReport)
+
+            //result.resolve().(referenceRange | component.referenceRange)
+            //     .where(meaning.coding.where(system=%sct and code="123456").any()).text
+
+
+            //const string SNOMEDCT = "http://snomed.org/sct";
+
+            //var dr = client.Read<DiagnosticReport>(...);
+            //var tree = dr.ToElementTree();      // denkbeeldige extension method die POCO -> ITreeNode doet
+
+            //var obs = tree["result"].Resolve(client);
+            //var ranges = obs["referenceRange"].Union(obs["component"]["referenceRange"]);
+            //var selectedRanges = ranges.Where(r => r["meaning"]["coding"]
+            //            .Where(c => c["system"] == SNOMEDCT && c["code"] == "123456")
+            //            .Where(c => c["system"].Any(c => c.Value == "SNOMEDCT")
+            //            //			.Where(c => c["system"].SequenceEquals(SNOMEDCT.ToCollection()) 
+            //            //					&& c["code"].SequenceEquals("123456".ToCollection()))
+            //            .Any());
+            //var textNodes = selectedRanges.Select(r => r["text"]);
+
+            // (en nu nog weer unwrappen)
+            // SNIP===========8<================8<==========
+
+            // var tests = textNodes.Select(tn => tb.Value);	// Haalt string uit ITreeNode Value
+
+            var global_sct = "http://snomed.org/sct"; // resolve variables from global evaluation context
             var result3 = from node in nodeSet
                           from resultElem in node["result"]
                           from observation in resultElem.Resolve()
