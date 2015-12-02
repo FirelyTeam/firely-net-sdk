@@ -69,12 +69,29 @@ namespace Hl7.Fhir.Navigation
         abstract public DoublyLinkedTree FirstChild { get; protected set; }
 
         /// <summary>Indexer property. Enumerates the child items with the specified name.</summary>
-        /// <param name="name">An item name.</param>
+        /// <param name="path">An item name.</param>
         /// <returns>A tree item.</returns>
-        public IEnumerable<DoublyLinkedTree> this[string name]
+        public IEnumerable<DoublyLinkedTree> this[string path]
         {
             get {
-                return this.Children(name);
+                // return this.Children(name);
+                if (string.IsNullOrEmpty(path)) { throw new ArgumentNullException("path"); } // nameof(path)
+
+                var segments = path.Split('.');
+                if (segments.Length == 1)
+                {
+                    return this.Children(segments[0]);
+                }
+
+                var nodeSet = Enumerable.Repeat(this, 1);
+
+                // WRONG...!
+                var i = 0;
+                var result = nodeSet.Aggregate(
+                    Enumerable.Empty<DoublyLinkedTree>(),
+                    (acc, node) => acc = node[segments.Skip(1).First()]
+                );
+                return result;
             }
         }
 

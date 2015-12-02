@@ -39,9 +39,9 @@ namespace Hl7.Fhir.Navigation
         T FirstChild { get; }
 
         /// <summary>Indexer property. Enumerates the child items with the specified name.</summary>
-        /// <param name="name">An item name.</param>
+        /// <param name="path">An item name.</param>
         /// <returns>A tree item.</returns>
-        IEnumerable<T> this[string name] { get; }
+        IEnumerable<T> this[string path] { get; }
 
         /// <summary>Returns <c>true</c> if the instance is an internal tree node, i.e. if the item has at least one child.</summary>
         bool IsInternal { get; }

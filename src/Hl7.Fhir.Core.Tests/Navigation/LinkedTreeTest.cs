@@ -54,8 +54,8 @@ namespace Hl7.Fhir.Navigation
                     .AddLastSibling("prefix", "Prof. Dr. Ir.")
                     .AddLastSibling("suffix", "MBA")
                     .AddLastSibling("period")
-                        .AddLastChild("start", "20151201 03:15")
-                        .AddLastSibling("end", "20151231 23:45");
+                        .AddLastChild("start", "20151231 14:00")
+                        .AddLastSibling("end", "20151230 12:00");
 
             return root;
         }
@@ -304,15 +304,22 @@ namespace Hl7.Fhir.Navigation
             // TODO: use datetime values
             const string periodNode = "period";
             const string endNode = "end";
-            result = nodeSet.SelectMany(n => n.Descendants())
+            result = nodeSet
+                .SelectMany(n => n.Descendants())
                 .Where(n => n.Name == periodNode)
                 .Where(
                     n => string.Compare(
-                            n[startNode].FirstOrDefault().GetValue<string>(),
-                            n[endNode].FirstOrDefault().GetValue<string>()
+                        n.Children(startNode).FirstOrDefault().GetValue<string>(),
+                        n.Children(endNode).FirstOrDefault().GetValue<string>()
+                        // n[startNode].FirstOrDefault().GetValue<string>(),
+                        // n[endNode].FirstOrDefault().GetValue<string>()
                     ) > 0
                 );
             Assert.AreEqual(result.Count(), 1);
+
+            result = root["identifier.period.start"];
+            Assert.IsTrue(result.Count() == 1);
+            Assert.IsTrue(result.First().Name == startNode);
 
             // Example expressions:
 
