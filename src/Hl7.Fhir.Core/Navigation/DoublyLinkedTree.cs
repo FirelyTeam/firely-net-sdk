@@ -42,18 +42,22 @@ namespace Hl7.Fhir.Navigation
             return CreateLeaf<V>(name, value, null, null);
         }
 
-        protected DoublyLinkedTree(string name) { Name = name; }
+        private readonly string _name;
+        private readonly DoublyLinkedTree _parent;
+        private readonly DoublyLinkedTree _previousSibling;
+
+        protected DoublyLinkedTree(string name) { _name = name; }
 
         protected DoublyLinkedTree(string name, DoublyLinkedTree parent, DoublyLinkedTree previousSibling) : this(name)
         {
-            Parent = parent;
-            PreviousSibling = previousSibling;
+            _parent = parent;
+            _previousSibling = previousSibling;
         }
 
         #region ITree
 
         /// <summary>The name of the tree item.</summary>
-        public string Name { get; }
+        public string Name { get { return _name; } }
 
         // <summary>Returns <c>true</c> if the tree item supports the <see cref="IValue"/> interface.</summary>
         // public bool IsValue { get { return this is IValue; } }
@@ -69,28 +73,23 @@ namespace Hl7.Fhir.Navigation
         abstract public DoublyLinkedTree FirstChild { get; protected set; }
 
         /// <summary>Indexer property. Enumerates the child items with the specified name.</summary>
-        /// <param name="path">An item name.</param>
-        /// <returns>A tree item.</returns>
-        public IEnumerable<DoublyLinkedTree> this[string path]
+        /// <param name="name">An item name.</param>
+        /// <returns>An tree item enumerator.</returns>
+        public IEnumerable<DoublyLinkedTree> this[string name] { get { return this.Children(name); } }
+
+
+        /// <summary>Indexer property. Enumerates the descendant items with the specified path.</summary>
+        /// <param name="path">An array of nested item names.</param>
+        /// <returns>An tree item enumerator.</returns>
+        public IEnumerable<DoublyLinkedTree> this[params string[] path]
         {
             get {
-                // return this.Children(name);
-                if (string.IsNullOrEmpty(path)) { throw new ArgumentNullException("path"); } // nameof(path)
-
-                var segments = path.Split('.');
-                if (segments.Length == 1)
+                if (path == null || path.Length == 0) { throw new ArgumentNullException("path"); } // nameof(path)
+                var result = this.ToEnumerable();
+                foreach (var name in path)
                 {
-                    return this.Children(segments[0]);
+                    result = result.SelectMany(n => n[name]);
                 }
-
-                var nodeSet = Enumerable.Repeat(this, 1);
-
-                // WRONG...!
-                var i = 0;
-                var result = nodeSet.Aggregate(
-                    Enumerable.Empty<DoublyLinkedTree>(),
-                    (acc, node) => acc = node[segments.Skip(1).First()]
-                );
                 return result;
             }
         }
@@ -106,10 +105,10 @@ namespace Hl7.Fhir.Navigation
         #region DoublyLinkedTree
 
         /// <summary>Returns a reference to the parent tree item.</summary>
-        public DoublyLinkedTree Parent { get; }
+        public DoublyLinkedTree Parent { get { return _parent; } }
 
         /// <summary>Returns a reference to the previous sibling tree item.</summary>
-        public DoublyLinkedTree PreviousSibling { get; }
+        public DoublyLinkedTree PreviousSibling { get { return _previousSibling; } }
 
         /// <summary>Returns <c>true</c> if the item represents a root node, i.e. if the item <see cref="Parent"/> reference equals <c>null</c>.</summary>
         public bool IsRoot { get { return Parent == null; } }
@@ -221,10 +220,12 @@ namespace Hl7.Fhir.Navigation
 
         private sealed class Leaf<V> : DoublyLinkedTree, IValue<V>
         {
+            private readonly V _value;
+
             public Leaf(string name, V value, DoublyLinkedTree parent, DoublyLinkedTree previousSibling)
                 : base(name, parent, previousSibling)
             {
-                Value = value;
+                _value = value;
             }
 
             public override DoublyLinkedTree FirstChild
@@ -237,7 +238,7 @@ namespace Hl7.Fhir.Navigation
 
             #region IValue<T>
 
-            public V Value { get; }
+            public V Value { get { return _value; } }
 
             #endregion
 
@@ -245,7 +246,6 @@ namespace Hl7.Fhir.Navigation
         }
 
         #endregion
-
 
     }
 

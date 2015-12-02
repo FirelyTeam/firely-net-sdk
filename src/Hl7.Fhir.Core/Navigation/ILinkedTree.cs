@@ -39,9 +39,23 @@ namespace Hl7.Fhir.Navigation
         T FirstChild { get; }
 
         /// <summary>Indexer property. Enumerates the child items with the specified name.</summary>
-        /// <param name="path">An item name.</param>
-        /// <returns>A tree item.</returns>
-        IEnumerable<T> this[string path] { get; }
+        /// <param name="name">An item name.</param>
+        /// <returns>An tree item enumerator.</returns>
+        IEnumerable<T> this[string name] { get; }
+
+        /// <summary>Indexer property. Enumerates the descendant items with the specified path, i.e. a sequence of nested node names.</summary>
+        /// <param name="path">An array of nested item names.</param>
+        /// <returns>An tree item enumerator.</returns>
+        /// <example>
+        /// Retrieve descendants of the specified node with path "child.grandchild.greatgrandchild":
+        /// <list type="number">
+        ///     <item><description>Find child nodes of the specified node with name "child"</description></item>
+        ///     <item><description>Find child nodes in the previous result set with name "grandchild"</description></item>
+        ///     <item><description>Find child nodes in the previous result set with name "greatgrandchild"</description></item>
+        /// </list>
+        /// <code>var result = node["child", "grandchild", "greatgrandchild"];</code>
+        /// </example>
+        IEnumerable<T> this[params string[] path] { get; }
 
         /// <summary>Returns <c>true</c> if the instance is an internal tree node, i.e. if the item has at least one child.</summary>
         bool IsInternal { get; }

@@ -277,9 +277,10 @@ namespace Hl7.Fhir.Navigation
         public void Test_Tree_LinqExpression()
         {
             var root = CreatePatientTree();
-            var nodeSet = Enumerable.Repeat(root, 1); // By lack of Enumerable.FromValue<T> or Unit in Monad speak
+            var nodeSet = root.ToEnumerable();
 
             // Test 1: get all descendants
+
             var result = nodeSet
                 .SelectMany(n => n.Descendants());
             var result2 = from node in nodeSet
@@ -287,7 +288,8 @@ namespace Hl7.Fhir.Navigation
                           select d;
             Assert.IsTrue(result.SequenceEqual(result2));
 
-            // Test 1: get all start nodes
+            // Test 2: get all start nodes
+
             const string startNode = "start";
             result = nodeSet
                 .SelectMany(n => n.Descendants())
@@ -300,7 +302,8 @@ namespace Hl7.Fhir.Navigation
             Assert.IsTrue(result.SequenceEqual(result2));
             Assert.AreEqual(result.Count(), 2);
 
-            // Test 1: get all period nodes having start.value > end.value
+            // Test 3: get all period nodes having start.value > end.value
+
             // TODO: use datetime values
             const string periodNode = "period";
             const string endNode = "end";
@@ -317,9 +320,19 @@ namespace Hl7.Fhir.Navigation
                 );
             Assert.AreEqual(result.Count(), 1);
 
-            result = root["identifier.period.start"];
+            // Test 4: filter descendant nodes via path indexer
+
+            result = root["identifier", "period", "start"];
             Assert.IsTrue(result.Count() == 1);
             Assert.IsTrue(result.First().Name == startNode);
+
+            // result2 = root["identifier"]["period"]["start"];
+            result2 = root["identifier"].SelectMany(n => n["period"]).SelectMany(n => n["start"]);
+            Assert.IsTrue(result.SequenceEqual(result2));
+
+            var singleNode = root.FirstChild("identifier").FirstChild("period").FirstChild("start");
+            Assert.AreEqual(singleNode, result.Last());
+            Assert.AreEqual(singleNode.Name, startNode);
 
             // Example expressions:
 

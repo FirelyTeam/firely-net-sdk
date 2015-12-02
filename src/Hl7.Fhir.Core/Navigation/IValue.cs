@@ -20,6 +20,8 @@ namespace Hl7.Fhir.Navigation
     {
         /// <summary>Gets a value of type <typeparamref name="T"/>.</summary>
         T Value { get; }
+
+        // Suggestion: implement cast operators from/to T
     }
 
     /// <summary>Extension methods for the <see cref="IValue"/> interface.</summary>
