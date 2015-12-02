@@ -326,9 +326,19 @@ namespace Hl7.Fhir.Navigation
             Assert.IsTrue(result.Count() == 1);
             Assert.IsTrue(result.First().Name == startNode);
 
-            // result2 = root["identifier"]["period"]["start"];
+            result2 = from node in root["identifier", "period", "start"]
+                      select node;
+            Assert.IsTrue(result2.SequenceEqual(result));
+
+            result2 = from r in nodeSet
+                      from x in r["identifier"]
+                      from y in x["period"]
+                      from z in y["start"]
+                      select z;
+            Assert.IsTrue(result2.SequenceEqual(result));
+
             result2 = root["identifier"].SelectMany(n => n["period"]).SelectMany(n => n["start"]);
-            Assert.IsTrue(result.SequenceEqual(result2));
+            Assert.IsTrue(result2.SequenceEqual(result));
 
             var singleNode = root.FirstChild("identifier").FirstChild("period").FirstChild("start");
             Assert.AreEqual(singleNode, result.Last());
@@ -386,23 +396,36 @@ namespace Hl7.Fhir.Navigation
                           from resultElem in node["result"]
                           from observation in resultElem.Resolve()
                           from range in observation["referenceRange"].Union(
-                                from component in observation["component"]
-                                from componentRange in component["referenceRange"]
+                                // from component in observation["component"]
+                                // from componentRange in component["referenceRange"]
+                                from componentRange in observation["component", "referenceRange"]
                                 select componentRange
                           )
                           where (
-                                    from meaning in range["meaning"]
-                                    from coding in meaning["coding"]
-                                    where (
-                                        (
-                                            // Rule: compare sequence to scalar => sequence.Any(scalar)
-                                            from system in coding["system"]    // 0...1
-                                            from code in coding["code"]        // 0...1
-                                            where system.GetValue<string>() == global_sct
-                                                  && code.GetValue<string>() == "123456"
-                                            select system
-                                        ).Any()
-                                    )
+                                    // from meaning in range["meaning"]
+                                    // from coding in meaning["coding"]
+                                    from coding in range["meaning", "coding"]
+
+                                    //where (
+                                    //    (
+                                    //        // Rule: compare sequence to scalar => sequence.Any(scalar)
+                                    //        from system in coding["system"]    // 0...1
+                                    //        from code in coding["code"]        // 0...1
+                                    //        where system.GetValue<string>() == global_sct
+                                    //           && code.GetValue<string>() == "123456"
+                                    //        select system
+                                    //    ).Any()
+                                    //)
+
+                                    // Assumption: system and code have cardinality 0...1
+                                    where coding.FirstChild("system").GetValue<string>() == global_sct
+                                    where coding.FirstChild("code").GetValue<string>() == "123456"
+
+                                    // Generic predicate to handle any cardinality
+                                    // Definition: match nodeset to scalar => true if any node matches the scalar
+                                    // where coding["system"].Any(s => s.GetValue<string>() == global_sct)
+                                    // where coding["code"].Any(s => s.GetValue<string>() == "123456")
+
                                     select coding
                                 ).Any()
                           select range.GetValue<string>();
