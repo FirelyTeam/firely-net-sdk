@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Navigation
                 Debug.Print(item.ToString());
             }
 
-            var start_values = period_starts.OfType<IValue<string>>();
+            var start_values = period_starts.OfType<IValueProvider<string>>();
             var maxStart = start_values.Max(n => n.Value);
             var maxNode = start_values.First(n => n.Value == maxStart);
             Debug.Print("Max start = {0}", maxNode.Value);

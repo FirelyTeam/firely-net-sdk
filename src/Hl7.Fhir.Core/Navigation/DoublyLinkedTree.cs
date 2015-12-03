@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Navigation
     public interface IDoublyLinkedTree : IDoublyLinkedTree<DoublyLinkedTree> { }
 
     /// <summary>Abstract base class for doubly linked tree items.</summary>
-    public abstract class DoublyLinkedTree : IDoublyLinkedTree, ILinkedTreeBuilder<DoublyLinkedTree>, IValue
+    public abstract class DoublyLinkedTree : IDoublyLinkedTree, ILinkedTreeBuilder<DoublyLinkedTree>, IValueProvider
     {
         /// <summary>Static factory method. Creates a new tree node with the specified name.</summary>
         /// <param name="name">The name of the node.</param>
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Navigation
             public override string ToString() { return string.Format("({0}) {1}", ReflectionHelper.PrettyTypeName(GetType()), Name); }
         }
 
-        private sealed class Leaf<V> : DoublyLinkedTree, IValue<V>
+        private sealed class Leaf<V> : DoublyLinkedTree, IValueProvider<V>
         {
             private readonly V _value;
 
