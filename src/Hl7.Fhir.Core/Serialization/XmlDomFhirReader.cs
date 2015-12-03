@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static IPostitionInfo GetLineInfo(XObject obj)
+        public static IPositionInfo GetLineInfo(XObject obj)
         {
             return new XmlDomFhirReader(obj);
         }

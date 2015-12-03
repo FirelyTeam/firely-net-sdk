@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Support
         /// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
         /// <returns>The logged <see cref="Exception"/>.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
-        internal static FormatException Format(string messageFormat, IPostitionInfo pos, params object[] messageArgs)
+        internal static FormatException Format(string messageFormat, IPositionInfo pos, params object[] messageArgs)
         {
             string message;
 

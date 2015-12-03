@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static IPostitionInfo GetLineInfo(JToken obj)
+        public static IPositionInfo GetLineInfo(JToken obj)
         {
             return new JsonDomFhirReader(obj);
         }
