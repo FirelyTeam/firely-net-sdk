@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hl7.Fhir.Support;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -159,6 +160,7 @@ namespace Hl7.Fhir.Navigation
 
         #endregion
 
+        public override string ToString() { return string.Format("({0}) {1}", ReflectionHelper.PrettyTypeName(GetType()), Name); }
     }
 
 }

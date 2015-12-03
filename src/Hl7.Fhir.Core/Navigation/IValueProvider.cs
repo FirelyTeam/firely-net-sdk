@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Navigation
     /// <typeparam name="T">The value type.</typeparam>
     public interface IValueProvider<out T> : IValueProvider
     {
-        /// <summary>Provides a value of type <typeparamref name="T"/>.</summary>
+        /// <summary>Gets a value of type <typeparamref name="T"/>.</summary>
         T Value { get; }
 
         // Suggestion: implement cast operators from/to T

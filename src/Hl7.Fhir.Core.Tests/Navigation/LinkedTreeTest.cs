@@ -30,9 +30,39 @@ namespace Hl7.Fhir.Navigation
             );
         }
 
-        FhirNavigationTree CreatePatientTree()
+        FhirNavigationTree CreateFhirNavigationTree()
         {
             var root = FhirNavigationTree.Create("Patient");
+
+            root.AddLastChild("identifier")
+                    .AddLastChild("use", "...use...")
+                    .AddLastSibling("type", "...type...")
+                    .AddLastSibling("system", "...system...")
+                    .AddLastSibling("value", "0123456789")
+                    .AddLastSibling("period")
+                        .AddLastChild("start", "20151127 12:00")
+                        .AddLastSibling("end", "20151127 18:00")
+                    .Parent
+                    .AddLastSibling("assigner", "Dr. House")
+                .Parent
+                .AddLastSibling("gender", "F")
+                .AddLastSibling("name")
+                    .AddLastChild("use", "...use...")
+                    .AddLastSibling("text", "Prof. Dr. Ir. P. Akkermans MBA")
+                    .AddLastSibling("family", "Akkermans")
+                    .AddLastSibling("given", "Piet")
+                    .AddLastSibling("prefix", "Prof. Dr. Ir.")
+                    .AddLastSibling("suffix", "MBA")
+                    .AddLastSibling("period")
+                        .AddLastChild("start", "20151231 14:00")
+                        .AddLastSibling("end", "20151230 12:00");
+
+            return root;
+        }
+
+        FhirNavigationTree CreateFhirInstanceTree()
+        {
+            var root = FhirInstanceTree.Create("Patient");
 
             root.AddLastChild("identifier")
                     .AddLastChild("use", "...use...")
@@ -106,9 +136,17 @@ namespace Hl7.Fhir.Navigation
         }
 
         [TestMethod]
-        public void Test_Tree_Builder()
+        public void Test_Tree_CreateFhirNavigationTree()
         {
-            var root = CreatePatientTree();
+            var root = CreateFhirNavigationTree();
+            // TODO: Assert result...
+            Debug.Print(RenderTree(root));
+        }
+
+        [TestMethod]
+        public void Test_Tree_CreateFhirInstanceTree()
+        {
+            var root = CreateFhirInstanceTree();
             // TODO: Assert result...
             Debug.Print(RenderTree(root));
         }
@@ -174,7 +212,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_Children()
         {
-            var root = CreatePatientTree();
+            var root = CreateFhirNavigationTree();
             Assert.AreEqual(root.FirstChild.Name, "identifier");
             Assert.AreEqual(root.LastChild().Name, "name");
 
@@ -190,7 +228,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_Descendants()
         {
-            var root = CreatePatientTree();
+            var root = CreateFhirNavigationTree();
             var child = root.FirstChild;
             Assert.AreEqual(child.Name, "identifier");
 
@@ -211,7 +249,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_Siblings()
         {
-            var root = CreatePatientTree();
+            var root = CreateFhirNavigationTree();
             var child = root.FirstChild.FirstChild;
             Assert.AreEqual(child.Name, "use");
 
@@ -229,7 +267,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_Ancestors()
         {
-            var root = CreatePatientTree();
+            var root = CreateFhirNavigationTree();
             var child = root.FirstChild.FirstChild;
             Assert.AreEqual(child.Name, "use");
             child = child.FollowingSiblings().First(n => n.Name == "period");
@@ -250,7 +288,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_SimpleExpression()
         {
-            var root = CreatePatientTree();
+            var root = CreateFhirNavigationTree();
 
             Debug.Print("===== Full tree =====");
             Debug.Print(RenderTree(root));
@@ -276,7 +314,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_LinqExpression()
         {
-            var root = CreatePatientTree();
+            var root = CreateFhirNavigationTree();
             var nodeSet = root.ToEnumerable();
 
             // Test 1: get all descendants
