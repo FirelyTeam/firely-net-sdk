@@ -1,5 +1,6 @@
-﻿<!-- Comments here -->
-<Patient xmlns="http://hl7.org/fhir">  
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Patient xmlns="http://hl7.org/fhir">
+  <!-- Comments here -->
   <id value="pat1"/>
   <text>
     <status value="generated"/>
