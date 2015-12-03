@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Navigation
     public class LinkedTreeTest
     {
         // Render tree to formatted string
-        static string RenderTree<T>(T root) where T : IDoublyLinkedTree<T>
+        internal static string RenderTree<T>(T root) where T : IDoublyLinkedTree<T>
         {
             return root.DescendantsAndSelf().Aggregate("",
                 (bc, n) => bc + n.Ancestors().Aggregate("",

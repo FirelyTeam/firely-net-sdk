@@ -88,6 +88,7 @@
     <Compile Include="Model\DeepCopyTest.cs" />
     <Compile Include="Model\DeepMatchTest.cs" />
     <Compile Include="Model\ModelTests.cs" />
+    <Compile Include="Navigation\ConstructFromXml.cs" />
     <Compile Include="Navigation\LinkedTreeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JsonAssert.cs" />
