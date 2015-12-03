@@ -73,6 +73,7 @@
     <Compile Include="FhirPath\Expression.cs" />
     <Compile Include="FhirPath\Lexer.cs" />
     <Compile Include="FhirPath\Path.cs" />
+    <Compile Include="Navigation\AnnotationList.cs" />
     <Compile Include="Navigation\FhirNavigationTree.cs" />
     <Compile Include="Navigation\FhirInstanceTree.cs" />
     <Compile Include="Navigation\IAnnotatable.cs" />
