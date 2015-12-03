@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Navigation
         T AddLastChild(string name);
     }
 
-    /// <summary>Common generic interface for constructing a linked tree with node values.</summary>
+    /// <summary>Common generic interface for constructing a linked tree with node values of any type.</summary>
     /// <typeparam name="T">The tree type.</typeparam>
     public interface ILinkedTreeBuilderWithValues<out T> where T : ILinkedTree<T>
     {
@@ -108,6 +108,24 @@ namespace Hl7.Fhir.Navigation
         /// <param name="value">The node value.</param>
         /// <returns>A reference to the new child node of type <typeparamref name="T"/>.</returns>
         T AddLastChild<V>(string name, V value);
+    }
+
+    /// <summary>Common generic interface for constructing a linked tree with node values of a single specific type.</summary>
+    /// <typeparam name="T">The tree type.</typeparam>
+    /// <typeparam name="V">The value type.</typeparam>
+    public interface ILinkedTreeBuilderWithValues<out T, in V> where T : ILinkedTree<T>
+    {
+        /// <summary>Add a new node with the specified name and value as the last sibling.</summary>
+        /// <param name="name">The name of the new sibling node.</param>
+        /// <param name="value">The node value.</param>
+        /// <returns>A reference to the new sibling node of type <typeparamref name="T"/>.</returns>
+        T AddLastSibling(string name, V value);
+
+        /// <summary>Add a new node with the specified name and value as the last child.</summary>
+        /// <param name="name">The name of the new child node.</param>
+        /// <param name="value">The node value.</param>
+        /// <returns>A reference to the new child node of type <typeparamref name="T"/>.</returns>
+        T AddLastChild(string name, V value);
     }
 
 }

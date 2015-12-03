@@ -18,6 +18,7 @@ namespace Hl7.Fhir.Navigation
 
         /// <summary>Create a new tree root node.</summary>
         /// <param name="name">The name of the new node.</param>
+        /// <returns>A new <see cref="NavigationTree{T}"/> node.</returns>
         protected NavigationTree(string name) { _name = name; }
 
         /// <summary>Create a new tree node.</summary>

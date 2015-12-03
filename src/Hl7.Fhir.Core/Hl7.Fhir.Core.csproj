@@ -77,7 +77,7 @@
     <Compile Include="Navigation\FhirInstanceTree.cs" />
     <Compile Include="Navigation\IAnnotatable.cs" />
     <Compile Include="Navigation\ILinkedTree.cs" />
-    <Compile Include="Navigation\IValue.cs" />
+    <Compile Include="Navigation\IValueProvider.cs" />
     <Compile Include="Navigation\LinkedTreeFhirExtensions.cs" />
     <Compile Include="Navigation\LinkedTreeExtensions.cs" />
     <Compile Include="Navigation\LinkedTreeFactory.cs" />

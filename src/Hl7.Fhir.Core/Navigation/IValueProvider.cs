@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Navigation
         Type ValueType { get; }
     }
 
-    /// <summary>Common generic interface for objects that provide a strongly typed value.</summary>
+    /// <summary>Common generic interface for objects that provide an immutable strongly typed value.</summary>
     /// <typeparam name="T">The value type.</typeparam>
     public interface IValueProvider<out T> : IValueProvider
     {
@@ -31,6 +31,14 @@ namespace Hl7.Fhir.Navigation
         T Value { get; }
 
         // Suggestion: implement cast operators from/to T
+    }
+
+    /// <summary>Common generic interface for objects that provide a mutable strongly typed value.</summary>
+    /// <typeparam name="T">The value type.</typeparam>
+    public interface IMutableValueProvider<T> : IValueProvider
+    {
+        /// <summary>Gets or sets a value of type <typeparamref name="T"/>.</summary>
+        T Value { get; set; }
     }
 
     /// <summary>Extension methods for the <see cref="IValueProvider"/> interface.</summary>
