@@ -9,35 +9,6 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Navigation
 {
-    internal class WrappedXmlPositionInfo : IPositionInfo
-    {
-        private IXmlLineInfo _wrapped;
-
-        public WrappedXmlPositionInfo(IXmlLineInfo lineInfo)
-        {
-            if (!lineInfo.HasLineInfo())
-                throw Error.InvalidOperation("No lineinfo available. Please read the Xml document using LoadOptions.SetLineInfo.");
-
-            _wrapped = lineInfo;
-        }
-
-        public int LineNumber
-        {
-            get
-            {
-                return _wrapped.LineNumber;
-            }
-        }
-
-        public int LinePosition
-        {
-            get
-            {
-                return _wrapped.LinePosition;
-            }
-        }
-    }
-
     public static partial class TreeConstructor
     {
         public static readonly XName XVALUE = XName.Get("value");
