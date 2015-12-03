@@ -35,33 +35,36 @@ namespace Hl7.Fhir.Navigation
             return FromXml(SerializationUtil.XmlReaderFromXmlText(xml));
         }
 
-        private static FhirNavigationTree createTreeNodeFromDocNode(XElement docNode, FhirNavigationTree parent)
+        private static FhirNavigationTree createTreeNodeFromDocNode(XElement docElement, FhirNavigationTree parent)
         {
-            var newNodeName = docNode.Name.LocalName;       // ignore namespace
+            var newNodeName = docElement.Name.LocalName;       // ignore namespace
             FhirNavigationTree newNode = null;
 
             bool hasValue = false;
-            var value = tryGetValue(docNode, out hasValue);
+            var value = tryGetValue(docElement, out hasValue);
 
             if (hasValue)
                 newNode = parent.AddLastChild(newNodeName,value);
             else
                 newNode = parent.AddLastChild(newNodeName);
 
-            foreach(var attr in getFhirNonValueAttributes(docNode))
+            foreach(var attr in getFhirNonValueAttributes(docElement))
                 createTreeNodeFromDocAttribute(attr, newNode);
 
-            foreach (var elem in docNode.Elements())
-            {
-                //if (isNestedResource(elem))
-                //{
-                //    // TODO: Set type of contained node as annotation
-                //    // special case - nested resources -> the value is the nested resource in the (only) element, not
-                //    // the current element itself.
-                //    docNode = elem.Elements().First();
-                //}
+            if(docElement.HasElements)
+            { 
+                var elements = docElement.Elements();
 
-                createTreeNodeFromDocNode(elem, newNode);
+                // special case - nested resources -> the children of this node are nested in a resource 
+                // (which is the (only) element), not in the current element itself.
+                if (isNestedResource(elements.First()))
+                {
+                    // TODO: Set type of contained node as annotation
+                    elements = elements.First().Elements();
+                }
+
+                foreach (var elem in elements)
+                    createTreeNodeFromDocNode(elem, newNode);
             }
 
             return newNode;
@@ -151,14 +154,20 @@ namespace Hl7.Fhir.Navigation
 
 
         //Try to determine whether this node is a nested resource. This is most probable if
-        // a) The node has no siblings
-        // b) The node name starts with a capitalized letter
-        // c) The node name is one of the known resources
-        private static bool isNestedResource(XElement node)
+        // a) The node name starts with a capitalized letter
+        // b) The node name is one of the known resources
+        // c) The node has no siblings
+        private static bool isNestedResource(XElement elem)
         {
-            bool hasSiblings = node.Parent != null && node.Parent.Elements().Count() > 1;
+            return Char.IsUpper(elem.Name.LocalName[0]) && ModelInfo.IsKnownResource(elem.Name.LocalName);
 
-            return !hasSiblings && node is XElement && ModelInfo.IsKnownResource(((XElement)node).Name.LocalName);
+            // alternative, without ModelInfo:
+            //if (Char.IsUpper(elem.Name.LocalName[0]))
+            //{
+            //    bool hasSiblings = elem.Parent != null && elem.Parent.Elements().Count() > 1;
+
+            //    return !hasSiblings;
+            //}
         }
 
         private static IEnumerable<XAttribute> getFhirNonValueAttributes(XElement node)
@@ -186,10 +195,7 @@ namespace Hl7.Fhir.Navigation
 
         private static IPositionInfo wrap(XObject node)
         {
-            return new WrappedXmlPositionInfo(node);
+            return new XmlLineInfoWrapper(node);
         }
-
-   
-
     }
 }
