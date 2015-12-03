@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Navigation
     /// Concrete implementation of a <see cref="NavigationTree{T}"/> for FHIR resources.
     /// Supports nodes with immutable generic values of any type.
     /// </summary>
-    public class FhirNavigationTree : NavigationTree<FhirNavigationTree>, ILinkedTreeBuilderWithValues<FhirNavigationTree>, IValueProvider
+    public class FhirNavigationTree : NavigationTree<FhirNavigationTree>, ILinkedTreeBuilderWithValues<FhirNavigationTree>, IValueProvider, IAnnotatable
     {
         /// <summary>Create a new <see cref="FhirNavigationTree"/> root node.</summary>
         /// <param name="name">The name of the new node.</param>
@@ -73,6 +73,51 @@ namespace Hl7.Fhir.Navigation
 
         #endregion
 
+        #region IAnnotatable
+
+        private Lazy<AnnotationList> _annotations = new Lazy<AnnotationList>(() => new AnnotationList());
+
+        public object Annotation(Type type)
+        {
+            return _annotations.Value.FilterByType(type).FirstOrDefault();
+        }
+
+        public T Annotation<T>() where T : class
+        {
+            return (T)Annotation(typeof(T));
+        }
+
+        public IEnumerable<object> Annotations(Type type)
+        {
+            return _annotations.Value.FilterByType(type).Cast<object>();
+        }
+
+        public IEnumerable<T> Annotations<T>() where T : class
+        {
+            return _annotations.Value.FilterByType(typeof(T)).Cast<T>();
+        }
+
+        public void AddAnnotation(object annotation)
+        {
+            _annotations.Value.AddAnnotation(annotation);
+        }
+
+        public void RemoveAnnotations(Type type)
+        {
+            _annotations.Value.RemoveAnnotation(type);
+        }
+
+        public void RemoveAnnotations<T>() where T : class
+        {
+            RemoveAnnotations(typeof(T));
+        }
+
+        #endregion
+
+        public override string ToString()
+        {
+            return base.ToString() + (_annotations.IsValueCreated ? _annotations.Value.ToString() : "");
+        }
     }
 
     /// <summary>Represents a <see cref="FhirNavigationTree"/> node with a strongly-typed immutable value.</summary>
@@ -157,48 +202,7 @@ namespace Hl7.Fhir.Navigation
         public TValue Value { get; set; }
 
         #endregion
-
-
-        #region IAnnotatable
-
-        private Lazy<AnnotationList> _annotations = new Lazy<AnnotationList>(() => new AnnotationList());
-
-        public object Annotation(Type type)
-        {
-            return _annotations.Value.FilterByType(type).FirstOrDefault();
-        }
-
-        public T Annotation<T>() where T : class
-        {
-            return (T)Annotation(typeof(T));
-        }
-
-        public IEnumerable<object> Annotations(Type type)
-        {
-            return _annotations.Value.FilterByType(type).Cast<object>();
-        }
-
-        public IEnumerable<T> Annotations<T>() where T : class
-        {
-            return _annotations.Value.FilterByType(typeof(T)).Cast<T>();
-        }
-
-        public void AddAnnotation(object annotation)
-        {
-            _annotations.Value.AddAnnotation(annotation);
-        }
-
-        public void RemoveAnnotations(Type type)
-        {
-            _annotations.Value.RemoveAnnotation(type);
-        }
-
-        public void RemoveAnnotations<T>() where T : class
-        {
-            RemoveAnnotations(typeof(T));
-        }
-
-        #endregion
+        
         public override string ToString() { return string.Format("{0} = '{1}'", base.ToString(), Value); }
     }
 }

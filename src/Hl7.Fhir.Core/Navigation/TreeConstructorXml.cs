@@ -35,25 +35,49 @@ namespace Hl7.Fhir.Navigation
             return FromXml(SerializationUtil.XmlReaderFromXmlText(xml));
         }
 
+
+        public struct XmlRenderHints
+        {
+            public bool IsXhtmldiv;
+
+            public override string ToString()
+            {
+                return IsXhtmldiv ? "Is XHTML <div>" : "(no hints)";
+            }
+        }
+
         private static FhirNavigationTree createTreeNodeFromDocNode(XElement docElement, FhirNavigationTree parent)
         {
             var newNodeName = docElement.Name.LocalName;       // ignore namespace
             FhirNavigationTree newNode = null;
 
             bool hasValue = false;
-            var value = tryGetValue(docElement, out hasValue);
+            string value = null;
+
+            if (isXhtmlDiv(docElement))
+            {
+                value = getDivValue(docElement);
+                hasValue = true;
+            }
+            else
+                value = tryGetValue(docElement, out hasValue);
 
             if (hasValue)
                 newNode = parent.AddLastChild(newNodeName,value);
             else
                 newNode = parent.AddLastChild(newNodeName);
 
-            foreach(var attr in getFhirNonValueAttributes(docElement))
+            if (isXhtmlDiv(docElement))
+            {
+                newNode.AddAnnotation(new XmlRenderHints() { IsXhtmldiv = true });
+            }
+
+            foreach (var attr in getFhirNonValueAttributes(docElement))
                 createTreeNodeFromDocAttribute(attr, newNode);
 
-            if(docElement.HasElements)
-            { 
-                var elements = docElement.Elements();
+            if(docElement.HasElements && !isXhtmlDiv(docElement))
+            {
+                var elements = getFhirChildNodes(docElement);
 
                 // special case - nested resources -> the children of this node are nested in a resource 
                 // (which is the (only) element), not in the current element itself.
@@ -64,7 +88,9 @@ namespace Hl7.Fhir.Navigation
                 }
 
                 foreach (var elem in elements)
+                {
                     createTreeNodeFromDocNode(elem, newNode);
+                }
             }
 
             return newNode;
@@ -76,6 +102,12 @@ namespace Hl7.Fhir.Navigation
             var newNode = parent.AddLastChild(newNodeName, attr.Value);
 
             return newNode;
+        }
+
+
+        private static string getDivValue(XElement docNode)
+        {
+            return docNode.ToString(SaveOptions.DisableFormatting);
         }
 
         private static string tryGetValue(XElement docNode, out bool hasValue)
@@ -94,8 +126,13 @@ namespace Hl7.Fhir.Navigation
             }
         }
 
+        private static bool isXhtmlDiv(XElement element)
+        {
+            return element.Name == XHTMLDIV;
+        }
 
-        private static IEnumerable<XNode> getFhirChildNodes(XElement parent)
+
+        private static IEnumerable<XElement> getFhirChildNodes(XElement parent)
         {
             foreach (var node in parent.Nodes())
             {
@@ -122,7 +159,7 @@ namespace Hl7.Fhir.Navigation
                     }
 
                     // The special xhtml div element
-                    else if (elem.Name == XHTMLDIV)
+                    else if (isXhtmlDiv(elem))
                         yield return elem;
 
                     //
@@ -159,15 +196,14 @@ namespace Hl7.Fhir.Navigation
         // c) The node has no siblings
         private static bool isNestedResource(XElement elem)
         {
-            return Char.IsUpper(elem.Name.LocalName[0]) && ModelInfo.IsKnownResource(elem.Name.LocalName);
+            if(Char.IsUpper(elem.Name.LocalName[0]) && ModelInfo.IsKnownResource(elem.Name.LocalName))
+            {
+                bool hasSiblings = elem.Parent != null && elem.Parent.Elements().Count() > 1;
 
-            // alternative, without ModelInfo:
-            //if (Char.IsUpper(elem.Name.LocalName[0]))
-            //{
-            //    bool hasSiblings = elem.Parent != null && elem.Parent.Elements().Count() > 1;
+                return !hasSiblings;
+            }
 
-            //    return !hasSiblings;
-            //}
+            return false;
         }
 
         private static IEnumerable<XAttribute> getFhirNonValueAttributes(XElement node)
@@ -189,7 +225,7 @@ namespace Hl7.Fhir.Navigation
                 if (attr.Name.NamespaceName == "")
                     yield return attr;
                 else
-                    throw Error.Format("Encountered unsupported attribute '{0}'.".FormatWith(attr.Name), wrap(attr));
+                    throw Error.Format("Encountered unexpected attribute '{0}'.".FormatWith(attr.Name), wrap(attr));
             }
         }
 

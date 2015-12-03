@@ -8,6 +8,21 @@ namespace Hl7.Fhir.Navigation
 {
     internal class AnnotationList : List<AnnotationEntry>
     {
+        public override string ToString()
+        {
+            if(this.Any())
+            {
+                var result = new StringBuilder();
+
+                result.Append("@[");
+                result.Append(string.Join(", ", this.Select(o => o.ToString())));
+                result.Append("]");
+
+                return result.ToString();
+            }
+
+            return String.Empty;            
+        }
     }
 
     internal struct AnnotationEntry
@@ -20,6 +35,11 @@ namespace Hl7.Fhir.Navigation
     
         public Type Type;
         public object Annotation;
+
+        public override string ToString()
+        {
+            return "(" + Type.Name + "): " + Annotation.ToString();
+        }
     }
  
     internal static class AnnotationListExtensions
