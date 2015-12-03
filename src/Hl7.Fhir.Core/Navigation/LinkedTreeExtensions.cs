@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Navigation
             yield return item;
         }
 
-        /// <summary>Perform depth-first recursion on a <see cref="DoublyLinkedTree"/> structure.</summary>
+        /// <summary>Perform depth-first recursion on a <see cref="IDoublyLinkedTree{T}"/> structure.</summary>
         /// <typeparam name="T">The tree type; should implement <see cref="IDoublyLinkedTree{T}"/>.</typeparam>
         /// <param name="tree">The start item.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> sequence.</returns>

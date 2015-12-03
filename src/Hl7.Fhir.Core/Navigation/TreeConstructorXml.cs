@@ -3,8 +3,6 @@ using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -14,28 +12,28 @@ namespace Hl7.Fhir.Navigation
     {
         public static readonly XName XNAME_VALUE = XName.Get("value");
 
-        public static DoublyLinkedTree FromXml(XmlReader reader)
+        public static FhirNavigationTree FromXml(XmlReader reader)
         {
             var doc = SerializationUtil.XDocumentFromReader(reader);
             if (doc == null) Error.ArgumentNull("doc");
             var docRoot = doc.Root;
 
-            var treeRootRoot = DoublyLinkedTree.Create("root");
+            var treeRootRoot = FhirNavigationTree.Create("root");
 
             createTreeNodeFromDocNode(docRoot, treeRootRoot);
 
             return treeRootRoot.FirstChild;
         }
 
-        public static DoublyLinkedTree FromXml(string xml)
+        public static FhirNavigationTree FromXml(string xml)
         {
             return FromXml(SerializationUtil.XmlReaderFromXmlText(xml));
         }
 
-        private static DoublyLinkedTree createTreeNodeFromDocNode(XElement docNode, DoublyLinkedTree parent)
+        private static FhirNavigationTree createTreeNodeFromDocNode(XElement docNode, FhirNavigationTree parent)
         {
             var newNodeName = docNode.Name.LocalName;       // ignore namespace
-            DoublyLinkedTree newNode = null;
+            FhirNavigationTree newNode = null;
 
             bool hasValue = false;
             var value = tryGetValue(docNode, out hasValue);
@@ -57,7 +55,7 @@ namespace Hl7.Fhir.Navigation
             return newNode;
         }
 
-        private static DoublyLinkedTree createTreeNodeFromDocAttribute(XAttribute attr, DoublyLinkedTree parent)
+        private static FhirNavigationTree createTreeNodeFromDocAttribute(XAttribute attr, FhirNavigationTree parent)
         {
             var newNodeName = attr.Name.LocalName;
             var newNode = parent.AddLastChild(newNodeName, attr.Value);

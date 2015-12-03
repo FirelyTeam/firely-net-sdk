@@ -73,6 +73,7 @@
     <Compile Include="FhirPath\Expression.cs" />
     <Compile Include="FhirPath\Lexer.cs" />
     <Compile Include="FhirPath\Path.cs" />
+    <Compile Include="Navigation\FhirNavigationTree.cs" />
     <Compile Include="Navigation\ILinkedTree.cs" />
     <Compile Include="Navigation\IValue.cs" />
     <Compile Include="Navigation\DoublyLinkedTree.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Model\Generated\TestScript.cs" />
     <Compile Include="Model\Markdown.cs" />
     <Compile Include="Model\PositiveInt.cs" />
+    <Compile Include="Navigation\NavigationTree.cs" />
     <Compile Include="Navigation\TreeConstructorXml.cs" />
     <Compile Include="Rest\ResourceReferenceExtensions.cs" />
     <Compile Include="Model\StructureDefinition.cs" />

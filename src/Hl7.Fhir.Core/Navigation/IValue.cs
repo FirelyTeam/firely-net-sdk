@@ -4,6 +4,15 @@ using System.Linq;
 
 namespace Hl7.Fhir.Navigation
 {
+    // Motivation:
+    // FHIR supports a value on each node - not only on leafs, but also on inner nodes!
+    // This concept is not to be confused with XML inner value; in XML representation, FHIR values are represented as attributes
+
+    // [WMR 20151203]
+    // Possible improvement: wrap the value in a generic struct
+    // This allows an instance to dynamically switch value type
+    // http://codeblog.jonskeet.uk/2013/06/22/array-covariance-not-just-ugly-but-slow-too/
+
     /// <summary>Common interface for objects that provide a strongly typed value.</summary>
     public interface IValueProvider
     {

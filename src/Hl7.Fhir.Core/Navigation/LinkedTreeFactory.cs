@@ -13,46 +13,36 @@ using System.Reflection;
 
 namespace Hl7.Fhir.Navigation
 {
-    /// <summary>Provides static methods for creating a <see cref="DoublyLinkedTree"/> structure.</summary>
+    /// <summary>Provides static methods for creating a <see cref="FhirNavigationTree"/> structure.</summary>
     public static class LinkedTreeFactory
     {
         /// <summary>
-        /// Create a structure of <see cref="DoublyLinkedTree"/> instances from the specified (anonymous) object.
-        /// Recursively reflect on the object properties to generate tree nodes and leaf items.
-        /// Convert complex properties to internal nodes. Convert simple properties to leaf items.
+        /// Create a <see cref="FhirNavigationTree"/> structure from the specified (anonymous) object.
+        /// Recursively reflect on the object properties to generate tree nodes.
+        /// Convert complex property values to internal nodes. Convert simple property values to node values.
         /// </summary>
         /// <param name="obj">The (anonymous) object instance to convert to a tree.</param>
         /// <param name="name">The name of the root node.</param>
-        /// <returns>A <see cref="DoublyLinkedTree"/> instance that represents the root of the generated tree.</returns>
-        public static DoublyLinkedTree CreateFromObject(object obj, string name)
+        /// <returns>A <see cref="FhirNavigationTree"/> instance that represents the root of the generated tree.</returns>
+        public static FhirNavigationTree CreateFromObject(object obj, string name)
         {
-            var root = DoublyLinkedTree.Create(name);
-            AddFromObject<DoublyLinkedTree>(root, obj);
+            var root = FhirNavigationTree.Create(name);
+            AddFromObject(root, obj);
             return root;
         }
-
-        // Helper function to create a tree node (without value) or leaf item (with value)
-        //private static DoublyLinkedTree CreateNode(string name, object value)
-        //{
-        //    if (value == null) { return DoublyLinkedTree.Create(name); }
-        //    // Create a DoublyLinkedTreeLeaf<T> instance for the specified value of type T
-        //    var valueNodeType = typeof(DoublyLinkedTreeLeaf<>).MakeGenericType(value.GetType());
-        //    var instance = Activator.CreateInstance(valueNodeType, name, value);
-        //    return instance as DoublyLinkedTree;
-        //}
 
         // Private static helper class for caching the generic MethodInfo
         private static class LinkedTreeBuilderHelper<TNode>
             where TNode : ILinkedTree<TNode>, ILinkedTreeBuilder<TNode>
         {
-            private const string memberName = "AddLastChild"; // nameof(ILinkedTreeBuilder<TNode>.AddLastChild)
+            private const string memberName = "AddLastChild"; // nameof(ILinkedTreeBuilderWithValues<TNode>.AddLastChild)
 
             public static MethodInfo MiAddLastChild =
                 
                 // Awkward way of retrieving the desired methodinfo
                 // http://stackoverflow.com/questions/588149/referencing-desired-overloaded-generic-method
 
-                (from m in typeof(ILinkedTreeBuilder<TNode>).GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                (from m in typeof(ILinkedTreeBuilderWithValues<TNode>).GetMethods(BindingFlags.Public | BindingFlags.Instance)
                  where m.Name == memberName && m.GetGenericArguments().Length == 1
                  && m.GetParameters().Length == 2
                  && m.ReturnType == typeof(TNode)

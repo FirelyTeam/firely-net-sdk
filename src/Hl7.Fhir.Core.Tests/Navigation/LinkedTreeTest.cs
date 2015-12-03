@@ -30,9 +30,9 @@ namespace Hl7.Fhir.Navigation
             );
         }
 
-        DoublyLinkedTree CreatePatientTree()
+        FhirNavigationTree CreatePatientTree()
         {
-            var root = DoublyLinkedTree.Create("Patient");
+            var root = FhirNavigationTree.Create("Patient");
 
             root.AddLastChild("identifier")
                     .AddLastChild("use", "...use...")
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_AddChild()
         {
-            var root = DoublyLinkedTree.Create("Homer");
+            var root = FhirNavigationTree.Create("Homer");
             var child = root.AddLastChild("Marge");
             var grandchild = child.AddLastChild("Bart");
             var grandchild2 = child.AddLastChild("Lisa");
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_AddSiblings()
         {
-            var root = DoublyLinkedTree.Create("Homer");
+            var root = FhirNavigationTree.Create("Homer");
             var s1 = root.AddLastSibling("Marge");
             var s2 = s1.AddLastSibling("Bart");
             var s3 = s2.AddLastSibling("Lisa");
@@ -433,9 +433,13 @@ namespace Hl7.Fhir.Navigation
 
     }
 
+    // Dummy implementation for extension methods, to test LINQ syntax
     static class TestExtensions
     {
-        public static IEnumerable<DoublyLinkedTree> Resolve(this DoublyLinkedTree tree) { throw new NotImplementedException(); }
+        public static IEnumerable<T> Resolve<T>(this T tree) where T : FhirNavigationTree
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
