@@ -21,10 +21,8 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class SerializationUtil
-    {
-        public const string RESTPARAM_FORMAT = "_format";
-       
+    public static class SerializationUtil
+    {     
         public static XmlReader XmlReaderFromXmlText(string xml)
         {
             return WrapXmlReader(XmlReader.Create(new StringReader(SerializationUtil.SanitizeXml(xml))));
@@ -295,6 +293,5 @@ namespace Hl7.Fhir.Serialization
             _xmlReplacements = xr;
             return xr;
         }
-
     }
 }
