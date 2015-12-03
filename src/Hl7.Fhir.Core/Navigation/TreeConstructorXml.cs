@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Navigation
             foreach (var attr in getFhirNonValueAttributes(docElement))
                 createTreeNodeFromDocAttribute(attr, newNode);
 
-            if(docElement.HasElements && !isXhtmlDiv(docElement))
+            if(!isXhtmlDiv(docElement))
             {
                 var elements = getFhirChildNodes(docElement);
 
@@ -181,7 +181,8 @@ namespace Hl7.Fhir.Navigation
                 // Throw when encountering a text node
                 else if (node is XText)
                 {
-                    throw Error.Format("Encountered an Xml Text node, which is not supported by the FHIR serialization", wrap(node));
+                    throw Error.Format("Encountered an Xml Text node (\"{0}\"), which is not supported by the FHIR serialization"
+                        .FormatWith(((XText)node).Value.Trim().Shorten(15)),wrap(node));
                 }
 
                 else

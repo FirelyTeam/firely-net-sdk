@@ -16,6 +16,14 @@ namespace Hl7.Fhir.Support
 {
     internal static class StringExtensions
     {
+        public static string Shorten(this string me, int maxLength)
+        {
+            if (me.Length < maxLength) return me;
+
+            return me.Substring(0, maxLength - 3) + "...";
+        }
+
+
         public static string RemovePrefix(this string instance, string prefix)
         {
             if (instance == null) return null;
