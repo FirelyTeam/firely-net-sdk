@@ -17,7 +17,7 @@ using System.Xml.Linq;
 namespace Hl7.Fhir.Test.Navigation
 {
     [TestClass]
-    public class ConstructFromXml
+    public class ConstructFromXmlTest
     {
         [TestMethod]
         public void ConstructTestPatient()

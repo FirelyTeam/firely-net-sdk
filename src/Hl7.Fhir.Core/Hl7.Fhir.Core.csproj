@@ -83,8 +83,13 @@
     <Compile Include="Navigation\TreeBuilderExtensions.cs" />
     <Compile Include="Navigation\ValueNavigationTree.cs" />
     <Compile Include="Navigation\VariantNavigationTree.cs" />
+    <Compile Include="Navigation\XAttributeConversionStrategy.cs" />
+    <Compile Include="Navigation\XElementNestedResourceConversionStrategy.cs" />
+    <Compile Include="Navigation\XElementDivConversionStrategy.cs" />
+    <Compile Include="Navigation\XElementConversionStrategy.cs" />
     <Compile Include="Navigation\IAnnotatable.cs" />
     <Compile Include="Navigation\ILinkedTree.cs" />
+    <Compile Include="Navigation\INodeConversionStrategy.cs" />
     <Compile Include="Navigation\IValueProvider.cs" />
     <Compile Include="Navigation\XmlLineInfoWrapper.cs" />
     <Compile Include="Navigation\LinkedTreeFhirExtensions.cs" />

@@ -12,6 +12,12 @@ namespace Hl7.Fhir.Navigation
     {
         private IXmlLineInfo _wrapped;
 
+        public static IPositionInfo Wrap(IXmlLineInfo node)
+        {
+            return new XmlLineInfoWrapper(node);
+        }
+
+
         public XmlLineInfoWrapper(IXmlLineInfo lineInfo)
         {
             if (!lineInfo.HasLineInfo())

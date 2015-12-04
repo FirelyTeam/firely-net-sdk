@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!-- First comment -->
 <Patient xmlns="http://hl7.org/fhir">
   <!-- Comments here -->
-  <id value="pat1"/>
+  <id value="pat1"/>   <!-- where's this comment? -->
   <text>
     <status value="generated"/>
     <div xmlns="http://www.w3.org/1999/xhtml">
@@ -10,15 +11,18 @@
       
     </div>
   </text>
+  <!-- comment on contained -->
   <contained>
+    <!-- Where does this end up?-->
     <Patient>      
+      <!-- Maybe here ?-->
       <id value="1"/>     
       <identifier>
-        <system value="http://hl7.org/fhir/sid/us-ssn"/>
+        <system value="http://hl7.org/fhir/sid/us-ssn" />
         <value value="444222222"/>
       </identifier>
       <active value ="true"/>
-      <name>
+      <name id="firstname">
         <!-- See if this is roundtripped -->        
         <use value="official"/>
         <family value="Everywoman"/>
@@ -80,4 +84,4 @@
     <type value="seealso"/>
   </link>
 </Patient>
-<!-- Comments there -->
+<!-- Last comment -->

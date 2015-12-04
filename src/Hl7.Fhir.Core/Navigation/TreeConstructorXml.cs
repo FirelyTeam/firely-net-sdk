@@ -9,10 +9,27 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Navigation
 {
+
+    public struct XmlRenderHints
+    {
+        public bool IsXhtmlDiv;
+
+        public bool IsXmlAttribute;
+
+        public string NestedResourceName;
+
+        public bool HasNestedResource {  get { return !String.IsNullOrEmpty(NestedResourceName);  } }
+
+        public override string ToString()
+        {
+            return IsXhtmlDiv ? "Is XHTML <div>" : (IsXmlAttribute ? "Is Xml attribute" : (HasNestedResource ? "Contains nested resource " + NestedResourceName :  "(no hints)"));
+        }
+    }
+
+
     public static partial class TreeConstructor
     {
-        public static readonly XName XVALUE = XName.Get("value");
-        public static readonly XName XHTMLDIV = XmlNs.XHTMLNS + "div";
+
 
         public static FhirNavigationTree FromXml(XmlReader reader)
         {
@@ -36,203 +53,71 @@ namespace Hl7.Fhir.Navigation
         }
 
 
-        public struct XmlRenderHints
+        private static string getNodeDescription(XObject docNode)
         {
-            public bool IsXhtmldiv;
-
-            public override string ToString()
+            if(docNode is XAttribute)
             {
-                return IsXhtmldiv ? "Is XHTML <div>" : "(no hints)";
+                return "'@{0}'".FormatWith(((XAttribute)docNode).Name.LocalName);
             }
-        }
-
-        private static FhirNavigationTree createTreeNodeFromDocNode(XElement docElement, FhirNavigationTree parent)
-        {
-            var newNodeName = docElement.Name.LocalName;       // ignore namespace
-            FhirNavigationTree newNode = null;
-
-            bool hasValue = false;
-            string value = null;
-
-            if (isXhtmlDiv(docElement))
+            else if(docNode is XElement)
             {
-                value = getDivValue(docElement);
-                hasValue = true;
-            }
-            else
-                value = tryGetValue(docElement, out hasValue);
-
-            if (hasValue)
-                newNode = parent.AddLastChild(newNodeName,value);
-            else
-                newNode = parent.AddLastChild(newNodeName);
-
-            if (isXhtmlDiv(docElement))
-            {
-                newNode.AddAnnotation(new XmlRenderHints() { IsXhtmldiv = true });
-            }
-
-            foreach (var attr in getFhirNonValueAttributes(docElement))
-                createTreeNodeFromDocAttribute(attr, newNode);
-
-            if(!isXhtmlDiv(docElement))
-            {
-                var elements = getFhirChildNodes(docElement);
-
-                // special case - nested resources -> the children of this node are nested in a resource 
-                // (which is the (only) element), not in the current element itself.
-                if (elements.Any() && isNestedResource(elements.First()))
-                {
-                    // TODO: Set type of contained node as annotation
-                    elements = elements.First().Elements();
-                }
-
-                foreach (var elem in elements)
-                {
-                    createTreeNodeFromDocNode(elem, newNode);
-                }
-            }
-
-            return newNode;
-        }
-
-        private static FhirNavigationTree createTreeNodeFromDocAttribute(XAttribute attr, FhirNavigationTree parent)
-        {
-            var newNodeName = attr.Name.LocalName;
-            var newNode = parent.AddLastChild(newNodeName, attr.Value);
-
-            return newNode;
-        }
-
-
-        private static string getDivValue(XElement docNode)
-        {
-            return docNode.ToString(SaveOptions.DisableFormatting);
-        }
-
-        private static string tryGetValue(XElement docNode, out bool hasValue)
-        {
-            var valueAttribute = docNode.Attribute(XVALUE);
-
-            if (valueAttribute != null)
-            {
-                hasValue = true;
-                return valueAttribute.Value;
+                var name = ((XElement)docNode).Name;
+                return "'{0}' in namespace {1}".FormatWith(name.LocalName,name.NamespaceName);
             }
             else
             {
-                hasValue = false;
-                return null;
+                return "(" + docNode.NodeType.ToString() + ")";
             }
         }
 
-        private static bool isXhtmlDiv(XElement element)
+        private static FhirNavigationTree createTreeNodeFromDocNode(XObject docNode, FhirNavigationTree parent)
         {
-            return element.Name == XHTMLDIV;
-        }
+            /* Make sure we handle all possible node types:
+              System.Xml.Linq.XObject
+                System.Xml.Linq.XAttribute
+                System.Xml.Linq.XNode
+                    System.Xml.Linq.XComment
+                    System.Xml.Linq.XContainer
+                        System.Xml.Linq.XDocument
+                        System.Xml.Linq.XElement
+                System.Xml.Linq.XDocumentType
+                System.Xml.Linq.XProcessingInstruction
+                System.Xml.Linq.XText   
 
+                Note: XDocumentType, XProcessingInstruction appear only on XDocument and can be disregarded
+            */
 
-        private static IEnumerable<XElement> getFhirChildNodes(XElement parent)
-        {
-            foreach (var node in parent.Nodes())
+            var strategies = new INodeConversionStrategy<XObject>[] { new XElementNestedResourceConversionStrategy(), new XElementConversionStrategy(),
+                new XElementDivConversionStrategy(), new XAttributeConversionStrategy() };
+            var handled = false;
+            FhirNavigationTree result = null;
+
+            foreach (var strategy in strategies)
             {
-                /* Make sure we handle all possible node types:
-                  System.Xml.Linq.XObject
-                    System.Xml.Linq.XAttribute
-                    System.Xml.Linq.XNode
-                        System.Xml.Linq.XComment
-                        System.Xml.Linq.XContainer
-                            System.Xml.Linq.XDocument
-                            System.Xml.Linq.XElement
-                    System.Xml.Linq.XDocumentType
-                    System.Xml.Linq.XProcessingInstruction
-                    System.Xml.Linq.XText   
-                */
-                if (node is XElement)
+                if(strategy.HandlesDocNode(docNode))
                 {
-                    var elem = (XElement)node;
+                    handled = true;
+                    result = strategy.ConstructTreeNode(docNode, parent);
+                    var children = strategy.SelectChildren(docNode, result);
 
-                    // All normal FHIR elements
-                    if (elem.Name.NamespaceName == XmlNs.FHIR)
+                    if (children != null && children.Any())
                     {
-                        yield return elem;
+                        children = strategy.PostProcessChildren(children, result);
+                        foreach(var child in children)
+                        {
+                            createTreeNodeFromDocNode(child, result);
+                        }
                     }
 
-                    // The special xhtml div element
-                    else if (isXhtmlDiv(elem))
-                        yield return elem;
-
-                    //
-                    else
-                        throw Error.Format("Encountered unknown element '{0}' (from namespace '{1}')"
-                                .FormatWith(elem.Name.LocalName, elem.Name.NamespaceName), wrap(elem) );
+                    break;                   
                 }
-
-                // Ignore comments (for now)
-                else if (node is XComment)
-                    continue;
-
-                // Ignore document types and processing instructions
-                else if (node is XDocumentType)
-                    continue;
-                else if (node is XProcessingInstruction)
-                    continue;
-
-                // Throw when encountering a text node
-                else if (node is XText)
-                {
-                    throw Error.Format("Encountered an Xml Text node (\"{0}\"), which is not supported by the FHIR serialization"
-                        .FormatWith(((XText)node).Value.Trim().Shorten(15)),wrap(node));
-                }
-
-                else
-                    throw Error.Format("Encountered unexpected xml node type '{0}'".FormatWith(node.GetType().Name), wrap(node));
-            }
-        }
-
-
-        //Try to determine whether this node is a nested resource. This is most probable if
-        // a) The node name starts with a capitalized letter
-        // b) The node name is one of the known resources
-        // c) The node has no siblings
-        private static bool isNestedResource(XElement elem)
-        {
-            if(Char.IsUpper(elem.Name.LocalName[0]) && ModelInfo.IsKnownResource(elem.Name.LocalName))
-            {
-                bool hasSiblings = elem.Parent != null && elem.Parent.Elements().Count() > 1;
-
-                return !hasSiblings;
             }
 
-            return false;
-        }
+            if(!handled)
+                throw Error.Format("Encountered unexpected node {0}, starts with \"{1}\")".
+                                    FormatWith( getNodeDescription(docNode), docNode.ToString().Trim().Shorten(100)), XmlLineInfoWrapper.Wrap(docNode));
 
-        private static IEnumerable<XAttribute> getFhirNonValueAttributes(XElement node)
-        {
-            foreach (var attr in node.Attributes())
-            {
-                // skip fhir "value" attribute
-                if (attr.Name == XVALUE) continue;
-
-                // skip xmlns declarations
-                if (attr.IsNamespaceDeclaration) continue; 
-                
-                // skip xmlns:xsi declaration
-                if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !SerializationConfig.EnforceNoXsiAttributesOnRoot) continue;
-
-                // skip schemaLocation
-                if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !SerializationConfig.EnforceNoXsiAttributesOnRoot) continue;  
-
-                if (attr.Name.NamespaceName == "")
-                    yield return attr;
-                else
-                    throw Error.Format("Encountered unexpected attribute '{0}'.".FormatWith(attr.Name), wrap(attr));
-            }
-        }
-
-        private static IPositionInfo wrap(XObject node)
-        {
-            return new XmlLineInfoWrapper(node);
+            return result;         
         }
     }
 }
