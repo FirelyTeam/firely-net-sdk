@@ -32,7 +32,8 @@ namespace Hl7.Fhir.Navigation
             Type = annotation.GetType();
             Annotation = annotation;
         }
-    
+
+        // [WMR] Instead implement IValueProvider / IValueProvider<T> or similar pattern
         public Type Type;
         public object Annotation;
 

@@ -31,6 +31,7 @@ namespace Hl7.Fhir.Navigation
         /// <summary>Returns the type of the value provided by this instance, or <c>null</c>.</summary>
         public override Type ValueType { get { return null; } }
 
+        /// <summary>Gets the instance value as an <see cref="object"/>.</summary>
         public override object ObjectValue { get { return null; } }
 
         #endregion
@@ -107,14 +108,15 @@ namespace Hl7.Fhir.Navigation
             /// <summary>Returns the type of the value provided by this instance, i.e. the type of <typeparamref name="V"/>.</summary>
             public sealed override Type ValueType { get { return typeof(V); } }
 
+            /// <summary>Gets the instance value as an <see cref="object"/>.</summary>
+            public override object ObjectValue { get { return Value; } }
+
             #endregion
 
             #region IValueProvider<V>
 
             /// <summary>Gets or sets the node value of type <typeparamref name="V"/>.</summary>
             public virtual V Value { get; set; }
-
-            public override object ObjectValue { get { return Value; } }
 
             #endregion
 

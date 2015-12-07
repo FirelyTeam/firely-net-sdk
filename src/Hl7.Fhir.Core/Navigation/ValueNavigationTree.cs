@@ -66,6 +66,7 @@ namespace Hl7.Fhir.Navigation
         /// <summary>Returns the type of the value provided by this instance, i.e. the type of <typeparamref name="V"/>.</summary>
         public Type ValueType { get { return typeof(V); } }
 
+        /// <summary>Gets the instance value as an <see cref="object"/>.</summary>
         public object ObjectValue { get { return Value; } }
 
         #endregion

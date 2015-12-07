@@ -56,6 +56,7 @@ namespace Hl7.Fhir.Navigation
         /// <summary>Returns the type of the value provided by the current tree node.</summary>
         public abstract Type ValueType { get; }
 
+        /// <summary>Gets the instance value as an <see cref="object"/>.</summary>
         public abstract object ObjectValue { get; }
 
         #endregion
@@ -113,6 +114,7 @@ namespace Hl7.Fhir.Navigation
         /// <summary>Returns the type of the value provided by this instance, i.e. the type of <typeparamref name="V"/>.</summary>
         public sealed override Type ValueType { get { return typeof(V); } }
 
+        /// <summary>Gets the instance value as an <see cref="object"/>.</summary>
         public override object ObjectValue { get { return Value; } }
 
         #endregion
@@ -159,6 +161,7 @@ namespace Hl7.Fhir.Navigation
         /// <summary>Returns the type of the value provided by this instance, i.e. the type of <typeparamref name="V"/>.</summary>
         public sealed override Type ValueType { get { return typeof(V); } }
 
+        /// <summary>Gets the instance value as an <see cref="object"/>.</summary>
         public override object ObjectValue { get { return Value; } }
 
         #endregion

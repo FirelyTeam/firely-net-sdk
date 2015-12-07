@@ -15,8 +15,8 @@ using System.Reflection;
 
 namespace Hl7.Fhir.Navigation
 {
-    /// <summary>Extension methods for <see cref="ILinkedTree{T}"/> to create (sub)trees.</summary>
-    public static class LinkedTreeFactoryExtensions
+    /// <summary>Extension methods for <see cref="ILinkedTree{T}"/> to create (sub)trees from (anonymous) objects.</summary>
+    public static class TreeBuilderFactoryExtensions
     {
         /// <summary>
         /// Create a generic tree structure of type <typeparamref name="T"/> from the specified (anonymous) object.

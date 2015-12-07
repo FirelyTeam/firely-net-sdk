@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Navigation
 
                 // special case - nested resources -> the children of this node are nested in a resource 
                 // (which is the (only) element), not in the current element itself.
-                if (isNestedResource(elements.First()))
+                if (elements.Any() && isNestedResource(elements.First()))
                 {
                     // TODO: Set type of contained node as annotation
                     elements = elements.First().Elements();
