@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Rest
 
                 if (order.StartsWith("asc")) Sort.Add(Tuple.Create(value, SortOrder.Ascending));
                 else if (order.StartsWith("desc")) Sort.Add(Tuple.Create(value, SortOrder.Descending));
-                else throw Error.Format("Cannot parse sort order '{0}'", null, order);
+                else throw Error.Format("Cannot parse sort order '{0}'".FormatWith(order), null);
             }
             else if (name == SEARCH_PARAM_SORT)
             {
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Rest
                 if (Enum.TryParse<SummaryType>(value, ignoreCase: true, result: out st))
                     Summary = st;
                 else
-                    throw Error.Format("Cannot parse summary value '{0}'", null, value);
+                    throw Error.Format("Cannot parse summary value '{0}'".FormatWith(value), null);
             }
             else if (name == SEARCH_PARAM_FILTER) Filter = value;
             else if (name == SEARCH_PARAM_CONTAINED)
@@ -145,13 +145,13 @@ namespace Hl7.Fhir.Rest
                 if (SEARCH_CONTAINED_TRUE.Equals(value)) Contained = ContainedSearch.True;
                 else if (SEARCH_CONTAINED_FALSE.Equals(value)) Contained = ContainedSearch.False;
                 else if (SEARCH_CONTAINED_BOTH.Equals(value)) Contained = ContainedSearch.Both;
-                else throw Error.Format("Cannot parse contained value '{0}'", null, value);
+                else throw Error.Format("Cannot parse contained value '{0}'".FormatWith(value), null);
             }
             else if (name == SEARCH_PARAM_CONTAINEDTYPE)
             {
                 if (SEARCH_CONTAINED_TYPE_CONTAINED.Equals(value)) ContainedType = ContainedResult.Contained;
                 else if (SEARCH_CONTAINED_TYPE_CONTAINER.Equals(value)) ContainedType = ContainedResult.Container;
-                else throw Error.Format("Cannot parse containedType value '{0}'", null, value);
+                else throw Error.Format("Cannot parse containedType value '{0}'".FormatWith(value), null);
             }
             else if (name== SEARCH_PARAM_ELEMENTS)
             {

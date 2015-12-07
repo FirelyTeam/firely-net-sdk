@@ -193,8 +193,7 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("resourceType should be a primitive string json value", this);
             }
 
-            throw Error.Format("Cannot determine type of resource to create from json input data: no member {0} was found", this, 
-                            JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME);
+            throw Error.Format("Cannot determine type of resource to create from json input data: no member {0} was found".FormatWith(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME), this);
         }
 
 

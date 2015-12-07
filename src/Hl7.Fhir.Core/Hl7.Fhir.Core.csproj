@@ -74,6 +74,7 @@
     <Compile Include="FhirPath\Lexer.cs" />
     <Compile Include="FhirPath\Path.cs" />
     <Compile Include="Navigation\FhirNavigationTreeOfV.cs" />
+    <Compile Include="Navigation\AnnotationList.cs" />
     <Compile Include="Navigation\FhirNavigationTree.cs" />
     <Compile Include="Navigation\FhirInstanceTree.cs" />
     <Compile Include="Navigation\ILinkedTreeBuilder.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Navigation\IAnnotatable.cs" />
     <Compile Include="Navigation\ILinkedTree.cs" />
     <Compile Include="Navigation\IValueProvider.cs" />
+    <Compile Include="Navigation\XmlLineInfoWrapper.cs" />
     <Compile Include="Navigation\LinkedTreeFhirExtensions.cs" />
     <Compile Include="Navigation\LinkedTreeExtensions.cs" />
     <Compile Include="Navigation\LinkedTreeFactoryExtensions.cs" />

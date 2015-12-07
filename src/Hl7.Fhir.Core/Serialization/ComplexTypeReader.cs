@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Serialization
                 else
                 {
                     if (SerializationConfig.AcceptUnknownMembers == false)
-                        throw Error.Format("Encountered unknown member '{0}' while de-serializing", _current, memberName);
+                        throw Error.Format("Encountered unknown member '{0}' while de-serializing".FormatWith(memberName), _current);
                     else
                         Message.Info("Skipping unknown member " + memberName);
                 }
