@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="human-group" />
+  <meta>
+    <lastUpdated value="2015-09-22T20:02:49.724+10:00" />
+  </meta>
+  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
+    <valueInteger value="0" />
+  </extension>
+  <url value="http://example.org/fhir/StructureDefinition/human-group" />
+  <version value="1.0" />
+  <name value="Human Group" />
+  <display value="Group with just humans" />
+  <status value="draft" />
+  <publisher value="Ewout Kramer" />
+  <date value="2015-09-22T20:02:49+10:00" />
+  <description value="A group with just humans, i.e. member.entity.reference types are limited to Patient and Practitioner." />
+  <fhirVersion value="1.0.1" />
+  <kind value="resource" />
+  <constrainedType value="Group" />
+  <abstract value="false" />
+  <base value="http://hl7.org/fhir/StructureDefinition/Group" />
+  <differential>
+    <element>
+      <path value="Group" />
+      <short value="Group of multiple entities" />
+      <definition value="Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization." />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Group" />
+      </type>
+      <mapping>
+        <identity value="rim" />
+        <map value="Entity[determinerCode=&quot;GRP&quot; or determinerCode=&quot;GRP_KIND&quot;]" />
+      </mapping>
+      <mapping>
+        <identity value="w5" />
+        <map value="administrative.group" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Group.type" />
+      <short value="person | practitioner" />
+      <definition value="Identifies whether the group includes persons or practitioners" />
+      <comments value="Group members SHALL be of the appropriate resource type (Patient for person or animal; or Practitioner, Device, Medicaiton or Substance for the other types.)." />
+      <requirements value="Identifies what type of resources the group is made up of." />
+      <min value="1" />
+      <max value="1" />
+      <type>
+        <code value="code" />
+      </type>
+      <isSummary value="true" />
+      <binding>
+        <strength value="required" />
+        <description value="Types of resources that are part of group" />
+        <valueSetReference>
+          <reference value="http://example.org/fhir/ValueSet/group-type-human" />
+        </valueSetReference>
+      </binding>
+    </element>
+    <element>
+      <path value="Group.actual" />
+      <short value="Descriptive or actual" />
+      <definition value="If true, indicates that the resource refers to a specific group of real individuals.  If false, the group defines a set of intended individuals." />
+      <requirements value="There are use-cases for groups that define specific collections of individuals, and other groups that define &quot;types&quot; of intended individuals.  The requirements for both kinds of groups are similar, so we use a single resource, distinguished by this flag." />
+      <min value="1" />
+      <max value="1" />
+      <type>
+        <code value="boolean" />
+      </type>
+      <fixedBoolean value="true" />
+      <isSummary value="true" />
+    </element>
+    <element>
+      <path value="Group.name.extension" />
+      <slicing>
+        <discriminator value="url" />
+        <rules value="openAtEnd" />
+      </slicing>
+    </element>
+    <element>
+      <path value="Group.name.extension" />
+      <name value="translation" />
+      <definition value="Optional Extensions Element - found in all resources." />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://example.org/fhir/StructureDefinition/string-translation" />
+      </type>
+    </element>
+    <element>
+      <path value="Group.characteristic" />
+      <slicing>
+        <discriminator value="code" />
+        <rules value="openAtEnd" />
+      </slicing>
+      <short value="Trait of group members" />
+      <definition value="Identifies the traits shared by members of the group." />
+      <comments value="All the identified characteristics must be true for an entity to a member of the group." />
+      <min value="0" />
+      <max value="*" />
+    </element>
+    <element>
+      <path value="Group.characteristic" />
+      <name value="isSenior" />
+      <label value="Is senior?" />
+      <short value="The group members are seniors" />
+      <definition value="The group members are seniors" />
+      <min value="0" />
+      <max value="*" />
+      <mapping>
+        <identity value="rim" />
+        <map value="./playedRole[isNormalRole()]/participation[isNormalParticipation() and typeCode=&quot;SBJ&quot;]/act[isNormalAct and classCode=&quot;OBS&quot; and moodCode=&quot;EVN&quot;]" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Group.characteristic.code.coding.system" />
+      <short value="Identity of the terminology system" />
+      <definition value="The identification of the code system that defines the meaning of the symbol in the code." />
+      <comments value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should de-reference to some definition that establish the system clearly and unambiguously." />
+      <requirements value="Need to be unambiguous about the source of the definition of the symbol." />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="uri" />
+      </type>
+      <fixedUri value="http://snomed.info/sct" />
+      <isSummary value="true" />
+      <mapping>
+        <identity value="v2" />
+        <map value="C*E.3" />
+      </mapping>
+      <mapping>
+        <identity value="rim" />
+        <map value="./codeSystem" />
+      </mapping>
+      <mapping>
+        <identity value="orim" />
+        <map value="fhir:Coding.system rdfs:subPropertyOf dt:CDCoding.codeSystem" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Group.characteristic.code.coding.code" />
+      <short value="Symbol in syntax defined by the system" />
+      <definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)." />
+      <requirements value="Need to refer to a particular code in the system." />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="code" />
+      </type>
+      <fixedCode value="105436006" />
+      <isSummary value="true" />
+      <mapping>
+        <identity value="v2" />
+        <map value="C*E.1" />
+      </mapping>
+      <mapping>
+        <identity value="rim" />
+        <map value="./code" />
+      </mapping>
+      <mapping>
+        <identity value="orim" />
+        <map value="fhir:Coding.code rdfs:subPropertyOf dt:CDCoding.code" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Group.characteristic.value[x]" />
+      <short value="Value held by characteristic" />
+      <definition value="The value of the trait that holds (or does not hold - see 'exclude') for members of the group." />
+      <comments value="For Range, it means members of the group have a value that falls somewhere within the specified range." />
+      <requirements value="The value of the characteristic is what determines group membership." />
+      <min value="1" />
+      <max value="1" />
+      <type>
+        <code value="boolean" />
+      </type>
+      <mapping>
+        <identity value="rim" />
+        <map value="./value" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Group.characteristic.exclude" />
+      <short value="Group includes or excludes" />
+      <definition value="If true, indicates the characteristic is one that is NOT held by members of the group." />
+      <comments value="This is labeled as &quot;Is Modifier&quot; because applications cannot wrongly include excluded members as included or vice versa." />
+      <requirements value="Sometimes group membership is determined by characteristics not possessed." />
+      <min value="1" />
+      <max value="1" />
+      <type>
+        <code value="boolean" />
+      </type>
+      <fixedBoolean value="true" />
+      <isModifier value="true" />
+      <mapping>
+        <identity value="rim" />
+        <map value="./valueNegationInd" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Group.characteristic.period" />
+      <short value="Period over which characteristic is tested" />
+      <definition value="The period over which the characteristic is tested; e.g. the patient had an operation during the month of June." />
+      <min value="0" />
+      <max value="0" />
+      <type>
+        <code value="Period" />
+      </type>
+    </element>
+    <element>
+      <path value="Group.member" />
+      <short value="Who or what is in group" />
+      <definition value="Identifies the resource instances that are members of the group." />
+      <min value="0" />
+      <max value="*" />
+      <mapping>
+        <identity value="rim" />
+        <map value="./scopedRole[isNormalRole() and classCode=&quot;MBR&quot;]/player" />
+      </mapping>
+    </element>
+    <element>
+      <path value="Group.member.entity" />
+      <short value="Reference to the group member" />
+      <definition value="A reference to the entity that is a member of the group. Must be consistent with Group.type." />
+      <comments value="The allowed reference types for this element have been reduced to just human beings." />
+      <min value="1" />
+      <max value="1" />
+      <type>
+        <code value="Reference" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/Patient" />
+      </type>
+      <type>
+        <code value="Reference" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/Practitioner" />
+      </type>
+    </element>
+    <element>
+      <path value="Group.member.period" />
+      <short value="Period member belonged to the group" />
+      <definition value="The period that the member was in the group, if known." />
+      <requirements value="Need to track who was in a group at a  particular time." />
+      <min value="0" />
+      <max value="0" />
+      <type>
+        <code value="Period" />
+      </type>
+      <meaningWhenMissing value="The member is in the group at this time" />
+    </element>
+  </differential>
+</StructureDefinition>

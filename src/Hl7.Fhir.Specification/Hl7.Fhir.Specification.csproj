@@ -67,6 +67,10 @@
     <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs">
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
+    <Compile Include="Specification\Snapshot\ElementMatcher.cs" />
+    <Compile Include="Specification\Snapshot\ElementDefnMerger.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGenerator.cs" />
     <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorModificationExtensions.cs" />

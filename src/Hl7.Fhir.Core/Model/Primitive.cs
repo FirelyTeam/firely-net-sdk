@@ -14,7 +14,7 @@ namespace Hl7.Fhir.Model
     public abstract class Primitive : Element
     {
         [NotMapped]
-        public object ObjectValue { get; internal set; }
+        public object ObjectValue { get; set; }
 
         public override string ToString()
         {
