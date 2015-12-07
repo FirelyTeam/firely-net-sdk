@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Navigation
             System.Xml.Linq.XNode
                 System.Xml.Linq.XComment
                 System.Xml.Linq.XContainer
-                          System.Xml.Linq.XDocument
+                    System.Xml.Linq.XDocument
                     System.Xml.Linq.XElement
             System.Xml.Linq.XDocumentType
             System.Xml.Linq.XProcessingInstruction
@@ -88,12 +88,13 @@ namespace Hl7.Fhir.Navigation
 
                         if (children != null && children.Any())
                         {
-                            children = strategy.PostProcessChildren(children, result);
                             foreach (var child in children)
                             {
                                 createTreeNodeFromDocNode(child, result);
                             }
                         }
+
+                        PostProcess(result);
                     }
 
                     break;                   

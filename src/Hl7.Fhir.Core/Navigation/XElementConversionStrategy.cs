@@ -43,9 +43,9 @@ namespace Hl7.Fhir.Navigation
                 yield return node;
         }
 
-        public virtual IEnumerable<XObject> PostProcessChildren(IEnumerable<XObject> children, FhirNavigationTree treeNode)
+        public void PostProcess(FhirNavigationTree convertedNode)
         {
-            return children;
+            return;
         }
 
 

@@ -10,6 +10,6 @@ namespace Hl7.Fhir.Navigation
 
         IEnumerable<TInput> SelectChildren(TInput element, FhirNavigationTree treeNode);
 
-        IEnumerable<TInput> PostProcessChildren(IEnumerable<TInput> children, FhirNavigationTree treeNode);
+        void PostProcess(FhirNavigationTree convertedNode);
     }
 }

@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Navigation
             return null;
         }
 
-        public IEnumerable<XObject> PostProcessChildren(IEnumerable<XObject> children, FhirNavigationTree treeNode)
+        public void PostProcess(FhirNavigationTree convertedNode)
         {
             throw Error.NotImplemented("Don't know how to process children of an xml attribute.");
         }
