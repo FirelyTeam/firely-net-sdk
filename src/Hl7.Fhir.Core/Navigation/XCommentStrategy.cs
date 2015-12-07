@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Navigation
             return null;
         }
 
-        public void PostProcess(FhirNavigationTree convertedNode);
+        public void PostProcess(FhirNavigationTree convertedNode)
         {
             return;
         }

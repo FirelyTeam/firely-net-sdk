@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Navigation
                             }
                         }
 
-                        PostProcess(result);
+                        strategy.PostProcess(result);
                     }
 
                     break;                   
