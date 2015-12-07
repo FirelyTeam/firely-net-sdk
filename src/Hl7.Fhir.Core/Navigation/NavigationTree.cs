@@ -1,66 +1,99 @@
-﻿using Hl7.Fhir.Support;
+﻿/* 
+ * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Navigation
 {
     /// <summary>Common interface for a <see cref="NavigationTree{T}"/>.</summary>
-    /// <typeparam name="T">The type of the implementing class.</typeparam>
-    public interface INavigationTree<T> : IDoublyLinkedTree<T> where T : NavigationTree<T> { }
+    /// <typeparam name="T">The type of tree.</typeparam>
+    /// <example><code>MyTree : INavigationTree&lt;MyTree&gt; { }</code></example>
+    public interface INavigationTree<T> : INamedTree<T>, IDoublyLinkedTree<T>, ITreeBuilder<T> where T : INavigationTree<T> { }
 
-    /// <summary>Abstract base class for navigation trees.</summary>
-    /// <typeparam name="T">The type of the derived class.</typeparam>
-    public abstract class NavigationTree<T> : INavigationTree<T>, ILinkedTreeBuilder<T> where T : NavigationTree<T>
+    /// <summary>Abstract base class for a navigation tree.</summary>
+    /// <typeparam name="T">The type of tree.</typeparam>
+    /// <example><code>MyTree : NavigationTree&lt;MyTree&gt; { }</code></example>
+    public abstract class NavigationTree<T> : INavigationTree<T> where T : NavigationTree<T>
     {
         private readonly string _name;
-        private readonly T _parent;
-        private readonly T _previousSibling;
-
-        /// <summary>Create a new tree root node.</summary>
-        /// <param name="name">The name of the new node.</param>
-        /// <returns>A new <see cref="NavigationTree{T}"/> node.</returns>
-        protected NavigationTree(string name) { _name = name; }
+        
+        private readonly T _parent;             // readonly => cannot rotate or randomly move nodes
+        private readonly T _previousSibling;    // readonly => can append, but not insert new nodes
 
         /// <summary>Create a new tree node.</summary>
-        /// <param name="name">The name of the new node.</param>
         /// <param name="parent">A reference to the parent node.</param>
         /// <param name="previousSibling">A reference to the previous sibling node.</param>
-        protected NavigationTree(string name, T parent, T previousSibling) : this(name)
+        /// <param name="name">The name of the new node.</param>
+        protected NavigationTree(T parent, T previousSibling, string name)
         {
+            _name = name;
             _parent = parent;
             _previousSibling = previousSibling;
         }
 
-        #region ITree
+        #region ITree<T>
 
         /// <summary>The name of the tree node.</summary>
         public string Name { get { return _name; } }
 
+        /// <summary>Indicates if the instance represents a root node.</summary>
+        /// <value><c>true</c> of <see cref="Parent"/> equals <c>null</c>, or <c>false</c> otherwise.</value>
+        public bool IsRoot { get { return Parent == null; } }
+
+        /// <summary>Indicates if the instance represents an internal tree node.</summary>
+        /// <value><c>true</c> if the node has at least one child, or <c>false</c> otherwise.</value>
+        public bool IsInternal { get { return FirstChild != null; } }
+
+        /// <summary>Indicates if the instance represents a tree leaf node.</summary>
+        /// <value><c>true</c> if the node has no children, or <c>false</c> otherwise.</value>
+        public bool IsLeaf { get { return FirstChild == null; } }
+
+        public bool IsFirstSibling { get { return PreviousSibling == null; } }
+
+        public bool IsLastSibling { get { return NextSibling == null; } }
+
+        /// <summary>Returns a sequence of all descendant nodes.</summary>
+        /// <returns>An <see cref="IEnumerator{T}"/> sequence.</returns>
+        public IEnumerator<T> GetEnumerator()
+        {
+            return Self.Descendants().GetEnumerator();
+        }
+
+        /// <summary>Returns a sequence of all descendant nodes.</summary>
+        /// <returns>An <see cref="IEnumerator"/> sequence.</returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
         #endregion
 
-        #region ILinkedTree
+        #region IPathIndexTree
 
-        /// <summary>Returns a reference to the next sibling node.</summary>
-        public T NextSibling { get; private set; }
-
-        /// <summary>Returns a reference to the first child node.</summary>
-        public T FirstChild { get; private set; }
-
-        /// <summary>Indexer property. Enumerates the child nodes with the specified name.</summary>
+        /// <summary>Indexer property. Returns a sequence of child nodes by name.</summary>
         /// <param name="name">An node name.</param>
         /// <returns>An <see cref="IEnumerable{T}"/> sequence.</returns>
         public IEnumerable<T> this[string name] { get { return Self.Children(name); } }
 
-        /// <summary>Indexer property. Enumerates the descendant nodes with the specified path.</summary>
-        /// <param name="names">A sequence of path segments, i.e. nested node names.</param>
+        /// <summary>Indexer property. Returns a sequence of descendant nodes by path.</summary>
+        /// <param name="names">A sequence of node names describing a node path relative to the current node.</param>
         /// <returns>An <see cref="IEnumerable{T}"/> sequence.</returns>
         /// <example>
-        /// Retrieve descendants of the specified node with path "child.grandchild.greatgrandchild":
+        /// Retrieve the descendants of the specified node matching the path "child.grandchild.greatgrandchild":
         /// <list type="number">
-        ///     <item><description>Find child nodes of the specified node with name "child"</description></item>
-        ///     <item><description>Find child nodes in the previous result set with name "grandchild"</description></item>
-        ///     <item><description>Find child nodes in the previous result set with name "greatgrandchild"</description></item>
+        ///     <item><description>Find child nodes of the current node with name "child"</description></item>
+        ///     <item><description>For all nodes in the result set, find child nodes with name "grandchild"</description></item>
+        ///     <item><description>For all nodes in the (2nd) result set, find child nodes with name "greatgrandchild"</description></item>
         /// </list>
         /// <code>var result = node["child", "grandchild", "greatgrandchild"];</code>
         /// </example>
@@ -78,11 +111,15 @@ namespace Hl7.Fhir.Navigation
             }
         }
 
-        /// <summary>Indicates if the instance represents an internal tree node, i.e. if the node has at least one child.</summary>
-        public bool IsInternal { get { return FirstChild != null; } }
+        #endregion
 
-        /// <summary>Indicates if the instance represents a tree leaf node, i.e. if the node has no children.</summary>
-        public bool IsLeaf { get { return FirstChild == null; } }
+        #region ILinkedTree
+
+        /// <summary>Returns a reference to the next sibling node.</summary>
+        public T NextSibling { get; private set; }
+
+        /// <summary>Returns a reference to the first child node.</summary>
+        public T FirstChild { get; private set; }
 
         #endregion
 
@@ -94,73 +131,69 @@ namespace Hl7.Fhir.Navigation
         /// <summary>Returns a reference to the previous sibling tree node.</summary>
         public T PreviousSibling { get { return _previousSibling; } }
 
-        /// <summary>Indicates if the instance represents a root node, i.e. if the <see cref="Parent"/> reference equals <c>null</c>.</summary>
-        public bool IsRoot { get { return Parent == null; } }
-
         #endregion
 
         #region ILinkedTreeBuilder
 
-        /// <summary>Add a new node with the specified name as the last sibling.</summary>
-        /// <param name="name">The name of the new sibling node.</param>
-        /// <returns>A reference to the new sibling node of type <typeparamref name="T"/>.</returns>
-        public T AddLastSibling(string name) { return AddLastSibling(last => CreateNode(name, Parent, last)); }
+        /// <summary>Add a new node with the specified name as the first child.</summary>
+        /// <param name="name">The name of the new node.</param>
+        /// <returns>A reference to the new node of type <typeparamref name="T"/>.</returns>
+        public T AddFirstChild(string name) { return AddFirstChild(() => CreateNode(Self, null, name)); }
 
-        /// <summary>Add a new node with the specified name as the last child.</summary>
-        /// <param name="name">The name of the new child node.</param>
-        /// <returns>A reference to the new child node of type <typeparamref name="T"/>.</returns>
-        public T AddLastChild(string name) { return AddLastChild(last => CreateNode(name, Self, last)); }
+        /// <summary>Add a new node with the specified name as the next sibling.</summary>
+        /// <param name="name">The name of the new node.</param>
+        /// <returns>A reference to the new node of type <typeparamref name="T"/>.</returns>
+        public T AddNextSibling(string name) { return AddNextSibling(() => CreateNode(Parent, Self, name)); }
 
         #endregion
 
         #region Protected members
 
-        // Following property is for upcasting base reference to derived class
+        // Derived classes must implement the following abstract members
+
+        // Self - allows base class to operate on the derived class using it's generic target type T (covariance)
+        // Example: Self.FirstChild returns T whereas this.FirstChild returns NavigationTree<T>
 
         /// <summary>Returns a self-reference to the current instance of type <typeparamref name="T"/>.</summary>
         /// <example><code>protected override T Self { get { return this; } }</code></example>
         protected abstract T Self { get; } // (T)this;
 
+        // CreateNode - allows base class to create new instances of the generic type T of the derived class
+
         /// <summary>Creates a new tree node of type <typeparamref name="T"/>.</summary>
-        /// <param name="name">The name of the new node.</param>
         /// <param name="parent">A reference to the parent node.</param>
         /// <param name="previousSibling">A reference to the previous sibling node.</param>
+        /// <param name="name">The name of the new node.</param>
         /// <returns>A new node instance of <typeparamref name="T"/>.</returns>
-        protected abstract T CreateNode(string name, T parent, T previousSibling);
+        protected abstract T CreateNode(T parent, T previousSibling, string name);
 
-        /// <summary>Add a new node as the last sibling.</summary>
-        /// <param name="factory">A factory delegate to create the new node.</param>
-        /// <returns>A new node instance of <typeparamref name="T"/>.</returns>
-        protected T AddLastSibling(Func<T, T> factory)
+        // Note: internal builder methods expect factory delegate parameter so derived classes may inject additional ctor parameters
+
+        protected T AddFirstChild(Func<T> factory)
         {
-            var last = Self.LastSibling();
-            var node = factory(last);
-            last.NextSibling = node;
+            if (!this.IsLeaf) { throw new InvalidOperationException("Invalid operation. The current node already has a first child node."); }
+            var node = factory();
+            Debug.Assert(object.ReferenceEquals(node.Parent, this));
+            Debug.Assert(node.IsFirstSibling);
+            Debug.Assert(node.IsLastSibling);
+            FirstChild = node;
             return node;
         }
 
-        /// <summary>Add a new node as the last child.</summary>
-        /// <param name="factory">A factory delegate to create the new node.</param>
-        /// <returns>A new node instance of <typeparamref name="T"/>.</returns>
-        protected T AddLastChild(Func<T, T> factory)
+        protected T AddNextSibling(Func<T> factory)
         {
-            T node = null;
-            var first = FirstChild;
-            if (first == null)
-            {
-                FirstChild = node = factory(null);
-            }
-            else
-            {
-                var last = first.LastSibling();
-                node = last.AddLastSibling(factory);
-            }
+            if (!this.IsLastSibling) { throw new InvalidOperationException("Invalid operation. The current node already has a sibling node."); }
+            var node = factory();
+            Debug.Assert(object.ReferenceEquals(node.Parent, this.Parent));
+            Debug.Assert(node.IsLastSibling);
+            NextSibling = node;
             return node;
         }
 
         #endregion
 
         public override string ToString() { return string.Format("({0}) {1}", ReflectionHelper.PrettyTypeName(GetType()), Name); }
+
     }
 
 }

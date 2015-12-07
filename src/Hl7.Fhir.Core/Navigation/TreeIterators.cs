@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Navigation
 {
-    public class LinkedTreeHelpers
+    public class TreeIterators
     {
         // For trees that also store parent node references, the following algorithm outperforms a nested foreach loop
         // The classical trade-off: performance vs. memory

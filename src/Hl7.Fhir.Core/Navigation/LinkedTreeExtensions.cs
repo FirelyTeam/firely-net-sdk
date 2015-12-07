@@ -15,16 +15,39 @@ namespace Hl7.Fhir.Navigation
 {
     public static class LinkedTreeExtensions
     {
-        /// <summary>
-        /// Returns the last sibling of the specified tree item.
-        /// Returns the given item if it has no siblings.
-        /// </summary>
-        /// <param name="tree">A <see cref="ILinkedTree{T}"/> item.</param>
-        /// <typeparam name="T">The link type.</typeparam>
-        /// <returns>A <see cref="ILinkedTree{T}"/> item.</returns>
+        #region Internal helpers
+
+        /// <summary>Perform depth-first recursion on a <see cref="IDoublyLinkedTree{T}"/> structure.</summary>
+        /// <typeparam name="T">The tree type.</typeparam>
+        /// <param name="tree">The start tree node.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of tree nodes.</returns>
+        /// <remarks>The implementation is O(n).</remarks>
+        private static IEnumerable<T> DepthFirst<T>(T tree) where T : IDoublyLinkedTree<T>
+        {
+            return TreeIterators.DepthFirst(tree, t => t.FirstChild, t => t.NextSibling, t => t.Parent);
+        }
+
+        #endregion
+
+        // Note: The ToEnumerable extension method is universally applicable on works on any type T.
+        // However we specify a generic constraint so as not to pollute the global namespace.
+
+        /// <summary>Convert the specified node to an <see cref="IEnumerable{T}"/> sequence of tree nodes.</summary>
+        /// <typeparam name="T">The tree type.</typeparam>
+        /// <param name="tree">An instance of <typeparamref name="T"/>.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of tree nodes.</returns>
+        public static IEnumerable<T> ToEnumerable<T>(this T tree) where T : ILinkedTree<T>
+        {
+            // return Enumerable.Repeat(node, 1);
+            yield return tree;
+        }
+
+        /// <summary>Returns the last sibling of the tree node, or the node itself if it has no following siblings.</summary>
+        /// <typeparam name="T">The tree type.</typeparam>
+        /// <param name="tree">A tree node.</param>
+        /// <returns>A <see cref="ILinkedTree{T}"/> node.</returns>
         public static T LastSibling<T>(this T tree) where T : ILinkedTree<T>
         {
-            if (tree == null) { throw new ArgumentNullException("tree"); } // nameof(tree)
             for (T next; (next = tree.NextSibling) != null; tree = next) ;
 
             Debug.Assert(tree != null);
@@ -33,43 +56,33 @@ namespace Hl7.Fhir.Navigation
             return tree;
         }
 
+        /// <summary>Returns the last child of the tree node, or <c>null</c> of the node has no children.</summary>
+        /// <typeparam name="T">The tree type.</typeparam>
+        /// <param name="tree">A tree node.</param>
+        /// <returns>A <see cref="ILinkedTree{T}"/> node.</returns>
         public static T LastChild<T>(this T tree) where T : ILinkedTree<T>
         {
-            if (tree == null) { throw new ArgumentNullException("tree"); } // nameof(tree)
             var first = tree.FirstChild;
             return first != null ? first.LastSibling() : default(T);
         }
 
-        /// <summary>Convert the specified item to an <see cref="IEnumerable{T}"/> sequence.</summary>
-        /// <typeparam name="T">The item type.</typeparam>
-        /// <param name="item">An instance of <typeparamref name="T"/>.</param>
-        /// <returns>An <see cref="IEnumerable{T}"/> instance.</returns>
-        public static IEnumerable<T> ToEnumerable<T>(this T item) where T : ILinkedTree<T>
+        /// <summary>Returns the distance from the tree node to the root node.</summary>
+        /// <typeparam name="T">The tree type.</typeparam>
+        /// <param name="tree">A tree node.</param>
+        /// <returns>A non-negative integer value.</returns>
+        public static int Depth<T>(this T tree) where T : IDoublyLinkedTree<T>
         {
-            // return Enumerable.Repeat(item, 1);
-            yield return item;
-        }
-
-        /// <summary>Perform depth-first recursion on a <see cref="IDoublyLinkedTree{T}"/> structure.</summary>
-        /// <typeparam name="T">The tree type; should implement <see cref="IDoublyLinkedTree{T}"/>.</typeparam>
-        /// <param name="tree">The start item.</param>
-        /// <returns>A <see cref="IEnumerable{T}"/> sequence.</returns>
-        /// <remarks>The implementation is O(n).</remarks>
-        private static IEnumerable<T> DepthFirst<T>(T tree) where T : IDoublyLinkedTree<T>
-        {
-            return LinkedTreeHelpers.DepthFirst(tree, t => t.FirstChild, t => t.NextSibling, t => t.Parent);
+            return tree.IsRoot ? 0 : 1 + tree.Parent.Depth();
         }
 
         #region Axes navigation
 
-        /// <summary>Enumerate the direct children of the current tree item.</summary>
+        /// <summary>Enumerate the direct children of the current tree node.</summary>
         /// <typeparam name="T">The tree type.</typeparam>
-        /// <param name="tree">A tree item.</param>
-        /// <returns>A <see cref="IEnumerable{T}"/> sequence.</returns>
+        /// <param name="tree">A tree node.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of tree nodes.</returns>
         public static IEnumerable<T> Children<T>(this T tree) where T : ILinkedTree<T>
         {
-            if (tree == null) { throw new ArgumentNullException("tree"); } // nameof(tree)
-
             var child = tree.FirstChild;
             while (child != null)
             {
@@ -79,11 +92,11 @@ namespace Hl7.Fhir.Navigation
             yield break;
         }
 
-        /// <summary>Enumerate the direct children of the current tree item that comply with the specified predicate.</summary>
+        /// <summary>Enumerate the direct children of the current tree node that comply with the specified predicate.</summary>
         /// <typeparam name="T">The tree type.</typeparam>
-        /// <param name="tree">A tree item.</param>
-        /// <param name="predicate">A predicate to select the relevant tree items.</param>
-        /// <returns>A <see cref="IEnumerable{T}"/> sequence.</returns>
+        /// <param name="tree">A tree node.</param>
+        /// <param name="predicate">A predicate to select the relevant tree nodes.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of tree nodes.</returns>
         public static IEnumerable<T> Children<T>(this T tree, Func<T, bool> predicate) where T : ILinkedTree<T>
         {
             return tree.Children().Where(predicate);
@@ -91,39 +104,44 @@ namespace Hl7.Fhir.Navigation
 
         private readonly static StringComparer nameComparer = StringComparer.Ordinal;
 
-        /// <summary>Enumerate the direct children of the current tree item with the specified name.</summary>
+        /// <summary>Enumerate the direct children of the current tree node with the specified name.</summary>
         /// <typeparam name="T">The tree type.</typeparam>
-        /// <param name="tree">A tree item.</param>
-        /// <param name="name">The name of the target item.</param>
-        /// <returns>A <see cref="IEnumerable{T}"/> sequence.</returns>
-        public static IEnumerable<T> Children<T>(this T tree, string name) where T : ILinkedTree<T>
+        /// <param name="tree">A tree node.</param>
+        /// <param name="name">The name of the target node.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of tree nodes.</returns>
+        public static IEnumerable<T> Children<T>(this T tree, string name) where T : ILinkedTree<T>, INamedTree
         {
             return tree.Children().Where(n => nameComparer.Compare(n.Name, name) == 0);
         }
 
-        /// <summary>Returns the first child of the current tree item that complies with the specified predicate, or <c>null</c>.</summary>
+        /// <summary>Returns the first child of the current tree node that complies with the specified predicate, or <c>null</c>.</summary>
         /// <typeparam name="T">The tree type.</typeparam>
-        /// <param name="tree">A tree item.</param>
-        /// <param name="predicate">A predicate to select the relevant tree items.</param>
-        /// <returns>An instance of <typeparamref name="T"/>, or <c>null</c>.</returns>
-        public static T FirstChild<T>(this T tree, Func<T, bool> predicate) where T : ILinkedTree<T> { return tree.Children(predicate).FirstOrDefault(); }
+        /// <param name="tree">A tree node.</param>
+        /// <param name="predicate">A predicate to select the relevant tree nodes.</param>
+        /// <returns>An tree node of type <typeparamref name="T"/>, or <c>null</c>.</returns>
+        public static T FirstChild<T>(this T tree, Func<T, bool> predicate) where T : ILinkedTree<T>
+        {
+            return tree.Children(predicate).FirstOrDefault();
+        }
 
-        /// <summary>Returns the first child of the current tree item with the specified name, or <c>null</c>.</summary>
+        /// <summary>Returns the first child of the current tree node with the specified name, or <c>null</c>.</summary>
         /// <typeparam name="T">The tree type.</typeparam>
-        /// <param name="tree">A tree item.</param>
-        /// <param name="name">The name of the target item.</param>
-        /// <returns>An instance of <typeparamref name="T"/>, or <c>null</c>.</returns>
-        public static T FirstChild<T>(this T tree, string name) where T : ILinkedTree<T> { return tree.Children(name).FirstOrDefault(); }
+        /// <param name="tree">A tree node.</param>
+        /// <param name="name">The name of the target node.</param>
+        /// <returns>An tree node of type <typeparamref name="T"/>, or <c>null</c>.</returns>
+        public static T FirstChild<T>(this T tree, string name) where T : ILinkedTree<T>, INamedTree
+        {
+            return tree.Children(name).FirstOrDefault();
+        }
 
-        /// <summary>Enumerate the descendants of the current tree item.</summary>
+        /// <summary>Enumerate the descendants of the current tree node.</summary>
         /// <typeparam name="T">The tree type.</typeparam>
-        /// <param name="tree">A tree item.</param>
-        /// <returns>A <see cref="IEnumerable{T}"/> sequence.</returns>
+        /// <param name="tree">A tree node.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of tree nodes.</returns>
         public static IEnumerable<T> Descendants<T>(this T tree) where T : IDoublyLinkedTree<T>
         {
-            if (tree == null) { throw new ArgumentNullException("tree"); } // nameof(tree)
 #if true
-            // Skip the root item
+            // Skip the root node
             return DepthFirst(tree).Skip(1);
 #else
             // [WMR] Nested foreach is inefficient O(n^2)
@@ -131,9 +149,9 @@ namespace Hl7.Fhir.Navigation
 
             foreach (var child in tree.Children())
             {
-                foreach (var item in child.Descendants())
+                foreach (var node in child.Descendants())
                 {
-                    yield return item;
+                    yield return node;
                 }
                 yield return child;
             }
@@ -141,57 +159,52 @@ namespace Hl7.Fhir.Navigation
 #endif
         }
 
-        /// <summary>Enumerate the current tree item and it's descendants.</summary>
+        /// <summary>Enumerate the current tree node and it's descendants.</summary>
         /// <typeparam name="T">The tree type.</typeparam>
-        /// <param name="tree">A tree item.</param>
-        /// <returns>A <see cref="IEnumerable{T}"/> sequence.</returns>
+        /// <param name="tree">A tree node.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of tree nodes.</returns>
         public static IEnumerable<T> DescendantsAndSelf<T>(this T tree) where T : IDoublyLinkedTree<T>
         {
-            if (tree == null) { throw new ArgumentNullException("tree"); } // nameof(tree)
             return DepthFirst(tree);
         }
 
-        /// <summary>Enumerate the ancestors of the current tree item.</summary>
+        /// <summary>Enumerate the ancestors of the current tree node.</summary>
         /// <typeparam name="T">The tree type.</typeparam>
-        /// <param name="tree">A tree item.</param>
-        /// <returns>A <see cref="IEnumerable{T}"/> sequence.</returns>
+        /// <param name="tree">A tree node.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of tree nodes.</returns>
         public static IEnumerable<T> Ancestors<T>(this T tree) where T : IDoublyLinkedTree<T>
         {
-            if (tree == null) { throw new ArgumentNullException("tree"); } // nameof(tree)
             for (tree = tree.Parent; tree != null; tree = tree.Parent) { yield return tree; }
             yield break;
         }
 
-        /// <summary>Enumerate the current tree item and it's ancestors.</summary>
+        /// <summary>Enumerate the current tree node and it's ancestors.</summary>
         /// <typeparam name="T">The tree type.</typeparam>
-        /// <param name="tree">A tree item.</param>
-        /// <returns>A <see cref="IEnumerable{T}"/> sequence.</returns>
+        /// <param name="tree">A tree node.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of tree nodes.</returns>
         public static IEnumerable<T> AncestorsAndSelf<T>(this T tree) where T : IDoublyLinkedTree<T>
         {
-            if (tree == null) { throw new ArgumentNullException("tree"); } // nameof(tree)
             for (; tree != null; tree = tree.Parent) { yield return tree; }
             yield break;
 
         }
 
-        /// <summary>Enumerate the siblings preceding the current tree item.</summary>
+        /// <summary>Enumerate the siblings preceding the current tree node.</summary>
         /// <typeparam name="T">The tree type.</typeparam>
-        /// <param name="tree">A tree item.</param>
-        /// <returns>A <see cref="IEnumerable{T}"/> sequence.</returns>
+        /// <param name="tree">A tree node.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of tree nodes.</returns>
         public static IEnumerable<T> PrecedingSiblings<T>(this T tree) where T : IDoublyLinkedTree<T>
         {
-            if (tree == null) { throw new ArgumentNullException("tree"); } // nameof(tree)
             for (tree = tree.PreviousSibling; tree != null; tree = tree.PreviousSibling) { yield return tree; }
             yield break;
         }
 
-        /// <summary>Enumerate the siblings following the current tree item.</summary>
+        /// <summary>Enumerate the siblings following the current tree node.</summary>
         /// <typeparam name="T">The tree type.</typeparam>
-        /// <param name="tree">A tree item.</param>
-        /// <returns>A <see cref="IEnumerable{T}"/> sequence.</returns>
+        /// <param name="tree">A tree node.</param>
+        /// <returns>A <see cref="IEnumerable{T}"/> sequence of linked tree nodes.</returns>
         public static IEnumerable<T> FollowingSiblings<T>(this T tree) where T : ILinkedTree<T>
         {
-            if (tree == null) { throw new ArgumentNullException("tree"); } // nameof(tree)
             for (tree = tree.NextSibling; tree != null; tree = tree.NextSibling) { yield return tree; }
             yield break;
         }

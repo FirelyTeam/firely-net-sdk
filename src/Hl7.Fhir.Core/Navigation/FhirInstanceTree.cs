@@ -7,35 +7,39 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Hl7.Fhir.Navigation
 {
-    public class FhirInstanceTree : FhirNavigationTreeWithMutableValue<string>
+    /// <summary>Represents a FHIR navigation tree with node values of type <see cref="string"/>.</summary>
+    public class FhirInstanceTree : ValueNavigationTree<FhirInstanceTree, string>
     {
-#if false
-        /// <summary>Create a new <see cref="FhirInstanceTree"/> root node.</summary>
+        #region Public Factory Methods
+
+        /// <summary>Create a new <see cref="FhirInstanceTree"/> root node with the specified name.</summary>
+        /// <param name="name">The name of the new node.</param>
+        /// <returns>A new <see cref="FhirInstanceTree"/> node.</returns>
+        public static FhirInstanceTree Create(string name) { return new FhirInstanceTree(null, null, name, null); }
+
+        /// <summary>Create a new <see cref="FhirInstanceTree"/> node with the specified name and value.</summary>
         /// <param name="name">The name of the new node.</param>
         /// <param name="value">The node value.</param>
         /// <returns>A new <see cref="FhirInstanceTree"/> node.</returns>
-        public new static FhirInstanceTree Create(string name, string value) { return new FhirInstanceTree(name, value); }
-#endif
-        protected FhirInstanceTree(string name, string value) : base(name, value) { }
+        public static FhirInstanceTree Create(string name, string value) { return new FhirInstanceTree(null, null, name, value); }
 
-        protected FhirInstanceTree(string name, string value, FhirNavigationTree parent, FhirNavigationTree previousSibling)
-                : base(name, value, parent, previousSibling)
-        { }
+        #endregion
 
-        protected override FhirNavigationTree CreateNode(string name, FhirNavigationTree parent, FhirNavigationTree previousSibling)
+        protected FhirInstanceTree(FhirInstanceTree parent, FhirInstanceTree previousSibling, string name, string value) : base(parent, previousSibling, name, value) { }
+
+        protected override FhirInstanceTree Self { get { return this; } }
+
+        protected override FhirInstanceTree CreateNode(FhirInstanceTree parent, FhirInstanceTree previousSibling, string name)
         {
-            return new FhirInstanceTree(name, null, parent, previousSibling);
+            return new FhirInstanceTree(parent, previousSibling, name, null);
         }
 
-        protected override FhirNavigationTree CreateNode<V>(string name, V value, FhirNavigationTree parent, FhirNavigationTree previousSibling)
+        protected override FhirInstanceTree CreateNode(FhirInstanceTree parent, FhirInstanceTree previousSibling, string name, string value)
         {
-            var s = value != null ? value.ToString() : null;
-            return new FhirInstanceTree(name, s, parent, previousSibling);
+            return new FhirInstanceTree(parent, previousSibling, name, value);
         }
     }
 }

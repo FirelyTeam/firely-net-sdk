@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Hl7.Fhir.Navigation
+namespace Hl7.Fhir.Test.Navigation
 {
     [TestClass]
     public class LinkedTreeTest
@@ -34,58 +34,70 @@ namespace Hl7.Fhir.Navigation
         {
             var root = FhirNavigationTree.Create("Patient");
 
-            root.AddLastChild("identifier")
-                    .AddLastChild("use", "...use...")
-                    .AddLastSibling("type", "...type...")
-                    .AddLastSibling("system", "...system...")
-                    .AddLastSibling("value", "0123456789")
-                    .AddLastSibling("period")
-                        .AddLastChild("start", "20151127 12:00")
-                        .AddLastSibling("end", "20151127 18:00")
+            root.AddFirstChild("identifier")
+                    .AddFirstChild("use", "...use...")
+                    .AddNextSibling("type", "...type...")
+                    .AddNextSibling("system", "...system...")
+                    .AddNextSibling("value", "0123456789")
+                    .AddNextSibling("period")
+                        // .AddFirstChild("start", "20151127 12:00")
+                        // .AddNextSibling("end", "20151127 18:00")
+                        .AddFirstChild("start", new DateTime(2015, 11, 27, 12, 00, 00))
+                        .AddNextSibling("end", new DateTime(2015, 11, 27, 18, 00, 00))
                     .Parent
-                    .AddLastSibling("assigner", "Dr. House")
+                    //.AddLastSibling("assigner", "Dr. House")
+                    .LastSibling()
+                    .AddNextSibling("assigner", "Dr. House")
                 .Parent
-                .AddLastSibling("gender", "F")
-                .AddLastSibling("name")
-                    .AddLastChild("use", "...use...")
-                    .AddLastSibling("text", "Prof. Dr. Ir. P. Akkermans MBA")
-                    .AddLastSibling("family", "Akkermans")
-                    .AddLastSibling("given", "Piet")
-                    .AddLastSibling("prefix", "Prof. Dr. Ir.")
-                    .AddLastSibling("suffix", "MBA")
-                    .AddLastSibling("period")
-                        .AddLastChild("start", "20151231 14:00")
-                        .AddLastSibling("end", "20151230 12:00");
+                //.AddLastSibling("gender", "F")
+                .LastSibling()
+                .AddNextSibling("gender", "F")
+                .AddNextSibling("name")
+                    .AddFirstChild("use", "...use...")
+                    .AddNextSibling("text", "Prof. Dr. Ir. P. Akkermans MBA")
+                    .AddNextSibling("family", "Akkermans")
+                    .AddNextSibling("given", "Piet")
+                    .AddNextSibling("prefix", "Prof. Dr. Ir.")
+                    .AddNextSibling("suffix", "MBA")
+                    .AddNextSibling("period")
+                        // .AddFirstChild("start", "20151231 14:00")
+                        // .AddNextSibling("end", "20151230 12:00");
+                        .AddFirstChild("start", new DateTime(2015, 12, 31, 14, 00, 00))
+                        .AddNextSibling("end", new DateTime(2015, 12, 30, 12, 00, 00));
 
             return root;
         }
 
-        FhirNavigationTree CreateFhirInstanceTree()
+        FhirInstanceTree CreateFhirInstanceTree()
         {
             var root = FhirInstanceTree.Create("Patient");
 
-            root.AddLastChild("identifier")
-                    .AddLastChild("use", "...use...")
-                    .AddLastSibling("type", "...type...")
-                    .AddLastSibling("system", "...system...")
-                    .AddLastSibling("value", "0123456789")
-                    .AddLastSibling("period")
-                        .AddLastChild("start", "20151127 12:00")
-                        .AddLastSibling("end", "20151127 18:00")
+            root.AddFirstChild("identifier")
+                    .AddFirstChild("use", "...use...")
+                    .AddNextSibling("type", "...type...")
+                    .AddNextSibling("system", "...system...")
+                    .AddNextSibling("value", "0123456789")
+                    .AddNextSibling("period")
+                        .AddFirstChild("start", "20151127 12:00")
+                        .AddNextSibling("end", "20151127 18:00")
                     .Parent
-                    .AddLastSibling("assigner", "Dr. House")
+                    // .AddLastSibling("assigner", "Dr. House")
+                    .LastSibling()
+                    .AddNextSibling("assigner", "Dr. House")
                 .Parent
-                .AddLastSibling("gender", "F")
-                .AddLastSibling("name")
-                    .AddLastChild("use", "...use...")
-                    .AddLastSibling("text", "Prof. Dr. Ir. P. Akkermans MBA")
-                    .AddLastSibling("family", "Akkermans")
-                    .AddLastSibling("given", "Piet")
-                    .AddLastSibling("prefix", "Prof. Dr. Ir.")
-                    .AddLastSibling("suffix", "MBA")
-                    .AddLastSibling("period")
-                        .AddLastChild("start", "20151231 14:00")
-                        .AddLastSibling("end", "20151230 12:00");
+                // .AddLastSibling("gender", "F")
+                .LastSibling()
+                .AddNextSibling("gender", "F")
+                .AddNextSibling("name")
+                    .AddFirstChild("use", "...use...")
+                    .AddNextSibling("text", "Prof. Dr. Ir. P. Akkermans MBA")
+                    .AddNextSibling("family", "Akkermans")
+                    .AddNextSibling("given", "Piet")
+                    .AddNextSibling("prefix", "Prof. Dr. Ir.")
+                    .AddNextSibling("suffix", "MBA")
+                    .AddNextSibling("period")
+                        .AddFirstChild("start", "20151231 14:00")
+                        .AddNextSibling("end", "20151230 12:00");
 
             return root;
         }
@@ -124,15 +136,32 @@ namespace Hl7.Fhir.Navigation
                             start = "[start]",
                             end = "[end]"
                         }
-
-                        , test = 3
-                        // , test = new Model.FhirBoolean(true)
                     }
+
+                    ,valueString = "string"
+                    ,valueInt = 3
+                    ,valueBoolean = true // new Model.FhirBoolean(true)
                 };
 
-            var root = LinkedTreeFactory.CreateFromObject(Patient, "Patient");
-            // TODO: Assert result...
+            // var root = LinkedTreeFactory.CreateFromObject("Patient", Patient);
+            var root = FhirNavigationTree.Create("Patient");
+            root.AddChildrenFromObject(Patient);
             Debug.Print(RenderTree(root));
+
+            Assert.AreEqual(root.Name, "Patient");
+
+            // Test dynamic generation of separately typed node values
+            var valueString = root.FirstChild("valueString");
+            Assert.IsNotNull(valueString);
+            Assert.AreEqual(valueString.ValueType, typeof(string));
+
+            var valueInt = root.FirstChild("valueInt");
+            Assert.IsNotNull(valueInt);
+            Assert.AreEqual(valueInt.ValueType, typeof(int));
+
+            var valueBoolean = root.FirstChild("valueBoolean");
+            Assert.IsNotNull(valueBoolean);
+            Assert.AreEqual(valueBoolean.ValueType, typeof(bool));
         }
 
         [TestMethod]
@@ -154,7 +183,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_AddChild()
         {
-            var root = FhirNavigationTree.Create("Homer");
+            var root = FhirInstanceTree.Create("Homer");
             var child = root.AddLastChild("Marge");
             var grandchild = child.AddLastChild("Bart");
             var grandchild2 = child.AddLastChild("Lisa");
@@ -183,7 +212,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_AddSiblings()
         {
-            var root = FhirNavigationTree.Create("Homer");
+            var root = FhirInstanceTree.Create("Homer");
             var s1 = root.AddLastSibling("Marge");
             var s2 = s1.AddLastSibling("Bart");
             var s3 = s2.AddLastSibling("Lisa");
@@ -212,7 +241,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_Children()
         {
-            var root = CreateFhirNavigationTree();
+            var root = CreateFhirInstanceTree();
             Assert.AreEqual(root.FirstChild.Name, "identifier");
             Assert.AreEqual(root.LastChild().Name, "name");
 
@@ -228,7 +257,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_Descendants()
         {
-            var root = CreateFhirNavigationTree();
+            var root = CreateFhirInstanceTree();
             var child = root.FirstChild;
             Assert.AreEqual(child.Name, "identifier");
 
@@ -249,7 +278,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_Siblings()
         {
-            var root = CreateFhirNavigationTree();
+            var root = CreateFhirInstanceTree();
             var child = root.FirstChild.FirstChild;
             Assert.AreEqual(child.Name, "use");
 
@@ -267,7 +296,7 @@ namespace Hl7.Fhir.Navigation
         [TestMethod]
         public void Test_Tree_Ancestors()
         {
-            var root = CreateFhirNavigationTree();
+            var root = CreateFhirInstanceTree();
             var child = root.FirstChild.FirstChild;
             Assert.AreEqual(child.Name, "use");
             child = child.FollowingSiblings().First(n => n.Name == "period");
@@ -305,7 +334,7 @@ namespace Hl7.Fhir.Navigation
                 Debug.Print(item.ToString());
             }
 
-            var start_values = period_starts.OfType<IValueProvider<string>>();
+            var start_values = period_starts.OfType<IValueProvider<DateTime>>();
             var maxStart = start_values.Max(n => n.Value);
             var maxNode = start_values.First(n => n.Value == maxStart);
             Debug.Print("Max start = {0}", maxNode.Value);
@@ -342,18 +371,15 @@ namespace Hl7.Fhir.Navigation
 
             // Test 3: get all period nodes having start.value > end.value
 
-            // TODO: use datetime values
             const string periodNode = "period";
             const string endNode = "end";
             result = nodeSet
                 .SelectMany(n => n.Descendants())
                 .Where(n => n.Name == periodNode)
                 .Where(
-                    n => string.Compare(
-                        n.Children(startNode).FirstOrDefault().GetValue<string>(),
-                        n.Children(endNode).FirstOrDefault().GetValue<string>()
-                        // n[startNode].FirstOrDefault().GetValue<string>(),
-                        // n[endNode].FirstOrDefault().GetValue<string>()
+                    n => DateTime.Compare(
+                        n[startNode].FirstOrDefault().GetValue<DateTime>(),
+                        n[endNode].FirstOrDefault().GetValue<DateTime>()
                     ) > 0
                 );
             Assert.AreEqual(result.Count(), 1);
@@ -471,7 +497,7 @@ namespace Hl7.Fhir.Navigation
 
     }
 
-    // Dummy implementation for extension methods, to test LINQ syntax
+    // Mock implementation for extension methods, to test LINQ syntax
     static class TestExtensions
     {
         public static IEnumerable<T> Resolve<T>(this T tree) where T : FhirNavigationTree
@@ -479,5 +505,4 @@ namespace Hl7.Fhir.Navigation
             throw new NotImplementedException();
         }
     }
-
 }

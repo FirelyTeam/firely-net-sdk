@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Navigation
         private const string PolymorphicNameSuffix = "[x]";
         public const string NameWildcard = "*";
 
-        public static bool IsMatch<T>(this T tree, string name) where T : ITree
+        public static bool IsMatch<T>(this T tree, string name) where T : INamedTree
         {
             if (tree == null) { throw new ArgumentNullException("tree"); } // nameof(tree)
             if (string.IsNullOrEmpty(name)) { throw new ArgumentNullException("name"); } // nameof(name)
@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Navigation
             return name == NameWildcard | tree.Name == name | IsPolymorphicMatch(tree, name);
         }
 
-        private static bool IsPolymorphicMatch<T>(T tree, string name) where T : ITree
+        private static bool IsPolymorphicMatch<T>(T tree, string name) where T : INamedTree
         {
             if (name.EndsWith(PolymorphicNameSuffix))
             {
