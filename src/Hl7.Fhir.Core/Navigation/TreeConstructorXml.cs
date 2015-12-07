@@ -3,53 +3,53 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
 namespace Hl7.Fhir.Navigation
-{
-
-    public struct XmlRenderHints
-    {
-        public bool IsXhtmlDiv;
-
-        public bool IsXmlAttribute;
-
-        public string NestedResourceName;
-
-        public bool HasNestedResource {  get { return !String.IsNullOrEmpty(NestedResourceName);  } }
-
-        public override string ToString()
-        {
-            return IsXhtmlDiv ? "Is XHTML <div>" : (IsXmlAttribute ? "Is Xml attribute" : (HasNestedResource ? "Contains nested resource " + NestedResourceName :  "(no hints)"));
-        }
-    }
-
-
+{   
     public static partial class TreeConstructor
     {
+        /* Make sure we handle all possible node types:
+          System.Xml.Linq.XObject
+            System.Xml.Linq.XAttribute
+            System.Xml.Linq.XNode
+                System.Xml.Linq.XComment
+                System.Xml.Linq.XContainer
+                          System.Xml.Linq.XDocument
+                    System.Xml.Linq.XElement
+            System.Xml.Linq.XDocumentType
+            System.Xml.Linq.XProcessingInstruction
+            System.Xml.Linq.XText   
 
+            Note: XDocumentType, XProcessingInstruction appear only on XDocument and can be disregarded
+        */
+        private static readonly IEnumerable<INodeConversionStrategy<XObject>> STRATEGIES = new INodeConversionStrategy<XObject>[] 
+        {
+            new XDocumentConversionStrategy(),
+            new XWhitespaceStrategy(),
+            new XElementNestedResourceConversionStrategy(), new XElementConversionStrategy(),
+            new XElementDivConversionStrategy(),
+            new XCommentStrategy(), new XAttributeConversionStrategy()
+        };
 
         public static FhirNavigationTree FromXml(XmlReader reader)
         {
             if (reader == null) Error.ArgumentNull("reader");
 
-            var doc = SerializationUtil.XDocumentFromReader(reader); 
-            var docRoot = doc.Root;
+            var doc = xDocumentFromReader(reader); 
 
-            var treeRootRoot = FhirNavigationTree.Create("root");
-
-            createTreeNodeFromDocNode(docRoot, treeRootRoot);
-
-            return treeRootRoot.FirstChild;
+            return createTreeNodeFromDocNode(doc, null);
         }
+
 
         public static FhirNavigationTree FromXml(string xml)
         {
             if (xml == null) Error.ArgumentNull("xml");
 
-            return FromXml(SerializationUtil.XmlReaderFromXmlText(xml));
+            return FromXml(XmlReader.Create(new StringReader(SerializationUtil.SanitizeXml(xml))));
         }
 
 
@@ -72,40 +72,27 @@ namespace Hl7.Fhir.Navigation
 
         private static FhirNavigationTree createTreeNodeFromDocNode(XObject docNode, FhirNavigationTree parent)
         {
-            /* Make sure we handle all possible node types:
-              System.Xml.Linq.XObject
-                System.Xml.Linq.XAttribute
-                System.Xml.Linq.XNode
-                    System.Xml.Linq.XComment
-                    System.Xml.Linq.XContainer
-                        System.Xml.Linq.XDocument
-                        System.Xml.Linq.XElement
-                System.Xml.Linq.XDocumentType
-                System.Xml.Linq.XProcessingInstruction
-                System.Xml.Linq.XText   
-
-                Note: XDocumentType, XProcessingInstruction appear only on XDocument and can be disregarded
-            */
-
-            var strategies = new INodeConversionStrategy<XObject>[] { new XElementNestedResourceConversionStrategy(), new XElementConversionStrategy(),
-                new XElementDivConversionStrategy(), new XAttributeConversionStrategy() };
             var handled = false;
             FhirNavigationTree result = null;
 
-            foreach (var strategy in strategies)
+            foreach (var strategy in STRATEGIES)
             {
                 if(strategy.HandlesDocNode(docNode))
                 {
                     handled = true;
                     result = strategy.ConstructTreeNode(docNode, parent);
-                    var children = strategy.SelectChildren(docNode, result);
 
-                    if (children != null && children.Any())
+                    if (result != null)
                     {
-                        children = strategy.PostProcessChildren(children, result);
-                        foreach(var child in children)
+                        var children = strategy.SelectChildren(docNode, result);
+
+                        if (children != null && children.Any())
                         {
-                            createTreeNodeFromDocNode(child, result);
+                            children = strategy.PostProcessChildren(children, result);
+                            foreach (var child in children)
+                            {
+                                createTreeNodeFromDocNode(child, result);
+                            }
                         }
                     }
 
@@ -119,5 +106,40 @@ namespace Hl7.Fhir.Navigation
 
             return result;         
         }
+
+        private static XDocument xDocumentFromReader(XmlReader reader)
+        {
+            XDocument doc;
+
+            try
+            {
+                doc = XDocument.Load(wrapXmlReader(reader), LoadOptions.SetLineInfo);
+            }
+            catch (XmlException xec)
+            {
+                throw Error.Format("Cannot parse xml: " + xec.Message, null);
+            }
+
+            return doc;
+        }
+
+
+        private static XmlReader wrapXmlReader(XmlReader xmlReader)
+        {
+            var settings = new XmlReaderSettings();
+
+            //settings.IgnoreComments = true;
+            settings.IgnoreProcessingInstructions = true;
+            //settings.IgnoreWhitespace = true;
+#if PORTABLE45
+            settings.DtdProcessing = DtdProcessing.Ignore;
+#else
+            settings.DtdProcessing = DtdProcessing.Parse;
+#endif
+
+            return XmlReader.Create(xmlReader, settings);
+        }
+
+
     }
 }

@@ -83,6 +83,10 @@
     <Compile Include="Navigation\TreeBuilderExtensions.cs" />
     <Compile Include="Navigation\ValueNavigationTree.cs" />
     <Compile Include="Navigation\VariantNavigationTree.cs" />
+    <Compile Include="Navigation\InstanceTreeAnnotations.cs" />
+    <Compile Include="Navigation\XCommentStrategy.cs" />
+    <Compile Include="Navigation\XDocumentConversionStrategy.cs" />
+    <Compile Include="Navigation\XWhitespaceStrategy.cs" />
     <Compile Include="Navigation\XAttributeConversionStrategy.cs" />
     <Compile Include="Navigation\XElementNestedResourceConversionStrategy.cs" />
     <Compile Include="Navigation\XElementDivConversionStrategy.cs" />
