@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Navigation
 
         public void PostProcess(FhirNavigationTree convertedNode)
         {
-            throw Error.NotImplemented("Don't know how to process children of an xml attribute.");
+            return;
         }
     }
 }
