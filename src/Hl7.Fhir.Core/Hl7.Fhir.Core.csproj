@@ -81,6 +81,7 @@
     <Compile Include="Navigation\INamedTree.cs" />
     <Compile Include="Navigation\ITree.cs" />
     <Compile Include="Navigation\TreeBuilderExtensions.cs" />
+    <Compile Include="Navigation\TreeBuilderFactoryExtensions.cs" />
     <Compile Include="Navigation\ValueNavigationTree.cs" />
     <Compile Include="Navigation\VariantNavigationTree.cs" />
     <Compile Include="Navigation\InstanceTreeAnnotations.cs" />
@@ -98,7 +99,6 @@
     <Compile Include="Navigation\XmlLineInfoWrapper.cs" />
     <Compile Include="Navigation\LinkedTreeFhirExtensions.cs" />
     <Compile Include="Navigation\LinkedTreeExtensions.cs" />
-    <Compile Include="Navigation\LinkedTreeFactoryExtensions.cs" />
     <Compile Include="Navigation\TreeIterators.cs" />
     <Compile Include="FhirPath\PathEvaluator.cs" />
     <Compile Include="FhirPath\Result.cs" />
