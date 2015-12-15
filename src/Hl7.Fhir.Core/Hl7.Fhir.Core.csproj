@@ -77,7 +77,7 @@
     <Compile Include="Navigation\AnnotationList.cs" />
     <Compile Include="Navigation\FhirNavigationTree.cs" />
     <Compile Include="Navigation\FhirInstanceTree.cs" />
-    <Compile Include="Navigation\ILinkedTreeBuilder.cs" />
+    <Compile Include="Navigation\ITreeBuilder.cs" />
     <Compile Include="Navigation\INamedTree.cs" />
     <Compile Include="Navigation\ITree.cs" />
     <Compile Include="Navigation\TreeBuilderExtensions.cs" />
@@ -97,7 +97,7 @@
     <Compile Include="Navigation\INodeConversionStrategy.cs" />
     <Compile Include="Navigation\IValueProvider.cs" />
     <Compile Include="Navigation\XmlLineInfoWrapper.cs" />
-    <Compile Include="Navigation\LinkedTreeFhirExtensions.cs" />
+    <Compile Include="Navigation\NamedTreeFhirExtensions.cs" />
     <Compile Include="Navigation\LinkedTreeExtensions.cs" />
     <Compile Include="Navigation\TreeIterators.cs" />
     <Compile Include="FhirPath\PathEvaluator.cs" />

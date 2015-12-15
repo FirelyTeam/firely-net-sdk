@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Navigation
     /// <summary>Common interface for a <see cref="NavigationTree{T}"/>.</summary>
     /// <typeparam name="T">The type of tree.</typeparam>
     /// <example><code>MyTree : INavigationTree&lt;MyTree&gt; { }</code></example>
-    public interface INavigationTree<T> : INamedTree<T>, IDoublyLinkedTree<T>, ITreeBuilder<T> where T : INavigationTree<T> { }
+    public interface INavigationTree<T> : INamedTree<T>, IDoublyLinkedTree<T>, ITreeBuilder<T>, IAnnotatable where T : INavigationTree<T> { }
 
     /// <summary>Abstract base class for a navigation tree.</summary>
     /// <typeparam name="T">The type of tree.</typeparam>
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Navigation
 
         #endregion
 
-        #region IPathIndexTree
+        #region INamedTree
 
         /// <summary>Indexer property. Returns a sequence of child nodes by name.</summary>
         /// <param name="name">An node name.</param>
@@ -147,6 +147,58 @@ namespace Hl7.Fhir.Navigation
 
         #endregion
 
+
+        #region IAnnotatable
+
+        private Lazy<AnnotationList> _annotations = new Lazy<AnnotationList>(() => new AnnotationList());
+        private AnnotationList annotations { get { return _annotations.Value; } }
+
+        public object Annotation(Type type)
+        {
+            return OfType(annotations,type).FirstOrDefault();
+        }
+
+        public A Annotation<A>() where A : class
+        {
+            return (A)Annotation(typeof(A));
+        }
+
+        public IEnumerable<object> Annotations(Type type)
+        {
+            return OfType(annotations, type).Cast<object>();
+        }
+
+        public IEnumerable<A> Annotations<A>() where A : class
+        {
+            return OfType(annotations,typeof(A)).Cast<A>();
+        }
+
+        public void AddAnnotation(object annotation)
+        {
+            annotations.Add(annotation);
+        }
+
+        public void RemoveAnnotations(Type type)
+        {
+            var annotationsToRemove = OfType(annotations, type).ToArray();
+
+            foreach (var found in annotationsToRemove)
+                annotations.Remove(found);
+        }
+
+        public void RemoveAnnotations<A>() where A : class
+        {
+            RemoveAnnotations(typeof(A));
+        }
+
+        public static IEnumerable<Object> OfType(IEnumerable<Object> me, Type t)
+        {
+            return me.Where(e => e.GetType() == t);
+        }
+
+        #endregion
+
+
         #region Protected members
 
         // Derived classes must implement the following abstract members
@@ -192,8 +244,10 @@ namespace Hl7.Fhir.Navigation
 
         #endregion
 
-        public override string ToString() { return string.Format("({0}) {1}", ReflectionHelper.PrettyTypeName(GetType()), Name); }
-
+        public override string ToString()
+        {
+            return string.Format("({0}) {1} {2}", ReflectionHelper.PrettyTypeName(GetType()), Name, _annotations.IsValueCreated ? _annotations.Value.ToString() : "");
+        }
     }
 
 }

@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Navigation
 {
-    public static class LinkedTreeFhirExtensions
+    public static class NamedTreeFhirExtensions
     {
         private const string PolymorphicNameSuffix = "[x]";
         public const string NameWildcard = "*";

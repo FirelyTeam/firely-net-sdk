@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Navigation
 {
-    internal class AnnotationList : List<AnnotationEntry>
+    internal class AnnotationList : List<Object>
     {
         public override string ToString()
         {
-            if(this.Any())
+            if(this.Count > 0)
             {
                 var result = new StringBuilder();
 
@@ -25,39 +25,17 @@ namespace Hl7.Fhir.Navigation
         }
     }
 
-    internal struct AnnotationEntry
-    {
-        public AnnotationEntry(object annotation)
-        {
-            Type = annotation.GetType();
-            Annotation = annotation;
-        }
 
-        // [WMR] Instead implement IValueProvider / IValueProvider<T> or similar pattern
-        public Type Type;
-        public object Annotation;
-
-        public override string ToString()
-        {
-            return "(" + Type.Name + "): " + Annotation.ToString();
-        }
-    }
- 
     internal static class AnnotationListExtensions
     {
-        public static IEnumerable<AnnotationEntry> FilterByType(this IEnumerable<AnnotationEntry> me, Type t)
+        public static IEnumerable<Object> OfType(this IEnumerable<Object> me, Type t)
         {
-            return me.Where(e => e.Type == t);
+            return me.Where(e => e.GetType() == t);
         }
 
-        public static void AddAnnotation(this IList<AnnotationEntry> me, object annotation)
+        public static void RemoveOfType(this IList<Object> me, Type t)
         {
-            me.Add(new AnnotationEntry(annotation));
-        }
-
-        public static void RemoveAnnotation(this IList<AnnotationEntry> me, Type t)
-        {
-            var annotations = me.FilterByType(t).ToArray();
+            var annotations = me.OfType(t).ToArray();
 
             foreach (var found in annotations)
                 me.Remove(found);

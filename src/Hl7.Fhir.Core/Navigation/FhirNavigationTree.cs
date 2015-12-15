@@ -47,53 +47,7 @@ namespace Hl7.Fhir.Navigation
         {
             return new Node<V>(name, value, parent, previousSibling);
         }
-
-        #region IAnnotatable
-
-        private Lazy<AnnotationList> _annotations = new Lazy<AnnotationList>(() => new AnnotationList());
-
-        public object Annotation(Type type)
-        {
-            return _annotations.Value.FilterByType(type).FirstOrDefault();
-        }
-
-        public T Annotation<T>() where T : class
-        {
-            return (T)Annotation(typeof(T));
-        }
-
-        public IEnumerable<object> Annotations(Type type)
-        {
-            return _annotations.Value.FilterByType(type).Cast<object>();
-        }
-
-        public IEnumerable<T> Annotations<T>() where T : class
-        {
-            return _annotations.Value.FilterByType(typeof(T)).Cast<T>();
-        }
-
-        public void AddAnnotation(object annotation)
-        {
-            _annotations.Value.AddAnnotation(annotation);
-        }
-
-        public void RemoveAnnotations(Type type)
-        {
-            _annotations.Value.RemoveAnnotation(type);
-        }
-
-        public void RemoveAnnotations<T>() where T : class
-        {
-            RemoveAnnotations(typeof(T));
-        }
-
-        #endregion
-
-        public override string ToString()
-        {
-            return base.ToString() + (_annotations.IsValueCreated ? _annotations.Value.ToString() : "");
-        }
-
+        
         /// <summary>Private subclass that implements the variant Value property.</summary>
         /// <typeparam name="V">The value type.</typeparam>
         class Node<V> : FhirNavigationTree, IValueProvider<V>
