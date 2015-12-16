@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Hl7.Fhir.FhirPath;
 using Sprache;
 using System.Diagnostics;
+using Hl7.Fhir.Navigation;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -29,14 +30,20 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod]
         public void TestExpression()
         {
-            var result = Expression.Expr.TryParse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5,false != true))and(%bla>=6)");
+            //var result = Expression.Expr.TryParse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5,false != true))and(%bla>=6)");
             //var result = Expression.FpConst.TryParse("4.5");
+            var tpXml = System.IO.File.ReadAllText("TestData\\TestPatient.xml");
+            var tree = TreeConstructor.FromXml(tpXml);
 
+            var result = Path.Predicate.TryParse("Patient.name");
 
             if (result.WasSuccessful)
             {
                 // Assert.AreEqual(4.5m, result.Value(new EvaluationContext()));
-                Assert.AreEqual("", result.Value);
+                var evaluator = result.Value;
+                var context = EvaluationContext.NewContext(null, tree);
+                var resultContxt = evaluator(context);
+                Assert.IsNotNull(resultContxt);                
             }
             else
             {

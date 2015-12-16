@@ -77,6 +77,7 @@
     <Compile Include="Navigation\AnnotationList.cs" />
     <Compile Include="Navigation\FhirNavigationTree.cs" />
     <Compile Include="Navigation\FhirInstanceTree.cs" />
+    <Compile Include="Navigation\FhirTreeListExtensions.cs" />
     <Compile Include="Navigation\ITreeBuilder.cs" />
     <Compile Include="Navigation\INamedTree.cs" />
     <Compile Include="Navigation\ITree.cs" />
@@ -101,7 +102,6 @@
     <Compile Include="Navigation\LinkedTreeExtensions.cs" />
     <Compile Include="Navigation\TreeIterators.cs" />
     <Compile Include="FhirPath\PathEvaluator.cs" />
-    <Compile Include="FhirPath\Result.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />

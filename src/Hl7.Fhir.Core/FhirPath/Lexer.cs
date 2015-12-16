@@ -18,17 +18,18 @@ namespace Hl7.Fhir.FhirPath
         public static readonly Parser<string> Recurse =
             Parse.Char('*').Once().Text().Named("Recurse");
 
-        // axis_spec: '*' | '**' ;
-        public static readonly Parser<string> AxisSpec =
-            Parse.Char('*').Repeat(1, 2).Text().Named("AxisSpec");
-
         // root_spec: '$context' | '$resource' | '$parent';
         public static readonly Parser<string> RootSpec =
             (from first in Parse.Char('$')
-            from spec in (Parse.String("context")
-                .Or(Parse.String("resource"))
-                .Or(Parse.String("parent")))
-            select new String(spec.ToArray())).Named("RootSpec");
+             from spec in (Parse.String("context")
+                 .Or(Parse.String("resource"))
+                 .Or(Parse.String("parent")))
+             select new String(spec.ToArray())).Named("RootSpec");
+
+        // axis_spec: '*' | '**' | '$context' | '$resource' | '$parent';
+        public static readonly Parser<string> AxisSpec =
+            Parse.Char('*').Repeat(1, 2).Text().Named("AxisSpec")
+                .XOr(RootSpec);
 
         //ID: ALPHA ALPHANUM* ;
         //fragment ALPHA: [a-zA-Z];

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hl7.Fhir.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,42 @@ namespace Hl7.Fhir.FhirPath
         // https://github.com/louthy/csharp-monad
         // http://www.codeproject.com/Articles/649989/Monad-like-programming-with-Csharp
 
+            // Later we can make this nicer with an Option type or so, just need to go on now.
+        public IEnumerable<FhirNavigationTree> Nodes { get; private set; }
+        public IEnumerable<string> Values { get; private set; }
+
+        public bool IsAtomic
+        {
+            get
+            {
+                return Values != null;
+            }
+        }
+
+        public bool IsNodeSet
+        {
+            get
+            {
+                return Nodes != null;
+            }
+        }
+
+        public static EvaluationContext NewContext(EvaluationContext parent, string value)
+        {
+            //copy stuff from parent
+            return new EvaluationContext() { Values = new string[] { value } };
+        }
+
+        public static EvaluationContext NewContext(EvaluationContext parent, IEnumerable<string> values)
+        {
+            //copy stuff from parent
+            return new EvaluationContext() { Values = values };
+        }
+
+        public static EvaluationContext NewContext(EvaluationContext parent, IEnumerable<FhirNavigationTree> nodes)
+        {
+            // copy stuff from parent
+            return new EvaluationContext() { Nodes = nodes };
+        }
     }
 }
