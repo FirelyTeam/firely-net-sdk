@@ -28,7 +28,11 @@
     nsT.AddNamespace("fhir", "http://hl7.org/fhir");
 
 	string fhirVersion = docResources.SelectSingleNode("//fhir:fhirVersion/@value", nsE).Value;
-
+#>
+//
+// Model Generated on <#= DateTime.Now.ToString("R") #> for FHIR v<#= fhirVersion #>
+//
+<#
 	Dictionary<string, string> enums = new Dictionary<string, string>();
 	System.Collections.Generic.List<string> generatedSets = new System.Collections.Generic.List<string>();
 	foreach (System.Xml.XmlElement valueset in docExpansions.SelectNodes(
@@ -139,7 +143,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated on <#= DateTime.Now.ToString("R") #> for FHIR v<#= fhirVersion #>
+// Generated for FHIR v<#= fhirVersion #>
 //
 namespace Hl7.Fhir.Model
 {

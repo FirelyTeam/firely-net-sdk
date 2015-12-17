@@ -149,6 +149,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\Template-ModelInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-ModelInfo.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\TestScript.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -392,7 +397,6 @@
     <Compile Include="Model\Generated\MessageHeader.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\ModelInfo.cs" />
     <Compile Include="Model\Generated\Observation.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -504,6 +508,7 @@
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
+    <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
@@ -515,6 +520,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Support\NullExtensions.cs" />
+    <Compile Include="Support\DateExtensions.cs" />
     <Compile Include="Support\XmlNs.cs" />
     <Compile Include="Support\ReflectionHelper.cs" />
     <Compile Include="Serialization\RepeatingElementReader.cs" />
@@ -569,8 +575,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template-Model.cs</LastGenOutput>
     </Content>
-    <None Include="Model\Source\search-parameters.xml" />
-    <None Include="Model\Source\expansions.xml" />
+    <Content Include="Model\Generated\Template-ModelInfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-ModelInfo.cs</LastGenOutput>
+    </Content>
+    <None Include="Model\Source\search-parameters.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Model\Source\expansions.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Model\Source\profiles-resources.xml">
       <SubType>Designer</SubType>
     </None>
