@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated on Sat, 07 Nov 2015 23:06:17 GMT for FHIR v1.0.2
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
