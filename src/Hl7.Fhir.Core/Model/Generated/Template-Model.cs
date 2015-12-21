@@ -1,25 +1,7 @@
 ﻿
-// Generated Shared Enumeration: BindingStrength
-	// Used in model class (resource): OperationDefinition.parameter.binding.strength
-	// Used in model class (type): ElementDefinition.binding.strength
-
-// Generated Shared Enumeration: FHIRDefinedType
-	// Used in model class (resource): StructureDefinition.constrainedType
-	// Used in model class (resource): TestScript.setup.action.operation.resource
-	// Used in model class (resource): TestScript.setup.action.assert.resource
-	// Used in model class (type): ElementDefinition.type.code
-
-// Generated Shared Enumeration: DocumentReferenceStatus
-	// Used in model class (resource): DocumentManifest.status
-	// Used in model class (resource): DocumentReference.status
-
-// Generated Shared Enumeration: RemittanceOutcome
-	// Used in model class (resource): ClaimResponse.outcome
-	// Used in model class (resource): EligibilityResponse.outcome
-	// Used in model class (resource): EnrollmentResponse.outcome
-	// Used in model class (resource): ExplanationOfBenefit.outcome
-	// Used in model class (resource): PaymentReconciliation.outcome
-
+//
+// Model Generated on Fri, 18 Dec 2015 07:32:10 GMT for FHIR v1.0.2
+//
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): Conformance.rest.resource.type
 	// Used in model class (resource): Conformance.rest.resource.searchParam.target
@@ -30,6 +12,39 @@
 	// Used in model class (resource): Questionnaire.subjectType
 	// Used in model class (resource): SearchParameter.base
 	// Used in model class (resource): SearchParameter.target
+
+// Generated Shared Enumeration: AdministrativeGender
+	// Used in model class (resource): FamilyMemberHistory.gender
+	// Used in model class (resource): Patient.gender
+	// Used in model class (resource): Patient.contact.gender
+	// Used in model class (resource): Person.gender
+	// Used in model class (resource): Practitioner.gender
+	// Used in model class (resource): RelatedPerson.gender
+
+// Generated Shared Enumeration: FHIRDefinedType
+	// Used in model class (resource): StructureDefinition.constrainedType
+	// Used in model class (resource): TestScript.setup.action.operation.resource
+	// Used in model class (resource): TestScript.setup.action.assert.resource
+	// Used in model class (type): ElementDefinition.type.code
+
+// Generated Shared Enumeration: BindingStrength
+	// Used in model class (resource): OperationDefinition.parameter.binding.strength
+	// Used in model class (type): ElementDefinition.binding.strength
+
+// Generated Shared Enumeration: RemittanceOutcome
+	// Used in model class (resource): ClaimResponse.outcome
+	// Used in model class (resource): EligibilityResponse.outcome
+	// Used in model class (resource): EnrollmentResponse.outcome
+	// Used in model class (resource): ExplanationOfBenefit.outcome
+	// Used in model class (resource): PaymentReconciliation.outcome
+
+// Generated Shared Enumeration: ListMode
+	// Used in model class (resource): Composition.section.mode
+	// Used in model class (resource): List.mode
+
+// Generated Shared Enumeration: SearchParamType
+	// Used in model class (resource): Conformance.rest.resource.searchParam.type
+	// Used in model class (resource): SearchParameter.type
 
 // Generated Shared Enumeration: ConformanceResourceStatus
 	// Used in model class (resource): ValueSet.status
@@ -43,25 +58,13 @@
 	// Used in model class (resource): StructureDefinition.status
 	// Used in model class (resource): TestScript.status
 
-// Generated Shared Enumeration: SearchParamType
-	// Used in model class (resource): Conformance.rest.resource.searchParam.type
-	// Used in model class (resource): SearchParameter.type
-
-// Generated Shared Enumeration: AdministrativeGender
-	// Used in model class (resource): FamilyMemberHistory.gender
-	// Used in model class (resource): Patient.gender
-	// Used in model class (resource): Patient.contact.gender
-	// Used in model class (resource): Person.gender
-	// Used in model class (resource): Practitioner.gender
-	// Used in model class (resource): RelatedPerson.gender
+// Generated Shared Enumeration: DocumentReferenceStatus
+	// Used in model class (resource): DocumentManifest.status
+	// Used in model class (resource): DocumentReference.status
 
 // Generated Shared Enumeration: MedicationAdministrationStatus
 	// Used in model class (resource): Immunization.status
 	// Used in model class (resource): MedicationAdministration.status
-
-// Generated Shared Enumeration: ListMode
-	// Used in model class (resource): Composition.section.mode
-	// Used in model class (resource): List.mode
 
 // Generated helper templates
 // Generated items
