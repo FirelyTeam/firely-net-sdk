@@ -76,7 +76,6 @@
     <Compile Include="Navigation\FhirNavigationTreeOfV.cs" />
     <Compile Include="Navigation\AnnotationList.cs" />
     <Compile Include="Navigation\FhirNavigationTree.cs" />
-    <Compile Include="Navigation\FhirInstanceTree.cs" />
     <Compile Include="Navigation\FhirTreeListExtensions.cs" />
     <Compile Include="Navigation\ITreeBuilder.cs" />
     <Compile Include="Navigation\INamedTree.cs" />

@@ -68,40 +68,7 @@ namespace Hl7.Fhir.Test.Navigation
             return root;
         }
 
-        FhirInstanceTree CreateFhirInstanceTree()
-        {
-            var root = FhirInstanceTree.Create("Patient");
-
-            root.AddFirstChild("identifier")
-                    .AddFirstChild("use", "...use...")
-                    .AddNextSibling("type", "...type...")
-                    .AddNextSibling("system", "...system...")
-                    .AddNextSibling("value", "0123456789")
-                    .AddNextSibling("period")
-                        .AddFirstChild("start", "20151127 12:00")
-                        .AddNextSibling("end", "20151127 18:00")
-                    .Parent
-                    // .AddLastSibling("assigner", "Dr. House")
-                    .LastSibling()
-                    .AddNextSibling("assigner", "Dr. House")
-                .Parent
-                // .AddLastSibling("gender", "F")
-                .LastSibling()
-                .AddNextSibling("gender", "F")
-                .AddNextSibling("name")
-                    .AddFirstChild("use", "...use...")
-                    .AddNextSibling("text", "Prof. Dr. Ir. P. Akkermans MBA")
-                    .AddNextSibling("family", "Akkermans")
-                    .AddNextSibling("given", "Piet")
-                    .AddNextSibling("prefix", "Prof. Dr. Ir.")
-                    .AddNextSibling("suffix", "MBA")
-                    .AddNextSibling("period")
-                        .AddFirstChild("start", "20151231 14:00")
-                        .AddNextSibling("end", "20151230 12:00");
-
-            return root;
-        }
-
+     
         [TestMethod]
         public void Test_Tree_CreateFromAnonymousObject()
         {
@@ -173,17 +140,9 @@ namespace Hl7.Fhir.Test.Navigation
         }
 
         [TestMethod]
-        public void Test_Tree_CreateFhirInstanceTree()
-        {
-            var root = CreateFhirInstanceTree();
-            // TODO: Assert result...
-            Debug.Print(RenderTree(root));
-        }
-
-        [TestMethod]
         public void Test_Tree_AddChild()
         {
-            var root = FhirInstanceTree.Create("Homer");
+            var root = FhirNavigationTree.Create("Homer");
             var child = root.AddLastChild("Marge");
             var grandchild = child.AddLastChild("Bart");
             var grandchild2 = child.AddLastChild("Lisa");
@@ -212,7 +171,7 @@ namespace Hl7.Fhir.Test.Navigation
         [TestMethod]
         public void Test_Tree_AddSiblings()
         {
-            var root = FhirInstanceTree.Create("Homer");
+            var root = FhirNavigationTree.Create("Homer");
             var s1 = root.AddLastSibling("Marge");
             var s2 = s1.AddLastSibling("Bart");
             var s3 = s2.AddLastSibling("Lisa");
@@ -241,7 +200,7 @@ namespace Hl7.Fhir.Test.Navigation
         [TestMethod]
         public void Test_Tree_Children()
         {
-            var root = CreateFhirInstanceTree();
+            var root = CreateFhirNavigationTree();
             Assert.AreEqual(root.FirstChild.Name, "identifier");
             Assert.AreEqual(root.LastChild().Name, "name");
 
@@ -257,7 +216,7 @@ namespace Hl7.Fhir.Test.Navigation
         [TestMethod]
         public void Test_Tree_Descendants()
         {
-            var root = CreateFhirInstanceTree();
+            var root = CreateFhirNavigationTree();
             var child = root.FirstChild;
             Assert.AreEqual(child.Name, "identifier");
 
@@ -278,7 +237,7 @@ namespace Hl7.Fhir.Test.Navigation
         [TestMethod]
         public void Test_Tree_Siblings()
         {
-            var root = CreateFhirInstanceTree();
+            var root = CreateFhirNavigationTree();
             var child = root.FirstChild.FirstChild;
             Assert.AreEqual(child.Name, "use");
 
@@ -296,7 +255,7 @@ namespace Hl7.Fhir.Test.Navigation
         [TestMethod]
         public void Test_Tree_Ancestors()
         {
-            var root = CreateFhirInstanceTree();
+            var root = CreateFhirNavigationTree();
             var child = root.FirstChild.FirstChild;
             Assert.AreEqual(child.Name, "use");
             child = child.FollowingSiblings().First(n => n.Name == "period");
