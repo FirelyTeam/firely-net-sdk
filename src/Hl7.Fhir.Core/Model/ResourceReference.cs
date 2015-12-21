@@ -37,8 +37,27 @@ using System.Text;
 
 namespace Hl7.Fhir.Model
 {
+    [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public partial class ResourceReference
     {
+        [NotMapped]
+        private string DebuggerDisplay
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(Reference) && !string.IsNullOrEmpty(Display))
+                    return "url: " + Reference + "(" + Display + ")";
+                if (string.IsNullOrEmpty(Reference) && !string.IsNullOrEmpty(Display))
+                    return "url: null (" + Display + ")";
+                if (!string.IsNullOrEmpty(Reference) && string.IsNullOrEmpty(Display))
+                    return "url: " + Reference;
+                return "url: null";
+            }
+        }
+
+        /// <summary>
+        /// Native .net typed version of the string Reference property
+        /// </summary>
         [NotMapped]
         public Uri Url
         {
