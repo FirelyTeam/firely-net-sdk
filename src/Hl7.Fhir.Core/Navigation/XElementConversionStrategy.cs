@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Navigation
             var newNodeName = docElement.Name.LocalName;       // ignore namespace, it's always FHIRNS
             bool hasValue = false;
 
-            var value = tryGetValue(docElement, out hasValue);
+            var value = docElement.TryGetAttribute(XVALUE, out hasValue);
 
             if (hasValue)
                 return parent.AddLastChild(newNodeName, value);
@@ -46,23 +46,6 @@ namespace Hl7.Fhir.Navigation
         public void PostProcess(FhirNavigationTree convertedNode)
         {
             return;
-        }
-
-
-        private static string tryGetValue(XElement docNode, out bool hasValue)
-        {
-            var valueAttribute = docNode.Attribute(XVALUE);
-
-            if (valueAttribute != null)
-            {
-                hasValue = true;
-                return valueAttribute.Value;
-            }
-            else
-            {
-                hasValue = false;
-                return null;
-            }
         }
 
 

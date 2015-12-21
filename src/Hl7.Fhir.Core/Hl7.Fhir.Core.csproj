@@ -366,6 +366,7 @@
     <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
     <Compile Include="Support\StringExtensions.cs" />
+    <Compile Include="Support\XObjectExtensions.cs" />
     <Compile Include="Validation\AllowedTypesAttribute.cs" />
     <Compile Include="Validation\CardinalityAttribute.cs" />
     <Compile Include="Validation\CodePatternAttribute.cs" />
