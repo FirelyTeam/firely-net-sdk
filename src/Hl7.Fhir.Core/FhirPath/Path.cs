@@ -41,7 +41,7 @@ namespace Hl7.Fhir.FhirPath
 
         public static readonly Parser<Evaluator> Item =
             //Function
-            ElementPath.Select(path => Eval.ChildrenWithName(path));
+            ElementPath.Select(path => Eval.ChildrenMatchingName(path));
         //.XOr(Lexer.AxisSpec)
         //.XOr(Parse.Ref(() => Expression.BracketExpr));
 

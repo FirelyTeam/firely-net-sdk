@@ -17,9 +17,9 @@ namespace Hl7.Fhir.Navigation
             return nodeSet.SelectMany(node => node.Children());
         }
 
-        public static IEnumerable<T> Children<T>(this IEnumerable<T> nodeSet, string name) where T : ILinkedTree<T>, INamedTree
+        public static IEnumerable<T> IsMatch<T>(this IEnumerable<T> nodeSet, string name) where T : ILinkedTree<T>, INamedTree
         {
-            return nodeSet.SelectMany(node => node.Children().Where(child => child.IsMatch(name)));
+            return nodeSet.SelectMany(node => node.Children(n => n.IsMatch(name)));
         }
 
         ///// <summary>Enumerate the descendants of the specified nodes.</summary>
