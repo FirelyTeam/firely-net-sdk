@@ -8,12 +8,6 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FhirPath
 {
-    // [WMR]
-    // 1. Add parameter for input node set?
-    //    public delegate Result<T> Evaluator<I, T>(I input, EvaluationContext c);
-    //    I = IEnumerable<Navigation.NavNodeSet>
-    //    OR provide input as a member of EvaluationContext
-
     public delegate EvaluationContext Evaluator(EvaluationContext c);
 
     public static class Eval

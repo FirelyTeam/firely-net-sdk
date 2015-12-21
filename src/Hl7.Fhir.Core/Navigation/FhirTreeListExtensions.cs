@@ -12,12 +12,12 @@ namespace Hl7.Fhir.Navigation
         /// <typeparam name="T">The type of a tree node.</typeparam>
         /// <param name="nodeSet">A set of tree nodes.</param>
         /// <returns>An enumerator for nodes of type <typeparamref name="T"/>.</returns>
-        public static IEnumerable<FhirNavigationTree> Children(this IEnumerable<FhirNavigationTree> nodeSet) 
+        public static IEnumerable<T> Children<T>(this IEnumerable<T> nodeSet) where T : ILinkedTree<T>
         {
             return nodeSet.SelectMany(node => node.Children());
         }
 
-        public static IEnumerable<FhirNavigationTree> Children(this IEnumerable<FhirNavigationTree> nodeSet, string name)
+        public static IEnumerable<T> Children<T>(this IEnumerable<T> nodeSet, string name) where T : ILinkedTree<T>, INamedTree
         {
             return nodeSet.SelectMany(node => node.Children().Where(child => child.IsMatch(name)));
         }
