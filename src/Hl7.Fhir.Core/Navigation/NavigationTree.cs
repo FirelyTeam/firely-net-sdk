@@ -62,19 +62,23 @@ namespace Hl7.Fhir.Navigation
 
         public bool IsLastSibling { get { return NextSibling == null; } }
 
-        /// <summary>Returns a sequence of all descendant nodes.</summary>
-        /// <returns>An <see cref="IEnumerator{T}"/> sequence.</returns>
-        public IEnumerator<T> GetEnumerator()
-        {
-            return Self.Descendants().GetEnumerator();
-        }
 
-        /// <summary>Returns a sequence of all descendant nodes.</summary>
-        /// <returns>An <see cref="IEnumerator"/> sequence.</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        // Removed the feature where a node would itself be an enumerator of its children nodes
+        // since it will mostly result in errors where a tree is passed as an argument instead of its children
+
+        ///// <summary>Returns a sequence of all descendant nodes.</summary>
+        ///// <returns>An <see cref="IEnumerator{T}"/> sequence.</returns>
+        //public IEnumerator<T> GetEnumerator()
+        //{
+        //    return Self.Descendants().GetEnumerator();
+        //}
+
+        ///// <summary>Returns a sequence of all descendant nodes.</summary>
+        ///// <returns>An <see cref="IEnumerator"/> sequence.</returns>
+        //IEnumerator IEnumerable.GetEnumerator()
+        //{
+        //    return this.GetEnumerator();
+        //}
 
         #endregion
 

@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Navigation
     /// Common interface for a tree node.
     /// Derives from <see cref="IEnumerable"/> to provide access to a sequence of all descendant tree nodes.
     /// </summary>
-    public interface ITree : IEnumerable
+    public interface ITree
     {
         /// <summary>Indicates if the tree node is a root node.</summary>
         /// <value><c>true</c> if the node has a parent node, or <c>false</c> otherwise.</value>
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Navigation
     /// </summary>
     /// <typeparam name="T">The type of tree.</typeparam>
     /// <example><code>MyTree : ITree&lt;MyTree&gt; { }</code></example>
-    public interface ITree<out T> : ITree, IEnumerable<T>
+    public interface ITree<out T> : ITree
     {
     }
 }
