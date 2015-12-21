@@ -29,7 +29,7 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
-        public static Evaluator Constant(string value)
+        public static Evaluator Constant(object value)
         {
             return c => EvaluationContext.NewContext(c, value);
         }

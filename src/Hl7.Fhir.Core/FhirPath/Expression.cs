@@ -24,11 +24,11 @@ namespace Hl7.Fhir.FhirPath
         //    .XOr(Lexer.Bool.Select(s => Eval.Return((object)s)))
         //    .XOr(Lexer.Const.Select(s => Eval.Return((object)s)));
 
-        public static readonly Parser<string> FpConst =
-            Lexer.String
-            .XOr(Lexer.Number.Select(s => s.ToString()))
-            .XOr(Lexer.Bool.Select(s => s.ToString()))
-            .XOr(Lexer.Const.Select(s => s.ToString()));
+        public static readonly Parser<Evaluator> FpConst =
+            Lexer.String.Select(s=>Eval.Constant(s))
+            .XOr(Lexer.Number.Select(s =>Eval.Constant(s)))
+            .XOr(Lexer.Bool.Select(s =>Eval.Constant(s)))
+            .XOr(Lexer.Const.Select(s =>Eval.Constant(s)));
 
 
         public static Parser<string> makeOperator(Parser<string> left, char op, Parser<string> right)

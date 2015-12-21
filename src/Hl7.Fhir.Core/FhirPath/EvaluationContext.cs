@@ -21,7 +21,7 @@ namespace Hl7.Fhir.FhirPath
 
             // Later we can make this nicer with an Option type or so, just need to go on now.
         public IEnumerable<FhirNavigationTree> Nodes { get; private set; }
-        public IEnumerable<string> Values { get; private set; }
+        public IEnumerable<object> Values { get; private set; }
 
         public bool IsAtomic
         {
@@ -39,13 +39,11 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
-        public static EvaluationContext NewContext(EvaluationContext parent, string value)
+        public static EvaluationContext NewContext(EvaluationContext parent, params object[] values)
         {
-            //copy stuff from parent
-            return new EvaluationContext() { Values = new string[] { value } };
+            return NewContext(parent, (IEnumerable<object>)values);
         }
-
-        public static EvaluationContext NewContext(EvaluationContext parent, IEnumerable<string> values)
+        public static EvaluationContext NewContext(EvaluationContext parent, IEnumerable<object> values)
         {
             //copy stuff from parent
             return new EvaluationContext() { Values = values };
