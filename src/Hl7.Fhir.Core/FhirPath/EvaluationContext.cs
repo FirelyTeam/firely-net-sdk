@@ -39,6 +39,11 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
+        private EvaluationContext()
+        {
+
+        }
+
         public static EvaluationContext NewContext(EvaluationContext parent, params object[] values)
         {
             return NewContext(parent, (IEnumerable<object>)values);

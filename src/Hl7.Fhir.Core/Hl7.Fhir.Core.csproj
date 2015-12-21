@@ -100,7 +100,7 @@
     <Compile Include="Navigation\NamedTreeFhirExtensions.cs" />
     <Compile Include="Navigation\LinkedTreeExtensions.cs" />
     <Compile Include="Navigation\TreeIterators.cs" />
-    <Compile Include="FhirPath\PathEvaluator.cs" />
+    <Compile Include="FhirPath\Evaluator.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />
