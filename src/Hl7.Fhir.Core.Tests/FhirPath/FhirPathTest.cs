@@ -27,23 +27,28 @@ namespace Hl7.Fhir.Tests.FhirPath
     public class FhirPathTest
 #endif
     {
+        FhirNavigationTree tree;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
+            tree = TreeConstructor.FromXml(tpXml);
+        }
+
         [TestMethod]
         public void TestExpression()
         {
             //var result = Expression.Expr.TryParse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5,false != true))and(%bla>=6)");
             //var result = Expression.FpConst.TryParse("4.5");
-            var tpXml = System.IO.File.ReadAllText("TestData\\TestPatient.xml");
-            var tree = TreeConstructor.FromXml(tpXml);
 
-            var result = Path.Predicate.TryParse("Patient.name");
+            var result = Path.Predicate.TryParse("Patient.identifier.use");
 
             if (result.WasSuccessful)
             {
-                // Assert.AreEqual(4.5m, result.Value(new EvaluationContext()));
                 var evaluator = result.Value;
-                var context = EvaluationContext.NewContext(null, tree);
-                var resultContxt = evaluator(context);
-                Assert.IsNotNull(resultContxt);                
+                var resultNodes = evaluator.Evaluate(tree);
+                Assert.AreEqual(2,resultNodes.Count());
             }
             else
             {
@@ -51,6 +56,25 @@ namespace Hl7.Fhir.Tests.FhirPath
                 Assert.Fail(result.ToString());
             }            
         }
-    
+
+
+        [TestMethod]
+        public void TestExpression2()
+        {
+            var result = Path.Predicate.TryParse("Patient.deceased[x]");
+
+            if (result.WasSuccessful)
+            {
+                var evaluator = result.Value;
+                var resultNodes = evaluator.Evaluate(tree);
+                Assert.AreEqual(1, resultNodes.Count());
+            }
+            else
+            {
+                Debug.WriteLine("Expectations: " + String.Join(",", result.Expectations));
+                Assert.Fail(result.ToString());
+            }
+        }
+
     }
 }
