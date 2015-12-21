@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,35 +17,32 @@ namespace Hl7.Fhir.Navigation
 {
     public static class NamedTreeFhirExtensions
     {
-        private const string PolymorphicNameSuffix = "[x]";
-        public const string NameWildcard = "*";
+        private const string POLYMORPHICNAMESUFFIX = "[x]";
 
         public static bool IsMatch<T>(this T tree, string name) where T : INamedTree
         {
-            if (tree == null) { throw new ArgumentNullException("tree"); } // nameof(tree)
-            if (string.IsNullOrEmpty(name)) { throw new ArgumentNullException("name"); } // nameof(name)
+            if (tree == null) { throw Error.ArgumentNull("tree"); } // nameof(tree)
+            if (string.IsNullOrEmpty(name)) { throw Error.ArgumentNull("name"); } // nameof(name)
 
-            return name == NameWildcard | tree.Name == name | IsPolymorphicMatch(tree, name);
+            return tree.Name == name | isPolymorphicMatch(tree, name);
         }
 
-        private static bool IsPolymorphicMatch<T>(T tree, string name) where T : INamedTree
+        private static bool isPolymorphicMatch<T>(T tree, string name) where T : INamedTree
         {
-            if (name.EndsWith(PolymorphicNameSuffix))
+            if (name.EndsWith(POLYMORPHICNAMESUFFIX))
             {
-                var prefixLength = name.Length - PolymorphicNameSuffix.Length;
+                var prefixLength = name.Length - POLYMORPHICNAMESUFFIX.Length;
                 return String.Compare(tree.Name, 0, name, 0, Math.Max(0, prefixLength)) == 0
-                    && IsValidTypeName(tree.Name.Substring(prefixLength + 1));
+                    && IsValidTypeName(tree.Name.Substring(prefixLength));
             }
             return false;
         }
 
         static bool IsValidTypeName(string name)
         {
-            // TODO: validate typename
             // EK: Only way is to use ModelInfo. If you don't want that dependency here, we should move the
             // FHIR extensions to a more "fhiry" place
-            return ModelInfo.IsDataType(name);
-            //return char.IsUpper(name, 0);
+            return ModelInfo.IsDataType(name) || ModelInfo.IsPrimitive(name.ToLower());
         }
     }
 }
