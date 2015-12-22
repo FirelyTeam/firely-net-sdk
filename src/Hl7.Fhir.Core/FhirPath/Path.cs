@@ -12,8 +12,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+// The FhirPath parser is using Sprache, a monad-based approach to parsing
+// Useful pointers:
+// http://ericlippert.com/2013/02/21/monads-part-one/
+// http://blogs.msdn.com/b/wesdyer/archive/2008/01/11/the-marvels-of-monads.aspx
+// https://github.com/louthy/csharp-monad
+// http://www.codeproject.com/Articles/649989/Monad-like-programming-with-Csharp
+
+
 namespace Hl7.Fhir.FhirPath
 {
+    
     internal class Path
     {
         // function: ID '(' param_list? ')';

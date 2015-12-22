@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FhirPath
 {
+    // TODO: Need to keep track of related contexts
+    // $context - the original context (see below for usage)
+    // $resource - the original container resource(e.g.skip contained resources, but do not go past a root resource into a bundle, if it is contained in a bundle)
+	// $parent - the element that contains $context
+    // $focus - a reference to the current focus.This is useful where you need to refer to the focus in a function parameter (e.g. $focus in criteria)
     public class EvaluationContext
     {
         // [WMR] Store variables as Memo<T>, i.e. evaluate expression and save result on first call
@@ -14,12 +19,7 @@ namespace Hl7.Fhir.FhirPath
         // Important: each Evaluator instance should receive a new EvaluationContext instance - for variable scoping
         // => Copy ctor
 
-        // Useful pointers:
-        // http://blogs.msdn.com/b/wesdyer/archive/2008/01/11/the-marvels-of-monads.aspx
-        // https://github.com/louthy/csharp-monad
-        // http://www.codeproject.com/Articles/649989/Monad-like-programming-with-Csharp
-
-            // Later we can make this nicer with an Option type or so, just need to go on now.
+        // Later we can make this nicer with an Option type or so, just need to go on now.
         public IEnumerable<FhirNavigationTree> Nodes { get; private set; }
         public IEnumerable<object> Values { get; private set; }
 

@@ -23,13 +23,15 @@ namespace Hl7.Fhir.FhirPath
             (from first in Parse.Char('$')
              from spec in (Parse.String("context")
                  .Or(Parse.String("resource"))
-                 .Or(Parse.String("parent")))
+                 .Or(Parse.String("parent"))
+                 .Or(Parse.String("focus")))
              select new String(spec.ToArray())).Named("RootSpec");
 
-        // axis_spec: '*' | '**' | '$context' | '$resource' | '$parent';
+        // axis_spec: '*' | '**' | '$context' | '$resource' | '$parent' | '$focus';
         public static readonly Parser<string> AxisSpec =
-            Parse.Char('*').Repeat(1, 2).Text().Named("AxisSpec")
-                .XOr(RootSpec);
+            Parse.Char('*').Repeat(1, 2).Text()
+                .XOr(RootSpec)
+                .Named("AxisSpec");
 
         //ID: ALPHA ALPHANUM* ;
         //fragment ALPHA: [a-zA-Z];

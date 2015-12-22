@@ -10,6 +10,14 @@ namespace Hl7.Fhir.FhirPath
 {
     public delegate EvaluationContext Evaluator(EvaluationContext c);
 
+    // There is a special case around the entry point, where the type of the entry point can be represented, but is optional.
+    // To illustrate this point, take the path
+    //      telecom.where(use = 'work').value
+    // This can be evaluated as an expression on a Patient resource, or other kind of resources. 
+    // However, for natural human use, expressions are often prefixed with the name of the context in which they are used:
+    //	    Patient.telecom.where(use = 'work').value
+    // These 2 expressions have the same outcome, but when evaluating the second, the evaluation will only produce results when used on a Patient resource.
+
     public static class Eval
     {
         public static IEnumerable<FhirNavigationTree> Evaluate(this Evaluator evaluator, FhirNavigationTree instance)
