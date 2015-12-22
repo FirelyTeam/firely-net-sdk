@@ -156,6 +156,8 @@ namespace Hl7.Fhir.Tests.Serialization
                 var xml = File.ReadAllText(inputFile);
                 var resource = FhirParser.ParseResourceFromXml(xml);
 
+                var r2 = resource.DeepCopy();
+
                 var json = FhirSerializer.SerializeResourceToJson(resource);
                 File.WriteAllText(outputFile, json);
             }
