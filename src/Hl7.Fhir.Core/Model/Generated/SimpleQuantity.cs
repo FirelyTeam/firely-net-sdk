@@ -45,7 +45,12 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "SimpleQuantity"; } }
-        
+
+        public override IDeepCopyable DeepCopy()
+        {
+            return CopyTo(new SimpleQuantity());
+        }
+
         // TODO: Add code to enforce these constraints:
         // * The comparator is not used on a SimpleQuantity
     }

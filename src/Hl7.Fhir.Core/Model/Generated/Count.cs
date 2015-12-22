@@ -45,7 +45,12 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "Count"; } }
-        
+
+        public override IDeepCopyable DeepCopy()
+        {
+            return CopyTo(new Count());
+        }
+
         // TODO: Add code to enforce these constraints:
         // * There SHALL be a code with a value of "1" if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number.
     }

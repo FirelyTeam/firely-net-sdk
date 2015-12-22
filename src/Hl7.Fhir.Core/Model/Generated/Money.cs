@@ -45,7 +45,12 @@ namespace Hl7.Fhir.Model
     {
         [NotMapped]
         public override string TypeName { get { return "Money"; } }
-        
+
+        public override IDeepCopyable DeepCopy()
+        {
+            return CopyTo(new Money());
+        }
+
         // TODO: Add code to enforce these constraints:
         // * There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = "urn:iso:std:iso:4217" - currency).
     }
