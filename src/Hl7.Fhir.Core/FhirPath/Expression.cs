@@ -17,19 +17,16 @@ namespace Hl7.Fhir.FhirPath
         // fpconst: STRING |
         //   '-'? NUMBER |
         //   BOOL |
-        //   CONST;
-        //public static readonly Parser<Evaluator<object>> FpConst =       
-        //Lexer.String.Select(s => Eval.Return((object)s))
-        //    .XOr(Lexer.Number.Select(s => Eval.Return((object)s)))
-        //    .XOr(Lexer.Bool.Select(s => Eval.Return((object)s)))
-        //    .XOr(Lexer.Const.Select(s => Eval.Return((object)s)));
+        //   CONST |
+        //   DATETIME;
 
         public static readonly Parser<Evaluator> FpConst =
-            Lexer.String.Select(s=>Eval.Constant(s))
-            .XOr(Lexer.Number.Select(s =>Eval.Constant(s)))
-            .XOr(Lexer.Bool.Select(s =>Eval.Constant(s)))
-            .XOr(Lexer.Const.Select(s =>Eval.Constant(s)));
-
+            Lexer.String.Select(s => Eval.Constant(s))
+            .XOr(Lexer.DateTime.Select(dt => Eval.Constant(dt)))
+            .XOr(Lexer.Number.Select(n => Eval.Constant(n)))
+            .XOr(Lexer.Bool.Select(b => Eval.Constant(b)))
+            .XOr(Lexer.Const.Select(s => Eval.Constant(s)));
+            
 
         public static Parser<string> makeOperator(Parser<string> left, char op, Parser<string> right)
         {

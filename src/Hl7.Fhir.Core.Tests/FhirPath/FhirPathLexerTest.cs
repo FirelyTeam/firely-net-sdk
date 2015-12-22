@@ -91,6 +91,16 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
         [TestMethod]
+        public void FhirPath_Lex_DateTime()
+        {
+            var parser = Lexer.DateTime.End();
+
+            AssertParser.SucceedsWith(parser, "2015-01", result => Assert.AreEqual(PartialDateTime.Precision.Month, result.Prec));
+            AssertParser.SucceedsWith(parser, "2015-01-02T12:34:00Z", result => Assert.AreEqual(PartialDateTime.Precision.Time, result.Prec));
+            AssertParser.SucceedsWith(parser, "2015-01-03T12:34:34+02:30", result => Assert.AreEqual(PartialDateTime.Precision.Time, result.Prec));            
+        }
+
+        [TestMethod]
         public void FhirPath_Lex_Unicode()
         {
             var parser = Lexer.Unicode.End();

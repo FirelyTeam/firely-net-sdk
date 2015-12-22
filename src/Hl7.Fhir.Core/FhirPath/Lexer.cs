@@ -39,6 +39,7 @@ namespace Hl7.Fhir.FhirPath
         public static readonly Parser<string> Id =
             Parse.Identifier(Parse.Letter, Parse.LetterOrDigit).Named("Id");
 
+
         // CHOICE: '[x]';
         public static readonly Parser<string> Choice =
             Parse.String("[x]").Text().Named("Choice");
@@ -58,6 +59,14 @@ namespace Hl7.Fhir.FhirPath
                     .Text()
             select name).Named("Const");
 
+        // NB: This regex has been modified so it REQUIRES a month to be present (otherwise we cannot distinguish a number from a year-only date
+        // This needs to be fixed in the FhirPath spec.
+        // Original: public const string DATETIME_REGEX = @"-?[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?";
+        public const string DATETIME_REGEX = @"-?[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)";
+
+        public static readonly Parser<PartialDateTime> DateTime = Parse.Regex(DATETIME_REGEX)
+            .Select(s => PartialDateTime.Parse(s));
+    
         // COMP: '=' | '~' | '!=' | '!~' | '>' | '<' | '<=' | '>=' | 'in';
         public static readonly Parser<string> Comp =
             Parse.Chars("=~").Select(s => new char[] { s })

@@ -31,6 +31,13 @@ namespace Hl7.Fhir.FhirPath
                 return resultContxt.Nodes;
         }
 
+
+        public static Evaluator Then(this Evaluator first, Evaluator then)
+        {
+            return c => then(first(c));
+        }
+
+
         public static Evaluator Chain(IEnumerable<Evaluator> evaluators)
         {
             return c =>
