@@ -58,6 +58,17 @@ namespace Hl7.Fhir.Model
             public string[] Path { get; set; }
 
             /// <summary>
+            /// The XPath expression for evaluating this search parameter
+            /// </summary>
+            public string XPath { get; set; }
+
+            /// <summary>
+            /// The FHIR Path expresssion that can be used to extract the data
+            /// for this search parameter
+            /// </summary>
+            public string Expression { get; set; }
+
+            /// <summary>
             /// If this is a reference, the possible types of resources that the
             /// parameters references to
             /// </summary>

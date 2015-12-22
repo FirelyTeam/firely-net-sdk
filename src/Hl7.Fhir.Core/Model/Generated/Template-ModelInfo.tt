@@ -230,26 +230,32 @@ namespace Hl7.Fhir.Model
 					case "uri" : outputType = "Uri"; break;
                 }
 				string path = ""; // "ResourceType.Patient, ";
+				string xpath= "";
 				foreach(XmlAttribute et in sp.SelectNodes("fhir:xpath/@value", nsS))
                 {
+					xpath = et.Value;
 					string temp = "\"" + et.Value.Replace("f:", "").Replace("/", ".").Replace("(", "[").Replace(")", "]") + "\"";
 					var split = temp.Split(new char[] {'|', ' '}, StringSplitOptions.RemoveEmptyEntries);
 					path += string.Join("\", \"", split) + ", ";
 				}
 				string target = ""; // "ResourceType.Patient, ";
+				string expression = "";
 				var sc = new System.Collections.Generic.SortedSet<String>();
 				foreach(XmlAttribute et in sp.SelectNodes("fhir:target/@value", nsS))
                 {
 					sc.Add("ResourceType." + et.Value);
 					target += "ResourceType." + et.Value + ", ";
 				}
+				var exprNode = sp.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/searchparameter-expression']/fhir:valueString/@value", nsR);
+				if (exprNode != null)
+					expression = exprNode.Value;
 				if (!string.IsNullOrEmpty(target))
                 {
 					// target = ", Target = new ResourceType[] { " + target + "}";
 					target = ", Target = new ResourceType[] { " + string.Join(", ", sc) + ", }";
                 }
 				// string path = sp.SelectSingleNode("fhir:xpath/@value", nsR).Value;
-#>                new SearchParamDefinition() { Resource = "<#= resourceName #>", Name = "<#= name #>", Description = @"<#= description.Replace("\"", "\"\"") #>", Type = SearchParamType.<#= outputType #>, Path = new string[] { <#= path #>}<#= target #> }, 
+#>                new SearchParamDefinition() { Resource = "<#= resourceName #>", Name = "<#= name #>", Description = @"<#= description.Replace("\"", "\"\"") #>", Type = SearchParamType.<#= outputType #>, Path = new string[] { <#= path #>}<#= target #><#= !string.IsNullOrEmpty(xpath) ? ", XPath = \"" + xpath + "\"" : "" #><#= !string.IsNullOrEmpty(expression) ? ", Expression = \"" + expression + "\"" : "" #> },
 <#
             }
         }
