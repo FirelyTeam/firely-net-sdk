@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
 			defintion = "MISSING DESCRIPTION";
 #>
         /// <summary>
-        /// <#= defintion.Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ").Replace("<", "&lt;").Replace(">", "&gt;") #><br/>
+        /// <#= defintion.Replace("\r", "\n").Replace("\n\n", "\n").Replace("<", "&lt;").Replace(">", "&gt;").Replace("\n", "<br/>\r\n        /// ") #><br/>
         /// (system: <#= system #>)
         /// </summary>
         [EnumLiteral("<#= code #>"), Description("<#= display #>")]
