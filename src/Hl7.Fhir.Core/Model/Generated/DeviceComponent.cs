@@ -128,12 +128,12 @@ namespace Hl7.Fhir.Model
             Manual,
         }
 
-        [FhirType("DeviceComponentProductionSpecificationComponent")]
+        [FhirType("ProductionSpecificationComponent")]
         [DataContract]
-        public partial class DeviceComponentProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DeviceComponentProductionSpecificationComponent"; } }
+            public override string TypeName { get { return "ProductionSpecificationComponent"; } }
             
             /// <summary>
             /// Specification type
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DeviceComponentProductionSpecificationComponent;
+                var dest = other as ProductionSpecificationComponent;
                 
                 if (dest != null)
                 {
@@ -211,12 +211,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DeviceComponentProductionSpecificationComponent());
+                return CopyTo(new ProductionSpecificationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DeviceComponentProductionSpecificationComponent;
+                var otherT = other as ProductionSpecificationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DeviceComponentProductionSpecificationComponent;
+                var otherT = other as ProductionSpecificationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -397,13 +397,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("productionSpecification", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DeviceComponent.DeviceComponentProductionSpecificationComponent> ProductionSpecification
+        public List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent> ProductionSpecification
         {
-            get { if(_ProductionSpecification==null) _ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.DeviceComponentProductionSpecificationComponent>(); return _ProductionSpecification; }
+            get { if(_ProductionSpecification==null) _ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>(); return _ProductionSpecification; }
             set { _ProductionSpecification = value; OnPropertyChanged("ProductionSpecification"); }
         }
         
-        private List<Hl7.Fhir.Model.DeviceComponent.DeviceComponentProductionSpecificationComponent> _ProductionSpecification;
+        private List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent> _ProductionSpecification;
         
         /// <summary>
         /// Language code for the human-readable text strings produced by the device
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
                 if(OperationalStatus != null) dest.OperationalStatus = new List<Hl7.Fhir.Model.CodeableConcept>(OperationalStatus.DeepCopy());
                 if(ParameterGroup != null) dest.ParameterGroup = (Hl7.Fhir.Model.CodeableConcept)ParameterGroup.DeepCopy();
                 if(MeasurementPrincipleElement != null) dest.MeasurementPrincipleElement = (Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle>)MeasurementPrincipleElement.DeepCopy();
-                if(ProductionSpecification != null) dest.ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.DeviceComponentProductionSpecificationComponent>(ProductionSpecification.DeepCopy());
+                if(ProductionSpecification != null) dest.ProductionSpecification = new List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent>(ProductionSpecification.DeepCopy());
                 if(LanguageCode != null) dest.LanguageCode = (Hl7.Fhir.Model.CodeableConcept)LanguageCode.DeepCopy();
                 return dest;
             }

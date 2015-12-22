@@ -80,12 +80,12 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("ClinicalImpressionInvestigationsComponent")]
+        [FhirType("InvestigationsComponent")]
         [DataContract]
-        public partial class ClinicalImpressionInvestigationsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InvestigationsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ClinicalImpressionInvestigationsComponent"; } }
+            public override string TypeName { get { return "InvestigationsComponent"; } }
             
             /// <summary>
             /// A name/code for the set
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ClinicalImpressionInvestigationsComponent;
+                var dest = other as InvestigationsComponent;
                 
                 if (dest != null)
                 {
@@ -133,12 +133,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ClinicalImpressionInvestigationsComponent());
+                return CopyTo(new InvestigationsComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ClinicalImpressionInvestigationsComponent;
+                var otherT = other as InvestigationsComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ClinicalImpressionInvestigationsComponent;
+                var otherT = other as InvestigationsComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -163,12 +163,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClinicalImpressionFindingComponent")]
+        [FhirType("FindingComponent")]
         [DataContract]
-        public partial class ClinicalImpressionFindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ClinicalImpressionFindingComponent"; } }
+            public override string TypeName { get { return "FindingComponent"; } }
             
             /// <summary>
             /// Specific text or code for finding
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ClinicalImpressionFindingComponent;
+                var dest = other as FindingComponent;
                 
                 if (dest != null)
                 {
@@ -233,12 +233,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ClinicalImpressionFindingComponent());
+                return CopyTo(new FindingComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ClinicalImpressionFindingComponent;
+                var otherT = other as FindingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ClinicalImpressionFindingComponent;
+                var otherT = other as FindingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -263,12 +263,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClinicalImpressionRuledOutComponent")]
+        [FhirType("RuledOutComponent")]
         [DataContract]
-        public partial class ClinicalImpressionRuledOutComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RuledOutComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ClinicalImpressionRuledOutComponent"; } }
+            public override string TypeName { get { return "RuledOutComponent"; } }
             
             /// <summary>
             /// Specific text of code for diagnosis
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ClinicalImpressionRuledOutComponent;
+                var dest = other as RuledOutComponent;
                 
                 if (dest != null)
                 {
@@ -333,12 +333,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ClinicalImpressionRuledOutComponent());
+                return CopyTo(new RuledOutComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ClinicalImpressionRuledOutComponent;
+                var otherT = other as RuledOutComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ClinicalImpressionRuledOutComponent;
+                var otherT = other as RuledOutComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -538,13 +538,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("investigations", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionInvestigationsComponent> Investigations
+        public List<Hl7.Fhir.Model.ClinicalImpression.InvestigationsComponent> Investigations
         {
-            get { if(_Investigations==null) _Investigations = new List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionInvestigationsComponent>(); return _Investigations; }
+            get { if(_Investigations==null) _Investigations = new List<Hl7.Fhir.Model.ClinicalImpression.InvestigationsComponent>(); return _Investigations; }
             set { _Investigations = value; OnPropertyChanged("Investigations"); }
         }
         
-        private List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionInvestigationsComponent> _Investigations;
+        private List<Hl7.Fhir.Model.ClinicalImpression.InvestigationsComponent> _Investigations;
         
         /// <summary>
         /// Clinical Protocol followed
@@ -616,13 +616,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("finding", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionFindingComponent> Finding
+        public List<Hl7.Fhir.Model.ClinicalImpression.FindingComponent> Finding
         {
-            get { if(_Finding==null) _Finding = new List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionFindingComponent>(); return _Finding; }
+            get { if(_Finding==null) _Finding = new List<Hl7.Fhir.Model.ClinicalImpression.FindingComponent>(); return _Finding; }
             set { _Finding = value; OnPropertyChanged("Finding"); }
         }
         
-        private List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionFindingComponent> _Finding;
+        private List<Hl7.Fhir.Model.ClinicalImpression.FindingComponent> _Finding;
         
         /// <summary>
         /// Diagnoses/conditions resolved since previous assessment
@@ -644,13 +644,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("ruledOut", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionRuledOutComponent> RuledOut
+        public List<Hl7.Fhir.Model.ClinicalImpression.RuledOutComponent> RuledOut
         {
-            get { if(_RuledOut==null) _RuledOut = new List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionRuledOutComponent>(); return _RuledOut; }
+            get { if(_RuledOut==null) _RuledOut = new List<Hl7.Fhir.Model.ClinicalImpression.RuledOutComponent>(); return _RuledOut; }
             set { _RuledOut = value; OnPropertyChanged("RuledOut"); }
         }
         
-        private List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionRuledOutComponent> _RuledOut;
+        private List<Hl7.Fhir.Model.ClinicalImpression.RuledOutComponent> _RuledOut;
         
         /// <summary>
         /// Estimate of likely outcome
@@ -729,12 +729,12 @@ namespace Hl7.Fhir.Model
                 if(Previous != null) dest.Previous = (Hl7.Fhir.Model.ResourceReference)Previous.DeepCopy();
                 if(Problem != null) dest.Problem = new List<Hl7.Fhir.Model.ResourceReference>(Problem.DeepCopy());
                 if(Trigger != null) dest.Trigger = (Hl7.Fhir.Model.Element)Trigger.DeepCopy();
-                if(Investigations != null) dest.Investigations = new List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionInvestigationsComponent>(Investigations.DeepCopy());
+                if(Investigations != null) dest.Investigations = new List<Hl7.Fhir.Model.ClinicalImpression.InvestigationsComponent>(Investigations.DeepCopy());
                 if(ProtocolElement != null) dest.ProtocolElement = (Hl7.Fhir.Model.FhirUri)ProtocolElement.DeepCopy();
                 if(SummaryElement != null) dest.SummaryElement = (Hl7.Fhir.Model.FhirString)SummaryElement.DeepCopy();
-                if(Finding != null) dest.Finding = new List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionFindingComponent>(Finding.DeepCopy());
+                if(Finding != null) dest.Finding = new List<Hl7.Fhir.Model.ClinicalImpression.FindingComponent>(Finding.DeepCopy());
                 if(Resolved != null) dest.Resolved = new List<Hl7.Fhir.Model.CodeableConcept>(Resolved.DeepCopy());
-                if(RuledOut != null) dest.RuledOut = new List<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionRuledOutComponent>(RuledOut.DeepCopy());
+                if(RuledOut != null) dest.RuledOut = new List<Hl7.Fhir.Model.ClinicalImpression.RuledOutComponent>(RuledOut.DeepCopy());
                 if(PrognosisElement != null) dest.PrognosisElement = (Hl7.Fhir.Model.FhirString)PrognosisElement.DeepCopy();
                 if(Plan != null) dest.Plan = new List<Hl7.Fhir.Model.ResourceReference>(Plan.DeepCopy());
                 if(Action != null) dest.Action = new List<Hl7.Fhir.Model.ResourceReference>(Action.DeepCopy());

@@ -361,13 +361,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("answer", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseGroupQuestionAnswerComponent> Answer
+            public List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> Answer
             {
-                get { if(_Answer==null) _Answer = new List<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseGroupQuestionAnswerComponent>(); return _Answer; }
+                get { if(_Answer==null) _Answer = new List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>(); return _Answer; }
                 set { _Answer = value; OnPropertyChanged("Answer"); }
             }
             
-            private List<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseGroupQuestionAnswerComponent> _Answer;
+            private List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> _Answer;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(LinkIdElement != null) dest.LinkIdElement = (Hl7.Fhir.Model.FhirString)LinkIdElement.DeepCopy();
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
-                    if(Answer != null) dest.Answer = new List<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseGroupQuestionAnswerComponent>(Answer.DeepCopy());
+                    if(Answer != null) dest.Answer = new List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>(Answer.DeepCopy());
                     return dest;
                 }
                 else
@@ -419,12 +419,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("QuestionnaireResponseGroupQuestionAnswerComponent")]
+        [FhirType("AnswerComponent")]
         [DataContract]
-        public partial class QuestionnaireResponseGroupQuestionAnswerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "QuestionnaireResponseGroupQuestionAnswerComponent"; } }
+            public override string TypeName { get { return "AnswerComponent"; } }
             
             /// <summary>
             /// Single-valued answer to the question
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as QuestionnaireResponseGroupQuestionAnswerComponent;
+                var dest = other as AnswerComponent;
                 
                 if (dest != null)
                 {
@@ -471,12 +471,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new QuestionnaireResponseGroupQuestionAnswerComponent());
+                return CopyTo(new AnswerComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as QuestionnaireResponseGroupQuestionAnswerComponent;
+                var otherT = other as AnswerComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as QuestionnaireResponseGroupQuestionAnswerComponent;
+                var otherT = other as AnswerComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;

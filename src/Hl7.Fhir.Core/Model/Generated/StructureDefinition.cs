@@ -113,12 +113,12 @@ namespace Hl7.Fhir.Model
             Extension,
         }
 
-        [FhirType("StructureDefinitionContactComponent")]
+        [FhirType("ContactComponent")]
         [DataContract]
-        public partial class StructureDefinitionContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "StructureDefinitionContactComponent"; } }
+            public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
             /// Name of a individual to contact
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as StructureDefinitionContactComponent;
+                var dest = other as ContactComponent;
                 
                 if (dest != null)
                 {
@@ -183,12 +183,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new StructureDefinitionContactComponent());
+                return CopyTo(new ContactComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as StructureDefinitionContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as StructureDefinitionContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -213,12 +213,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureDefinitionMappingComponent")]
+        [FhirType("MappingComponent")]
         [DataContract]
-        public partial class StructureDefinitionMappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "StructureDefinitionMappingComponent"; } }
+            public override string TypeName { get { return "MappingComponent"; } }
             
             /// <summary>
             /// Internal id when this mapping is used
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as StructureDefinitionMappingComponent;
+                var dest = other as MappingComponent;
                 
                 if (dest != null)
                 {
@@ -368,12 +368,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new StructureDefinitionMappingComponent());
+                return CopyTo(new MappingComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as StructureDefinitionMappingComponent;
+                var otherT = other as MappingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as StructureDefinitionMappingComponent;
+                var otherT = other as MappingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -402,12 +402,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureDefinitionSnapshotComponent")]
+        [FhirType("SnapshotComponent")]
         [DataContract]
-        public partial class StructureDefinitionSnapshotComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SnapshotComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "StructureDefinitionSnapshotComponent"; } }
+            public override string TypeName { get { return "SnapshotComponent"; } }
             
             /// <summary>
             /// Definition of elements in the resource (if no StructureDefinition)
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as StructureDefinitionSnapshotComponent;
+                var dest = other as SnapshotComponent;
                 
                 if (dest != null)
                 {
@@ -439,12 +439,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new StructureDefinitionSnapshotComponent());
+                return CopyTo(new SnapshotComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as StructureDefinitionSnapshotComponent;
+                var otherT = other as SnapshotComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -455,7 +455,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as StructureDefinitionSnapshotComponent;
+                var otherT = other as SnapshotComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -467,12 +467,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureDefinitionDifferentialComponent")]
+        [FhirType("DifferentialComponent")]
         [DataContract]
-        public partial class StructureDefinitionDifferentialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DifferentialComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "StructureDefinitionDifferentialComponent"; } }
+            public override string TypeName { get { return "DifferentialComponent"; } }
             
             /// <summary>
             /// Definition of elements in the resource (if no StructureDefinition)
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as StructureDefinitionDifferentialComponent;
+                var dest = other as DifferentialComponent;
                 
                 if (dest != null)
                 {
@@ -504,12 +504,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new StructureDefinitionDifferentialComponent());
+                return CopyTo(new DifferentialComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as StructureDefinitionDifferentialComponent;
+                var otherT = other as DifferentialComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -520,7 +520,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as StructureDefinitionDifferentialComponent;
+                var otherT = other as DifferentialComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -779,13 +779,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contact", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionContactComponent> Contact
+        public List<Hl7.Fhir.Model.StructureDefinition.ContactComponent> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.StructureDefinition.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionContactComponent> _Contact;
+        private List<Hl7.Fhir.Model.StructureDefinition.ContactComponent> _Contact;
         
         /// <summary>
         /// Date for this version of the StructureDefinition
@@ -981,13 +981,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("mapping", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionMappingComponent> Mapping
+        public List<Hl7.Fhir.Model.StructureDefinition.MappingComponent> Mapping
         {
-            get { if(_Mapping==null) _Mapping = new List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionMappingComponent>(); return _Mapping; }
+            get { if(_Mapping==null) _Mapping = new List<Hl7.Fhir.Model.StructureDefinition.MappingComponent>(); return _Mapping; }
             set { _Mapping = value; OnPropertyChanged("Mapping"); }
         }
         
-        private List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionMappingComponent> _Mapping;
+        private List<Hl7.Fhir.Model.StructureDefinition.MappingComponent> _Mapping;
         
         /// <summary>
         /// datatype | resource | logical
@@ -1189,26 +1189,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("snapshot", Order=320)]
         [DataMember]
-        public Hl7.Fhir.Model.StructureDefinition.StructureDefinitionSnapshotComponent Snapshot
+        public Hl7.Fhir.Model.StructureDefinition.SnapshotComponent Snapshot
         {
             get { return _Snapshot; }
             set { _Snapshot = value; OnPropertyChanged("Snapshot"); }
         }
         
-        private Hl7.Fhir.Model.StructureDefinition.StructureDefinitionSnapshotComponent _Snapshot;
+        private Hl7.Fhir.Model.StructureDefinition.SnapshotComponent _Snapshot;
         
         /// <summary>
         /// Differential view of the structure
         /// </summary>
         [FhirElement("differential", Order=330)]
         [DataMember]
-        public Hl7.Fhir.Model.StructureDefinition.StructureDefinitionDifferentialComponent Differential
+        public Hl7.Fhir.Model.StructureDefinition.DifferentialComponent Differential
         {
             get { return _Differential; }
             set { _Differential = value; OnPropertyChanged("Differential"); }
         }
         
-        private Hl7.Fhir.Model.StructureDefinition.StructureDefinitionDifferentialComponent _Differential;
+        private Hl7.Fhir.Model.StructureDefinition.DifferentialComponent _Differential;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1225,7 +1225,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.StructureDefinition.ContactComponent>(Contact.DeepCopy());
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
@@ -1233,15 +1233,15 @@ namespace Hl7.Fhir.Model
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
                 if(Code != null) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopy());
                 if(FhirVersionElement != null) dest.FhirVersionElement = (Hl7.Fhir.Model.Id)FhirVersionElement.DeepCopy();
-                if(Mapping != null) dest.Mapping = new List<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionMappingComponent>(Mapping.DeepCopy());
+                if(Mapping != null) dest.Mapping = new List<Hl7.Fhir.Model.StructureDefinition.MappingComponent>(Mapping.DeepCopy());
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind>)KindElement.DeepCopy();
                 if(ConstrainedTypeElement != null) dest.ConstrainedTypeElement = (Code<Hl7.Fhir.Model.FHIRDefinedType>)ConstrainedTypeElement.DeepCopy();
                 if(AbstractElement != null) dest.AbstractElement = (Hl7.Fhir.Model.FhirBoolean)AbstractElement.DeepCopy();
                 if(ContextTypeElement != null) dest.ContextTypeElement = (Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContext>)ContextTypeElement.DeepCopy();
                 if(ContextElement != null) dest.ContextElement = new List<Hl7.Fhir.Model.FhirString>(ContextElement.DeepCopy());
                 if(BaseElement != null) dest.BaseElement = (Hl7.Fhir.Model.FhirUri)BaseElement.DeepCopy();
-                if(Snapshot != null) dest.Snapshot = (Hl7.Fhir.Model.StructureDefinition.StructureDefinitionSnapshotComponent)Snapshot.DeepCopy();
-                if(Differential != null) dest.Differential = (Hl7.Fhir.Model.StructureDefinition.StructureDefinitionDifferentialComponent)Differential.DeepCopy();
+                if(Snapshot != null) dest.Snapshot = (Hl7.Fhir.Model.StructureDefinition.SnapshotComponent)Snapshot.DeepCopy();
+                if(Differential != null) dest.Differential = (Hl7.Fhir.Model.StructureDefinition.DifferentialComponent)Differential.DeepCopy();
                 return dest;
             }
             else

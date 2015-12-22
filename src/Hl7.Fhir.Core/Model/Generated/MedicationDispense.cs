@@ -93,12 +93,12 @@ namespace Hl7.Fhir.Model
             Stopped,
         }
 
-        [FhirType("MedicationDispenseDosageInstructionComponent")]
+        [FhirType("DosageInstructionComponent")]
         [DataContract]
-        public partial class MedicationDispenseDosageInstructionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DosageInstructionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "MedicationDispenseDosageInstructionComponent"; } }
+            public override string TypeName { get { return "DosageInstructionComponent"; } }
             
             /// <summary>
             /// Dosage Instructions
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as MedicationDispenseDosageInstructionComponent;
+                var dest = other as DosageInstructionComponent;
                 
                 if (dest != null)
                 {
@@ -278,12 +278,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new MedicationDispenseDosageInstructionComponent());
+                return CopyTo(new DosageInstructionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as MedicationDispenseDosageInstructionComponent;
+                var otherT = other as DosageInstructionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as MedicationDispenseDosageInstructionComponent;
+                var otherT = other as DosageInstructionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -324,12 +324,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicationDispenseSubstitutionComponent")]
+        [FhirType("SubstitutionComponent")]
         [DataContract]
-        public partial class MedicationDispenseSubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "MedicationDispenseSubstitutionComponent"; } }
+            public override string TypeName { get { return "SubstitutionComponent"; } }
             
             /// <summary>
             /// Type of substitution
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as MedicationDispenseSubstitutionComponent;
+                var dest = other as SubstitutionComponent;
                 
                 if (dest != null)
                 {
@@ -392,12 +392,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new MedicationDispenseSubstitutionComponent());
+                return CopyTo(new SubstitutionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as MedicationDispenseSubstitutionComponent;
+                var otherT = other as SubstitutionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as MedicationDispenseSubstitutionComponent;
+                var otherT = other as SubstitutionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -697,26 +697,26 @@ namespace Hl7.Fhir.Model
         [FhirElement("dosageInstruction", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDosageInstructionComponent> DosageInstruction
+        public List<Hl7.Fhir.Model.MedicationDispense.DosageInstructionComponent> DosageInstruction
         {
-            get { if(_DosageInstruction==null) _DosageInstruction = new List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDosageInstructionComponent>(); return _DosageInstruction; }
+            get { if(_DosageInstruction==null) _DosageInstruction = new List<Hl7.Fhir.Model.MedicationDispense.DosageInstructionComponent>(); return _DosageInstruction; }
             set { _DosageInstruction = value; OnPropertyChanged("DosageInstruction"); }
         }
         
-        private List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDosageInstructionComponent> _DosageInstruction;
+        private List<Hl7.Fhir.Model.MedicationDispense.DosageInstructionComponent> _DosageInstruction;
         
         /// <summary>
         /// Deals with substitution of one medicine for another
         /// </summary>
         [FhirElement("substitution", InSummary=true, Order=240)]
         [DataMember]
-        public Hl7.Fhir.Model.MedicationDispense.MedicationDispenseSubstitutionComponent Substitution
+        public Hl7.Fhir.Model.MedicationDispense.SubstitutionComponent Substitution
         {
             get { return _Substitution; }
             set { _Substitution = value; OnPropertyChanged("Substitution"); }
         }
         
-        private Hl7.Fhir.Model.MedicationDispense.MedicationDispenseSubstitutionComponent _Substitution;
+        private Hl7.Fhir.Model.MedicationDispense.SubstitutionComponent _Substitution;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -739,8 +739,8 @@ namespace Hl7.Fhir.Model
                 if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
                 if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.ResourceReference>(Receiver.DeepCopy());
                 if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
-                if(DosageInstruction != null) dest.DosageInstruction = new List<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseDosageInstructionComponent>(DosageInstruction.DeepCopy());
-                if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.MedicationDispense.MedicationDispenseSubstitutionComponent)Substitution.DeepCopy();
+                if(DosageInstruction != null) dest.DosageInstruction = new List<Hl7.Fhir.Model.MedicationDispense.DosageInstructionComponent>(DosageInstruction.DeepCopy());
+                if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.MedicationDispense.SubstitutionComponent)Substitution.DeepCopy();
                 return dest;
             }
             else

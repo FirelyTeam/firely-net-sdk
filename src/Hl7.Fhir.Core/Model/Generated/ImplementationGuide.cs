@@ -176,12 +176,12 @@ namespace Hl7.Fhir.Model
             Resource,
         }
 
-        [FhirType("ImplementationGuideContactComponent")]
+        [FhirType("ContactComponent")]
         [DataContract]
-        public partial class ImplementationGuideContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImplementationGuideContactComponent"; } }
+            public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
             /// Name of a individual to contact
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImplementationGuideContactComponent;
+                var dest = other as ContactComponent;
                 
                 if (dest != null)
                 {
@@ -246,12 +246,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImplementationGuideContactComponent());
+                return CopyTo(new ContactComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuideContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuideContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -276,12 +276,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuideDependencyComponent")]
+        [FhirType("DependencyComponent")]
         [DataContract]
-        public partial class ImplementationGuideDependencyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImplementationGuideDependencyComponent"; } }
+            public override string TypeName { get { return "DependencyComponent"; } }
             
             /// <summary>
             /// reference | inclusion
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImplementationGuideDependencyComponent;
+                var dest = other as DependencyComponent;
                 
                 if (dest != null)
                 {
@@ -366,12 +366,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImplementationGuideDependencyComponent());
+                return CopyTo(new DependencyComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuideDependencyComponent;
+                var otherT = other as DependencyComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuideDependencyComponent;
+                var otherT = other as DependencyComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -396,12 +396,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuidePackageComponent")]
+        [FhirType("PackageComponent")]
         [DataContract]
-        public partial class ImplementationGuidePackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImplementationGuidePackageComponent"; } }
+            public override string TypeName { get { return "PackageComponent"; } }
             
             /// <summary>
             /// Name used .page.package
@@ -474,24 +474,24 @@ namespace Hl7.Fhir.Model
             [FhirElement("resource", InSummary=true, Order=60)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageResourceComponent> Resource
+            public List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent> Resource
             {
-                get { if(_Resource==null) _Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageResourceComponent>(); return _Resource; }
+                get { if(_Resource==null) _Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent>(); return _Resource; }
                 set { _Resource = value; OnPropertyChanged("Resource"); }
             }
             
-            private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageResourceComponent> _Resource;
+            private List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent> _Resource;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImplementationGuidePackageComponent;
+                var dest = other as PackageComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageResourceComponent>(Resource.DeepCopy());
+                    if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent>(Resource.DeepCopy());
                     return dest;
                 }
                 else
@@ -500,12 +500,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImplementationGuidePackageComponent());
+                return CopyTo(new PackageComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuidePackageComponent;
+                var otherT = other as PackageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuidePackageComponent;
+                var otherT = other as PackageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -532,12 +532,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuidePackageResourceComponent")]
+        [FhirType("ResourceComponent")]
         [DataContract]
-        public partial class ImplementationGuidePackageResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImplementationGuidePackageResourceComponent"; } }
+            public override string TypeName { get { return "ResourceComponent"; } }
             
             /// <summary>
             /// example | terminology | profile | extension | dictionary | logical
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImplementationGuidePackageResourceComponent;
+                var dest = other as ResourceComponent;
                 
                 if (dest != null)
                 {
@@ -718,12 +718,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImplementationGuidePackageResourceComponent());
+                return CopyTo(new ResourceComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuidePackageResourceComponent;
+                var otherT = other as ResourceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -739,7 +739,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuidePackageResourceComponent;
+                var otherT = other as ResourceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -756,12 +756,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuideGlobalComponent")]
+        [FhirType("GlobalComponent")]
         [DataContract]
-        public partial class ImplementationGuideGlobalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImplementationGuideGlobalComponent"; } }
+            public override string TypeName { get { return "GlobalComponent"; } }
             
             /// <summary>
             /// Type this profiles applies to
@@ -813,7 +813,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImplementationGuideGlobalComponent;
+                var dest = other as GlobalComponent;
                 
                 if (dest != null)
                 {
@@ -828,12 +828,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImplementationGuideGlobalComponent());
+                return CopyTo(new GlobalComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuideGlobalComponent;
+                var otherT = other as GlobalComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -845,7 +845,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuideGlobalComponent;
+                var otherT = other as GlobalComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -858,12 +858,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuidePageComponent")]
+        [FhirType("PageComponent")]
         [DataContract]
-        public partial class ImplementationGuidePageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImplementationGuidePageComponent"; } }
+            public override string TypeName { get { return "PageComponent"; } }
             
             /// <summary>
             /// Where to find that page
@@ -1068,17 +1068,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("page", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent> Page
+            public List<Hl7.Fhir.Model.ImplementationGuide.PageComponent> Page
             {
-                get { if(_Page==null) _Page = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent>(); return _Page; }
+                get { if(_Page==null) _Page = new List<Hl7.Fhir.Model.ImplementationGuide.PageComponent>(); return _Page; }
                 set { _Page = value; OnPropertyChanged("Page"); }
             }
             
-            private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent> _Page;
+            private List<Hl7.Fhir.Model.ImplementationGuide.PageComponent> _Page;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImplementationGuidePageComponent;
+                var dest = other as PageComponent;
                 
                 if (dest != null)
                 {
@@ -1089,7 +1089,7 @@ namespace Hl7.Fhir.Model
                     if(TypeElement != null) dest.TypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(TypeElement.DeepCopy());
                     if(PackageElement != null) dest.PackageElement = new List<Hl7.Fhir.Model.FhirString>(PackageElement.DeepCopy());
                     if(FormatElement != null) dest.FormatElement = (Hl7.Fhir.Model.Code)FormatElement.DeepCopy();
-                    if(Page != null) dest.Page = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent>(Page.DeepCopy());
+                    if(Page != null) dest.Page = new List<Hl7.Fhir.Model.ImplementationGuide.PageComponent>(Page.DeepCopy());
                     return dest;
                 }
                 else
@@ -1098,12 +1098,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImplementationGuidePageComponent());
+                return CopyTo(new PageComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuidePageComponent;
+                var otherT = other as PageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuidePageComponent;
+                var otherT = other as PageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1339,13 +1339,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contact", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideContactComponent> Contact
+        public List<Hl7.Fhir.Model.ImplementationGuide.ContactComponent> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ImplementationGuide.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideContactComponent> _Contact;
+        private List<Hl7.Fhir.Model.ImplementationGuide.ContactComponent> _Contact;
         
         /// <summary>
         /// Date for this version of the Implementation Guide
@@ -1495,13 +1495,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("dependency", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideDependencyComponent> Dependency
+        public List<Hl7.Fhir.Model.ImplementationGuide.DependencyComponent> Dependency
         {
-            get { if(_Dependency==null) _Dependency = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideDependencyComponent>(); return _Dependency; }
+            get { if(_Dependency==null) _Dependency = new List<Hl7.Fhir.Model.ImplementationGuide.DependencyComponent>(); return _Dependency; }
             set { _Dependency = value; OnPropertyChanged("Dependency"); }
         }
         
-        private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideDependencyComponent> _Dependency;
+        private List<Hl7.Fhir.Model.ImplementationGuide.DependencyComponent> _Dependency;
         
         /// <summary>
         /// Group of resources as used in .page.package
@@ -1509,13 +1509,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("package", InSummary=true, Order=220)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageComponent> Package
+        public List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent> Package
         {
-            get { if(_Package==null) _Package = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageComponent>(); return _Package; }
+            get { if(_Package==null) _Package = new List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent>(); return _Package; }
             set { _Package = value; OnPropertyChanged("Package"); }
         }
         
-        private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageComponent> _Package;
+        private List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent> _Package;
         
         /// <summary>
         /// Profiles that apply globally
@@ -1523,13 +1523,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("global", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideGlobalComponent> Global
+        public List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent> Global
         {
-            get { if(_Global==null) _Global = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideGlobalComponent>(); return _Global; }
+            get { if(_Global==null) _Global = new List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent>(); return _Global; }
             set { _Global = value; OnPropertyChanged("Global"); }
         }
         
-        private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideGlobalComponent> _Global;
+        private List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent> _Global;
         
         /// <summary>
         /// Image, css, script, etc.
@@ -1570,13 +1570,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("page", InSummary=true, Order=250)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent Page
+        public Hl7.Fhir.Model.ImplementationGuide.PageComponent Page
         {
             get { return _Page; }
             set { _Page = value; OnPropertyChanged("Page"); }
         }
         
-        private Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent _Page;
+        private Hl7.Fhir.Model.ImplementationGuide.PageComponent _Page;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1591,17 +1591,17 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ImplementationGuide.ContactComponent>(Contact.DeepCopy());
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
                 if(FhirVersionElement != null) dest.FhirVersionElement = (Hl7.Fhir.Model.Id)FhirVersionElement.DeepCopy();
-                if(Dependency != null) dest.Dependency = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideDependencyComponent>(Dependency.DeepCopy());
-                if(Package != null) dest.Package = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageComponent>(Package.DeepCopy());
-                if(Global != null) dest.Global = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideGlobalComponent>(Global.DeepCopy());
+                if(Dependency != null) dest.Dependency = new List<Hl7.Fhir.Model.ImplementationGuide.DependencyComponent>(Dependency.DeepCopy());
+                if(Package != null) dest.Package = new List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent>(Package.DeepCopy());
+                if(Global != null) dest.Global = new List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent>(Global.DeepCopy());
                 if(BinaryElement != null) dest.BinaryElement = new List<Hl7.Fhir.Model.FhirUri>(BinaryElement.DeepCopy());
-                if(Page != null) dest.Page = (Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent)Page.DeepCopy();
+                if(Page != null) dest.Page = (Hl7.Fhir.Model.ImplementationGuide.PageComponent)Page.DeepCopy();
                 return dest;
             }
             else

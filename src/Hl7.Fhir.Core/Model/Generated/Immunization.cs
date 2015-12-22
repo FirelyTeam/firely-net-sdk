@@ -53,12 +53,12 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Immunization"; } }
         
-        [FhirType("ImmunizationExplanationComponent")]
+        [FhirType("ExplanationComponent")]
         [DataContract]
-        public partial class ImmunizationExplanationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImmunizationExplanationComponent"; } }
+            public override string TypeName { get { return "ExplanationComponent"; } }
             
             /// <summary>
             /// Why immunization occurred
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImmunizationExplanationComponent;
+                var dest = other as ExplanationComponent;
                 
                 if (dest != null)
                 {
@@ -105,12 +105,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImmunizationExplanationComponent());
+                return CopyTo(new ExplanationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImmunizationExplanationComponent;
+                var otherT = other as ExplanationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImmunizationExplanationComponent;
+                var otherT = other as ExplanationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -135,12 +135,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImmunizationReactionComponent")]
+        [FhirType("ReactionComponent")]
         [DataContract]
-        public partial class ImmunizationReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImmunizationReactionComponent"; } }
+            public override string TypeName { get { return "ReactionComponent"; } }
             
             /// <summary>
             /// When reaction started
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImmunizationReactionComponent;
+                var dest = other as ReactionComponent;
                 
                 if (dest != null)
                 {
@@ -238,12 +238,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImmunizationReactionComponent());
+                return CopyTo(new ReactionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImmunizationReactionComponent;
+                var otherT = other as ReactionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImmunizationReactionComponent;
+                var otherT = other as ReactionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -270,12 +270,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImmunizationVaccinationProtocolComponent")]
+        [FhirType("VaccinationProtocolComponent")]
         [DataContract]
-        public partial class ImmunizationVaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImmunizationVaccinationProtocolComponent"; } }
+            public override string TypeName { get { return "VaccinationProtocolComponent"; } }
             
             /// <summary>
             /// Dose number within series
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImmunizationVaccinationProtocolComponent;
+                var dest = other as VaccinationProtocolComponent;
                 
                 if (dest != null)
                 {
@@ -484,12 +484,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImmunizationVaccinationProtocolComponent());
+                return CopyTo(new VaccinationProtocolComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImmunizationVaccinationProtocolComponent;
+                var otherT = other as VaccinationProtocolComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -507,7 +507,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImmunizationVaccinationProtocolComponent;
+                var otherT = other as VaccinationProtocolComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -892,13 +892,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("explanation", Order=270)]
         [DataMember]
-        public Hl7.Fhir.Model.Immunization.ImmunizationExplanationComponent Explanation
+        public Hl7.Fhir.Model.Immunization.ExplanationComponent Explanation
         {
             get { return _Explanation; }
             set { _Explanation = value; OnPropertyChanged("Explanation"); }
         }
         
-        private Hl7.Fhir.Model.Immunization.ImmunizationExplanationComponent _Explanation;
+        private Hl7.Fhir.Model.Immunization.ExplanationComponent _Explanation;
         
         /// <summary>
         /// Details of a reaction that follows immunization
@@ -906,13 +906,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("reaction", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Immunization.ImmunizationReactionComponent> Reaction
+        public List<Hl7.Fhir.Model.Immunization.ReactionComponent> Reaction
         {
-            get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.Immunization.ImmunizationReactionComponent>(); return _Reaction; }
+            get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.Immunization.ReactionComponent>(); return _Reaction; }
             set { _Reaction = value; OnPropertyChanged("Reaction"); }
         }
         
-        private List<Hl7.Fhir.Model.Immunization.ImmunizationReactionComponent> _Reaction;
+        private List<Hl7.Fhir.Model.Immunization.ReactionComponent> _Reaction;
         
         /// <summary>
         /// What protocol was followed
@@ -920,13 +920,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("vaccinationProtocol", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Immunization.ImmunizationVaccinationProtocolComponent> VaccinationProtocol
+        public List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> VaccinationProtocol
         {
-            get { if(_VaccinationProtocol==null) _VaccinationProtocol = new List<Hl7.Fhir.Model.Immunization.ImmunizationVaccinationProtocolComponent>(); return _VaccinationProtocol; }
+            get { if(_VaccinationProtocol==null) _VaccinationProtocol = new List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>(); return _VaccinationProtocol; }
             set { _VaccinationProtocol = value; OnPropertyChanged("VaccinationProtocol"); }
         }
         
-        private List<Hl7.Fhir.Model.Immunization.ImmunizationVaccinationProtocolComponent> _VaccinationProtocol;
+        private List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> _VaccinationProtocol;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -953,9 +953,9 @@ namespace Hl7.Fhir.Model
                 if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                 if(DoseQuantity != null) dest.DoseQuantity = (Hl7.Fhir.Model.SimpleQuantity)DoseQuantity.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(Explanation != null) dest.Explanation = (Hl7.Fhir.Model.Immunization.ImmunizationExplanationComponent)Explanation.DeepCopy();
-                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.Immunization.ImmunizationReactionComponent>(Reaction.DeepCopy());
-                if(VaccinationProtocol != null) dest.VaccinationProtocol = new List<Hl7.Fhir.Model.Immunization.ImmunizationVaccinationProtocolComponent>(VaccinationProtocol.DeepCopy());
+                if(Explanation != null) dest.Explanation = (Hl7.Fhir.Model.Immunization.ExplanationComponent)Explanation.DeepCopy();
+                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.Immunization.ReactionComponent>(Reaction.DeepCopy());
+                if(VaccinationProtocol != null) dest.VaccinationProtocol = new List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>(VaccinationProtocol.DeepCopy());
                 return dest;
             }
             else

@@ -86,12 +86,12 @@ namespace Hl7.Fhir.Model
             Level4,
         }
 
-        [FhirType("PersonLinkComponent")]
+        [FhirType("LinkComponent")]
         [DataContract]
-        public partial class PersonLinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "PersonLinkComponent"; } }
+            public override string TypeName { get { return "LinkComponent"; } }
             
             /// <summary>
             /// The resource to which this actual person is associated
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as PersonLinkComponent;
+                var dest = other as LinkComponent;
                 
                 if (dest != null)
                 {
@@ -157,12 +157,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new PersonLinkComponent());
+                return CopyTo(new LinkComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as PersonLinkComponent;
+                var otherT = other as LinkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as PersonLinkComponent;
+                var otherT = other as LinkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -372,13 +372,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("link", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Person.PersonLinkComponent> Link
+        public List<Hl7.Fhir.Model.Person.LinkComponent> Link
         {
-            get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Person.PersonLinkComponent>(); return _Link; }
+            get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Person.LinkComponent>(); return _Link; }
             set { _Link = value; OnPropertyChanged("Link"); }
         }
         
-        private List<Hl7.Fhir.Model.Person.PersonLinkComponent> _Link;
+        private List<Hl7.Fhir.Model.Person.LinkComponent> _Link;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
                 if(Photo != null) dest.Photo = (Hl7.Fhir.Model.Attachment)Photo.DeepCopy();
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
-                if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Person.PersonLinkComponent>(Link.DeepCopy());
+                if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Person.LinkComponent>(Link.DeepCopy());
                 return dest;
             }
             else

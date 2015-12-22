@@ -173,12 +173,12 @@ namespace Hl7.Fhir.Model
             Asap,
         }
 
-        [FhirType("DiagnosticOrderEventComponent")]
+        [FhirType("EventComponent")]
         [DataContract]
-        public partial class DiagnosticOrderEventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DiagnosticOrderEventComponent"; } }
+            public override string TypeName { get { return "EventComponent"; } }
             
             /// <summary>
             /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DiagnosticOrderEventComponent;
+                var dest = other as EventComponent;
                 
                 if (dest != null)
                 {
@@ -292,12 +292,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DiagnosticOrderEventComponent());
+                return CopyTo(new EventComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DiagnosticOrderEventComponent;
+                var otherT = other as EventComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DiagnosticOrderEventComponent;
+                var otherT = other as EventComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -326,12 +326,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DiagnosticOrderItemComponent")]
+        [FhirType("ItemComponent")]
         [DataContract]
-        public partial class DiagnosticOrderItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DiagnosticOrderItemComponent"; } }
+            public override string TypeName { get { return "ItemComponent"; } }
             
             /// <summary>
             /// Code to indicate the item (test or panel) being ordered
@@ -413,17 +413,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("event", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> Event
+            public List<Hl7.Fhir.Model.DiagnosticOrder.EventComponent> Event
             {
-                get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(); return _Event; }
+                get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.DiagnosticOrder.EventComponent>(); return _Event; }
                 set { _Event = value; OnPropertyChanged("Event"); }
             }
             
-            private List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> _Event;
+            private List<Hl7.Fhir.Model.DiagnosticOrder.EventComponent> _Event;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DiagnosticOrderItemComponent;
+                var dest = other as ItemComponent;
                 
                 if (dest != null)
                 {
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
                     if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>)StatusElement.DeepCopy();
-                    if(Event != null) dest.Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(Event.DeepCopy());
+                    if(Event != null) dest.Event = new List<Hl7.Fhir.Model.DiagnosticOrder.EventComponent>(Event.DeepCopy());
                     return dest;
                 }
                 else
@@ -441,12 +441,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DiagnosticOrderItemComponent());
+                return CopyTo(new ItemComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DiagnosticOrderItemComponent;
+                var otherT = other as ItemComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DiagnosticOrderItemComponent;
+                var otherT = other as ItemComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -648,13 +648,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("event", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> Event
+        public List<Hl7.Fhir.Model.DiagnosticOrder.EventComponent> Event
         {
-            get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(); return _Event; }
+            get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.DiagnosticOrder.EventComponent>(); return _Event; }
             set { _Event = value; OnPropertyChanged("Event"); }
         }
         
-        private List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> _Event;
+        private List<Hl7.Fhir.Model.DiagnosticOrder.EventComponent> _Event;
         
         /// <summary>
         /// The items the orderer requested
@@ -662,13 +662,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("item", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent> Item
+        public List<Hl7.Fhir.Model.DiagnosticOrder.ItemComponent> Item
         {
-            get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent>(); return _Item; }
+            get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.DiagnosticOrder.ItemComponent>(); return _Item; }
             set { _Item = value; OnPropertyChanged("Item"); }
         }
         
-        private List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent> _Item;
+        private List<Hl7.Fhir.Model.DiagnosticOrder.ItemComponent> _Item;
         
         /// <summary>
         /// Other notes and comments
@@ -700,8 +700,8 @@ namespace Hl7.Fhir.Model
                 if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>)StatusElement.DeepCopy();
                 if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority>)PriorityElement.DeepCopy();
-                if(Event != null) dest.Event = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent>(Event.DeepCopy());
-                if(Item != null) dest.Item = new List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent>(Item.DeepCopy());
+                if(Event != null) dest.Event = new List<Hl7.Fhir.Model.DiagnosticOrder.EventComponent>(Event.DeepCopy());
+                if(Item != null) dest.Item = new List<Hl7.Fhir.Model.DiagnosticOrder.ItemComponent>(Item.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }

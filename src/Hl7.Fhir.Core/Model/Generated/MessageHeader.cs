@@ -80,12 +80,12 @@ namespace Hl7.Fhir.Model
             FatalError,
         }
 
-        [FhirType("MessageHeaderResponseComponent")]
+        [FhirType("ResponseComponent")]
         [DataContract]
-        public partial class MessageHeaderResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "MessageHeaderResponseComponent"; } }
+            public override string TypeName { get { return "ResponseComponent"; } }
             
             /// <summary>
             /// Id of original message
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as MessageHeaderResponseComponent;
+                var dest = other as ResponseComponent;
                 
                 if (dest != null)
                 {
@@ -185,12 +185,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new MessageHeaderResponseComponent());
+                return CopyTo(new ResponseComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as MessageHeaderResponseComponent;
+                var otherT = other as ResponseComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as MessageHeaderResponseComponent;
+                var otherT = other as ResponseComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -610,13 +610,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("response", InSummary=true, Order=110)]
         [DataMember]
-        public Hl7.Fhir.Model.MessageHeader.MessageHeaderResponseComponent Response
+        public Hl7.Fhir.Model.MessageHeader.ResponseComponent Response
         {
             get { return _Response; }
             set { _Response = value; OnPropertyChanged("Response"); }
         }
         
-        private Hl7.Fhir.Model.MessageHeader.MessageHeaderResponseComponent _Response;
+        private Hl7.Fhir.Model.MessageHeader.ResponseComponent _Response;
         
         /// <summary>
         /// Message Source Application
@@ -739,7 +739,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.Instant)TimestampElement.DeepCopy();
                 if(Event != null) dest.Event = (Hl7.Fhir.Model.Coding)Event.DeepCopy();
-                if(Response != null) dest.Response = (Hl7.Fhir.Model.MessageHeader.MessageHeaderResponseComponent)Response.DeepCopy();
+                if(Response != null) dest.Response = (Hl7.Fhir.Model.MessageHeader.ResponseComponent)Response.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.MessageHeader.MessageSourceComponent)Source.DeepCopy();
                 if(Destination != null) dest.Destination = new List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>(Destination.DeepCopy());
                 if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();

@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Model
             if (name == null) throw new ArgumentNullException("name");
             if (value == null) throw new ArgumentNullException("value");
 
-            var newParam = new ParametersParameterComponent() { Name = name };            
+            var newParam = new ParameterComponent() { Name = name };            
 
             if (value is Element)
                 newParam.Value = (Element)value;
@@ -83,11 +83,11 @@ namespace Hl7.Fhir.Model
             if (name == null) throw new ArgumentNullException("name");
             if (tuples == null) throw new ArgumentNullException("tuples");
 
-            var newParam = new ParametersParameterComponent() { Name = name };
+            var newParam = new ParameterComponent() { Name = name };
             
             foreach (var tuple in tuples)
             {
-                var newPart = new ParametersParameterComponent() { Name = tuple.Item1 };
+                var newPart = new ParameterComponent() { Name = tuple.Item1 };
                 newParam.Part.Add(newPart);
 
                 if (tuple.Item2 is Element)
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <param name="name">The name of the parameter</param>
         /// <param name="matchPrefix">If true, will remove all parameters which begin with the string given in the "name" parameter</param>
-        public IEnumerable<ParametersParameterComponent> Get(string name, bool matchPrefix = false)
+        public IEnumerable<ParameterComponent> Get(string name, bool matchPrefix = false)
         {
             if (name == null) throw new ArgumentNullException("name");
 
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <param name="name">The name of the parameter</param>
         /// <param name="matchPrefix">If true, will remove all parameters which begin with the string given in the "name" parameter</param>
-        public ParametersParameterComponent GetSingle(string name, bool matchPrefix = false)
+        public ParameterComponent GetSingle(string name, bool matchPrefix = false)
         {
             if (name == null) throw new ArgumentNullException("name");
 
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
         public T GetSingleValue<T>(string name, bool matchPrefix = false) where T : Element
         {
             if (name == null) throw new ArgumentNullException("name");
-            ParametersParameterComponent p = Get(name, matchPrefix).SingleOrDefault();
+            ParameterComponent p = Get(name, matchPrefix).SingleOrDefault();
             if (p == null)
                 return null;
             return p.Value as T;

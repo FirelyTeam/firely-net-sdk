@@ -53,12 +53,12 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Parameters"; } }
         
-        [FhirType("ParametersParameterComponent")]
+        [FhirType("ParameterComponent")]
         [DataContract]
-        public partial class ParametersParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ParametersParameterComponent"; } }
+            public override string TypeName { get { return "ParameterComponent"; } }
             
             /// <summary>
             /// Name from the definition
@@ -127,17 +127,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("part", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> Part
+            public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Part
             {
-                get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent>(); return _Part; }
+                get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(); return _Part; }
                 set { _Part = value; OnPropertyChanged("Part"); }
             }
             
-            private List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> _Part;
+            private List<Hl7.Fhir.Model.Parameters.ParameterComponent> _Part;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ParametersParameterComponent;
+                var dest = other as ParameterComponent;
                 
                 if (dest != null)
                 {
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopy();
-                    if(Part != null) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent>(Part.DeepCopy());
+                    if(Part != null) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Part.DeepCopy());
                     return dest;
                 }
                 else
@@ -154,12 +154,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ParametersParameterComponent());
+                return CopyTo(new ParameterComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ParametersParameterComponent;
+                var otherT = other as ParameterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ParametersParameterComponent;
+                var otherT = other as ParameterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -194,13 +194,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("parameter", Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> Parameter
+        public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Parameter
         {
-            get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent>(); return _Parameter; }
+            get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(); return _Parameter; }
             set { _Parameter = value; OnPropertyChanged("Parameter"); }
         }
         
-        private List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> _Parameter;
+        private List<Hl7.Fhir.Model.Parameters.ParameterComponent> _Parameter;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent>(Parameter.DeepCopy());
+                if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Parameter.DeepCopy());
                 return dest;
             }
             else

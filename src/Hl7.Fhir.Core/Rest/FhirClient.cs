@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
         /// </summary>
-        public Bundle.BundleEntryResponseComponent LastResult
+        public Bundle.ResponseComponent LastResult
         {
             get { return _requester.LastResult != null ? _requester.LastResult.Response : null; }
         }
@@ -844,7 +844,7 @@ namespace Hl7.Fhir.Rest
                 return result as TResource;
         }
 
-        private bool isPostOrPut(Bundle.BundleEntryComponent interaction)
+        private bool isPostOrPut(Bundle.EntryComponent interaction)
         {
             var method = interaction.Request.Method;
             return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;

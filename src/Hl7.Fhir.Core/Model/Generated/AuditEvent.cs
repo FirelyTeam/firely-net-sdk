@@ -164,12 +164,12 @@ namespace Hl7.Fhir.Model
             N5,
         }
 
-        [FhirType("AuditEventEventComponent")]
+        [FhirType("EventComponent")]
         [DataContract]
-        public partial class AuditEventEventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "AuditEventEventComponent"; } }
+            public override string TypeName { get { return "EventComponent"; } }
             
             /// <summary>
             /// Type/identifier of event
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as AuditEventEventComponent;
+                var dest = other as EventComponent;
                 
                 if (dest != null)
                 {
@@ -364,12 +364,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new AuditEventEventComponent());
+                return CopyTo(new EventComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as AuditEventEventComponent;
+                var otherT = other as EventComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as AuditEventEventComponent;
+                var otherT = other as EventComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -404,12 +404,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AuditEventParticipantComponent")]
+        [FhirType("ParticipantComponent")]
         [DataContract]
-        public partial class AuditEventParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "AuditEventParticipantComponent"; } }
+            public override string TypeName { get { return "ParticipantComponent"; } }
             
             /// <summary>
             /// User roles (e.g. local RBAC codes)
@@ -614,13 +614,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("network", Order=130)]
             [DataMember]
-            public Hl7.Fhir.Model.AuditEvent.AuditEventParticipantNetworkComponent Network
+            public Hl7.Fhir.Model.AuditEvent.NetworkComponent Network
             {
                 get { return _Network; }
                 set { _Network = value; OnPropertyChanged("Network"); }
             }
             
-            private Hl7.Fhir.Model.AuditEvent.AuditEventParticipantNetworkComponent _Network;
+            private Hl7.Fhir.Model.AuditEvent.NetworkComponent _Network;
             
             /// <summary>
             /// Reason given for this user
@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as AuditEventParticipantComponent;
+                var dest = other as ParticipantComponent;
                 
                 if (dest != null)
                 {
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
                     if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                     if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
                     if(Media != null) dest.Media = (Hl7.Fhir.Model.Coding)Media.DeepCopy();
-                    if(Network != null) dest.Network = (Hl7.Fhir.Model.AuditEvent.AuditEventParticipantNetworkComponent)Network.DeepCopy();
+                    if(Network != null) dest.Network = (Hl7.Fhir.Model.AuditEvent.NetworkComponent)Network.DeepCopy();
                     if(PurposeOfUse != null) dest.PurposeOfUse = new List<Hl7.Fhir.Model.Coding>(PurposeOfUse.DeepCopy());
                     return dest;
                 }
@@ -662,12 +662,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new AuditEventParticipantComponent());
+                return CopyTo(new ParticipantComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as AuditEventParticipantComponent;
+                var otherT = other as ParticipantComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as AuditEventParticipantComponent;
+                var otherT = other as ParticipantComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -710,12 +710,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AuditEventParticipantNetworkComponent")]
+        [FhirType("NetworkComponent")]
         [DataContract]
-        public partial class AuditEventParticipantNetworkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "AuditEventParticipantNetworkComponent"; } }
+            public override string TypeName { get { return "NetworkComponent"; } }
             
             /// <summary>
             /// Identifier for the network access point of the user device
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as AuditEventParticipantNetworkComponent;
+                var dest = other as NetworkComponent;
                 
                 if (dest != null)
                 {
@@ -798,12 +798,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new AuditEventParticipantNetworkComponent());
+                return CopyTo(new NetworkComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as AuditEventParticipantNetworkComponent;
+                var otherT = other as NetworkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as AuditEventParticipantNetworkComponent;
+                var otherT = other as NetworkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -828,12 +828,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AuditEventSourceComponent")]
+        [FhirType("SourceComponent")]
         [DataContract]
-        public partial class AuditEventSourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "AuditEventSourceComponent"; } }
+            public override string TypeName { get { return "SourceComponent"; } }
             
             /// <summary>
             /// Logical source location within the enterprise
@@ -897,7 +897,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as AuditEventSourceComponent;
+                var dest = other as SourceComponent;
                 
                 if (dest != null)
                 {
@@ -913,12 +913,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new AuditEventSourceComponent());
+                return CopyTo(new SourceComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as AuditEventSourceComponent;
+                var otherT = other as SourceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -931,7 +931,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as AuditEventSourceComponent;
+                var otherT = other as SourceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -945,12 +945,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AuditEventObjectComponent")]
+        [FhirType("ObjectComponent")]
         [DataContract]
-        public partial class AuditEventObjectComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ObjectComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "AuditEventObjectComponent"; } }
+            public override string TypeName { get { return "ObjectComponent"; } }
             
             /// <summary>
             /// Specific instance of object (e.g. versioned)
@@ -1134,17 +1134,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("detail", Order=130)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.AuditEvent.AuditEventObjectDetailComponent> Detail
+            public List<Hl7.Fhir.Model.AuditEvent.DetailComponent> Detail
             {
-                get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.AuditEvent.AuditEventObjectDetailComponent>(); return _Detail; }
+                get { if(_Detail==null) _Detail = new List<Hl7.Fhir.Model.AuditEvent.DetailComponent>(); return _Detail; }
                 set { _Detail = value; OnPropertyChanged("Detail"); }
             }
             
-            private List<Hl7.Fhir.Model.AuditEvent.AuditEventObjectDetailComponent> _Detail;
+            private List<Hl7.Fhir.Model.AuditEvent.DetailComponent> _Detail;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as AuditEventObjectComponent;
+                var dest = other as ObjectComponent;
                 
                 if (dest != null)
                 {
@@ -1158,7 +1158,7 @@ namespace Hl7.Fhir.Model
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(QueryElement != null) dest.QueryElement = (Hl7.Fhir.Model.Base64Binary)QueryElement.DeepCopy();
-                    if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.AuditEvent.AuditEventObjectDetailComponent>(Detail.DeepCopy());
+                    if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.AuditEvent.DetailComponent>(Detail.DeepCopy());
                     return dest;
                 }
                 else
@@ -1167,12 +1167,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new AuditEventObjectComponent());
+                return CopyTo(new ObjectComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as AuditEventObjectComponent;
+                var otherT = other as ObjectComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1192,7 +1192,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as AuditEventObjectComponent;
+                var otherT = other as ObjectComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1213,12 +1213,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AuditEventObjectDetailComponent")]
+        [FhirType("DetailComponent")]
         [DataContract]
-        public partial class AuditEventObjectDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "AuditEventObjectDetailComponent"; } }
+            public override string TypeName { get { return "DetailComponent"; } }
             
             /// <summary>
             /// Name of the property
@@ -1288,7 +1288,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as AuditEventObjectDetailComponent;
+                var dest = other as DetailComponent;
                 
                 if (dest != null)
                 {
@@ -1303,12 +1303,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new AuditEventObjectDetailComponent());
+                return CopyTo(new DetailComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as AuditEventObjectDetailComponent;
+                var otherT = other as DetailComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1320,7 +1320,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as AuditEventObjectDetailComponent;
+                var otherT = other as DetailComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1339,13 +1339,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("event", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.AuditEvent.AuditEventEventComponent Event
+        public Hl7.Fhir.Model.AuditEvent.EventComponent Event
         {
             get { return _Event; }
             set { _Event = value; OnPropertyChanged("Event"); }
         }
         
-        private Hl7.Fhir.Model.AuditEvent.AuditEventEventComponent _Event;
+        private Hl7.Fhir.Model.AuditEvent.EventComponent _Event;
         
         /// <summary>
         /// A person, a hardware device or software process
@@ -1353,13 +1353,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("participant", Order=100)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.AuditEvent.AuditEventParticipantComponent> Participant
+        public List<Hl7.Fhir.Model.AuditEvent.ParticipantComponent> Participant
         {
-            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.AuditEvent.AuditEventParticipantComponent>(); return _Participant; }
+            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.AuditEvent.ParticipantComponent>(); return _Participant; }
             set { _Participant = value; OnPropertyChanged("Participant"); }
         }
         
-        private List<Hl7.Fhir.Model.AuditEvent.AuditEventParticipantComponent> _Participant;
+        private List<Hl7.Fhir.Model.AuditEvent.ParticipantComponent> _Participant;
         
         /// <summary>
         /// Application systems and processes
@@ -1367,13 +1367,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("source", Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.AuditEvent.AuditEventSourceComponent Source
+        public Hl7.Fhir.Model.AuditEvent.SourceComponent Source
         {
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
         
-        private Hl7.Fhir.Model.AuditEvent.AuditEventSourceComponent _Source;
+        private Hl7.Fhir.Model.AuditEvent.SourceComponent _Source;
         
         /// <summary>
         /// Specific instances of data or objects that have been accessed
@@ -1381,13 +1381,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("object", Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.AuditEvent.AuditEventObjectComponent> Object
+        public List<Hl7.Fhir.Model.AuditEvent.ObjectComponent> Object
         {
-            get { if(_Object==null) _Object = new List<Hl7.Fhir.Model.AuditEvent.AuditEventObjectComponent>(); return _Object; }
+            get { if(_Object==null) _Object = new List<Hl7.Fhir.Model.AuditEvent.ObjectComponent>(); return _Object; }
             set { _Object = value; OnPropertyChanged("Object"); }
         }
         
-        private List<Hl7.Fhir.Model.AuditEvent.AuditEventObjectComponent> _Object;
+        private List<Hl7.Fhir.Model.AuditEvent.ObjectComponent> _Object;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1396,10 +1396,10 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Event != null) dest.Event = (Hl7.Fhir.Model.AuditEvent.AuditEventEventComponent)Event.DeepCopy();
-                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.AuditEvent.AuditEventParticipantComponent>(Participant.DeepCopy());
-                if(Source != null) dest.Source = (Hl7.Fhir.Model.AuditEvent.AuditEventSourceComponent)Source.DeepCopy();
-                if(Object != null) dest.Object = new List<Hl7.Fhir.Model.AuditEvent.AuditEventObjectComponent>(Object.DeepCopy());
+                if(Event != null) dest.Event = (Hl7.Fhir.Model.AuditEvent.EventComponent)Event.DeepCopy();
+                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.AuditEvent.ParticipantComponent>(Participant.DeepCopy());
+                if(Source != null) dest.Source = (Hl7.Fhir.Model.AuditEvent.SourceComponent)Source.DeepCopy();
+                if(Object != null) dest.Object = new List<Hl7.Fhir.Model.AuditEvent.ObjectComponent>(Object.DeepCopy());
                 return dest;
             }
             else

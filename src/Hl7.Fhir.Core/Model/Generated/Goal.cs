@@ -116,12 +116,12 @@ namespace Hl7.Fhir.Model
             Cancelled,
         }
 
-        [FhirType("GoalOutcomeComponent")]
+        [FhirType("OutcomeComponent")]
         [DataContract]
-        public partial class GoalOutcomeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OutcomeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "GoalOutcomeComponent"; } }
+            public override string TypeName { get { return "OutcomeComponent"; } }
             
             /// <summary>
             /// Code or observation that resulted from goal
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as GoalOutcomeComponent;
+                var dest = other as OutcomeComponent;
                 
                 if (dest != null)
                 {
@@ -153,12 +153,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new GoalOutcomeComponent());
+                return CopyTo(new OutcomeComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as GoalOutcomeComponent;
+                var otherT = other as OutcomeComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as GoalOutcomeComponent;
+                var otherT = other as OutcomeComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -424,13 +424,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("outcome", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Goal.GoalOutcomeComponent> Outcome
+        public List<Hl7.Fhir.Model.Goal.OutcomeComponent> Outcome
         {
-            get { if(_Outcome==null) _Outcome = new List<Hl7.Fhir.Model.Goal.GoalOutcomeComponent>(); return _Outcome; }
+            get { if(_Outcome==null) _Outcome = new List<Hl7.Fhir.Model.Goal.OutcomeComponent>(); return _Outcome; }
             set { _Outcome = value; OnPropertyChanged("Outcome"); }
         }
         
-        private List<Hl7.Fhir.Model.Goal.GoalOutcomeComponent> _Outcome;
+        private List<Hl7.Fhir.Model.Goal.OutcomeComponent> _Outcome;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 if(Addresses != null) dest.Addresses = new List<Hl7.Fhir.Model.ResourceReference>(Addresses.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(Outcome != null) dest.Outcome = new List<Hl7.Fhir.Model.Goal.GoalOutcomeComponent>(Outcome.DeepCopy());
+                if(Outcome != null) dest.Outcome = new List<Hl7.Fhir.Model.Goal.OutcomeComponent>(Outcome.DeepCopy());
                 return dest;
             }
             else

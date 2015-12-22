@@ -449,12 +449,12 @@ namespace Hl7.Fhir.Model
             Consumer,
         }
 
-        [FhirType("ConformanceContactComponent")]
+        [FhirType("ContactComponent")]
         [DataContract]
-        public partial class ConformanceContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceContactComponent"; } }
+            public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
             /// Name of a individual to contact
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceContactComponent;
+                var dest = other as ContactComponent;
                 
                 if (dest != null)
                 {
@@ -519,12 +519,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceContactComponent());
+                return CopyTo(new ContactComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -536,7 +536,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -549,12 +549,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConformanceSoftwareComponent")]
+        [FhirType("SoftwareComponent")]
         [DataContract]
-        public partial class ConformanceSoftwareComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceSoftwareComponent"; } }
+            public override string TypeName { get { return "SoftwareComponent"; } }
             
             /// <summary>
             /// A name the software is known by
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceSoftwareComponent;
+                var dest = other as SoftwareComponent;
                 
                 if (dest != null)
                 {
@@ -671,12 +671,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceSoftwareComponent());
+                return CopyTo(new SoftwareComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceSoftwareComponent;
+                var otherT = other as SoftwareComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -689,7 +689,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceSoftwareComponent;
+                var otherT = other as SoftwareComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -703,12 +703,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConformanceImplementationComponent")]
+        [FhirType("ImplementationComponent")]
         [DataContract]
-        public partial class ConformanceImplementationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceImplementationComponent"; } }
+            public override string TypeName { get { return "ImplementationComponent"; } }
             
             /// <summary>
             /// Describes this specific instance
@@ -777,7 +777,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceImplementationComponent;
+                var dest = other as ImplementationComponent;
                 
                 if (dest != null)
                 {
@@ -792,12 +792,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceImplementationComponent());
+                return CopyTo(new ImplementationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceImplementationComponent;
+                var otherT = other as ImplementationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -809,7 +809,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceImplementationComponent;
+                var otherT = other as ImplementationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -822,12 +822,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConformanceRestComponent")]
+        [FhirType("RestComponent")]
         [DataContract]
-        public partial class ConformanceRestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceRestComponent"; } }
+            public override string TypeName { get { return "RestComponent"; } }
             
             /// <summary>
             /// client | server
@@ -899,13 +899,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("security", Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Conformance.ConformanceRestSecurityComponent Security
+            public Hl7.Fhir.Model.Conformance.SecurityComponent Security
             {
                 get { return _Security; }
                 set { _Security = value; OnPropertyChanged("Security"); }
             }
             
-            private Hl7.Fhir.Model.Conformance.ConformanceRestSecurityComponent _Security;
+            private Hl7.Fhir.Model.Conformance.SecurityComponent _Security;
             
             /// <summary>
             /// Resource served on the REST interface
@@ -913,13 +913,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("resource", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceComponent> Resource
+            public List<Hl7.Fhir.Model.Conformance.ResourceComponent> Resource
             {
-                get { if(_Resource==null) _Resource = new List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceComponent>(); return _Resource; }
+                get { if(_Resource==null) _Resource = new List<Hl7.Fhir.Model.Conformance.ResourceComponent>(); return _Resource; }
                 set { _Resource = value; OnPropertyChanged("Resource"); }
             }
             
-            private List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceComponent> _Resource;
+            private List<Hl7.Fhir.Model.Conformance.ResourceComponent> _Resource;
             
             /// <summary>
             /// What operations are supported?
@@ -973,13 +973,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("searchParam", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> SearchParam
+            public List<Hl7.Fhir.Model.Conformance.SearchParamComponent> SearchParam
             {
-                get { if(_SearchParam==null) _SearchParam = new List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent>(); return _SearchParam; }
+                get { if(_SearchParam==null) _SearchParam = new List<Hl7.Fhir.Model.Conformance.SearchParamComponent>(); return _SearchParam; }
                 set { _SearchParam = value; OnPropertyChanged("SearchParam"); }
             }
             
-            private List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> _SearchParam;
+            private List<Hl7.Fhir.Model.Conformance.SearchParamComponent> _SearchParam;
             
             /// <summary>
             /// Definition of an operation or a custom query
@@ -987,13 +987,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("operation", Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceRestOperationComponent> Operation
+            public List<Hl7.Fhir.Model.Conformance.OperationComponent> Operation
             {
-                get { if(_Operation==null) _Operation = new List<Hl7.Fhir.Model.Conformance.ConformanceRestOperationComponent>(); return _Operation; }
+                get { if(_Operation==null) _Operation = new List<Hl7.Fhir.Model.Conformance.OperationComponent>(); return _Operation; }
                 set { _Operation = value; OnPropertyChanged("Operation"); }
             }
             
-            private List<Hl7.Fhir.Model.Conformance.ConformanceRestOperationComponent> _Operation;
+            private List<Hl7.Fhir.Model.Conformance.OperationComponent> _Operation;
             
             /// <summary>
             /// Compartments served/used by system
@@ -1030,19 +1030,19 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceRestComponent;
+                var dest = other as RestComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.Conformance.RestfulConformanceMode>)ModeElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
-                    if(Security != null) dest.Security = (Hl7.Fhir.Model.Conformance.ConformanceRestSecurityComponent)Security.DeepCopy();
-                    if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceComponent>(Resource.DeepCopy());
+                    if(Security != null) dest.Security = (Hl7.Fhir.Model.Conformance.SecurityComponent)Security.DeepCopy();
+                    if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.Conformance.ResourceComponent>(Resource.DeepCopy());
                     if(Interaction != null) dest.Interaction = new List<Hl7.Fhir.Model.Conformance.SystemInteractionComponent>(Interaction.DeepCopy());
                     if(TransactionMode_Element != null) dest.TransactionMode_Element = (Code<Hl7.Fhir.Model.Conformance.TransactionMode>)TransactionMode_Element.DeepCopy();
-                    if(SearchParam != null) dest.SearchParam = new List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent>(SearchParam.DeepCopy());
-                    if(Operation != null) dest.Operation = new List<Hl7.Fhir.Model.Conformance.ConformanceRestOperationComponent>(Operation.DeepCopy());
+                    if(SearchParam != null) dest.SearchParam = new List<Hl7.Fhir.Model.Conformance.SearchParamComponent>(SearchParam.DeepCopy());
+                    if(Operation != null) dest.Operation = new List<Hl7.Fhir.Model.Conformance.OperationComponent>(Operation.DeepCopy());
                     if(CompartmentElement != null) dest.CompartmentElement = new List<Hl7.Fhir.Model.FhirUri>(CompartmentElement.DeepCopy());
                     return dest;
                 }
@@ -1052,12 +1052,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceRestComponent());
+                return CopyTo(new RestComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceRestComponent;
+                var otherT = other as RestComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1076,7 +1076,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceRestComponent;
+                var otherT = other as RestComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1096,12 +1096,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConformanceRestSecurityComponent")]
+        [FhirType("SecurityComponent")]
         [DataContract]
-        public partial class ConformanceRestSecurityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SecurityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceRestSecurityComponent"; } }
+            public override string TypeName { get { return "SecurityComponent"; } }
             
             /// <summary>
             /// Adds CORS Headers (http://enable-cors.org/)
@@ -1187,17 +1187,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("certificate", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceRestSecurityCertificateComponent> Certificate
+            public List<Hl7.Fhir.Model.Conformance.CertificateComponent> Certificate
             {
-                get { if(_Certificate==null) _Certificate = new List<Hl7.Fhir.Model.Conformance.ConformanceRestSecurityCertificateComponent>(); return _Certificate; }
+                get { if(_Certificate==null) _Certificate = new List<Hl7.Fhir.Model.Conformance.CertificateComponent>(); return _Certificate; }
                 set { _Certificate = value; OnPropertyChanged("Certificate"); }
             }
             
-            private List<Hl7.Fhir.Model.Conformance.ConformanceRestSecurityCertificateComponent> _Certificate;
+            private List<Hl7.Fhir.Model.Conformance.CertificateComponent> _Certificate;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceRestSecurityComponent;
+                var dest = other as SecurityComponent;
                 
                 if (dest != null)
                 {
@@ -1205,7 +1205,7 @@ namespace Hl7.Fhir.Model
                     if(CorsElement != null) dest.CorsElement = (Hl7.Fhir.Model.FhirBoolean)CorsElement.DeepCopy();
                     if(Service != null) dest.Service = new List<Hl7.Fhir.Model.CodeableConcept>(Service.DeepCopy());
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Certificate != null) dest.Certificate = new List<Hl7.Fhir.Model.Conformance.ConformanceRestSecurityCertificateComponent>(Certificate.DeepCopy());
+                    if(Certificate != null) dest.Certificate = new List<Hl7.Fhir.Model.Conformance.CertificateComponent>(Certificate.DeepCopy());
                     return dest;
                 }
                 else
@@ -1214,12 +1214,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceRestSecurityComponent());
+                return CopyTo(new SecurityComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceRestSecurityComponent;
+                var otherT = other as SecurityComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1233,7 +1233,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceRestSecurityComponent;
+                var otherT = other as SecurityComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1248,12 +1248,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConformanceRestSecurityCertificateComponent")]
+        [FhirType("CertificateComponent")]
         [DataContract]
-        public partial class ConformanceRestSecurityCertificateComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CertificateComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceRestSecurityCertificateComponent"; } }
+            public override string TypeName { get { return "CertificateComponent"; } }
             
             /// <summary>
             /// Mime type for certificate
@@ -1321,7 +1321,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceRestSecurityCertificateComponent;
+                var dest = other as CertificateComponent;
                 
                 if (dest != null)
                 {
@@ -1336,12 +1336,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceRestSecurityCertificateComponent());
+                return CopyTo(new CertificateComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceRestSecurityCertificateComponent;
+                var otherT = other as CertificateComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1353,7 +1353,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceRestSecurityCertificateComponent;
+                var otherT = other as CertificateComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1366,12 +1366,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConformanceRestResourceComponent")]
+        [FhirType("ResourceComponent")]
         [DataContract]
-        public partial class ConformanceRestResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceRestResourceComponent"; } }
+            public override string TypeName { get { return "ResourceComponent"; } }
             
             /// <summary>
             /// A resource type that is supported
@@ -1698,17 +1698,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("searchParam", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> SearchParam
+            public List<Hl7.Fhir.Model.Conformance.SearchParamComponent> SearchParam
             {
-                get { if(_SearchParam==null) _SearchParam = new List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent>(); return _SearchParam; }
+                get { if(_SearchParam==null) _SearchParam = new List<Hl7.Fhir.Model.Conformance.SearchParamComponent>(); return _SearchParam; }
                 set { _SearchParam = value; OnPropertyChanged("SearchParam"); }
             }
             
-            private List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent> _SearchParam;
+            private List<Hl7.Fhir.Model.Conformance.SearchParamComponent> _SearchParam;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceRestResourceComponent;
+                var dest = other as ResourceComponent;
                 
                 if (dest != null)
                 {
@@ -1724,7 +1724,7 @@ namespace Hl7.Fhir.Model
                     if(ConditionalDeleteElement != null) dest.ConditionalDeleteElement = (Code<Hl7.Fhir.Model.Conformance.ConditionalDeleteStatus>)ConditionalDeleteElement.DeepCopy();
                     if(SearchIncludeElement != null) dest.SearchIncludeElement = new List<Hl7.Fhir.Model.FhirString>(SearchIncludeElement.DeepCopy());
                     if(SearchRevIncludeElement != null) dest.SearchRevIncludeElement = new List<Hl7.Fhir.Model.FhirString>(SearchRevIncludeElement.DeepCopy());
-                    if(SearchParam != null) dest.SearchParam = new List<Hl7.Fhir.Model.Conformance.ConformanceRestResourceSearchParamComponent>(SearchParam.DeepCopy());
+                    if(SearchParam != null) dest.SearchParam = new List<Hl7.Fhir.Model.Conformance.SearchParamComponent>(SearchParam.DeepCopy());
                     return dest;
                 }
                 else
@@ -1733,12 +1733,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceRestResourceComponent());
+                return CopyTo(new ResourceComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceRestResourceComponent;
+                var otherT = other as ResourceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1760,7 +1760,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceRestResourceComponent;
+                var otherT = other as ResourceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1902,12 +1902,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConformanceRestResourceSearchParamComponent")]
+        [FhirType("SearchParamComponent")]
         [DataContract]
-        public partial class ConformanceRestResourceSearchParamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SearchParamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceRestResourceSearchParamComponent"; } }
+            public override string TypeName { get { return "SearchParamComponent"; } }
             
             /// <summary>
             /// Name of search parameter
@@ -2140,7 +2140,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceRestResourceSearchParamComponent;
+                var dest = other as SearchParamComponent;
                 
                 if (dest != null)
                 {
@@ -2160,12 +2160,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceRestResourceSearchParamComponent());
+                return CopyTo(new SearchParamComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceRestResourceSearchParamComponent;
+                var otherT = other as SearchParamComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -2182,7 +2182,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceRestResourceSearchParamComponent;
+                var otherT = other as SearchParamComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -2319,12 +2319,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConformanceRestOperationComponent")]
+        [FhirType("OperationComponent")]
         [DataContract]
-        public partial class ConformanceRestOperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceRestOperationComponent"; } }
+            public override string TypeName { get { return "OperationComponent"; } }
             
             /// <summary>
             /// Name by which the operation/query is invoked
@@ -2376,7 +2376,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceRestOperationComponent;
+                var dest = other as OperationComponent;
                 
                 if (dest != null)
                 {
@@ -2391,12 +2391,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceRestOperationComponent());
+                return CopyTo(new OperationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceRestOperationComponent;
+                var otherT = other as OperationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -2408,7 +2408,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceRestOperationComponent;
+                var otherT = other as OperationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -2421,12 +2421,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConformanceMessagingComponent")]
+        [FhirType("MessagingComponent")]
         [DataContract]
-        public partial class ConformanceMessagingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MessagingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceMessagingComponent"; } }
+            public override string TypeName { get { return "MessagingComponent"; } }
             
             /// <summary>
             /// A messaging service end-point
@@ -2434,13 +2434,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("endpoint", Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceMessagingEndpointComponent> Endpoint
+            public List<Hl7.Fhir.Model.Conformance.EndpointComponent> Endpoint
             {
-                get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.Conformance.ConformanceMessagingEndpointComponent>(); return _Endpoint; }
+                get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.Conformance.EndpointComponent>(); return _Endpoint; }
                 set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
             }
             
-            private List<Hl7.Fhir.Model.Conformance.ConformanceMessagingEndpointComponent> _Endpoint;
+            private List<Hl7.Fhir.Model.Conformance.EndpointComponent> _Endpoint;
             
             /// <summary>
             /// Reliable Message Cache Length (min)
@@ -2512,25 +2512,25 @@ namespace Hl7.Fhir.Model
             [FhirElement("event", Order=70)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Conformance.ConformanceMessagingEventComponent> Event
+            public List<Hl7.Fhir.Model.Conformance.EventComponent> Event
             {
-                get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.Conformance.ConformanceMessagingEventComponent>(); return _Event; }
+                get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.Conformance.EventComponent>(); return _Event; }
                 set { _Event = value; OnPropertyChanged("Event"); }
             }
             
-            private List<Hl7.Fhir.Model.Conformance.ConformanceMessagingEventComponent> _Event;
+            private List<Hl7.Fhir.Model.Conformance.EventComponent> _Event;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceMessagingComponent;
+                var dest = other as MessagingComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.Conformance.ConformanceMessagingEndpointComponent>(Endpoint.DeepCopy());
+                    if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.Conformance.EndpointComponent>(Endpoint.DeepCopy());
                     if(ReliableCacheElement != null) dest.ReliableCacheElement = (Hl7.Fhir.Model.UnsignedInt)ReliableCacheElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
-                    if(Event != null) dest.Event = new List<Hl7.Fhir.Model.Conformance.ConformanceMessagingEventComponent>(Event.DeepCopy());
+                    if(Event != null) dest.Event = new List<Hl7.Fhir.Model.Conformance.EventComponent>(Event.DeepCopy());
                     return dest;
                 }
                 else
@@ -2539,12 +2539,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceMessagingComponent());
+                return CopyTo(new MessagingComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceMessagingComponent;
+                var otherT = other as MessagingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -2558,7 +2558,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceMessagingComponent;
+                var otherT = other as MessagingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -2573,12 +2573,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConformanceMessagingEndpointComponent")]
+        [FhirType("EndpointComponent")]
         [DataContract]
-        public partial class ConformanceMessagingEndpointComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EndpointComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceMessagingEndpointComponent"; } }
+            public override string TypeName { get { return "EndpointComponent"; } }
             
             /// <summary>
             /// http | ftp | mllp +
@@ -2629,7 +2629,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceMessagingEndpointComponent;
+                var dest = other as EndpointComponent;
                 
                 if (dest != null)
                 {
@@ -2644,12 +2644,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceMessagingEndpointComponent());
+                return CopyTo(new EndpointComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceMessagingEndpointComponent;
+                var otherT = other as EndpointComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -2661,7 +2661,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceMessagingEndpointComponent;
+                var otherT = other as EndpointComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -2674,12 +2674,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConformanceMessagingEventComponent")]
+        [FhirType("EventComponent")]
         [DataContract]
-        public partial class ConformanceMessagingEventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceMessagingEventComponent"; } }
+            public override string TypeName { get { return "EventComponent"; } }
             
             /// <summary>
             /// Event type
@@ -2857,7 +2857,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceMessagingEventComponent;
+                var dest = other as EventComponent;
                 
                 if (dest != null)
                 {
@@ -2877,12 +2877,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceMessagingEventComponent());
+                return CopyTo(new EventComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceMessagingEventComponent;
+                var otherT = other as EventComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -2899,7 +2899,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceMessagingEventComponent;
+                var otherT = other as EventComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -2917,12 +2917,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConformanceDocumentComponent")]
+        [FhirType("DocumentComponent")]
         [DataContract]
-        public partial class ConformanceDocumentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DocumentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConformanceDocumentComponent"; } }
+            public override string TypeName { get { return "DocumentComponent"; } }
             
             /// <summary>
             /// producer | consumer
@@ -3006,7 +3006,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConformanceDocumentComponent;
+                var dest = other as DocumentComponent;
                 
                 if (dest != null)
                 {
@@ -3022,12 +3022,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConformanceDocumentComponent());
+                return CopyTo(new DocumentComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConformanceDocumentComponent;
+                var otherT = other as DocumentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -3040,7 +3040,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConformanceDocumentComponent;
+                var otherT = other as DocumentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -3252,13 +3252,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contact", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Conformance.ConformanceContactComponent> Contact
+        public List<Hl7.Fhir.Model.Conformance.ContactComponent> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.Conformance.ConformanceContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.Conformance.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.Conformance.ConformanceContactComponent> _Contact;
+        private List<Hl7.Fhir.Model.Conformance.ContactComponent> _Contact;
         
         /// <summary>
         /// Publication Date(/time)
@@ -3427,26 +3427,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("software", InSummary=true, Order=210)]
         [DataMember]
-        public Hl7.Fhir.Model.Conformance.ConformanceSoftwareComponent Software
+        public Hl7.Fhir.Model.Conformance.SoftwareComponent Software
         {
             get { return _Software; }
             set { _Software = value; OnPropertyChanged("Software"); }
         }
         
-        private Hl7.Fhir.Model.Conformance.ConformanceSoftwareComponent _Software;
+        private Hl7.Fhir.Model.Conformance.SoftwareComponent _Software;
         
         /// <summary>
         /// If this describes a specific instance
         /// </summary>
         [FhirElement("implementation", InSummary=true, Order=220)]
         [DataMember]
-        public Hl7.Fhir.Model.Conformance.ConformanceImplementationComponent Implementation
+        public Hl7.Fhir.Model.Conformance.ImplementationComponent Implementation
         {
             get { return _Implementation; }
             set { _Implementation = value; OnPropertyChanged("Implementation"); }
         }
         
-        private Hl7.Fhir.Model.Conformance.ConformanceImplementationComponent _Implementation;
+        private Hl7.Fhir.Model.Conformance.ImplementationComponent _Implementation;
         
         /// <summary>
         /// FHIR Version the system uses
@@ -3568,13 +3568,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("rest", InSummary=true, Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Conformance.ConformanceRestComponent> Rest
+        public List<Hl7.Fhir.Model.Conformance.RestComponent> Rest
         {
-            get { if(_Rest==null) _Rest = new List<Hl7.Fhir.Model.Conformance.ConformanceRestComponent>(); return _Rest; }
+            get { if(_Rest==null) _Rest = new List<Hl7.Fhir.Model.Conformance.RestComponent>(); return _Rest; }
             set { _Rest = value; OnPropertyChanged("Rest"); }
         }
         
-        private List<Hl7.Fhir.Model.Conformance.ConformanceRestComponent> _Rest;
+        private List<Hl7.Fhir.Model.Conformance.RestComponent> _Rest;
         
         /// <summary>
         /// If messaging is supported
@@ -3582,13 +3582,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("messaging", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Conformance.ConformanceMessagingComponent> Messaging
+        public List<Hl7.Fhir.Model.Conformance.MessagingComponent> Messaging
         {
-            get { if(_Messaging==null) _Messaging = new List<Hl7.Fhir.Model.Conformance.ConformanceMessagingComponent>(); return _Messaging; }
+            get { if(_Messaging==null) _Messaging = new List<Hl7.Fhir.Model.Conformance.MessagingComponent>(); return _Messaging; }
             set { _Messaging = value; OnPropertyChanged("Messaging"); }
         }
         
-        private List<Hl7.Fhir.Model.Conformance.ConformanceMessagingComponent> _Messaging;
+        private List<Hl7.Fhir.Model.Conformance.MessagingComponent> _Messaging;
         
         /// <summary>
         /// Document definition
@@ -3596,13 +3596,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("document", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Conformance.ConformanceDocumentComponent> Document
+        public List<Hl7.Fhir.Model.Conformance.DocumentComponent> Document
         {
-            get { if(_Document==null) _Document = new List<Hl7.Fhir.Model.Conformance.ConformanceDocumentComponent>(); return _Document; }
+            get { if(_Document==null) _Document = new List<Hl7.Fhir.Model.Conformance.DocumentComponent>(); return _Document; }
             set { _Document = value; OnPropertyChanged("Document"); }
         }
         
-        private List<Hl7.Fhir.Model.Conformance.ConformanceDocumentComponent> _Document;
+        private List<Hl7.Fhir.Model.Conformance.DocumentComponent> _Document;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -3617,21 +3617,21 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Conformance.ConformanceContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Conformance.ContactComponent>(Contact.DeepCopy());
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.Conformance.ConformanceStatementKind>)KindElement.DeepCopy();
-                if(Software != null) dest.Software = (Hl7.Fhir.Model.Conformance.ConformanceSoftwareComponent)Software.DeepCopy();
-                if(Implementation != null) dest.Implementation = (Hl7.Fhir.Model.Conformance.ConformanceImplementationComponent)Implementation.DeepCopy();
+                if(Software != null) dest.Software = (Hl7.Fhir.Model.Conformance.SoftwareComponent)Software.DeepCopy();
+                if(Implementation != null) dest.Implementation = (Hl7.Fhir.Model.Conformance.ImplementationComponent)Implementation.DeepCopy();
                 if(FhirVersionElement != null) dest.FhirVersionElement = (Hl7.Fhir.Model.Id)FhirVersionElement.DeepCopy();
                 if(AcceptUnknownElement != null) dest.AcceptUnknownElement = (Code<Hl7.Fhir.Model.Conformance.UnknownContentCode>)AcceptUnknownElement.DeepCopy();
                 if(FormatElement != null) dest.FormatElement = new List<Hl7.Fhir.Model.Code>(FormatElement.DeepCopy());
                 if(Profile != null) dest.Profile = new List<Hl7.Fhir.Model.ResourceReference>(Profile.DeepCopy());
-                if(Rest != null) dest.Rest = new List<Hl7.Fhir.Model.Conformance.ConformanceRestComponent>(Rest.DeepCopy());
-                if(Messaging != null) dest.Messaging = new List<Hl7.Fhir.Model.Conformance.ConformanceMessagingComponent>(Messaging.DeepCopy());
-                if(Document != null) dest.Document = new List<Hl7.Fhir.Model.Conformance.ConformanceDocumentComponent>(Document.DeepCopy());
+                if(Rest != null) dest.Rest = new List<Hl7.Fhir.Model.Conformance.RestComponent>(Rest.DeepCopy());
+                if(Messaging != null) dest.Messaging = new List<Hl7.Fhir.Model.Conformance.MessagingComponent>(Messaging.DeepCopy());
+                if(Document != null) dest.Document = new List<Hl7.Fhir.Model.Conformance.DocumentComponent>(Document.DeepCopy());
                 return dest;
             }
             else

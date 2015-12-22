@@ -53,12 +53,12 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Practitioner"; } }
         
-        [FhirType("PractitionerPractitionerRoleComponent")]
+        [FhirType("PractitionerRoleComponent")]
         [DataContract]
-        public partial class PractitionerPractitionerRoleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PractitionerRoleComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "PractitionerPractitionerRoleComponent"; } }
+            public override string TypeName { get { return "PractitionerRoleComponent"; } }
             
             /// <summary>
             /// Organization where the roles are performed
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as PractitionerPractitionerRoleComponent;
+                var dest = other as PractitionerRoleComponent;
                 
                 if (dest != null)
                 {
@@ -165,12 +165,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new PractitionerPractitionerRoleComponent());
+                return CopyTo(new PractitionerRoleComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as PractitionerPractitionerRoleComponent;
+                var otherT = other as PractitionerRoleComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as PractitionerPractitionerRoleComponent;
+                var otherT = other as PractitionerRoleComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -203,12 +203,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PractitionerQualificationComponent")]
+        [FhirType("QualificationComponent")]
         [DataContract]
-        public partial class PractitionerQualificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "PractitionerQualificationComponent"; } }
+            public override string TypeName { get { return "QualificationComponent"; } }
             
             /// <summary>
             /// An identifier for this qualification for the practitioner
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as PractitionerQualificationComponent;
+                var dest = other as QualificationComponent;
                 
                 if (dest != null)
                 {
@@ -284,12 +284,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new PractitionerQualificationComponent());
+                return CopyTo(new QualificationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as PractitionerQualificationComponent;
+                var otherT = other as QualificationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as PractitionerQualificationComponent;
+                var otherT = other as QualificationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -489,13 +489,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("practitionerRole", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Practitioner.PractitionerPractitionerRoleComponent> PractitionerRole
+        public List<Hl7.Fhir.Model.Practitioner.PractitionerRoleComponent> PractitionerRole
         {
-            get { if(_PractitionerRole==null) _PractitionerRole = new List<Hl7.Fhir.Model.Practitioner.PractitionerPractitionerRoleComponent>(); return _PractitionerRole; }
+            get { if(_PractitionerRole==null) _PractitionerRole = new List<Hl7.Fhir.Model.Practitioner.PractitionerRoleComponent>(); return _PractitionerRole; }
             set { _PractitionerRole = value; OnPropertyChanged("PractitionerRole"); }
         }
         
-        private List<Hl7.Fhir.Model.Practitioner.PractitionerPractitionerRoleComponent> _PractitionerRole;
+        private List<Hl7.Fhir.Model.Practitioner.PractitionerRoleComponent> _PractitionerRole;
         
         /// <summary>
         /// Qualifications obtained by training and certification
@@ -503,13 +503,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("qualification", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent> Qualification
+        public List<Hl7.Fhir.Model.Practitioner.QualificationComponent> Qualification
         {
-            get { if(_Qualification==null) _Qualification = new List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent>(); return _Qualification; }
+            get { if(_Qualification==null) _Qualification = new List<Hl7.Fhir.Model.Practitioner.QualificationComponent>(); return _Qualification; }
             set { _Qualification = value; OnPropertyChanged("Qualification"); }
         }
         
-        private List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent> _Qualification;
+        private List<Hl7.Fhir.Model.Practitioner.QualificationComponent> _Qualification;
         
         /// <summary>
         /// A language the practitioner is able to use in patient communication
@@ -540,8 +540,8 @@ namespace Hl7.Fhir.Model
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                 if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopy();
                 if(Photo != null) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopy());
-                if(PractitionerRole != null) dest.PractitionerRole = new List<Hl7.Fhir.Model.Practitioner.PractitionerPractitionerRoleComponent>(PractitionerRole.DeepCopy());
-                if(Qualification != null) dest.Qualification = new List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent>(Qualification.DeepCopy());
+                if(PractitionerRole != null) dest.PractitionerRole = new List<Hl7.Fhir.Model.Practitioner.PractitionerRoleComponent>(PractitionerRole.DeepCopy());
+                if(Qualification != null) dest.Qualification = new List<Hl7.Fhir.Model.Practitioner.QualificationComponent>(Qualification.DeepCopy());
                 if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.CodeableConcept>(Communication.DeepCopy());
                 return dest;
             }

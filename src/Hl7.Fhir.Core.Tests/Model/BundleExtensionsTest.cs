@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Tests.Model
             testBundle.AddResourceEntry(new Patient { Id = "1234", Meta = new Meta { VersionId = "v2" } }, "http://nu.nl/fhir/Patient/1234");
             testBundle.AddResourceEntry(new Patient { Id = "1234", Meta = new Meta { VersionId = "v3" } }, "http://nu.nl/fhir/Patient/1234");
             testBundle.AddResourceEntry(new Patient { Id = "1234", Meta = new Meta { VersionId = "v4" } }, "http://nu.nl/fhir/Patient/1234")
-                        .Request = new Bundle.BundleEntryRequestComponent { Method = Bundle.HTTPVerb.DELETE } ;
+                        .Request = new Bundle.RequestComponent { Method = Bundle.HTTPVerb.DELETE } ;
 
             testBundle.AddResourceEntry(new Patient { Id = "5678" }, "http://server1.com/fhir/Patient/5678");
             testBundle.AddResourceEntry(new Patient { Id = "1.2.3.4.5" }, "urn:oid:1.2.3.4.5");

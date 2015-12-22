@@ -236,12 +236,12 @@ namespace Hl7.Fhir.Model
             Unspecified,
         }
 
-        [FhirType("DeviceMetricCalibrationComponent")]
+        [FhirType("CalibrationComponent")]
         [DataContract]
-        public partial class DeviceMetricCalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DeviceMetricCalibrationComponent"; } }
+            public override string TypeName { get { return "CalibrationComponent"; } }
             
             /// <summary>
             /// unspecified | offset | gain | two-point
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DeviceMetricCalibrationComponent;
+                var dest = other as CalibrationComponent;
                 
                 if (dest != null)
                 {
@@ -357,12 +357,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DeviceMetricCalibrationComponent());
+                return CopyTo(new CalibrationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DeviceMetricCalibrationComponent;
+                var otherT = other as CalibrationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DeviceMetricCalibrationComponent;
+                var otherT = other as CalibrationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -574,13 +574,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("calibration", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationComponent> Calibration
+        public List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> Calibration
         {
-            get { if(_Calibration==null) _Calibration = new List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationComponent>(); return _Calibration; }
+            get { if(_Calibration==null) _Calibration = new List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>(); return _Calibration; }
             set { _Calibration = value; OnPropertyChanged("Calibration"); }
         }
         
-        private List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationComponent> _Calibration;
+        private List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> _Calibration;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
                 if(ColorElement != null) dest.ColorElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>)ColorElement.DeepCopy();
                 if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>)CategoryElement.DeepCopy();
                 if(MeasurementPeriod != null) dest.MeasurementPeriod = (Hl7.Fhir.Model.Timing)MeasurementPeriod.DeepCopy();
-                if(Calibration != null) dest.Calibration = new List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationComponent>(Calibration.DeepCopy());
+                if(Calibration != null) dest.Calibration = new List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>(Calibration.DeepCopy());
                 return dest;
             }
             else

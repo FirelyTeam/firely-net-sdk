@@ -92,12 +92,12 @@ namespace Hl7.Fhir.Model
             Failed,
         }
 
-        [FhirType("CommunicationPayloadComponent")]
+        [FhirType("PayloadComponent")]
         [DataContract]
-        public partial class CommunicationPayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "CommunicationPayloadComponent"; } }
+            public override string TypeName { get { return "PayloadComponent"; } }
             
             /// <summary>
             /// Message part content
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CommunicationPayloadComponent;
+                var dest = other as PayloadComponent;
                 
                 if (dest != null)
                 {
@@ -130,12 +130,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CommunicationPayloadComponent());
+                return CopyTo(new PayloadComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CommunicationPayloadComponent;
+                var otherT = other as PayloadComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CommunicationPayloadComponent;
+                var otherT = other as PayloadComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -220,13 +220,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("payload", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Communication.CommunicationPayloadComponent> Payload
+        public List<Hl7.Fhir.Model.Communication.PayloadComponent> Payload
         {
-            get { if(_Payload==null) _Payload = new List<Hl7.Fhir.Model.Communication.CommunicationPayloadComponent>(); return _Payload; }
+            get { if(_Payload==null) _Payload = new List<Hl7.Fhir.Model.Communication.PayloadComponent>(); return _Payload; }
             set { _Payload = value; OnPropertyChanged("Payload"); }
         }
         
-        private List<Hl7.Fhir.Model.Communication.CommunicationPayloadComponent> _Payload;
+        private List<Hl7.Fhir.Model.Communication.PayloadComponent> _Payload;
         
         /// <summary>
         /// A channel of communication
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
                 if(Recipient != null) dest.Recipient = new List<Hl7.Fhir.Model.ResourceReference>(Recipient.DeepCopy());
-                if(Payload != null) dest.Payload = new List<Hl7.Fhir.Model.Communication.CommunicationPayloadComponent>(Payload.DeepCopy());
+                if(Payload != null) dest.Payload = new List<Hl7.Fhir.Model.Communication.PayloadComponent>(Payload.DeepCopy());
                 if(Medium != null) dest.Medium = new List<Hl7.Fhir.Model.CodeableConcept>(Medium.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Communication.CommunicationStatus>)StatusElement.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();

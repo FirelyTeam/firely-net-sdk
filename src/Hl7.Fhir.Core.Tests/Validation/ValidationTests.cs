@@ -108,10 +108,10 @@ namespace Hl7.Fhir.Tests.Validation
             OperationOutcome oo = new OperationOutcome();
             validateErrorOrFail(oo,true);
 
-            oo.Issue = new List<OperationOutcome.OperationOutcomeIssueComponent>();
+            oo.Issue = new List<OperationOutcome.IssueComponent>();
             validateErrorOrFail(oo,true);
 
-            var issue = new OperationOutcome.OperationOutcomeIssueComponent();
+            var issue = new OperationOutcome.IssueComponent();
 
             oo.Issue.Add(issue);
             validateErrorOrFail(oo,true);

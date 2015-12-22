@@ -86,12 +86,12 @@ namespace Hl7.Fhir.Model
             UNAVAILABLE,
         }
 
-        [FhirType("ImagingStudySeriesComponent")]
+        [FhirType("SeriesComponent")]
         [DataContract]
-        public partial class ImagingStudySeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImagingStudySeriesComponent"; } }
+            public override string TypeName { get { return "SeriesComponent"; } }
             
             /// <summary>
             /// Numeric identifier of this series
@@ -365,17 +365,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("instance", InSummary=true, Order=140)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesInstanceComponent> Instance
+            public List<Hl7.Fhir.Model.ImagingStudy.InstanceComponent> Instance
             {
-                get { if(_Instance==null) _Instance = new List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesInstanceComponent>(); return _Instance; }
+                get { if(_Instance==null) _Instance = new List<Hl7.Fhir.Model.ImagingStudy.InstanceComponent>(); return _Instance; }
                 set { _Instance = value; OnPropertyChanged("Instance"); }
             }
             
-            private List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesInstanceComponent> _Instance;
+            private List<Hl7.Fhir.Model.ImagingStudy.InstanceComponent> _Instance;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImagingStudySeriesComponent;
+                var dest = other as SeriesComponent;
                 
                 if (dest != null)
                 {
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
                     if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.Coding)BodySite.DeepCopy();
                     if(Laterality != null) dest.Laterality = (Hl7.Fhir.Model.Coding)Laterality.DeepCopy();
                     if(StartedElement != null) dest.StartedElement = (Hl7.Fhir.Model.FhirDateTime)StartedElement.DeepCopy();
-                    if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesInstanceComponent>(Instance.DeepCopy());
+                    if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.ImagingStudy.InstanceComponent>(Instance.DeepCopy());
                     return dest;
                 }
                 else
@@ -399,12 +399,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImagingStudySeriesComponent());
+                return CopyTo(new SeriesComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImagingStudySeriesComponent;
+                var otherT = other as SeriesComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImagingStudySeriesComponent;
+                var otherT = other as SeriesComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -447,12 +447,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImagingStudySeriesInstanceComponent")]
+        [FhirType("InstanceComponent")]
         [DataContract]
-        public partial class ImagingStudySeriesInstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImagingStudySeriesInstanceComponent"; } }
+            public override string TypeName { get { return "InstanceComponent"; } }
             
             /// <summary>
             /// The number of this instance in the series
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImagingStudySeriesInstanceComponent;
+                var dest = other as InstanceComponent;
                 
                 if (dest != null)
                 {
@@ -651,12 +651,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImagingStudySeriesInstanceComponent());
+                return CopyTo(new InstanceComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImagingStudySeriesInstanceComponent;
+                var otherT = other as InstanceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImagingStudySeriesInstanceComponent;
+                var otherT = other as InstanceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1036,13 +1036,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("series", InSummary=true, Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesComponent> Series
+        public List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent> Series
         {
-            get { if(_Series==null) _Series = new List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesComponent>(); return _Series; }
+            get { if(_Series==null) _Series = new List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent>(); return _Series; }
             set { _Series = value; OnPropertyChanged("Series"); }
         }
         
-        private List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesComponent> _Series;
+        private List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent> _Series;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1066,7 +1066,7 @@ namespace Hl7.Fhir.Model
                 if(Procedure != null) dest.Procedure = new List<Hl7.Fhir.Model.ResourceReference>(Procedure.DeepCopy());
                 if(Interpreter != null) dest.Interpreter = (Hl7.Fhir.Model.ResourceReference)Interpreter.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(Series != null) dest.Series = new List<Hl7.Fhir.Model.ImagingStudy.ImagingStudySeriesComponent>(Series.DeepCopy());
+                if(Series != null) dest.Series = new List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent>(Series.DeepCopy());
                 return dest;
             }
             else

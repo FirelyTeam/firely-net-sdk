@@ -96,12 +96,12 @@ namespace Hl7.Fhir.Model
         }
 
 // TODO: the enumeration ParameterTypesusedinOperationDefinitions contains an expansion that has duplicates
-        [FhirType("OperationDefinitionContactComponent")]
+        [FhirType("ContactComponent")]
         [DataContract]
-        public partial class OperationDefinitionContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "OperationDefinitionContactComponent"; } }
+            public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
             /// Name of a individual to contact
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as OperationDefinitionContactComponent;
+                var dest = other as ContactComponent;
                 
                 if (dest != null)
                 {
@@ -166,12 +166,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new OperationDefinitionContactComponent());
+                return CopyTo(new ContactComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as OperationDefinitionContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as OperationDefinitionContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -196,12 +196,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OperationDefinitionParameterComponent")]
+        [FhirType("ParameterComponent")]
         [DataContract]
-        public partial class OperationDefinitionParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "OperationDefinitionParameterComponent"; } }
+            public override string TypeName { get { return "ParameterComponent"; } }
             
             /// <summary>
             /// Name in Parameters.parameter.name or in URL
@@ -418,13 +418,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("binding", Order=110)]
             [DataMember]
-            public Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterBindingComponent Binding
+            public Hl7.Fhir.Model.OperationDefinition.BindingComponent Binding
             {
                 get { return _Binding; }
                 set { _Binding = value; OnPropertyChanged("Binding"); }
             }
             
-            private Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterBindingComponent _Binding;
+            private Hl7.Fhir.Model.OperationDefinition.BindingComponent _Binding;
             
             /// <summary>
             /// Parts of a Tuple Parameter
@@ -432,17 +432,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("part", Order=120)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterComponent> Part
+            public List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> Part
             {
-                get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterComponent>(); return _Part; }
+                get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent>(); return _Part; }
                 set { _Part = value; OnPropertyChanged("Part"); }
             }
             
-            private List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterComponent> _Part;
+            private List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> _Part;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as OperationDefinitionParameterComponent;
+                var dest = other as ParameterComponent;
                 
                 if (dest != null)
                 {
@@ -454,8 +454,8 @@ namespace Hl7.Fhir.Model
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
                     if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
-                    if(Binding != null) dest.Binding = (Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterBindingComponent)Binding.DeepCopy();
-                    if(Part != null) dest.Part = new List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterComponent>(Part.DeepCopy());
+                    if(Binding != null) dest.Binding = (Hl7.Fhir.Model.OperationDefinition.BindingComponent)Binding.DeepCopy();
+                    if(Part != null) dest.Part = new List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent>(Part.DeepCopy());
                     return dest;
                 }
                 else
@@ -464,12 +464,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new OperationDefinitionParameterComponent());
+                return CopyTo(new ParameterComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as OperationDefinitionParameterComponent;
+                var otherT = other as ParameterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as OperationDefinitionParameterComponent;
+                var otherT = other as ParameterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -508,12 +508,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OperationDefinitionParameterBindingComponent")]
+        [FhirType("BindingComponent")]
         [DataContract]
-        public partial class OperationDefinitionParameterBindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "OperationDefinitionParameterBindingComponent"; } }
+            public override string TypeName { get { return "BindingComponent"; } }
             
             /// <summary>
             /// required | extensible | preferred | example
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as OperationDefinitionParameterBindingComponent;
+                var dest = other as BindingComponent;
                 
                 if (dest != null)
                 {
@@ -580,12 +580,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new OperationDefinitionParameterBindingComponent());
+                return CopyTo(new BindingComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as OperationDefinitionParameterBindingComponent;
+                var otherT = other as BindingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as OperationDefinitionParameterBindingComponent;
+                var otherT = other as BindingComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -843,13 +843,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contact", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionContactComponent> Contact
+        public List<Hl7.Fhir.Model.OperationDefinition.ContactComponent> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.OperationDefinition.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionContactComponent> _Contact;
+        private List<Hl7.Fhir.Model.OperationDefinition.ContactComponent> _Contact;
         
         /// <summary>
         /// Date for this version of the operation definition
@@ -1163,13 +1163,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("parameter", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterComponent> Parameter
+        public List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> Parameter
         {
-            get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterComponent>(); return _Parameter; }
+            get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent>(); return _Parameter; }
             set { _Parameter = value; OnPropertyChanged("Parameter"); }
         }
         
-        private List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterComponent> _Parameter;
+        private List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> _Parameter;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1185,7 +1185,7 @@ namespace Hl7.Fhir.Model
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.OperationDefinition.OperationKind>)KindElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.OperationDefinition.ContactComponent>(Contact.DeepCopy());
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
@@ -1196,7 +1196,7 @@ namespace Hl7.Fhir.Model
                 if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirBoolean)SystemElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(TypeElement.DeepCopy());
                 if(InstanceElement != null) dest.InstanceElement = (Hl7.Fhir.Model.FhirBoolean)InstanceElement.DeepCopy();
-                if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.OperationDefinition.OperationDefinitionParameterComponent>(Parameter.DeepCopy());
+                if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent>(Parameter.DeepCopy());
                 return dest;
             }
             else

@@ -45,9 +45,9 @@ namespace Hl7.Fhir.Model
 
     public partial class StructureDefinition
     {
-        public partial class StructureDefinitionSnapshotComponent : IElementList {}
+        public partial class SnapshotComponent : IElementList {}
 
-        public partial class StructureDefinitionDifferentialComponent : IElementList { }
+        public partial class DifferentialComponent : IElementList { }
 
         [NotMapped]
         public bool IsConstraint {  get { return ConstrainedType != null && !IsExtension; } }

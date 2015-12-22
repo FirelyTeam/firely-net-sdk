@@ -86,12 +86,12 @@ namespace Hl7.Fhir.Model
             Cancelled,
         }
 
-        [FhirType("SupplyRequestWhenComponent")]
+        [FhirType("WhenComponent")]
         [DataContract]
-        public partial class SupplyRequestWhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class WhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "SupplyRequestWhenComponent"; } }
+            public override string TypeName { get { return "WhenComponent"; } }
             
             /// <summary>
             /// Fulfilment code
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as SupplyRequestWhenComponent;
+                var dest = other as WhenComponent;
                 
                 if (dest != null)
                 {
@@ -136,12 +136,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new SupplyRequestWhenComponent());
+                return CopyTo(new WhenComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as SupplyRequestWhenComponent;
+                var otherT = other as WhenComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as SupplyRequestWhenComponent;
+                var otherT = other as WhenComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -332,13 +332,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("when", InSummary=true, Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.SupplyRequest.SupplyRequestWhenComponent When
+        public Hl7.Fhir.Model.SupplyRequest.WhenComponent When
         {
             get { return _When; }
             set { _When = value; OnPropertyChanged("When"); }
         }
         
-        private Hl7.Fhir.Model.SupplyRequest.SupplyRequestWhenComponent _When;
+        private Hl7.Fhir.Model.SupplyRequest.WhenComponent _When;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
                 if(OrderedItem != null) dest.OrderedItem = (Hl7.Fhir.Model.ResourceReference)OrderedItem.DeepCopy();
                 if(Supplier != null) dest.Supplier = new List<Hl7.Fhir.Model.ResourceReference>(Supplier.DeepCopy());
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
-                if(When != null) dest.When = (Hl7.Fhir.Model.SupplyRequest.SupplyRequestWhenComponent)When.DeepCopy();
+                if(When != null) dest.When = (Hl7.Fhir.Model.SupplyRequest.WhenComponent)When.DeepCopy();
                 return dest;
             }
             else

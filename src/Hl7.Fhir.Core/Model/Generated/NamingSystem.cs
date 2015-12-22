@@ -113,12 +113,12 @@ namespace Hl7.Fhir.Model
             Other,
         }
 
-        [FhirType("NamingSystemContactComponent")]
+        [FhirType("ContactComponent")]
         [DataContract]
-        public partial class NamingSystemContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NamingSystemContactComponent"; } }
+            public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
             /// Name of a individual to contact
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NamingSystemContactComponent;
+                var dest = other as ContactComponent;
                 
                 if (dest != null)
                 {
@@ -183,12 +183,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NamingSystemContactComponent());
+                return CopyTo(new ContactComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NamingSystemContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NamingSystemContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -213,12 +213,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NamingSystemUniqueIdComponent")]
+        [FhirType("UniqueIdComponent")]
         [DataContract]
-        public partial class NamingSystemUniqueIdComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NamingSystemUniqueIdComponent"; } }
+            public override string TypeName { get { return "UniqueIdComponent"; } }
             
             /// <summary>
             /// oid | uuid | uri | other
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NamingSystemUniqueIdComponent;
+                var dest = other as UniqueIdComponent;
                 
                 if (dest != null)
                 {
@@ -350,12 +350,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NamingSystemUniqueIdComponent());
+                return CopyTo(new UniqueIdComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NamingSystemUniqueIdComponent;
+                var otherT = other as UniqueIdComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NamingSystemUniqueIdComponent;
+                var otherT = other as UniqueIdComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -521,13 +521,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contact", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent> Contact
+        public List<Hl7.Fhir.Model.NamingSystem.ContactComponent> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.NamingSystem.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent> _Contact;
+        private List<Hl7.Fhir.Model.NamingSystem.ContactComponent> _Contact;
         
         /// <summary>
         /// Who maintains system namespace?
@@ -691,13 +691,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("uniqueId", Order=200)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent> UniqueId
+        public List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> UniqueId
         {
-            get { if(_UniqueId==null) _UniqueId = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent>(); return _UniqueId; }
+            get { if(_UniqueId==null) _UniqueId = new List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent>(); return _UniqueId; }
             set { _UniqueId = value; OnPropertyChanged("UniqueId"); }
         }
         
-        private List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent> _UniqueId;
+        private List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> _UniqueId;
         
         /// <summary>
         /// Use this instead
@@ -724,14 +724,14 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType>)KindElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.NamingSystem.ContactComponent>(Contact.DeepCopy());
                 if(ResponsibleElement != null) dest.ResponsibleElement = (Hl7.Fhir.Model.FhirString)ResponsibleElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
                 if(UsageElement != null) dest.UsageElement = (Hl7.Fhir.Model.FhirString)UsageElement.DeepCopy();
-                if(UniqueId != null) dest.UniqueId = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent>(UniqueId.DeepCopy());
+                if(UniqueId != null) dest.UniqueId = new List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent>(UniqueId.DeepCopy());
                 if(ReplacedBy != null) dest.ReplacedBy = (Hl7.Fhir.Model.ResourceReference)ReplacedBy.DeepCopy();
                 return dest;
             }

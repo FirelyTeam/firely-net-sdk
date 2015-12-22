@@ -86,12 +86,12 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("ProcedurePerformerComponent")]
+        [FhirType("PerformerComponent")]
         [DataContract]
-        public partial class ProcedurePerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ProcedurePerformerComponent"; } }
+            public override string TypeName { get { return "PerformerComponent"; } }
             
             /// <summary>
             /// The reference to the practitioner
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ProcedurePerformerComponent;
+                var dest = other as PerformerComponent;
                 
                 if (dest != null)
                 {
@@ -137,12 +137,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ProcedurePerformerComponent());
+                return CopyTo(new PerformerComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ProcedurePerformerComponent;
+                var otherT = other as PerformerComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ProcedurePerformerComponent;
+                var otherT = other as PerformerComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -167,12 +167,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProcedureFocalDeviceComponent")]
+        [FhirType("FocalDeviceComponent")]
         [DataContract]
-        public partial class ProcedureFocalDeviceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ProcedureFocalDeviceComponent"; } }
+            public override string TypeName { get { return "FocalDeviceComponent"; } }
             
             /// <summary>
             /// Kind of change to device
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ProcedureFocalDeviceComponent;
+                var dest = other as FocalDeviceComponent;
                 
                 if (dest != null)
                 {
@@ -219,12 +219,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ProcedureFocalDeviceComponent());
+                return CopyTo(new FocalDeviceComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ProcedureFocalDeviceComponent;
+                var otherT = other as FocalDeviceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ProcedureFocalDeviceComponent;
+                var otherT = other as FocalDeviceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -418,13 +418,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("performer", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Procedure.ProcedurePerformerComponent> Performer
+        public List<Hl7.Fhir.Model.Procedure.PerformerComponent> Performer
         {
-            get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.Procedure.ProcedurePerformerComponent>(); return _Performer; }
+            get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.Procedure.PerformerComponent>(); return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
-        private List<Hl7.Fhir.Model.Procedure.ProcedurePerformerComponent> _Performer;
+        private List<Hl7.Fhir.Model.Procedure.PerformerComponent> _Performer;
         
         /// <summary>
         /// Date/Period the procedure was performed
@@ -558,13 +558,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("focalDevice", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Procedure.ProcedureFocalDeviceComponent> FocalDevice
+        public List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent> FocalDevice
         {
-            get { if(_FocalDevice==null) _FocalDevice = new List<Hl7.Fhir.Model.Procedure.ProcedureFocalDeviceComponent>(); return _FocalDevice; }
+            get { if(_FocalDevice==null) _FocalDevice = new List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent>(); return _FocalDevice; }
             set { _FocalDevice = value; OnPropertyChanged("FocalDevice"); }
         }
         
-        private List<Hl7.Fhir.Model.Procedure.ProcedureFocalDeviceComponent> _FocalDevice;
+        private List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent> _FocalDevice;
         
         /// <summary>
         /// Items used during procedure
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model
                 if(ReasonNotPerformed != null) dest.ReasonNotPerformed = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonNotPerformed.DeepCopy());
                 if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
-                if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.Procedure.ProcedurePerformerComponent>(Performer.DeepCopy());
+                if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.Procedure.PerformerComponent>(Performer.DeepCopy());
                 if(Performed != null) dest.Performed = (Hl7.Fhir.Model.Element)Performed.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
                 if(FollowUp != null) dest.FollowUp = new List<Hl7.Fhir.Model.CodeableConcept>(FollowUp.DeepCopy());
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
                 if(Notes != null) dest.Notes = new List<Hl7.Fhir.Model.Annotation>(Notes.DeepCopy());
-                if(FocalDevice != null) dest.FocalDevice = new List<Hl7.Fhir.Model.Procedure.ProcedureFocalDeviceComponent>(FocalDevice.DeepCopy());
+                if(FocalDevice != null) dest.FocalDevice = new List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent>(FocalDevice.DeepCopy());
                 if(Used != null) dest.Used = new List<Hl7.Fhir.Model.ResourceReference>(Used.DeepCopy());
                 return dest;
             }

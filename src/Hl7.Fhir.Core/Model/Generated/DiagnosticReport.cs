@@ -104,12 +104,12 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("DiagnosticReportImageComponent")]
+        [FhirType("ImageComponent")]
         [DataContract]
-        public partial class DiagnosticReportImageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DiagnosticReportImageComponent"; } }
+            public override string TypeName { get { return "ImageComponent"; } }
             
             /// <summary>
             /// Comment about the image (e.g. explanation)
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DiagnosticReportImageComponent;
+                var dest = other as ImageComponent;
                 
                 if (dest != null)
                 {
@@ -175,12 +175,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DiagnosticReportImageComponent());
+                return CopyTo(new ImageComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DiagnosticReportImageComponent;
+                var otherT = other as ImageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DiagnosticReportImageComponent;
+                var otherT = other as ImageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -437,13 +437,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("image", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportImageComponent> Image
+        public List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent> Image
         {
-            get { if(_Image==null) _Image = new List<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportImageComponent>(); return _Image; }
+            get { if(_Image==null) _Image = new List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent>(); return _Image; }
             set { _Image = value; OnPropertyChanged("Image"); }
         }
         
-        private List<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportImageComponent> _Image;
+        private List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent> _Image;
         
         /// <summary>
         /// Clinical Interpretation of test results
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
                 if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
                 if(Result != null) dest.Result = new List<Hl7.Fhir.Model.ResourceReference>(Result.DeepCopy());
                 if(ImagingStudy != null) dest.ImagingStudy = new List<Hl7.Fhir.Model.ResourceReference>(ImagingStudy.DeepCopy());
-                if(Image != null) dest.Image = new List<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportImageComponent>(Image.DeepCopy());
+                if(Image != null) dest.Image = new List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent>(Image.DeepCopy());
                 if(ConclusionElement != null) dest.ConclusionElement = (Hl7.Fhir.Model.FhirString)ConclusionElement.DeepCopy();
                 if(CodedDiagnosis != null) dest.CodedDiagnosis = new List<Hl7.Fhir.Model.CodeableConcept>(CodedDiagnosis.DeepCopy());
                 if(PresentedForm != null) dest.PresentedForm = new List<Hl7.Fhir.Model.Attachment>(PresentedForm.DeepCopy());

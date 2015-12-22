@@ -232,16 +232,21 @@ namespace Hl7.Fhir.Model
 				string path = ""; // "ResourceType.Patient, ";
 				foreach(XmlAttribute et in sp.SelectNodes("fhir:xpath/@value", nsS))
                 {
-					path += "\"" + et.Value.Replace("f:", "").Replace("/", ".").Replace("(", "[").Replace(")", "]") + "\", ";
+					string temp = "\"" + et.Value.Replace("f:", "").Replace("/", ".").Replace("(", "[").Replace(")", "]") + "\"";
+					var split = temp.Split(new char[] {'|', ' '}, StringSplitOptions.RemoveEmptyEntries);
+					path += string.Join("\", \"", split) + ", ";
 				}
 				string target = ""; // "ResourceType.Patient, ";
+				var sc = new System.Collections.Generic.SortedSet<String>();
 				foreach(XmlAttribute et in sp.SelectNodes("fhir:target/@value", nsS))
                 {
+					sc.Add("ResourceType." + et.Value);
 					target += "ResourceType." + et.Value + ", ";
 				}
 				if (!string.IsNullOrEmpty(target))
                 {
-					target = ", Target = new ResourceType[] { " + target + "}";
+					// target = ", Target = new ResourceType[] { " + target + "}";
+					target = ", Target = new ResourceType[] { " + string.Join(", ", sc) + ", }";
                 }
 				// string path = sp.SelectSingleNode("fhir:xpath/@value", nsR).Value;
 #>                new SearchParamDefinition() { Resource = "<#= resourceName #>", Name = "<#= name #>", Description = @"<#= description.Replace("\"", "\"\"") #>", Type = SearchParamType.<#= outputType #>, Path = new string[] { <#= path #>}<#= target #> }, 

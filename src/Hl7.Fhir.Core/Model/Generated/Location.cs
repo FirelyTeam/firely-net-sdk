@@ -101,12 +101,12 @@ namespace Hl7.Fhir.Model
             Kind,
         }
 
-        [FhirType("LocationPositionComponent")]
+        [FhirType("PositionComponent")]
         [DataContract]
-        public partial class LocationPositionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "LocationPositionComponent"; } }
+            public override string TypeName { get { return "PositionComponent"; } }
             
             /// <summary>
             /// Longitude with WGS84 datum
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as LocationPositionComponent;
+                var dest = other as PositionComponent;
                 
                 if (dest != null)
                 {
@@ -224,12 +224,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new LocationPositionComponent());
+                return CopyTo(new PositionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as LocationPositionComponent;
+                var otherT = other as PositionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as LocationPositionComponent;
+                var otherT = other as PositionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -456,13 +456,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("position", Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.Location.LocationPositionComponent Position
+        public Hl7.Fhir.Model.Location.PositionComponent Position
         {
             get { return _Position; }
             set { _Position = value; OnPropertyChanged("Position"); }
         }
         
-        private Hl7.Fhir.Model.Location.LocationPositionComponent _Position;
+        private Hl7.Fhir.Model.Location.PositionComponent _Position;
         
         /// <summary>
         /// Organization responsible for provisioning and upkeep
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
                 if(PhysicalType != null) dest.PhysicalType = (Hl7.Fhir.Model.CodeableConcept)PhysicalType.DeepCopy();
-                if(Position != null) dest.Position = (Hl7.Fhir.Model.Location.LocationPositionComponent)Position.DeepCopy();
+                if(Position != null) dest.Position = (Hl7.Fhir.Model.Location.PositionComponent)Position.DeepCopy();
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
                 return dest;

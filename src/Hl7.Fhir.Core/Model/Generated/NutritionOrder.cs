@@ -110,12 +110,12 @@ namespace Hl7.Fhir.Model
             Cancelled,
         }
 
-        [FhirType("NutritionOrderOralDietComponent")]
+        [FhirType("OralDietComponent")]
         [DataContract]
-        public partial class NutritionOrderOralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NutritionOrderOralDietComponent"; } }
+            public override string TypeName { get { return "OralDietComponent"; } }
             
             /// <summary>
             /// Type of oral diet or diet restrictions that describe what can be consumed orally
@@ -151,13 +151,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("nutrient", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietNutrientComponent> Nutrient
+            public List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent> Nutrient
             {
-                get { if(_Nutrient==null) _Nutrient = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietNutrientComponent>(); return _Nutrient; }
+                get { if(_Nutrient==null) _Nutrient = new List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>(); return _Nutrient; }
                 set { _Nutrient = value; OnPropertyChanged("Nutrient"); }
             }
             
-            private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietNutrientComponent> _Nutrient;
+            private List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent> _Nutrient;
             
             /// <summary>
             /// Required  texture modifications
@@ -165,13 +165,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("texture", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietTextureComponent> Texture
+            public List<Hl7.Fhir.Model.NutritionOrder.TextureComponent> Texture
             {
-                get { if(_Texture==null) _Texture = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietTextureComponent>(); return _Texture; }
+                get { if(_Texture==null) _Texture = new List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>(); return _Texture; }
                 set { _Texture = value; OnPropertyChanged("Texture"); }
             }
             
-            private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietTextureComponent> _Texture;
+            private List<Hl7.Fhir.Model.NutritionOrder.TextureComponent> _Texture;
             
             /// <summary>
             /// The required consistency of fluids and liquids provided to the patient
@@ -221,15 +221,15 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NutritionOrderOralDietComponent;
+                var dest = other as OralDietComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                     if(Schedule != null) dest.Schedule = new List<Hl7.Fhir.Model.Timing>(Schedule.DeepCopy());
-                    if(Nutrient != null) dest.Nutrient = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietNutrientComponent>(Nutrient.DeepCopy());
-                    if(Texture != null) dest.Texture = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietTextureComponent>(Texture.DeepCopy());
+                    if(Nutrient != null) dest.Nutrient = new List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>(Nutrient.DeepCopy());
+                    if(Texture != null) dest.Texture = new List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>(Texture.DeepCopy());
                     if(FluidConsistencyType != null) dest.FluidConsistencyType = new List<Hl7.Fhir.Model.CodeableConcept>(FluidConsistencyType.DeepCopy());
                     if(InstructionElement != null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)InstructionElement.DeepCopy();
                     return dest;
@@ -240,12 +240,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NutritionOrderOralDietComponent());
+                return CopyTo(new OralDietComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderOralDietComponent;
+                var otherT = other as OralDietComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderOralDietComponent;
+                var otherT = other as OralDietComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -278,12 +278,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NutritionOrderOralDietNutrientComponent")]
+        [FhirType("NutrientComponent")]
         [DataContract]
-        public partial class NutritionOrderOralDietNutrientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NutritionOrderOralDietNutrientComponent"; } }
+            public override string TypeName { get { return "NutrientComponent"; } }
             
             /// <summary>
             /// Type of nutrient that is being modified
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NutritionOrderOralDietNutrientComponent;
+                var dest = other as NutrientComponent;
                 
                 if (dest != null)
                 {
@@ -328,12 +328,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NutritionOrderOralDietNutrientComponent());
+                return CopyTo(new NutrientComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderOralDietNutrientComponent;
+                var otherT = other as NutrientComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderOralDietNutrientComponent;
+                var otherT = other as NutrientComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -358,12 +358,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NutritionOrderOralDietTextureComponent")]
+        [FhirType("TextureComponent")]
         [DataContract]
-        public partial class NutritionOrderOralDietTextureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NutritionOrderOralDietTextureComponent"; } }
+            public override string TypeName { get { return "TextureComponent"; } }
             
             /// <summary>
             /// Code to indicate how to alter the texture of the foods, e.g. pureed
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NutritionOrderOralDietTextureComponent;
+                var dest = other as TextureComponent;
                 
                 if (dest != null)
                 {
@@ -408,12 +408,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NutritionOrderOralDietTextureComponent());
+                return CopyTo(new TextureComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderOralDietTextureComponent;
+                var otherT = other as TextureComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderOralDietTextureComponent;
+                var otherT = other as TextureComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -438,12 +438,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NutritionOrderSupplementComponent")]
+        [FhirType("SupplementComponent")]
         [DataContract]
-        public partial class NutritionOrderSupplementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NutritionOrderSupplementComponent"; } }
+            public override string TypeName { get { return "SupplementComponent"; } }
             
             /// <summary>
             /// Type of supplement product requested
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NutritionOrderSupplementComponent;
+                var dest = other as SupplementComponent;
                 
                 if (dest != null)
                 {
@@ -569,12 +569,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NutritionOrderSupplementComponent());
+                return CopyTo(new SupplementComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderSupplementComponent;
+                var otherT = other as SupplementComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderSupplementComponent;
+                var otherT = other as SupplementComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -605,12 +605,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NutritionOrderEnteralFormulaComponent")]
+        [FhirType("EnteralFormulaComponent")]
         [DataContract]
-        public partial class NutritionOrderEnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NutritionOrderEnteralFormulaComponent"; } }
+            public override string TypeName { get { return "EnteralFormulaComponent"; } }
             
             /// <summary>
             /// Type of enteral or infant formula
@@ -734,13 +734,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("administration", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaAdministrationComponent> Administration
+            public List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent> Administration
             {
-                get { if(_Administration==null) _Administration = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaAdministrationComponent>(); return _Administration; }
+                get { if(_Administration==null) _Administration = new List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>(); return _Administration; }
                 set { _Administration = value; OnPropertyChanged("Administration"); }
             }
             
-            private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaAdministrationComponent> _Administration;
+            private List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent> _Administration;
             
             /// <summary>
             /// Upper limit on formula volume per unit of time
@@ -789,7 +789,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NutritionOrderEnteralFormulaComponent;
+                var dest = other as EnteralFormulaComponent;
                 
                 if (dest != null)
                 {
@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Model
                     if(AdditiveProductNameElement != null) dest.AdditiveProductNameElement = (Hl7.Fhir.Model.FhirString)AdditiveProductNameElement.DeepCopy();
                     if(CaloricDensity != null) dest.CaloricDensity = (Hl7.Fhir.Model.SimpleQuantity)CaloricDensity.DeepCopy();
                     if(RouteofAdministration != null) dest.RouteofAdministration = (Hl7.Fhir.Model.CodeableConcept)RouteofAdministration.DeepCopy();
-                    if(Administration != null) dest.Administration = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaAdministrationComponent>(Administration.DeepCopy());
+                    if(Administration != null) dest.Administration = new List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>(Administration.DeepCopy());
                     if(MaxVolumeToDeliver != null) dest.MaxVolumeToDeliver = (Hl7.Fhir.Model.SimpleQuantity)MaxVolumeToDeliver.DeepCopy();
                     if(AdministrationInstructionElement != null) dest.AdministrationInstructionElement = (Hl7.Fhir.Model.FhirString)AdministrationInstructionElement.DeepCopy();
                     return dest;
@@ -811,12 +811,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NutritionOrderEnteralFormulaComponent());
+                return CopyTo(new EnteralFormulaComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderEnteralFormulaComponent;
+                var otherT = other as EnteralFormulaComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -835,7 +835,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderEnteralFormulaComponent;
+                var otherT = other as EnteralFormulaComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -855,12 +855,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NutritionOrderEnteralFormulaAdministrationComponent")]
+        [FhirType("AdministrationComponent")]
         [DataContract]
-        public partial class NutritionOrderEnteralFormulaAdministrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NutritionOrderEnteralFormulaAdministrationComponent"; } }
+            public override string TypeName { get { return "AdministrationComponent"; } }
             
             /// <summary>
             /// Scheduled frequency of enteral feeding
@@ -904,7 +904,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NutritionOrderEnteralFormulaAdministrationComponent;
+                var dest = other as AdministrationComponent;
                 
                 if (dest != null)
                 {
@@ -920,12 +920,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NutritionOrderEnteralFormulaAdministrationComponent());
+                return CopyTo(new AdministrationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderEnteralFormulaAdministrationComponent;
+                var otherT = other as AdministrationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -938,7 +938,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NutritionOrderEnteralFormulaAdministrationComponent;
+                var otherT = other as AdministrationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1122,13 +1122,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("oralDiet", Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietComponent OralDiet
+        public Hl7.Fhir.Model.NutritionOrder.OralDietComponent OralDiet
         {
             get { return _OralDiet; }
             set { _OralDiet = value; OnPropertyChanged("OralDiet"); }
         }
         
-        private Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietComponent _OralDiet;
+        private Hl7.Fhir.Model.NutritionOrder.OralDietComponent _OralDiet;
         
         /// <summary>
         /// Supplement components
@@ -1136,26 +1136,26 @@ namespace Hl7.Fhir.Model
         [FhirElement("supplement", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent> Supplement
+        public List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent> Supplement
         {
-            get { if(_Supplement==null) _Supplement = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent>(); return _Supplement; }
+            get { if(_Supplement==null) _Supplement = new List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>(); return _Supplement; }
             set { _Supplement = value; OnPropertyChanged("Supplement"); }
         }
         
-        private List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent> _Supplement;
+        private List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent> _Supplement;
         
         /// <summary>
         /// Enteral formula components
         /// </summary>
         [FhirElement("enteralFormula", Order=200)]
         [DataMember]
-        public Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaComponent EnteralFormula
+        public Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent EnteralFormula
         {
             get { return _EnteralFormula; }
             set { _EnteralFormula = value; OnPropertyChanged("EnteralFormula"); }
         }
         
-        private Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaComponent _EnteralFormula;
+        private Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent _EnteralFormula;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1173,9 +1173,9 @@ namespace Hl7.Fhir.Model
                 if(AllergyIntolerance != null) dest.AllergyIntolerance = new List<Hl7.Fhir.Model.ResourceReference>(AllergyIntolerance.DeepCopy());
                 if(FoodPreferenceModifier != null) dest.FoodPreferenceModifier = new List<Hl7.Fhir.Model.CodeableConcept>(FoodPreferenceModifier.DeepCopy());
                 if(ExcludeFoodModifier != null) dest.ExcludeFoodModifier = new List<Hl7.Fhir.Model.CodeableConcept>(ExcludeFoodModifier.DeepCopy());
-                if(OralDiet != null) dest.OralDiet = (Hl7.Fhir.Model.NutritionOrder.NutritionOrderOralDietComponent)OralDiet.DeepCopy();
-                if(Supplement != null) dest.Supplement = new List<Hl7.Fhir.Model.NutritionOrder.NutritionOrderSupplementComponent>(Supplement.DeepCopy());
-                if(EnteralFormula != null) dest.EnteralFormula = (Hl7.Fhir.Model.NutritionOrder.NutritionOrderEnteralFormulaComponent)EnteralFormula.DeepCopy();
+                if(OralDiet != null) dest.OralDiet = (Hl7.Fhir.Model.NutritionOrder.OralDietComponent)OralDiet.DeepCopy();
+                if(Supplement != null) dest.Supplement = new List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>(Supplement.DeepCopy());
+                if(EnteralFormula != null) dest.EnteralFormula = (Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent)EnteralFormula.DeepCopy();
                 return dest;
             }
             else

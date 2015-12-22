@@ -164,12 +164,12 @@ namespace Hl7.Fhir.Model
             NeedsAction,
         }
 
-        [FhirType("AppointmentParticipantComponent")]
+        [FhirType("ParticipantComponent")]
         [DataContract]
-        public partial class AppointmentParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "AppointmentParticipantComponent"; } }
+            public override string TypeName { get { return "ParticipantComponent"; } }
             
             /// <summary>
             /// Role of participant in the appointment
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as AppointmentParticipantComponent;
+                var dest = other as ParticipantComponent;
                 
                 if (dest != null)
                 {
@@ -283,12 +283,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new AppointmentParticipantComponent());
+                return CopyTo(new ParticipantComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as AppointmentParticipantComponent;
+                var otherT = other as ParticipantComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as AppointmentParticipantComponent;
+                var otherT = other as ParticipantComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -603,13 +603,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("participant", Order=200)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent> Participant
+        public List<Hl7.Fhir.Model.Appointment.ParticipantComponent> Participant
         {
-            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent>(); return _Participant; }
+            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(); return _Participant; }
             set { _Participant = value; OnPropertyChanged("Participant"); }
         }
         
-        private List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent> _Participant;
+        private List<Hl7.Fhir.Model.Appointment.ParticipantComponent> _Participant;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model
                 if(MinutesDurationElement != null) dest.MinutesDurationElement = (Hl7.Fhir.Model.PositiveInt)MinutesDurationElement.DeepCopy();
                 if(Slot != null) dest.Slot = new List<Hl7.Fhir.Model.ResourceReference>(Slot.DeepCopy());
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent>(Participant.DeepCopy());
+                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(Participant.DeepCopy());
                 return dest;
             }
             else

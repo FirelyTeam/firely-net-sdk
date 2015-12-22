@@ -86,12 +86,12 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("SpecimenCollectionComponent")]
+        [FhirType("CollectionComponent")]
         [DataContract]
-        public partial class SpecimenCollectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "SpecimenCollectionComponent"; } }
+            public override string TypeName { get { return "CollectionComponent"; } }
             
             /// <summary>
             /// Who collected the specimen
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as SpecimenCollectionComponent;
+                var dest = other as CollectionComponent;
                 
                 if (dest != null)
                 {
@@ -214,12 +214,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new SpecimenCollectionComponent());
+                return CopyTo(new CollectionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as SpecimenCollectionComponent;
+                var otherT = other as CollectionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as SpecimenCollectionComponent;
+                var otherT = other as CollectionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -252,12 +252,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecimenTreatmentComponent")]
+        [FhirType("TreatmentComponent")]
         [DataContract]
-        public partial class SpecimenTreatmentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TreatmentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "SpecimenTreatmentComponent"; } }
+            public override string TypeName { get { return "TreatmentComponent"; } }
             
             /// <summary>
             /// Textual description of procedure
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as SpecimenTreatmentComponent;
+                var dest = other as TreatmentComponent;
                 
                 if (dest != null)
                 {
@@ -337,12 +337,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new SpecimenTreatmentComponent());
+                return CopyTo(new TreatmentComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as SpecimenTreatmentComponent;
+                var otherT = other as TreatmentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as SpecimenTreatmentComponent;
+                var otherT = other as TreatmentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -369,12 +369,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecimenContainerComponent")]
+        [FhirType("ContainerComponent")]
         [DataContract]
-        public partial class SpecimenContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "SpecimenContainerComponent"; } }
+            public override string TypeName { get { return "ContainerComponent"; } }
             
             /// <summary>
             /// Id for the container
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as SpecimenContainerComponent;
+                var dest = other as ContainerComponent;
                 
                 if (dest != null)
                 {
@@ -496,12 +496,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new SpecimenContainerComponent());
+                return CopyTo(new ContainerComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as SpecimenContainerComponent;
+                var otherT = other as ContainerComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as SpecimenContainerComponent;
+                var otherT = other as ContainerComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -673,13 +673,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("collection", Order=160)]
         [DataMember]
-        public Hl7.Fhir.Model.Specimen.SpecimenCollectionComponent Collection
+        public Hl7.Fhir.Model.Specimen.CollectionComponent Collection
         {
             get { return _Collection; }
             set { _Collection = value; OnPropertyChanged("Collection"); }
         }
         
-        private Hl7.Fhir.Model.Specimen.SpecimenCollectionComponent _Collection;
+        private Hl7.Fhir.Model.Specimen.CollectionComponent _Collection;
         
         /// <summary>
         /// Treatment and processing step details
@@ -687,13 +687,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("treatment", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Specimen.SpecimenTreatmentComponent> Treatment
+        public List<Hl7.Fhir.Model.Specimen.TreatmentComponent> Treatment
         {
-            get { if(_Treatment==null) _Treatment = new List<Hl7.Fhir.Model.Specimen.SpecimenTreatmentComponent>(); return _Treatment; }
+            get { if(_Treatment==null) _Treatment = new List<Hl7.Fhir.Model.Specimen.TreatmentComponent>(); return _Treatment; }
             set { _Treatment = value; OnPropertyChanged("Treatment"); }
         }
         
-        private List<Hl7.Fhir.Model.Specimen.SpecimenTreatmentComponent> _Treatment;
+        private List<Hl7.Fhir.Model.Specimen.TreatmentComponent> _Treatment;
         
         /// <summary>
         /// Direct container of specimen (tube/slide, etc.)
@@ -701,13 +701,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("container", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Specimen.SpecimenContainerComponent> Container
+        public List<Hl7.Fhir.Model.Specimen.ContainerComponent> Container
         {
-            get { if(_Container==null) _Container = new List<Hl7.Fhir.Model.Specimen.SpecimenContainerComponent>(); return _Container; }
+            get { if(_Container==null) _Container = new List<Hl7.Fhir.Model.Specimen.ContainerComponent>(); return _Container; }
             set { _Container = value; OnPropertyChanged("Container"); }
         }
         
-        private List<Hl7.Fhir.Model.Specimen.SpecimenContainerComponent> _Container;
+        private List<Hl7.Fhir.Model.Specimen.ContainerComponent> _Container;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -723,9 +723,9 @@ namespace Hl7.Fhir.Model
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(AccessionIdentifier != null) dest.AccessionIdentifier = (Hl7.Fhir.Model.Identifier)AccessionIdentifier.DeepCopy();
                 if(ReceivedTimeElement != null) dest.ReceivedTimeElement = (Hl7.Fhir.Model.FhirDateTime)ReceivedTimeElement.DeepCopy();
-                if(Collection != null) dest.Collection = (Hl7.Fhir.Model.Specimen.SpecimenCollectionComponent)Collection.DeepCopy();
-                if(Treatment != null) dest.Treatment = new List<Hl7.Fhir.Model.Specimen.SpecimenTreatmentComponent>(Treatment.DeepCopy());
-                if(Container != null) dest.Container = new List<Hl7.Fhir.Model.Specimen.SpecimenContainerComponent>(Container.DeepCopy());
+                if(Collection != null) dest.Collection = (Hl7.Fhir.Model.Specimen.CollectionComponent)Collection.DeepCopy();
+                if(Treatment != null) dest.Treatment = new List<Hl7.Fhir.Model.Specimen.TreatmentComponent>(Treatment.DeepCopy());
+                if(Container != null) dest.Container = new List<Hl7.Fhir.Model.Specimen.ContainerComponent>(Container.DeepCopy());
                 return dest;
             }
             else

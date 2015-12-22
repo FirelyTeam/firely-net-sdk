@@ -86,12 +86,12 @@ namespace Hl7.Fhir.Model
             Source,
         }
 
-        [FhirType("ProvenanceAgentComponent")]
+        [FhirType("AgentComponent")]
         [DataContract]
-        public partial class ProvenanceAgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ProvenanceAgentComponent"; } }
+            public override string TypeName { get { return "AgentComponent"; } }
             
             /// <summary>
             /// What the agents involvement was
@@ -140,17 +140,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("relatedAgent", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Provenance.ProvenanceAgentRelatedAgentComponent> RelatedAgent
+            public List<Hl7.Fhir.Model.Provenance.RelatedAgentComponent> RelatedAgent
             {
-                get { if(_RelatedAgent==null) _RelatedAgent = new List<Hl7.Fhir.Model.Provenance.ProvenanceAgentRelatedAgentComponent>(); return _RelatedAgent; }
+                get { if(_RelatedAgent==null) _RelatedAgent = new List<Hl7.Fhir.Model.Provenance.RelatedAgentComponent>(); return _RelatedAgent; }
                 set { _RelatedAgent = value; OnPropertyChanged("RelatedAgent"); }
             }
             
-            private List<Hl7.Fhir.Model.Provenance.ProvenanceAgentRelatedAgentComponent> _RelatedAgent;
+            private List<Hl7.Fhir.Model.Provenance.RelatedAgentComponent> _RelatedAgent;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ProvenanceAgentComponent;
+                var dest = other as AgentComponent;
                 
                 if (dest != null)
                 {
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
                     if(Role != null) dest.Role = (Hl7.Fhir.Model.Coding)Role.DeepCopy();
                     if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
                     if(UserId != null) dest.UserId = (Hl7.Fhir.Model.Identifier)UserId.DeepCopy();
-                    if(RelatedAgent != null) dest.RelatedAgent = new List<Hl7.Fhir.Model.Provenance.ProvenanceAgentRelatedAgentComponent>(RelatedAgent.DeepCopy());
+                    if(RelatedAgent != null) dest.RelatedAgent = new List<Hl7.Fhir.Model.Provenance.RelatedAgentComponent>(RelatedAgent.DeepCopy());
                     return dest;
                 }
                 else
@@ -167,12 +167,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ProvenanceAgentComponent());
+                return CopyTo(new AgentComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ProvenanceAgentComponent;
+                var otherT = other as AgentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ProvenanceAgentComponent;
+                var otherT = other as AgentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -201,12 +201,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProvenanceAgentRelatedAgentComponent")]
+        [FhirType("RelatedAgentComponent")]
         [DataContract]
-        public partial class ProvenanceAgentRelatedAgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RelatedAgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ProvenanceAgentRelatedAgentComponent"; } }
+            public override string TypeName { get { return "RelatedAgentComponent"; } }
             
             /// <summary>
             /// Type of relationship between agents
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ProvenanceAgentRelatedAgentComponent;
+                var dest = other as RelatedAgentComponent;
                 
                 if (dest != null)
                 {
@@ -272,12 +272,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ProvenanceAgentRelatedAgentComponent());
+                return CopyTo(new RelatedAgentComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ProvenanceAgentRelatedAgentComponent;
+                var otherT = other as RelatedAgentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ProvenanceAgentRelatedAgentComponent;
+                var otherT = other as RelatedAgentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -302,12 +302,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProvenanceEntityComponent")]
+        [FhirType("EntityComponent")]
         [DataContract]
-        public partial class ProvenanceEntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ProvenanceEntityComponent"; } }
+            public override string TypeName { get { return "EntityComponent"; } }
             
             /// <summary>
             /// derivation | revision | quotation | source
@@ -426,17 +426,17 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("agent", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent Agent
+            public Hl7.Fhir.Model.Provenance.AgentComponent Agent
             {
                 get { return _Agent; }
                 set { _Agent = value; OnPropertyChanged("Agent"); }
             }
             
-            private Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent _Agent;
+            private Hl7.Fhir.Model.Provenance.AgentComponent _Agent;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ProvenanceEntityComponent;
+                var dest = other as EntityComponent;
                 
                 if (dest != null)
                 {
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
                     if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirUri)ReferenceElement.DeepCopy();
                     if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-                    if(Agent != null) dest.Agent = (Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent)Agent.DeepCopy();
+                    if(Agent != null) dest.Agent = (Hl7.Fhir.Model.Provenance.AgentComponent)Agent.DeepCopy();
                     return dest;
                 }
                 else
@@ -454,12 +454,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ProvenanceEntityComponent());
+                return CopyTo(new EntityComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ProvenanceEntityComponent;
+                var otherT = other as EntityComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ProvenanceEntityComponent;
+                var otherT = other as EntityComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -631,13 +631,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("agent", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent> Agent
+        public List<Hl7.Fhir.Model.Provenance.AgentComponent> Agent
         {
-            get { if(_Agent==null) _Agent = new List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent>(); return _Agent; }
+            get { if(_Agent==null) _Agent = new List<Hl7.Fhir.Model.Provenance.AgentComponent>(); return _Agent; }
             set { _Agent = value; OnPropertyChanged("Agent"); }
         }
         
-        private List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent> _Agent;
+        private List<Hl7.Fhir.Model.Provenance.AgentComponent> _Agent;
         
         /// <summary>
         /// An entity used in this activity
@@ -645,13 +645,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("entity", InSummary=true, Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent> Entity
+        public List<Hl7.Fhir.Model.Provenance.EntityComponent> Entity
         {
-            get { if(_Entity==null) _Entity = new List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent>(); return _Entity; }
+            get { if(_Entity==null) _Entity = new List<Hl7.Fhir.Model.Provenance.EntityComponent>(); return _Entity; }
             set { _Entity = value; OnPropertyChanged("Entity"); }
         }
         
-        private List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent> _Entity;
+        private List<Hl7.Fhir.Model.Provenance.EntityComponent> _Entity;
         
         /// <summary>
         /// Signature on target
@@ -681,8 +681,8 @@ namespace Hl7.Fhir.Model
                 if(Activity != null) dest.Activity = (Hl7.Fhir.Model.CodeableConcept)Activity.DeepCopy();
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
-                if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Provenance.ProvenanceAgentComponent>(Agent.DeepCopy());
-                if(Entity != null) dest.Entity = new List<Hl7.Fhir.Model.Provenance.ProvenanceEntityComponent>(Entity.DeepCopy());
+                if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Provenance.AgentComponent>(Agent.DeepCopy());
+                if(Entity != null) dest.Entity = new List<Hl7.Fhir.Model.Provenance.EntityComponent>(Entity.DeepCopy());
                 if(Signature != null) dest.Signature = new List<Hl7.Fhir.Model.Signature>(Signature.DeepCopy());
                 return dest;
             }

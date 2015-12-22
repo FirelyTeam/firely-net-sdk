@@ -269,12 +269,12 @@ namespace Hl7.Fhir.Model
             Informational,
         }
 
-        [FhirType("OperationOutcomeIssueComponent")]
+        [FhirType("IssueComponent")]
         [DataContract]
-        public partial class OperationOutcomeIssueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "OperationOutcomeIssueComponent"; } }
+            public override string TypeName { get { return "IssueComponent"; } }
             
             /// <summary>
             /// fatal | error | warning | information
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as OperationOutcomeIssueComponent;
+                var dest = other as IssueComponent;
                 
                 if (dest != null)
                 {
@@ -440,12 +440,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new OperationOutcomeIssueComponent());
+                return CopyTo(new IssueComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as OperationOutcomeIssueComponent;
+                var otherT = other as IssueComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as OperationOutcomeIssueComponent;
+                var otherT = other as IssueComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -482,13 +482,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("issue", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.OperationOutcome.OperationOutcomeIssueComponent> Issue
+        public List<Hl7.Fhir.Model.OperationOutcome.IssueComponent> Issue
         {
-            get { if(_Issue==null) _Issue = new List<Hl7.Fhir.Model.OperationOutcome.OperationOutcomeIssueComponent>(); return _Issue; }
+            get { if(_Issue==null) _Issue = new List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>(); return _Issue; }
             set { _Issue = value; OnPropertyChanged("Issue"); }
         }
         
-        private List<Hl7.Fhir.Model.OperationOutcome.OperationOutcomeIssueComponent> _Issue;
+        private List<Hl7.Fhir.Model.OperationOutcome.IssueComponent> _Issue;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Issue != null) dest.Issue = new List<Hl7.Fhir.Model.OperationOutcome.OperationOutcomeIssueComponent>(Issue.DeepCopy());
+                if(Issue != null) dest.Issue = new List<Hl7.Fhir.Model.OperationOutcome.IssueComponent>(Issue.DeepCopy());
                 return dest;
             }
             else

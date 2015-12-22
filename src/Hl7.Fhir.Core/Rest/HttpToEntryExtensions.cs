@@ -30,11 +30,11 @@ namespace Hl7.Fhir.Rest
         private const string USERDATA_BODY = "$body";
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
 
-        internal static Bundle.BundleEntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body)
+        internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body)
         {
-            var result = new Bundle.BundleEntryComponent();
+            var result = new Bundle.EntryComponent();
 
-            result.Response = new Bundle.BundleEntryResponseComponent();
+            result.Response = new Bundle.ResponseComponent();
             result.Response.Status = ((int)response.StatusCode).ToString();
             result.Response.SetHeaders(response.Headers);
 
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static string GetBodyAsText(this Bundle.BundleEntryResponseComponent interaction)
+        public static string GetBodyAsText(this Bundle.ResponseComponent interaction)
         {
             var body = interaction.GetBody();
 
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Rest
                 return null;
         }
 
-        public static byte[] GetBody(this Bundle.BundleEntryResponseComponent interaction)
+        public static byte[] GetBody(this Bundle.ResponseComponent interaction)
         {
             if (interaction.UserData.ContainsKey(USERDATA_BODY))
                 return (byte[])interaction.UserData[USERDATA_BODY];
@@ -204,12 +204,12 @@ namespace Hl7.Fhir.Rest
                 return null;
         }
 
-        internal static void SetBody(this Bundle.BundleEntryResponseComponent interaction, byte[] data)
+        internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)
         {
             interaction.UserData[USERDATA_BODY] = data;
         }
 
-        internal static void SetHeaders(this Bundle.BundleEntryResponseComponent interaction, WebHeaderCollection headers)
+        internal static void SetHeaders(this Bundle.ResponseComponent interaction, WebHeaderCollection headers)
         {
             foreach (var key in headers.AllKeys)
             {
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        public static IEnumerable<Tuple<string,string>> GetHeaders(this Bundle.BundleEntryResponseComponent interaction)
+        public static IEnumerable<Tuple<string,string>> GetHeaders(this Bundle.ResponseComponent interaction)
         {
             foreach (var headerExt in interaction.GetExtensions(EXTENSION_RESPONSE_HEADER))
             {
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static IEnumerable<string> GetHeader(this Bundle.BundleEntryResponseComponent interaction, string header)
+        public static IEnumerable<string> GetHeader(this Bundle.ResponseComponent interaction, string header)
         {
             return interaction.GetHeaders().Where(h => h.Item1 == header).Select(h => h.Item2);
         }

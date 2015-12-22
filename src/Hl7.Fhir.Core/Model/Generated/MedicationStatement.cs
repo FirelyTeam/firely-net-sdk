@@ -86,12 +86,12 @@ namespace Hl7.Fhir.Model
             Intended,
         }
 
-        [FhirType("MedicationStatementDosageComponent")]
+        [FhirType("DosageComponent")]
         [DataContract]
-        public partial class MedicationStatementDosageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "MedicationStatementDosageComponent"; } }
+            public override string TypeName { get { return "DosageComponent"; } }
             
             /// <summary>
             /// Reported dosage information
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as MedicationStatementDosageComponent;
+                var dest = other as DosageComponent;
                 
                 if (dest != null)
                 {
@@ -257,12 +257,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new MedicationStatementDosageComponent());
+                return CopyTo(new DosageComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as MedicationStatementDosageComponent;
+                var otherT = other as DosageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as MedicationStatementDosageComponent;
+                var otherT = other as DosageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -551,13 +551,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("dosage", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.MedicationStatement.MedicationStatementDosageComponent> Dosage
+        public List<Hl7.Fhir.Model.MedicationStatement.DosageComponent> Dosage
         {
-            get { if(_Dosage==null) _Dosage = new List<Hl7.Fhir.Model.MedicationStatement.MedicationStatementDosageComponent>(); return _Dosage; }
+            get { if(_Dosage==null) _Dosage = new List<Hl7.Fhir.Model.MedicationStatement.DosageComponent>(); return _Dosage; }
             set { _Dosage = value; OnPropertyChanged("Dosage"); }
         }
         
-        private List<Hl7.Fhir.Model.MedicationStatement.MedicationStatementDosageComponent> _Dosage;
+        private List<Hl7.Fhir.Model.MedicationStatement.DosageComponent> _Dosage;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
                 if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
                 if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
                 if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
-                if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.MedicationStatement.MedicationStatementDosageComponent>(Dosage.DeepCopy());
+                if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.MedicationStatement.DosageComponent>(Dosage.DeepCopy());
                 return dest;
             }
             else

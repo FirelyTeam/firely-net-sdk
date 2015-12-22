@@ -204,12 +204,12 @@ namespace Hl7.Fhir.Model
             Official,
         }
 
-        [FhirType("CompositionAttesterComponent")]
+        [FhirType("AttesterComponent")]
         [DataContract]
-        public partial class CompositionAttesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "CompositionAttesterComponent"; } }
+            public override string TypeName { get { return "AttesterComponent"; } }
             
             /// <summary>
             /// personal | professional | legal | official
@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CompositionAttesterComponent;
+                var dest = other as AttesterComponent;
                 
                 if (dest != null)
                 {
@@ -308,12 +308,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CompositionAttesterComponent());
+                return CopyTo(new AttesterComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CompositionAttesterComponent;
+                var otherT = other as AttesterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CompositionAttesterComponent;
+                var otherT = other as AttesterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -340,12 +340,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CompositionEventComponent")]
+        [FhirType("EventComponent")]
         [DataContract]
-        public partial class CompositionEventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "CompositionEventComponent"; } }
+            public override string TypeName { get { return "EventComponent"; } }
             
             /// <summary>
             /// Code(s) that apply to the event being documented
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CompositionEventComponent;
+                var dest = other as EventComponent;
                 
                 if (dest != null)
                 {
@@ -407,12 +407,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CompositionEventComponent());
+                return CopyTo(new EventComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CompositionEventComponent;
+                var otherT = other as EventComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CompositionEventComponent;
+                var otherT = other as EventComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -863,13 +863,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("attester", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Composition.CompositionAttesterComponent> Attester
+        public List<Hl7.Fhir.Model.Composition.AttesterComponent> Attester
         {
-            get { if(_Attester==null) _Attester = new List<Hl7.Fhir.Model.Composition.CompositionAttesterComponent>(); return _Attester; }
+            get { if(_Attester==null) _Attester = new List<Hl7.Fhir.Model.Composition.AttesterComponent>(); return _Attester; }
             set { _Attester = value; OnPropertyChanged("Attester"); }
         }
         
-        private List<Hl7.Fhir.Model.Composition.CompositionAttesterComponent> _Attester;
+        private List<Hl7.Fhir.Model.Composition.AttesterComponent> _Attester;
         
         /// <summary>
         /// Organization which maintains the composition
@@ -891,13 +891,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("event", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Composition.CompositionEventComponent> Event
+        public List<Hl7.Fhir.Model.Composition.EventComponent> Event
         {
-            get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.Composition.CompositionEventComponent>(); return _Event; }
+            get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.Composition.EventComponent>(); return _Event; }
             set { _Event = value; OnPropertyChanged("Event"); }
         }
         
-        private List<Hl7.Fhir.Model.Composition.CompositionEventComponent> _Event;
+        private List<Hl7.Fhir.Model.Composition.EventComponent> _Event;
         
         /// <summary>
         /// Context of the Composition
@@ -943,9 +943,9 @@ namespace Hl7.Fhir.Model
                 if(ConfidentialityElement != null) dest.ConfidentialityElement = (Code<Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality>)ConfidentialityElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
-                if(Attester != null) dest.Attester = new List<Hl7.Fhir.Model.Composition.CompositionAttesterComponent>(Attester.DeepCopy());
+                if(Attester != null) dest.Attester = new List<Hl7.Fhir.Model.Composition.AttesterComponent>(Attester.DeepCopy());
                 if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
-                if(Event != null) dest.Event = new List<Hl7.Fhir.Model.Composition.CompositionEventComponent>(Event.DeepCopy());
+                if(Event != null) dest.Event = new List<Hl7.Fhir.Model.Composition.EventComponent>(Event.DeepCopy());
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Section != null) dest.Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(Section.DeepCopy());
                 return dest;

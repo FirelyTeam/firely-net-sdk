@@ -86,12 +86,12 @@ namespace Hl7.Fhir.Model
             Appends,
         }
 
-        [FhirType("DocumentReferenceRelatesToComponent")]
+        [FhirType("RelatesToComponent")]
         [DataContract]
-        public partial class DocumentReferenceRelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DocumentReferenceRelatesToComponent"; } }
+            public override string TypeName { get { return "RelatesToComponent"; } }
             
             /// <summary>
             /// replaces | transforms | signs | appends
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DocumentReferenceRelatesToComponent;
+                var dest = other as RelatesToComponent;
                 
                 if (dest != null)
                 {
@@ -158,12 +158,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DocumentReferenceRelatesToComponent());
+                return CopyTo(new RelatesToComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DocumentReferenceRelatesToComponent;
+                var otherT = other as RelatesToComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DocumentReferenceRelatesToComponent;
+                var otherT = other as RelatesToComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -188,12 +188,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DocumentReferenceContentComponent")]
+        [FhirType("ContentComponent")]
         [DataContract]
-        public partial class DocumentReferenceContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DocumentReferenceContentComponent"; } }
+            public override string TypeName { get { return "ContentComponent"; } }
             
             /// <summary>
             /// Where to access the document
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DocumentReferenceContentComponent;
+                var dest = other as ContentComponent;
                 
                 if (dest != null)
                 {
@@ -240,12 +240,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DocumentReferenceContentComponent());
+                return CopyTo(new ContentComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DocumentReferenceContentComponent;
+                var otherT = other as ContentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DocumentReferenceContentComponent;
+                var otherT = other as ContentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -270,12 +270,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DocumentReferenceContextComponent")]
+        [FhirType("ContextComponent")]
         [DataContract]
-        public partial class DocumentReferenceContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DocumentReferenceContextComponent"; } }
+            public override string TypeName { get { return "ContextComponent"; } }
             
             /// <summary>
             /// Context of the document  content
@@ -364,17 +364,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("related", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextRelatedComponent> Related
+            public List<Hl7.Fhir.Model.DocumentReference.RelatedComponent> Related
             {
-                get { if(_Related==null) _Related = new List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextRelatedComponent>(); return _Related; }
+                get { if(_Related==null) _Related = new List<Hl7.Fhir.Model.DocumentReference.RelatedComponent>(); return _Related; }
                 set { _Related = value; OnPropertyChanged("Related"); }
             }
             
-            private List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextRelatedComponent> _Related;
+            private List<Hl7.Fhir.Model.DocumentReference.RelatedComponent> _Related;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DocumentReferenceContextComponent;
+                var dest = other as ContextComponent;
                 
                 if (dest != null)
                 {
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
                     if(FacilityType != null) dest.FacilityType = (Hl7.Fhir.Model.CodeableConcept)FacilityType.DeepCopy();
                     if(PracticeSetting != null) dest.PracticeSetting = (Hl7.Fhir.Model.CodeableConcept)PracticeSetting.DeepCopy();
                     if(SourcePatientInfo != null) dest.SourcePatientInfo = (Hl7.Fhir.Model.ResourceReference)SourcePatientInfo.DeepCopy();
-                    if(Related != null) dest.Related = new List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextRelatedComponent>(Related.DeepCopy());
+                    if(Related != null) dest.Related = new List<Hl7.Fhir.Model.DocumentReference.RelatedComponent>(Related.DeepCopy());
                     return dest;
                 }
                 else
@@ -394,12 +394,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DocumentReferenceContextComponent());
+                return CopyTo(new ContextComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DocumentReferenceContextComponent;
+                var otherT = other as ContextComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DocumentReferenceContextComponent;
+                var otherT = other as ContextComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -434,12 +434,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DocumentReferenceContextRelatedComponent")]
+        [FhirType("RelatedComponent")]
         [DataContract]
-        public partial class DocumentReferenceContextRelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DocumentReferenceContextRelatedComponent"; } }
+            public override string TypeName { get { return "RelatedComponent"; } }
             
             /// <summary>
             /// Identifier of related objects or events
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DocumentReferenceContextRelatedComponent;
+                var dest = other as RelatedComponent;
                 
                 if (dest != null)
                 {
@@ -485,12 +485,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DocumentReferenceContextRelatedComponent());
+                return CopyTo(new RelatedComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DocumentReferenceContextRelatedComponent;
+                var otherT = other as RelatedComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DocumentReferenceContextRelatedComponent;
+                var otherT = other as RelatedComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -743,13 +743,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("relatesTo", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceRelatesToComponent> RelatesTo
+        public List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent> RelatesTo
         {
-            get { if(_RelatesTo==null) _RelatesTo = new List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceRelatesToComponent>(); return _RelatesTo; }
+            get { if(_RelatesTo==null) _RelatesTo = new List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent>(); return _RelatesTo; }
             set { _RelatesTo = value; OnPropertyChanged("RelatesTo"); }
         }
         
-        private List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceRelatesToComponent> _RelatesTo;
+        private List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent> _RelatesTo;
         
         /// <summary>
         /// Human-readable description (title)
@@ -803,26 +803,26 @@ namespace Hl7.Fhir.Model
         [FhirElement("content", InSummary=true, Order=240)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceContentComponent> Content
+        public List<Hl7.Fhir.Model.DocumentReference.ContentComponent> Content
         {
-            get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceContentComponent>(); return _Content; }
+            get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.DocumentReference.ContentComponent>(); return _Content; }
             set { _Content = value; OnPropertyChanged("Content"); }
         }
         
-        private List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceContentComponent> _Content;
+        private List<Hl7.Fhir.Model.DocumentReference.ContentComponent> _Content;
         
         /// <summary>
         /// Clinical context of document
         /// </summary>
         [FhirElement("context", InSummary=true, Order=250)]
         [DataMember]
-        public Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextComponent Context
+        public Hl7.Fhir.Model.DocumentReference.ContextComponent Context
         {
             get { return _Context; }
             set { _Context = value; OnPropertyChanged("Context"); }
         }
         
-        private Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextComponent _Context;
+        private Hl7.Fhir.Model.DocumentReference.ContextComponent _Context;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -843,11 +843,11 @@ namespace Hl7.Fhir.Model
                 if(IndexedElement != null) dest.IndexedElement = (Hl7.Fhir.Model.Instant)IndexedElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DocumentReferenceStatus>)StatusElement.DeepCopy();
                 if(DocStatus != null) dest.DocStatus = (Hl7.Fhir.Model.CodeableConcept)DocStatus.DeepCopy();
-                if(RelatesTo != null) dest.RelatesTo = new List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceRelatesToComponent>(RelatesTo.DeepCopy());
+                if(RelatesTo != null) dest.RelatesTo = new List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent>(RelatesTo.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(SecurityLabel != null) dest.SecurityLabel = new List<Hl7.Fhir.Model.CodeableConcept>(SecurityLabel.DeepCopy());
-                if(Content != null) dest.Content = new List<Hl7.Fhir.Model.DocumentReference.DocumentReferenceContentComponent>(Content.DeepCopy());
-                if(Context != null) dest.Context = (Hl7.Fhir.Model.DocumentReference.DocumentReferenceContextComponent)Context.DeepCopy();
+                if(Content != null) dest.Content = new List<Hl7.Fhir.Model.DocumentReference.ContentComponent>(Content.DeepCopy());
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.DocumentReference.ContextComponent)Context.DeepCopy();
                 return dest;
             }
             else

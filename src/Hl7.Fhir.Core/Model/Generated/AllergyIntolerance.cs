@@ -239,12 +239,12 @@ namespace Hl7.Fhir.Model
             Severe,
         }
 
-        [FhirType("AllergyIntoleranceReactionComponent")]
+        [FhirType("ReactionComponent")]
         [DataContract]
-        public partial class AllergyIntoleranceReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "AllergyIntoleranceReactionComponent"; } }
+            public override string TypeName { get { return "ReactionComponent"; } }
             
             /// <summary>
             /// Specific substance considered to be responsible for event
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as AllergyIntoleranceReactionComponent;
+                var dest = other as ReactionComponent;
                 
                 if (dest != null)
                 {
@@ -450,12 +450,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new AllergyIntoleranceReactionComponent());
+                return CopyTo(new ReactionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as AllergyIntoleranceReactionComponent;
+                var otherT = other as ReactionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as AllergyIntoleranceReactionComponent;
+                var otherT = other as ReactionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -806,13 +806,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("reaction", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceReactionComponent> Reaction
+        public List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> Reaction
         {
-            get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceReactionComponent>(); return _Reaction; }
+            get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>(); return _Reaction; }
             set { _Reaction = value; OnPropertyChanged("Reaction"); }
         }
         
-        private List<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceReactionComponent> _Reaction;
+        private List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> _Reaction;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -834,7 +834,7 @@ namespace Hl7.Fhir.Model
                 if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>)CategoryElement.DeepCopy();
                 if(LastOccurenceElement != null) dest.LastOccurenceElement = (Hl7.Fhir.Model.FhirDateTime)LastOccurenceElement.DeepCopy();
                 if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
-                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceReactionComponent>(Reaction.DeepCopy());
+                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>(Reaction.DeepCopy());
                 return dest;
             }
             else

@@ -107,12 +107,12 @@ namespace Hl7.Fhir.Model
             Out,
         }
 
-        [FhirType("VisionPrescriptionDispenseComponent")]
+        [FhirType("DispenseComponent")]
         [DataContract]
-        public partial class VisionPrescriptionDispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "VisionPrescriptionDispenseComponent"; } }
+            public override string TypeName { get { return "DispenseComponent"; } }
             
             /// <summary>
             /// Product to be supplied
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as VisionPrescriptionDispenseComponent;
+                var dest = other as DispenseComponent;
                 
                 if (dest != null)
                 {
@@ -587,12 +587,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new VisionPrescriptionDispenseComponent());
+                return CopyTo(new DispenseComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as VisionPrescriptionDispenseComponent;
+                var otherT = other as DispenseComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as VisionPrescriptionDispenseComponent;
+                var otherT = other as DispenseComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -751,13 +751,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("dispense", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.VisionPrescription.VisionPrescriptionDispenseComponent> Dispense
+        public List<Hl7.Fhir.Model.VisionPrescription.DispenseComponent> Dispense
         {
-            get { if(_Dispense==null) _Dispense = new List<Hl7.Fhir.Model.VisionPrescription.VisionPrescriptionDispenseComponent>(); return _Dispense; }
+            get { if(_Dispense==null) _Dispense = new List<Hl7.Fhir.Model.VisionPrescription.DispenseComponent>(); return _Dispense; }
             set { _Dispense = value; OnPropertyChanged("Dispense"); }
         }
         
-        private List<Hl7.Fhir.Model.VisionPrescription.VisionPrescriptionDispenseComponent> _Dispense;
+        private List<Hl7.Fhir.Model.VisionPrescription.DispenseComponent> _Dispense;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -772,7 +772,7 @@ namespace Hl7.Fhir.Model
                 if(Prescriber != null) dest.Prescriber = (Hl7.Fhir.Model.ResourceReference)Prescriber.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
-                if(Dispense != null) dest.Dispense = new List<Hl7.Fhir.Model.VisionPrescription.VisionPrescriptionDispenseComponent>(Dispense.DeepCopy());
+                if(Dispense != null) dest.Dispense = new List<Hl7.Fhir.Model.VisionPrescription.DispenseComponent>(Dispense.DeepCopy());
                 return dest;
             }
             else

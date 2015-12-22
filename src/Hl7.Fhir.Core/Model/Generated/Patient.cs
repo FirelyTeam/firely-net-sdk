@@ -359,12 +359,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PatientCommunicationComponent")]
+        [FhirType("CommunicationComponent")]
         [DataContract]
-        public partial class PatientCommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "PatientCommunicationComponent"; } }
+            public override string TypeName { get { return "CommunicationComponent"; } }
             
             /// <summary>
             /// The language which can be used to communicate with the patient about his or her health
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as PatientCommunicationComponent;
+                var dest = other as CommunicationComponent;
                 
                 if (dest != null)
                 {
@@ -429,12 +429,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new PatientCommunicationComponent());
+                return CopyTo(new CommunicationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as PatientCommunicationComponent;
+                var otherT = other as CommunicationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as PatientCommunicationComponent;
+                var otherT = other as CommunicationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -459,12 +459,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PatientLinkComponent")]
+        [FhirType("LinkComponent")]
         [DataContract]
-        public partial class PatientLinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "PatientLinkComponent"; } }
+            public override string TypeName { get { return "LinkComponent"; } }
             
             /// <summary>
             /// The other patient resource that the link refers to
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as PatientLinkComponent;
+                var dest = other as LinkComponent;
                 
                 if (dest != null)
                 {
@@ -531,12 +531,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new PatientLinkComponent());
+                return CopyTo(new LinkComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as PatientLinkComponent;
+                var otherT = other as LinkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as PatientLinkComponent;
+                var otherT = other as LinkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -801,13 +801,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("communication", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Patient.PatientCommunicationComponent> Communication
+        public List<Hl7.Fhir.Model.Patient.CommunicationComponent> Communication
         {
-            get { if(_Communication==null) _Communication = new List<Hl7.Fhir.Model.Patient.PatientCommunicationComponent>(); return _Communication; }
+            get { if(_Communication==null) _Communication = new List<Hl7.Fhir.Model.Patient.CommunicationComponent>(); return _Communication; }
             set { _Communication = value; OnPropertyChanged("Communication"); }
         }
         
-        private List<Hl7.Fhir.Model.Patient.PatientCommunicationComponent> _Communication;
+        private List<Hl7.Fhir.Model.Patient.CommunicationComponent> _Communication;
         
         /// <summary>
         /// Patient's nominated primary care provider
@@ -844,13 +844,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("link", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Patient.PatientLinkComponent> Link
+        public List<Hl7.Fhir.Model.Patient.LinkComponent> Link
         {
-            get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Patient.PatientLinkComponent>(); return _Link; }
+            get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Patient.LinkComponent>(); return _Link; }
             set { _Link = value; OnPropertyChanged("Link"); }
         }
         
-        private List<Hl7.Fhir.Model.Patient.PatientLinkComponent> _Link;
+        private List<Hl7.Fhir.Model.Patient.LinkComponent> _Link;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -872,10 +872,10 @@ namespace Hl7.Fhir.Model
                 if(Photo != null) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopy());
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(Contact.DeepCopy());
                 if(Animal != null) dest.Animal = (Hl7.Fhir.Model.Patient.AnimalComponent)Animal.DeepCopy();
-                if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.Patient.PatientCommunicationComponent>(Communication.DeepCopy());
+                if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.Patient.CommunicationComponent>(Communication.DeepCopy());
                 if(CareProvider != null) dest.CareProvider = new List<Hl7.Fhir.Model.ResourceReference>(CareProvider.DeepCopy());
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
-                if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Patient.PatientLinkComponent>(Link.DeepCopy());
+                if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Patient.LinkComponent>(Link.DeepCopy());
                 return dest;
             }
             else

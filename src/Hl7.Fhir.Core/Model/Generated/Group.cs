@@ -98,12 +98,12 @@ namespace Hl7.Fhir.Model
             Substance,
         }
 
-        [FhirType("GroupCharacteristicComponent")]
+        [FhirType("CharacteristicComponent")]
         [DataContract]
-        public partial class GroupCharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "GroupCharacteristicComponent"; } }
+            public override string TypeName { get { return "CharacteristicComponent"; } }
             
             /// <summary>
             /// Kind of characteristic
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as GroupCharacteristicComponent;
+                var dest = other as CharacteristicComponent;
                 
                 if (dest != null)
                 {
@@ -199,12 +199,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new GroupCharacteristicComponent());
+                return CopyTo(new CharacteristicComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as GroupCharacteristicComponent;
+                var otherT = other as CharacteristicComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as GroupCharacteristicComponent;
+                var otherT = other as CharacteristicComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -233,12 +233,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GroupMemberComponent")]
+        [FhirType("MemberComponent")]
         [DataContract]
-        public partial class GroupMemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "GroupMemberComponent"; } }
+            public override string TypeName { get { return "MemberComponent"; } }
             
             /// <summary>
             /// Reference to the group member
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as GroupMemberComponent;
+                var dest = other as MemberComponent;
                 
                 if (dest != null)
                 {
@@ -318,12 +318,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new GroupMemberComponent());
+                return CopyTo(new MemberComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as GroupMemberComponent;
+                var otherT = other as MemberComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as GroupMemberComponent;
+                var otherT = other as MemberComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -513,13 +513,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("characteristic", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent> Characteristic
+        public List<Hl7.Fhir.Model.Group.CharacteristicComponent> Characteristic
         {
-            get { if(_Characteristic==null) _Characteristic = new List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent>(); return _Characteristic; }
+            get { if(_Characteristic==null) _Characteristic = new List<Hl7.Fhir.Model.Group.CharacteristicComponent>(); return _Characteristic; }
             set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
         }
         
-        private List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent> _Characteristic;
+        private List<Hl7.Fhir.Model.Group.CharacteristicComponent> _Characteristic;
         
         /// <summary>
         /// Who or what is in group
@@ -527,13 +527,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("member", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Group.GroupMemberComponent> Member
+        public List<Hl7.Fhir.Model.Group.MemberComponent> Member
         {
-            get { if(_Member==null) _Member = new List<Hl7.Fhir.Model.Group.GroupMemberComponent>(); return _Member; }
+            get { if(_Member==null) _Member = new List<Hl7.Fhir.Model.Group.MemberComponent>(); return _Member; }
             set { _Member = value; OnPropertyChanged("Member"); }
         }
         
-        private List<Hl7.Fhir.Model.Group.GroupMemberComponent> _Member;
+        private List<Hl7.Fhir.Model.Group.MemberComponent> _Member;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -548,8 +548,8 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.UnsignedInt)QuantityElement.DeepCopy();
-                if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent>(Characteristic.DeepCopy());
-                if(Member != null) dest.Member = new List<Hl7.Fhir.Model.Group.GroupMemberComponent>(Member.DeepCopy());
+                if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.Group.CharacteristicComponent>(Characteristic.DeepCopy());
+                if(Member != null) dest.Member = new List<Hl7.Fhir.Model.Group.MemberComponent>(Member.DeepCopy());
                 return dest;
             }
             else

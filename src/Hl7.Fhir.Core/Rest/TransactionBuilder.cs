@@ -37,16 +37,16 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private Bundle.BundleEntryComponent newEntry(Bundle.HTTPVerb method)
+        private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method)
         {
-            var newEntry = new Bundle.BundleEntryComponent();
-            newEntry.Request = new Bundle.BundleEntryRequestComponent();
+            var newEntry = new Bundle.EntryComponent();
+            newEntry.Request = new Bundle.RequestComponent();
             newEntry.Request.Method = method;
 
             return newEntry;
         }
 
-        private void addEntry(Bundle.BundleEntryComponent newEntry, RestUrl path)
+        private void addEntry(Bundle.EntryComponent newEntry, RestUrl path)
         {
             newEntry.Request.Url = path.Uri.ToString();
             _result.Entry.Add(newEntry);

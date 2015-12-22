@@ -86,12 +86,12 @@ namespace Hl7.Fhir.Model
             HealthUnknown,
         }
 
-        [FhirType("FamilyMemberHistoryConditionComponent")]
+        [FhirType("ConditionComponent")]
         [DataContract]
-        public partial class FamilyMemberHistoryConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "FamilyMemberHistoryConditionComponent"; } }
+            public override string TypeName { get { return "ConditionComponent"; } }
             
             /// <summary>
             /// Condition suffered by relation
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as FamilyMemberHistoryConditionComponent;
+                var dest = other as ConditionComponent;
                 
                 if (dest != null)
                 {
@@ -166,12 +166,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new FamilyMemberHistoryConditionComponent());
+                return CopyTo(new ConditionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as FamilyMemberHistoryConditionComponent;
+                var otherT = other as ConditionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as FamilyMemberHistoryConditionComponent;
+                var otherT = other as ConditionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -433,13 +433,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("condition", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FamilyMemberHistory.FamilyMemberHistoryConditionComponent> Condition
+        public List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> Condition
         {
-            get { if(_Condition==null) _Condition = new List<Hl7.Fhir.Model.FamilyMemberHistory.FamilyMemberHistoryConditionComponent>(); return _Condition; }
+            get { if(_Condition==null) _Condition = new List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent>(); return _Condition; }
             set { _Condition = value; OnPropertyChanged("Condition"); }
         }
         
-        private List<Hl7.Fhir.Model.FamilyMemberHistory.FamilyMemberHistoryConditionComponent> _Condition;
+        private List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> _Condition;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
                 if(Age != null) dest.Age = (Hl7.Fhir.Model.Element)Age.DeepCopy();
                 if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.Element)Deceased.DeepCopy();
                 if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
-                if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.FamilyMemberHistory.FamilyMemberHistoryConditionComponent>(Condition.DeepCopy());
+                if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent>(Condition.DeepCopy());
                 return dest;
             }
             else

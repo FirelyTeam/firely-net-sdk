@@ -53,12 +53,12 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Medication"; } }
         
-        [FhirType("MedicationProductComponent")]
+        [FhirType("ProductComponent")]
         [DataContract]
-        public partial class MedicationProductComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProductComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "MedicationProductComponent"; } }
+            public override string TypeName { get { return "ProductComponent"; } }
             
             /// <summary>
             /// powder | tablets | carton +
@@ -79,13 +79,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("ingredient", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> Ingredient
+            public List<Hl7.Fhir.Model.Medication.IngredientComponent> Ingredient
             {
-                get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent>(); return _Ingredient; }
+                get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.Medication.IngredientComponent>(); return _Ingredient; }
                 set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
             }
             
-            private List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> _Ingredient;
+            private List<Hl7.Fhir.Model.Medication.IngredientComponent> _Ingredient;
             
             /// <summary>
             /// 
@@ -93,24 +93,24 @@ namespace Hl7.Fhir.Model
             [FhirElement("batch", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Medication.MedicationProductBatchComponent> Batch
+            public List<Hl7.Fhir.Model.Medication.BatchComponent> Batch
             {
-                get { if(_Batch==null) _Batch = new List<Hl7.Fhir.Model.Medication.MedicationProductBatchComponent>(); return _Batch; }
+                get { if(_Batch==null) _Batch = new List<Hl7.Fhir.Model.Medication.BatchComponent>(); return _Batch; }
                 set { _Batch = value; OnPropertyChanged("Batch"); }
             }
             
-            private List<Hl7.Fhir.Model.Medication.MedicationProductBatchComponent> _Batch;
+            private List<Hl7.Fhir.Model.Medication.BatchComponent> _Batch;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as MedicationProductComponent;
+                var dest = other as ProductComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(Form != null) dest.Form = (Hl7.Fhir.Model.CodeableConcept)Form.DeepCopy();
-                    if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent>(Ingredient.DeepCopy());
-                    if(Batch != null) dest.Batch = new List<Hl7.Fhir.Model.Medication.MedicationProductBatchComponent>(Batch.DeepCopy());
+                    if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.Medication.IngredientComponent>(Ingredient.DeepCopy());
+                    if(Batch != null) dest.Batch = new List<Hl7.Fhir.Model.Medication.BatchComponent>(Batch.DeepCopy());
                     return dest;
                 }
                 else
@@ -119,12 +119,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new MedicationProductComponent());
+                return CopyTo(new ProductComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as MedicationProductComponent;
+                var otherT = other as ProductComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as MedicationProductComponent;
+                var otherT = other as ProductComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -151,12 +151,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicationProductIngredientComponent")]
+        [FhirType("IngredientComponent")]
         [DataContract]
-        public partial class MedicationProductIngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "MedicationProductIngredientComponent"; } }
+            public override string TypeName { get { return "IngredientComponent"; } }
             
             /// <summary>
             /// The product contained
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as MedicationProductIngredientComponent;
+                var dest = other as IngredientComponent;
                 
                 if (dest != null)
                 {
@@ -203,12 +203,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new MedicationProductIngredientComponent());
+                return CopyTo(new IngredientComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as MedicationProductIngredientComponent;
+                var otherT = other as IngredientComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as MedicationProductIngredientComponent;
+                var otherT = other as IngredientComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -233,12 +233,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicationProductBatchComponent")]
+        [FhirType("BatchComponent")]
         [DataContract]
-        public partial class MedicationProductBatchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "MedicationProductBatchComponent"; } }
+            public override string TypeName { get { return "BatchComponent"; } }
             
             /// <summary>
             /// 
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as MedicationProductBatchComponent;
+                var dest = other as BatchComponent;
                 
                 if (dest != null)
                 {
@@ -321,12 +321,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new MedicationProductBatchComponent());
+                return CopyTo(new BatchComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as MedicationProductBatchComponent;
+                var otherT = other as BatchComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as MedicationProductBatchComponent;
+                var otherT = other as BatchComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -351,12 +351,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicationPackageComponent")]
+        [FhirType("PackageComponent")]
         [DataContract]
-        public partial class MedicationPackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "MedicationPackageComponent"; } }
+            public override string TypeName { get { return "PackageComponent"; } }
             
             /// <summary>
             /// E.g. box, vial, blister-pack
@@ -377,23 +377,23 @@ namespace Hl7.Fhir.Model
             [FhirElement("content", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent> Content
+            public List<Hl7.Fhir.Model.Medication.ContentComponent> Content
             {
-                get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent>(); return _Content; }
+                get { if(_Content==null) _Content = new List<Hl7.Fhir.Model.Medication.ContentComponent>(); return _Content; }
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
             
-            private List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent> _Content;
+            private List<Hl7.Fhir.Model.Medication.ContentComponent> _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as MedicationPackageComponent;
+                var dest = other as PackageComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(Container != null) dest.Container = (Hl7.Fhir.Model.CodeableConcept)Container.DeepCopy();
-                    if(Content != null) dest.Content = new List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent>(Content.DeepCopy());
+                    if(Content != null) dest.Content = new List<Hl7.Fhir.Model.Medication.ContentComponent>(Content.DeepCopy());
                     return dest;
                 }
                 else
@@ -402,12 +402,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new MedicationPackageComponent());
+                return CopyTo(new PackageComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as MedicationPackageComponent;
+                var otherT = other as PackageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as MedicationPackageComponent;
+                var otherT = other as PackageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -432,12 +432,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicationPackageContentComponent")]
+        [FhirType("ContentComponent")]
         [DataContract]
-        public partial class MedicationPackageContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "MedicationPackageContentComponent"; } }
+            public override string TypeName { get { return "ContentComponent"; } }
             
             /// <summary>
             /// A product in the package
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as MedicationPackageContentComponent;
+                var dest = other as ContentComponent;
                 
                 if (dest != null)
                 {
@@ -484,12 +484,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new MedicationPackageContentComponent());
+                return CopyTo(new ContentComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as MedicationPackageContentComponent;
+                var otherT = other as ContentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as MedicationPackageContentComponent;
+                var otherT = other as ContentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -578,26 +578,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("product", Order=120)]
         [DataMember]
-        public Hl7.Fhir.Model.Medication.MedicationProductComponent Product
+        public Hl7.Fhir.Model.Medication.ProductComponent Product
         {
             get { return _Product; }
             set { _Product = value; OnPropertyChanged("Product"); }
         }
         
-        private Hl7.Fhir.Model.Medication.MedicationProductComponent _Product;
+        private Hl7.Fhir.Model.Medication.ProductComponent _Product;
         
         /// <summary>
         /// Details about packaged medications
         /// </summary>
         [FhirElement("package", Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.Medication.MedicationPackageComponent Package
+        public Hl7.Fhir.Model.Medication.PackageComponent Package
         {
             get { return _Package; }
             set { _Package = value; OnPropertyChanged("Package"); }
         }
         
-        private Hl7.Fhir.Model.Medication.MedicationPackageComponent _Package;
+        private Hl7.Fhir.Model.Medication.PackageComponent _Package;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -609,8 +609,8 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(IsBrandElement != null) dest.IsBrandElement = (Hl7.Fhir.Model.FhirBoolean)IsBrandElement.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = (Hl7.Fhir.Model.ResourceReference)Manufacturer.DeepCopy();
-                if(Product != null) dest.Product = (Hl7.Fhir.Model.Medication.MedicationProductComponent)Product.DeepCopy();
-                if(Package != null) dest.Package = (Hl7.Fhir.Model.Medication.MedicationPackageComponent)Package.DeepCopy();
+                if(Product != null) dest.Product = (Hl7.Fhir.Model.Medication.ProductComponent)Product.DeepCopy();
+                if(Package != null) dest.Package = (Hl7.Fhir.Model.Medication.PackageComponent)Package.DeepCopy();
                 return dest;
             }
             else

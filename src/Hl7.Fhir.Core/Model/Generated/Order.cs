@@ -53,12 +53,12 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Order"; } }
         
-        [FhirType("OrderWhenComponent")]
+        [FhirType("WhenComponent")]
         [DataContract]
-        public partial class OrderWhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class WhenComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "OrderWhenComponent"; } }
+            public override string TypeName { get { return "WhenComponent"; } }
             
             /// <summary>
             /// Code specifies when request should be done. The code may simply be a priority code
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as OrderWhenComponent;
+                var dest = other as WhenComponent;
                 
                 if (dest != null)
                 {
@@ -103,12 +103,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new OrderWhenComponent());
+                return CopyTo(new WhenComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as OrderWhenComponent;
+                var otherT = other as WhenComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as OrderWhenComponent;
+                var otherT = other as WhenComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -240,13 +240,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("when", InSummary=true, Order=150)]
         [DataMember]
-        public Hl7.Fhir.Model.Order.OrderWhenComponent When
+        public Hl7.Fhir.Model.Order.WhenComponent When
         {
             get { return _When; }
             set { _When = value; OnPropertyChanged("When"); }
         }
         
-        private Hl7.Fhir.Model.Order.OrderWhenComponent _When;
+        private Hl7.Fhir.Model.Order.WhenComponent _When;
         
         /// <summary>
         /// What action is being ordered
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                 if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
-                if(When != null) dest.When = (Hl7.Fhir.Model.Order.OrderWhenComponent)When.DeepCopy();
+                if(When != null) dest.When = (Hl7.Fhir.Model.Order.WhenComponent)When.DeepCopy();
                 if(Detail != null) dest.Detail = new List<Hl7.Fhir.Model.ResourceReference>(Detail.DeepCopy());
                 return dest;
             }

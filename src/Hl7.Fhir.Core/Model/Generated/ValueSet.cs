@@ -98,12 +98,12 @@ namespace Hl7.Fhir.Model
             NotIn,
         }
 
-        [FhirType("ValueSetContactComponent")]
+        [FhirType("ContactComponent")]
         [DataContract]
-        public partial class ValueSetContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ValueSetContactComponent"; } }
+            public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
             /// Name of an individual to contact
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ValueSetContactComponent;
+                var dest = other as ContactComponent;
                 
                 if (dest != null)
                 {
@@ -168,12 +168,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ValueSetContactComponent());
+                return CopyTo(new ContactComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ValueSetContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ValueSetContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -198,12 +198,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValueSetCodeSystemComponent")]
+        [FhirType("CodeSystemComponent")]
         [DataContract]
-        public partial class ValueSetCodeSystemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CodeSystemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ValueSetCodeSystemComponent"; } }
+            public override string TypeName { get { return "CodeSystemComponent"; } }
             
             /// <summary>
             /// URI to identify the code system (e.g. in Coding.system)
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ValueSetCodeSystemComponent;
+                var dest = other as CodeSystemComponent;
                 
                 if (dest != null)
                 {
@@ -335,12 +335,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ValueSetCodeSystemComponent());
+                return CopyTo(new CodeSystemComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ValueSetCodeSystemComponent;
+                var otherT = other as CodeSystemComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ValueSetCodeSystemComponent;
+                var otherT = other as CodeSystemComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -511,13 +511,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("designation", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemConceptDesignationComponent> Designation
+            public List<Hl7.Fhir.Model.ValueSet.DesignationComponent> Designation
             {
-                get { if(_Designation==null) _Designation = new List<Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemConceptDesignationComponent>(); return _Designation; }
+                get { if(_Designation==null) _Designation = new List<Hl7.Fhir.Model.ValueSet.DesignationComponent>(); return _Designation; }
                 set { _Designation = value; OnPropertyChanged("Designation"); }
             }
             
-            private List<Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemConceptDesignationComponent> _Designation;
+            private List<Hl7.Fhir.Model.ValueSet.DesignationComponent> _Designation;
             
             /// <summary>
             /// Child Concepts (is-a/contains/categorizes)
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
                     if(AbstractElement != null) dest.AbstractElement = (Hl7.Fhir.Model.FhirBoolean)AbstractElement.DeepCopy();
                     if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                     if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirString)DefinitionElement.DeepCopy();
-                    if(Designation != null) dest.Designation = new List<Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemConceptDesignationComponent>(Designation.DeepCopy());
+                    if(Designation != null) dest.Designation = new List<Hl7.Fhir.Model.ValueSet.DesignationComponent>(Designation.DeepCopy());
                     if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent>(Concept.DeepCopy());
                     return dest;
                 }
@@ -592,12 +592,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValueSetCodeSystemConceptDesignationComponent")]
+        [FhirType("DesignationComponent")]
         [DataContract]
-        public partial class ValueSetCodeSystemConceptDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ValueSetCodeSystemConceptDesignationComponent"; } }
+            public override string TypeName { get { return "DesignationComponent"; } }
             
             /// <summary>
             /// Human language of the designation
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ValueSetCodeSystemConceptDesignationComponent;
+                var dest = other as DesignationComponent;
                 
                 if (dest != null)
                 {
@@ -695,12 +695,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ValueSetCodeSystemConceptDesignationComponent());
+                return CopyTo(new DesignationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ValueSetCodeSystemConceptDesignationComponent;
+                var otherT = other as DesignationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ValueSetCodeSystemConceptDesignationComponent;
+                var otherT = other as DesignationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -727,12 +727,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValueSetComposeComponent")]
+        [FhirType("ComposeComponent")]
         [DataContract]
-        public partial class ValueSetComposeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ComposeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ValueSetComposeComponent"; } }
+            public override string TypeName { get { return "ComposeComponent"; } }
             
             /// <summary>
             /// Import the contents of another value set
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ValueSetComposeComponent;
+                var dest = other as ComposeComponent;
                 
                 if (dest != null)
                 {
@@ -813,12 +813,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ValueSetComposeComponent());
+                return CopyTo(new ComposeComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ValueSetComposeComponent;
+                var otherT = other as ComposeComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -831,7 +831,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ValueSetComposeComponent;
+                var otherT = other as ComposeComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -937,13 +937,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("filter", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ValueSetComposeIncludeFilterComponent> Filter
+            public List<Hl7.Fhir.Model.ValueSet.FilterComponent> Filter
             {
-                get { if(_Filter==null) _Filter = new List<Hl7.Fhir.Model.ValueSet.ValueSetComposeIncludeFilterComponent>(); return _Filter; }
+                get { if(_Filter==null) _Filter = new List<Hl7.Fhir.Model.ValueSet.FilterComponent>(); return _Filter; }
                 set { _Filter = value; OnPropertyChanged("Filter"); }
             }
             
-            private List<Hl7.Fhir.Model.ValueSet.ValueSetComposeIncludeFilterComponent> _Filter;
+            private List<Hl7.Fhir.Model.ValueSet.FilterComponent> _Filter;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -955,7 +955,7 @@ namespace Hl7.Fhir.Model
                     if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
                     if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                     if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.ValueSet.ConceptReferenceComponent>(Concept.DeepCopy());
-                    if(Filter != null) dest.Filter = new List<Hl7.Fhir.Model.ValueSet.ValueSetComposeIncludeFilterComponent>(Filter.DeepCopy());
+                    if(Filter != null) dest.Filter = new List<Hl7.Fhir.Model.ValueSet.FilterComponent>(Filter.DeepCopy());
                     return dest;
                 }
                 else
@@ -1076,13 +1076,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("designation", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemConceptDesignationComponent> Designation
+            public List<Hl7.Fhir.Model.ValueSet.DesignationComponent> Designation
             {
-                get { if(_Designation==null) _Designation = new List<Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemConceptDesignationComponent>(); return _Designation; }
+                get { if(_Designation==null) _Designation = new List<Hl7.Fhir.Model.ValueSet.DesignationComponent>(); return _Designation; }
                 set { _Designation = value; OnPropertyChanged("Designation"); }
             }
             
-            private List<Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemConceptDesignationComponent> _Designation;
+            private List<Hl7.Fhir.Model.ValueSet.DesignationComponent> _Designation;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1093,7 +1093,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                     if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-                    if(Designation != null) dest.Designation = new List<Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemConceptDesignationComponent>(Designation.DeepCopy());
+                    if(Designation != null) dest.Designation = new List<Hl7.Fhir.Model.ValueSet.DesignationComponent>(Designation.DeepCopy());
                     return dest;
                 }
                 else
@@ -1134,12 +1134,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValueSetComposeIncludeFilterComponent")]
+        [FhirType("FilterComponent")]
         [DataContract]
-        public partial class ValueSetComposeIncludeFilterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ValueSetComposeIncludeFilterComponent"; } }
+            public override string TypeName { get { return "FilterComponent"; } }
             
             /// <summary>
             /// A property defined by the code system
@@ -1242,7 +1242,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ValueSetComposeIncludeFilterComponent;
+                var dest = other as FilterComponent;
                 
                 if (dest != null)
                 {
@@ -1258,12 +1258,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ValueSetComposeIncludeFilterComponent());
+                return CopyTo(new FilterComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ValueSetComposeIncludeFilterComponent;
+                var otherT = other as FilterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1276,7 +1276,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ValueSetComposeIncludeFilterComponent;
+                var otherT = other as FilterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1290,12 +1290,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValueSetExpansionComponent")]
+        [FhirType("ExpansionComponent")]
         [DataContract]
-        public partial class ValueSetExpansionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ValueSetExpansionComponent"; } }
+            public override string TypeName { get { return "ExpansionComponent"; } }
             
             /// <summary>
             /// Uniquely identifies this expansion
@@ -1433,13 +1433,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("parameter", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionParameterComponent> Parameter
+            public List<Hl7.Fhir.Model.ValueSet.ParameterComponent> Parameter
             {
-                get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionParameterComponent>(); return _Parameter; }
+                get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.ValueSet.ParameterComponent>(); return _Parameter; }
                 set { _Parameter = value; OnPropertyChanged("Parameter"); }
             }
             
-            private List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionParameterComponent> _Parameter;
+            private List<Hl7.Fhir.Model.ValueSet.ParameterComponent> _Parameter;
             
             /// <summary>
             /// Codes in the value set
@@ -1447,17 +1447,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("contains", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> Contains
+            public List<Hl7.Fhir.Model.ValueSet.ContainsComponent> Contains
             {
-                get { if(_Contains==null) _Contains = new List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent>(); return _Contains; }
+                get { if(_Contains==null) _Contains = new List<Hl7.Fhir.Model.ValueSet.ContainsComponent>(); return _Contains; }
                 set { _Contains = value; OnPropertyChanged("Contains"); }
             }
             
-            private List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> _Contains;
+            private List<Hl7.Fhir.Model.ValueSet.ContainsComponent> _Contains;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ValueSetExpansionComponent;
+                var dest = other as ExpansionComponent;
                 
                 if (dest != null)
                 {
@@ -1466,8 +1466,8 @@ namespace Hl7.Fhir.Model
                     if(TimestampElement != null) dest.TimestampElement = (Hl7.Fhir.Model.FhirDateTime)TimestampElement.DeepCopy();
                     if(TotalElement != null) dest.TotalElement = (Hl7.Fhir.Model.Integer)TotalElement.DeepCopy();
                     if(OffsetElement != null) dest.OffsetElement = (Hl7.Fhir.Model.Integer)OffsetElement.DeepCopy();
-                    if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionParameterComponent>(Parameter.DeepCopy());
-                    if(Contains != null) dest.Contains = new List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent>(Contains.DeepCopy());
+                    if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.ValueSet.ParameterComponent>(Parameter.DeepCopy());
+                    if(Contains != null) dest.Contains = new List<Hl7.Fhir.Model.ValueSet.ContainsComponent>(Contains.DeepCopy());
                     return dest;
                 }
                 else
@@ -1476,12 +1476,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ValueSetExpansionComponent());
+                return CopyTo(new ExpansionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ValueSetExpansionComponent;
+                var otherT = other as ExpansionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1497,7 +1497,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ValueSetExpansionComponent;
+                var otherT = other as ExpansionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1514,12 +1514,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValueSetExpansionParameterComponent")]
+        [FhirType("ParameterComponent")]
         [DataContract]
-        public partial class ValueSetExpansionParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ValueSetExpansionParameterComponent"; } }
+            public override string TypeName { get { return "ParameterComponent"; } }
             
             /// <summary>
             /// Name as assigned by the server
@@ -1570,7 +1570,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ValueSetExpansionParameterComponent;
+                var dest = other as ParameterComponent;
                 
                 if (dest != null)
                 {
@@ -1585,12 +1585,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ValueSetExpansionParameterComponent());
+                return CopyTo(new ParameterComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ValueSetExpansionParameterComponent;
+                var otherT = other as ParameterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1602,7 +1602,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ValueSetExpansionParameterComponent;
+                var otherT = other as ParameterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1615,12 +1615,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValueSetExpansionContainsComponent")]
+        [FhirType("ContainsComponent")]
         [DataContract]
-        public partial class ValueSetExpansionContainsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContainsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ValueSetExpansionContainsComponent"; } }
+            public override string TypeName { get { return "ContainsComponent"; } }
             
             /// <summary>
             /// System value for the code
@@ -1788,17 +1788,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("contains", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> Contains
+            public List<Hl7.Fhir.Model.ValueSet.ContainsComponent> Contains
             {
-                get { if(_Contains==null) _Contains = new List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent>(); return _Contains; }
+                get { if(_Contains==null) _Contains = new List<Hl7.Fhir.Model.ValueSet.ContainsComponent>(); return _Contains; }
                 set { _Contains = value; OnPropertyChanged("Contains"); }
             }
             
-            private List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent> _Contains;
+            private List<Hl7.Fhir.Model.ValueSet.ContainsComponent> _Contains;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ValueSetExpansionContainsComponent;
+                var dest = other as ContainsComponent;
                 
                 if (dest != null)
                 {
@@ -1808,7 +1808,7 @@ namespace Hl7.Fhir.Model
                     if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                     if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                     if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-                    if(Contains != null) dest.Contains = new List<Hl7.Fhir.Model.ValueSet.ValueSetExpansionContainsComponent>(Contains.DeepCopy());
+                    if(Contains != null) dest.Contains = new List<Hl7.Fhir.Model.ValueSet.ContainsComponent>(Contains.DeepCopy());
                     return dest;
                 }
                 else
@@ -1817,12 +1817,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ValueSetExpansionContainsComponent());
+                return CopyTo(new ContainsComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ValueSetExpansionContainsComponent;
+                var otherT = other as ContainsComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1838,7 +1838,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ValueSetExpansionContainsComponent;
+                var otherT = other as ContainsComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -2067,13 +2067,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contact", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ValueSet.ValueSetContactComponent> Contact
+        public List<Hl7.Fhir.Model.ValueSet.ContactComponent> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ValueSet.ValueSetContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ValueSet.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.ValueSet.ValueSetContactComponent> _Contact;
+        private List<Hl7.Fhir.Model.ValueSet.ContactComponent> _Contact;
         
         /// <summary>
         /// Date for given status
@@ -2318,39 +2318,39 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("codeSystem", InSummary=true, Order=250)]
         [DataMember]
-        public Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemComponent CodeSystem
+        public Hl7.Fhir.Model.ValueSet.CodeSystemComponent CodeSystem
         {
             get { return _CodeSystem; }
             set { _CodeSystem = value; OnPropertyChanged("CodeSystem"); }
         }
         
-        private Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemComponent _CodeSystem;
+        private Hl7.Fhir.Model.ValueSet.CodeSystemComponent _CodeSystem;
         
         /// <summary>
         /// When value set includes codes from elsewhere
         /// </summary>
         [FhirElement("compose", Order=260)]
         [DataMember]
-        public Hl7.Fhir.Model.ValueSet.ValueSetComposeComponent Compose
+        public Hl7.Fhir.Model.ValueSet.ComposeComponent Compose
         {
             get { return _Compose; }
             set { _Compose = value; OnPropertyChanged("Compose"); }
         }
         
-        private Hl7.Fhir.Model.ValueSet.ValueSetComposeComponent _Compose;
+        private Hl7.Fhir.Model.ValueSet.ComposeComponent _Compose;
         
         /// <summary>
         /// Used when the value set is "expanded"
         /// </summary>
         [FhirElement("expansion", Order=270)]
         [DataMember]
-        public Hl7.Fhir.Model.ValueSet.ValueSetExpansionComponent Expansion
+        public Hl7.Fhir.Model.ValueSet.ExpansionComponent Expansion
         {
             get { return _Expansion; }
             set { _Expansion = value; OnPropertyChanged("Expansion"); }
         }
         
-        private Hl7.Fhir.Model.ValueSet.ValueSetExpansionComponent _Expansion;
+        private Hl7.Fhir.Model.ValueSet.ExpansionComponent _Expansion;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -2366,7 +2366,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ValueSet.ValueSetContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ValueSet.ContactComponent>(Contact.DeepCopy());
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(LockedDateElement != null) dest.LockedDateElement = (Hl7.Fhir.Model.Date)LockedDateElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
@@ -2375,9 +2375,9 @@ namespace Hl7.Fhir.Model
                 if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
                 if(ExtensibleElement != null) dest.ExtensibleElement = (Hl7.Fhir.Model.FhirBoolean)ExtensibleElement.DeepCopy();
-                if(CodeSystem != null) dest.CodeSystem = (Hl7.Fhir.Model.ValueSet.ValueSetCodeSystemComponent)CodeSystem.DeepCopy();
-                if(Compose != null) dest.Compose = (Hl7.Fhir.Model.ValueSet.ValueSetComposeComponent)Compose.DeepCopy();
-                if(Expansion != null) dest.Expansion = (Hl7.Fhir.Model.ValueSet.ValueSetExpansionComponent)Expansion.DeepCopy();
+                if(CodeSystem != null) dest.CodeSystem = (Hl7.Fhir.Model.ValueSet.CodeSystemComponent)CodeSystem.DeepCopy();
+                if(Compose != null) dest.Compose = (Hl7.Fhir.Model.ValueSet.ComposeComponent)Compose.DeepCopy();
+                if(Expansion != null) dest.Expansion = (Hl7.Fhir.Model.ValueSet.ExpansionComponent)Expansion.DeepCopy();
                 return dest;
             }
             else

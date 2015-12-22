@@ -125,12 +125,12 @@ namespace Hl7.Fhir.Model
             Message,
         }
 
-        [FhirType("SubscriptionChannelComponent")]
+        [FhirType("ChannelComponent")]
         [DataContract]
-        public partial class SubscriptionChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "SubscriptionChannelComponent"; } }
+            public override string TypeName { get { return "ChannelComponent"; } }
             
             /// <summary>
             /// rest-hook | websocket | email | sms | message
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as SubscriptionChannelComponent;
+                var dest = other as ChannelComponent;
                 
                 if (dest != null)
                 {
@@ -281,12 +281,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new SubscriptionChannelComponent());
+                return CopyTo(new ChannelComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as SubscriptionChannelComponent;
+                var otherT = other as ChannelComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as SubscriptionChannelComponent;
+                var otherT = other as ChannelComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -466,13 +466,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("channel", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Subscription.SubscriptionChannelComponent Channel
+        public Hl7.Fhir.Model.Subscription.ChannelComponent Channel
         {
             get { return _Channel; }
             set { _Channel = value; OnPropertyChanged("Channel"); }
         }
         
-        private Hl7.Fhir.Model.Subscription.SubscriptionChannelComponent _Channel;
+        private Hl7.Fhir.Model.Subscription.ChannelComponent _Channel;
         
         /// <summary>
         /// When to automatically delete the subscription
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
                 if(ReasonElement != null) dest.ReasonElement = (Hl7.Fhir.Model.FhirString)ReasonElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>)StatusElement.DeepCopy();
                 if(ErrorElement != null) dest.ErrorElement = (Hl7.Fhir.Model.FhirString)ErrorElement.DeepCopy();
-                if(Channel != null) dest.Channel = (Hl7.Fhir.Model.Subscription.SubscriptionChannelComponent)Channel.DeepCopy();
+                if(Channel != null) dest.Channel = (Hl7.Fhir.Model.Subscription.ChannelComponent)Channel.DeepCopy();
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
                 if(Tag != null) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopy());
                 return dest;

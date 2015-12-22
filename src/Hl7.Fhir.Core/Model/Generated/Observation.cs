@@ -149,12 +149,12 @@ namespace Hl7.Fhir.Model
             InterferedBy,
         }
 
-        [FhirType("ObservationReferenceRangeComponent")]
+        [FhirType("ReferenceRangeComponent")]
         [DataContract]
-        public partial class ObservationReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ObservationReferenceRangeComponent"; } }
+            public override string TypeName { get { return "ReferenceRangeComponent"; } }
             
             /// <summary>
             /// Low Range, if relevant
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ObservationReferenceRangeComponent;
+                var dest = other as ReferenceRangeComponent;
                 
                 if (dest != null)
                 {
@@ -260,12 +260,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ObservationReferenceRangeComponent());
+                return CopyTo(new ReferenceRangeComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ObservationReferenceRangeComponent;
+                var otherT = other as ReferenceRangeComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ObservationReferenceRangeComponent;
+                var otherT = other as ReferenceRangeComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -296,12 +296,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ObservationRelatedComponent")]
+        [FhirType("RelatedComponent")]
         [DataContract]
-        public partial class ObservationRelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ObservationRelatedComponent"; } }
+            public override string TypeName { get { return "RelatedComponent"; } }
             
             /// <summary>
             /// has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ObservationRelatedComponent;
+                var dest = other as RelatedComponent;
                 
                 if (dest != null)
                 {
@@ -367,12 +367,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ObservationRelatedComponent());
+                return CopyTo(new RelatedComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ObservationRelatedComponent;
+                var otherT = other as RelatedComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ObservationRelatedComponent;
+                var otherT = other as RelatedComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -397,12 +397,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ObservationComponentComponent")]
+        [FhirType("ComponentComponent")]
         [DataContract]
-        public partial class ObservationComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ObservationComponentComponent"; } }
+            public override string TypeName { get { return "ComponentComponent"; } }
             
             /// <summary>
             /// Type of component observation (code / type)
@@ -451,17 +451,17 @@ namespace Hl7.Fhir.Model
             [FhirElement("referenceRange", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> ReferenceRange
+            public List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent> ReferenceRange
             {
-                get { if(_ReferenceRange==null) _ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(); return _ReferenceRange; }
+                get { if(_ReferenceRange==null) _ReferenceRange = new List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent>(); return _ReferenceRange; }
                 set { _ReferenceRange = value; OnPropertyChanged("ReferenceRange"); }
             }
             
-            private List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> _ReferenceRange;
+            private List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent> _ReferenceRange;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ObservationComponentComponent;
+                var dest = other as ComponentComponent;
                 
                 if (dest != null)
                 {
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
-                    if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(ReferenceRange.DeepCopy());
+                    if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent>(ReferenceRange.DeepCopy());
                     return dest;
                 }
                 else
@@ -478,12 +478,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ObservationComponentComponent());
+                return CopyTo(new ComponentComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ObservationComponentComponent;
+                var otherT = other as ComponentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ObservationComponentComponent;
+                var otherT = other as ComponentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -807,13 +807,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("referenceRange", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> ReferenceRange
+        public List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent> ReferenceRange
         {
-            get { if(_ReferenceRange==null) _ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(); return _ReferenceRange; }
+            get { if(_ReferenceRange==null) _ReferenceRange = new List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent>(); return _ReferenceRange; }
             set { _ReferenceRange = value; OnPropertyChanged("ReferenceRange"); }
         }
         
-        private List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent> _ReferenceRange;
+        private List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent> _ReferenceRange;
         
         /// <summary>
         /// Resource related to this observation
@@ -821,13 +821,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("related", InSummary=true, Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent> Related
+        public List<Hl7.Fhir.Model.Observation.RelatedComponent> Related
         {
-            get { if(_Related==null) _Related = new List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent>(); return _Related; }
+            get { if(_Related==null) _Related = new List<Hl7.Fhir.Model.Observation.RelatedComponent>(); return _Related; }
             set { _Related = value; OnPropertyChanged("Related"); }
         }
         
-        private List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent> _Related;
+        private List<Hl7.Fhir.Model.Observation.RelatedComponent> _Related;
         
         /// <summary>
         /// Component results
@@ -835,13 +835,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("component", InSummary=true, Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Observation.ObservationComponentComponent> Component
+        public List<Hl7.Fhir.Model.Observation.ComponentComponent> Component
         {
-            get { if(_Component==null) _Component = new List<Hl7.Fhir.Model.Observation.ObservationComponentComponent>(); return _Component; }
+            get { if(_Component==null) _Component = new List<Hl7.Fhir.Model.Observation.ComponentComponent>(); return _Component; }
             set { _Component = value; OnPropertyChanged("Component"); }
         }
         
-        private List<Hl7.Fhir.Model.Observation.ObservationComponentComponent> _Component;
+        private List<Hl7.Fhir.Model.Observation.ComponentComponent> _Component;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -867,9 +867,9 @@ namespace Hl7.Fhir.Model
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
                 if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
-                if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ObservationReferenceRangeComponent>(ReferenceRange.DeepCopy());
-                if(Related != null) dest.Related = new List<Hl7.Fhir.Model.Observation.ObservationRelatedComponent>(Related.DeepCopy());
-                if(Component != null) dest.Component = new List<Hl7.Fhir.Model.Observation.ObservationComponentComponent>(Component.DeepCopy());
+                if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent>(ReferenceRange.DeepCopy());
+                if(Related != null) dest.Related = new List<Hl7.Fhir.Model.Observation.RelatedComponent>(Related.DeepCopy());
+                if(Component != null) dest.Component = new List<Hl7.Fhir.Model.Observation.ComponentComponent>(Component.DeepCopy());
                 return dest;
             }
             else

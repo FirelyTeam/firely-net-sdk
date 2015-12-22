@@ -176,12 +176,12 @@ namespace Hl7.Fhir.Model
             DELETE,
         }
 
-        [FhirType("BundleLinkComponent")]
+        [FhirType("LinkComponent")]
         [DataContract]
-        public partial class BundleLinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "BundleLinkComponent"; } }
+            public override string TypeName { get { return "LinkComponent"; } }
             
             /// <summary>
             /// http://www.iana.org/assignments/link-relations/link-relations.xhtml
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as BundleLinkComponent;
+                var dest = other as LinkComponent;
                 
                 if (dest != null)
                 {
@@ -266,12 +266,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new BundleLinkComponent());
+                return CopyTo(new LinkComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as BundleLinkComponent;
+                var otherT = other as LinkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as BundleLinkComponent;
+                var otherT = other as LinkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -296,12 +296,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BundleEntryComponent")]
+        [FhirType("EntryComponent")]
         [DataContract]
-        public partial class BundleEntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "BundleEntryComponent"; } }
+            public override string TypeName { get { return "EntryComponent"; } }
             
             /// <summary>
             /// Links related to this entry
@@ -309,13 +309,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("link", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Bundle.BundleLinkComponent> Link
+            public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
             {
-                get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Bundle.BundleLinkComponent>(); return _Link; }
+                get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(); return _Link; }
                 set { _Link = value; OnPropertyChanged("Link"); }
             }
             
-            private List<Hl7.Fhir.Model.Bundle.BundleLinkComponent> _Link;
+            private List<Hl7.Fhir.Model.Bundle.LinkComponent> _Link;
             
             /// <summary>
             /// Absolute URL for resource (server address, or UUID/OID)
@@ -368,53 +368,53 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("search", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.Bundle.BundleEntrySearchComponent Search
+            public Hl7.Fhir.Model.Bundle.SearchComponent Search
             {
                 get { return _Search; }
                 set { _Search = value; OnPropertyChanged("Search"); }
             }
             
-            private Hl7.Fhir.Model.Bundle.BundleEntrySearchComponent _Search;
+            private Hl7.Fhir.Model.Bundle.SearchComponent _Search;
             
             /// <summary>
             /// Transaction Related Information
             /// </summary>
             [FhirElement("request", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Bundle.BundleEntryRequestComponent Request
+            public Hl7.Fhir.Model.Bundle.RequestComponent Request
             {
                 get { return _Request; }
                 set { _Request = value; OnPropertyChanged("Request"); }
             }
             
-            private Hl7.Fhir.Model.Bundle.BundleEntryRequestComponent _Request;
+            private Hl7.Fhir.Model.Bundle.RequestComponent _Request;
             
             /// <summary>
             /// Transaction Related Information
             /// </summary>
             [FhirElement("response", InSummary=true, Order=90)]
             [DataMember]
-            public Hl7.Fhir.Model.Bundle.BundleEntryResponseComponent Response
+            public Hl7.Fhir.Model.Bundle.ResponseComponent Response
             {
                 get { return _Response; }
                 set { _Response = value; OnPropertyChanged("Response"); }
             }
             
-            private Hl7.Fhir.Model.Bundle.BundleEntryResponseComponent _Response;
+            private Hl7.Fhir.Model.Bundle.ResponseComponent _Response;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as BundleEntryComponent;
+                var dest = other as EntryComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Bundle.BundleLinkComponent>(Link.DeepCopy());
+                    if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(Link.DeepCopy());
                     if(FullUrlElement != null) dest.FullUrlElement = (Hl7.Fhir.Model.FhirUri)FullUrlElement.DeepCopy();
                     if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopy();
-                    if(Search != null) dest.Search = (Hl7.Fhir.Model.Bundle.BundleEntrySearchComponent)Search.DeepCopy();
-                    if(Request != null) dest.Request = (Hl7.Fhir.Model.Bundle.BundleEntryRequestComponent)Request.DeepCopy();
-                    if(Response != null) dest.Response = (Hl7.Fhir.Model.Bundle.BundleEntryResponseComponent)Response.DeepCopy();
+                    if(Search != null) dest.Search = (Hl7.Fhir.Model.Bundle.SearchComponent)Search.DeepCopy();
+                    if(Request != null) dest.Request = (Hl7.Fhir.Model.Bundle.RequestComponent)Request.DeepCopy();
+                    if(Response != null) dest.Response = (Hl7.Fhir.Model.Bundle.ResponseComponent)Response.DeepCopy();
                     return dest;
                 }
                 else
@@ -423,12 +423,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new BundleEntryComponent());
+                return CopyTo(new EntryComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as BundleEntryComponent;
+                var otherT = other as EntryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as BundleEntryComponent;
+                var otherT = other as EntryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -461,12 +461,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BundleEntrySearchComponent")]
+        [FhirType("SearchComponent")]
         [DataContract]
-        public partial class BundleEntrySearchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "BundleEntrySearchComponent"; } }
+            public override string TypeName { get { return "SearchComponent"; } }
             
             /// <summary>
             /// match | include | outcome - why this is in the result set
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as BundleEntrySearchComponent;
+                var dest = other as SearchComponent;
                 
                 if (dest != null)
                 {
@@ -549,12 +549,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new BundleEntrySearchComponent());
+                return CopyTo(new SearchComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as BundleEntrySearchComponent;
+                var otherT = other as SearchComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as BundleEntrySearchComponent;
+                var otherT = other as SearchComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -579,12 +579,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BundleEntryRequestComponent")]
+        [FhirType("RequestComponent")]
         [DataContract]
-        public partial class BundleEntryRequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "BundleEntryRequestComponent"; } }
+            public override string TypeName { get { return "RequestComponent"; } }
             
             /// <summary>
             /// GET | POST | PUT | DELETE
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as BundleEntryRequestComponent;
+                var dest = other as RequestComponent;
                 
                 if (dest != null)
                 {
@@ -801,12 +801,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new BundleEntryRequestComponent());
+                return CopyTo(new RequestComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as BundleEntryRequestComponent;
+                var otherT = other as RequestComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -822,7 +822,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as BundleEntryRequestComponent;
+                var otherT = other as RequestComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -839,12 +839,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BundleEntryResponseComponent")]
+        [FhirType("ResponseComponent")]
         [DataContract]
-        public partial class BundleEntryResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "BundleEntryResponseComponent"; } }
+            public override string TypeName { get { return "ResponseComponent"; } }
             
             /// <summary>
             /// Status return code for entry
@@ -977,7 +977,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as BundleEntryResponseComponent;
+                var dest = other as ResponseComponent;
                 
                 if (dest != null)
                 {
@@ -994,12 +994,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new BundleEntryResponseComponent());
+                return CopyTo(new ResponseComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as BundleEntryResponseComponent;
+                var otherT = other as ResponseComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1013,7 +1013,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as BundleEntryResponseComponent;
+                var otherT = other as ResponseComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1099,13 +1099,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("link", InSummary=true, Order=70)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Bundle.BundleLinkComponent> Link
+        public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
         {
-            get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Bundle.BundleLinkComponent>(); return _Link; }
+            get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(); return _Link; }
             set { _Link = value; OnPropertyChanged("Link"); }
         }
         
-        private List<Hl7.Fhir.Model.Bundle.BundleLinkComponent> _Link;
+        private List<Hl7.Fhir.Model.Bundle.LinkComponent> _Link;
         
         /// <summary>
         /// Entry in the bundle - will have a resource, or information
@@ -1113,13 +1113,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("entry", InSummary=true, Order=80)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Bundle.BundleEntryComponent> Entry
+        public List<Hl7.Fhir.Model.Bundle.EntryComponent> Entry
         {
-            get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.Bundle.BundleEntryComponent>(); return _Entry; }
+            get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.Bundle.EntryComponent>(); return _Entry; }
             set { _Entry = value; OnPropertyChanged("Entry"); }
         }
         
-        private List<Hl7.Fhir.Model.Bundle.BundleEntryComponent> _Entry;
+        private List<Hl7.Fhir.Model.Bundle.EntryComponent> _Entry;
         
         /// <summary>
         /// Digital Signature
@@ -1143,8 +1143,8 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Bundle.BundleType>)TypeElement.DeepCopy();
                 if(TotalElement != null) dest.TotalElement = (Hl7.Fhir.Model.UnsignedInt)TotalElement.DeepCopy();
-                if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Bundle.BundleLinkComponent>(Link.DeepCopy());
-                if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.Bundle.BundleEntryComponent>(Entry.DeepCopy());
+                if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Bundle.LinkComponent>(Link.DeepCopy());
+                if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.Bundle.EntryComponent>(Entry.DeepCopy());
                 if(Signature != null) dest.Signature = (Hl7.Fhir.Model.Signature)Signature.DeepCopy();
                 return dest;
             }

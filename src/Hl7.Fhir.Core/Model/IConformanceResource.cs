@@ -75,13 +75,13 @@ namespace Hl7.Fhir.Model
 
     public partial class StructureDefinition : IVersionableConformanceResource
     {
-        public partial class StructureDefinitionContactComponent : IConformanceResourceContact
+        public partial class ContactComponent : IConformanceResourceContact
         { }
     }   
 
     public partial class ValueSet : IVersionableConformanceResource
     {
-        public partial class ValueSetContactComponent : IConformanceResourceContact
+        public partial class ContactComponent : IConformanceResourceContact
         { }
     }
 
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
             set {; }
         }
 
-        public partial class OperationDefinitionContactComponent : IConformanceResourceContact
+        public partial class ContactComponent : IConformanceResourceContact
         { }
     }
 
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
             set {; }
         }
 
-        public partial class SearchParameterContactComponent : IConformanceResourceContact
+        public partial class ContactComponent : IConformanceResourceContact
         { }
     }
 
@@ -130,13 +130,13 @@ namespace Hl7.Fhir.Model
             set {; }
         }
 
-        public partial class DataElementContactComponent : IConformanceResourceContact
+        public partial class ContactComponent : IConformanceResourceContact
         { }
     }
 
     public partial class ConceptMap : IVersionableConformanceResource
     {
-        public partial class ConceptMapContactComponent : IConformanceResourceContact
+        public partial class ContactComponent : IConformanceResourceContact
         { }
     }
 
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
             get { return null; }
             set {; }
         }
-        public partial class ConformanceContactComponent : IConformanceResourceContact
+        public partial class ContactComponent : IConformanceResourceContact
         { }
     }
 
@@ -184,19 +184,19 @@ namespace Hl7.Fhir.Model
             set {; }
         }
 
-        public partial class NamingSystemContactComponent : IConformanceResourceContact
+        public partial class ContactComponent : IConformanceResourceContact
         { }
     }
 
     public partial class ImplementationGuide : IVersionableConformanceResource
     {
-        public partial class ImplementationGuideContactComponent : IConformanceResourceContact
+        public partial class ContactComponent : IConformanceResourceContact
         { }
     }
 
     public partial class TestScript : IVersionableConformanceResource
     {
-        public partial class TestScriptContactComponent : IConformanceResourceContact
+        public partial class ContactComponent : IConformanceResourceContact
         { }
     }
 }

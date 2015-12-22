@@ -53,12 +53,12 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ImmunizationRecommendation"; } }
         
-        [FhirType("ImmunizationRecommendationRecommendationComponent")]
+        [FhirType("RecommendationComponent")]
         [DataContract]
-        public partial class ImmunizationRecommendationRecommendationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImmunizationRecommendationRecommendationComponent"; } }
+            public override string TypeName { get { return "RecommendationComponent"; } }
             
             /// <summary>
             /// Date recommendation created
@@ -159,26 +159,26 @@ namespace Hl7.Fhir.Model
             [FhirElement("dateCriterion", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationDateCriterionComponent> DateCriterion
+            public List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent> DateCriterion
             {
-                get { if(_DateCriterion==null) _DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationDateCriterionComponent>(); return _DateCriterion; }
+                get { if(_DateCriterion==null) _DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>(); return _DateCriterion; }
                 set { _DateCriterion = value; OnPropertyChanged("DateCriterion"); }
             }
             
-            private List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationDateCriterionComponent> _DateCriterion;
+            private List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent> _DateCriterion;
             
             /// <summary>
             /// Protocol used by recommendation
             /// </summary>
             [FhirElement("protocol", Order=90)]
             [DataMember]
-            public Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationProtocolComponent Protocol
+            public Hl7.Fhir.Model.ImmunizationRecommendation.ProtocolComponent Protocol
             {
                 get { return _Protocol; }
                 set { _Protocol = value; OnPropertyChanged("Protocol"); }
             }
             
-            private Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationProtocolComponent _Protocol;
+            private Hl7.Fhir.Model.ImmunizationRecommendation.ProtocolComponent _Protocol;
             
             /// <summary>
             /// Past immunizations supporting recommendation
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImmunizationRecommendationRecommendationComponent;
+                var dest = other as RecommendationComponent;
                 
                 if (dest != null)
                 {
@@ -221,8 +221,8 @@ namespace Hl7.Fhir.Model
                     if(VaccineCode != null) dest.VaccineCode = (Hl7.Fhir.Model.CodeableConcept)VaccineCode.DeepCopy();
                     if(DoseNumberElement != null) dest.DoseNumberElement = (Hl7.Fhir.Model.PositiveInt)DoseNumberElement.DeepCopy();
                     if(ForecastStatus != null) dest.ForecastStatus = (Hl7.Fhir.Model.CodeableConcept)ForecastStatus.DeepCopy();
-                    if(DateCriterion != null) dest.DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationDateCriterionComponent>(DateCriterion.DeepCopy());
-                    if(Protocol != null) dest.Protocol = (Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationProtocolComponent)Protocol.DeepCopy();
+                    if(DateCriterion != null) dest.DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>(DateCriterion.DeepCopy());
+                    if(Protocol != null) dest.Protocol = (Hl7.Fhir.Model.ImmunizationRecommendation.ProtocolComponent)Protocol.DeepCopy();
                     if(SupportingImmunization != null) dest.SupportingImmunization = new List<Hl7.Fhir.Model.ResourceReference>(SupportingImmunization.DeepCopy());
                     if(SupportingPatientInformation != null) dest.SupportingPatientInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingPatientInformation.DeepCopy());
                     return dest;
@@ -233,12 +233,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImmunizationRecommendationRecommendationComponent());
+                return CopyTo(new RecommendationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImmunizationRecommendationRecommendationComponent;
+                var otherT = other as RecommendationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImmunizationRecommendationRecommendationComponent;
+                var otherT = other as RecommendationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -275,12 +275,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImmunizationRecommendationRecommendationDateCriterionComponent")]
+        [FhirType("DateCriterionComponent")]
         [DataContract]
-        public partial class ImmunizationRecommendationRecommendationDateCriterionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImmunizationRecommendationRecommendationDateCriterionComponent"; } }
+            public override string TypeName { get { return "DateCriterionComponent"; } }
             
             /// <summary>
             /// Type of date
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImmunizationRecommendationRecommendationDateCriterionComponent;
+                var dest = other as DateCriterionComponent;
                 
                 if (dest != null)
                 {
@@ -346,12 +346,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImmunizationRecommendationRecommendationDateCriterionComponent());
+                return CopyTo(new DateCriterionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImmunizationRecommendationRecommendationDateCriterionComponent;
+                var otherT = other as DateCriterionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImmunizationRecommendationRecommendationDateCriterionComponent;
+                var otherT = other as DateCriterionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -376,12 +376,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImmunizationRecommendationRecommendationProtocolComponent")]
+        [FhirType("ProtocolComponent")]
         [DataContract]
-        public partial class ImmunizationRecommendationRecommendationProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImmunizationRecommendationRecommendationProtocolComponent"; } }
+            public override string TypeName { get { return "ProtocolComponent"; } }
             
             /// <summary>
             /// Dose number within sequence
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImmunizationRecommendationRecommendationProtocolComponent;
+                var dest = other as ProtocolComponent;
                 
                 if (dest != null)
                 {
@@ -512,12 +512,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImmunizationRecommendationRecommendationProtocolComponent());
+                return CopyTo(new ProtocolComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImmunizationRecommendationRecommendationProtocolComponent;
+                var otherT = other as ProtocolComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImmunizationRecommendationRecommendationProtocolComponent;
+                var otherT = other as ProtocolComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -581,13 +581,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("recommendation", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationComponent> Recommendation
+        public List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> Recommendation
         {
-            get { if(_Recommendation==null) _Recommendation = new List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationComponent>(); return _Recommendation; }
+            get { if(_Recommendation==null) _Recommendation = new List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>(); return _Recommendation; }
             set { _Recommendation = value; OnPropertyChanged("Recommendation"); }
         }
         
-        private List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationComponent> _Recommendation;
+        private List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> _Recommendation;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Recommendation != null) dest.Recommendation = new List<Hl7.Fhir.Model.ImmunizationRecommendation.ImmunizationRecommendationRecommendationComponent>(Recommendation.DeepCopy());
+                if(Recommendation != null) dest.Recommendation = new List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent>(Recommendation.DeepCopy());
                 return dest;
             }
             else

@@ -98,12 +98,12 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("ConditionStageComponent")]
+        [FhirType("StageComponent")]
         [DataContract]
-        public partial class ConditionStageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConditionStageComponent"; } }
+            public override string TypeName { get { return "StageComponent"; } }
             
             /// <summary>
             /// Simple summary (disease specific)
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConditionStageComponent;
+                var dest = other as StageComponent;
                 
                 if (dest != null)
                 {
@@ -150,12 +150,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConditionStageComponent());
+                return CopyTo(new StageComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConditionStageComponent;
+                var otherT = other as StageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConditionStageComponent;
+                var otherT = other as StageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -180,12 +180,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConditionEvidenceComponent")]
+        [FhirType("EvidenceComponent")]
         [DataContract]
-        public partial class ConditionEvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConditionEvidenceComponent"; } }
+            public override string TypeName { get { return "EvidenceComponent"; } }
             
             /// <summary>
             /// Manifestation/symptom
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConditionEvidenceComponent;
+                var dest = other as EvidenceComponent;
                 
                 if (dest != null)
                 {
@@ -232,12 +232,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConditionEvidenceComponent());
+                return CopyTo(new EvidenceComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConditionEvidenceComponent;
+                var otherT = other as EvidenceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConditionEvidenceComponent;
+                var otherT = other as EvidenceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -489,13 +489,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("stage", InSummary=true, Order=210)]
         [DataMember]
-        public Hl7.Fhir.Model.Condition.ConditionStageComponent Stage
+        public Hl7.Fhir.Model.Condition.StageComponent Stage
         {
             get { return _Stage; }
             set { _Stage = value; OnPropertyChanged("Stage"); }
         }
         
-        private Hl7.Fhir.Model.Condition.ConditionStageComponent _Stage;
+        private Hl7.Fhir.Model.Condition.StageComponent _Stage;
         
         /// <summary>
         /// Supporting evidence
@@ -503,13 +503,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("evidence", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent> Evidence
+        public List<Hl7.Fhir.Model.Condition.EvidenceComponent> Evidence
         {
-            get { if(_Evidence==null) _Evidence = new List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent>(); return _Evidence; }
+            get { if(_Evidence==null) _Evidence = new List<Hl7.Fhir.Model.Condition.EvidenceComponent>(); return _Evidence; }
             set { _Evidence = value; OnPropertyChanged("Evidence"); }
         }
         
-        private List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent> _Evidence;
+        private List<Hl7.Fhir.Model.Condition.EvidenceComponent> _Evidence;
         
         /// <summary>
         /// Anatomical location, if relevant
@@ -576,8 +576,8 @@ namespace Hl7.Fhir.Model
                 if(Severity != null) dest.Severity = (Hl7.Fhir.Model.CodeableConcept)Severity.DeepCopy();
                 if(Onset != null) dest.Onset = (Hl7.Fhir.Model.Element)Onset.DeepCopy();
                 if(Abatement != null) dest.Abatement = (Hl7.Fhir.Model.Element)Abatement.DeepCopy();
-                if(Stage != null) dest.Stage = (Hl7.Fhir.Model.Condition.ConditionStageComponent)Stage.DeepCopy();
-                if(Evidence != null) dest.Evidence = new List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent>(Evidence.DeepCopy());
+                if(Stage != null) dest.Stage = (Hl7.Fhir.Model.Condition.StageComponent)Stage.DeepCopy();
+                if(Evidence != null) dest.Evidence = new List<Hl7.Fhir.Model.Condition.EvidenceComponent>(Evidence.DeepCopy());
                 if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
                 if(NotesElement != null) dest.NotesElement = (Hl7.Fhir.Model.FhirString)NotesElement.DeepCopy();
                 return dest;

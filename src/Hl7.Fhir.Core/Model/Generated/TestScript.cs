@@ -249,12 +249,12 @@ namespace Hl7.Fhir.Model
             Unprocessable,
         }
 
-        [FhirType("TestScriptContactComponent")]
+        [FhirType("ContactComponent")]
         [DataContract]
-        public partial class TestScriptContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptContactComponent"; } }
+            public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
             /// Name of a individual to contact
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptContactComponent;
+                var dest = other as ContactComponent;
                 
                 if (dest != null)
                 {
@@ -319,12 +319,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptContactComponent());
+                return CopyTo(new ContactComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -349,12 +349,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptMetadataComponent")]
+        [FhirType("MetadataComponent")]
         [DataContract]
-        public partial class TestScriptMetadataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MetadataComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptMetadataComponent"; } }
+            public override string TypeName { get { return "MetadataComponent"; } }
             
             /// <summary>
             /// Links to the FHIR specification
@@ -362,13 +362,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("link", Order=40)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent> Link
+            public List<Hl7.Fhir.Model.TestScript.LinkComponent> Link
             {
-                get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent>(); return _Link; }
+                get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.TestScript.LinkComponent>(); return _Link; }
                 set { _Link = value; OnPropertyChanged("Link"); }
             }
             
-            private List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent> _Link;
+            private List<Hl7.Fhir.Model.TestScript.LinkComponent> _Link;
             
             /// <summary>
             /// Capabilities  that are assumed to function correctly on the FHIR server being tested
@@ -376,23 +376,23 @@ namespace Hl7.Fhir.Model
             [FhirElement("capability", Order=50)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.TestScriptMetadataCapabilityComponent> Capability
+            public List<Hl7.Fhir.Model.TestScript.CapabilityComponent> Capability
             {
-                get { if(_Capability==null) _Capability = new List<Hl7.Fhir.Model.TestScript.TestScriptMetadataCapabilityComponent>(); return _Capability; }
+                get { if(_Capability==null) _Capability = new List<Hl7.Fhir.Model.TestScript.CapabilityComponent>(); return _Capability; }
                 set { _Capability = value; OnPropertyChanged("Capability"); }
             }
             
-            private List<Hl7.Fhir.Model.TestScript.TestScriptMetadataCapabilityComponent> _Capability;
+            private List<Hl7.Fhir.Model.TestScript.CapabilityComponent> _Capability;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptMetadataComponent;
+                var dest = other as MetadataComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Link != null) dest.Link = new List<Hl7.Fhir.Model.TestScript.TestScriptMetadataLinkComponent>(Link.DeepCopy());
-                    if(Capability != null) dest.Capability = new List<Hl7.Fhir.Model.TestScript.TestScriptMetadataCapabilityComponent>(Capability.DeepCopy());
+                    if(Link != null) dest.Link = new List<Hl7.Fhir.Model.TestScript.LinkComponent>(Link.DeepCopy());
+                    if(Capability != null) dest.Capability = new List<Hl7.Fhir.Model.TestScript.CapabilityComponent>(Capability.DeepCopy());
                     return dest;
                 }
                 else
@@ -401,12 +401,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptMetadataComponent());
+                return CopyTo(new MetadataComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptMetadataComponent;
+                var otherT = other as MetadataComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptMetadataComponent;
+                var otherT = other as MetadataComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -431,12 +431,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptMetadataLinkComponent")]
+        [FhirType("LinkComponent")]
         [DataContract]
-        public partial class TestScriptMetadataLinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptMetadataLinkComponent"; } }
+            public override string TypeName { get { return "LinkComponent"; } }
             
             /// <summary>
             /// URL to the specification
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptMetadataLinkComponent;
+                var dest = other as LinkComponent;
                 
                 if (dest != null)
                 {
@@ -520,12 +520,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptMetadataLinkComponent());
+                return CopyTo(new LinkComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptMetadataLinkComponent;
+                var otherT = other as LinkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -537,7 +537,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptMetadataLinkComponent;
+                var otherT = other as LinkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -550,12 +550,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptMetadataCapabilityComponent")]
+        [FhirType("CapabilityComponent")]
         [DataContract]
-        public partial class TestScriptMetadataCapabilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptMetadataCapabilityComponent"; } }
+            public override string TypeName { get { return "CapabilityComponent"; } }
             
             /// <summary>
             /// Are the capabilities required?
@@ -735,7 +735,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptMetadataCapabilityComponent;
+                var dest = other as CapabilityComponent;
                 
                 if (dest != null)
                 {
@@ -754,12 +754,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptMetadataCapabilityComponent());
+                return CopyTo(new CapabilityComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptMetadataCapabilityComponent;
+                var otherT = other as CapabilityComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -775,7 +775,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptMetadataCapabilityComponent;
+                var otherT = other as CapabilityComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -792,12 +792,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptFixtureComponent")]
+        [FhirType("FixtureComponent")]
         [DataContract]
-        public partial class TestScriptFixtureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class FixtureComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptFixtureComponent"; } }
+            public override string TypeName { get { return "FixtureComponent"; } }
             
             /// <summary>
             /// Whether or not to implicitly create the fixture during setup
@@ -879,7 +879,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptFixtureComponent;
+                var dest = other as FixtureComponent;
                 
                 if (dest != null)
                 {
@@ -895,12 +895,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptFixtureComponent());
+                return CopyTo(new FixtureComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptFixtureComponent;
+                var otherT = other as FixtureComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -913,7 +913,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptFixtureComponent;
+                var otherT = other as FixtureComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -927,12 +927,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptVariableComponent")]
+        [FhirType("VariableComponent")]
         [DataContract]
-        public partial class TestScriptVariableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptVariableComponent"; } }
+            public override string TypeName { get { return "VariableComponent"; } }
             
             /// <summary>
             /// Descriptive name for this variable
@@ -1065,7 +1065,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptVariableComponent;
+                var dest = other as VariableComponent;
                 
                 if (dest != null)
                 {
@@ -1082,12 +1082,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptVariableComponent());
+                return CopyTo(new VariableComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptVariableComponent;
+                var otherT = other as VariableComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1101,7 +1101,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptVariableComponent;
+                var otherT = other as VariableComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1116,25 +1116,25 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptSetupComponent")]
+        [FhirType("SetupComponent")]
         [DataContract]
-        public partial class TestScriptSetupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptSetupComponent"; } }
+            public override string TypeName { get { return "SetupComponent"; } }
             
             /// <summary>
             /// Capabilities  that are assumed to function correctly on the FHIR server being tested
             /// </summary>
             [FhirElement("metadata", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent Metadata
+            public Hl7.Fhir.Model.TestScript.MetadataComponent Metadata
             {
                 get { return _Metadata; }
                 set { _Metadata = value; OnPropertyChanged("Metadata"); }
             }
             
-            private Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent _Metadata;
+            private Hl7.Fhir.Model.TestScript.MetadataComponent _Metadata;
             
             /// <summary>
             /// A setup operation or assert to perform
@@ -1142,23 +1142,23 @@ namespace Hl7.Fhir.Model
             [FhirElement("action", Order=50)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionComponent> Action
+            public List<Hl7.Fhir.Model.TestScript.SetupActionComponent> Action
             {
-                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionComponent>(); return _Action; }
+                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.TestScript.SetupActionComponent>(); return _Action; }
                 set { _Action = value; OnPropertyChanged("Action"); }
             }
             
-            private List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionComponent> _Action;
+            private List<Hl7.Fhir.Model.TestScript.SetupActionComponent> _Action;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptSetupComponent;
+                var dest = other as SetupComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Metadata != null) dest.Metadata = (Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent)Metadata.DeepCopy();
-                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionComponent>(Action.DeepCopy());
+                    if(Metadata != null) dest.Metadata = (Hl7.Fhir.Model.TestScript.MetadataComponent)Metadata.DeepCopy();
+                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestScript.SetupActionComponent>(Action.DeepCopy());
                     return dest;
                 }
                 else
@@ -1167,12 +1167,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptSetupComponent());
+                return CopyTo(new SetupComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptSetupComponent;
+                var otherT = other as SetupComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1184,7 +1184,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptSetupComponent;
+                var otherT = other as SetupComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1197,48 +1197,48 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptSetupActionComponent")]
+        [FhirType("SetupActionComponent")]
         [DataContract]
-        public partial class TestScriptSetupActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptSetupActionComponent"; } }
+            public override string TypeName { get { return "SetupActionComponent"; } }
             
             /// <summary>
             /// The setup operation to perform
             /// </summary>
             [FhirElement("operation", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent Operation
+            public Hl7.Fhir.Model.TestScript.OperationComponent Operation
             {
                 get { return _Operation; }
                 set { _Operation = value; OnPropertyChanged("Operation"); }
             }
             
-            private Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent _Operation;
+            private Hl7.Fhir.Model.TestScript.OperationComponent _Operation;
             
             /// <summary>
             /// The assertion to perform
             /// </summary>
             [FhirElement("assert", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.TestScript.TestScriptSetupActionAssertComponent Assert
+            public Hl7.Fhir.Model.TestScript.AssertComponent Assert
             {
                 get { return _Assert; }
                 set { _Assert = value; OnPropertyChanged("Assert"); }
             }
             
-            private Hl7.Fhir.Model.TestScript.TestScriptSetupActionAssertComponent _Assert;
+            private Hl7.Fhir.Model.TestScript.AssertComponent _Assert;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptSetupActionComponent;
+                var dest = other as SetupActionComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent)Operation.DeepCopy();
-                    if(Assert != null) dest.Assert = (Hl7.Fhir.Model.TestScript.TestScriptSetupActionAssertComponent)Assert.DeepCopy();
+                    if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestScript.OperationComponent)Operation.DeepCopy();
+                    if(Assert != null) dest.Assert = (Hl7.Fhir.Model.TestScript.AssertComponent)Assert.DeepCopy();
                     return dest;
                 }
                 else
@@ -1247,12 +1247,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptSetupActionComponent());
+                return CopyTo(new SetupActionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptSetupActionComponent;
+                var otherT = other as SetupActionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1264,7 +1264,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptSetupActionComponent;
+                var otherT = other as SetupActionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1277,12 +1277,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptSetupActionOperationComponent")]
+        [FhirType("OperationComponent")]
         [DataContract]
-        public partial class TestScriptSetupActionOperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptSetupActionOperationComponent"; } }
+            public override string TypeName { get { return "OperationComponent"; } }
             
             /// <summary>
             /// The setup operation type that will be executed
@@ -1559,13 +1559,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("requestHeader", Order=130)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationRequestHeaderComponent> RequestHeader
+            public List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent> RequestHeader
             {
-                get { if(_RequestHeader==null) _RequestHeader = new List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationRequestHeaderComponent>(); return _RequestHeader; }
+                get { if(_RequestHeader==null) _RequestHeader = new List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent>(); return _RequestHeader; }
                 set { _RequestHeader = value; OnPropertyChanged("RequestHeader"); }
             }
             
-            private List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationRequestHeaderComponent> _RequestHeader;
+            private List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent> _RequestHeader;
             
             /// <summary>
             /// Fixture Id of mapped response
@@ -1697,7 +1697,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptSetupActionOperationComponent;
+                var dest = other as OperationComponent;
                 
                 if (dest != null)
                 {
@@ -1711,7 +1711,7 @@ namespace Hl7.Fhir.Model
                     if(DestinationElement != null) dest.DestinationElement = (Hl7.Fhir.Model.Integer)DestinationElement.DeepCopy();
                     if(EncodeRequestUrlElement != null) dest.EncodeRequestUrlElement = (Hl7.Fhir.Model.FhirBoolean)EncodeRequestUrlElement.DeepCopy();
                     if(ParamsElement != null) dest.ParamsElement = (Hl7.Fhir.Model.FhirString)ParamsElement.DeepCopy();
-                    if(RequestHeader != null) dest.RequestHeader = new List<Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationRequestHeaderComponent>(RequestHeader.DeepCopy());
+                    if(RequestHeader != null) dest.RequestHeader = new List<Hl7.Fhir.Model.TestScript.RequestHeaderComponent>(RequestHeader.DeepCopy());
                     if(ResponseIdElement != null) dest.ResponseIdElement = (Hl7.Fhir.Model.Id)ResponseIdElement.DeepCopy();
                     if(SourceIdElement != null) dest.SourceIdElement = (Hl7.Fhir.Model.Id)SourceIdElement.DeepCopy();
                     if(TargetIdElement != null) dest.TargetIdElement = (Hl7.Fhir.Model.Id)TargetIdElement.DeepCopy();
@@ -1724,12 +1724,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptSetupActionOperationComponent());
+                return CopyTo(new OperationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptSetupActionOperationComponent;
+                var otherT = other as OperationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1753,7 +1753,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptSetupActionOperationComponent;
+                var otherT = other as OperationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1778,12 +1778,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptSetupActionOperationRequestHeaderComponent")]
+        [FhirType("RequestHeaderComponent")]
         [DataContract]
-        public partial class TestScriptSetupActionOperationRequestHeaderComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RequestHeaderComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptSetupActionOperationRequestHeaderComponent"; } }
+            public override string TypeName { get { return "RequestHeaderComponent"; } }
             
             /// <summary>
             /// HTTP header field name
@@ -1853,7 +1853,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptSetupActionOperationRequestHeaderComponent;
+                var dest = other as RequestHeaderComponent;
                 
                 if (dest != null)
                 {
@@ -1868,12 +1868,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptSetupActionOperationRequestHeaderComponent());
+                return CopyTo(new RequestHeaderComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptSetupActionOperationRequestHeaderComponent;
+                var otherT = other as RequestHeaderComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1885,7 +1885,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptSetupActionOperationRequestHeaderComponent;
+                var otherT = other as RequestHeaderComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1898,12 +1898,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptSetupActionAssertComponent")]
+        [FhirType("AssertComponent")]
         [DataContract]
-        public partial class TestScriptSetupActionAssertComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptSetupActionAssertComponent"; } }
+            public override string TypeName { get { return "AssertComponent"; } }
             
             /// <summary>
             /// Tracking/logging assertion label
@@ -2483,7 +2483,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptSetupActionAssertComponent;
+                var dest = other as AssertComponent;
                 
                 if (dest != null)
                 {
@@ -2514,12 +2514,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptSetupActionAssertComponent());
+                return CopyTo(new AssertComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptSetupActionAssertComponent;
+                var otherT = other as AssertComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -2547,7 +2547,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptSetupActionAssertComponent;
+                var otherT = other as AssertComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -2576,12 +2576,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptTestComponent")]
+        [FhirType("TestComponent")]
         [DataContract]
-        public partial class TestScriptTestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptTestComponent"; } }
+            public override string TypeName { get { return "TestComponent"; } }
             
             /// <summary>
             /// Tracking/logging name of this test
@@ -2652,13 +2652,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("metadata", Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent Metadata
+            public Hl7.Fhir.Model.TestScript.MetadataComponent Metadata
             {
                 get { return _Metadata; }
                 set { _Metadata = value; OnPropertyChanged("Metadata"); }
             }
             
-            private Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent _Metadata;
+            private Hl7.Fhir.Model.TestScript.MetadataComponent _Metadata;
             
             /// <summary>
             /// A test operation or assert to perform
@@ -2666,25 +2666,25 @@ namespace Hl7.Fhir.Model
             [FhirElement("action", Order=70)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.TestScriptTestActionComponent> Action
+            public List<Hl7.Fhir.Model.TestScript.TestActionComponent> Action
             {
-                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.TestScript.TestScriptTestActionComponent>(); return _Action; }
+                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.TestScript.TestActionComponent>(); return _Action; }
                 set { _Action = value; OnPropertyChanged("Action"); }
             }
             
-            private List<Hl7.Fhir.Model.TestScript.TestScriptTestActionComponent> _Action;
+            private List<Hl7.Fhir.Model.TestScript.TestActionComponent> _Action;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptTestComponent;
+                var dest = other as TestComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Metadata != null) dest.Metadata = (Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent)Metadata.DeepCopy();
-                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestScript.TestScriptTestActionComponent>(Action.DeepCopy());
+                    if(Metadata != null) dest.Metadata = (Hl7.Fhir.Model.TestScript.MetadataComponent)Metadata.DeepCopy();
+                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestScript.TestActionComponent>(Action.DeepCopy());
                     return dest;
                 }
                 else
@@ -2693,12 +2693,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptTestComponent());
+                return CopyTo(new TestComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptTestComponent;
+                var otherT = other as TestComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -2712,7 +2712,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptTestComponent;
+                var otherT = other as TestComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -2727,48 +2727,48 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptTestActionComponent")]
+        [FhirType("TestActionComponent")]
         [DataContract]
-        public partial class TestScriptTestActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptTestActionComponent"; } }
+            public override string TypeName { get { return "TestActionComponent"; } }
             
             /// <summary>
             /// The setup operation to perform
             /// </summary>
             [FhirElement("operation", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent Operation
+            public Hl7.Fhir.Model.TestScript.OperationComponent Operation
             {
                 get { return _Operation; }
                 set { _Operation = value; OnPropertyChanged("Operation"); }
             }
             
-            private Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent _Operation;
+            private Hl7.Fhir.Model.TestScript.OperationComponent _Operation;
             
             /// <summary>
             /// The setup assertion to perform
             /// </summary>
             [FhirElement("assert", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.TestScript.TestScriptSetupActionAssertComponent Assert
+            public Hl7.Fhir.Model.TestScript.AssertComponent Assert
             {
                 get { return _Assert; }
                 set { _Assert = value; OnPropertyChanged("Assert"); }
             }
             
-            private Hl7.Fhir.Model.TestScript.TestScriptSetupActionAssertComponent _Assert;
+            private Hl7.Fhir.Model.TestScript.AssertComponent _Assert;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptTestActionComponent;
+                var dest = other as TestActionComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent)Operation.DeepCopy();
-                    if(Assert != null) dest.Assert = (Hl7.Fhir.Model.TestScript.TestScriptSetupActionAssertComponent)Assert.DeepCopy();
+                    if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestScript.OperationComponent)Operation.DeepCopy();
+                    if(Assert != null) dest.Assert = (Hl7.Fhir.Model.TestScript.AssertComponent)Assert.DeepCopy();
                     return dest;
                 }
                 else
@@ -2777,12 +2777,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptTestActionComponent());
+                return CopyTo(new TestActionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptTestActionComponent;
+                var otherT = other as TestActionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -2794,7 +2794,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptTestActionComponent;
+                var otherT = other as TestActionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -2807,12 +2807,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptTeardownComponent")]
+        [FhirType("TeardownComponent")]
         [DataContract]
-        public partial class TestScriptTeardownComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptTeardownComponent"; } }
+            public override string TypeName { get { return "TeardownComponent"; } }
             
             /// <summary>
             /// One or more teardown operations to perform
@@ -2820,22 +2820,22 @@ namespace Hl7.Fhir.Model
             [FhirElement("action", Order=40)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.TestScript.TestScriptTeardownActionComponent> Action
+            public List<Hl7.Fhir.Model.TestScript.TearDownActionComponent> Action
             {
-                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.TestScript.TestScriptTeardownActionComponent>(); return _Action; }
+                get { if(_Action==null) _Action = new List<Hl7.Fhir.Model.TestScript.TearDownActionComponent>(); return _Action; }
                 set { _Action = value; OnPropertyChanged("Action"); }
             }
             
-            private List<Hl7.Fhir.Model.TestScript.TestScriptTeardownActionComponent> _Action;
+            private List<Hl7.Fhir.Model.TestScript.TearDownActionComponent> _Action;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptTeardownComponent;
+                var dest = other as TeardownComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestScript.TestScriptTeardownActionComponent>(Action.DeepCopy());
+                    if(Action != null) dest.Action = new List<Hl7.Fhir.Model.TestScript.TearDownActionComponent>(Action.DeepCopy());
                     return dest;
                 }
                 else
@@ -2844,12 +2844,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptTeardownComponent());
+                return CopyTo(new TeardownComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptTeardownComponent;
+                var otherT = other as TeardownComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -2860,7 +2860,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptTeardownComponent;
+                var otherT = other as TeardownComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -2872,34 +2872,34 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScriptTeardownActionComponent")]
+        [FhirType("TearDownActionComponent")]
         [DataContract]
-        public partial class TestScriptTeardownActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class TearDownActionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TestScriptTeardownActionComponent"; } }
+            public override string TypeName { get { return "TearDownActionComponent"; } }
             
             /// <summary>
             /// The teardown operation to perform
             /// </summary>
             [FhirElement("operation", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent Operation
+            public Hl7.Fhir.Model.TestScript.OperationComponent Operation
             {
                 get { return _Operation; }
                 set { _Operation = value; OnPropertyChanged("Operation"); }
             }
             
-            private Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent _Operation;
+            private Hl7.Fhir.Model.TestScript.OperationComponent _Operation;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TestScriptTeardownActionComponent;
+                var dest = other as TearDownActionComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestScript.TestScriptSetupActionOperationComponent)Operation.DeepCopy();
+                    if(Operation != null) dest.Operation = (Hl7.Fhir.Model.TestScript.OperationComponent)Operation.DeepCopy();
                     return dest;
                 }
                 else
@@ -2908,12 +2908,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TestScriptTeardownActionComponent());
+                return CopyTo(new TearDownActionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TestScriptTeardownActionComponent;
+                var otherT = other as TearDownActionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -2924,7 +2924,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TestScriptTeardownActionComponent;
+                var otherT = other as TearDownActionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -3150,13 +3150,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contact", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.TestScript.TestScriptContactComponent> Contact
+        public List<Hl7.Fhir.Model.TestScript.ContactComponent> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.TestScript.TestScriptContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.TestScript.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.TestScript.TestScriptContactComponent> _Contact;
+        private List<Hl7.Fhir.Model.TestScript.ContactComponent> _Contact;
         
         /// <summary>
         /// Date for this version of the TestScript
@@ -3305,13 +3305,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("metadata", Order=220)]
         [DataMember]
-        public Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent Metadata
+        public Hl7.Fhir.Model.TestScript.MetadataComponent Metadata
         {
             get { return _Metadata; }
             set { _Metadata = value; OnPropertyChanged("Metadata"); }
         }
         
-        private Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent _Metadata;
+        private Hl7.Fhir.Model.TestScript.MetadataComponent _Metadata;
         
         /// <summary>
         /// Whether or not the tests apply to more than one FHIR server
@@ -3351,13 +3351,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("fixture", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.TestScript.TestScriptFixtureComponent> Fixture
+        public List<Hl7.Fhir.Model.TestScript.FixtureComponent> Fixture
         {
-            get { if(_Fixture==null) _Fixture = new List<Hl7.Fhir.Model.TestScript.TestScriptFixtureComponent>(); return _Fixture; }
+            get { if(_Fixture==null) _Fixture = new List<Hl7.Fhir.Model.TestScript.FixtureComponent>(); return _Fixture; }
             set { _Fixture = value; OnPropertyChanged("Fixture"); }
         }
         
-        private List<Hl7.Fhir.Model.TestScript.TestScriptFixtureComponent> _Fixture;
+        private List<Hl7.Fhir.Model.TestScript.FixtureComponent> _Fixture;
         
         /// <summary>
         /// Reference of the validation profile
@@ -3380,26 +3380,26 @@ namespace Hl7.Fhir.Model
         [FhirElement("variable", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.TestScript.TestScriptVariableComponent> Variable
+        public List<Hl7.Fhir.Model.TestScript.VariableComponent> Variable
         {
-            get { if(_Variable==null) _Variable = new List<Hl7.Fhir.Model.TestScript.TestScriptVariableComponent>(); return _Variable; }
+            get { if(_Variable==null) _Variable = new List<Hl7.Fhir.Model.TestScript.VariableComponent>(); return _Variable; }
             set { _Variable = value; OnPropertyChanged("Variable"); }
         }
         
-        private List<Hl7.Fhir.Model.TestScript.TestScriptVariableComponent> _Variable;
+        private List<Hl7.Fhir.Model.TestScript.VariableComponent> _Variable;
         
         /// <summary>
         /// A series of required setup operations before tests are executed
         /// </summary>
         [FhirElement("setup", Order=270)]
         [DataMember]
-        public Hl7.Fhir.Model.TestScript.TestScriptSetupComponent Setup
+        public Hl7.Fhir.Model.TestScript.SetupComponent Setup
         {
             get { return _Setup; }
             set { _Setup = value; OnPropertyChanged("Setup"); }
         }
         
-        private Hl7.Fhir.Model.TestScript.TestScriptSetupComponent _Setup;
+        private Hl7.Fhir.Model.TestScript.SetupComponent _Setup;
         
         /// <summary>
         /// A test in this script
@@ -3407,26 +3407,26 @@ namespace Hl7.Fhir.Model
         [FhirElement("test", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.TestScript.TestScriptTestComponent> Test
+        public List<Hl7.Fhir.Model.TestScript.TestComponent> Test
         {
-            get { if(_Test==null) _Test = new List<Hl7.Fhir.Model.TestScript.TestScriptTestComponent>(); return _Test; }
+            get { if(_Test==null) _Test = new List<Hl7.Fhir.Model.TestScript.TestComponent>(); return _Test; }
             set { _Test = value; OnPropertyChanged("Test"); }
         }
         
-        private List<Hl7.Fhir.Model.TestScript.TestScriptTestComponent> _Test;
+        private List<Hl7.Fhir.Model.TestScript.TestComponent> _Test;
         
         /// <summary>
         /// A series of required clean up steps
         /// </summary>
         [FhirElement("teardown", Order=290)]
         [DataMember]
-        public Hl7.Fhir.Model.TestScript.TestScriptTeardownComponent Teardown
+        public Hl7.Fhir.Model.TestScript.TeardownComponent Teardown
         {
             get { return _Teardown; }
             set { _Teardown = value; OnPropertyChanged("Teardown"); }
         }
         
-        private Hl7.Fhir.Model.TestScript.TestScriptTeardownComponent _Teardown;
+        private Hl7.Fhir.Model.TestScript.TeardownComponent _Teardown;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -3442,20 +3442,20 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.TestScript.TestScriptContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.TestScript.ContactComponent>(Contact.DeepCopy());
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
                 if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
-                if(Metadata != null) dest.Metadata = (Hl7.Fhir.Model.TestScript.TestScriptMetadataComponent)Metadata.DeepCopy();
+                if(Metadata != null) dest.Metadata = (Hl7.Fhir.Model.TestScript.MetadataComponent)Metadata.DeepCopy();
                 if(MultiserverElement != null) dest.MultiserverElement = (Hl7.Fhir.Model.FhirBoolean)MultiserverElement.DeepCopy();
-                if(Fixture != null) dest.Fixture = new List<Hl7.Fhir.Model.TestScript.TestScriptFixtureComponent>(Fixture.DeepCopy());
+                if(Fixture != null) dest.Fixture = new List<Hl7.Fhir.Model.TestScript.FixtureComponent>(Fixture.DeepCopy());
                 if(Profile != null) dest.Profile = new List<Hl7.Fhir.Model.ResourceReference>(Profile.DeepCopy());
-                if(Variable != null) dest.Variable = new List<Hl7.Fhir.Model.TestScript.TestScriptVariableComponent>(Variable.DeepCopy());
-                if(Setup != null) dest.Setup = (Hl7.Fhir.Model.TestScript.TestScriptSetupComponent)Setup.DeepCopy();
-                if(Test != null) dest.Test = new List<Hl7.Fhir.Model.TestScript.TestScriptTestComponent>(Test.DeepCopy());
-                if(Teardown != null) dest.Teardown = (Hl7.Fhir.Model.TestScript.TestScriptTeardownComponent)Teardown.DeepCopy();
+                if(Variable != null) dest.Variable = new List<Hl7.Fhir.Model.TestScript.VariableComponent>(Variable.DeepCopy());
+                if(Setup != null) dest.Setup = (Hl7.Fhir.Model.TestScript.SetupComponent)Setup.DeepCopy();
+                if(Test != null) dest.Test = new List<Hl7.Fhir.Model.TestScript.TestComponent>(Test.DeepCopy());
+                if(Teardown != null) dest.Teardown = (Hl7.Fhir.Model.TestScript.TeardownComponent)Teardown.DeepCopy();
                 return dest;
             }
             else

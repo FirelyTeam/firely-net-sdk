@@ -53,12 +53,12 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "RiskAssessment"; } }
         
-        [FhirType("RiskAssessmentPredictionComponent")]
+        [FhirType("PredictionComponent")]
         [DataContract]
-        public partial class RiskAssessmentPredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "RiskAssessmentPredictionComponent"; } }
+            public override string TypeName { get { return "PredictionComponent"; } }
             
             /// <summary>
             /// Possible outcome for the subject
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as RiskAssessmentPredictionComponent;
+                var dest = other as PredictionComponent;
                 
                 if (dest != null)
                 {
@@ -186,12 +186,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new RiskAssessmentPredictionComponent());
+                return CopyTo(new PredictionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as RiskAssessmentPredictionComponent;
+                var otherT = other as PredictionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as RiskAssessmentPredictionComponent;
+                var otherT = other as PredictionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -357,13 +357,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("prediction", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent> Prediction
+        public List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent> Prediction
         {
-            get { if(_Prediction==null) _Prediction = new List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent>(); return _Prediction; }
+            get { if(_Prediction==null) _Prediction = new List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent>(); return _Prediction; }
             set { _Prediction = value; OnPropertyChanged("Prediction"); }
         }
         
-        private List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent> _Prediction;
+        private List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent> _Prediction;
         
         /// <summary>
         /// How to reduce risk
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Basis != null) dest.Basis = new List<Hl7.Fhir.Model.ResourceReference>(Basis.DeepCopy());
-                if(Prediction != null) dest.Prediction = new List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent>(Prediction.DeepCopy());
+                if(Prediction != null) dest.Prediction = new List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent>(Prediction.DeepCopy());
                 if(MitigationElement != null) dest.MitigationElement = (Hl7.Fhir.Model.FhirString)MitigationElement.DeepCopy();
                 return dest;
             }

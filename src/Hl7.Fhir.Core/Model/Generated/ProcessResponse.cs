@@ -53,12 +53,12 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ProcessResponse"; } }
         
-        [FhirType("ProcessResponseNotesComponent")]
+        [FhirType("NotesComponent")]
         [DataContract]
-        public partial class ProcessResponseNotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ProcessResponseNotesComponent"; } }
+            public override string TypeName { get { return "NotesComponent"; } }
             
             /// <summary>
             /// display | print | printoper
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ProcessResponseNotesComponent;
+                var dest = other as NotesComponent;
                 
                 if (dest != null)
                 {
@@ -122,12 +122,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ProcessResponseNotesComponent());
+                return CopyTo(new NotesComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ProcessResponseNotesComponent;
+                var otherT = other as NotesComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ProcessResponseNotesComponent;
+                var otherT = other as NotesComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -344,13 +344,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("notes", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ProcessResponse.ProcessResponseNotesComponent> Notes
+        public List<Hl7.Fhir.Model.ProcessResponse.NotesComponent> Notes
         {
-            get { if(_Notes==null) _Notes = new List<Hl7.Fhir.Model.ProcessResponse.ProcessResponseNotesComponent>(); return _Notes; }
+            get { if(_Notes==null) _Notes = new List<Hl7.Fhir.Model.ProcessResponse.NotesComponent>(); return _Notes; }
             set { _Notes = value; OnPropertyChanged("Notes"); }
         }
         
-        private List<Hl7.Fhir.Model.ProcessResponse.ProcessResponseNotesComponent> _Notes;
+        private List<Hl7.Fhir.Model.ProcessResponse.NotesComponent> _Notes;
         
         /// <summary>
         /// Error code
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
                 if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
                 if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.Coding)Form.DeepCopy();
-                if(Notes != null) dest.Notes = new List<Hl7.Fhir.Model.ProcessResponse.ProcessResponseNotesComponent>(Notes.DeepCopy());
+                if(Notes != null) dest.Notes = new List<Hl7.Fhir.Model.ProcessResponse.NotesComponent>(Notes.DeepCopy());
                 if(Error != null) dest.Error = new List<Hl7.Fhir.Model.Coding>(Error.DeepCopy());
                 return dest;
             }

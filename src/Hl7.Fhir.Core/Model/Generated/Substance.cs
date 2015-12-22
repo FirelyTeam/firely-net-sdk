@@ -53,12 +53,12 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Substance"; } }
         
-        [FhirType("SubstanceInstanceComponent")]
+        [FhirType("InstanceComponent")]
         [DataContract]
-        public partial class SubstanceInstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "SubstanceInstanceComponent"; } }
+            public override string TypeName { get { return "InstanceComponent"; } }
             
             /// <summary>
             /// Identifier of the package/container
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as SubstanceInstanceComponent;
+                var dest = other as InstanceComponent;
                 
                 if (dest != null)
                 {
@@ -136,12 +136,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new SubstanceInstanceComponent());
+                return CopyTo(new InstanceComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as SubstanceInstanceComponent;
+                var otherT = other as InstanceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as SubstanceInstanceComponent;
+                var otherT = other as InstanceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -168,12 +168,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceIngredientComponent")]
+        [FhirType("IngredientComponent")]
         [DataContract]
-        public partial class SubstanceIngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "SubstanceIngredientComponent"; } }
+            public override string TypeName { get { return "IngredientComponent"; } }
             
             /// <summary>
             /// Optional amount (concentration)
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as SubstanceIngredientComponent;
+                var dest = other as IngredientComponent;
                 
                 if (dest != null)
                 {
@@ -220,12 +220,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new SubstanceIngredientComponent());
+                return CopyTo(new IngredientComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as SubstanceIngredientComponent;
+                var otherT = other as IngredientComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as SubstanceIngredientComponent;
+                var otherT = other as IngredientComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -330,13 +330,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("instance", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Substance.SubstanceInstanceComponent> Instance
+        public List<Hl7.Fhir.Model.Substance.InstanceComponent> Instance
         {
-            get { if(_Instance==null) _Instance = new List<Hl7.Fhir.Model.Substance.SubstanceInstanceComponent>(); return _Instance; }
+            get { if(_Instance==null) _Instance = new List<Hl7.Fhir.Model.Substance.InstanceComponent>(); return _Instance; }
             set { _Instance = value; OnPropertyChanged("Instance"); }
         }
         
-        private List<Hl7.Fhir.Model.Substance.SubstanceInstanceComponent> _Instance;
+        private List<Hl7.Fhir.Model.Substance.InstanceComponent> _Instance;
         
         /// <summary>
         /// Composition information about the substance
@@ -344,13 +344,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("ingredient", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> Ingredient
+        public List<Hl7.Fhir.Model.Substance.IngredientComponent> Ingredient
         {
-            get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent>(); return _Ingredient; }
+            get { if(_Ingredient==null) _Ingredient = new List<Hl7.Fhir.Model.Substance.IngredientComponent>(); return _Ingredient; }
             set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
         }
         
-        private List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> _Ingredient;
+        private List<Hl7.Fhir.Model.Substance.IngredientComponent> _Ingredient;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -363,8 +363,8 @@ namespace Hl7.Fhir.Model
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.Substance.SubstanceInstanceComponent>(Instance.DeepCopy());
-                if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent>(Ingredient.DeepCopy());
+                if(Instance != null) dest.Instance = new List<Hl7.Fhir.Model.Substance.InstanceComponent>(Instance.DeepCopy());
+                if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.Substance.IngredientComponent>(Ingredient.DeepCopy());
                 return dest;
             }
             else

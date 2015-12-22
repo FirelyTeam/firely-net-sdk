@@ -196,12 +196,12 @@ namespace Hl7.Fhir.Model
             Completed,
         }
 
-        [FhirType("EncounterStatusHistoryComponent")]
+        [FhirType("StatusHistoryComponent")]
         [DataContract]
-        public partial class EncounterStatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "EncounterStatusHistoryComponent"; } }
+            public override string TypeName { get { return "StatusHistoryComponent"; } }
             
             /// <summary>
             /// planned | arrived | in-progress | onleave | finished | cancelled
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as EncounterStatusHistoryComponent;
+                var dest = other as StatusHistoryComponent;
                 
                 if (dest != null)
                 {
@@ -267,12 +267,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new EncounterStatusHistoryComponent());
+                return CopyTo(new StatusHistoryComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as EncounterStatusHistoryComponent;
+                var otherT = other as StatusHistoryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as EncounterStatusHistoryComponent;
+                var otherT = other as StatusHistoryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -297,12 +297,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EncounterParticipantComponent")]
+        [FhirType("ParticipantComponent")]
         [DataContract]
-        public partial class EncounterParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "EncounterParticipantComponent"; } }
+            public override string TypeName { get { return "ParticipantComponent"; } }
             
             /// <summary>
             /// Role of participant in encounter
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as EncounterParticipantComponent;
+                var dest = other as ParticipantComponent;
                 
                 if (dest != null)
                 {
@@ -363,12 +363,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new EncounterParticipantComponent());
+                return CopyTo(new ParticipantComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as EncounterParticipantComponent;
+                var otherT = other as ParticipantComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as EncounterParticipantComponent;
+                var otherT = other as ParticipantComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -395,12 +395,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EncounterHospitalizationComponent")]
+        [FhirType("HospitalizationComponent")]
         [DataContract]
-        public partial class EncounterHospitalizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "EncounterHospitalizationComponent"; } }
+            public override string TypeName { get { return "HospitalizationComponent"; } }
             
             /// <summary>
             /// Pre-admission identifier
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as EncounterHospitalizationComponent;
+                var dest = other as HospitalizationComponent;
                 
                 if (dest != null)
                 {
@@ -580,12 +580,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new EncounterHospitalizationComponent());
+                return CopyTo(new HospitalizationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as EncounterHospitalizationComponent;
+                var otherT = other as HospitalizationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as EncounterHospitalizationComponent;
+                var otherT = other as HospitalizationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -628,12 +628,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EncounterLocationComponent")]
+        [FhirType("LocationComponent")]
         [DataContract]
-        public partial class EncounterLocationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "EncounterLocationComponent"; } }
+            public override string TypeName { get { return "LocationComponent"; } }
             
             /// <summary>
             /// Location the encounter takes place
@@ -697,7 +697,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as EncounterLocationComponent;
+                var dest = other as LocationComponent;
                 
                 if (dest != null)
                 {
@@ -713,12 +713,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new EncounterLocationComponent());
+                return CopyTo(new LocationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as EncounterLocationComponent;
+                var otherT = other as LocationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -731,7 +731,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as EncounterLocationComponent;
+                var otherT = other as LocationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -798,13 +798,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("statusHistory", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Encounter.EncounterStatusHistoryComponent> StatusHistory
+        public List<Hl7.Fhir.Model.Encounter.StatusHistoryComponent> StatusHistory
         {
-            get { if(_StatusHistory==null) _StatusHistory = new List<Hl7.Fhir.Model.Encounter.EncounterStatusHistoryComponent>(); return _StatusHistory; }
+            get { if(_StatusHistory==null) _StatusHistory = new List<Hl7.Fhir.Model.Encounter.StatusHistoryComponent>(); return _StatusHistory; }
             set { _StatusHistory = value; OnPropertyChanged("StatusHistory"); }
         }
         
-        private List<Hl7.Fhir.Model.Encounter.EncounterStatusHistoryComponent> _StatusHistory;
+        private List<Hl7.Fhir.Model.Encounter.StatusHistoryComponent> _StatusHistory;
         
         /// <summary>
         /// inpatient | outpatient | ambulatory | emergency +
@@ -915,13 +915,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("participant", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Encounter.EncounterParticipantComponent> Participant
+        public List<Hl7.Fhir.Model.Encounter.ParticipantComponent> Participant
         {
-            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.Encounter.EncounterParticipantComponent>(); return _Participant; }
+            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.Encounter.ParticipantComponent>(); return _Participant; }
             set { _Participant = value; OnPropertyChanged("Participant"); }
         }
         
-        private List<Hl7.Fhir.Model.Encounter.EncounterParticipantComponent> _Participant;
+        private List<Hl7.Fhir.Model.Encounter.ParticipantComponent> _Participant;
         
         /// <summary>
         /// The appointment that scheduled this encounter
@@ -997,13 +997,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("hospitalization", Order=240)]
         [DataMember]
-        public Hl7.Fhir.Model.Encounter.EncounterHospitalizationComponent Hospitalization
+        public Hl7.Fhir.Model.Encounter.HospitalizationComponent Hospitalization
         {
             get { return _Hospitalization; }
             set { _Hospitalization = value; OnPropertyChanged("Hospitalization"); }
         }
         
-        private Hl7.Fhir.Model.Encounter.EncounterHospitalizationComponent _Hospitalization;
+        private Hl7.Fhir.Model.Encounter.HospitalizationComponent _Hospitalization;
         
         /// <summary>
         /// List of locations where the patient has been
@@ -1011,13 +1011,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("location", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Encounter.EncounterLocationComponent> Location
+        public List<Hl7.Fhir.Model.Encounter.LocationComponent> Location
         {
-            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.Encounter.EncounterLocationComponent>(); return _Location; }
+            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.Encounter.LocationComponent>(); return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         
-        private List<Hl7.Fhir.Model.Encounter.EncounterLocationComponent> _Location;
+        private List<Hl7.Fhir.Model.Encounter.LocationComponent> _Location;
         
         /// <summary>
         /// The custodian organization of this Encounter record
@@ -1056,21 +1056,21 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterState>)StatusElement.DeepCopy();
-                if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.Encounter.EncounterStatusHistoryComponent>(StatusHistory.DeepCopy());
+                if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.Encounter.StatusHistoryComponent>(StatusHistory.DeepCopy());
                 if(ClassElement != null) dest.ClassElement = (Code<Hl7.Fhir.Model.Encounter.EncounterClass>)ClassElement.DeepCopy();
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(EpisodeOfCare != null) dest.EpisodeOfCare = new List<Hl7.Fhir.Model.ResourceReference>(EpisodeOfCare.DeepCopy());
                 if(IncomingReferral != null) dest.IncomingReferral = new List<Hl7.Fhir.Model.ResourceReference>(IncomingReferral.DeepCopy());
-                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Encounter.EncounterParticipantComponent>(Participant.DeepCopy());
+                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Encounter.ParticipantComponent>(Participant.DeepCopy());
                 if(Appointment != null) dest.Appointment = (Hl7.Fhir.Model.ResourceReference)Appointment.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Length != null) dest.Length = (Hl7.Fhir.Model.Duration)Length.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.ResourceReference>(Indication.DeepCopy());
-                if(Hospitalization != null) dest.Hospitalization = (Hl7.Fhir.Model.Encounter.EncounterHospitalizationComponent)Hospitalization.DeepCopy();
-                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.Encounter.EncounterLocationComponent>(Location.DeepCopy());
+                if(Hospitalization != null) dest.Hospitalization = (Hl7.Fhir.Model.Encounter.HospitalizationComponent)Hospitalization.DeepCopy();
+                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.Encounter.LocationComponent>(Location.DeepCopy());
                 if(ServiceProvider != null) dest.ServiceProvider = (Hl7.Fhir.Model.ResourceReference)ServiceProvider.DeepCopy();
                 if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
                 return dest;

@@ -80,12 +80,12 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("ListEntryComponent")]
+        [FhirType("EntryComponent")]
         [DataContract]
-        public partial class ListEntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ListEntryComponent"; } }
+            public override string TypeName { get { return "EntryComponent"; } }
             
             /// <summary>
             /// Status/Workflow information about this item
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ListEntryComponent;
+                var dest = other as EntryComponent;
                 
                 if (dest != null)
                 {
@@ -198,12 +198,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ListEntryComponent());
+                return CopyTo(new EntryComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ListEntryComponent;
+                var otherT = other as EntryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ListEntryComponent;
+                var otherT = other as EntryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -482,13 +482,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("entry", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.List.ListEntryComponent> Entry
+        public List<Hl7.Fhir.Model.List.EntryComponent> Entry
         {
-            get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.List.ListEntryComponent>(); return _Entry; }
+            get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.List.EntryComponent>(); return _Entry; }
             set { _Entry = value; OnPropertyChanged("Entry"); }
         }
         
-        private List<Hl7.Fhir.Model.List.ListEntryComponent> _Entry;
+        private List<Hl7.Fhir.Model.List.EntryComponent> _Entry;
         
         /// <summary>
         /// Why list is empty
@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Model
                 if(OrderedBy != null) dest.OrderedBy = (Hl7.Fhir.Model.CodeableConcept)OrderedBy.DeepCopy();
                 if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.ListMode>)ModeElement.DeepCopy();
                 if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
-                if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.List.ListEntryComponent>(Entry.DeepCopy());
+                if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.List.EntryComponent>(Entry.DeepCopy());
                 if(EmptyReason != null) dest.EmptyReason = (Hl7.Fhir.Model.CodeableConcept)EmptyReason.DeepCopy();
                 return dest;
             }

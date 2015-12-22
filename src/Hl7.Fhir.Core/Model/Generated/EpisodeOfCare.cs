@@ -98,12 +98,12 @@ namespace Hl7.Fhir.Model
             Cancelled,
         }
 
-        [FhirType("EpisodeOfCareStatusHistoryComponent")]
+        [FhirType("StatusHistoryComponent")]
         [DataContract]
-        public partial class EpisodeOfCareStatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "EpisodeOfCareStatusHistoryComponent"; } }
+            public override string TypeName { get { return "StatusHistoryComponent"; } }
             
             /// <summary>
             /// planned | waitlist | active | onhold | finished | cancelled
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as EpisodeOfCareStatusHistoryComponent;
+                var dest = other as StatusHistoryComponent;
                 
                 if (dest != null)
                 {
@@ -169,12 +169,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new EpisodeOfCareStatusHistoryComponent());
+                return CopyTo(new StatusHistoryComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as EpisodeOfCareStatusHistoryComponent;
+                var otherT = other as StatusHistoryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as EpisodeOfCareStatusHistoryComponent;
+                var otherT = other as StatusHistoryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -199,12 +199,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EpisodeOfCareCareTeamComponent")]
+        [FhirType("CareTeamComponent")]
         [DataContract]
-        public partial class EpisodeOfCareCareTeamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CareTeamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "EpisodeOfCareCareTeamComponent"; } }
+            public override string TypeName { get { return "CareTeamComponent"; } }
             
             /// <summary>
             /// Role taken by this team member
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as EpisodeOfCareCareTeamComponent;
+                var dest = other as CareTeamComponent;
                 
                 if (dest != null)
                 {
@@ -265,12 +265,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new EpisodeOfCareCareTeamComponent());
+                return CopyTo(new CareTeamComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as EpisodeOfCareCareTeamComponent;
+                var otherT = other as CareTeamComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as EpisodeOfCareCareTeamComponent;
+                var otherT = other as CareTeamComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -350,13 +350,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("statusHistory", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatusHistoryComponent> StatusHistory
+        public List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent> StatusHistory
         {
-            get { if(_StatusHistory==null) _StatusHistory = new List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatusHistoryComponent>(); return _StatusHistory; }
+            get { if(_StatusHistory==null) _StatusHistory = new List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>(); return _StatusHistory; }
             set { _StatusHistory = value; OnPropertyChanged("StatusHistory"); }
         }
         
-        private List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatusHistoryComponent> _StatusHistory;
+        private List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent> _StatusHistory;
         
         /// <summary>
         /// Type/class  - e.g. specialist referral, disease management
@@ -464,13 +464,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("careTeam", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareCareTeamComponent> CareTeam
+        public List<Hl7.Fhir.Model.EpisodeOfCare.CareTeamComponent> CareTeam
         {
-            get { if(_CareTeam==null) _CareTeam = new List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareCareTeamComponent>(); return _CareTeam; }
+            get { if(_CareTeam==null) _CareTeam = new List<Hl7.Fhir.Model.EpisodeOfCare.CareTeamComponent>(); return _CareTeam; }
             set { _CareTeam = value; OnPropertyChanged("CareTeam"); }
         }
         
-        private List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareCareTeamComponent> _CareTeam;
+        private List<Hl7.Fhir.Model.EpisodeOfCare.CareTeamComponent> _CareTeam;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>)StatusElement.DeepCopy();
-                if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatusHistoryComponent>(StatusHistory.DeepCopy());
+                if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent>(StatusHistory.DeepCopy());
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.ResourceReference>(Condition.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(ReferralRequest != null) dest.ReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(ReferralRequest.DeepCopy());
                 if(CareManager != null) dest.CareManager = (Hl7.Fhir.Model.ResourceReference)CareManager.DeepCopy();
-                if(CareTeam != null) dest.CareTeam = new List<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareCareTeamComponent>(CareTeam.DeepCopy());
+                if(CareTeam != null) dest.CareTeam = new List<Hl7.Fhir.Model.EpisodeOfCare.CareTeamComponent>(CareTeam.DeepCopy());
                 return dest;
             }
             else

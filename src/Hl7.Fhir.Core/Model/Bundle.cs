@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
     [InvokeIValidatableObject]
     public partial class Bundle : Hl7.Fhir.Validation.IValidatableObject
     {
-        public partial class BundleEntryComponent
+        public partial class EntryComponent
         {
             [Obsolete("Base no longer exists in BundleEntryComponent. You need to replace any code using this element."), NotMapped]
             public string Base { get; set; }
@@ -133,14 +133,14 @@ namespace Hl7.Fhir.Model
 
         private void setLink(string rel, Uri uri)
         {
-            if (Link == null) Link = new List<BundleLinkComponent>();
+            if (Link == null) Link = new List<LinkComponent>();
 
             var entry = Link.FirstOrDefault(e => rel.Equals(e.Relation, StringComparison.OrdinalIgnoreCase));
 
             if (entry != null)
                 entry.Url = uri.ToString();
             else
-                Link.Add(new BundleLinkComponent() { Relation = rel, Url = uri.ToString() });
+                Link.Add(new LinkComponent() { Relation = rel, Url = uri.ToString() });
         }
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

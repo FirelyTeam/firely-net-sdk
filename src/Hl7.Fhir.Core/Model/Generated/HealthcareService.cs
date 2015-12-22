@@ -186,12 +186,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HealthcareServiceAvailableTimeComponent")]
+        [FhirType("AvailableTimeComponent")]
         [DataContract]
-        public partial class HealthcareServiceAvailableTimeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "HealthcareServiceAvailableTimeComponent"; } }
+            public override string TypeName { get { return "AvailableTimeComponent"; } }
             
             /// <summary>
             /// mon | tue | wed | thu | fri | sat | sun
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as HealthcareServiceAvailableTimeComponent;
+                var dest = other as AvailableTimeComponent;
                 
                 if (dest != null)
                 {
@@ -341,12 +341,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new HealthcareServiceAvailableTimeComponent());
+                return CopyTo(new AvailableTimeComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as HealthcareServiceAvailableTimeComponent;
+                var otherT = other as AvailableTimeComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as HealthcareServiceAvailableTimeComponent;
+                var otherT = other as AvailableTimeComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -375,12 +375,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HealthcareServiceNotAvailableComponent")]
+        [FhirType("NotAvailableComponent")]
         [DataContract]
-        public partial class HealthcareServiceNotAvailableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "HealthcareServiceNotAvailableComponent"; } }
+            public override string TypeName { get { return "NotAvailableComponent"; } }
             
             /// <summary>
             /// Reason presented to the user explaining why time not available
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as HealthcareServiceNotAvailableComponent;
+                var dest = other as NotAvailableComponent;
                 
                 if (dest != null)
                 {
@@ -445,12 +445,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new HealthcareServiceNotAvailableComponent());
+                return CopyTo(new NotAvailableComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as HealthcareServiceNotAvailableComponent;
+                var otherT = other as NotAvailableComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as HealthcareServiceNotAvailableComponent;
+                var otherT = other as NotAvailableComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -873,13 +873,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("availableTime", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent> AvailableTime
+        public List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent> AvailableTime
         {
-            get { if(_AvailableTime==null) _AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent>(); return _AvailableTime; }
+            get { if(_AvailableTime==null) _AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>(); return _AvailableTime; }
             set { _AvailableTime = value; OnPropertyChanged("AvailableTime"); }
         }
         
-        private List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent> _AvailableTime;
+        private List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent> _AvailableTime;
         
         /// <summary>
         /// Not available during this time due to provided reason
@@ -887,13 +887,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("notAvailable", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableComponent> NotAvailable
+        public List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent> NotAvailable
         {
-            get { if(_NotAvailable==null) _NotAvailable = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableComponent>(); return _NotAvailable; }
+            get { if(_NotAvailable==null) _NotAvailable = new List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent>(); return _NotAvailable; }
             set { _NotAvailable = value; OnPropertyChanged("NotAvailable"); }
         }
         
-        private List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableComponent> _NotAvailable;
+        private List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent> _NotAvailable;
         
         /// <summary>
         /// Description of availability exceptions
@@ -953,8 +953,8 @@ namespace Hl7.Fhir.Model
                 if(ReferralMethod != null) dest.ReferralMethod = new List<Hl7.Fhir.Model.CodeableConcept>(ReferralMethod.DeepCopy());
                 if(PublicKeyElement != null) dest.PublicKeyElement = (Hl7.Fhir.Model.FhirString)PublicKeyElement.DeepCopy();
                 if(AppointmentRequiredElement != null) dest.AppointmentRequiredElement = (Hl7.Fhir.Model.FhirBoolean)AppointmentRequiredElement.DeepCopy();
-                if(AvailableTime != null) dest.AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceAvailableTimeComponent>(AvailableTime.DeepCopy());
-                if(NotAvailable != null) dest.NotAvailable = new List<Hl7.Fhir.Model.HealthcareService.HealthcareServiceNotAvailableComponent>(NotAvailable.DeepCopy());
+                if(AvailableTime != null) dest.AvailableTime = new List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent>(AvailableTime.DeepCopy());
+                if(NotAvailable != null) dest.NotAvailable = new List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent>(NotAvailable.DeepCopy());
                 if(AvailabilityExceptionsElement != null) dest.AvailabilityExceptionsElement = (Hl7.Fhir.Model.FhirString)AvailabilityExceptionsElement.DeepCopy();
                 return dest;
             }

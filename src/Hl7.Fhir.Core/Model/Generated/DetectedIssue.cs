@@ -80,12 +80,12 @@ namespace Hl7.Fhir.Model
             Low,
         }
 
-        [FhirType("DetectedIssueMitigationComponent")]
+        [FhirType("MitigationComponent")]
         [DataContract]
-        public partial class DetectedIssueMitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DetectedIssueMitigationComponent"; } }
+            public override string TypeName { get { return "MitigationComponent"; } }
             
             /// <summary>
             /// What mitigation?
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DetectedIssueMitigationComponent;
+                var dest = other as MitigationComponent;
                 
                 if (dest != null)
                 {
@@ -165,12 +165,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DetectedIssueMitigationComponent());
+                return CopyTo(new MitigationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DetectedIssueMitigationComponent;
+                var otherT = other as MitigationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DetectedIssueMitigationComponent;
+                var otherT = other as MitigationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -400,13 +400,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("mitigation", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DetectedIssue.DetectedIssueMitigationComponent> Mitigation
+        public List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> Mitigation
         {
-            get { if(_Mitigation==null) _Mitigation = new List<Hl7.Fhir.Model.DetectedIssue.DetectedIssueMitigationComponent>(); return _Mitigation; }
+            get { if(_Mitigation==null) _Mitigation = new List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent>(); return _Mitigation; }
             set { _Mitigation = value; OnPropertyChanged("Mitigation"); }
         }
         
-        private List<Hl7.Fhir.Model.DetectedIssue.DetectedIssueMitigationComponent> _Mitigation;
+        private List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> _Mitigation;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirUri)ReferenceElement.DeepCopy();
-                if(Mitigation != null) dest.Mitigation = new List<Hl7.Fhir.Model.DetectedIssue.DetectedIssueMitigationComponent>(Mitigation.DeepCopy());
+                if(Mitigation != null) dest.Mitigation = new List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent>(Mitigation.DeepCopy());
                 return dest;
             }
             else

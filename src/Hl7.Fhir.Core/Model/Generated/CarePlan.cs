@@ -164,12 +164,12 @@ namespace Hl7.Fhir.Model
             Cancelled,
         }
 
-        [FhirType("CarePlanRelatedPlanComponent")]
+        [FhirType("RelatedPlanComponent")]
         [DataContract]
-        public partial class CarePlanRelatedPlanComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RelatedPlanComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "CarePlanRelatedPlanComponent"; } }
+            public override string TypeName { get { return "RelatedPlanComponent"; } }
             
             /// <summary>
             /// includes | replaces | fulfills
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CarePlanRelatedPlanComponent;
+                var dest = other as RelatedPlanComponent;
                 
                 if (dest != null)
                 {
@@ -235,12 +235,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CarePlanRelatedPlanComponent());
+                return CopyTo(new RelatedPlanComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CarePlanRelatedPlanComponent;
+                var otherT = other as RelatedPlanComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CarePlanRelatedPlanComponent;
+                var otherT = other as RelatedPlanComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -265,12 +265,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CarePlanParticipantComponent")]
+        [FhirType("ParticipantComponent")]
         [DataContract]
-        public partial class CarePlanParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "CarePlanParticipantComponent"; } }
+            public override string TypeName { get { return "ParticipantComponent"; } }
             
             /// <summary>
             /// Type of involvement
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CarePlanParticipantComponent;
+                var dest = other as ParticipantComponent;
                 
                 if (dest != null)
                 {
@@ -316,12 +316,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CarePlanParticipantComponent());
+                return CopyTo(new ParticipantComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CarePlanParticipantComponent;
+                var otherT = other as ParticipantComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CarePlanParticipantComponent;
+                var otherT = other as ParticipantComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -346,12 +346,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CarePlanActivityComponent")]
+        [FhirType("ActivityComponent")]
         [DataContract]
-        public partial class CarePlanActivityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "CarePlanActivityComponent"; } }
+            public override string TypeName { get { return "ActivityComponent"; } }
             
             /// <summary>
             /// Appointments, orders, etc.
@@ -401,17 +401,17 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("detail", Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.CarePlan.CarePlanActivityDetailComponent Detail
+            public Hl7.Fhir.Model.CarePlan.DetailComponent Detail
             {
                 get { return _Detail; }
                 set { _Detail = value; OnPropertyChanged("Detail"); }
             }
             
-            private Hl7.Fhir.Model.CarePlan.CarePlanActivityDetailComponent _Detail;
+            private Hl7.Fhir.Model.CarePlan.DetailComponent _Detail;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CarePlanActivityComponent;
+                var dest = other as ActivityComponent;
                 
                 if (dest != null)
                 {
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
                     if(ActionResulting != null) dest.ActionResulting = new List<Hl7.Fhir.Model.ResourceReference>(ActionResulting.DeepCopy());
                     if(Progress != null) dest.Progress = new List<Hl7.Fhir.Model.Annotation>(Progress.DeepCopy());
                     if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
-                    if(Detail != null) dest.Detail = (Hl7.Fhir.Model.CarePlan.CarePlanActivityDetailComponent)Detail.DeepCopy();
+                    if(Detail != null) dest.Detail = (Hl7.Fhir.Model.CarePlan.DetailComponent)Detail.DeepCopy();
                     return dest;
                 }
                 else
@@ -428,12 +428,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CarePlanActivityComponent());
+                return CopyTo(new ActivityComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CarePlanActivityComponent;
+                var otherT = other as ActivityComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CarePlanActivityComponent;
+                var otherT = other as ActivityComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -462,12 +462,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CarePlanActivityDetailComponent")]
+        [FhirType("DetailComponent")]
         [DataContract]
-        public partial class CarePlanActivityDetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "CarePlanActivityDetailComponent"; } }
+            public override string TypeName { get { return "DetailComponent"; } }
             
             /// <summary>
             /// diet | drug | encounter | observation | procedure | supply | other
@@ -734,7 +734,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CarePlanActivityDetailComponent;
+                var dest = other as DetailComponent;
                 
                 if (dest != null)
                 {
@@ -762,12 +762,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CarePlanActivityDetailComponent());
+                return CopyTo(new DetailComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CarePlanActivityDetailComponent;
+                var otherT = other as DetailComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -792,7 +792,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CarePlanActivityDetailComponent;
+                var otherT = other as DetailComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1035,13 +1035,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("relatedPlan", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CarePlan.CarePlanRelatedPlanComponent> RelatedPlan
+        public List<Hl7.Fhir.Model.CarePlan.RelatedPlanComponent> RelatedPlan
         {
-            get { if(_RelatedPlan==null) _RelatedPlan = new List<Hl7.Fhir.Model.CarePlan.CarePlanRelatedPlanComponent>(); return _RelatedPlan; }
+            get { if(_RelatedPlan==null) _RelatedPlan = new List<Hl7.Fhir.Model.CarePlan.RelatedPlanComponent>(); return _RelatedPlan; }
             set { _RelatedPlan = value; OnPropertyChanged("RelatedPlan"); }
         }
         
-        private List<Hl7.Fhir.Model.CarePlan.CarePlanRelatedPlanComponent> _RelatedPlan;
+        private List<Hl7.Fhir.Model.CarePlan.RelatedPlanComponent> _RelatedPlan;
         
         /// <summary>
         /// Who's involved in plan?
@@ -1049,13 +1049,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("participant", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CarePlan.CarePlanParticipantComponent> Participant
+        public List<Hl7.Fhir.Model.CarePlan.ParticipantComponent> Participant
         {
-            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.CarePlan.CarePlanParticipantComponent>(); return _Participant; }
+            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.CarePlan.ParticipantComponent>(); return _Participant; }
             set { _Participant = value; OnPropertyChanged("Participant"); }
         }
         
-        private List<Hl7.Fhir.Model.CarePlan.CarePlanParticipantComponent> _Participant;
+        private List<Hl7.Fhir.Model.CarePlan.ParticipantComponent> _Participant;
         
         /// <summary>
         /// Desired outcome of plan
@@ -1078,13 +1078,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("activity", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CarePlan.CarePlanActivityComponent> Activity
+        public List<Hl7.Fhir.Model.CarePlan.ActivityComponent> Activity
         {
-            get { if(_Activity==null) _Activity = new List<Hl7.Fhir.Model.CarePlan.CarePlanActivityComponent>(); return _Activity; }
+            get { if(_Activity==null) _Activity = new List<Hl7.Fhir.Model.CarePlan.ActivityComponent>(); return _Activity; }
             set { _Activity = value; OnPropertyChanged("Activity"); }
         }
         
-        private List<Hl7.Fhir.Model.CarePlan.CarePlanActivityComponent> _Activity;
+        private List<Hl7.Fhir.Model.CarePlan.ActivityComponent> _Activity;
         
         /// <summary>
         /// Comments about the plan
@@ -1117,10 +1117,10 @@ namespace Hl7.Fhir.Model
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Addresses != null) dest.Addresses = new List<Hl7.Fhir.Model.ResourceReference>(Addresses.DeepCopy());
                 if(Support != null) dest.Support = new List<Hl7.Fhir.Model.ResourceReference>(Support.DeepCopy());
-                if(RelatedPlan != null) dest.RelatedPlan = new List<Hl7.Fhir.Model.CarePlan.CarePlanRelatedPlanComponent>(RelatedPlan.DeepCopy());
-                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.CarePlan.CarePlanParticipantComponent>(Participant.DeepCopy());
+                if(RelatedPlan != null) dest.RelatedPlan = new List<Hl7.Fhir.Model.CarePlan.RelatedPlanComponent>(RelatedPlan.DeepCopy());
+                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.CarePlan.ParticipantComponent>(Participant.DeepCopy());
                 if(Goal != null) dest.Goal = new List<Hl7.Fhir.Model.ResourceReference>(Goal.DeepCopy());
-                if(Activity != null) dest.Activity = new List<Hl7.Fhir.Model.CarePlan.CarePlanActivityComponent>(Activity.DeepCopy());
+                if(Activity != null) dest.Activity = new List<Hl7.Fhir.Model.CarePlan.ActivityComponent>(Activity.DeepCopy());
                 if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
                 return dest;
             }
