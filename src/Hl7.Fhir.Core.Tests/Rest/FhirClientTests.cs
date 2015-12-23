@@ -34,7 +34,8 @@ namespace Hl7.Fhir.Tests.Rest
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
          //  Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
-        Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
+        //Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
+        Uri testEndpoint = new Uri("http://localhost:49911/fhir");
 
         [TestInitialize]
         public void TestInitialize()
@@ -379,6 +380,27 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 Assert.IsTrue(client.LastResult.Status == "410");
             }
+        }
+
+        [TestMethod, TestCategory("FhirClient")]
+        //Test for github issue https://github.com/ewoutkramer/fhir-net-api/issues/145
+        public void Create_ObservationWithValueAsSimpleQuantity_ReadReturnsValueAsQuantity()
+        {
+            FhirClient client = new FhirClient(testEndpoint);
+            var observation = new Observation();
+            observation.Status = Observation.ObservationStatus.Preliminary;
+            observation.Code = new CodeableConcept("http://loinc.org", "2164-2");
+            observation.Value = new SimpleQuantity()
+            {
+                System = "http://unitsofmeasure.org",
+                Value = 23,
+                Code = "mg",
+                Unit = "miligram"
+            };
+            observation.BodySite = new CodeableConcept("http://snomed.info/sct", "182756003");
+            var fe = client.Create(observation);
+            fe = client.Read<Observation>(fe.ResourceIdentity().WithoutVersion());
+            Assert.IsInstanceOfType(fe.Value, typeof(Quantity));
         }
 
 #if PORTABLE45z

@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Serialization
 
         internal static void Serialize(Base instance, IFhirWriter writer, bool summary = false, string root = null)
         {
-            new ResourceWriter(writer).Serialize(instance, summary, root: root);
+             new ResourceWriter(writer).Serialize(instance, summary, root: root);
         }
 
 
