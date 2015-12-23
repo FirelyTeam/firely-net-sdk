@@ -8,12 +8,14 @@
 
 using Hl7.Fhir.Support;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.FhirPath
 {
-    internal class ConstantValueProvider : IValueProvider
+    internal class ConstantFhirPathNode : IFhirPathValue
     {
-        public ConstantValueProvider(object value)
+        public ConstantFhirPathNode(object value)
         {
             ObjectValue = value;
         }

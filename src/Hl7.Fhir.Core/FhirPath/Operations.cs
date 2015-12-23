@@ -18,17 +18,17 @@ namespace Hl7.Fhir.FhirPath
     {
         /// <summary>Enumerate the direct children of the specified nodes.</summary>
         /// <param name="nodeSet">A set of tree nodes.</param>
-        public static IEnumerable<IFhirPathNode> All(this IEnumerable<IFhirPathNode> nodeSet)
+        public static IEnumerable<IFhirPathElement> AllChildren(this IEnumerable<IFhirPathValue> nodeSet)
         {
-            return nodeSet.SelectMany(node => node.Children());
+            return nodeSet.JustFhirPathElements().SelectMany(node => node.Children());
         }
 
-        public static IEnumerable<IFhirPathNode> Navigate(this IEnumerable<IFhirPathNode> nodeSet, string name)
+        public static IEnumerable<IFhirPathElement> Navigate(this IEnumerable<IFhirPathElement> nodeSet, string name)
         {
             return nodeSet.SelectMany(node => node.Children().Where(child => child.IsMatch(name)));
         }      
 
-        public static IEnumerable<object> Values(this IEnumerable<IValueProvider> nodeSet)
+        public static IEnumerable<object> Values(this IEnumerable<IFhirPathValue> nodeSet)
         {
             return
                 from node in nodeSet
@@ -36,9 +36,24 @@ namespace Hl7.Fhir.FhirPath
                 select node.ObjectValue;
         }
 
-        public static bool IsEqualTo(this IEnumerable<IFhirPathNode> me, IEnumerable<IFhirPathNode> that)
+        public static bool IsEqualTo(this IEnumerable<IFhirPathValue> us, IEnumerable<IFhirPathValue> them)
         {
-            throw new NotImplementedException();
+            if (!us.Any() && !them.Any()) return true;
+            if (us.Count() != them.Count()) return false;
+
+            return us.Zip(them, (left, right) => left.IsEqualTo(right)).All(r => r == true);
+        }
+
+        
+        public static bool IsEqualTo(this IFhirPathValue me, IFhirPathValue that)
+        {
+            //TODO: Equality is slightly more complex than this, but this will do for now
+            if (me.ObjectValue.Equals(that.ObjectValue))
+            {
+                return me.Children().IsEqualTo(that.Children());
+            }
+
+            return false;
         }
 
         ///// <summary>Enumerate the descendants of the specified nodes.</summary>

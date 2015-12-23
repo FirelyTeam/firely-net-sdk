@@ -12,6 +12,7 @@ using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hl7.Fhir.FhirPath.Grammar;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -52,21 +53,29 @@ namespace Hl7.Fhir.FhirPath
         {
             return c =>
             {
-                if (c.Focus.HasAllNamedTreeNodes())
-                   return EvaluationContext.NewContext(c, c.Focus.AsNamedTreeNodes().Navigate(name));
-                else
-                   throw Error.InvalidOperation("Cannot navigate to children {0} on an expression that is not a node-set");
+                return EvaluationContext.NewContext(c, c.Focus.JustFhirPathElements().Navigate(name));
             };
         }
 
         public static Evaluator Constant(object value)
         {
-            return c => EvaluationContext.NewContext(c, new ConstantValueProvider(value));
+            return c => EvaluationContext.NewContext(c, value);
         }
 
-        public static Evaluator Compare(string op, Evaluator left, Evaluator right)
+        public static Evaluator Compare(FPComparison op, Evaluator left, Evaluator right)
         {
-            throw new NotImplementedException();
+            return c =>
+            {
+                var leftNodes = left(c).Focus;
+                var rightNodes = right(c).Focus;
+
+                if (op == FPComparison.Equals)
+                {
+                    return EvaluationContext.NewContext(c, leftNodes.IsEqualTo(rightNodes));
+                }
+                else
+                    throw Error.NotImplemented("Operator '{0}' is not yet implemented".FormatWith(op));
+            };
         }
 
         //public static Evaluator<decimal> Add(this Evaluator<decimal> left, Evaluator<decimal> right)
@@ -94,4 +103,18 @@ namespace Hl7.Fhir.FhirPath
         //    return c => Result.ForValue(left(c).Value + right(c).Value);
         //}
     }
+
+    public enum FPComparison
+    {
+        Equals,
+        Equivalent,
+        NotEquals,
+        NotEquivalent,
+        GreaterThan,
+        LessThan,
+        GreaterOrEqual,
+        LessOrEqual,
+        In
+    }
+
 }

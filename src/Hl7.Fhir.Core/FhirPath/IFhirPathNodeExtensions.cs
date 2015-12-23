@@ -9,6 +9,8 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -16,7 +18,7 @@ namespace Hl7.Fhir.FhirPath
     {
         private const string POLYMORPHICNAMESUFFIX = "[x]";
 
-        public static bool IsMatch(this IFhirPathNode node, string name)
+        public static bool IsMatch(this IFhirPathElement node, string name)
         {
             if (node == null) { throw Error.ArgumentNull("node"); } // nameof(tree)
             if (string.IsNullOrEmpty(name)) { throw Error.ArgumentNull("name"); } // nameof(name)
@@ -24,7 +26,7 @@ namespace Hl7.Fhir.FhirPath
             return node.Name == name | isPolymorphicMatch(node, name);
         }
 
-        private static bool isPolymorphicMatch(IFhirPathNode node, string name)
+        private static bool isPolymorphicMatch(IFhirPathElement node, string name)
         {
             if (name.EndsWith(POLYMORPHICNAMESUFFIX))
             {
@@ -41,5 +43,17 @@ namespace Hl7.Fhir.FhirPath
             // FHIR extensions to a more "fhiry" place
             return ModelInfo.IsDataType(name) || ModelInfo.IsPrimitive(name.ToLower());
         }
+
+
+        public static IEnumerable<IFhirPathElement> Children(this IFhirPathValue me)
+        {
+            if (me is IFhirPathElement)
+            {
+                return ((IFhirPathElement)me).Children();
+            }
+
+            return Enumerable.Empty<IFhirPathElement>();
+        }
+
     }
 }

@@ -14,9 +14,14 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.FhirPath
 {
-    public interface IFhirPathNode : IValueProvider
+    public interface IFhirPathValue : IValueProvider
     {
-        IEnumerable<IFhirPathNode> Children();
+    }
+
+    public interface IFhirPathElement : IFhirPathValue
+    {
+        IEnumerable<IFhirPathElement> Children();
+        bool HasChildren();
 
         string Name { get; }
     }

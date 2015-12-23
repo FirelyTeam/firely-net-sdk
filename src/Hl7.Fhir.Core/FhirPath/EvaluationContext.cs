@@ -26,38 +26,43 @@ namespace Hl7.Fhir.FhirPath
         // Important: each Evaluator instance should receive a new EvaluationContext instance - for variable scoping
         // => Copy ctor
 
-        public IEnumerable<IValueProvider> Focus { get; private set; }
+        public IEnumerable<IFhirPathValue> Focus { get; private set; }
 
         private EvaluationContext()
         {
             // Must use factory methods
         }
 
-        public static EvaluationContext NewContext(EvaluationContext parent, params IValueProvider[] values)
+        public static EvaluationContext NewContext(EvaluationContext parent, params IFhirPathValue[] values)
         {
             if (values == null) throw Error.ArgumentNull("values");
 
-            return NewContext(parent, (IEnumerable<IValueProvider>)values);
+            return NewContext(parent, (IEnumerable<IFhirPathValue>)values);
         }
-        public static EvaluationContext NewContext(EvaluationContext parent, IEnumerable<IValueProvider> values)
+
+        public static EvaluationContext NewContext(EvaluationContext parent, object value)
+        {
+            if (value == null) throw Error.ArgumentNull("value");
+
+            return NewContext(parent, new ConstantFhirPathNode(value));
+        }
+
+        public static EvaluationContext NewContext(EvaluationContext parent, IEnumerable<IFhirPathValue> values)
         {
             if (values == null) throw Error.ArgumentNull("values");
 
             //copy stuff from parent
             return new EvaluationContext() { Focus = values };
         }
+
+
     }
 
     public static class FocusExtensions
     {
-        public static bool HasAllNamedTreeNodes(this IEnumerable<IValueProvider> focus)
+        public static IEnumerable<IFhirPathElement> JustFhirPathElements(this IEnumerable<IValueProvider> focus)
         {
-            return focus.All(f => f is IFhirPathNode);
-        }
-
-        public static IEnumerable<IFhirPathNode> AsNamedTreeNodes(this IEnumerable<IValueProvider> focus)
-        {
-            return focus.OfType<IFhirPathNode>();
+            return focus.OfType<IFhirPathElement>();
         }
     }
 }

@@ -27,16 +27,6 @@ namespace Hl7.Fhir.FhirPath.Grammar
             .XOr(Lexer.Bool.Select(b => Eval.Constant(b)))
             .XOr(Lexer.Const.Select(s => Eval.Constant(s)));
             
-
-        public static Parser<string> makeOperator(Parser<string> left, char op, Parser<string> right)
-        {
-            return
-                from l in left
-                from o in Parse.Char(op).Once().Text()
-                from r in right
-                select l + o + r;
-        }
-
         // term:
         //   '(' expr ')' |
         //   predicate |
@@ -87,6 +77,6 @@ namespace Hl7.Fhir.FhirPath.Grammar
         //public static readonly Parser<string> LogicExpr =
         //    Parse.ChainOperator(Lexer.Logic, CompExpr, (op, left, right) => left + " " + op + " " + right);
 
-        //public static readonly Parser<string> Expr = LogicExpr;    
+        public static readonly Parser<Evaluator> Expr = CompExpr;    
     }
 }

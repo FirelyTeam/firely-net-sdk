@@ -15,7 +15,7 @@ using System.Linq;
 namespace Hl7.Fhir.Navigation
 {
     /// <summary>Represents a FHIR navigation tree with variant mutable node values.</summary>
-    public class FhirNavigationTree : VariantNavigationTree<FhirNavigationTree>, IMutableValueProvider, IFhirPathNode
+    public class FhirNavigationTree : VariantNavigationTree<FhirNavigationTree>, IMutableValueProvider, IFhirPathElement
     {
         #region Public Factory Method
 
@@ -50,9 +50,14 @@ namespace Hl7.Fhir.Navigation
             return new Node<V>(name, value, parent, previousSibling);
         }
 
-        public IEnumerable<IFhirPathNode> Children()
+        public IEnumerable<IFhirPathElement> Children()
         {
             return LinkedTreeExtensions.Children(this);
+        }
+
+        public bool HasChildren()
+        {
+            return LinkedTreeExtensions.HasChildren(this);
         }
 
         /// <summary>Private subclass that implements the variant Value property.</summary>

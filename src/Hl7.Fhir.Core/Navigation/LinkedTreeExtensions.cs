@@ -92,6 +92,11 @@ namespace Hl7.Fhir.Navigation
             yield break;
         }
 
+        public static bool HasChildren<T>(this T tree) where T : ILinkedTree<T>
+        {
+            return tree.FirstChild != null;
+        }
+
         /// <summary>Enumerate the direct children of the current tree node that comply with the specified predicate.</summary>
         /// <typeparam name="T">The tree type.</typeparam>
         /// <param name="tree">A tree node.</param>

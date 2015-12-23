@@ -6,8 +6,10 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Support;
 using Sprache;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.FhirPath.Grammar
@@ -68,8 +70,26 @@ namespace Hl7.Fhir.FhirPath.Grammar
             .Select(s => PartialDateTime.Parse(s));
     
         // COMP: '=' | '~' | '!=' | '!~' | '>' | '<' | '<=' | '>=' | 'in';
-        public static readonly Parser<string> Comp =
-            Parse.Chars("=~").Select(s => new char[] { s })
+
+        private static FPComparison toFpComparison(string c)
+        {
+            switch(c)
+            {
+                case "=": return FPComparison.Equals;
+                case "~": return FPComparison.Equivalent;
+                case "!=": return FPComparison.NotEquals;
+                case "!~": return FPComparison.NotEquivalent;
+                case ">": return FPComparison.GreaterOrEqual;
+                case "<": return FPComparison.LessOrEqual;
+                case ">=": return FPComparison.GreaterOrEqual;
+                case "<=": return FPComparison.LessOrEqual;
+                case "in": return FPComparison.In;
+                default: throw Error.NotSupported("Comparison operation '{0}' is not supported.".FormatWith(c));
+            }
+        }
+
+        public static readonly Parser<FPComparison> Comp =
+            Parse.Chars("=~").Select(c => new char[] { c })
             .Or(Parse.String("!="))
             .Or(Parse.String("!~"))
             .Or(Parse.String("<="))
@@ -77,7 +97,9 @@ namespace Hl7.Fhir.FhirPath.Grammar
             .Or(Parse.String(">"))
             .Or(Parse.String("<"))
             .Or(Parse.String("in"))
-            .Text().Named("Comp");
+            .Text()
+            .Select(s => toFpComparison(s))
+            .Named("Comp");
 
         // LOGIC: 'and' | 'or' | 'xor';
         public static readonly Parser<string> Logic =
