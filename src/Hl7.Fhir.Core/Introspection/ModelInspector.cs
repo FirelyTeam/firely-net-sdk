@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Introspection
             EnumMapping mapping = null;
 
             if (!EnumMapping.IsMappableEnum(type))
-                throw Error.Argument("type", "Type {0} is not a mappable enumeration", type.Name);
+                throw Error.Argument("type", "Type {0} is not a mappable enumeration".FormatWith(type.Name));
 
             lock (lockObject)
             {
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Introspection
             ClassMapping mapping = null;
 
             if(!ClassMapping.IsMappableType(type))
-                throw Error.Argument("type", "Type {0} is not a mappable Fhir datatype or resource", type.Name);
+                throw Error.Argument("type", "Type {0} is not a mappable Fhir datatype or resource".FormatWith(type.Name));
 
             lock (lockObject)
             {
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Introspection
         public EnumMapping FindEnumMappingByType(Type type)
         {
             if (type == null) throw Error.ArgumentNull("type");
-            if (!type.IsEnum()) throw Error.Argument("type", "Type {0} is not an enumeration", type.Name);
+            if (!type.IsEnum()) throw Error.Argument("type", "Type {0} is not an enumeration".FormatWith(type.Name));
 
             EnumMapping entry = null;
 

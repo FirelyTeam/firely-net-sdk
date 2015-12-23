@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Support
 #endif
 			}
             else
-                throw Error.Argument("type", "Type {0} is not a Nullable<T>", type.Name);
+                throw Error.Argument("type", "Type {0} is not a Nullable<T>".FormatWith(type.Name));
         }
 
         public static bool IsTypedCollection(Type type)
@@ -200,15 +200,15 @@ namespace Hl7.Fhir.Support
 #else
                 return genericListType.GetGenericArguments()[0];
 #endif
-			}
-			else if (typeof(IEnumerable).IsAssignableFrom(type))
-			{
-				return null;
-			}
-			else
-			{
-				throw Error.Argument("type", "Type {0} is not a collection.", type.Name);
-			}
+            }
+            else if (typeof(IEnumerable).IsAssignableFrom(type))
+            {
+                return null;
+            }
+            else
+            {
+                throw Error.Argument("type", "Type {0} is not a collection.".FormatWith(type.Name));
+            }
         }
 
         public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition)
@@ -224,11 +224,10 @@ namespace Hl7.Fhir.Support
 
 #if PORTABLE45
 			if (!genericInterfaceDefinition.GetTypeInfo().IsInterface || !genericInterfaceDefinition.GetTypeInfo().IsGenericTypeDefinition)
-				throw Error.Argument("genericInterfaceDefinition", "'{0}' is not a generic interface definition.", genericInterfaceDefinition.Name);
 #else
-			if (!genericInterfaceDefinition.IsInterface || !genericInterfaceDefinition.IsGenericTypeDefinition)
-               throw Error.Argument("genericInterfaceDefinition", "'{0}' is not a generic interface definition.",genericInterfaceDefinition.Name);
+            if (!genericInterfaceDefinition.IsInterface || !genericInterfaceDefinition.IsGenericTypeDefinition)
 #endif
+                throw Error.Argument("genericInterfaceDefinition", "'{0}' is not a generic interface definition.".FormatWith(genericInterfaceDefinition.Name));
 
 #if PORTABLE45
 			if (type.GetTypeInfo().IsInterface)
