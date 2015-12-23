@@ -7,12 +7,10 @@
  */
 
 
-using Hl7.Fhir.Navigation;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.FhirPath.Grammar;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -28,9 +26,9 @@ namespace Hl7.Fhir.FhirPath
 
     public static class Eval
     {
-        public static IEnumerable<IValueProvider> Evaluate(this Evaluator evaluator, FhirNavigationTree instance)
+        public static IEnumerable<IValueProvider> Evaluate(this Evaluator evaluator, IFhirPathElement instance)
         {
-            var context = EvaluationContext.NewContext(null, new List<FhirNavigationTree> { instance });
+            var context = EvaluationContext.NewContext(null, new List<IFhirPathElement> { instance });
             var resultContxt = evaluator(context);
 
             return resultContxt.Focus;
