@@ -19,37 +19,35 @@ using System.Linq;
 
 namespace Hl7.Fhir.FhirPath.Grammar
 {
-    
+
     internal class Path
     {
         // function: ID '(' param_list? ')';
         // param_list: expr(',' expr)*;
-        //public static readonly Parser<string> Function =
-        //    (from id in Lexer.Id
-        //     from lparen in Parse.Char('(')
-        //     from paramlist in Parse.Ref(() => Expression.Expr.Named("parameter")).XDelimitedBy(Parse.Char(','))
-        //     from rparen in Parse.Char(')')
-        //     select id + "(" + String.Join(",", paramlist) + ")")
-        //    .Named("Function");
+        public static readonly Parser<Evaluator> Function =
+            from name in Lexer.Id
+            from lparen in Parse.Char('(')
+            from paramList in Parse.Ref(() => Expression.Expr.Named("parameter")).XDelimitedBy(Parse.Char(','))
+            from rparen in Parse.Char(')')
+            select Eval.Function(name, paramList);
 
         // item: element recurse? | function | axis_spec | '(' expr ')';
-        public static readonly Parser<string> ElementPath =
+        public static readonly Parser<Evaluator> ElementPath =
             from element in Lexer.Element
             from recurse in Lexer.Recurse.Optional()
-//            from nolparen in Parse.Not(Parse.Char('('))
-            select element + recurse.GetOrDefault();
+                //            select element + recurse.GetOrDefault();
+            select Eval.ChildrenMatchingName(element);
 
         //public static readonly Parser<string> Item =
         //    Function
         //    .Or(ElementPath)
         //    .XOr(Lexer.AxisSpec)
         //    .XOr(Parse.Ref(() => Expression.BracketExpr));
-
         public static readonly Parser<Evaluator> Item =
-            //Function
-            ElementPath.Select(path => Eval.ChildrenMatchingName(path));
-        //.XOr(Lexer.AxisSpec)
-        //.XOr(Parse.Ref(() => Expression.BracketExpr));
+            Function
+            .Or(ElementPath)
+            //.XOr(Lexer.AxisSpec)
+            .XOr(Parse.Ref(() => Expression.BracketExpr));
 
         // predicate: item ('.' item)* ;
         public static readonly Parser<Evaluator> Predicate =

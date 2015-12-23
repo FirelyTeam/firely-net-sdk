@@ -7,6 +7,7 @@
  */
 
 
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -60,9 +61,31 @@ namespace Hl7.Fhir.FhirPath
 
     public static class FocusExtensions
     {
-        public static IEnumerable<IFhirPathElement> JustFhirPathElements(this IEnumerable<IValueProvider> focus)
+        public static IEnumerable<IFhirPathElement> JustFhirPathElements(this IEnumerable<IFhirPathValue> focus)
         {
             return focus.OfType<IFhirPathElement>();
+        }
+
+        public static bool AsBooleanEvaluation(this IEnumerable<IFhirPathValue> focus)
+        {
+            // An empty result is considered "false"
+            if (!focus.Any()) return false;
+
+            // A result that looks like a single boolean should be interpreted as a boolean
+            if (focus.Count() == 1)
+            {
+                try
+                {
+                    return PrimitiveTypeConverter.ConvertTo<bool>(focus.Single().ObjectValue);
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+
+            // Otherwise, we have "some" content, which we'll consider "true"
+            return true;
         }
     }
 }

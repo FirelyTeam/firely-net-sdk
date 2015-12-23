@@ -56,6 +56,7 @@ namespace Hl7.Fhir.FhirPath
             return false;
         }
 
+
         ///// <summary>Enumerate the descendants of the specified nodes.</summary>
         ///// <typeparam name="T">The type of a tree node.</typeparam>
         ///// <param name="nodeSet">A set of tree nodes.</param>

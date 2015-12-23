@@ -78,6 +78,34 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
+        public static Evaluator Function(string name, IEnumerable<Evaluator> paramList)
+        {
+            if(name == "where")
+                return Where(paramList);
+            else
+                throw Error.NotSupported("An unknown function '{0}' is invoked".FormatWith(name));
+        }
+
+        public static Evaluator Where(IEnumerable<Evaluator> parameters)
+        {
+            if (parameters.Count() != 1) throw Error.Argument("parameters", "'where' requires exactly one parameter");
+
+            return c =>
+            {
+                var condition = parameters.Single();
+                return EvaluationContext.NewContext(c, where(c, condition));
+            };
+        }
+
+        private static IEnumerable<IFhirPathValue> where(EvaluationContext parentContext, Evaluator condition)
+        {
+            foreach (var element in parentContext.Focus)
+            {
+                var context = EvaluationContext.NewContext(parentContext, element);
+                var result = condition(context).Focus.AsBooleanEvaluation();
+                if (result) yield return element;
+            }
+        }
         //public static Evaluator<decimal> Add(this Evaluator<decimal> left, Evaluator<decimal> right)
         //{
         //    return c => Result.ForValue(left(c).Value + right(c).Value);

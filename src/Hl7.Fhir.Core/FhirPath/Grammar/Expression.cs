@@ -19,28 +19,27 @@ namespace Hl7.Fhir.FhirPath.Grammar
         //   BOOL |
         //   CONST |
         //   DATETIME;
-
         public static readonly Parser<Evaluator> FpConst =
             Lexer.String.Select(s => Eval.Constant(s))
             .XOr(Lexer.DateTime.Select(dt => Eval.Constant(dt)))
             .XOr(Lexer.Number.Select(n => Eval.Constant(n)))
             .XOr(Lexer.Bool.Select(b => Eval.Constant(b)))
             .XOr(Lexer.Const.Select(s => Eval.Constant(s)));
-            
+
         // term:
         //   '(' expr ')' |
         //   predicate |
         //   fpconst;
-        //public static readonly Parser<string> BracketExpr =
-        //    (from lparen in Parse.Char('(')
-        //     from expr in Parse.Ref(() => LogicExpr)
-        //     from rparen in Parse.Char(')')
-        //     select "(" + expr + ")")
-        //    .Named("BracketExpr");
+        public static readonly Parser<Evaluator> BracketExpr =
+            (from lparen in Parse.Char('(')
+             from expr in Parse.Ref(() => Expr)
+             from rparen in Parse.Char(')')
+             select expr)
+            .Named("BracketExpr");
 
         public static readonly Parser<Evaluator> Term =
             FpConst
-            //.XOr(BracketExpr)
+            .XOr(BracketExpr)
             .Or(Path.Predicate)
             .Named("Term");
 
@@ -51,13 +50,6 @@ namespace Hl7.Fhir.FhirPath.Grammar
         //  expr('|' | '&') expr |
         //  expr COMP expr |
         //  expr LOGIC expr;
-
-        //public static readonly Parser<Evaluator<object>> MulExpr =
-        //    Parse.ChainOperator(Parse.Chars("*/"), Term, (op, left, right) => left.Mul(right));
-
-        //public static readonly Parser<string> AddExpr =
-        //    Parse.ChainOperator(Parse.Chars("+-"), MulExpr, (op, left, right) => left.Add(right));
-
 
         //public static readonly Parser<string> MulExpr =
         //    Parse.ChainOperator(Parse.Chars("*/"), Term, (op, left, right) => left + " " + op + " " + right);
