@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Serialization
             else
             {
                 if (mapping.NativeType != existing.GetType())
-                    throw Error.Argument("existing", "Existing instance is of type {0}, but data indicates resource is a {1}", existing.GetType().Name, mapping.NativeType.Name);
+                    throw Error.Argument("existing", "Existing instance is of type {0}, but data indicates resource is a {1}".FormatWith(existing.GetType().Name, mapping.NativeType.Name));
             }
 
             IEnumerable<Tuple<string, IFhirReader>> members = null;

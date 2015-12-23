@@ -44,9 +44,9 @@ namespace Hl7.Fhir.Support
         /// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
         /// <returns>The logged <see cref="Exception"/>.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification="Utility method that might become useful for future usecases")]
-        internal static ArgumentException Argument(string messageFormat, params object[] messageArgs)
+        internal static ArgumentException Argument(string message)
         {
-            return new ArgumentException(Error.formatMessage(messageFormat, messageArgs));
+            return new ArgumentException(message);
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace Hl7.Fhir.Support
         /// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
         /// <returns>The logged <see cref="Exception"/>.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
-        internal static ArgumentException Argument(string parameterName, string messageFormat, params object[] messageArgs)
+        internal static ArgumentException Argument(string parameterName, string message)
         {
-            return new ArgumentException(Error.formatMessage(messageFormat, messageArgs), parameterName);
+            return new ArgumentException(message, parameterName);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Support
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
         internal static ArgumentException ArgumentNullOrEmpty(string parameterName)
         {
-            return Error.Argument(parameterName, "The argument '{0}' is null or empty.", parameterName);
+            return Error.Argument(parameterName, "The argument '{0}' is null or empty.".FormatWith(parameterName));
         }
 
 

@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Introspection
             var isValueElement = valueElementAttr != null && valueElementAttr.IsPrimitiveValue;
 
             if(isValueElement && !isAllowedNativeTypeForDataTypeValue(prop.PropertyType))
-                throw Error.Argument("prop", "Property {0} is marked for use as a primitive element value, but its .NET type ({1}) is not supported by the serializer.", buildQualifiedPropName(prop), prop.PropertyType.Name);
+                throw Error.Argument("prop", "Property {0} is marked for use as a primitive element value, but its .NET type ({1}) is not supported by the serializer.".FormatWith(buildQualifiedPropName(prop), prop.PropertyType.Name));
 
             return isValueElement;
         }
@@ -171,8 +171,7 @@ namespace Hl7.Fhir.Introspection
             if (MatchesSuffixedName(suffixedName))
                 return suffixedName.Remove(0, Name.Length);
             else
-                throw Error.Argument("suffixedName", "The given suffixed name {0} does not match this property's name {1}",
-                                            suffixedName, Name);
+                throw Error.Argument("suffixedName", "The given suffixed name {0} does not match this property's name {1}".FormatWith(suffixedName, Name));
         }
      
         //public Type GetChoiceType(string choiceSuffix)
