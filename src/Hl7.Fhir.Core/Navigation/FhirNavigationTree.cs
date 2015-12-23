@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.Linq;
 namespace Hl7.Fhir.Navigation
 {
     /// <summary>Represents a FHIR navigation tree with variant mutable node values.</summary>
-    public class FhirNavigationTree : VariantNavigationTree<FhirNavigationTree>, IMutableValueProvider
+    public class FhirNavigationTree : VariantNavigationTree<FhirNavigationTree>, IMutableValueProvider, IFhirPathNode
     {
         #region Public Factory Method
 
@@ -48,7 +49,12 @@ namespace Hl7.Fhir.Navigation
         {
             return new Node<V>(name, value, parent, previousSibling);
         }
-        
+
+        public IEnumerable<IFhirPathNode> Children()
+        {
+            return LinkedTreeExtensions.Children(this);
+        }
+
         /// <summary>Private subclass that implements the variant Value property.</summary>
         /// <typeparam name="V">The value type.</typeparam>
         class Node<V> : FhirNavigationTree, IValueProvider<V>

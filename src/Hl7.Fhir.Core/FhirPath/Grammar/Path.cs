@@ -5,11 +5,8 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
-using Hl7.Fhir.Navigation;
-using Hl7.Fhir.Support;
+
 using Sprache;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 // The FhirPath parser is using Sprache, a monad-based approach to parsing
@@ -20,7 +17,7 @@ using System.Linq;
 // http://www.codeproject.com/Articles/649989/Monad-like-programming-with-Csharp
 
 
-namespace Hl7.Fhir.FhirPath
+namespace Hl7.Fhir.FhirPath.Grammar
 {
     
     internal class Path

@@ -1,27 +1,32 @@
-﻿using Hl7.Fhir.Support;
+﻿/* 
+ * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Hl7.Fhir.Navigation
+namespace Hl7.Fhir.FhirPath
 {
-    public static class FhirTreeListExtensions
+    public static class Operations
     {
         /// <summary>Enumerate the direct children of the specified nodes.</summary>
-        /// <typeparam name="T">The type of a tree node.</typeparam>
         /// <param name="nodeSet">A set of tree nodes.</param>
-        /// <returns>An enumerator for nodes of type <typeparamref name="T"/>.</returns>
-        public static IEnumerable<T> Children<T>(this IEnumerable<T> nodeSet) where T : ILinkedTree<T>
+        public static IEnumerable<IFhirPathNode> All(this IEnumerable<IFhirPathNode> nodeSet)
         {
             return nodeSet.SelectMany(node => node.Children());
         }
 
-        public static IEnumerable<T> IsMatch<T>(this IEnumerable<T> nodeSet, string name) where T : ILinkedTree<T>, INamedTree
+        public static IEnumerable<IFhirPathNode> Navigate(this IEnumerable<IFhirPathNode> nodeSet, string name)
         {
-            return nodeSet.SelectMany(node => node.Children(n => n.IsMatch(name)));
-        }
+            return nodeSet.SelectMany(node => node.Children().Where(child => child.IsMatch(name)));
+        }      
 
         public static IEnumerable<object> Values(this IEnumerable<IValueProvider> nodeSet)
         {
@@ -31,7 +36,10 @@ namespace Hl7.Fhir.Navigation
                 select node.ObjectValue;
         }
 
-       // public static bool IsEqual(this IEnumerable<IV>)
+        public static bool IsEqualTo(this IEnumerable<IFhirPathNode> me, IEnumerable<IFhirPathNode> that)
+        {
+            throw new NotImplementedException();
+        }
 
         ///// <summary>Enumerate the descendants of the specified nodes.</summary>
         ///// <typeparam name="T">The type of a tree node.</typeparam>

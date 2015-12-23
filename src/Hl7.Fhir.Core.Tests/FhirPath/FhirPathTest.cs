@@ -17,6 +17,7 @@ using Hl7.Fhir.FhirPath;
 using Sprache;
 using System.Diagnostics;
 using Hl7.Fhir.Navigation;
+using Hl7.Fhir.FhirPath.Grammar;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -42,7 +43,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             //var result = Expression.Expr.TryParse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5,false != true))and(%bla>=6)");
             //var result = Expression.FpConst.TryParse("4.5");
 
-            var result = Path.Predicate.TryParse("Patient.identifier.use");
+            var result = Path.Predicate.TryParse("Patient.identifier.use.bla");
 
             if (result.WasSuccessful)
             {

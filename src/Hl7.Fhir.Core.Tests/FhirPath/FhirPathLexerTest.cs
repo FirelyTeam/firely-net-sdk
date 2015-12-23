@@ -8,12 +8,10 @@
 
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.FhirPath;
 using Sprache;
 using System.Linq;
+using Hl7.Fhir.FhirPath.Grammar;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {

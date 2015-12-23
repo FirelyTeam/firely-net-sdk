@@ -1,9 +1,16 @@
-﻿using Hl7.Fhir.Navigation;
+﻿/* 
+ * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -19,45 +26,38 @@ namespace Hl7.Fhir.FhirPath
         // Important: each Evaluator instance should receive a new EvaluationContext instance - for variable scoping
         // => Copy ctor
 
-        // Later we can make this nicer with an Option type or so, just need to go on now.
-        public IEnumerable<FhirNavigationTree> Nodes { get; private set; }
-        public IEnumerable<object> Values { get; private set; }
-
-        public bool IsAtomic
-        {
-            get
-            {
-                return Values != null;
-            }
-        }
-
-        public bool IsNodeSet
-        {
-            get
-            {
-                return Nodes != null;
-            }
-        }
+        public IEnumerable<IValueProvider> Focus { get; private set; }
 
         private EvaluationContext()
         {
-
+            // Must use factory methods
         }
 
-        public static EvaluationContext NewContext(EvaluationContext parent, params object[] values)
+        public static EvaluationContext NewContext(EvaluationContext parent, params IValueProvider[] values)
         {
-            return NewContext(parent, (IEnumerable<object>)values);
+            if (values == null) throw Error.ArgumentNull("values");
+
+            return NewContext(parent, (IEnumerable<IValueProvider>)values);
         }
-        public static EvaluationContext NewContext(EvaluationContext parent, IEnumerable<object> values)
+        public static EvaluationContext NewContext(EvaluationContext parent, IEnumerable<IValueProvider> values)
         {
+            if (values == null) throw Error.ArgumentNull("values");
+
             //copy stuff from parent
-            return new EvaluationContext() { Values = values };
+            return new EvaluationContext() { Focus = values };
+        }
+    }
+
+    public static class FocusExtensions
+    {
+        public static bool HasAllNamedTreeNodes(this IEnumerable<IValueProvider> focus)
+        {
+            return focus.All(f => f is IFhirPathNode);
         }
 
-        public static EvaluationContext NewContext(EvaluationContext parent, IEnumerable<FhirNavigationTree> nodes)
+        public static IEnumerable<IFhirPathNode> AsNamedTreeNodes(this IEnumerable<IValueProvider> focus)
         {
-            // copy stuff from parent
-            return new EvaluationContext() { Nodes = nodes };
+            return focus.OfType<IFhirPathNode>();
         }
     }
 }

@@ -1,10 +1,17 @@
-﻿using Hl7.Fhir.Navigation;
+﻿/* 
+ * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+
+using Hl7.Fhir.Navigation;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -20,15 +27,12 @@ namespace Hl7.Fhir.FhirPath
 
     public static class Eval
     {
-        public static IEnumerable<FhirNavigationTree> Evaluate(this Evaluator evaluator, FhirNavigationTree instance)
+        public static IEnumerable<IValueProvider> Evaluate(this Evaluator evaluator, FhirNavigationTree instance)
         {
             var context = EvaluationContext.NewContext(null, new List<FhirNavigationTree> { instance });
             var resultContxt = evaluator(context);
 
-            if (resultContxt.IsAtomic)
-                throw new NotImplementedException("Need to find elegant solution here");
-            else
-                return resultContxt.Nodes;
+            return resultContxt.Focus;
         }
 
 
@@ -48,8 +52,8 @@ namespace Hl7.Fhir.FhirPath
         {
             return c =>
             {
-                if (c.IsNodeSet)
-                   return EvaluationContext.NewContext(c, c.Nodes.IsMatch(name));
+                if (c.Focus.HasAllNamedTreeNodes())
+                   return EvaluationContext.NewContext(c, c.Focus.AsNamedTreeNodes().Navigate(name));
                 else
                    throw Error.InvalidOperation("Cannot navigate to children {0} on an expression that is not a node-set");
             };
@@ -57,7 +61,12 @@ namespace Hl7.Fhir.FhirPath
 
         public static Evaluator Constant(object value)
         {
-            return c => EvaluationContext.NewContext(c, value);
+            return c => EvaluationContext.NewContext(c, new ConstantValueProvider(value));
+        }
+
+        public static Evaluator Compare(string op, Evaluator left, Evaluator right)
+        {
+            throw new NotImplementedException();
         }
 
         //public static Evaluator<decimal> Add(this Evaluator<decimal> left, Evaluator<decimal> right)

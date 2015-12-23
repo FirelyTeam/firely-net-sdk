@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sprache;
 
-namespace Hl7.Fhir.FhirPath
+namespace Hl7.Fhir.FhirPath.Grammar
 {
     internal class Expression
     {
@@ -48,11 +48,11 @@ namespace Hl7.Fhir.FhirPath
         //     select "(" + expr + ")")
         //    .Named("BracketExpr");
 
-        //public static readonly Parser<string> Term =
-        //    FpConst
-        //    .XOr(BracketExpr)
-        //    .Or(Path.Predicate)
-        //    .Named("Term");
+        public static readonly Parser<Evaluator> Term =
+            FpConst
+            //.XOr(BracketExpr)
+            .Or(Path.Predicate)
+            .Named("Term");
 
         //expr:
         //  term |
@@ -77,6 +77,9 @@ namespace Hl7.Fhir.FhirPath
 
         //public static readonly Parser<string> JoinExpr =
         //    Parse.ChainOperator(Parse.Chars("|&"), AddExpr, (op, left, right) => left + " " + op + " " + right);
+
+        public static readonly Parser<Evaluator> CompExpr =
+            Parse.ChainOperator(Lexer.Comp, Term, (op, left, right) => Eval.Compare(op, left, right));
 
         //public static readonly Parser<string> CompExpr =
         //    Parse.ChainOperator(Lexer.Comp, JoinExpr, (op, left, right) => left + " " + op + " " + right);

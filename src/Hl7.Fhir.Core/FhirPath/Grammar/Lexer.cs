@@ -10,7 +10,7 @@ using Sprache;
 using System;
 using System.Linq;
 
-namespace Hl7.Fhir.FhirPath
+namespace Hl7.Fhir.FhirPath.Grammar
 {
     internal class Lexer
     {
