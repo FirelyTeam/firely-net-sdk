@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Navigation
 {

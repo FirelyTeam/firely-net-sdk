@@ -9,6 +9,7 @@
 #define NEWBUILDER
 #define IM_MUTABLE_TEST
 
+using Hl7.Fhir.Support;
 using System;
 
 namespace Hl7.Fhir.Navigation

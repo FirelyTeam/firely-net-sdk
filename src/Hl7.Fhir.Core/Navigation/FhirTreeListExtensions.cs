@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hl7.Fhir.Support;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,16 @@ namespace Hl7.Fhir.Navigation
         {
             return nodeSet.SelectMany(node => node.Children(n => n.IsMatch(name)));
         }
+
+        public static IEnumerable<object> Values(this IEnumerable<IValueProvider> nodeSet)
+        {
+            return
+                from node in nodeSet
+                where node.ObjectValue != null
+                select node.ObjectValue;
+        }
+
+       // public static bool IsEqual(this IEnumerable<IV>)
 
         ///// <summary>Enumerate the descendants of the specified nodes.</summary>
         ///// <typeparam name="T">The type of a tree node.</typeparam>

@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Navigation;
+using Hl7.Fhir.Support;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

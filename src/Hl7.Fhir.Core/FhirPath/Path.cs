@@ -58,8 +58,5 @@ namespace Hl7.Fhir.FhirPath
         public static readonly Parser<Evaluator> Predicate =
             from itemList in Item.XDelimitedBy(Parse.Char('.'))
             select Eval.Chain(itemList);
-
-
-
     }
 }
