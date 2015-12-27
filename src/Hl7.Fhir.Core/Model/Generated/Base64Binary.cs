@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,12 +37,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Typed element containing the primitive base64Binary
+    /// Primitive Type base64Binary
     /// </summary>
     [FhirType("base64Binary")]
     [DataContract]
@@ -50,13 +51,13 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "base64Binary"; } }
         
-        public Base64Binary(byte[] value)
-        {
-            Value = value; 
-        }
-        
-        public Base64Binary(): this((byte[])null) {}
-        
+		public Base64Binary(byte[] value)
+		{
+			Value = value;
+		}
+
+		public Base64Binary(): this((byte[])null) {}
+
         /// <summary>
         /// Primitive value of the element
         /// </summary>

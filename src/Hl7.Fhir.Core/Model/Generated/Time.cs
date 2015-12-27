@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,12 +37,12 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Typed element containing the primitive time
+    /// Primitive Type time
     /// </summary>
     [FhirType("time")]
     [DataContract]
@@ -52,14 +53,14 @@ namespace Hl7.Fhir.Model
         
         // Must conform to the pattern "([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?"
         public const string PATTERN = @"([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?";
-        
-        public Time(string value)
-        {
-            Value = value; 
-        }
-        
-        public Time(): this((string)null) {}
-        
+
+		public Time(string value)
+		{
+			Value = value;
+		}
+
+		public Time(): this((string)null) {}
+
         /// <summary>
         /// Primitive value of the element
         /// </summary>

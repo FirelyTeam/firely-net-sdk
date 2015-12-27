@@ -7901,7 +7901,7 @@ This element may need to be included in narrative because of the potential for m
           <name value="RIM"/>
         </mapping>
         <kind value="datatype"/>
-        <abstract value="false"/>
+        <abstract value="true"/>
         <base value="http://hl7.org/fhir/StructureDefinition/Element"/>
         <snapshot>
           <element>
@@ -7964,6 +7964,7 @@ This element may need to be included in narrative because of the potential for m
               <code value="Extension"/>
             </type>
             <isModifier value="true"/>
+            <isSummary value="true"/>
             <mapping>
               <identity value="rim"/>
               <map value="N/A"/>
@@ -7999,6 +8000,7 @@ This element may need to be included in narrative because of the potential for m
               <code value="Extension"/>
             </type>
             <isModifier value="true"/>
+            <isSummary value="true"/>
             <mapping>
               <identity value="rim"/>
               <map value="N/A"/>
@@ -11584,7 +11586,7 @@ This element may need to be included in narrative because of the potential for m
             <min value="0"/>
             <max value="1"/>
             <type>
-              <code value="Element"/>
+              <code value="BackboneElement"/>
             </type>
             <constraint>
               <key value="tim-6"/>
@@ -11936,7 +11938,7 @@ This element may need to be included in narrative because of the potential for m
             <min value="0"/>
             <max value="1"/>
             <type>
-              <code value="Element"/>
+              <code value="BackboneElement"/>
             </type>
             <constraint>
               <key value="tim-6"/>

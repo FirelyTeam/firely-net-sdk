@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,32 +53,37 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// How the Quantity should be understood and represented.
+        /// (url: http://hl7.org/fhir/ValueSet/quantity-comparator)
         /// </summary>
         [FhirEnumeration("QuantityComparator")]
         public enum QuantityComparator
         {
             /// <summary>
             /// The actual value is less than the given value.
+            /// (system: http://hl7.org/fhir/quantity-comparator)
             /// </summary>
-            [EnumLiteral("<")]
+            [EnumLiteral("<"), Description("Less than")]
             LessThan,
             /// <summary>
             /// The actual value is less than or equal to the given value.
+            /// (system: http://hl7.org/fhir/quantity-comparator)
             /// </summary>
-            [EnumLiteral("<=")]
+            [EnumLiteral("<="), Description("Less or Equal to")]
             LessOrEqual,
             /// <summary>
             /// The actual value is greater than or equal to the given value.
+            /// (system: http://hl7.org/fhir/quantity-comparator)
             /// </summary>
-            [EnumLiteral(">=")]
+            [EnumLiteral(">="), Description("Greater or Equal to")]
             GreaterOrEqual,
             /// <summary>
             /// The actual value is greater than the given value.
+            /// (system: http://hl7.org/fhir/quantity-comparator)
             /// </summary>
-            [EnumLiteral(">")]
+            [EnumLiteral(">"), Description("Greater than")]
             GreaterThan,
         }
-        
+
         /// <summary>
         /// Numerical value (with implicit precision)
         /// </summary>
