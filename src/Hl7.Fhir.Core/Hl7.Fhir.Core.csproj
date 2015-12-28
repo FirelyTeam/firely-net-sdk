@@ -101,7 +101,9 @@
     <Compile Include="Model\Generated\Base64Binary.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Code.cs" />
+    <Compile Include="Model\Generated\Code.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\CodeableConcept.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
@@ -129,7 +131,9 @@
     <Compile Include="Model\Generated\HumanName.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Id.cs" />
+    <Compile Include="Model\Generated\Id.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Identifier.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
@@ -151,7 +155,9 @@
     </Compile>
     <Compile Include="Model\Generated\Money.cs" />
     <Compile Include="Model\Generated\Narrative.cs" />
-    <Compile Include="Model\Generated\Oid.cs" />
+    <Compile Include="Model\Generated\Oid.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Period.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
