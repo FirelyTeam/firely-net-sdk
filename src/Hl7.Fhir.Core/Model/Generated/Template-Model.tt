@@ -83,7 +83,9 @@
 			string resourceDescription = "";
 			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+resourceName+"']/fhir:short/@value", nsR) != null)
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+resourceName+"']/fhir:short/@value", nsR).Value;
-			if (resourceName == "Resource" || resourceName == "DomainResource")
+			if (resourceName == "Resource" 
+			//	|| resourceName == "DomainResource"
+				)
 				continue;
 			manager.StartNewFile(resourceName + ".cs");
 
@@ -103,6 +105,9 @@
 					continue;
             }
 
+			bool abstractType = false;
+			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:abstract[@value='true']", nsR) != null)
+				abstractType = true;
 #>
 using System;
 using System.Collections.Generic;
@@ -150,9 +155,12 @@ namespace Hl7.Fhir.Model
 <# if (!string.IsNullOrEmpty(resourceDescription)) { #>    /// <summary>
     /// <#= resourceDescription #>
     /// </summary>
-<# } #>    [FhirType("<#= resourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? ", IsResource=true" : "" #>)]
-    [DataContract]
-    public partial class <#= resourceName #> : <#= resourceBaseType #>, System.ComponentModel.INotifyPropertyChanged
+<# }
+if(!abstractType) {
+ #>    [FhirType("<#= resourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? ", IsResource=true" : "" #>)]
+<# }
+#>    [DataContract]
+    public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>, System.ComponentModel.INotifyPropertyChanged
     {
 <# if (resourceBaseType != "Hl7.Fhir.Model.Element") { #>        [NotMapped]
         public override ResourceType ResourceType { get { return ResourceType.<#= resourceName #>; } }
@@ -294,7 +302,7 @@ namespace Hl7.Fhir.Model
 		nComponentPropNum += 10;
 #>
             /// <summary>
-            /// <#= pd.Summary #>
+            /// <#= pd.Summary.Replace("&", "&amp;") #>
             /// </summary>
             [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
@@ -373,12 +381,13 @@ namespace Hl7.Fhir.Model
                 	throw new ArgumentException("Can only copy to an object of the same type", "other");
             }
             
-            public override IDeepCopyable DeepCopy()
+<# if (!abstractType){
+#>            public override IDeepCopyable DeepCopy()
             {
                 return CopyTo(new <#= componentName #>());
             }
             
-            public override bool Matches(IDeepComparable other)
+<# } #>            public override bool Matches(IDeepComparable other)
             {
                 var otherT = other as <#= componentName #>;
                 if(otherT == null) return false;
@@ -511,12 +520,14 @@ namespace Hl7.Fhir.Model
             	throw new ArgumentException("Can only copy to an object of the same type", "other");
         }
         
-        public override IDeepCopyable DeepCopy()
+<# if (!abstractType){
+#>        public override IDeepCopyable DeepCopy()
         {
             return CopyTo(new <#= resourceName #>());
         }
         
-        public override bool Matches(IDeepComparable other)
+<# } 
+#>        public override bool Matches(IDeepComparable other)
         {
             var otherT = other as <#= resourceName #>;
             if(otherT == null) return false;

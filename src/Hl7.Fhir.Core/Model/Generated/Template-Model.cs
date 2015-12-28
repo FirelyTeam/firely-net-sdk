@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Tue, 22 Dec 2015 14:11:55 GMT for FHIR v1.0.2
+// Model Generated on Mon, 28 Dec 2015 16:11:02 GMT for FHIR v1.0.2
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): Conformance.rest.resource.type
@@ -160,5 +160,6 @@
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Appointment.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\AllergyIntolerance.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Account.cs
+// C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\DomainResource.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Parameters.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\ValueSet.cs
