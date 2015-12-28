@@ -151,7 +151,7 @@
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR).Value;
 			if (resourceName == "Resource"
 				|| resourceName == "DomainResource"
-				|| resourceName == "ElementDefinition"
+			//	|| resourceName == "ElementDefinition"
 				|| resourceName == "Narrative"
 				|| resourceName == "Extension")
 				continue;
