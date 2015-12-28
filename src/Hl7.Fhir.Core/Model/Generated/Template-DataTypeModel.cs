@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Mon, 28 Dec 2015 12:33:08 GMT for FHIR v1.0.2
+// Model Generated on Mon, 28 Dec 2015 16:36:26 GMT for FHIR v1.0.2
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -46,11 +46,14 @@
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Coding.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Identifier.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\FhirDecimal.cs
+// C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\PositiveInt.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Id.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Time.cs
+// C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\UnsignedInt.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Base64Binary.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\FhirBoolean.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Instant.cs
+// C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Uuid.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\FhirUri.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Oid.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Integer.cs

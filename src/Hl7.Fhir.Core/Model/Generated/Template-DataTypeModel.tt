@@ -81,7 +81,7 @@
 	foreach (System.Xml.XmlNode e in docResources.DocumentElement.SelectNodes(
 	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR))
 	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = 'Address' or fhir:id/@value = 'Coding' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment']", nsR))
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:base/@value = 'http://hl7.org/fhir/StructureDefinition/Element' or fhir:id/@value = 'Coding' or fhir:id/@value = 'code' or fhir:id/@value = 'oid' or fhir:id/@value = 'id' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment']", nsR))
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:base/@value = 'http://hl7.org/fhir/StructureDefinition/Element' or fhir:id/@value = 'Coding' or fhir:id/@value = 'code' or fhir:id/@value = 'oid' or fhir:id/@value = 'id' or fhir:id/@value = 'uuid' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment' or fhir:id/@value = 'unsignedInt' or fhir:id/@value = 'positiveInt']", nsR))
     {
 		if (e is System.Xml.XmlElement)
         {
@@ -128,6 +128,14 @@
 			}
 			else if (resourceName == "integer") {
 				resourceName = "Integer";
+				primitiveTypeName = "int?";
+			}
+			else if (resourceName == "positiveInt") {
+				resourceName = "PositiveInt";
+				primitiveTypeName = "int?";
+			}
+			else if (resourceName == "unsignedInt") {
+				resourceName = "UnsignedInt";
 				primitiveTypeName = "int?";
 			}
 			else if (resourceName == "code") {
@@ -271,7 +279,7 @@ if (!abstractType){
         /// </summary>
         [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=30)]
 <#
-	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer"
+	if (!string.IsNullOrEmpty(pattern) && resourceName != "FhirDecimal" && resourceName != "Time" && resourceName != "Integer" && resourceName != "UnsignedInt" && resourceName != "PositiveInt"
 		|| resourceName == "Instant"
 		|| resourceName == "FhirUri")
     {

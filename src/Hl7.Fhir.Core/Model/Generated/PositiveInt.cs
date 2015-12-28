@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,13 +37,10 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Typed element containing the primitive positiveInt
-    /// </summary>
     [FhirType("positiveInt")]
     [DataContract]
     public partial class PositiveInt : Hl7.Fhir.Model.Primitive<int?>, System.ComponentModel.INotifyPropertyChanged
@@ -52,14 +50,14 @@ namespace Hl7.Fhir.Model
         
         // Must conform to the pattern "[1-9][0-9]*"
         public const string PATTERN = @"[1-9][0-9]*";
-        
-        public PositiveInt(int? value)
-        {
-            Value = value; 
-        }
-        
-        public PositiveInt(): this((int?)null) {}
-        
+
+		public PositiveInt(int? value)
+		{
+			Value = value;
+		}
+
+		public PositiveInt(): this((int?)null) {}
+
         /// <summary>
         /// Primitive value of the element
         /// </summary>

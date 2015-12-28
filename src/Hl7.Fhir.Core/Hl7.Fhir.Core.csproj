@@ -163,7 +163,9 @@
     <Compile Include="Model\Generated\Period.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\PositiveInt.cs" />
+    <Compile Include="Model\Generated\PositiveInt.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Quantity.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
@@ -218,8 +220,12 @@
     <Compile Include="Model\Generated\Timing.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\UnsignedInt.cs" />
-    <Compile Include="Model\Generated\Uuid.cs" />
+    <Compile Include="Model\Generated\UnsignedInt.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Uuid.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Markdown.cs" />
     <Compile Include="Model\PositiveInt.cs" />
     <Compile Include="Rest\ResourceReferenceExtensions.cs" />
