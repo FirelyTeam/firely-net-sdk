@@ -148,7 +148,9 @@
     <Compile Include="Model\Generated\Integer.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Markdown.cs" />
+    <Compile Include="Model\Generated\Markdown.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\MedicationOrder.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>

@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Mon, 28 Dec 2015 16:36:26 GMT for FHIR v1.0.2
+// Model Generated on Mon, 28 Dec 2015 16:43:20 GMT for FHIR v1.0.2
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -49,6 +49,7 @@
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\PositiveInt.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Id.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Time.cs
+// C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Markdown.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\UnsignedInt.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\Base64Binary.cs
 // C:\src\FHIR\fhir-net-api-DSTU2\src\Hl7.Fhir.Core\Model\Generated\FhirBoolean.cs
