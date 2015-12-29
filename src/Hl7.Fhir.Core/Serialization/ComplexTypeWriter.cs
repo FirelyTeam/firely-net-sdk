@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Serialization
         private Type GetSerializationTypeForDataTypeChoiceElements( PropertyMapping prop, object value)
         {
             Type serializationType = value.GetType();
-            if (!prop.IsPrimitive)
+            if (!prop.IsPrimitive && false)
             {
                 Type baseType = serializationType.BaseType;
                 while (baseType != typeof(Element) && baseType != typeof(object))

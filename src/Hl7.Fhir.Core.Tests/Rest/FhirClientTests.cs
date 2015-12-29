@@ -32,11 +32,10 @@ namespace Hl7.Fhir.Tests.Rest
         //Uri testEndpoint = new Uri("http://spark-dstu2.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-         // Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
+        Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
         // Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
-        //Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
-        Uri testEndpoint = new Uri("http://localhost:49911/fhir");
+        //Uri testEndpoint = new Uri("http://localhost:49911/fhir");
         // Uri testEndpoint = new Uri("http://sqlonfhir-dstu2.azurewebsites.net/fhir");
 
         [TestInitialize]
@@ -302,11 +301,12 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void StackOverflow()
         {
+            // Test doesn't assert anything, nor have a pre defined set of data
             var client = new FhirClient("http://spark.furore.com/fhir");
-            var pat = client.Read<Patient>("Patient/1");
+            var pat = client.Read<Patient>("Patient/1"); // "/_history/spark680");
         }
 
         [TestMethod, TestCategory("FhirClient")]
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Tests.Rest
             pat.Identifier.Clear();
             pat.Identifier.Add(new Identifier("http://hl7.org/test/2", "99999"));
 
-            var fe = client.Update(pat); // Update not create as we are providing the ID to be used.
+            var fe = client.Create(pat); // Create as we are not providing the ID to be used.
             Assert.IsNotNull(fe);
             Assert.IsNotNull(fe.Id);
             Assert.IsNotNull(fe.Meta.VersionId);
