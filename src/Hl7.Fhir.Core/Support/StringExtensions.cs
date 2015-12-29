@@ -44,6 +44,13 @@ namespace Hl7.Fhir.Support
         }
 
 
+        public static string Capitalize(this string s)
+        {
+            if (string.IsNullOrEmpty(s)) return string.Empty;
+
+            // Return char and concat substring.
+            return char.ToUpper(s[0]) + s.Substring(1);
+        }
 
         internal static string[] SplitNotInQuotes(this string value, char separator)
         {

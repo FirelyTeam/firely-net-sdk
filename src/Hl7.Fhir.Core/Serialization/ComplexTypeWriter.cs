@@ -77,7 +77,9 @@ namespace Hl7.Fhir.Serialization
                 // For Choice properties, determine the actual name of the element
                 // by appending its type to the base property name (i.e. deceasedBoolean, deceasedDate)
                 if (prop.Choice == ChoiceType.DatatypeChoice)
-                    memberName = determineElementMemberName(prop.Name, value.GetType());
+                {
+                    memberName = determineElementMemberName(prop.Name, GetSerializationTypeForDataTypeChoiceElements(prop, value));
+                }
 
                 _writer.WriteStartProperty(memberName);
                
@@ -98,6 +100,22 @@ namespace Hl7.Fhir.Serialization
 
                 _writer.WriteEndProperty();
             }
+        }
+
+        private Type GetSerializationTypeForDataTypeChoiceElements( PropertyMapping prop, object value)
+        {
+            Type serializationType = value.GetType();
+            if (!prop.IsPrimitive)
+            {
+                Type baseType = serializationType.BaseType;
+                while (baseType != typeof(Element) && baseType != typeof(object))
+                {
+                    serializationType = baseType;
+                    baseType = baseType.BaseType;
+                }
+            }
+
+            return serializationType;
         }
 
 

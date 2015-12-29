@@ -36,5 +36,16 @@ namespace Hl7.Fhir.Tests.Model
             var xml2 = FhirSerializer.SerializeResourceToXml(p2);
             XmlAssert.AreSame(xml, xml2);
         }
+
+        [TestMethod]
+        public void CheckCopyCarePlan()
+        {
+            string xml = File.ReadAllText(@"TestData\careplan-example-f201-renal.xml");
+
+            var p = (CarePlan)FhirParser.ParseResourceFromXml(xml);
+            var p2 = (CarePlan)p.DeepCopy();
+            var xml2 = FhirSerializer.SerializeResourceToXml(p2);
+            XmlAssert.AreSame(xml, xml2);
+        }
     }
 }

@@ -104,44 +104,5 @@ namespace Hl7.Fhir.Specification.Navigation
 
             return true;
         }
-
-
-        public static bool ExpandElement(this ElementNavigator nav, ArtifactResolver source)
-        {
-            if (source == null) throw Error.ArgumentNull("source");
-            if (nav.Current == null) throw Error.ArgumentNull("Navigator is not positioned on an element");
-
-            if (nav.HasChildren) return true;     // already has children, we're not doing anything extra
-
-            var defn = nav.Current;
-
-            if (!String.IsNullOrEmpty(defn.NameReference))
-            {
-                var sourceNav = new ElementNavigator(nav);
-                var success = sourceNav.JumpToNameReference(defn.NameReference);
-
-                if(!success)
-                    throw Error.InvalidOperation("Trying to navigate down a node that has a nameReference of '{0}', which cannot be found in the StructureDefinition".FormatWith(defn.NameReference));
-
-                nav.CopyChildren(sourceNav);
-            }
-            else if (defn.Type != null && defn.Type.Count > 0)
-            {
-                if (defn.Type.Count > 1)
-                    throw new NotSupportedException("Element at path {0} has a choice of types, cannot expand".FormatWith(nav.Path));
-                else
-                {
-                    var coreType = source.GetStructureDefinitionForCoreType(defn.Type[0].Code);
-                    if (coreType == null) throw Error.NotSupported("Trying to navigate down a node that has a declared base type of '{0}', which is unknown".FormatWith(defn.Type[0].Code));
-                    if (coreType.Snapshot == null) throw Error.NotSupported("Found definition of base type '{0}', but is does not contain a snapshot representation".FormatWith(defn.Type[0].Code));
-
-                    var sourceNav = new ElementNavigator(coreType.Snapshot.Element);
-                    sourceNav.MoveToFirstChild();
-                    nav.CopyChildren(sourceNav);
-                }
-            }
-
-            return true;
-        }
     }
 }

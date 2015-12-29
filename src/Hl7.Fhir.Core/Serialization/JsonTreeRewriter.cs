@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Serialization
             if (prop != null && prop.Value.Type == JTokenType.Null) prop = null;
             if (appendix != null && appendix.Value.Type == JTokenType.Null) appendix = null;
 
-            if (appendix == null && prop == null) throw new ArgumentException("prop and appendix cannot both be null");
+            if (appendix == null && prop == null) throw new FormatException("property value and appendix (_property) cannot both be null");
 
             // If there is no corresponding appendix property, return the base contents
             if (appendix == null) return prop;

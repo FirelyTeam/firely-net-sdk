@@ -220,9 +220,9 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters)
+        public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters, bool useGet = false)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST);
+            var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST);
             entry.Resource = parameters;
             var path = new RestUrl(endpoint);
             addEntry(entry, path);
@@ -230,32 +230,32 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        public TransactionBuilder EndpointOperation(RestUrl endpoint, string name, Parameters parameters)
+        public TransactionBuilder EndpointOperation(RestUrl endpoint, string name, Parameters parameters, bool useGet = false)
         {          
             var path = new RestUrl(endpoint).AddPath(OPERATIONPREFIX + name);
 
-            return EndpointOperation(path, parameters);
+            return EndpointOperation(path, parameters, useGet);
         }
 
-        public TransactionBuilder ServerOperation(string name, Parameters parameters)
+        public TransactionBuilder ServerOperation(string name, Parameters parameters, bool useGet = false)
         {
             var path = newRestUrl().AddPath(OPERATIONPREFIX + name);
-            return EndpointOperation(path, parameters);
+            return EndpointOperation(path, parameters, useGet);
         }
 
-        public TransactionBuilder TypeOperation(string resourceType, string name, Parameters parameters)
+        public TransactionBuilder TypeOperation(string resourceType, string name, Parameters parameters, bool useGet = false)
         {
             var path = newRestUrl().AddPath(resourceType, OPERATIONPREFIX + name);
-            return EndpointOperation(path,parameters);
+            return EndpointOperation(path,parameters, useGet);
         }
 
-        public TransactionBuilder ResourceOperation(string resourceType, string id, string vid, string name, Parameters parameters)
+        public TransactionBuilder ResourceOperation(string resourceType, string id, string vid, string name, Parameters parameters, bool useGet = false)
         {
             var path = newRestUrl().AddPath(resourceType, id);
-            if(vid != null) path.AddPath(resourceType, vid);
+            if(vid != null) path.AddPath(HISTORY, vid);
             path.AddPath(OPERATIONPREFIX + name);
 
-            return EndpointOperation(path, parameters);
+            return EndpointOperation(path, parameters, useGet);
         }
 
 
