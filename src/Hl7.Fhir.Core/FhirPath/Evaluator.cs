@@ -78,25 +78,40 @@ namespace Hl7.Fhir.FhirPath
 
         public static Evaluator Function(string name, IEnumerable<Evaluator> paramList)
         {
-            if(name == "where")
-                return Where(paramList);
-            else
-                throw Error.NotSupported("An unknown function '{0}' is invoked".FormatWith(name));
-        }
-
-        public static Evaluator Where(IEnumerable<Evaluator> parameters)
-        {
-            if (parameters.Count() != 1) throw Error.Argument("parameters", "'where' requires exactly one parameter");
-
             return c =>
             {
-                var condition = parameters.Single();
-                return EvaluationContext.NewContext(c, where(c, condition));
+                IEnumerable<IFhirPathValue> result;
+
+                if (name == "where") result = where(c, paramList);
+                else if (name == "empty") result = empty(c, paramList);
+                else if (name == "not") result = not(c, paramList);
+                else
+                    throw Error.NotSupported("An unknown function '{0}' is invoked".FormatWith(name));
+
+                return EvaluationContext.NewContext(c, result);
             };
         }
 
-        private static IEnumerable<IFhirPathValue> where(EvaluationContext parentContext, Evaluator condition)
+        private static IEnumerable<IFhirPathValue> empty(EvaluationContext parentContext, IEnumerable<Evaluator> parameters)
+        {            
+            if (parameters.Any()) throw Error.Argument("parameters", "'empty' does not take parameters");
+
+            return ConstantFhirPathNode.AsEnumerableOfValue(!parentContext.Focus.Any());
+        }
+
+        private static IEnumerable<IFhirPathValue> not(EvaluationContext parentContext, IEnumerable<Evaluator> parameters)
         {
+            if (parameters.Any()) throw Error.Argument("parameters", "'not' does not take parameters");
+
+            return ConstantFhirPathNode.AsEnumerableOfValue(!parentContext.Focus.AsBooleanEvaluation());
+        }
+
+        private static IEnumerable<IFhirPathValue> where(EvaluationContext parentContext, IEnumerable<Evaluator> parameters)
+        {
+            if (parameters.Count() != 1) throw Error.Argument("parameters", "'where' requires exactly one parameter");
+
+            var condition = parameters.Single();
+
             foreach (var element in parentContext.Focus)
             {
                 var context = EvaluationContext.NewContext(parentContext, element);
@@ -104,6 +119,7 @@ namespace Hl7.Fhir.FhirPath
                 if (result) yield return element;
             }
         }
+
         //public static Evaluator<decimal> Add(this Evaluator<decimal> left, Evaluator<decimal> right)
         //{
         //    return c => Result.ForValue(left(c).Value + right(c).Value);

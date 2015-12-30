@@ -27,9 +27,9 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> Function =
             from name in Lexer.Id
             from lparen in Parse.Char('(')
-            from paramList in Parse.Ref(() => Expression.Expr.Named("parameter")).XDelimitedBy(Parse.Char(','))
+            from paramList in Parse.Ref(() => Expression.Expr.Named("parameter")).XDelimitedBy(Parse.Char(',')).Optional()
             from rparen in Parse.Char(')')
-            select Eval.Function(name, paramList);
+            select Eval.Function(name, paramList.GetOrElse(Enumerable.Empty<Evaluator>()));
 
         // item: element recurse? | function | axis_spec | '(' expr ')';
         public static readonly Parser<Evaluator> ElementPath =

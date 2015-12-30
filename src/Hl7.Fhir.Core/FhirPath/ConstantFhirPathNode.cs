@@ -29,5 +29,10 @@ namespace Hl7.Fhir.FhirPath
                 return ObjectValue != null ? ObjectValue.GetType() : null;
             }
         }
+
+        public static IEnumerable<IFhirPathValue> AsEnumerableOfValue(object value)
+        {
+            yield return new ConstantFhirPathNode(value);
+        }
     }
 }
