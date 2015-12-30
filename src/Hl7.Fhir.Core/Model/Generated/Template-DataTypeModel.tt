@@ -33,6 +33,7 @@
     nsT.AddNamespace("fhir", "http://hl7.org/fhir");
 
 	string fhirVersion = docResources.SelectSingleNode("//fhir:fhirVersion/@value", nsE).Value;
+	// string fhirVersion = "1.0.2";
 #>
 //
 // Model Generated on <#= DateTime.Now.ToString("R") #> for FHIR v<#= fhirVersion #>
@@ -390,7 +391,7 @@ if (!abstractType){
             }
 
 	// This is the generation for the Components of the class
-	foreach (System.Xml.XmlElement e2 in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'BackboneElement']", nsR))
+	foreach (System.Xml.XmlElement e2 in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'Element']", nsR))
     {
 		System.Xml.XmlAttribute componentElement = e2.SelectSingleNode("fhir:path/@value", nsR) as System.Xml.XmlAttribute;
 		string v = componentElement.Value;
@@ -398,6 +399,10 @@ if (!abstractType){
         {
 			int index = v.LastIndexOf(".");
 			v = v.Substring(index+1, 1).ToUpper() + v.Substring(index+2);
+        }
+		else
+		{
+			continue;
         }
 		string componentName = v + "Component";
 		System.Xml.XmlAttribute componentNameElement = (System.Xml.XmlAttribute)e2.SelectSingleNode("fhir:extension[@url = 'http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name']/fhir:valueString/@value", nsR);
@@ -416,7 +421,7 @@ if (!abstractType){
 #>
         [FhirType("<#= componentName #>")]
         [DataContract]
-        public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class <#= componentName #> : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
             public override string TypeName { get { return "<#= componentName #>"; } }
@@ -880,7 +885,7 @@ if (!abstractType){
 			if (!result.FhirName.Contains(".") || !result.FhirName.StartsWith(resourceName + "."))
 				return null;
 			string ResourceBase = result.FhirName.Substring(0, result.FhirName.IndexOf("."));
-			if (result.PropType == "BackboneElement")
+			if (result.PropType == "BackboneElement" || result.PropType == "Element")
             {
 				string v = result.FhirName;
 				if (v.Contains("."))
@@ -1005,6 +1010,8 @@ if (!abstractType){
 								break;
 				case "BackboneElement" : result.PropType = result.BackboneComponentType;
 								break;
+				case "Element" : result.PropType = result.BackboneComponentType;
+								break;
 				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
 								break;
 				case "Quantity" :
@@ -1118,7 +1125,7 @@ if (!abstractType){
 		//		result.FhirName = result.FhirName.Substring(result.FhirName.IndexOf(".") + 1);
 			result.FhirName = result.FhirName.ToUpper().Substring(0,1) + result.FhirName.Substring(1); // convert this to the actual property name
 
-			if (result.PropType == "BackboneElement")
+			if (result.PropType == "BackboneElement" || result.PropType == "Element")
             {
 				string v = result.FhirName;
 				if (v.Contains("."))
@@ -1149,7 +1156,7 @@ if (!abstractType){
 				}
 			}
 
-			if (result.PropType == "BackboneElement")
+			if (result.PropType == "BackboneElement" || result.PropType == "Element")
             {
 				string v = result.FhirName;
 				if (v.Contains("."))

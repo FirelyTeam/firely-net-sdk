@@ -41,7 +41,7 @@ using System.ComponentModel;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("Duration")]
+    [FhirType("Quantity")]
     public partial class Duration : Quantity
     {
         [NotMapped]

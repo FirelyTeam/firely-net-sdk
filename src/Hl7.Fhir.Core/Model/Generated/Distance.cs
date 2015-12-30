@@ -41,7 +41,7 @@ using System.ComponentModel;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("Distance")]
+    [FhirType("Quantity")]
     public partial class Distance : Quantity
     {
         [NotMapped]

@@ -33,6 +33,7 @@
     nsT.AddNamespace("fhir", "http://hl7.org/fhir");
 
 	string fhirVersion = docResources.SelectSingleNode("//fhir:fhirVersion/@value", nsE).Value;
+	// string fhirVersion = "1.0.2";
 #>
 //
 // Model Generated on <#= DateTime.Now.ToString("R") #> for FHIR v<#= fhirVersion #>
@@ -163,8 +164,8 @@ namespace Hl7.Fhir.Model
 <# if (!string.IsNullOrEmpty(resourceDescription)) { #>    /// <summary>
     /// <#= resourceDescription.Replace("&", "&amp;") #>
     /// </summary>
-<# }
-#>    [FhirType("<#= rawResourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? "" : "" #>)]
+<# } 
+#>    [FhirType("Quantity"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? "" : "" #>)]
     public partial class <#= resourceName #> : Quantity
     {
         [NotMapped]
