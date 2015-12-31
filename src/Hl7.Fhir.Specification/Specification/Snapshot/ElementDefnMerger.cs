@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // to one. The name can then be changed to choiceXXXX, where XXXX is the name of the type.
             if(snap.Path != diff.Path && snap.IsChoice() && diff.Type.Count() == 1)
             {
-                if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.Capitalize() != diff.Path)
+                if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.ToString().Capitalize() != diff.Path)
                     throw Error.InvalidOperation("Path cannot be changed from {0} to {1}, since the type is sliced to {2}"
                             .FormatWith(snap.Path, diff.Path, diff.Type.First().Code));
 
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Comments = null;
                 snap.Requirements = null;
                 snap.AliasElement = new List<FhirString>();
-                snap.Mapping = new List<ElementDefinition.ElementDefinitionMappingComponent>();
+                snap.Mapping = new List<ElementDefinition.MappingComponent>();
             }
 
             snap.ShortElement = mergePrimitiveAttribute(snap.ShortElement, diff.ShortElement);

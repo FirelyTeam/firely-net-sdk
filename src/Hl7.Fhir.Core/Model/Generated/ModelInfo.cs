@@ -1,1 +1,0 @@
-﻿// The content of this generated file is now output to Template-ModelInfo.cs
