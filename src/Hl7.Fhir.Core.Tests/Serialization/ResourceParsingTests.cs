@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(json2);
             File.WriteAllText(@"c:\temp\edgecase.json", json2);
            
-            JsonAssert.AreSame(json, json2);
+            JsonAssert.AreSame("edgecase.json", json, json2);
         }
 
 

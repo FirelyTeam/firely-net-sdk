@@ -209,6 +209,38 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Coding _PaymentStatus;
         
+        /// <summary>
+        /// Payment or clearing date
+        /// </summary>
+        [FhirElement("statusDate", InSummary=true, Order=190)]
+        [DataMember]
+        public Hl7.Fhir.Model.Date StatusDateElement
+        {
+            get { return _StatusDateElement; }
+            set { _StatusDateElement = value; OnPropertyChanged("StatusDateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Date _StatusDateElement;
+        
+        /// <summary>
+        /// Payment or clearing date
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string StatusDate
+        {
+            get { return StatusDateElement != null ? StatusDateElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  StatusDateElement = null; 
+                else
+                  StatusDateElement = new Hl7.Fhir.Model.Date(value);
+                OnPropertyChanged("StatusDate");
+            }
+        }
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as PaymentNotice;
@@ -226,6 +258,7 @@ namespace Hl7.Fhir.Model
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
                 if(Response != null) dest.Response = (Hl7.Fhir.Model.ResourceReference)Response.DeepCopy();
                 if(PaymentStatus != null) dest.PaymentStatus = (Hl7.Fhir.Model.Coding)PaymentStatus.DeepCopy();
+                if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.Date)StatusDateElement.DeepCopy();
                 return dest;
             }
             else
@@ -253,6 +286,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Request, otherT.Request)) return false;
             if( !DeepComparable.Matches(Response, otherT.Response)) return false;
             if( !DeepComparable.Matches(PaymentStatus, otherT.PaymentStatus)) return false;
+            if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
             
             return true;
         }
@@ -273,6 +307,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
             if( !DeepComparable.IsExactly(Response, otherT.Response)) return false;
             if( !DeepComparable.IsExactly(PaymentStatus, otherT.PaymentStatus)) return false;
+            if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
             
             return true;
         }

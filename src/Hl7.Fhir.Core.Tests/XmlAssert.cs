@@ -18,20 +18,20 @@ namespace Hl7.Fhir.Tests
 {
     public class XmlAssert
     {
-        public static void AreSame(XDocument expected, XDocument actual)
+        public static void AreSame(string filename, XDocument expected, XDocument actual)
         {
-            areSame(actual.Root.Name.LocalName, expected.Root, actual.Root);
+            areSame(filename, actual.Root.Name.LocalName, expected.Root, actual.Root);
         }
 
-        public static void AreSame(string expected, string actual)
+        public static void AreSame(string filename, string expected, string actual)
         {
             XDocument exp = FhirParser.XDocumentFromXml(expected);
             XDocument act = FhirParser.XDocumentFromXml(actual);
 
-            AreSame(exp, act);
+            AreSame(filename, exp, act);
         }
 
-        private static void areSame(string context, XElement expected, XElement actual)
+        private static void areSame(string filename, string context, XElement expected, XElement actual)
         {
             if (expected.Name.ToString() != actual.Name.ToString())
                 throw new AssertFailedException(String.Format("Expected element '{0}', actual '{1}' at '{2}'",
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Tests
                 var ex = expectedList[elemNr];
                 var ac = actualList[elemNr];
 
-                areSame(context + "." + ex.Name.LocalName + String.Format("[{0}]", elemNr), ex, ac);
+                areSame(filename, context + "." + ex.Name.LocalName + String.Format("[{0}]", elemNr), ex, ac);
             }
         }
 

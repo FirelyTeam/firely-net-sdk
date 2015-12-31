@@ -557,26 +557,26 @@ namespace Hl7.Fhir.Model
         [FhirElement("reason", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Reason
+        public List<Hl7.Fhir.Model.Coding> Reason
         {
-            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.Coding>(); return _Reason; }
             set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
+        private List<Hl7.Fhir.Model.Coding> _Reason;
         
         /// <summary>
         /// Activity that occurred
         /// </summary>
         [FhirElement("activity", InSummary=true, Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Activity
+        public Hl7.Fhir.Model.Coding Activity
         {
             get { return _Activity; }
             set { _Activity = value; OnPropertyChanged("Activity"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Activity;
+        private Hl7.Fhir.Model.Coding _Activity;
         
         /// <summary>
         /// Where the activity occurred, if relevant
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model
         /// Agents involved in creating resource
         /// </summary>
         [FhirElement("agent", InSummary=true, Order=160)]
-        [Cardinality(Min=0,Max=-1)]
+        [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Provenance.AgentComponent> Agent
         {
@@ -677,8 +677,8 @@ namespace Hl7.Fhir.Model
                 if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
-                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
-                if(Activity != null) dest.Activity = (Hl7.Fhir.Model.CodeableConcept)Activity.DeepCopy();
+                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.Coding>(Reason.DeepCopy());
+                if(Activity != null) dest.Activity = (Hl7.Fhir.Model.Coding)Activity.DeepCopy();
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
                 if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Provenance.AgentComponent>(Agent.DeepCopy());

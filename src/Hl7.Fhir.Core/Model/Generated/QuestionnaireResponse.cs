@@ -80,15 +80,15 @@ namespace Hl7.Fhir.Model
             Amended,
         }
 
-        [FhirType("GroupComponent")]
+        [FhirType("ItemComponent")]
         [DataContract]
-        public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "GroupComponent"; } }
+            public override string TypeName { get { return "ItemComponent"; } }
             
             /// <summary>
-            /// Corresponding group within Questionnaire
+            /// Corresponding item within Questionnaire
             /// </summary>
             [FhirElement("linkId", Order=40)]
             [DataMember]
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _LinkIdElement;
             
             /// <summary>
-            /// Corresponding group within Questionnaire
+            /// Corresponding item within Questionnaire
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -120,41 +120,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Name for this group
+            /// Name for group or question text
             /// </summary>
-            [FhirElement("title", Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString TitleElement
-            {
-                get { return _TitleElement; }
-                set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _TitleElement;
-            
-            /// <summary>
-            /// Name for this group
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Title
-            {
-                get { return TitleElement != null ? TitleElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TitleElement = null; 
-                    else
-                      TitleElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Title");
-                }
-            }
-            
-            /// <summary>
-            /// Additional text for the group
-            /// </summary>
-            [FhirElement("text", Order=60)]
+            [FhirElement("text", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -165,7 +133,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
-            /// Additional text for the group
+            /// Name for group or question text
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -186,7 +154,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The subject this group's answers are about
             /// </summary>
-            [FhirElement("subject", Order=70)]
+            [FhirElement("subject", Order=60)]
             [References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Subject
@@ -198,167 +166,9 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Subject;
             
             /// <summary>
-            /// Nested questionnaire response group
-            /// </summary>
-            [FhirElement("group", Order=80)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent> Group
-            {
-                get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent>(); return _Group; }
-                set { _Group = value; OnPropertyChanged("Group"); }
-            }
-            
-            private List<Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent> _Group;
-            
-            /// <summary>
-            /// Questions in this group
-            /// </summary>
-            [FhirElement("question", Order=90)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.QuestionnaireResponse.QuestionComponent> Question
-            {
-                get { if(_Question==null) _Question = new List<Hl7.Fhir.Model.QuestionnaireResponse.QuestionComponent>(); return _Question; }
-                set { _Question = value; OnPropertyChanged("Question"); }
-            }
-            
-            private List<Hl7.Fhir.Model.QuestionnaireResponse.QuestionComponent> _Question;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as GroupComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(LinkIdElement != null) dest.LinkIdElement = (Hl7.Fhir.Model.FhirString)LinkIdElement.DeepCopy();
-                    if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                    if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
-                    if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                    if(Group != null) dest.Group = new List<Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent>(Group.DeepCopy());
-                    if(Question != null) dest.Question = new List<Hl7.Fhir.Model.QuestionnaireResponse.QuestionComponent>(Question.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new GroupComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as GroupComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(LinkIdElement, otherT.LinkIdElement)) return false;
-                if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
-                if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
-                if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-                if( !DeepComparable.Matches(Group, otherT.Group)) return false;
-                if( !DeepComparable.Matches(Question, otherT.Question)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as GroupComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(LinkIdElement, otherT.LinkIdElement)) return false;
-                if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
-                if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
-                if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-                if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
-                if( !DeepComparable.IsExactly(Question, otherT.Question)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("QuestionComponent")]
-        [DataContract]
-        public partial class QuestionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "QuestionComponent"; } }
-            
-            /// <summary>
-            /// Corresponding question within Questionnaire
-            /// </summary>
-            [FhirElement("linkId", Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString LinkIdElement
-            {
-                get { return _LinkIdElement; }
-                set { _LinkIdElement = value; OnPropertyChanged("LinkIdElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _LinkIdElement;
-            
-            /// <summary>
-            /// Corresponding question within Questionnaire
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string LinkId
-            {
-                get { return LinkIdElement != null ? LinkIdElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      LinkIdElement = null; 
-                    else
-                      LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("LinkId");
-                }
-            }
-            
-            /// <summary>
-            /// Text of the question as it is shown to the user
-            /// </summary>
-            [FhirElement("text", Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString TextElement
-            {
-                get { return _TextElement; }
-                set { _TextElement = value; OnPropertyChanged("TextElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _TextElement;
-            
-            /// <summary>
-            /// Text of the question as it is shown to the user
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Text
-            {
-                get { return TextElement != null ? TextElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TextElement = null; 
-                    else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Text");
-                }
-            }
-            
-            /// <summary>
             /// The response(s) to the question
             /// </summary>
-            [FhirElement("answer", Order=60)]
+            [FhirElement("answer", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> Answer
@@ -369,16 +179,32 @@ namespace Hl7.Fhir.Model
             
             private List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> _Answer;
             
+            /// <summary>
+            /// Nested questionnaire response items
+            /// </summary>
+            [FhirElement("item", Order=80)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
+            {
+                get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(); return _Item; }
+                set { _Item = value; OnPropertyChanged("Item"); }
+            }
+            
+            private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> _Item;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as QuestionComponent;
+                var dest = other as ItemComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(LinkIdElement != null) dest.LinkIdElement = (Hl7.Fhir.Model.FhirString)LinkIdElement.DeepCopy();
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
+                    if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                     if(Answer != null) dest.Answer = new List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent>(Answer.DeepCopy());
+                    if(Item != null) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(Item.DeepCopy());
                     return dest;
                 }
                 else
@@ -387,31 +213,35 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new QuestionComponent());
+                return CopyTo(new ItemComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as QuestionComponent;
+                var otherT = other as ItemComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(LinkIdElement, otherT.LinkIdElement)) return false;
                 if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
+                if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
                 if( !DeepComparable.Matches(Answer, otherT.Answer)) return false;
+                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
                 
                 return true;
             }
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as QuestionComponent;
+                var otherT = other as ItemComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(LinkIdElement, otherT.LinkIdElement)) return false;
                 if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
+                if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
                 if( !DeepComparable.IsExactly(Answer, otherT.Answer)) return false;
+                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
                 
                 return true;
             }
@@ -441,18 +271,18 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Element _Value;
             
             /// <summary>
-            /// Nested questionnaire group
+            /// Nested groups and questions
             /// </summary>
-            [FhirElement("group", Order=50)]
+            [FhirElement("item", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent> Group
+            public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
             {
-                get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent>(); return _Group; }
-                set { _Group = value; OnPropertyChanged("Group"); }
+                get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(); return _Item; }
+                set { _Item = value; OnPropertyChanged("Item"); }
             }
             
-            private List<Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent> _Group;
+            private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> _Item;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -462,7 +292,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
-                    if(Group != null) dest.Group = new List<Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent>(Group.DeepCopy());
+                    if(Item != null) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(Item.DeepCopy());
                     return dest;
                 }
                 else
@@ -481,7 +311,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-                if( !DeepComparable.Matches(Group, otherT.Group)) return false;
+                if( !DeepComparable.Matches(Item, otherT.Item)) return false;
                 
                 return true;
             }
@@ -493,7 +323,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-                if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
+                if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
                 
                 return true;
             }
@@ -650,17 +480,18 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
-        /// Grouped questions
+        /// Groups and questions
         /// </summary>
-        [FhirElement("group", Order=170)]
+        [FhirElement("item", Order=170)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent Group
+        public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
         {
-            get { return _Group; }
-            set { _Group = value; OnPropertyChanged("Group"); }
+            get { if(_Item==null) _Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(); return _Item; }
+            set { _Item = value; OnPropertyChanged("Item"); }
         }
         
-        private Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent _Group;
+        private List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> _Item;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -677,7 +508,7 @@ namespace Hl7.Fhir.Model
                 if(AuthoredElement != null) dest.AuthoredElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredElement.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
-                if(Group != null) dest.Group = (Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent)Group.DeepCopy();
+                if(Item != null) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(Item.DeepCopy());
                 return dest;
             }
             else
@@ -703,7 +534,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(AuthoredElement, otherT.AuthoredElement)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
-            if( !DeepComparable.Matches(Group, otherT.Group)) return false;
+            if( !DeepComparable.Matches(Item, otherT.Item)) return false;
             
             return true;
         }
@@ -722,7 +553,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(AuthoredElement, otherT.AuthoredElement)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
-            if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
+            if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
             
             return true;
         }

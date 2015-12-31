@@ -125,9 +125,9 @@ namespace Hl7.Fhir.Tests.Serialization
         private void compareFile(string expectedFile, string actualFile)
         {
             if(expectedFile.EndsWith(".xml"))
-                XmlAssert.AreSame(File.ReadAllText(expectedFile),File.ReadAllText(actualFile));
+                XmlAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile),File.ReadAllText(actualFile));
             else
-                JsonAssert.AreSame(File.ReadAllText(expectedFile), File.ReadAllText(actualFile));
+                JsonAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile), File.ReadAllText(actualFile));
         }
 
         private bool isFeed(string filename)

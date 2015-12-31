@@ -29,10 +29,13 @@ namespace Hl7.Fhir.Tests.Rest
     public class FhirClientTests
 #endif
     {
+        // This value is also in OperationTests too!
+
         //Uri testEndpoint = new Uri("http://spark-dstu2.furore.com/fhir");
         // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
+        //Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
+        Uri testEndpoint = new Uri("http://fhir-dev.healthintersections.com.au/open");
         // Uri testEndpoint = new Uri("https://api.fhir.me");
         // Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
         //Uri testEndpoint = new Uri("http://localhost:49911/fhir");
@@ -94,7 +97,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             FhirClient client = new FhirClient(testEndpoint);
 
-            var loc = client.Read<Location>("Location/example");
+            var loc = client.Read<Location>("Location/1");
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Address.City);
 

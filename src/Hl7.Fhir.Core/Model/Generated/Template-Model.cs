@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Thu, 31 Dec 2015 07:45:43 GMT for FHIR v1.0.2
+// Model Generated on Thu, 31 Dec 2015 09:57:07 GMT for FHIR v1.0.2
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): Conformance.rest.resource.type
@@ -12,6 +12,11 @@
 	// Used in model class (resource): Questionnaire.subjectType
 	// Used in model class (resource): SearchParameter.base
 	// Used in model class (resource): SearchParameter.target
+
+// Generated Shared Enumeration: OperationParameterUse
+	// Used in model class (resource): DecisionSupportServiceModule.parameter.use
+	// Used in model class (resource): ModuleDefinition.parameter.use
+	// Used in model class (resource): OperationDefinition.parameter.use
 
 // Generated Shared Enumeration: AdministrativeGender
 	// Used in model class (resource): FamilyMemberHistory.gender
@@ -35,7 +40,6 @@
 	// Used in model class (resource): ClaimResponse.outcome
 	// Used in model class (resource): EligibilityResponse.outcome
 	// Used in model class (resource): EnrollmentResponse.outcome
-	// Used in model class (resource): ExplanationOfBenefit.outcome
 	// Used in model class (resource): PaymentReconciliation.outcome
 
 // Generated Shared Enumeration: ListMode
@@ -51,6 +55,7 @@
 	// Used in model class (resource): ConceptMap.status
 	// Used in model class (resource): Conformance.status
 	// Used in model class (resource): DataElement.status
+	// Used in model class (resource): ExpansionProfile.status
 	// Used in model class (resource): ImplementationGuide.status
 	// Used in model class (resource): NamingSystem.status
 	// Used in model class (resource): OperationDefinition.status
@@ -66,6 +71,12 @@
 	// Used in model class (resource): Immunization.status
 	// Used in model class (resource): MedicationAdministration.status
 
+// Generated Shared Enumeration: ParameterTypesusedinOperationDefinitions
+	// Used in model class (resource): DecisionSupportServiceModule.parameter.type
+	// Used in model class (resource): ModuleDefinition.parameter.type
+	// Used in model class (resource): ModuleDefinition.data.type
+	// Used in model class (resource): OperationDefinition.parameter.type
+
 // Generated helper templates
 // Generated items
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\VisionPrescription.cs
@@ -77,6 +88,7 @@
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\StructureDefinition.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Specimen.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Slot.cs
+// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Sequence.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\SearchParameter.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Schedule.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\RiskAssessment.cs
@@ -95,6 +107,7 @@
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\PaymentNotice.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Patient.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Organization.cs
+// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\OrderSet.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\OrderResponse.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Order.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\OperationOutcome.cs
@@ -102,6 +115,8 @@
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Observation.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\NutritionOrder.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\NamingSystem.cs
+// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\ModuleMetadata.cs
+// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\ModuleDefinition.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\MessageHeader.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\MedicationStatement.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\MedicationOrder.cs
@@ -109,19 +124,23 @@
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\MedicationAdministration.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Medication.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Media.cs
+// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Measure.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Location.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\List.cs
+// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Library.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\ImplementationGuide.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\ImmunizationRecommendation.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Immunization.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\ImagingStudy.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\ImagingObjectSelection.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\HealthcareService.cs
+// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\GuidanceResponse.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Group.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Goal.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Flag.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\FamilyMemberHistory.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\ExplanationOfBenefit.cs
+// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\ExpansionProfile.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\EpisodeOfCare.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\EnrollmentResponse.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\EnrollmentRequest.cs
@@ -138,6 +157,8 @@
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\DeviceComponent.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Device.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\DetectedIssue.cs
+// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\DecisionSupportServiceModule.cs
+// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\DecisionSupportRule.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\DataElement.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Coverage.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Contract.cs
@@ -160,6 +181,6 @@
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Appointment.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\AllergyIntolerance.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Account.cs
-// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\DomainResource.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Parameters.cs
+// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\DomainResource.cs
 // C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\ValueSet.cs

@@ -121,6 +121,12 @@
     <Compile Include="Model\Generated\Date.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\DecisionSupportRule.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\DecisionSupportServiceModule.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\DetectedIssue.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -134,9 +140,15 @@
     <Compile Include="Model\Generated\ElementDefinition.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\ExpansionProfile.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Extension.cs" />
     <Compile Include="Model\Generated\FhirBoolean.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\GuidanceResponse.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\HumanName.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
@@ -156,8 +168,14 @@
     <Compile Include="Model\Generated\Integer.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\Library.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Markdown.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Measure.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\MedicationOrder.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
@@ -165,12 +183,21 @@
     <Compile Include="Model\Generated\Meta.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\ModuleDefinition.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ModuleMetadata.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Money.cs">
       <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Narrative.cs" />
     <Compile Include="Model\Generated\Oid.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\OrderSet.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Period.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
@@ -192,6 +219,9 @@
     </Compile>
     <Compile Include="Model\Generated\SampledData.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Sequence.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Signature.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>

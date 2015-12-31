@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Tests.Rest
     {
         public const string testEndpoint = "http://fhir-dev.healthintersections.com.au/open";
 
-        [TestMethod] //Server throws error: Access violation at address 000000000129D56C in module 'FHIRServer.exe'. Read of address 0000000000000000
+        [TestMethod, TestCategory("FhirClient")] //Server throws error: Access violation at address 000000000129D56C in module 'FHIRServer.exe'. Read of address 0000000000000000
         public void InvokeTestPatientGetEverything()
         {
             var client = new FhirClient(testEndpoint);
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(bundle2.Entry.Any());
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirClient")]
         public void InvokeExpandExistingValueSet()
         {
             var client = new FhirClient(testEndpoint);
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(vs.Expansion.Contains.Any());
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirClient")]
         public void InvokeExpandParameterValueSet()
         {
             var client = new FhirClient(testEndpoint);
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(vsX.Expansion.Contains.Any());
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirClient")]
         public void InvokeLookupCoding()
         {
             var client = new FhirClient(testEndpoint);
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);               
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirClient")]
         public void InvokeLookupCode()
         {
             var client = new FhirClient(testEndpoint);
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);
         }
 
-        [TestMethod]//returns 500: validation of slices is not done yet.
+        [TestMethod, TestCategory("FhirClient")]//returns 500: validation of slices is not done yet.
         public void InvokeResourceValidation()
         {
             var client = new FhirClient(testEndpoint);

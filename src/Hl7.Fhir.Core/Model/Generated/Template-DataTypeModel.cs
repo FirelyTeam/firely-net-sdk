@@ -1,8 +1,10 @@
 ﻿
 //
-// Model Generated on Thu, 31 Dec 2015 07:45:24 GMT for FHIR v1.0.2
+// Model Generated on Thu, 31 Dec 2015 09:57:05 GMT for FHIR v1.0.2
 //
 // Generated Shared Enumeration: ResourceType
+
+// Generated Shared Enumeration: OperationParameterUse
 
 // Generated Shared Enumeration: AdministrativeGender
 
@@ -23,6 +25,8 @@
 // Generated Shared Enumeration: DocumentReferenceStatus
 
 // Generated Shared Enumeration: MedicationAdministrationStatus
+
+// Generated Shared Enumeration: ParameterTypesusedinOperationDefinitions
 
 // Generated helper templates
 // Generated items

@@ -104,10 +104,12 @@ namespace Hl7.Fhir.Tests.Serialization
 
             q.Status = Questionnaire.QuestionnaireStatus.Published;
             q.Date = "2015-09-27";
-            q.Group = new Questionnaire.GroupComponent();
-            q.Group.Title = "TITLE";
-            q.Group.Text = "TEXT";
-            q.Group.LinkId = "linkid";
+            q.Title = "TITLE";
+            q.Item = new List<Questionnaire.ItemComponent>();
+            q.Item.Add(new Questionnaire.ItemComponent() {
+                LinkId = "linkid",
+                Text = "TEXT"
+            });
 
             var qfull = FhirSerializer.SerializeResourceToXml(q);
             Console.WriteLine(qfull);

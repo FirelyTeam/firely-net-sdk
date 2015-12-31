@@ -74,28 +74,6 @@ namespace Hl7.Fhir.Model
             Query,
         }
 
-        /// <summary>
-        /// Whether an operation parameter is an input or an output parameter.
-        /// (url: http://hl7.org/fhir/ValueSet/operation-parameter-use)
-        /// </summary>
-        [FhirEnumeration("OperationParameterUse")]
-        public enum OperationParameterUse
-        {
-            /// <summary>
-            /// This is an input parameter.
-            /// (system: http://hl7.org/fhir/operation-parameter-use)
-            /// </summary>
-            [EnumLiteral("in"), Description("In")]
-            In,
-            /// <summary>
-            /// This is an output parameter.
-            /// (system: http://hl7.org/fhir/operation-parameter-use)
-            /// </summary>
-            [EnumLiteral("out"), Description("Out")]
-            Out,
-        }
-
-// TODO: the enumeration ParameterTypesusedinOperationDefinitions contains an expansion that has duplicates
         [FhirType("ContactComponent")]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -242,13 +220,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("use", Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterUse> UseElement
+            public Code<Hl7.Fhir.Model.OperationParameterUse> UseElement
             {
                 get { return _UseElement; }
                 set { _UseElement = value; OnPropertyChanged("UseElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterUse> _UseElement;
+            private Code<Hl7.Fhir.Model.OperationParameterUse> _UseElement;
             
             /// <summary>
             /// in | out
@@ -256,7 +234,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.OperationDefinition.OperationParameterUse? Use
+            public Hl7.Fhir.Model.OperationParameterUse? Use
             {
                 get { return UseElement != null ? UseElement.Value : null; }
                 set
@@ -264,7 +242,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       UseElement = null; 
                     else
-                      UseElement = new Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterUse>(value);
+                      UseElement = new Code<Hl7.Fhir.Model.OperationParameterUse>(value);
                     OnPropertyChanged("Use");
                 }
             }
@@ -448,7 +426,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.Code)NameElement.DeepCopy();
-                    if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.OperationDefinition.OperationParameterUse>)UseElement.DeepCopy();
+                    if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.OperationParameterUse>)UseElement.DeepCopy();
                     if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.Integer)MinElement.DeepCopy();
                     if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                     if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.FhirString)DocumentationElement.DeepCopy();
