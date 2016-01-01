@@ -316,6 +316,7 @@ namespace Hl7.Fhir.Tests.Rest
             client.ReturnFullResource = true;       // which is also the default
 
             var pat = client.Read<Patient>("Patient/example");
+            ResourceIdentity ri = pat.ResourceIdentity().WithBase(client.Endpoint);
             pat.Id = null;
             pat.Identifier.Clear();
             var patC = client.Create<Patient>(pat);
@@ -331,6 +332,14 @@ namespace Hl7.Fhir.Tests.Rest
                 var returned = client.LastBodyAsResource;
                 Assert.IsTrue(returned is OperationOutcome);
             }
+
+            // Now validate this resource
+            client.ReturnFullResource = true;       // which is also the default
+            Parameters p = new Parameters();
+          //  p.Add("mode", new FhirString("create"));
+            p.Add("resource", pat);
+            OperationOutcome ooI = (OperationOutcome)client.InstanceOperation(ri.WithoutVersion(), "validate", p);
+            Assert.IsNotNull(ooI);
         }
 
 

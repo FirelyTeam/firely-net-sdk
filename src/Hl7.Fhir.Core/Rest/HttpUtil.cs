@@ -159,6 +159,9 @@ namespace Hl7.Fhir.Rest
         {
             if (uri == null) return false;
 
+            if (uri.Contains("$"))
+                return false; // This is an operation, so not a resource identity
+
             return Regex.IsMatch(uri, RESTURI_PATTERN);
         }
     }
