@@ -38,45 +38,54 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
         [TestMethod]
-        public void TestExpression()
+        public void TestSimpleBooleanExpressions()
         {
-            //var result = Expression.Expr.TryParse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5,false != true))and(%bla>=6)");
-            //var result = Expression.FpConst.TryParse("4.5");
+            var values = new EvaluationContext(1, 3, 5, 7);
+            Assert.IsTrue(values.Empty().Not().ToBoolean());
+        }
 
-            var result = Expression.Expr.End().TryParse("Patient.identifier.where(use='official').empty().not()");
+        [TestMethod]
+        public void CheckTypeDetermination()
+        {
+            var values = new EvaluationContext(1, true, "hi", 4.0m, PartialDateTime.Now(), 4.0f);
 
-            if (result.WasSuccessful)
-            {
-                var evaluator = result.Value;
-                var resultNodes = evaluator.Evaluate(tree);
-                Assert.AreEqual(1,resultNodes.Count());
-                Assert.AreEqual(true, resultNodes.First().ObjectValue);
-            }
-            else
-            {
-                Debug.WriteLine("Expectations: " + String.Join(",",result.Expectations));
-                Assert.Fail(result.ToString());
-            }            
+            Assert.AreEqual(Fhir.FhirPath.ValueType.Integer, values.ItemAt(0).Single().Type);
+            Assert.AreEqual(Fhir.FhirPath.ValueType.Boolean, values.ItemAt(1).Single().Type);
+            Assert.AreEqual(Fhir.FhirPath.ValueType.String, values.ItemAt(2).Single().Type);
+            Assert.AreEqual(Fhir.FhirPath.ValueType.Decimal, values.ItemAt(3).Single().Type);
+            Assert.AreEqual(Fhir.FhirPath.ValueType.DateTime, values.ItemAt(4).Single().Type);
+            Assert.AreEqual(Fhir.FhirPath.ValueType.Unknown, values.ItemAt(5).Single().Type);
         }
 
 
         [TestMethod]
-        public void TestExpression2()
+        public void TestItemSelection()
         {
-            var result = Path.Predicate.TryParse("Patient.deceased[x]");
+            var values = new EvaluationContext(1, 2, 3, 4, 5, 6, 7);
 
-            if (result.WasSuccessful)
-            {
-                var evaluator = result.Value;
-                var resultNodes = evaluator.Evaluate(tree);
-                Assert.AreEqual(1, resultNodes.Count());
-            }
-            else
-            {
-                Debug.WriteLine("Expectations: " + String.Join(",", result.Expectations));
-                Assert.Fail(result.ToString());
-            }
+            Assert.AreEqual(1, values.ItemAt(0));
+            Assert.AreEqual(3, values.ItemAt(2));
+            Assert.AreEqual(1, values.First());
+            Assert.IsTrue(values.ItemAt(100).Empty());
         }
 
+        [TestMethod]
+        public void TestNavigation()
+        {
+            var values = new EvaluationContext(tree);
+
+            var result = values["Patient"]["identifier"]["use"];
+            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual("usual", result.First());
+        }
+
+        [TestMethod]
+        public void TestExpression()
+        {
+            var values = new EvaluationContext(tree);
+            var result = values["Patient"]["identifier"]
+                .Where(ctx => ctx["use"].IsEqualTo("official")).Empty().Not();
+            Assert.AreEqual(true, result);
+        }
     }
 }

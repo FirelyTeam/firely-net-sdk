@@ -43,17 +43,5 @@ namespace Hl7.Fhir.FhirPath
             // FHIR extensions to a more "fhiry" place
             return ModelInfo.IsDataType(name) || ModelInfo.IsPrimitive(name.ToLower());
         }
-
-
-        public static IEnumerable<IFhirPathElement> Children(this IFhirPathValue me)
-        {
-            if (me is IFhirPathElement)
-            {
-                return ((IFhirPathElement)me).Children();
-            }
-
-            return Enumerable.Empty<IFhirPathElement>();
-        }
-
     }
 }

@@ -69,7 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
-    <Compile Include="FhirPath\ConstantFhirPathNode.cs" />
+    <Compile Include="FhirPath\ConstantFhirPathValue.cs" />
     <Compile Include="FhirPath\EvaluationContext.cs" />
     <Compile Include="FhirPath\Grammar\Expression.cs" />
     <Compile Include="FhirPath\Grammar\Lexer.cs" />

@@ -40,6 +40,37 @@ namespace Hl7.Fhir.Navigation
 
         protected override FhirNavigationTree Self { get { return this; } }
 
+        FhirPath.ValueType IFhirPathValue.Type
+        {
+            get
+            {
+                return FhirPath.ValueType.Unknown;
+            }
+        }
+
+        object IFhirPathValue.Value
+        {
+            get
+            {
+                return ObjectValue;
+            }
+        }
+
+        IEnumerable<IFhirPathElement> IFhirPathElement.Children()
+        {
+            return LinkedTreeExtensions.Children(this);
+        }
+
+        bool IFhirPathElement.HasChildren()
+        {
+            return LinkedTreeExtensions.HasChildren(this);
+        }
+
+        IFhirPathElement IFhirPathElement.Parent
+        {
+            get { return Parent; }
+        }
+
         protected override FhirNavigationTree CreateNode(FhirNavigationTree parent, FhirNavigationTree previousSibling, string name)
         {
             return new FhirNavigationTree(parent, previousSibling, name);
@@ -48,16 +79,6 @@ namespace Hl7.Fhir.Navigation
         protected override FhirNavigationTree CreateNode<V>(FhirNavigationTree parent, FhirNavigationTree previousSibling, string name, V value)
         {
             return new Node<V>(name, value, parent, previousSibling);
-        }
-
-        public IEnumerable<IFhirPathElement> Children()
-        {
-            return LinkedTreeExtensions.Children(this);
-        }
-
-        public bool HasChildren()
-        {
-            return LinkedTreeExtensions.HasChildren(this);
         }
 
         /// <summary>Private subclass that implements the variant Value property.</summary>

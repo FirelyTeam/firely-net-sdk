@@ -7,6 +7,7 @@
  */
 
 
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -16,25 +17,58 @@ namespace Hl7.Fhir.FhirPath
 {
     public static class Operations
     {
-        /// <summary>Enumerate the direct children of the specified nodes.</summary>
-        /// <param name="nodeSet">A set of tree nodes.</param>
-        public static IEnumerable<IFhirPathElement> AllChildren(this IEnumerable<IFhirPathValue> nodeSet)
+
+        public static IEnumerable<IFhirPathElement> JustFhirPathElements(this IEnumerable<IFhirPathValue> focus)
         {
-            return nodeSet.JustFhirPathElements().SelectMany(node => node.Children());
+            return focus.OfType<IFhirPathElement>();
         }
 
-        public static IEnumerable<IFhirPathElement> Navigate(this IEnumerable<IFhirPathElement> nodeSet, string name)
+        public static IEnumerable<IFhirPathElement> JustFhirPathElements(this IFhirPathValue me)
         {
-            return nodeSet.SelectMany(node => node.Children().Where(child => child.IsMatch(name)));
-        }      
+            if (me is IFhirPathElement)
+            {
+                return ((IFhirPathElement)me).Children();
+            }
+
+            return Enumerable.Empty<IFhirPathElement>();
+        }
 
         public static IEnumerable<object> Values(this IEnumerable<IFhirPathValue> nodeSet)
         {
             return
                 from node in nodeSet
-                where node.ObjectValue != null
-                select node.ObjectValue;
+                where node.Value != null
+                select node.Value;
         }
+
+        public static bool AsBoolean(this IEnumerable<IFhirPathValue> focus)
+        {
+            var result = false;
+
+            // An empty result is considered "false"
+            if (!focus.Any())
+                result = false;
+
+            // A result that looks like a single boolean should be interpreted as a boolean
+            else if (focus.Count() == 1)
+            {
+                try
+                {
+                    result = PrimitiveTypeConverter.ConvertTo<bool>(focus.Single().Value);
+                }
+                catch
+                {
+                    result = true;  // not a boolean value -> any content means true
+                }
+            }
+
+            // Otherwise, we have "some" content, which we'll consider "true"
+            else
+                result = true;
+
+            return result;
+        }
+
 
         public static bool IsEqualTo(this IEnumerable<IFhirPathValue> us, IEnumerable<IFhirPathValue> them)
         {
@@ -48,9 +82,9 @@ namespace Hl7.Fhir.FhirPath
         public static bool IsEqualTo(this IFhirPathValue me, IFhirPathValue that)
         {
             //TODO: Equality is slightly more complex than this, but this will do for now
-            if (me.ObjectValue.Equals(that.ObjectValue))
+            if (me.Value.Equals(that.Value))
             {
-                return me.Children().IsEqualTo(that.Children());
+                return me.JustFhirPathElements().IsEqualTo(that.JustFhirPathElements());
             }
 
             return false;

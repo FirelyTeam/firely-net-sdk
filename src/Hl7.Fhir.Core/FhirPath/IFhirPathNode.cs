@@ -14,12 +14,28 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.FhirPath
 {
-    public interface IFhirPathValue : IValueProvider
+    public enum ValueType
     {
+        Unknown,
+        Boolean,
+        String, 
+        Integer,
+        Decimal,
+        DateTime
+    }
+
+
+    public interface IFhirPathValue
+    {
+        ValueType Type { get;  }
+
+        object Value { get; }
     }
 
     public interface IFhirPathElement : IFhirPathValue
     {
+        IFhirPathElement Parent { get; }
+
         IEnumerable<IFhirPathElement> Children();
         bool HasChildren();
 

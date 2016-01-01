@@ -18,74 +18,121 @@ namespace Hl7.Fhir.FhirPath
     // TODO: Need to keep track of related contexts
     // $context - the original context (see below for usage)
     // $resource - the original container resource(e.g.skip contained resources, but do not go past a root resource into a bundle, if it is contained in a bundle)
-	// $parent - the element that contains $context
+    // $parent - the element that contains $context
     // $focus - a reference to the current focus.This is useful where you need to refer to the focus in a function parameter (e.g. $focus in criteria)
+
+    // [WMR] Store variables as Memo<T>, i.e. evaluate expression and save result on first call
+    // Polymorphic collection - each variable has it's own value type T
+    // Important: each Evaluator instance should receive a new EvaluationContext instance - for variable scoping
+    // => Copy ctor
+
     public class EvaluationContext
     {
-        // [WMR] Store variables as Memo<T>, i.e. evaluate expression and save result on first call
-        // Polymorphic collection - each variable has it's own value type T
-        // Important: each Evaluator instance should receive a new EvaluationContext instance - for variable scoping
-        // => Copy ctor
 
         public IEnumerable<IFhirPathValue> Focus { get; private set; }
 
-        private EvaluationContext()
+        public EvaluationContext(params object[] values) : this(null, values)
         {
-            // Must use factory methods
         }
 
-        public static EvaluationContext NewContext(EvaluationContext parent, params IFhirPathValue[] values)
+        public EvaluationContext(EvaluationContext parent, params object[] values)
         {
             if (values == null) throw Error.ArgumentNull("values");
 
-            return NewContext(parent, (IEnumerable<IFhirPathValue>)values);
+            Focus = values.Select(value => value is IFhirPathValue ? (IFhirPathValue)value : new ConstantFhirPathValue(value));
         }
 
-        public static EvaluationContext NewContext(EvaluationContext parent, object value)
-        {
-            if (value == null) throw Error.ArgumentNull("value");
-
-            return NewContext(parent, new ConstantFhirPathNode(value));
-        }
-
-        public static EvaluationContext NewContext(EvaluationContext parent, IEnumerable<IFhirPathValue> values)
+        public EvaluationContext(EvaluationContext parent, IEnumerable<IFhirPathValue> values)
         {
             if (values == null) throw Error.ArgumentNull("values");
 
-            //copy stuff from parent
-            return new EvaluationContext() { Focus = values };
+            Focus = values;
         }
 
-
-    }
-
-    public static class FocusExtensions
-    {
-        public static IEnumerable<IFhirPathElement> JustFhirPathElements(this IEnumerable<IFhirPathValue> focus)
+        public EvaluationContext(IEnumerable<IFhirPathValue> values) : this(null,values)
         {
-            return focus.OfType<IFhirPathElement>();
         }
 
-        public static bool AsBooleanEvaluation(this IEnumerable<IFhirPathValue> focus)
+        public EvaluationContext Empty()
         {
-            // An empty result is considered "false"
-            if (!focus.Any()) return false;
+            return new EvaluationContext(this,!Focus.Any());
+        }
+        public EvaluationContext Not()
+        {
+            return new EvaluationContext(this,!Focus.AsBoolean());
+        }
 
-            // A result that looks like a single boolean should be interpreted as a boolean
-            if (focus.Count() == 1)
-            {
-                try
-                {
-                    return PrimitiveTypeConverter.ConvertTo<bool>(focus.Single().ObjectValue);
-                }
-                catch
-                {
-                    return true;
-                }
-            }
+        public EvaluationContext ItemAt(int index)
+        {
+            return new EvaluationContext(this,Focus.Skip(index).Take(1));
+        }
 
-            // Otherwise, we have "some" content, which we'll consider "true"
-            return true;
+        public EvaluationContext First()
+        {
+            return new EvaluationContext(this, Focus.Take(1));
+        }
+
+        public EvaluationContext this[string name]
+        {
+            get { return Navigate(name); }
+        }
+
+        public EvaluationContext Children()
+        {
+            return new EvaluationContext(Focus.JustFhirPathElements().SelectMany(node => node.Children()));
+        }
+        public EvaluationContext Navigate(string name)
+        {
+            return new EvaluationContext(
+                Focus.JustFhirPathElements().SelectMany(node => node.Children().Where(child => child.IsMatch(name))));
+        }
+
+        public EvaluationContext IsEqualTo(EvaluationContext other)
+        {
+            return new EvaluationContext(Focus.IsEqualTo(other.Focus));
+        }
+
+        public EvaluationContext IsEqualTo(object other)
+        {
+            return IsEqualTo(new EvaluationContext(other));
+        }
+
+        public EvaluationContext Where(Func<EvaluationContext,EvaluationContext> predicate)
+        {
+            return new EvaluationContext(Focus.Where(item => predicate(new EvaluationContext(this, item)).ToBoolean()));
+        }
+
+        public EvaluationContext Count()
+        {
+            return new EvaluationContext(this, Focus.Count());
+        }
+        public bool ToBoolean()
+        {
+            return Focus.AsBoolean();
+        }
+
+        public IFhirPathValue Single()
+        {
+            return Focus.Single();
+        }
+        public object Value()
+        {
+            return Focus.Single().Value;
+        }
+
+        public static implicit operator bool(EvaluationContext ctx)
+        {
+            return ctx.ToBoolean();
+        }
+
+        public static implicit operator int(EvaluationContext ctx)
+        {
+            return (int)ctx.Value();
+        }
+
+        public static implicit operator string(EvaluationContext ctx)
+        {
+            return (string)ctx.Value();
         }
     }
 }

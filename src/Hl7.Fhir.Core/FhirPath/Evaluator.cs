@@ -26,9 +26,17 @@ namespace Hl7.Fhir.FhirPath
 
     public static class Eval
     {
-        public static IEnumerable<IValueProvider> Evaluate(this Evaluator evaluator, IFhirPathElement instance)
+        public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, IFhirPathValue instance)
         {
-            var context = EvaluationContext.NewContext(null, new List<IFhirPathElement> { instance });
+            var context = new EvaluationContext(instance);
+            var resultContxt = evaluator(context);
+
+            return resultContxt.Focus;
+        }
+
+        public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, EvaluationContext parentContext, IFhirPathValue instance)
+        {
+            var context = new EvaluationContext(parentContext, instance);
             var resultContxt = evaluator(context);
 
             return resultContxt.Focus;
@@ -51,13 +59,13 @@ namespace Hl7.Fhir.FhirPath
         {
             return c =>
             {
-                return EvaluationContext.NewContext(c, c.Focus.JustFhirPathElements().Navigate(name));
+                return c.Navigate(name);
             };
         }
 
         public static Evaluator Constant(object value)
         {
-            return c => EvaluationContext.NewContext(c, value);
+            return c => new EvaluationContext(c, value);
         }
 
         public static Evaluator Compare(FPComparison op, Evaluator left, Evaluator right)
@@ -69,7 +77,7 @@ namespace Hl7.Fhir.FhirPath
 
                 if (op == FPComparison.Equals)
                 {
-                    return EvaluationContext.NewContext(c, leftNodes.IsEqualTo(rightNodes));
+                    return new EvaluationContext(c, leftNodes.IsEqualTo(rightNodes));
                 }
                 else
                     throw Error.NotImplemented("Operator '{0}' is not yet implemented".FormatWith(op));
@@ -80,7 +88,7 @@ namespace Hl7.Fhir.FhirPath
         {
             return c =>
             {
-                IEnumerable<IFhirPathValue> result;
+                EvaluationContext result;
 
                 if (name == "where") result = where(c, paramList);
                 else if (name == "empty") result = empty(c, paramList);
@@ -88,36 +96,31 @@ namespace Hl7.Fhir.FhirPath
                 else
                     throw Error.NotSupported("An unknown function '{0}' is invoked".FormatWith(name));
 
-                return EvaluationContext.NewContext(c, result);
+                return result;
             };
         }
 
-        private static IEnumerable<IFhirPathValue> empty(EvaluationContext parentContext, IEnumerable<Evaluator> parameters)
+        private static EvaluationContext empty(EvaluationContext parentContext, IEnumerable<Evaluator> parameters)
         {            
             if (parameters.Any()) throw Error.Argument("parameters", "'empty' does not take parameters");
 
-            return ConstantFhirPathNode.AsEnumerableOfValue(!parentContext.Focus.Any());
+            return parentContext.Empty();
         }
 
-        private static IEnumerable<IFhirPathValue> not(EvaluationContext parentContext, IEnumerable<Evaluator> parameters)
+        private static EvaluationContext not(EvaluationContext parentContext, IEnumerable<Evaluator> parameters)
         {
             if (parameters.Any()) throw Error.Argument("parameters", "'not' does not take parameters");
 
-            return ConstantFhirPathNode.AsEnumerableOfValue(!parentContext.Focus.AsBooleanEvaluation());
+            return parentContext.Not();
         }
 
-        private static IEnumerable<IFhirPathValue> where(EvaluationContext parentContext, IEnumerable<Evaluator> parameters)
+        private static EvaluationContext where(EvaluationContext parentContext, IEnumerable<Evaluator> parameters)
         {
             if (parameters.Count() != 1) throw Error.Argument("parameters", "'where' requires exactly one parameter");
 
             var condition = parameters.Single();
 
-            foreach (var element in parentContext.Focus)
-            {
-                var context = EvaluationContext.NewContext(parentContext, element);
-                var result = condition(context).Focus.AsBooleanEvaluation();
-                if (result) yield return element;
-            }
+            return parentContext.Where(ctx => condition(ctx));
         }
 
         //public static Evaluator<decimal> Add(this Evaluator<decimal> left, Evaluator<decimal> right)

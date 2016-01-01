@@ -13,8 +13,12 @@ using System.Xml;
 
 namespace Hl7.Fhir.FhirPath
 {
-    public struct PartialDateTime
+    public class PartialDateTime
     {
+        private PartialDateTime()
+        {
+
+        }
         public enum Precision
         {
             Year = 0,
@@ -34,6 +38,11 @@ namespace Hl7.Fhir.FhirPath
             var prec = (PartialDateTime.Precision)precCount;
 
             return new PartialDateTime { Value = dtValue, Prec = prec };
+        }
+
+        public static PartialDateTime Now()
+        {
+            return new PartialDateTime { Value = DateTimeOffset.Now, Prec = Precision.Time };
         }
     }
 }
