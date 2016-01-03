@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (baseStructure == null) throw Error.InvalidOperation("Could not locate the base StructureDefinition for url " + structure.Base);
             if (baseStructure.Snapshot == null) throw Error.InvalidOperation("Snapshot generator required the base at {0} to have a snapshot representation", structure.Base);
 
-            var snapshot = (StructureDefinition.StructureDefinitionSnapshotComponent)baseStructure.Snapshot.DeepCopy();
+            var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
             generateBaseElements(snapshot.Element);
             var snapNav = new ElementNavigator(snapshot.Element);
 
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             merge(snapNav, diffNav);
            
-            structure.Snapshot = new StructureDefinition.StructureDefinitionSnapshotComponent() { Element = snapNav.ToListOfElements() };
+            structure.Snapshot = new StructureDefinition.SnapshotComponent() { Element = snapNav.ToListOfElements() };
         }
 
 
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             // Create a pre-fab extension slice, filled with sensible defaults
             var slicingDiff = new ElementDefinition();
-            slicingDiff.Slicing = new ElementDefinition.ElementDefinitionSlicingComponent();
+            slicingDiff.Slicing = new ElementDefinition.SlicingComponent();
             slicingDiff.Slicing.Discriminator = new[] { "url" };
             slicingDiff.Slicing.Ordered = false;
             slicingDiff.Slicing.Rules = ElementDefinition.SlicingRules.Open;
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     throw new NotSupportedException("Element at path {0} has a choice of types, cannot expand".FormatWith(nav.Path));
                 else
                 {
-                    var coreType = resolver.GetStructureDefinitionForCoreType(defn.Type[0].Code);
+                    var coreType = resolver.GetStructureDefinitionForCoreType(defn.Type[0].Code.ToString());
 
                     if (coreType == null) throw Error.NotSupported("Trying to navigate down a node that has a declared base type of '{0}', which is unknown".FormatWith(defn.Type[0].Code));
                     if (coreType.Snapshot == null) throw Error.NotSupported("Found definition of base type '{0}', but is does not contain a snapshot representation".FormatWith(defn.Type[0].Code));
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 if (element.Base == null)
                 {
-                    element.Base = new ElementDefinition.ElementDefinitionBaseComponent()
+                    element.Base = new ElementDefinition.BaseComponent()
                     {
                         MaxElement = (FhirString)element.MaxElement.DeepCopy(),
                         MinElement = (Integer)element.MinElement.DeepCopy(),

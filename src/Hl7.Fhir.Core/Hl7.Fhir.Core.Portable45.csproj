@@ -99,7 +99,9 @@
     <Compile Include="Model\Generated\Account.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Annotation.cs" />
+    <Compile Include="Model\Generated\Annotation.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Appointment.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -109,7 +111,9 @@
     <Compile Include="Model\Generated\AuditEvent.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\BackboneElement.cs" />
+    <Compile Include="Model\Generated\BackboneElement.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Basic.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -134,7 +138,9 @@
     <Compile Include="Model\Generated\CommunicationRequest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\ContactPoint.cs" />
+    <Compile Include="Model\Generated\ContactPoint.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Contract.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -160,7 +166,9 @@
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\DomainResource.cs" />
-    <Compile Include="Model\Generated\ElementDefinition.cs" />
+    <Compile Include="Model\Generated\ElementDefinition.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\EligibilityRequest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -197,11 +205,15 @@
     <Compile Include="Model\Generated\ImplementationGuide.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Markdown.cs" />
+    <Compile Include="Model\Generated\Markdown.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\MedicationOrder.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Meta.cs" />
+    <Compile Include="Model\Generated\Meta.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\NamingSystem.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -223,7 +235,9 @@
     <Compile Include="Model\Generated\Person.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\PositiveInt.cs" />
+    <Compile Include="Model\Generated\PositiveInt.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\ProcedureRequest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -248,8 +262,12 @@
     <Compile Include="Model\Generated\SearchParameter.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Signature.cs" />
-    <Compile Include="Model\Generated\SimpleQuantity.cs" />
+    <Compile Include="Model\Generated\Signature.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\SimpleQuantity.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Slot.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -270,17 +288,38 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Template-Bindings.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\Template-DataTypeModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Template-Model.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\Template-ModelInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-ModelInfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Template-ProfiledDataTypes.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\TestScript.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Time.cs" />
-    <Compile Include="Model\Generated\Timing.cs" />
-    <Compile Include="Model\Generated\UnsignedInt.cs" />
+    <Compile Include="Model\Generated\Time.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Timing.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\UnsignedInt.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\VisionPrescription.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -289,22 +328,36 @@
     <Compile Include="Model\IDeepComparable.cs" />
     <Compile Include="Model\Integer.cs" />
     <Compile Include="Model\FhirUri.cs" />
-    <Compile Include="Model\Generated\Address.cs" />
-    <Compile Include="Model\Generated\Age.cs" />
+    <Compile Include="Model\Generated\Address.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Age.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\AllergyIntolerance.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Attachment.cs" />
-    <Compile Include="Model\Generated\Base64Binary.cs" />
+    <Compile Include="Model\Generated\Attachment.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Base64Binary.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Binary.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\CarePlan.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Code.cs" />
-    <Compile Include="Model\Generated\CodeableConcept.cs" />
-    <Compile Include="Model\Generated\Coding.cs" />
+    <Compile Include="Model\Generated\Code.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\CodeableConcept.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Coding.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Composition.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -317,8 +370,12 @@
     <Compile Include="Model\Generated\Conformance.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Count.cs" />
-    <Compile Include="Model\Generated\Date.cs" />
+    <Compile Include="Model\Generated\Count.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Date.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Device.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -328,30 +385,50 @@
     <Compile Include="Model\Generated\DiagnosticReport.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Distance.cs" />
+    <Compile Include="Model\Generated\Distance.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\DocumentManifest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\DocumentReference.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Duration.cs" />
+    <Compile Include="Model\Generated\Duration.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Element.cs" />
     <Compile Include="Model\Generated\Encounter.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Extension.cs" />
-    <Compile Include="Model\Generated\FhirBoolean.cs" />
-    <Compile Include="Model\Generated\FhirDateTime.cs" />
-    <Compile Include="Model\Generated\FhirDecimal.cs" />
-    <Compile Include="Model\Generated\FhirString.cs" />
-    <Compile Include="Model\Generated\FhirUri.cs" />
+    <Compile Include="Model\Generated\FhirBoolean.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\FhirDateTime.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\FhirDecimal.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\FhirString.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\FhirUri.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Group.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\HumanName.cs" />
-    <Compile Include="Model\Generated\Id.cs" />
-    <Compile Include="Model\Generated\Identifier.cs" />
+    <Compile Include="Model\Generated\HumanName.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Id.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Identifier.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\ImagingStudy.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -361,8 +438,12 @@
     <Compile Include="Model\Generated\ImmunizationRecommendation.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Instant.cs" />
-    <Compile Include="Model\Generated\Integer.cs" />
+    <Compile Include="Model\Generated\Instant.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Integer.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\List.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -387,13 +468,16 @@
     <Compile Include="Model\Generated\MessageHeader.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\ModelInfo.cs" />
-    <Compile Include="Model\Generated\Money.cs" />
+    <Compile Include="Model\Generated\Money.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Narrative.cs" />
     <Compile Include="Model\Generated\Observation.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Oid.cs" />
+    <Compile Include="Model\Generated\Oid.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\OperationOutcome.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -409,7 +493,9 @@
     <Compile Include="Model\Generated\Patient.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Period.cs" />
+    <Compile Include="Model\Generated\Period.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Practitioner.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -419,25 +505,37 @@
     <Compile Include="Model\Generated\Provenance.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Quantity.cs" />
+    <Compile Include="Model\Generated\Quantity.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Questionnaire.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Range.cs" />
-    <Compile Include="Model\Generated\Ratio.cs" />
+    <Compile Include="Model\Generated\Range.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Ratio.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\RelatedPerson.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Resource.cs" />
-    <Compile Include="Model\Generated\ResourceReference.cs" />
-    <Compile Include="Model\Generated\SampledData.cs" />
+    <Compile Include="Model\Generated\ResourceReference.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\SampledData.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Specimen.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Substance.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Uuid.cs" />
+    <Compile Include="Model\Generated\Uuid.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\ValueSet.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -507,6 +605,8 @@
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
+    <Compile Include="Support\DateExtensions.cs" />
+    <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
@@ -559,9 +659,21 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template-Bindings.cs</LastGenOutput>
     </Content>
+    <Content Include="Model\Generated\Template-DataTypeModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-DataTypeModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Model\Generated\Template-Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Template-Model.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Generated\Template-ModelInfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-ModelInfo.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Generated\Template-ProfiledDataTypes.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-ProfiledDataTypes.cs</LastGenOutput>
     </Content>
     <None Include="Model\Source\expansions.xml" />
     <None Include="Model\Source\profiles-resources.xml" />
