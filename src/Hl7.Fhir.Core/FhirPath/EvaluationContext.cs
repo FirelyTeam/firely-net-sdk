@@ -28,8 +28,11 @@ namespace Hl7.Fhir.FhirPath
 
     public class EvaluationContext
     {
+        //AsInteger etc. implementeren op IFhirValue
+        //    Add misschien ook?
 
-        public IEnumerable<IFhirPathValue> Focus { get; private set; }
+
+        private IEnumerable<IFhirPathValue> _focus;
 
         public EvaluationContext(params object[] values) : this(null, values)
         {
@@ -39,14 +42,14 @@ namespace Hl7.Fhir.FhirPath
         {
             if (values == null) throw Error.ArgumentNull("values");
 
-            Focus = values.Select(value => value is IFhirPathValue ? (IFhirPathValue)value : new ConstantFhirPathValue(value));
+            _focus = values.Select(value => value is IFhirPathValue ? (IFhirPathValue)value : new ConstantFhirPathValue(value));
         }
 
         public EvaluationContext(EvaluationContext parent, IEnumerable<IFhirPathValue> values)
         {
             if (values == null) throw Error.ArgumentNull("values");
 
-            Focus = values;
+            _focus = values;
         }
 
         public EvaluationContext(IEnumerable<IFhirPathValue> values) : this(null,values)
@@ -55,21 +58,21 @@ namespace Hl7.Fhir.FhirPath
 
         public EvaluationContext Empty()
         {
-            return new EvaluationContext(this,!Focus.Any());
+            return new EvaluationContext(this,!_focus.Any());
         }
         public EvaluationContext Not()
         {
-            return new EvaluationContext(this,!Focus.AsBoolean());
+            return new EvaluationContext(this,!_focus.AsBoolean());
         }
 
         public EvaluationContext ItemAt(int index)
         {
-            return new EvaluationContext(this,Focus.Skip(index).Take(1));
+            return new EvaluationContext(this,_focus.Skip(index).Take(1));
         }
 
         public EvaluationContext First()
         {
-            return new EvaluationContext(this, Focus.Take(1));
+            return new EvaluationContext(this, _focus.Take(1));
         }
 
         public EvaluationContext this[string name]
@@ -79,17 +82,17 @@ namespace Hl7.Fhir.FhirPath
 
         public EvaluationContext Children()
         {
-            return new EvaluationContext(Focus.JustFhirPathElements().SelectMany(node => node.Children()));
+            return new EvaluationContext(_focus.JustFhirPathElements().SelectMany(node => node.Children()));
         }
         public EvaluationContext Navigate(string name)
         {
             return new EvaluationContext(
-                Focus.JustFhirPathElements().SelectMany(node => node.Children().Where(child => child.IsMatch(name))));
+                _focus.JustFhirPathElements().SelectMany(node => node.Children().Where(child => child.IsMatch(name))));
         }
 
         public EvaluationContext IsEqualTo(EvaluationContext other)
         {
-            return new EvaluationContext(Focus.IsEqualTo(other.Focus));
+            return new EvaluationContext(_focus.IsEqualTo(other._focus));
         }
 
         public EvaluationContext IsEqualTo(object other)
@@ -99,25 +102,38 @@ namespace Hl7.Fhir.FhirPath
 
         public EvaluationContext Where(Func<EvaluationContext,EvaluationContext> predicate)
         {
-            return new EvaluationContext(Focus.Where(item => predicate(new EvaluationContext(this, item)).ToBoolean()));
+            return new EvaluationContext(_focus.Where(item => predicate(new EvaluationContext(this, item)).ToBoolean()));
         }
 
         public EvaluationContext Count()
         {
-            return new EvaluationContext(this, Focus.Count());
+            return new EvaluationContext(this, _focus.Count());
         }
         public bool ToBoolean()
         {
-            return Focus.AsBoolean();
+            return _focus.AsBoolean();
         }
 
         public IFhirPathValue Single()
         {
-            return Focus.Single();
+            return _focus.Single();
         }
         public object Value()
         {
-            return Focus.Single().Value;
+            return _focus.Single().Value;
+        }
+
+        public IEnumerable<object> Values()
+        {
+            return
+                from node in _focus
+                where node.Value != null
+                select node.Value;
+        }
+
+        public IEnumerable<IFhirPathValue> Result()
+        {
+            return _focus;
         }
 
         public static implicit operator bool(EvaluationContext ctx)
@@ -133,6 +149,16 @@ namespace Hl7.Fhir.FhirPath
         public static implicit operator string(EvaluationContext ctx)
         {
             return (string)ctx.Value();
+        }
+
+        public static implicit operator decimal(EvaluationContext ctx)
+        {
+            return (decimal)ctx.Value();
+        }
+
+        public static implicit operator PartialDateTime(EvaluationContext ctx)
+        {
+            return (PartialDateTime)ctx.Value();
         }
     }
 }

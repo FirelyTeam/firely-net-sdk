@@ -33,13 +33,7 @@ namespace Hl7.Fhir.FhirPath
             return Enumerable.Empty<IFhirPathElement>();
         }
 
-        public static IEnumerable<object> Values(this IEnumerable<IFhirPathValue> nodeSet)
-        {
-            return
-                from node in nodeSet
-                where node.Value != null
-                select node.Value;
-        }
+    
 
         public static bool AsBoolean(this IEnumerable<IFhirPathValue> focus)
         {

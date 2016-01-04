@@ -31,7 +31,7 @@ namespace Hl7.Fhir.FhirPath
             var context = new EvaluationContext(instance);
             var resultContxt = evaluator(context);
 
-            return resultContxt.Focus;
+            return resultContxt.Result();
         }
 
         public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, EvaluationContext parentContext, IFhirPathValue instance)
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.FhirPath
             var context = new EvaluationContext(parentContext, instance);
             var resultContxt = evaluator(context);
 
-            return resultContxt.Focus;
+            return resultContxt.Result();
         }
 
 
@@ -72,8 +72,8 @@ namespace Hl7.Fhir.FhirPath
         {
             return c =>
             {
-                var leftNodes = left(c).Focus;
-                var rightNodes = right(c).Focus;
+                var leftNodes = left(c);
+                var rightNodes = right(c);
 
                 if (op == FPComparison.Equals)
                 {
