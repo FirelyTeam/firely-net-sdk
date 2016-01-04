@@ -14,16 +14,6 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.FhirPath
 {
-    public enum ValueType
-    {
-        Boolean,
-        String, 
-        Integer,
-        Decimal,
-        DateTime
-    }
-
-
     public interface IFhirPathValue
     {
         object Value { get; }

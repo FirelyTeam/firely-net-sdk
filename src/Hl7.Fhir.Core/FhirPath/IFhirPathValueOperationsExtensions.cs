@@ -11,22 +11,9 @@ namespace Hl7.Fhir.FhirPath
     {
         public static bool IsEqualTo(this IFhirPathValue me, IFhirPathValue value)
         {
-            if (me.Value == null && value.Value == null)
-                return me.Children().IsEqualTo(value.Children());
+            if (me.Value != value.Value) return false;
 
-            else if (me.Value != null && value.Value != null)
-            {
-                // GetInternalValue will normalize the IFhirPath's value to a standard type so we can accurately compare them 
-                if (me.AsObject() == value.AsObject())
-                {
-                    return me.Children().IsEqualTo(value.Children());
-                }
-                else
-                    return false;
-            }
-
-            else 
-                return false;
+            return me.Children().IsEqualTo(value.Children());
         }
 
         public static IFhirPathValue Add(this IFhirPathValue me, IFhirPathValue value)
@@ -34,21 +21,21 @@ namespace Hl7.Fhir.FhirPath
             if (me.Value == null || value.Value == null)
                 throw Error.InvalidOperation("Add requires both operands to be values");
 
-            if(me.GetFhirType() == ValueType.Integer && value.GetFhirType() == ValueType.Integer)
+            if(me.Value is Int64 && value.Value is Int64)
             {
-                return new ConstantFhirPathValue((Int64)me.AsObject() + (Int64)value.AsObject());
+                return new TypedValue((Int64)me.Value + (Int64)value.Value);
             }
-            else if (me.GetFhirType() == ValueType.Decimal && value.GetFhirType() == ValueType.Decimal)
+            else if (me.Value is Decimal && value.Value is Decimal)
             {
-                return new ConstantFhirPathValue((Decimal)me.AsObject() + (Decimal)value.AsObject());
+                return new TypedValue((Decimal)me.Value + (Decimal)value.Value);
             }
-            else if (me.GetFhirType() == ValueType.String && value.GetFhirType() == ValueType.String)
+            else if (me.Value is String && value.Value is String)
             {
-                return new ConstantFhirPathValue((string)me.AsObject() + (string)value.AsObject());
+                return new TypedValue((string)me.Value + (string)value.Value);
             }
             else
             {
-                throw Error.InvalidOperation("Add cannot add a value of type {0} to a value of type {1}".FormatWith(me.GetFhirType(), value.GetFhirType()));
+                throw Error.InvalidOperation("Add cannot add a value of type {0} to a value of type {1}".FormatWith(me.Value.GetType(), value.Value.GetType()));
             }
         }
     }

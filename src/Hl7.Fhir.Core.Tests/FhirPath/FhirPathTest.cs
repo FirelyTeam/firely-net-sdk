@@ -51,20 +51,31 @@ namespace Hl7.Fhir.Tests.FhirPath
                         new UntypedValue("1"), new UntypedValue("true"), new UntypedValue("hi"), new UntypedValue("4.0"),
                         new UntypedValue(PartialDateTime.Now().ToString()));
 
-            Assert.AreEqual(Fhir.FhirPath.ValueType.Integer, values.ItemAt(0).Single().GetFhirType());
-            Assert.AreEqual(Fhir.FhirPath.ValueType.Boolean, values.ItemAt(1).Single().GetFhirType());
-            Assert.AreEqual(Fhir.FhirPath.ValueType.String, values.ItemAt(2).Single().GetFhirType());
-            Assert.AreEqual(Fhir.FhirPath.ValueType.Decimal, values.ItemAt(3).Single().GetFhirType());
-            Assert.AreEqual(Fhir.FhirPath.ValueType.Decimal, values.ItemAt(4).Single().GetFhirType());
-            Assert.AreEqual(Fhir.FhirPath.ValueType.DateTime, values.ItemAt(5).Single().GetFhirType());
+            Assert.IsInstanceOfType(values.ItemAt(0).Single().Value, typeof(Int64));
+            Assert.IsInstanceOfType(values.ItemAt(1).Single().Value, typeof(Boolean));
+            Assert.IsInstanceOfType(values.ItemAt(2).Single().Value, typeof(String));
+            Assert.IsInstanceOfType(values.ItemAt(3).Single().Value, typeof(Decimal));
+            Assert.IsInstanceOfType(values.ItemAt(4).Single().Value, typeof(Decimal));
+            Assert.IsInstanceOfType(values.ItemAt(5).Single().Value, typeof(PartialDateTime));
 
-            Assert.AreEqual(Fhir.FhirPath.ValueType.Integer, values.ItemAt(6).Single().GetFhirType());
-            Assert.AreEqual(Fhir.FhirPath.ValueType.Boolean, values.ItemAt(7).Single().GetFhirType());
-            Assert.AreEqual(Fhir.FhirPath.ValueType.String, values.ItemAt(8).Single().GetFhirType());
-            Assert.AreEqual(Fhir.FhirPath.ValueType.Decimal, values.ItemAt(9).Single().GetFhirType());
-            Assert.AreEqual(Fhir.FhirPath.ValueType.DateTime, values.ItemAt(10).Single().GetFhirType());
+            Assert.IsInstanceOfType(values.ItemAt(6).Single().Value, typeof(Int64));
+            Assert.IsInstanceOfType(values.ItemAt(7).Single().Value, typeof(Boolean));
+            Assert.IsInstanceOfType(values.ItemAt(8).Single().Value, typeof(String));
+            Assert.IsInstanceOfType(values.ItemAt(9).Single().Value, typeof(Decimal));
+            Assert.IsInstanceOfType(values.ItemAt(10).Single().Value, typeof(PartialDateTime));
         }
 
+
+        [TestMethod]
+        public void TestAdd()
+        {
+            var a = new TypedValue(4);
+            var b = new UntypedValue("5");
+
+            var result = a.Add(b);
+
+            Assert.AreEqual((Int64)9, result.Value);
+        }
 
         [TestMethod]
         public void TestItemSelection()

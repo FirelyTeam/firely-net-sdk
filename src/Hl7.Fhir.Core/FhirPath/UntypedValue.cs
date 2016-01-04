@@ -7,18 +7,17 @@ using System.Xml;
 
 namespace Hl7.Fhir.FhirPath
 {
-    public class UntypedValue
+    public class UntypedValue : IFhirPathValue
     {
-        public string Representation { get; private set; }
-        public UntypedValue(string representation)
+        public string Representation { get; private set; }  
+
+        public object Value
         {
-            Representation = representation;
+            get;  private set;
         }
 
-        public object ToTypedValue()
+        private static object parseValue(string rep)
         {
-            var rep = Representation;
-
             if (rep.ToLower() == "true") return true;
 
             if (rep.ToLower() == "false") return false;
@@ -43,7 +42,7 @@ namespace Hl7.Fhir.FhirPath
 
             try
             {
-                return XmlConvert.ToInt32(rep);
+                return XmlConvert.ToInt64(rep);
             }
             catch
             {
@@ -52,5 +51,11 @@ namespace Hl7.Fhir.FhirPath
 
             return rep;     // If all else fails, it's probably just a string
         }
+
+        public UntypedValue(string representation)
+        {
+            Representation = representation;
+            Value = parseValue(Representation);
+        }      
     }
 }

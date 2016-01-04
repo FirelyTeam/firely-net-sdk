@@ -42,7 +42,7 @@ namespace Hl7.Fhir.FhirPath
         {
             if (values == null) throw Error.ArgumentNull("values");
 
-            _focus = values.Select(value => value is IFhirPathValue ? (IFhirPathValue)value : new ConstantFhirPathValue(value));
+            _focus = values.Select(value => value is IFhirPathValue ? (IFhirPathValue)value : new TypedValue(value));
         }
 
         public EvaluationContext(EvaluationContext parent, IEnumerable<IFhirPathValue> values)
