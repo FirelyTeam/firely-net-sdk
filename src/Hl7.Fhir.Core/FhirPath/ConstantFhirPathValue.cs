@@ -20,25 +20,6 @@ namespace Hl7.Fhir.FhirPath
             Value = value;
         }
 
-        public ValueType Type
-        {
-            get
-            {
-                if (Value is bool)
-                    return ValueType.Boolean;
-                else if (Value is string)
-                    return ValueType.String;
-                else if (Value is int)
-                    return ValueType.Integer;
-                else if (Value is decimal)
-                    return ValueType.Decimal;
-                else if (Value is PartialDateTime)
-                    return ValueType.DateTime;
-                else
-                    return ValueType.Unknown;
-            }
-        }
-
         public object Value
         {
             get; private set;

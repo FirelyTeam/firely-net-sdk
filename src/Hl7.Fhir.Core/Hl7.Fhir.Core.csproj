@@ -73,8 +73,10 @@
     <Compile Include="FhirPath\EvaluationContext.cs" />
     <Compile Include="FhirPath\Grammar\Expression.cs" />
     <Compile Include="FhirPath\Grammar\Lexer.cs" />
+    <Compile Include="FhirPath\IFhirPathValueExtensions.cs" />
     <Compile Include="FhirPath\PartialDateTime.cs" />
     <Compile Include="FhirPath\Grammar\Path.cs" />
+    <Compile Include="FhirPath\UntypedValue.cs" />
     <Compile Include="Navigation\FhirNavigationTreeOfV.cs" />
     <Compile Include="Navigation\AnnotationList.cs" />
     <Compile Include="Navigation\FhirNavigationTree.cs" />

@@ -47,14 +47,22 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod]
         public void CheckTypeDetermination()
         {
-            var values = new EvaluationContext(1, true, "hi", 4.0m, PartialDateTime.Now(), 4.0f);
+            var values = new EvaluationContext(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now(), 
+                        new UntypedValue("1"), new UntypedValue("true"), new UntypedValue("hi"), new UntypedValue("4.0"),
+                        new UntypedValue(PartialDateTime.Now().ToString()));
 
-            Assert.AreEqual(Fhir.FhirPath.ValueType.Integer, values.ItemAt(0).Single().Type);
-            Assert.AreEqual(Fhir.FhirPath.ValueType.Boolean, values.ItemAt(1).Single().Type);
-            Assert.AreEqual(Fhir.FhirPath.ValueType.String, values.ItemAt(2).Single().Type);
-            Assert.AreEqual(Fhir.FhirPath.ValueType.Decimal, values.ItemAt(3).Single().Type);
-            Assert.AreEqual(Fhir.FhirPath.ValueType.DateTime, values.ItemAt(4).Single().Type);
-            Assert.AreEqual(Fhir.FhirPath.ValueType.Unknown, values.ItemAt(5).Single().Type);
+            Assert.AreEqual(Fhir.FhirPath.ValueType.Integer, values.ItemAt(0).Single().GetFhirType());
+            Assert.AreEqual(Fhir.FhirPath.ValueType.Boolean, values.ItemAt(1).Single().GetFhirType());
+            Assert.AreEqual(Fhir.FhirPath.ValueType.String, values.ItemAt(2).Single().GetFhirType());
+            Assert.AreEqual(Fhir.FhirPath.ValueType.Decimal, values.ItemAt(3).Single().GetFhirType());
+            Assert.AreEqual(Fhir.FhirPath.ValueType.Decimal, values.ItemAt(4).Single().GetFhirType());
+            Assert.AreEqual(Fhir.FhirPath.ValueType.DateTime, values.ItemAt(5).Single().GetFhirType());
+
+            Assert.AreEqual(Fhir.FhirPath.ValueType.Integer, values.ItemAt(6).Single().GetFhirType());
+            Assert.AreEqual(Fhir.FhirPath.ValueType.Boolean, values.ItemAt(7).Single().GetFhirType());
+            Assert.AreEqual(Fhir.FhirPath.ValueType.String, values.ItemAt(8).Single().GetFhirType());
+            Assert.AreEqual(Fhir.FhirPath.ValueType.Decimal, values.ItemAt(9).Single().GetFhirType());
+            Assert.AreEqual(Fhir.FhirPath.ValueType.DateTime, values.ItemAt(10).Single().GetFhirType());
         }
 
 

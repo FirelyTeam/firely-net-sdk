@@ -40,14 +40,6 @@ namespace Hl7.Fhir.Navigation
 
         protected override FhirNavigationTree Self { get { return this; } }
 
-        FhirPath.ValueType IFhirPathValue.Type
-        {
-            get
-            {
-                return FhirPath.ValueType.Unknown;
-            }
-        }
-
         object IFhirPathValue.Value
         {
             get

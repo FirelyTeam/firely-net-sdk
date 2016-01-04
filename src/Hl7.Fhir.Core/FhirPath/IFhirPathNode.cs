@@ -16,7 +16,7 @@ namespace Hl7.Fhir.FhirPath
 {
     public enum ValueType
     {
-        Unknown,
+        Untyped,
         Boolean,
         String, 
         Integer,
@@ -27,8 +27,6 @@ namespace Hl7.Fhir.FhirPath
 
     public interface IFhirPathValue
     {
-        ValueType Type { get;  }
-
         object Value { get; }
     }
 
