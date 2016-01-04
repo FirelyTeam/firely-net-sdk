@@ -14,6 +14,8 @@ using System.Xml;
 
 namespace Hl7.Fhir.FhirPath
 {
+
+    //TODO: Merge with FhirDateTime from Model namespace?s
     public class PartialDateTime
     {
         private PartialDateTime()
@@ -44,15 +46,16 @@ namespace Hl7.Fhir.FhirPath
             return new PartialDateTime { Value = dtValue, Prec = prec };
         }
 
-        public static bool CanParse(string representation)
+        public static bool TryParse(string representation, out PartialDateTime value)
         {
             try
             {
-                var dummy = XmlConvert.ToDateTimeOffset(representation);
+                value = PartialDateTime.Parse(representation);
                 return true;
             }
             catch
             {
+                value = null;
                 return false;
             }
         }

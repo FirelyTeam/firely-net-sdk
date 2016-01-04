@@ -16,7 +16,6 @@ namespace Hl7.Fhir.FhirPath
 {
     public enum ValueType
     {
-        Untyped,
         Boolean,
         String, 
         Integer,

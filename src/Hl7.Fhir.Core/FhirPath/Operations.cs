@@ -23,7 +23,7 @@ namespace Hl7.Fhir.FhirPath
             return focus.OfType<IFhirPathElement>();
         }
 
-        public static IEnumerable<IFhirPathElement> JustFhirPathElements(this IFhirPathValue me)
+        public static IEnumerable<IFhirPathElement> Children(this IFhirPathValue me)
         {
             if (me is IFhirPathElement)
             {
@@ -73,18 +73,6 @@ namespace Hl7.Fhir.FhirPath
         }
 
         
-        public static bool IsEqualTo(this IFhirPathValue me, IFhirPathValue that)
-        {
-            //TODO: Equality is slightly more complex than this, but this will do for now
-            if (me.Value.Equals(that.Value))
-            {
-                return me.JustFhirPathElements().IsEqualTo(that.JustFhirPathElements());
-            }
-
-            return false;
-        }
-
-
         ///// <summary>Enumerate the descendants of the specified nodes.</summary>
         ///// <typeparam name="T">The type of a tree node.</typeparam>
         ///// <param name="nodeSet">A set of tree nodes.</param>
