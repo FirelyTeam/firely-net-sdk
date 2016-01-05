@@ -54,14 +54,14 @@ namespace Hl7.Fhir.FhirPath.Grammar
         //public static readonly Parser<string> MulExpr =
         //    Parse.ChainOperator(Parse.Chars("*/"), Term, (op, left, right) => left + " " + op + " " + right);
 
-        //public static readonly Parser<string> AddExpr =
-        //    Parse.ChainOperator(Parse.Chars("+-"), MulExpr, (op, left, right) => left + " " + op + " " + right);
+        public static readonly Parser<Evaluator> AddExpr =
+            Parse.ChainOperator(Parse.Chars("+-"), Term.Token(), (op, left, right) => Eval.Infix(Lexer.ParseInfixOperator(op), left, right));
 
         //public static readonly Parser<string> JoinExpr =
         //    Parse.ChainOperator(Parse.Chars("|&"), AddExpr, (op, left, right) => left + " " + op + " " + right);
 
         public static readonly Parser<Evaluator> CompExpr =
-            Parse.ChainOperator(Lexer.Comp, Term, (op, left, right) => Eval.Compare(op, left, right));
+            Parse.ChainOperator(Lexer.Comp, AddExpr, (op, left, right) => Eval.Infix(op, left, right));
 
         //public static readonly Parser<string> CompExpr =
         //    Parse.ChainOperator(Lexer.Comp, JoinExpr, (op, left, right) => left + " " + op + " " + right);

@@ -28,4 +28,18 @@ namespace Hl7.Fhir.FhirPath
 
         string Name { get; }
     }
+
+    public static class Focus
+    {
+        public static IEnumerable<IFhirPathValue> Create(params object[] values)
+        {
+            return values.Select(value => value is IFhirPathValue ? (IFhirPathValue)value : new TypedValue(value));
+        }
+
+        public static IEnumerable<IFhirPathValue> Empty()
+        {
+            return Enumerable.Empty<IFhirPathValue>();
+        }
+    }
+
 }

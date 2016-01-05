@@ -70,7 +70,6 @@
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
     <Compile Include="FhirPath\TypedValue.cs" />
-    <Compile Include="FhirPath\EvaluationContext.cs" />
     <Compile Include="FhirPath\Grammar\Expression.cs" />
     <Compile Include="FhirPath\Grammar\Lexer.cs" />
     <Compile Include="FhirPath\IFhirPathValueOperationsExtensions.cs" />
@@ -81,7 +80,7 @@
     <Compile Include="Navigation\AnnotationList.cs" />
     <Compile Include="Navigation\FhirNavigationTree.cs" />
     <Compile Include="FhirPath\Operations.cs" />
-    <Compile Include="FhirPath\IFhirPathNode.cs" />
+    <Compile Include="FhirPath\IFhirPathValue.cs" />
     <Compile Include="Navigation\ITreeBuilder.cs" />
     <Compile Include="Navigation\INamedTree.cs" />
     <Compile Include="Navigation\ITree.cs" />
@@ -102,7 +101,7 @@
     <Compile Include="Navigation\INodeConversionStrategy.cs" />
     <Compile Include="Support\IValueProvider.cs" />
     <Compile Include="Navigation\XmlLineInfoWrapper.cs" />
-    <Compile Include="FhirPath\IFhirPathNodeExtensions.cs" />
+    <Compile Include="FhirPath\IFhirPathElementExtensions.cs" />
     <Compile Include="Navigation\LinkedTreeExtensions.cs" />
     <Compile Include="Navigation\TreeIterators.cs" />
     <Compile Include="FhirPath\Evaluator.cs" />

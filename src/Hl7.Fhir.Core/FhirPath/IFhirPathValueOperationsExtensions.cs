@@ -38,5 +38,7 @@ namespace Hl7.Fhir.FhirPath
                 throw Error.InvalidOperation("Add cannot add a value of type {0} to a value of type {1}".FormatWith(me.Value.GetType(), value.Value.GetType()));
             }
         }
+
+
     }
 }

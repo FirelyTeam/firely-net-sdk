@@ -71,24 +71,30 @@ namespace Hl7.Fhir.FhirPath.Grammar
     
         // COMP: '=' | '~' | '!=' | '!~' | '>' | '<' | '<=' | '>=' | 'in';
 
-        private static FPComparison toFpComparison(string c)
+        internal static InfixOperator ParseInfixOperator(char c)
+        {
+            return ParseInfixOperator(new String(c, 1));
+        }
+        internal static InfixOperator ParseInfixOperator(string c)
         {
             switch(c)
             {
-                case "=": return FPComparison.Equals;
-                case "~": return FPComparison.Equivalent;
-                case "!=": return FPComparison.NotEquals;
-                case "!~": return FPComparison.NotEquivalent;
-                case ">": return FPComparison.GreaterOrEqual;
-                case "<": return FPComparison.LessOrEqual;
-                case ">=": return FPComparison.GreaterOrEqual;
-                case "<=": return FPComparison.LessOrEqual;
-                case "in": return FPComparison.In;
-                default: throw Error.NotSupported("Comparison operation '{0}' is not supported.".FormatWith(c));
+                case "=": return InfixOperator.Equals;
+                case "~": return InfixOperator.Equivalent;
+                case "!=": return InfixOperator.NotEquals;
+                case "!~": return InfixOperator.NotEquivalent;
+                case ">": return InfixOperator.GreaterOrEqual;
+                case "<": return InfixOperator.LessOrEqual;
+                case ">=": return InfixOperator.GreaterOrEqual;
+                case "<=": return InfixOperator.LessOrEqual;
+                case "in": return InfixOperator.In;
+
+                case "+": return InfixOperator.Add;
+                default: throw Error.NotSupported("Infix operator '{0}' is not supported.".FormatWith(c));
             }
         }
 
-        public static readonly Parser<FPComparison> Comp =
+        public static readonly Parser<InfixOperator> Comp =
             Parse.Chars("=~").Select(c => new char[] { c })
             .Or(Parse.String("!="))
             .Or(Parse.String("!~"))
@@ -98,7 +104,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
             .Or(Parse.String("<"))
             .Or(Parse.String("in"))
             .Text()
-            .Select(s => toFpComparison(s))
+            .Select(s => ParseInfixOperator(s))
             .Named("Comp");
 
         // LOGIC: 'and' | 'or' | 'xor';

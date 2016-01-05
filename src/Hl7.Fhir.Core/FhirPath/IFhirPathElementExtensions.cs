@@ -14,8 +14,14 @@ using System.Linq;
 
 namespace Hl7.Fhir.FhirPath
 {
-    public static class IFhirPathNodeExtensions
+    public static class IFhirPathElementExtensions
     {
+        public static IEnumerable<IFhirPathElement> Children(this IFhirPathElement element, string name)
+        {
+            return element.Children().Where(c => c.IsMatch(name));
+        }
+
+
         private const string POLYMORPHICNAMESUFFIX = "[x]";
 
         public static bool IsMatch(this IFhirPathElement node, string name)

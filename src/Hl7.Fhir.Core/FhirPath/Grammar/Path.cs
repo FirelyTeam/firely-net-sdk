@@ -36,7 +36,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
             from element in Lexer.Element
             from recurse in Lexer.Recurse.Optional()
                 //            select element + recurse.GetOrDefault();
-            select Eval.ChildrenMatchingName(element);
+            select Eval.Invoke(l => l.Children(element));
 
         //public static readonly Parser<string> Item =
         //    Function
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
 
         // predicate: item ('.' item)* ;
         public static readonly Parser<Evaluator> Predicate =
-            from itemList in Item.XDelimitedBy(Parse.Char('.'))
+            from itemList in Item.XDelimitedBy(Parse.Char('.').Token())
             select Eval.Chain(itemList);
     }
 }

@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.FhirPath
 {
-    public delegate EvaluationContext Evaluator(EvaluationContext c);
+    public delegate IEnumerable<IFhirPathValue> Evaluator(IEnumerable<IFhirPathValue> focus);
 
     // There is a special case around the entry point, where the type of the entry point can be represented, but is optional.
     // To illustrate this point, take the path
@@ -28,20 +28,8 @@ namespace Hl7.Fhir.FhirPath
     {
         public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, IFhirPathValue instance)
         {
-            var context = new EvaluationContext(instance);
-            var resultContxt = evaluator(context);
-
-            return resultContxt.Result();
+            return evaluator(Focus.Create(instance));
         }
-
-        public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, EvaluationContext parentContext, IFhirPathValue instance)
-        {
-            var context = new EvaluationContext(parentContext, instance);
-            var resultContxt = evaluator(context);
-
-            return resultContxt.Result();
-        }
-
 
         public static Evaluator Then(this Evaluator first, Evaluator then)
         {
@@ -55,32 +43,32 @@ namespace Hl7.Fhir.FhirPath
                 evaluators.Aggregate(c, (result, next) => next(result));
         }
 
-        public static Evaluator ChildrenMatchingName(string name)
-        {
-            return c =>
-            {
-                return c.Navigate(name);
-            };
-        }
-
         public static Evaluator Constant(object value)
         {
-            return c => new EvaluationContext(c, value);
+            return c => Focus.Create(value);
         }
 
-        public static Evaluator Compare(FPComparison op, Evaluator left, Evaluator right)
+        public static Evaluator Invoke(Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> func)
+        {
+            return c => func(c);
+        }
+
+        public static Evaluator Infix(InfixOperator op, Evaluator left, Evaluator right)
         {
             return c =>
             {
                 var leftNodes = left(c);
                 var rightNodes = right(c);
 
-                if (op == FPComparison.Equals)
+                switch (op)
                 {
-                    return new EvaluationContext(c, leftNodes.IsEqualTo(rightNodes));
+                    case InfixOperator.Equals:
+                        return Focus.Create(leftNodes.IsEqualTo(rightNodes));
+                    case InfixOperator.Add:
+                        return leftNodes.Add(rightNodes);
+                    default:
+                        throw Error.NotImplemented("Operator '{0}' is not yet implemented".FormatWith(op));
                 }
-                else
-                    throw Error.NotImplemented("Operator '{0}' is not yet implemented".FormatWith(op));
             };
         }
 
@@ -88,7 +76,7 @@ namespace Hl7.Fhir.FhirPath
         {
             return c =>
             {
-                EvaluationContext result;
+                IEnumerable<IFhirPathValue> result;
 
                 if (name == "where") result = where(c, paramList);
                 else if (name == "empty") result = empty(c, paramList);
@@ -100,27 +88,27 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
-        private static EvaluationContext empty(EvaluationContext parentContext, IEnumerable<Evaluator> parameters)
+        private static IEnumerable<IFhirPathValue> empty(IEnumerable<IFhirPathValue> focus, IEnumerable<Evaluator> parameters)
         {            
             if (parameters.Any()) throw Error.Argument("parameters", "'empty' does not take parameters");
 
-            return parentContext.Empty();
+            return Focus.Create(focus.Empty());
         }
 
-        private static EvaluationContext not(EvaluationContext parentContext, IEnumerable<Evaluator> parameters)
+        private static IEnumerable<IFhirPathValue> not(IEnumerable<IFhirPathValue> focus, IEnumerable<Evaluator> parameters)
         {
             if (parameters.Any()) throw Error.Argument("parameters", "'not' does not take parameters");
 
-            return parentContext.Not();
+            return Focus.Create(!focus.AsBoolean());
         }
 
-        private static EvaluationContext where(EvaluationContext parentContext, IEnumerable<Evaluator> parameters)
+        private static IEnumerable<IFhirPathValue> where(IEnumerable<IFhirPathValue> focus, IEnumerable<Evaluator> parameters)
         {
             if (parameters.Count() != 1) throw Error.Argument("parameters", "'where' requires exactly one parameter");
 
             var condition = parameters.Single();
 
-            return parentContext.Where(ctx => condition(ctx));
+            return focus.Where(ctx => condition(Focus.Create(ctx)).AsBoolean());
         }
 
         //public static Evaluator<decimal> Add(this Evaluator<decimal> left, Evaluator<decimal> right)
@@ -149,7 +137,7 @@ namespace Hl7.Fhir.FhirPath
         //}
     }
 
-    public enum FPComparison
+    public enum InfixOperator
     {
         Equals,
         Equivalent,
@@ -159,7 +147,9 @@ namespace Hl7.Fhir.FhirPath
         LessThan,
         GreaterOrEqual,
         LessOrEqual,
-        In
+        In,
+        Add,
+        Sub        
     }
 
 }

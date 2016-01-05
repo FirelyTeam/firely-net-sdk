@@ -72,18 +72,6 @@ namespace Hl7.Fhir.Test.Navigation
 
      
         [TestMethod]
-        public void Test_GetValuesFromProvider()
-        {
-            var tree = new EvaluationContext(CreateFhirNavigationTree());
-            Assert.AreEqual("F", String.Join("|",tree.Children().Values().Cast<string>()));
-
-            var id = tree["identifier"];
-            Assert.IsFalse(id.Values().Any());
-
-            Assert.AreEqual("...use...|...type...|...system...|0123456789|Dr. House", String.Join("|", id.Children().Values().Cast<string>()));
-        }
-
-        [TestMethod]
         public void Test_Tree_CreateFromAnonymousObject()
         {
 
