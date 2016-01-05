@@ -11,7 +11,7 @@ namespace Hl7.Fhir.FhirPath
     {
         public static bool IsEqualTo(this IFhirPathValue me, IFhirPathValue value)
         {
-            if (me.Value != value.Value) return false;
+            if (!Object.Equals(me.Value,value.Value)) return false;
 
             return me.Children().IsEqualTo(value.Children());
         }

@@ -49,7 +49,7 @@ namespace Hl7.Fhir.FhirPath
             return !focus.Any();
         }
 
-        public static IFhirPathValue ItemAt(this IEnumerable<IFhirPathValue> focus, int index)
+        public static IFhirPathValue Item(this IEnumerable<IFhirPathValue> focus, int index)
         {
             return focus.Skip(index).FirstOrDefault();
         }

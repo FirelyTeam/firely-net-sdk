@@ -53,6 +53,7 @@ namespace Hl7.Fhir.FhirPath
             return c => func(c);
         }
 
+        // Of static Evaluator Add(this Evaluator left, InfixOperator op, Evaluator right) ???
         public static Evaluator Infix(InfixOperator op, Evaluator left, Evaluator right)
         {
             return c =>

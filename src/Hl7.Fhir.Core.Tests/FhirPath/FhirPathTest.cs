@@ -38,18 +38,18 @@ namespace Hl7.Fhir.Tests.FhirPath
                         new UntypedValue("1"), new UntypedValue("true"), new UntypedValue("hi"), new UntypedValue("4.0"),
                         new UntypedValue(PartialDateTime.Now().ToString()));
 
-            Assert.IsInstanceOfType(values.ItemAt(0).Value, typeof(Int64));
-            Assert.IsInstanceOfType(values.ItemAt(1).Value, typeof(Boolean));
-            Assert.IsInstanceOfType(values.ItemAt(2).Value, typeof(String));
-            Assert.IsInstanceOfType(values.ItemAt(3).Value, typeof(Decimal));
-            Assert.IsInstanceOfType(values.ItemAt(4).Value, typeof(Decimal));
-            Assert.IsInstanceOfType(values.ItemAt(5).Value, typeof(PartialDateTime));
+            Assert.IsInstanceOfType(values.Item(0).Value, typeof(Int64));
+            Assert.IsInstanceOfType(values.Item(1).Value, typeof(Boolean));
+            Assert.IsInstanceOfType(values.Item(2).Value, typeof(String));
+            Assert.IsInstanceOfType(values.Item(3).Value, typeof(Decimal));
+            Assert.IsInstanceOfType(values.Item(4).Value, typeof(Decimal));
+            Assert.IsInstanceOfType(values.Item(5).Value, typeof(PartialDateTime));
 
-            Assert.IsInstanceOfType(values.ItemAt(6).Value, typeof(Int64));
-            Assert.IsInstanceOfType(values.ItemAt(7).Value, typeof(Boolean));
-            Assert.IsInstanceOfType(values.ItemAt(8).Value, typeof(String));
-            Assert.IsInstanceOfType(values.ItemAt(9).Value, typeof(Decimal));
-            Assert.IsInstanceOfType(values.ItemAt(10).Value, typeof(PartialDateTime));
+            Assert.IsInstanceOfType(values.Item(6).Value, typeof(Int64));
+            Assert.IsInstanceOfType(values.Item(7).Value, typeof(Boolean));
+            Assert.IsInstanceOfType(values.Item(8).Value, typeof(String));
+            Assert.IsInstanceOfType(values.Item(9).Value, typeof(Decimal));
+            Assert.IsInstanceOfType(values.Item(10).Value, typeof(PartialDateTime));
         }
 
 
@@ -69,26 +69,26 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var values = Focus.Create(1, 2, 3, 4, 5, 6, 7);
 
-            Assert.AreEqual(1, values.ItemAt(0));
-            Assert.AreEqual(3, values.ItemAt(2));
-            Assert.AreEqual(1, values.First());
-            Assert.IsNotNull(values.ItemAt(100));
+            Assert.AreEqual((Int64)1, values.Item(0).Value);
+            Assert.AreEqual((Int64)3, values.Item(2).Value);
+            Assert.AreEqual((Int64)1, values.First().Value);
+            Assert.IsNull(values.Item(100));
         }
 
         [TestMethod]
         public void TestNavigation()
         {
-            var values = (IEnumerable<IFhirPathValue>)tree;
+            var values = tree;
 
             var result = values.Children("Patient").Children("identifier").Children("use");
             Assert.AreEqual(2, result.Count());
-            Assert.AreEqual("usual", result.First());
+            Assert.AreEqual("usual", result.First().Value);
         }
 
         [TestMethod]
         public void TestExpression()
         {
-            var values = (IEnumerable<IFhirPathElement>)tree.Children();
+            var values = tree;
 
             var result = !values.Children("Patient").Children("identifier")
                 .Where(ctx => ctx.Children("use").IsEqualTo(Focus.Create("official"))).Empty();
