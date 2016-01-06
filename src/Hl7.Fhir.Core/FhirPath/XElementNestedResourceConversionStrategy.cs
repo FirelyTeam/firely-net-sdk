@@ -1,4 +1,5 @@
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Navigation;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Hl7.Fhir.Navigation
+namespace Hl7.Fhir.FhirPath
 {
     internal class XElementNestedResourceConversionStrategy : XElementConversionStrategy
     {
@@ -16,7 +17,7 @@ namespace Hl7.Fhir.Navigation
             return base.HandlesDocNode(docNode) && hasNestedResource((XElement)docNode);
         }
 
-        public override FhirNavigationTree ConstructTreeNode(XObject docNode, FhirNavigationTree parent)
+        public override FhirInstanceTree ConstructTreeNode(XObject docNode, FhirInstanceTree parent)
         {
             var result = base.ConstructTreeNode(docNode, parent);
             var nestedResourceName = ((XElement)docNode).Elements().First().Name.LocalName;
@@ -25,7 +26,7 @@ namespace Hl7.Fhir.Navigation
 
             return result;
         }
-        public override IEnumerable<XObject> SelectChildren(XObject docNode, FhirNavigationTree treeNode)
+        public override IEnumerable<XObject> SelectChildren(XObject docNode, FhirInstanceTree treeNode)
         {
             var children = base.SelectChildren(docNode, treeNode);
 

@@ -1,9 +1,10 @@
+using Hl7.Fhir.Navigation;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace Hl7.Fhir.Navigation
+namespace Hl7.Fhir.FhirPath
 {
     internal class XElementConversionStrategy : INodeConversionStrategy<XObject>
     {
@@ -14,7 +15,7 @@ namespace Hl7.Fhir.Navigation
             return (docNode is XElement) && ((XElement)docNode).Name.NamespaceName == XmlNs.FHIR;
         }
 
-        public virtual FhirNavigationTree ConstructTreeNode(XObject docNode, FhirNavigationTree parent)
+        public virtual FhirInstanceTree ConstructTreeNode(XObject docNode, FhirInstanceTree parent)
         {
             var docElement = (XElement)docNode;
             var newNodeName = docElement.Name.LocalName;       // ignore namespace, it's always FHIRNS
@@ -23,12 +24,12 @@ namespace Hl7.Fhir.Navigation
             var value = docElement.TryGetAttribute(XVALUE, out hasValue);
 
             if (hasValue)
-                return parent.AddLastChild(newNodeName, value);
+                return parent.AddLastChild(newNodeName, (IFhirPathValue)new UntypedValue(value));
             else
                 return parent.AddLastChild(newNodeName);
         }
 
-        public virtual IEnumerable<XObject> SelectChildren(XObject docNode, FhirNavigationTree treeNode)
+        public virtual IEnumerable<XObject> SelectChildren(XObject docNode, FhirInstanceTree treeNode)
         {
             var docElement = (XElement)docNode;
 
@@ -43,7 +44,7 @@ namespace Hl7.Fhir.Navigation
                 yield return node;
         }
 
-        public void PostProcess(FhirNavigationTree convertedNode)
+        public void PostProcess(FhirInstanceTree convertedNode)
         {
             return;
         }

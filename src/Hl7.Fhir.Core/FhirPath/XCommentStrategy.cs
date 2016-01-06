@@ -1,9 +1,10 @@
+using Hl7.Fhir.Navigation;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace Hl7.Fhir.Navigation
+namespace Hl7.Fhir.FhirPath
 {
     internal class XCommentStrategy : INodeConversionStrategy<XObject>
     {
@@ -14,22 +15,22 @@ namespace Hl7.Fhir.Navigation
             return docNode is XComment;
         }
 
-        public FhirNavigationTree ConstructTreeNode(XObject docNode, FhirNavigationTree parent)
+        public FhirInstanceTree ConstructTreeNode(XObject docNode, FhirInstanceTree parent)
         {
             var comment = (XComment)docNode;
 
-            var result = parent.AddLastChild(COMMENT_ELEMENT_NAME, comment.Value);
+            var result = parent.AddLastChild(COMMENT_ELEMENT_NAME, (IFhirPathValue)new TypedValue(comment.Value));
             result.AddAnnotation(new StructuralHints() { IsComment = true });
 
             return result;
         }
 
-        public IEnumerable<XObject> SelectChildren(XObject docNode, FhirNavigationTree treeNode)
+        public IEnumerable<XObject> SelectChildren(XObject docNode, FhirInstanceTree treeNode)
         {
             return null;
         }
 
-        public void PostProcess(FhirNavigationTree convertedNode)
+        public void PostProcess(FhirInstanceTree convertedNode)
         {
             return;
         }

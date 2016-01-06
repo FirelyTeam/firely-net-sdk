@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Navigation
         /// <param name="name">The name of the new node.</param>
         /// <param name="value">The node value.</param>
         /// <returns>A reference to the new child node of type <typeparamref name="T"/>.</returns>
-        public static T AddLastChild<T, V>(this T node, string name, V value) where T : ILinkedTree<T>, ITreeBuilder<T>, IValueProvider
+        public static T AddLastChild<T, V>(this T node, string name, V value) where T : ILinkedTree<T>, ITreeBuilder<T>, IValueProvider<V>
         {
             var valueBuilder = node as IValueTreeBuilder<T, V>;
             if (valueBuilder != null)
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Navigation
         /// <param name="name">The name of the new node.</param>
         /// <param name="value">The node value.</param>
         /// <returns>A reference to the new sibling node of type <typeparamref name="T"/>.</returns>
-        public static T AddLastSibling<T, V>(this T node, string name, V value) where T : ILinkedTree<T>, ITreeBuilder<T>, IValueProvider
+        public static T AddLastSibling<T, V>(this T node, string name, V value) where T : ILinkedTree<T>, ITreeBuilder<T>, IValueProvider<V>
         {
             var valueBuilder = node as IValueTreeBuilder<T, V>;
             if (valueBuilder != null)

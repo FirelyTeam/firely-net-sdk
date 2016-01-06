@@ -1,9 +1,10 @@
+using Hl7.Fhir.Navigation;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace Hl7.Fhir.Navigation
+namespace Hl7.Fhir.FhirPath
 {
     internal class XAttributeConversionStrategy : INodeConversionStrategy<XObject>
     {
@@ -12,23 +13,23 @@ namespace Hl7.Fhir.Navigation
             return (docNode is XAttribute) && ((XAttribute)docNode).Name.NamespaceName == "";
         }
 
-        public FhirNavigationTree ConstructTreeNode(XObject docNode, FhirNavigationTree parent)
+        public FhirInstanceTree ConstructTreeNode(XObject docNode, FhirInstanceTree parent)
         {
             var attr = (XAttribute)docNode;
 
             var newNodeName = attr.Name.LocalName;
-            var result = parent.AddLastChild(newNodeName, attr.Value);
+            var result = parent.AddLastChild(newNodeName, (IFhirPathValue)new UntypedValue(attr.Value));
             result.AddAnnotation(new XmlRenderHints() { IsXmlAttribute = true });
 
             return result;
         }
 
-        public IEnumerable<XObject> SelectChildren(XObject docNode, FhirNavigationTree treeNode)
+        public IEnumerable<XObject> SelectChildren(XObject docNode, FhirInstanceTree treeNode)
         {
             return null;
         }
 
-        public void PostProcess(FhirNavigationTree convertedNode)
+        public void PostProcess(FhirInstanceTree convertedNode)
         {
             return;
         }

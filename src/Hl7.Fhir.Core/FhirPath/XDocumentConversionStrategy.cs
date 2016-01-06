@@ -3,8 +3,9 @@ using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System;
+using Hl7.Fhir.Navigation;
 
-namespace Hl7.Fhir.Navigation
+namespace Hl7.Fhir.FhirPath
 {
     internal class XDocumentConversionStrategy : INodeConversionStrategy<XObject>
     {        
@@ -13,16 +14,16 @@ namespace Hl7.Fhir.Navigation
             return (docNode is XDocument);
         }
 
-        public FhirNavigationTree ConstructTreeNode(XObject docNode, FhirNavigationTree parent)
+        public FhirInstanceTree ConstructTreeNode(XObject docNode, FhirInstanceTree parent)
         {
-            var result = FhirNavigationTree.Create("(root)");
+            var result = FhirInstanceTree.Create("(root)");
             var nestedResourceName = ((XDocument)docNode).Root.Name.LocalName;
 
             result.AddAnnotation(new XmlRenderHints { NestedResourceName = nestedResourceName });
 
             return result;
         }
-        public IEnumerable<XObject> SelectChildren(XObject docNode, FhirNavigationTree treeNode)
+        public IEnumerable<XObject> SelectChildren(XObject docNode, FhirInstanceTree treeNode)
         {
             return ((XDocument)docNode).Nodes();
             //var doc = (XDocument)docNode;
@@ -39,7 +40,7 @@ namespace Hl7.Fhir.Navigation
             //}
         }
 
-        public void PostProcess(FhirNavigationTree convertedNode)
+        public void PostProcess(FhirInstanceTree convertedNode)
         {
             return;
         }

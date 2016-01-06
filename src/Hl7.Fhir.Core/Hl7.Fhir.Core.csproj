@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
+    <Compile Include="FhirPath\FhirInstanceTree.cs" />
     <Compile Include="FhirPath\TypedValue.cs" />
     <Compile Include="FhirPath\Grammar\Expression.cs" />
     <Compile Include="FhirPath\Grammar\Lexer.cs" />
@@ -89,18 +90,18 @@
     <Compile Include="Navigation\ValueNavigationTree.cs" />
     <Compile Include="Navigation\VariantNavigationTree.cs" />
     <Compile Include="Navigation\InstanceTreeAnnotations.cs" />
-    <Compile Include="Navigation\XCommentStrategy.cs" />
-    <Compile Include="Navigation\XDocumentConversionStrategy.cs" />
-    <Compile Include="Navigation\XWhitespaceStrategy.cs" />
-    <Compile Include="Navigation\XAttributeConversionStrategy.cs" />
-    <Compile Include="Navigation\XElementNestedResourceConversionStrategy.cs" />
-    <Compile Include="Navigation\XElementDivConversionStrategy.cs" />
-    <Compile Include="Navigation\XElementConversionStrategy.cs" />
+    <Compile Include="FhirPath\XCommentStrategy.cs" />
+    <Compile Include="FhirPath\XDocumentConversionStrategy.cs" />
+    <Compile Include="FhirPath\XWhitespaceStrategy.cs" />
+    <Compile Include="FhirPath\XAttributeConversionStrategy.cs" />
+    <Compile Include="FhirPath\XElementNestedResourceConversionStrategy.cs" />
+    <Compile Include="FhirPath\XElementDivConversionStrategy.cs" />
+    <Compile Include="FhirPath\XElementConversionStrategy.cs" />
     <Compile Include="Navigation\IAnnotatable.cs" />
     <Compile Include="Navigation\ILinkedTree.cs" />
-    <Compile Include="Navigation\INodeConversionStrategy.cs" />
+    <Compile Include="FhirPath\INodeConversionStrategy.cs" />
     <Compile Include="Support\IValueProvider.cs" />
-    <Compile Include="Navigation\XmlLineInfoWrapper.cs" />
+    <Compile Include="FhirPath\XmlLineInfoWrapper.cs" />
     <Compile Include="FhirPath\IFhirPathElementExtensions.cs" />
     <Compile Include="Navigation\LinkedTreeExtensions.cs" />
     <Compile Include="Navigation\TreeIterators.cs" />
@@ -137,7 +138,7 @@
     <Compile Include="Model\Markdown.cs" />
     <Compile Include="Model\PositiveInt.cs" />
     <Compile Include="Navigation\NavigationTree.cs" />
-    <Compile Include="Navigation\TreeConstructorXml.cs" />
+    <Compile Include="FhirPath\TreeConstructorXml.cs" />
     <Compile Include="Rest\ResourceReferenceExtensions.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
     <Compile Include="Model\Element.cs" />

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Hl7.Fhir.Navigation
+namespace Hl7.Fhir.FhirPath
 {   
     public static partial class TreeConstructor
     {
@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Navigation
             new XCommentStrategy(), new XAttributeConversionStrategy()
         };
 
-        public static FhirNavigationTree FromXml(XmlReader reader)
+        public static FhirInstanceTree FromXml(XmlReader reader)
         {
             if (reader == null) Error.ArgumentNull("reader");
 
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Navigation
         }
 
 
-        public static FhirNavigationTree FromXml(string xml)
+        public static FhirInstanceTree FromXml(string xml)
         {
             if (xml == null) Error.ArgumentNull("xml");
 
@@ -70,10 +70,10 @@ namespace Hl7.Fhir.Navigation
             }
         }
 
-        private static FhirNavigationTree createTreeNodeFromDocNode(XObject docNode, FhirNavigationTree parent)
+        private static FhirInstanceTree createTreeNodeFromDocNode(XObject docNode, FhirInstanceTree parent)
         {
             var handled = false;
-            FhirNavigationTree result = null;
+            FhirInstanceTree result = null;
 
             foreach (var strategy in STRATEGIES)
             {

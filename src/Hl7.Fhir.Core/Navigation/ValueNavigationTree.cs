@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Navigation
     /// <typeparam name="T">The tree type.</typeparam>
     /// <typeparam name="V">The value type.</typeparam>
     /// <example><code>MyTree : ValueNavigationTree&lt;MyTree, string&gt; { }</code></example>
-    public abstract class ValueNavigationTree<T, V> : NavigationTree<T>, IValueNavigationTree<T, V>, IMutableValueProvider
+    public abstract class ValueNavigationTree<T, V> : NavigationTree<T>, IValueNavigationTree<T, V>, IMutableValueProvider<V>
         where T : ValueNavigationTree<T, V>
     {
         protected ValueNavigationTree(T parent, T previousSibling, string name, V value) : base(parent, previousSibling, name)

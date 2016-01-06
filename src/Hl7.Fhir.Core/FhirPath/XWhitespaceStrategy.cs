@@ -3,7 +3,7 @@ using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace Hl7.Fhir.Navigation
+namespace Hl7.Fhir.FhirPath
 {
     internal class XWhitespaceStrategy : INodeConversionStrategy<XObject>
     {
@@ -12,17 +12,17 @@ namespace Hl7.Fhir.Navigation
             return (docNode is XText) && ((XText)docNode).Value.Trim() == "";
         }
 
-        public FhirNavigationTree ConstructTreeNode(XObject docNode, FhirNavigationTree parent)
+        public FhirInstanceTree ConstructTreeNode(XObject docNode, FhirInstanceTree parent)
         {
             return null;
         }
 
-        public IEnumerable<XObject> SelectChildren(XObject docNode, FhirNavigationTree treeNode)
+        public IEnumerable<XObject> SelectChildren(XObject docNode, FhirInstanceTree treeNode)
         {
             return null;
         }
 
-        public void PostProcess(FhirNavigationTree convertedNode)
+        public void PostProcess(FhirInstanceTree convertedNode)
         {
             return;
         }

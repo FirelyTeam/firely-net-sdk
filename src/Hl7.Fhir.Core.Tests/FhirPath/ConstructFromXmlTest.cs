@@ -6,7 +6,8 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Navigation;
+using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Test.Navigation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Hl7.Fhir.Test.Navigation
+namespace Hl7.Fhir.Test.FhirPath
 {
     [TestClass]
     public class ConstructFromXmlTest

@@ -6,12 +6,14 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Navigation;
 using System;
+using System.Collections.Generic;
 
-namespace Hl7.Fhir.Navigation
+namespace Hl7.Fhir.FhirPath
 {
-    /// <summary>Represents a FHIR navigation tree with node values of type <see cref="string"/>.</summary>
-    public class FhirInstanceTree : ValueNavigationTree<FhirInstanceTree, string>
+    /// <summary>Represents a FHIR navigation tree with node values of type <see cref="IFhirPathElement"/>.</summary>
+    public class FhirInstanceTree : ValueNavigationTree<FhirInstanceTree, IFhirPathValue>, IFhirPathElement
     {
         #region Public Factory Methods
 
@@ -24,11 +26,11 @@ namespace Hl7.Fhir.Navigation
         /// <param name="name">The name of the new node.</param>
         /// <param name="value">The node value.</param>
         /// <returns>A new <see cref="FhirInstanceTree"/> node.</returns>
-        public static FhirInstanceTree Create(string name, string value) { return new FhirInstanceTree(null, null, name, value); }
+        public static FhirInstanceTree Create(string name, IFhirPathValue value) { return new FhirInstanceTree(null, null, name, value); }
 
         #endregion
 
-        protected FhirInstanceTree(FhirInstanceTree parent, FhirInstanceTree previousSibling, string name, string value) : base(parent, previousSibling, name, value) { }
+        protected FhirInstanceTree(FhirInstanceTree parent, FhirInstanceTree previousSibling, string name, IFhirPathValue value) : base(parent, previousSibling, name, value) { }
 
         protected override FhirInstanceTree Self { get { return this; } }
 
@@ -37,9 +39,36 @@ namespace Hl7.Fhir.Navigation
             return new FhirInstanceTree(parent, previousSibling, name, null);
         }
 
-        protected override FhirInstanceTree CreateNode(FhirInstanceTree parent, FhirInstanceTree previousSibling, string name, string value)
+        protected override FhirInstanceTree CreateNode(FhirInstanceTree parent, FhirInstanceTree previousSibling, string name, IFhirPathValue value)
         {
             return new FhirInstanceTree(parent, previousSibling, name, value);
         }
+
+        object IFhirPathValue.Value
+        {
+            get
+            {
+                if (Self.Value != null)
+                    return Self.Value.Value;
+                else
+                    return null;
+            }
+        }
+
+        IEnumerable<IFhirPathElement> IFhirPathElement.Children()
+        {
+            return LinkedTreeExtensions.Children(this);
+        }
+
+        bool IFhirPathElement.HasChildren()
+        {
+            return LinkedTreeExtensions.HasChildren(this);
+        }
+
+        IFhirPathElement IFhirPathElement.Parent
+        {
+            get { return Parent; }
+        }
+
     }
 }
