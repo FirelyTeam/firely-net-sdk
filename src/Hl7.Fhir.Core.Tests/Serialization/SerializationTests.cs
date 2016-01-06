@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(full.Contains("<birthDate"));
             Assert.IsTrue(full.Contains("<photo"));
 
-            var summ = FhirSerializer.SerializeResourceToXml(p, summary: true);
+            var summ = FhirSerializer.SerializeResourceToXml(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
 
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(qfull.Contains("<text value=\"TEXT\""));
             Assert.IsTrue(qfull.Contains("<linkId value=\"linkid\""));
 
-            var qSum = FhirSerializer.SerializeResourceToXml(q, summary: true);
+            var qSum = FhirSerializer.SerializeResourceToXml(q, summary: Fhir.Rest.SummaryType.True);
             Console.WriteLine(qSum);
             Assert.IsTrue(qSum.Contains("<status value=\"published\""));
             Assert.IsTrue(qSum.Contains("<date value=\"2015-09-27\""));
@@ -138,16 +138,25 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var b = new Bundle();
             b.AddResourceEntry(p, "http://nu.nl/fhir/Patient/1");
+            b.Total = 1;
 
             var full = FhirSerializer.SerializeResourceToXml(b);
             Assert.IsTrue(full.Contains("<entry"));
             Assert.IsTrue(full.Contains("<birthDate"));
             Assert.IsTrue(full.Contains("<photo"));
+            Assert.IsTrue(full.Contains("<total"));
 
-            var summ = FhirSerializer.SerializeResourceToXml(b, summary: true);
+            var summ = FhirSerializer.SerializeResourceToXml(b, summary: Fhir.Rest.SummaryType.True);
             Assert.IsTrue(summ.Contains("<entry"));
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
+            Assert.IsTrue(summ.Contains("<total"));
+
+            summ = FhirSerializer.SerializeResourceToXml(b, summary: Fhir.Rest.SummaryType.Count);
+            Assert.IsFalse(summ.Contains("<entry"));
+            Assert.IsFalse(summ.Contains("<birthDate"));
+            Assert.IsFalse(summ.Contains("<photo"));
+            Assert.IsTrue(summ.Contains("<total"));
         }
 
 
@@ -211,20 +220,53 @@ namespace Hl7.Fhir.Tests.Serialization
         public void TestIdInSummary()
         {
             var p = new Patient();
-
+            p.Text = new Narrative();
+            p.Text.Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Some test narrative</div>";
+            p.Meta = new Meta();
+            p.Contained = new List<Resource>();
+            p.Contained.Add(new Organization() { Id = "temp", Name = "temp org", Active = true });
+            p.AddExtension("http://example.org/ext", new FhirString("dud"));
             p.Id = "test-id-1";
             p.BirthDate = "1972-11-30";     // present in both summary and full
-            p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } };
+            p.Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain", Creation = "45" } };
+            p.ManagingOrganization = new ResourceReference() { Display = "temp org", Reference = "#temp" };
 
             var full = FhirSerializer.SerializeResourceToXml(p);
+            Assert.IsTrue(full.Contains("narrative"));
+            Assert.IsTrue(full.Contains("dud"));
+            Assert.IsTrue(full.Contains("temp org"));
             Assert.IsTrue(full.Contains("<id value="));
             Assert.IsTrue(full.Contains("<birthDate"));
             Assert.IsTrue(full.Contains("<photo"));
+            Assert.IsTrue(full.Contains("text/plain"));
 
-            var summ = FhirSerializer.SerializeResourceToXml(p, summary: true);
+            full = FhirSerializer.SerializeResourceToXml(p, summary: Hl7.Fhir.Rest.SummaryType.False);
+            Assert.IsTrue(full.Contains("narrative"));
+            Assert.IsTrue(full.Contains("dud"));
+            Assert.IsTrue(full.Contains("temp org"));
+            Assert.IsTrue(full.Contains("contain"));
+            Assert.IsTrue(full.Contains("<id value="));
+            Assert.IsTrue(full.Contains("<birthDate"));
+            Assert.IsTrue(full.Contains("<photo"));
+            Assert.IsTrue(full.Contains("text/plain"));
+
+            var summ = FhirSerializer.SerializeResourceToXml(p, summary: Fhir.Rest.SummaryType.True);
+            Assert.IsFalse(summ.Contains("narrative"));
+            Assert.IsFalse(summ.Contains("dud"));
+            Assert.IsFalse(summ.Contains("contain"));
+            Assert.IsTrue(summ.Contains("temp org"));
             Assert.IsTrue(summ.Contains("<id value="));
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
+
+            var data = FhirSerializer.SerializeResourceToXml(p, summary: Hl7.Fhir.Rest.SummaryType.Data);
+            Assert.IsFalse(data.Contains("narrative"));
+            Assert.IsTrue(data.Contains("contain"));
+            Assert.IsTrue(data.Contains("dud"));
+            Assert.IsTrue(data.Contains("temp org"));
+            Assert.IsTrue(data.Contains("<id value="));
+            Assert.IsTrue(data.Contains("<birthDate"));
+            Assert.IsTrue(data.Contains("<photo"));
         }
 
         [TestMethod]

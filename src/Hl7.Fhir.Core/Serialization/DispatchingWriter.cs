@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        internal void Serialize(PropertyMapping prop, object instance, bool summary, ComplexTypeWriter.SerializationMode mode)
+        internal void Serialize(PropertyMapping prop, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)
         {
             if (prop == null) throw Error.ArgumentNull("prop");
 
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Serialization
                 write(prop, instance, summary, mode);
         }
 
-        private void write(PropertyMapping prop, object instance, bool summary, ComplexTypeWriter.SerializationMode mode)
+        private void write(PropertyMapping prop, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)
         {
             // If this is a primitive type, no classmappings and reflection is involved,
             // just serialize the primitive to the writer

@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public void SerializeSummaryWithQuotes()
+        public void SerializeNarrativeWithQuotes()
         {
             var p = new Patient();
             p.Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Nasty, a text with both \"double\" quotes and 'single' quotes</div>" };

@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        public void Serialize(object instance, bool summary, bool contained = false, string root = null)
+        public void Serialize(object instance, Rest.SummaryType summary, bool contained = false, string root = null)
         {
             if (instance == null) throw Error.ArgumentNull("instance");
 
