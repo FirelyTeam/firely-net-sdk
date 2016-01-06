@@ -374,9 +374,9 @@ namespace Hl7.Fhir.Rest
         /// Get a conformance statement for the system
         /// </summary>
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
-        public Conformance Conformance()
+        public Conformance Conformance(SummaryType? summary = null)
         {
-            var tx = new TransactionBuilder(Endpoint).Conformance().ToBundle();          
+            var tx = new TransactionBuilder(Endpoint).Conformance(summary).ToBundle();
             return execute<Conformance>(tx, HttpStatusCode.OK);
         }
 
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>        
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-	    public Bundle TypeHistory(string resourceType, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+	    public Bundle TypeHistory(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {          
             return internalHistory(resourceType, null, since, pageSize, summary);
         }
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Rest
         /// <typeparam name="TResource">The type of Resource to get the history for</typeparam>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null, bool summary = false) where TResource : Resource, new()
+        public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False) where TResource : Resource, new()
         {
             string collection = typeof(TResource).GetCollectionName();
             return internalHistory(collection, null, since, pageSize, summary);
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+        public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             if (location == null) throw Error.ArgumentNull("location");
 
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+        public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             return History(new Uri(location, UriKind.Relative), since, pageSize, summary);
         }
@@ -442,12 +442,12 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Indicates whether the returned resources should just contain the minimal set of elements</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             return internalHistory(null, null, since, pageSize, summary);
         }
 
-        private Bundle internalHistory(string resourceType = null, string id = null, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+        private Bundle internalHistory(string resourceType = null, string id = null, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             TransactionBuilder history;
 

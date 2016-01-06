@@ -28,6 +28,7 @@ namespace Hl7.Fhir.Introspection
         public bool IsPrimitive { get; private set; }
         public bool RepresentsValueElement { get; private set; }
         public bool InSummary { get; private set; }
+        public bool IsMandatoryElement { get; private set; }
 
         public Type ReturnType { get; private set; }
         public Type ElementType { get; private set; }
@@ -56,15 +57,18 @@ namespace Hl7.Fhir.Introspection
 
 #if PORTABLE45
 			var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
+            var cardinalityAttr = prop.GetCustomAttribute<Validation.CardinalityAttribute>();
 #else
-			var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+            var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+            var cardinalityAttr = (Validation.CardinalityAttribute)Attribute.GetCustomAttribute(prop, typeof(Validation.CardinalityAttribute));
 #endif
-       
+
             result.Name = determinePropertyName(prop);
             result.ReturnType = prop.PropertyType;
             result.ElementType = result.ReturnType;
 
-            result.InSummary = elementAttr != null ? elementAttr.InSummary : false;            
+            result.InSummary = elementAttr != null ? elementAttr.InSummary : false;
+            result.IsMandatoryElement = cardinalityAttr != null ? cardinalityAttr.Min > 0 : false;
             result.Choice = elementAttr != null ? elementAttr.Choice : ChoiceType.None;
 
             if (elementAttr != null)

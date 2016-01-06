@@ -29,14 +29,14 @@ namespace Hl7.Fhir.Tests.Rest
     public class FhirClientTests
 #endif
     {
-        //Uri testEndpoint = new Uri("http://spark-dstu2.furore.com/fhir");
-        // Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
-        // Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
-        // Uri testEndpoint = new Uri("https://api.fhir.me");
-        // Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
-        //Uri testEndpoint = new Uri("http://localhost:49911/fhir");
-        // Uri testEndpoint = new Uri("http://sqlonfhir-dstu2.azurewebsites.net/fhir");
+        //public static Uri testEndpoint = new Uri("http://spark-dstu2.furore.com/fhir");
+        //public static Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
+        //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
+        public static Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
+        //public static Uri testEndpoint = new Uri("https://api.fhir.me");
+        //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
+        //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
+        //public static Uri testEndpoint = new Uri("http://sqlonfhir-dstu2.azurewebsites.net/fhir");
 
         [TestInitialize]
         public void TestInitialize()
@@ -51,10 +51,25 @@ namespace Hl7.Fhir.Tests.Rest
 
             var entry = client.Conformance();
 
+            Assert.IsNotNull(entry.Text);
             Assert.IsNotNull(entry);
+            Assert.IsNotNull(entry.FhirVersion);
             // Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server
             Assert.AreEqual(Conformance.RestfulConformanceMode.Server, entry.Rest[0].Mode.Value);
             Assert.AreEqual("200", client.LastResult.Status);
+
+            entry = client.Conformance(SummaryType.True);
+
+            Assert.IsNull(entry.Text);
+            Assert.IsNotNull(entry);
+            Assert.IsNotNull(entry.FhirVersion);
+            Assert.AreEqual(Conformance.RestfulConformanceMode.Server, entry.Rest[0].Mode.Value);
+            Assert.AreEqual("200", client.LastResult.Status);
+
+            Assert.IsNotNull(entry.Rest[0].Resource, "The resource property should be in the summary");
+            Assert.AreNotEqual(0, entry.Rest[0].Resource.Count , "There is expected to be at least 1 resource defined in the conformance statement");
+            Assert.IsTrue(entry.Rest[0].Resource[0].Type.HasValue, "The resource type should be provided");
+            Assert.AreEqual(0, entry.Rest[0].Operation.Count, "operations should not be listed in the summary");
         }
 
 
@@ -94,7 +109,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             FhirClient client = new FhirClient(testEndpoint);
 
-            var loc = client.Read<Location>("Location/example");
+            var loc = client.Read<Location>("Location/1");
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Address.City);
 
@@ -476,7 +491,11 @@ namespace Hl7.Fhir.Tests.Rest
 		}
 #endif
 
-        [TestMethod, TestCategory("FhirClient"), Ignore]
+        /// <summary>
+        /// This test will fail if the system records AuditEvents 
+        /// and counts them in the WholeSystemHistory
+        /// </summary>
+        [TestMethod, TestCategory("FhirClient")]
         public void History()
         {
             DateTimeOffset timestampBeforeCreationAndDeletions = DateTimeOffset.Now;
@@ -499,10 +518,17 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
+            history = client.TypeHistory<Patient>(timestampBeforeCreationAndDeletions, summary: SummaryType.True);
+            Assert.IsNotNull(history);
+            Assert.AreEqual(4, history.Entry.Count());
+            Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
+            Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
+
             history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions);
             Assert.IsNotNull(history);
-            Assert.AreEqual(3, history.Entry.Count());
-            Assert.AreEqual(2, history.Entry.Where(entry => entry.Resource != null).Count());
+            Assert.IsTrue(4 <= history.Entry.Count(), "Whole System history should have at least 4 new events");
+            // Check that the number of patients that have been created is what we expected
+            Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null && entry.Resource is Patient).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
         }
 
