@@ -36,7 +36,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
             from element in Lexer.Element
             from recurse in Lexer.Recurse.Optional()
                 //            select element + recurse.GetOrDefault();
-            select Eval.Invoke(l => l.Children(element));
+            select Eval.Children(element);
 
         //public static readonly Parser<string> Item =
         //    Function

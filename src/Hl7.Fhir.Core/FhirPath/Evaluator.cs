@@ -72,48 +72,77 @@ namespace Hl7.Fhir.FhirPath
                     case InfixOperator.Add:
                         return leftNodes.Add(rightNodes);
                     default:
-                        throw Error.NotImplemented("Operator '{0}' is not yet implemented".FormatWith(op));
+                        throw Error.NotImplemented("Infix operator '{0}' is not yet implemented".FormatWith(op));
                 }
             };
         }
 
-        public static Evaluator Function(string name, IEnumerable<Evaluator> paramList)
+        public static Evaluator Where(Evaluator condition)
+        {
+            return c=> c.Where(ctx => condition(Focus.Create(ctx)).AsBoolean());
+        }
+
+        public static Evaluator All(Evaluator condition)
+        {
+            return c => Focus.Create(c.Empty() || c.All(ctx => condition(Focus.Create(ctx)).AsBoolean()));
+        }
+
+        public static Evaluator Any(Evaluator condition)
+        {
+            return c => Focus.Create(c.Any(ctx => condition(Focus.Create(ctx)).AsBoolean()));
+        }
+
+        public static Evaluator Empty()
+        {
+            return c=> Focus.Create(c.Empty());
+        }
+
+        public static Evaluator Not()
+        {
+            return c=> Focus.Create(!c.AsBoolean());
+        }
+
+        public static Evaluator Children(Evaluator nameParam)
         {
             return c =>
             {
-                IEnumerable<IFhirPathValue> result;
-
-                if (name == "where") result = where(c, paramList);
-                else if (name == "empty") result = empty(c, paramList);
-                else if (name == "not") result = not(c, paramList);
-                else
-                    throw Error.NotSupported("An unknown function '{0}' is invoked".FormatWith(name));
-
-                return result;
+                var name = (string)nameParam(c).Single().Value;
+                return c.Children(name);
             };
         }
 
-        private static IEnumerable<IFhirPathValue> empty(IEnumerable<IFhirPathValue> focus, IEnumerable<Evaluator> parameters)
-        {            
-            if (parameters.Any()) throw Error.Argument("parameters", "'empty' does not take parameters");
-
-            return Focus.Create(focus.Empty());
+        public static Evaluator Children(string name)
+        {
+            return Children(Eval.Constant(name));
         }
 
-        private static IEnumerable<IFhirPathValue> not(IEnumerable<IFhirPathValue> focus, IEnumerable<Evaluator> parameters)
-        {
-            if (parameters.Any()) throw Error.Argument("parameters", "'not' does not take parameters");
 
-            return Focus.Create(!focus.AsBoolean());
+        private static Evaluator invoke(Func<Evaluator> func, IEnumerable<Evaluator> paramList)
+        {
+            if (paramList.Any()) throw Error.Argument("Function '{0}' does not take parameters".FormatWith(func.Method.Name));
+
+            return func();
         }
 
-        private static IEnumerable<IFhirPathValue> where(IEnumerable<IFhirPathValue> focus, IEnumerable<Evaluator> parameters)
+        private static Evaluator invoke(Func<Evaluator, Evaluator> func, IEnumerable<Evaluator> paramList)
         {
-            if (parameters.Count() != 1) throw Error.Argument("parameters", "'where' requires exactly one parameter");
+            if (paramList.Count() != 1) throw Error.Argument("Function '{0}' does takes exactly one parameter '{1}'".FormatWith(func.Method.Name, func.Method.GetParameters()[0].Name));
 
-            var condition = parameters.Single();
+            return func(paramList.Single());
+        }
 
-            return focus.Where(ctx => condition(Focus.Create(ctx)).AsBoolean());
+        public static Evaluator Function(string name, IEnumerable<Evaluator> paramList)
+        {
+            switch (name)
+            {
+                case "where": return invoke(Where, paramList);
+                case "not": return invoke(Not, paramList);
+                case "empty": return invoke(Empty, paramList);
+                case "all": return invoke(All, paramList);
+                case "any": return invoke(Any, paramList);
+                default:
+                    throw Error.NotSupported("An unknown function '{0}' is invoked".FormatWith(name));
+            }
         }
 
         //public static Evaluator<decimal> Add(this Evaluator<decimal> left, Evaluator<decimal> right)
@@ -167,5 +196,6 @@ namespace Hl7.Fhir.FhirPath
         Xor,
         Implies
     }
-
 }
+
+
