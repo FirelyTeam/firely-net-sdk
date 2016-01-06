@@ -6,7 +6,11 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Support;
 using Sprache;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 // The FhirPath parser is using Sprache, a monad-based approach to parsing
@@ -21,15 +25,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
 {
 
     internal class Path
-    {
-        // function: ID '(' param_list? ')';
-        // param_list: expr(',' expr)*;
-        public static readonly Parser<Evaluator> Function =
-            from name in Lexer.Id.Token()
-            from lparen in Parse.Char('(')
-            from paramList in Parse.Ref(() => Expression.Expr.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
-            from rparen in Parse.Char(')')
-            select Eval.Function(name, paramList.GetOrElse(Enumerable.Empty<Evaluator>()));
+    {        
 
         // element recurse?
         public static readonly Parser<Evaluator> ElementPath =
@@ -40,7 +36,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
 
         // item: element recurse? | function | axis_spec
         public static readonly Parser<Evaluator> Invoc =
-            Function
+            Functions.Function
             .Or(ElementPath)
             //.XOr(Lexer.AxisSpec)
             .Token();

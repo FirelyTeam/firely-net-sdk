@@ -15,6 +15,7 @@ using System.Linq;
 namespace Hl7.Fhir.FhirPath
 {
     public delegate IEnumerable<IFhirPathValue> Evaluator(IEnumerable<IFhirPathValue> focus);
+    public delegate object ScalarEvaluator(IEnumerable<IFhirPathValue> focus);
 
     // There is a special case around the entry point, where the type of the entry point can be represented, but is optional.
     // To illustrate this point, take the path
@@ -36,11 +37,16 @@ namespace Hl7.Fhir.FhirPath
             return c => then(first(c));
         }
 
+        //public static Evaluator Chain(IEnumerable<Evaluator> evaluators)
+        //{
+        //    return c =>
+        //        evaluators.Aggregate(c, (result, next) => next(result));
+        //}
 
-        public static Evaluator Chain(IEnumerable<Evaluator> evaluators)
+
+        public static Evaluator CastToCollection(ScalarEvaluator scalar)
         {
-            return c =>
-                evaluators.Aggregate(c, (result, next) => next(result));
+            return c => Focus.Create(scalar(c));
         }
 
         public static Evaluator Constant(object value)
@@ -82,25 +88,26 @@ namespace Hl7.Fhir.FhirPath
             return c=> c.Where(ctx => condition(Focus.Create(ctx)).AsBoolean());
         }
 
-        public static Evaluator All(Evaluator condition)
+        public static ScalarEvaluator All(Evaluator condition)
         {
-            return c => Focus.Create(c.Empty() || c.All(ctx => condition(Focus.Create(ctx)).AsBoolean()));
+            return c => c.Empty() || c.All(ctx => condition(Focus.Create(ctx)).AsBoolean());
         }
 
-        public static Evaluator Any(Evaluator condition)
+        public static ScalarEvaluator Any(Evaluator condition)
         {
-            return c => Focus.Create(c.Any(ctx => condition(Focus.Create(ctx)).AsBoolean()));
+            return c => c.Any(ctx => condition(Focus.Create(ctx)).AsBoolean());
         }
 
-        public static Evaluator Empty()
+        public static ScalarEvaluator Empty()
         {
-            return c=> Focus.Create(c.Empty());
+            return c=> c.Empty();
         }
 
-        public static Evaluator Not()
+        public static ScalarEvaluator Not()
         {
-            return c=> Focus.Create(!c.AsBoolean());
+            return c=> !c.AsBoolean();
         }
+
 
         public static Evaluator Children(Evaluator nameParam)
         {
@@ -117,32 +124,10 @@ namespace Hl7.Fhir.FhirPath
         }
 
 
-        private static Evaluator invoke(Func<Evaluator> func, IEnumerable<Evaluator> paramList)
-        {
-            if (paramList.Any()) throw Error.Argument("Function '{0}' does not take parameters".FormatWith(func.Method.Name));
-
-            return func();
-        }
-
-        private static Evaluator invoke(Func<Evaluator, Evaluator> func, IEnumerable<Evaluator> paramList)
-        {
-            if (paramList.Count() != 1) throw Error.Argument("Function '{0}' does takes exactly one parameter '{1}'".FormatWith(func.Method.Name, func.Method.GetParameters()[0].Name));
-
-            return func(paramList.Single());
-        }
-
         public static Evaluator Function(string name, IEnumerable<Evaluator> paramList)
         {
-            switch (name)
-            {
-                case "where": return invoke(Where, paramList);
-                case "not": return invoke(Not, paramList);
-                case "empty": return invoke(Empty, paramList);
-                case "all": return invoke(All, paramList);
-                case "any": return invoke(Any, paramList);
-                default:
-                    throw Error.NotSupported("An unknown function '{0}' is invoked".FormatWith(name));
-            }
+            // Later: provide a hook for custom functions
+            throw Error.NotSupported("An unknown function '{0}' is invoked".FormatWith(name));
         }
 
         //public static Evaluator<decimal> Add(this Evaluator<decimal> left, Evaluator<decimal> right)
