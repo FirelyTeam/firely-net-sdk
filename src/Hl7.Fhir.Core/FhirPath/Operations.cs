@@ -34,7 +34,7 @@ namespace Hl7.Fhir.FhirPath
             // A single result that's a boolean should be interpreted as a boolean
             else if (focus.Count() == 1 && focus.Single().Value is Boolean)
             {
-                return (bool)focus.Single().Value;
+                return focus.Single().AsBool();
             }
 
             // Otherwise, we have "some" content, which we'll consider "true"
@@ -53,6 +53,29 @@ namespace Hl7.Fhir.FhirPath
         {
             return focus.Skip(index).FirstOrDefault();
         }
+
+        public static long? AsInteger(this IEnumerable<IFhirPathValue> focus)
+        {
+            if (focus.Count() == 1)
+            {
+                var val = focus.Single().Value;
+                if(val != null)
+                {
+                    if (val is long) return (long)val;
+                    //if (val is decimal) return (Int64)Math.Round((decimal)val);
+                    if (val is string)
+                    {
+                        long result;
+                        if (Int64.TryParse((string)val, out result))
+                            return result;
+                    }
+
+                }
+            }
+
+            return null;
+        }
+
 
         public static IEnumerable<IFhirPathElement> Children(this IEnumerable<IFhirPathValue> focus, string name)
         {
@@ -93,10 +116,10 @@ namespace Hl7.Fhir.FhirPath
             return us.Zip(them, (left, right) => left.IsEqualTo(right)).All(r => r == true);
         }
 
-        public static IEnumerable<IFhirPathValue> Add(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        public static IEnumerable<IFhirPathValue> Operator(this IEnumerable<IFhirPathValue> left, InfixOperator op, IEnumerable<IFhirPathValue> right)
         {
             if (left.Count() == 1 && right.Count() == 1)
-                yield return left.Single().Add(right.Single());
+                yield return left.Single().Operator(op,right.Single());
         }
 
         ///// <summary>Enumerate the descendants of the specified nodes.</summary>

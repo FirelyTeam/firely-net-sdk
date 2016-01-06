@@ -32,6 +32,18 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
         [TestMethod]
+        public void AsIntegerOnList()
+        {
+            Assert.IsNull(Focus.Create(1, 2).AsInteger());
+            Assert.IsNull(Focus.Empty().AsInteger());
+
+            Assert.AreEqual(1L, Focus.Create(1).AsInteger());
+            Assert.AreEqual(45L, Focus.Create("45").AsInteger());
+            Assert.IsNull(Focus.Create(4.5m).AsInteger());
+            Assert.IsNull(Focus.Create("4.5").AsInteger());
+        }
+
+        [TestMethod]
         public void CheckTypeDetermination()
         {
             var values = Focus.Create(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now(), 
@@ -59,9 +71,9 @@ namespace Hl7.Fhir.Tests.FhirPath
             var a = new TypedValue(4);
             var b = new UntypedValue("5");
 
-            var result = a.Add(b);
+            var result = a.Operator(InfixOperator.Add,b);
 
-            Assert.AreEqual((Int64)9, result.Value);
+            Assert.AreEqual(9L, result.AsInteger());
         }
 
         [TestMethod]
@@ -69,9 +81,9 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var values = Focus.Create(1, 2, 3, 4, 5, 6, 7);
 
-            Assert.AreEqual((Int64)1, values.Item(0).Value);
-            Assert.AreEqual((Int64)3, values.Item(2).Value);
-            Assert.AreEqual((Int64)1, values.First().Value);
+            Assert.AreEqual((Int64)1, values.Item(0).AsInteger());
+            Assert.AreEqual((Int64)3, values.Item(2).AsInteger());
+            Assert.AreEqual((Int64)1, values.First().AsInteger());
             Assert.IsNull(values.Item(100));
         }
 
@@ -82,7 +94,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             var result = values.Children("Patient").Children("identifier").Children("use");
             Assert.AreEqual(2, result.Count());
-            Assert.AreEqual("usual", result.First().Value);
+            Assert.AreEqual("usual", result.First().AsString());
         }
 
         [TestMethod]

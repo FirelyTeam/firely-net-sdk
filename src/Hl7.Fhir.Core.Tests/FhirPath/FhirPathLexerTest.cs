@@ -216,30 +216,33 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod]
         public void FhirPath_Lex_Decimal()
         {
-            var parser = Lexer.Number.End();
+            var parser = Lexer.DecimalNumber.End();
+
+            AssertParser.SucceedsMatch(parser, "3.4", 3.4m);
+            AssertParser.FailsMatch(parser, "3");
 
             // TODO: Convert integer values to integer etc.
 
             // Test positive integer values
-            for (decimal d = 0; d < 100M; d++)
-            {
-                AssertParser.SucceedsMatch(parser, d.ToString(), d);
-            }
+            //for (decimal d = 0; d < 100M; d++)
+            //{
+            //    AssertParser.SucceedsMatch(parser, d.ToString(), d);
+            //}
 
-            // Test negative integer values
-            // TODO
-            for (decimal d = 0; d > -100M; d--)
-            {
-                AssertParser.SucceedsMatch(parser, d.ToString(), d);
-            }
+            //// Test negative integer values
+            //// TODO
+            //for (decimal d = 0; d > -100M; d--)
+            //{
+            //    AssertParser.SucceedsMatch(parser, d.ToString(), d);
+            //}
 
-            // Test fraction values
+            //// Test fraction values
 
-            // Test max value
-            var max = decimal.MaxValue;
-            AssertParser.SucceedsMatch(parser, max.ToString(), max);
-            // TODO: Handle overflow exception, convert to parsing error
-            AssertParser.FailsMatch(parser, max.ToString() + "0");
+            //// Test max value
+            //var max = decimal.MaxValue;
+            //AssertParser.SucceedsMatch(parser, max.ToString(), max);
+            //// TODO: Handle overflow exception, convert to parsing error
+            //AssertParser.FailsMatch(parser, max.ToString() + "0");
 
             // Test invalid values
             AssertParser.FailsMatch(parser, "");

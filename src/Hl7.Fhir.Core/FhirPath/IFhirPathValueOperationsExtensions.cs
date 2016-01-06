@@ -11,34 +11,52 @@ namespace Hl7.Fhir.FhirPath
     {
         public static bool IsEqualTo(this IFhirPathValue me, IFhirPathValue value)
         {
-            if (!Object.Equals(me.Value,value.Value)) return false;
+            if (!Object.Equals(me.Value, value.Value)) return false;
 
             return me.Children().IsEqualTo(value.Children());
         }
 
-        public static IFhirPathValue Add(this IFhirPathValue me, IFhirPathValue value)
+        public static Int64 AsInteger(this IFhirPathValue me)
         {
-            if (me.Value == null || value.Value == null)
-                throw Error.InvalidOperation("Add requires both operands to be values");
+            return (Int64)me.Value;
+        }
 
-            if(me.Value is Int64 && value.Value is Int64)
-            {
-                return new TypedValue((Int64)me.Value + (Int64)value.Value);
-            }
-            else if (me.Value is Decimal && value.Value is Decimal)
-            {
-                return new TypedValue((Decimal)me.Value + (Decimal)value.Value);
-            }
-            else if (me.Value is String && value.Value is String)
-            {
-                return new TypedValue((string)me.Value + (string)value.Value);
-            }
-            else
-            {
-                throw Error.InvalidOperation("Add cannot add a value of type {0} to a value of type {1}".FormatWith(me.Value.GetType(), value.Value.GetType()));
-            }
+        public static decimal AsDecimal(this IFhirPathValue me)
+        {
+            return (decimal)me.Value;
+        }
+
+        public static bool AsBool(this IFhirPathValue me)
+        {
+            return (bool)me.Value;
+        }
+
+        public static string AsString(this IFhirPathValue me)
+        {
+            return (string)me.Value;
+        }
+        public static PartialDateTime AsDateTime(this IFhirPathValue me)
+        {
+            return (PartialDateTime)me.Value;
         }
 
 
+        internal static IFhirPathValue Operator(this IFhirPathValue me, InfixOperator op, IFhirPathValue value)
+        {
+            if (me.Value == null || value.Value == null)
+                throw Error.InvalidOperation("'{0)' requires both operands to be values".FormatWith(op));
+            if (me.Value.GetType() != value.Value.GetType())
+                throw Error.InvalidOperation("Operands to '{0}' must be of the same type".FormatWith(op));
+
+            switch(op)
+            {
+                case InfixOperator.Add: return new TypedValue(((dynamic)me.Value) + ((dynamic)value.Value));
+                case InfixOperator.Sub: return new TypedValue(((dynamic)me.Value) - ((dynamic)value.Value));
+                case InfixOperator.Mul: return new TypedValue(((dynamic)me.Value) * ((dynamic)value.Value));
+                case InfixOperator.Div: return new TypedValue(((dynamic)me.Value) / ((dynamic)value.Value));
+                default:
+                    throw Error.InvalidOperation("Unsupported operator '{0}'".FormatWith(op));
+            }
+        }
     }
 }

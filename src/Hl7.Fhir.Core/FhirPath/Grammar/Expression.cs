@@ -22,7 +22,8 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> FpConst =
             Lexer.String.Select(s => Eval.Constant(s))
             .XOr(Lexer.DateTime.Select(dt => Eval.Constant(dt)))
-            .XOr(Lexer.Number.Select(n => Eval.Constant(n)))
+            .Or(Lexer.DecimalNumber.Select(d => Eval.Constant(d)))
+            .Or(Lexer.Number.Select(n => Eval.Constant(n)))
             .XOr(Lexer.Bool.Select(b => Eval.Constant(b)))
             .XOr(Lexer.Const.Select(s => Eval.Constant(s)));
 

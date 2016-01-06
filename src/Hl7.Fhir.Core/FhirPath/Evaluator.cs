@@ -46,7 +46,7 @@ namespace Hl7.Fhir.FhirPath
 
         public static Evaluator CastToCollection(ScalarEvaluator scalar)
         {
-            return c => Focus.Create(scalar(c));
+            return c => scalar != null ? Focus.Create(scalar(c)) : Focus.Empty();
         }
 
         public static Evaluator Constant(object value)
@@ -76,7 +76,18 @@ namespace Hl7.Fhir.FhirPath
                     case InfixOperator.Equal:
                         return Focus.Create(leftNodes.IsEqualTo(rightNodes));
                     case InfixOperator.Add:
-                        return leftNodes.Add(rightNodes);
+                    case InfixOperator.Sub:
+                    case InfixOperator.Mul:
+                    case InfixOperator.Div:
+                        return leftNodes.Operator(op,rightNodes);
+                    case InfixOperator.And:
+                        return Focus.Create(leftNodes.AsBoolean() && rightNodes.AsBoolean());
+                    case InfixOperator.Or:
+                        return Focus.Create(leftNodes.AsBoolean() || rightNodes.AsBoolean());
+                    case InfixOperator.Xor:
+                        return Focus.Create(leftNodes.AsBoolean() ^ rightNodes.AsBoolean());
+                    case InfixOperator.Implies:
+                        return Focus.Create(!leftNodes.AsBoolean() || rightNodes.AsBoolean());
                     default:
                         throw Error.NotImplemented("Infix operator '{0}' is not yet implemented".FormatWith(op));
                 }
@@ -108,12 +119,63 @@ namespace Hl7.Fhir.FhirPath
             return c=> !c.AsBoolean();
         }
 
+        public static ScalarEvaluator Item(Evaluator index)
+        {
+            return c =>
+            {
+                var ix = index(c).Single().AsInteger();
+                return c.Item((int)ix);
+            };
+        }
 
+        public static ScalarEvaluator First()
+        {
+            return c => c.FirstOrDefault();
+        }
+
+
+        public static ScalarEvaluator Last()
+        {
+            return c => c.LastOrDefault();
+        }
+
+        public static Evaluator Tail()
+        {
+            return c => c.Skip(1);
+        }
+
+        public static Evaluator Skip(Evaluator num)
+        {
+            return c =>
+            {
+                var ix = num(c).Single().AsInteger();
+                return c.Skip((int)ix);
+            };
+        }
+
+        public static Evaluator Take(Evaluator num)
+        {
+            return c =>
+            {
+                var ix = num(c).Single().AsInteger();
+                return c.Take((int)ix);
+            };
+        }
+
+        public static ScalarEvaluator Count()
+        {
+            return c => c.Count();
+        }
+
+        public static ScalarEvaluator AsInteger()
+        {
+            return c => c.AsInteger();
+        }
         public static Evaluator Children(Evaluator nameParam)
         {
             return c =>
             {
-                var name = (string)nameParam(c).Single().Value;
+                var name = nameParam(c).Single().AsString();
                 return c.Children(name);
             };
         }

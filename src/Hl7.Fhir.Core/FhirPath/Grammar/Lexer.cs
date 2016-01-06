@@ -11,6 +11,7 @@ using Sprache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 
 namespace Hl7.Fhir.FhirPath.Grammar
 {
@@ -121,8 +122,14 @@ namespace Hl7.Fhir.FhirPath.Grammar
             .Named("Logic");
 
 
-        public static readonly Parser<decimal> Number =
-            Parse.DecimalInvariant.Select(s => Decimal.Parse(s));
+        public static readonly Parser<Int64> Number =
+            Parse.Number.Select(s => Int64.Parse(s));
+
+        public static readonly Parser<decimal> DecimalNumber =
+                   from num in Parse.Number
+                   from dot in Parse.Char('.')
+                   from fraction in Parse.Number
+                   select XmlConvert.ToDecimal(num + dot + fraction);
 
         // STRING: '"' (ESC | ~["\\])* '"' |           // " delineated string
         //         '\'' (ESC | ~[\'\\])* '\'';         // ' delineated string

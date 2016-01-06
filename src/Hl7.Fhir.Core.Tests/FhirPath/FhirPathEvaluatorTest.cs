@@ -43,14 +43,16 @@ namespace Hl7.Fhir.Tests.FhirPath
             //var result = Expression.Expr.TryParse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5,false != true))and(%bla>=6)");
             //var result = Expression.FpConst.TryParse("4.5");
 
-            var result = Expression.Expr.End().TryParse(@"Patient.identifier.where ( use = ( 'offic' + 'ial')) .empty().not()");
+            var result = Expression.Expr.End().TryParse(
+                @"(Patient.identifier.where ( use = ( 'offic' + 'ial')) = 
+                       Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = Patient.identifier.first())");
 
             if (result.WasSuccessful)
             {
                 var evaluator = result.Value;
                 var resultNodes = evaluator.Evaluate(tree);
                 Assert.AreEqual(1,resultNodes.Count());
-                Assert.AreEqual(true, resultNodes.First().Value);
+                Assert.AreEqual(true, resultNodes.First().AsBool());
             }
             else
             {

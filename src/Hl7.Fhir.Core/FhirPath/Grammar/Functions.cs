@@ -63,6 +63,15 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> Empty = CreateScalarFunctionParser("empty", Eval.Empty);
         public static readonly Parser<Evaluator> Where = CreateFunctionParser("where", "criterium", Eval.Where);
         public static readonly Parser<Evaluator> All = CreateScalarFunctionParser("all", "criterium", Eval.All);
+        public static readonly Parser<Evaluator> Any = CreateScalarFunctionParser("any", "criterium", Eval.Any);
+        public static readonly Parser<Evaluator> Item = CreateScalarFunctionParser("item", "index", Eval.Item);
+        public static readonly Parser<Evaluator> First = CreateScalarFunctionParser("first", Eval.First);
+        public static readonly Parser<Evaluator> Last = CreateScalarFunctionParser("last", Eval.Last);
+        public static readonly Parser<Evaluator> Tail = CreateFunctionParser("tail", Eval.Tail);
+        public static readonly Parser<Evaluator> Skip = CreateFunctionParser("skip", "num", Eval.Skip);
+        public static readonly Parser<Evaluator> Take = CreateFunctionParser("take", "num", Eval.Take);
+        public static readonly Parser<Evaluator> Count = CreateScalarFunctionParser("count", Eval.Count);
+        public static readonly Parser<Evaluator> AsInteger = CreateScalarFunctionParser("asInteger", Eval.AsInteger);
 
         // function: ID '(' param_list? ')';
         // param_list: expr(',' expr)*;
@@ -74,6 +83,8 @@ namespace Hl7.Fhir.FhirPath.Grammar
             select Eval.Function(name, paramList.GetOrElse(Enumerable.Empty<Evaluator>()));
 
 
-        public static readonly Parser<Evaluator> Function = Not.Or(Empty).Or(Where).Or(OtherFunction);
+        public static readonly Parser<Evaluator> Function = Not.Or(Empty).Or(Where).Or(All).Or(Any).Or(Item)
+                        .Or(First).Or(Last).Or(Tail).Or(Skip).Or(Take).Or(Count).Or(AsInteger)
+                        .Or(OtherFunction);
     }
 }
