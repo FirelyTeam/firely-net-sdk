@@ -25,9 +25,9 @@ namespace Hl7.Fhir.FhirPath.Grammar
         // function: ID '(' param_list? ')';
         // param_list: expr(',' expr)*;
         public static readonly Parser<Evaluator> Function =
-            from name in Lexer.Id
+            from name in Lexer.Id.Token()
             from lparen in Parse.Char('(')
-            from paramList in Parse.Ref(() => Expression.Expr.Named("parameter")).XDelimitedBy(Parse.Char(',')).Optional()
+            from paramList in Parse.Ref(() => Expression.Expr.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
             from rparen in Parse.Char(')')
             select Eval.Function(name, paramList.GetOrElse(Enumerable.Empty<Evaluator>()));
 
@@ -47,11 +47,12 @@ namespace Hl7.Fhir.FhirPath.Grammar
             Function
             .Or(ElementPath)
             //.XOr(Lexer.AxisSpec)
-            .XOr(Parse.Ref(() => Expression.BracketExpr));
+            .XOr(Parse.Ref(() => Expression.BracketExpr))
+            .Token();
 
         // predicate: item ('.' item)* ;
         public static readonly Parser<Evaluator> Predicate =
-            from itemList in Item.XDelimitedBy(Parse.Char('.').Token())
+            from itemList in Item.DelimitedBy(Parse.Char('.'))
             select Eval.Chain(itemList);
     }
 }

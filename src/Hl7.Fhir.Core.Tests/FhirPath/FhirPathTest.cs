@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void Setup()
         {
             var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
-            tree = Fhir.Navigation.TreeConstructor.FromXml(tpXml);
+            tree = TreeConstructor.FromXml(tpXml);
         }
 
         [TestMethod]

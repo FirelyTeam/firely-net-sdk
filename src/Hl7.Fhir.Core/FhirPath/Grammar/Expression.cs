@@ -41,6 +41,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
             FpConst
             .XOr(BracketExpr)
             .Or(Path.Predicate)
+            .Token()
             .Named("Term");
 
         //expr:
@@ -51,24 +52,22 @@ namespace Hl7.Fhir.FhirPath.Grammar
         //  expr COMP expr |
         //  expr LOGIC expr;
 
-        //public static readonly Parser<string> MulExpr =
-        //    Parse.ChainOperator(Parse.Chars("*/"), Term, (op, left, right) => left + " " + op + " " + right);
+
+        public static readonly Parser<Evaluator> MulExpr =
+          Parse.ChainOperator(Lexer.Mul.Or(Lexer.Div), Term, (op, left, right) => left.Infix(op, right));
 
         public static readonly Parser<Evaluator> AddExpr =
-            Parse.ChainOperator(Parse.Chars("+-"), Term.Token(), (op, left, right) => Eval.Infix(Lexer.ParseInfixOperator(op), left, right));
+            Parse.ChainOperator(Lexer.Add.Or(Lexer.Sub), MulExpr, (op, left, right) => left.Infix(op, right));
 
-        //public static readonly Parser<string> JoinExpr =
-        //    Parse.ChainOperator(Parse.Chars("|&"), AddExpr, (op, left, right) => left + " " + op + " " + right);
+        public static readonly Parser<Evaluator> JoinExpr =
+            Parse.ChainOperator(Lexer.Union.Or(Lexer.Concat), AddExpr, (op, left, right) => left.Infix(op, right));
 
         public static readonly Parser<Evaluator> CompExpr =
-            Parse.ChainOperator(Lexer.Comp, AddExpr, (op, left, right) => Eval.Infix(op, left, right));
+            Parse.ChainOperator(Lexer.Comp, JoinExpr, (op, left, right) => left.Infix(op, right));
 
-        //public static readonly Parser<string> CompExpr =
-        //    Parse.ChainOperator(Lexer.Comp, JoinExpr, (op, left, right) => left + " " + op + " " + right);
+        public static readonly Parser<Evaluator> LogicExpr =
+            Parse.ChainOperator(Lexer.Logic, CompExpr, (op, left, right) => left.Infix(op, right));
 
-        //public static readonly Parser<string> LogicExpr =
-        //    Parse.ChainOperator(Lexer.Logic, CompExpr, (op, left, right) => left + " " + op + " " + right);
-
-        public static readonly Parser<Evaluator> Expr = CompExpr;    
+        public static readonly Parser<Evaluator> Expr = LogicExpr;    
     }
 }

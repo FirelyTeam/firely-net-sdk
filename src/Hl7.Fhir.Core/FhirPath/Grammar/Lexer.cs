@@ -23,11 +23,11 @@ namespace Hl7.Fhir.FhirPath.Grammar
         // root_spec: '$context' | '$resource' | '$parent';
         public static readonly Parser<string> RootSpec =
             (from first in Parse.Char('$')
-             from spec in (Parse.String("context")
+             from spec in Parse.String("context")
                  .Or(Parse.String("resource"))
                  .Or(Parse.String("parent"))
-                 .Or(Parse.String("focus")))
-             select new String(spec.ToArray())).Named("RootSpec");
+                 .Or(Parse.String("focus")).Text()
+             select spec).Named("RootSpec");
 
         // axis_spec: '*' | '**' | '$context' | '$resource' | '$parent' | '$focus';
         public static readonly Parser<string> AxisSpec =
@@ -68,52 +68,55 @@ namespace Hl7.Fhir.FhirPath.Grammar
 
         public static readonly Parser<PartialDateTime> DateTime = Parse.Regex(DATETIME_REGEX)
             .Select(s => PartialDateTime.Parse(s));
-    
+
+
+        internal static Parser<InfixOperator> Operator(string op, InfixOperator opType)
+        {
+            return Parse.String(op).Token().Return(opType);
+        }
+
+        internal static readonly Parser<InfixOperator> Mul = Operator("*", InfixOperator.Mul);
+        internal static readonly Parser<InfixOperator> Div = Operator("/", InfixOperator.Div);
+        internal static readonly Parser<InfixOperator> Add = Operator("+", InfixOperator.Add);
+        internal static readonly Parser<InfixOperator> Sub = Operator("-", InfixOperator.Sub);
+        internal static readonly Parser<InfixOperator> Union = Operator("|", InfixOperator.Union);
+        internal static readonly Parser<InfixOperator> Concat = Operator("&", InfixOperator.Concat);
+
+        internal static readonly Parser<InfixOperator> Equal = Operator("=", InfixOperator.Equal);
+        internal static readonly Parser<InfixOperator> Equivalent = Operator("~", InfixOperator.Equivalent);
+        internal static readonly Parser<InfixOperator> NotEqual = Operator("!=", InfixOperator.NotEqual);
+        internal static readonly Parser<InfixOperator> NotEquivalent = Operator("!~", InfixOperator.NotEquivalent);
+        internal static readonly Parser<InfixOperator> GreaterThan = Operator(">", InfixOperator.GreaterThan);
+        internal static readonly Parser<InfixOperator> LessThan = Operator("<", InfixOperator.LessThan);
+        internal static readonly Parser<InfixOperator> LessOrEqual = Operator("<=", InfixOperator.LessOrEqual);
+        internal static readonly Parser<InfixOperator> GreaterOrEqual = Operator(">=", InfixOperator.GreaterOrEqual);
+        internal static readonly Parser<InfixOperator> In = Operator("in", InfixOperator.In);
+
+        internal static readonly Parser<InfixOperator> And = Operator("and", InfixOperator.And);
+        internal static readonly Parser<InfixOperator> Or = Operator("or", InfixOperator.Or);
+        internal static readonly Parser<InfixOperator> Xor = Operator("xor", InfixOperator.Xor);
+        internal static readonly Parser<InfixOperator> Implies = Operator("implies", InfixOperator.Implies);
+
         // COMP: '=' | '~' | '!=' | '!~' | '>' | '<' | '<=' | '>=' | 'in';
-
-        internal static InfixOperator ParseInfixOperator(char c)
-        {
-            return ParseInfixOperator(new String(c, 1));
-        }
-        internal static InfixOperator ParseInfixOperator(string c)
-        {
-            switch(c)
-            {
-                case "=": return InfixOperator.Equals;
-                case "~": return InfixOperator.Equivalent;
-                case "!=": return InfixOperator.NotEquals;
-                case "!~": return InfixOperator.NotEquivalent;
-                case ">": return InfixOperator.GreaterOrEqual;
-                case "<": return InfixOperator.LessOrEqual;
-                case ">=": return InfixOperator.GreaterOrEqual;
-                case "<=": return InfixOperator.LessOrEqual;
-                case "in": return InfixOperator.In;
-
-                case "+": return InfixOperator.Add;
-                default: throw Error.NotSupported("Infix operator '{0}' is not supported.".FormatWith(c));
-            }
-        }
-
         public static readonly Parser<InfixOperator> Comp =
-            Parse.Chars("=~").Select(c => new char[] { c })
-            .Or(Parse.String("!="))
-            .Or(Parse.String("!~"))
-            .Or(Parse.String("<="))
-            .Or(Parse.String(">="))
-            .Or(Parse.String(">"))
-            .Or(Parse.String("<"))
-            .Or(Parse.String("in"))
-            .Text()
-            .Select(s => ParseInfixOperator(s))
+            Equal
+            .Or(Equivalent)
+            .Or(NotEqual)
+            .Or(NotEquivalent)
+            .Or(GreaterThan)
+            .Or(LessThan)
+            .Or(LessOrEqual)
+            .Or(GreaterOrEqual)
+            .Or(In)
             .Named("Comp");
 
-        // LOGIC: 'and' | 'or' | 'xor';
-        public static readonly Parser<string> Logic =
-            Parse.String("and")
-            .XOr(Parse.String("or"))
-            .XOr(Parse.String("xor"))
-            .XOr(Parse.String("implies"))
-            .Text().Named("Logic");
+       // LOGIC: 'and' | 'or' | 'xor' | 'implies';
+        public static readonly Parser<InfixOperator> Logic =
+            And
+            .Or(Or)
+            .Or(Xor)
+            .Or(Implies)
+            .Named("Logic");
 
 
         public static readonly Parser<decimal> Number =

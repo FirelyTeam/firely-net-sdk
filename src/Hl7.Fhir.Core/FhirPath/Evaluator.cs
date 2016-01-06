@@ -53,8 +53,12 @@ namespace Hl7.Fhir.FhirPath
             return c => func(c);
         }
 
-        // Of static Evaluator Add(this Evaluator left, InfixOperator op, Evaluator right) ???
-        public static Evaluator Infix(InfixOperator op, Evaluator left, Evaluator right)
+        public static Evaluator Invoke(Func<IEnumerable<IFhirPathValue>, IFhirPathValue> func)
+        {
+            return c => Focus.Create(func(c));
+        }
+
+        public static Evaluator Infix(this Evaluator left, InfixOperator op, Evaluator right)
         {
             return c =>
             {
@@ -63,7 +67,7 @@ namespace Hl7.Fhir.FhirPath
 
                 switch (op)
                 {
-                    case InfixOperator.Equals:
+                    case InfixOperator.Equal:
                         return Focus.Create(leftNodes.IsEqualTo(rightNodes));
                     case InfixOperator.Add:
                         return leftNodes.Add(rightNodes);
@@ -138,19 +142,30 @@ namespace Hl7.Fhir.FhirPath
         //}
     }
 
+
     public enum InfixOperator
     {
-        Equals,
+        Mul,
+        Div,
+        Add,
+        Sub,
+        Union,
+        Concat,
+
+        Equal,
         Equivalent,
-        NotEquals,
+        NotEqual,
         NotEquivalent,
         GreaterThan,
         LessThan,
-        GreaterOrEqual,
         LessOrEqual,
+        GreaterOrEqual,
         In,
-        Add,
-        Sub        
+
+        And,
+        Or,
+        Xor,
+        Implies
     }
 
 }
