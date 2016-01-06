@@ -39,22 +39,29 @@ namespace Hl7.Fhir.FhirPath.Grammar
 
         public static readonly Parser<Evaluator> Term =
             FpConst
+            .XOr(Path.Invoc)
             .XOr(BracketExpr)
-            .Or(Path.Predicate)
             .Token()
             .Named("Term");
 
+
         //expr:
-        //  term |
-        //  expr('*' | '/') expr |
-        //  expr('+' | '-') expr |
-        //  expr('|' | '&') expr |
+        //  term '.' invoc |
+        //  expr ('*' | '/') expr |
+        //  expr ('+' | '-') expr |
+        //  expr ('|' | '&') expr |
         //  expr COMP expr |
         //  expr LOGIC expr;
-
+        public static readonly Parser<Evaluator> InvocExpr =
+            from term in Term
+            from invoc in 
+                (from firstOp in Lexer.Invoke
+                 from invocs in Parse.ChainOperator(Lexer.Invoke, Path.Invoc, (op, left, right) => left.Then(right))
+                 select invocs).Optional()
+            select invoc.IsEmpty ? term : term.Then(invoc.Get());
 
         public static readonly Parser<Evaluator> MulExpr =
-          Parse.ChainOperator(Lexer.Mul.Or(Lexer.Div), Term, (op, left, right) => left.Infix(op, right));
+          Parse.ChainOperator(Lexer.Mul.Or(Lexer.Div), InvocExpr, (op, left, right) => left.Infix(op, right));
 
         public static readonly Parser<Evaluator> AddExpr =
             Parse.ChainOperator(Lexer.Add.Or(Lexer.Sub), MulExpr, (op, left, right) => left.Infix(op, right));

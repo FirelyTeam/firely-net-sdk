@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod]
         public void TestExpression2()
         {
-            var result = Path.Predicate.TryParse("Patient.deceased[x]");
+            var result = Expression.Expr.TryParse("Patient.deceased[x]");
 
             if (result.WasSuccessful)
             {

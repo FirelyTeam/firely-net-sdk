@@ -174,6 +174,8 @@ namespace Hl7.Fhir.FhirPath
 
     public enum InfixOperator
     {
+        Invoke,
+
         Mul,
         Div,
         Add,

@@ -31,28 +31,18 @@ namespace Hl7.Fhir.FhirPath.Grammar
             from rparen in Parse.Char(')')
             select Eval.Function(name, paramList.GetOrElse(Enumerable.Empty<Evaluator>()));
 
-        // item: element recurse? | function | axis_spec | '(' expr ')';
+        // element recurse?
         public static readonly Parser<Evaluator> ElementPath =
             from element in Lexer.Element
             from recurse in Lexer.Recurse.Optional()
                 //            select element + recurse.GetOrDefault();
             select Eval.Children(element);
 
-        //public static readonly Parser<string> Item =
-        //    Function
-        //    .Or(ElementPath)
-        //    .XOr(Lexer.AxisSpec)
-        //    .XOr(Parse.Ref(() => Expression.BracketExpr));
-        public static readonly Parser<Evaluator> Item =
+        // item: element recurse? | function | axis_spec
+        public static readonly Parser<Evaluator> Invoc =
             Function
             .Or(ElementPath)
             //.XOr(Lexer.AxisSpec)
-            .XOr(Parse.Ref(() => Expression.BracketExpr))
             .Token();
-
-        // predicate: item ('.' item)* ;
-        public static readonly Parser<Evaluator> Predicate =
-            from itemList in Item.DelimitedBy(Parse.Char('.'))
-            select Eval.Chain(itemList);
     }
 }
