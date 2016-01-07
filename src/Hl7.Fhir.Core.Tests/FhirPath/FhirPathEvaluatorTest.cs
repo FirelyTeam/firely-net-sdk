@@ -48,16 +48,12 @@ namespace Hl7.Fhir.Tests.FhirPath
             //           Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = Patient.identifier.first())");
 
             //var result = Expression.Expr.End().TryParse(
-            //    @"Patient.contact.relationship.where(coding.system = %vs-patient-contact-relationship and coding.code = 'owner').count() = 1");
-
-            //var result = Expression.Expr.End().TryParse(
-            //    @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and $focus.code = 'owner').log('test').count() = 1");
-
-            //Patient.contact.relationship.coding.where($focus.system = % vs - patient - contact - relationship and $focus.code = 'owner').log('after owner').$parent.$parent.organization.display.startsWith('Walt').empty().not()
+            //    @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and $focus.code = 'owner')
+            //        .log('after owner').$parent.$parent.organization.log('org').where(display.startsWith('Walt')).resolve().Organization.identifier.first().value = 'Gastro'");        
 
             var result = Expression.Expr.End().TryParse(
-                @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and $focus.code = 'owner')
-                    .log('after owner').$parent.$parent.organization.where(display.startsWith('Walt')).resolve().Organization.identifier.first().value = 'Gastro'");        
+                @"(Patient.identifier.where(use='official') in Patient.identifier) and
+                    (Patient.identifier.first() in Patient.identifier.tail()).not()");
 
             if (result.WasSuccessful)
             {

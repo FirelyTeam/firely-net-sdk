@@ -117,6 +117,17 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
+        public static int MaxLength(this IEnumerable<IFhirPathValue> focus)
+        {
+            return focus.JustValues()
+                .Aggregate(0, (val, item) => Math.Max(item.AsStringRepresentation().Length, val));
+        }
+
+        public static bool AllIn(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            return left.All(l => right.Any(r => l.IsEqualTo(r)));
+        }
+
         public static IEnumerable<IFhirPathElement> Children(this IEnumerable<IFhirPathValue> focus, string name)
         {
             return focus.JustElements().SelectMany(node => node.Children(name));

@@ -37,7 +37,13 @@ namespace Hl7.Fhir.FhirPath
 
         public virtual void Log(string argument, IEnumerable<IFhirPathValue> focus)
         {
-            System.Diagnostics.Trace.WriteLine(argument + ": " + focus.ToString());
+            System.Diagnostics.Trace.WriteLine(argument);
+
+            foreach (var element in focus)
+            {
+                System.Diagnostics.Trace.WriteLine("=========");
+                System.Diagnostics.Trace.WriteLine(element.ToString());
+            }
         }
 
         public virtual IFhirPathValue ResolveConstant(string name)

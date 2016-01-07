@@ -69,5 +69,7 @@ namespace Hl7.Fhir.FhirPath
                     throw Error.InvalidOperation("Unsupported operator '{0}'".FormatWith(op));
             }
         }
+
+
     }
 }

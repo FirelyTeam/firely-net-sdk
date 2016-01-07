@@ -88,6 +88,11 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
+        public static ScalarEvaluator Length()
+        {
+            return (f, _) => f.MaxLength();
+        }
+
         public static Evaluator Infix(this Evaluator left, InfixOperator op, Evaluator right)
         {
             return (f,c) =>
@@ -112,6 +117,8 @@ namespace Hl7.Fhir.FhirPath
                         return Focus.Create(leftNodes.AsBoolean() ^ rightNodes.AsBoolean());
                     case InfixOperator.Implies:
                         return Focus.Create(!leftNodes.AsBoolean() || rightNodes.AsBoolean());
+                    case InfixOperator.In:
+                        return Focus.Create(leftNodes.AllIn(rightNodes));
                     default:
                         throw Error.NotImplemented("Infix operator '{0}' is not yet implemented".FormatWith(op));
                 }
