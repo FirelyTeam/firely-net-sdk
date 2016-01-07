@@ -10,7 +10,8 @@ title: What's new?
     public static string ToFhirDate(this System.DateTime me)
     public static string ToFhirDateTime(this System.DateTime me)
     public static string ToFhirId(this System.Guid me)
-</pre>   
+</pre>  
+* Enhancement: Added the `SnapshotGenerator` class to turn differential representations of a StructureDefinition into a snapshot. Note: we're still working with the Java and HAPI people to get the snapshots 100% compatible. 
 * Breaking change: All `BackboneElement` derived classes are now named as found on [BackboneElement](http://hl7.org/fhir/backboneelement.html#summary) page in the specification, under the specializations heading.
 Usual fix for this will be removing the resource typename prefix from the classname, e.g. Bundle.BundleEntryComponent -> Bundle.EntryComponent
 * Fix: Elements are not serialized correctly in summary mode
