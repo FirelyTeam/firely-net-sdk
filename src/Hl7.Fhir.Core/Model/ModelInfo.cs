@@ -163,6 +163,20 @@ namespace Hl7.Fhir.Model
         {
             return IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
         }
+
+
+        //public static string GetReferenceToCoreValueSet(string id, string baseUrl=null)
+        //{
+        //    var url = baseUrl ?? "http://hl7.org/fhir/";
+        //    if (!url.EndsWith("/")) url += "/";
+
+        //    if (id.StartsWith("v3-"))
+        //        return url + "v3/" + id.Substring(3) + "/" + id + ".xml";
+        //    else if (id.StartsWith("v2-"))
+        //        return url + "v2/" + id.Substring(3) + "/" + id + ".xml";
+        //    else
+        //        return url + "valueset-" + id + ".xml";
+        //}
     }
 
     public static class ModelInfoExtensions

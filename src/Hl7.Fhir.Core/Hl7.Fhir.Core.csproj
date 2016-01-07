@@ -69,8 +69,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
+    <Compile Include="FhirPath\EvaluationContext.cs" />
     <Compile Include="FhirPath\FhirInstanceTree.cs" />
     <Compile Include="FhirPath\Grammar\Functions.cs" />
+    <Compile Include="FhirPath\IEvaluationContext.cs" />
     <Compile Include="FhirPath\TypedValue.cs" />
     <Compile Include="FhirPath\Grammar\Expression.cs" />
     <Compile Include="FhirPath\Grammar\Lexer.cs" />

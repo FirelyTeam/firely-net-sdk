@@ -43,9 +43,12 @@ namespace Hl7.Fhir.Tests.FhirPath
             //var result = Expression.Expr.TryParse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5,false != true))and(%bla>=6)");
             //var result = Expression.FpConst.TryParse("4.5");
 
+            //var result = Expression.Expr.End().TryParse(
+            //    @"(Patient.identifier.where ( use = ( 'offic' + 'ial')) = 
+            //           Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = Patient.identifier.first())");
+
             var result = Expression.Expr.End().TryParse(
-                @"(Patient.identifier.where ( use = ( 'offic' + 'ial')) = 
-                       Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = Patient.identifier.first())");
+                @"Patient.contact.relationship.where(coding.system = %vs-patient-contact-relationship and coding.code = 'owner').count() = 1");
 
             if (result.WasSuccessful)
             {

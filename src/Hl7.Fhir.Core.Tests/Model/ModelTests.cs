@@ -222,5 +222,16 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsFalse(ModelInfo.IsReference("Patient"));
         }
 
+
+        //[TestMethod]
+        //public void TestVSToUrl()
+        //{
+        //    var baseUrl = "http://hl7-fhir.github.io";
+
+        //    Assert.AreEqual("", ModelInfo.GetReferenceToCoreValueSet("v3-AcknowledgementCondition", baseUrl));
+        //    Assert.AreEqual("", ModelInfo.GetReferenceToCoreValueSet("v2-0007", baseUrl));
+        //    Assert.AreEqual("", ModelInfo.GetReferenceToCoreValueSet("address-type", baseUrl));
+        //    Assert.AreEqual("", ModelInfo.GetReferenceToCoreValueSet("address-type"));
+        //}
     }
 }

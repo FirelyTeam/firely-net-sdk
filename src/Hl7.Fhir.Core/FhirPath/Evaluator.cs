@@ -14,8 +14,8 @@ using System.Linq;
 
 namespace Hl7.Fhir.FhirPath
 {
-    public delegate IEnumerable<IFhirPathValue> Evaluator(IEnumerable<IFhirPathValue> focus);
-    public delegate object ScalarEvaluator(IEnumerable<IFhirPathValue> focus);
+    public delegate IEnumerable<IFhirPathValue> Evaluator(IEnumerable<IFhirPathValue> focus, IEvaluationContext ctx);
+    public delegate object ScalarEvaluator(IEnumerable<IFhirPathValue> focus, IEvaluationContext ctx);
 
     // There is a special case around the entry point, where the type of the entry point can be represented, but is optional.
     // To illustrate this point, take the path
@@ -27,14 +27,19 @@ namespace Hl7.Fhir.FhirPath
 
     public static class Eval
     {
+        public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, IEvaluationContext context, IFhirPathValue instance)
+        {
+            return evaluator(Focus.Create(instance), context);
+        }
+
         public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, IFhirPathValue instance)
         {
-            return evaluator(Focus.Create(instance));
+            return evaluator(Focus.Create(instance), new EvaluationContext());
         }
 
         public static Evaluator Then(this Evaluator first, Evaluator then)
         {
-            return c => then(first(c));
+            return (f,c) => then(f,c);
         }
 
         //public static Evaluator Chain(IEnumerable<Evaluator> evaluators)
@@ -46,30 +51,25 @@ namespace Hl7.Fhir.FhirPath
 
         public static Evaluator CastToCollection(ScalarEvaluator scalar)
         {
-            return c => scalar != null ? Focus.Create(scalar(c)) : Focus.Empty();
+            return (f,c) => scalar != null ? Focus.Create(scalar(f,c)) : Focus.Empty();
         }
 
-        public static Evaluator Constant(object value)
+        public static Evaluator TypedValue(object value)
         {
-            return c => Focus.Create(value);
+            return (_, __) => new[] { new TypedValue(value) };
         }
 
-        public static Evaluator Invoke(Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> func)
+        public static Evaluator Constant(string name)
         {
-            return c => func(c);
-        }
-
-        public static Evaluator Invoke(Func<IEnumerable<IFhirPathValue>, IFhirPathValue> func)
-        {
-            return c => Focus.Create(func(c));
+            return (_, ctx) => new[] { ctx.ResolveConstant(name) };
         }
 
         public static Evaluator Infix(this Evaluator left, InfixOperator op, Evaluator right)
         {
-            return c =>
+            return (f,c) =>
             {
-                var leftNodes = left(c);
-                var rightNodes = right(c);
+                var leftNodes = left(f,c);
+                var rightNodes = right(f,c);
 
                 switch (op)
                 {
@@ -96,93 +96,93 @@ namespace Hl7.Fhir.FhirPath
 
         public static Evaluator Where(Evaluator condition)
         {
-            return c=> c.Where(ctx => condition(Focus.Create(ctx)).AsBoolean());
+            return (f,c)=> f.Where(element => condition(Focus.Create(element),c).AsBoolean());
         }
 
         public static ScalarEvaluator All(Evaluator condition)
         {
-            return c => c.Empty() || c.All(ctx => condition(Focus.Create(ctx)).AsBoolean());
+            return (f,c) => f.Empty() || f.All(ctx => condition(Focus.Create(ctx),c).AsBoolean());
         }
 
         public static ScalarEvaluator Any(Evaluator condition)
         {
-            return c => c.Any(ctx => condition(Focus.Create(ctx)).AsBoolean());
+            return (f,c) => f.Any(ctx => condition(Focus.Create(ctx),c).AsBoolean());
         }
 
         public static ScalarEvaluator Empty()
         {
-            return c=> c.Empty();
+            return (f,_)=> f.Empty();
         }
 
         public static ScalarEvaluator Not()
         {
-            return c=> !c.AsBoolean();
+            return (f,_)=> !f.AsBoolean();
         }
 
         public static ScalarEvaluator Item(Evaluator index)
         {
-            return c =>
+            return (f,c) =>
             {
-                var ix = index(c).Single().AsInteger();
-                return c.Item((int)ix);
+                var ix = index(f,c).Single().AsInteger();
+                return f.Item((int)ix);
             };
         }
 
         public static ScalarEvaluator First()
         {
-            return c => c.FirstOrDefault();
+            return (f,_) => f.FirstOrDefault();
         }
 
 
         public static ScalarEvaluator Last()
         {
-            return c => c.LastOrDefault();
+            return (f,_) => f.LastOrDefault();
         }
 
         public static Evaluator Tail()
         {
-            return c => c.Skip(1);
+            return (f,_) => f.Skip(1);
         }
 
         public static Evaluator Skip(Evaluator num)
         {
-            return c =>
+            return (f,c) =>
             {
-                var ix = num(c).Single().AsInteger();
-                return c.Skip((int)ix);
+                var ix = num(f,c).Single().AsInteger();
+                return f.Skip((int)ix);
             };
         }
 
         public static Evaluator Take(Evaluator num)
         {
-            return c =>
+            return (f,c) =>
             {
-                var ix = num(c).Single().AsInteger();
-                return c.Take((int)ix);
+                var ix = num(f,c).Single().AsInteger();
+                return f.Take((int)ix);
             };
         }
 
         public static ScalarEvaluator Count()
         {
-            return c => c.Count();
+            return (f,_) => f.Count();
         }
 
         public static ScalarEvaluator AsInteger()
         {
-            return c => c.AsInteger();
+            return (f,_) => f.AsInteger();
         }
         public static Evaluator Children(Evaluator nameParam)
         {
-            return c =>
+            return (f,c) =>
             {
-                var name = nameParam(c).Single().AsString();
-                return c.Children(name);
+                var name = nameParam(f,c).Single().AsString();
+                return f.Children(name);
             };
         }
 
         public static Evaluator Children(string name)
         {
-            return Children(Eval.Constant(name));
+            return Children(Eval.TypedValue(name));
         }
 
 

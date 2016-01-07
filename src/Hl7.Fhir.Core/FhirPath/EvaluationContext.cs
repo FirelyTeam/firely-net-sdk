@@ -7,6 +7,8 @@
  */
 
 
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
@@ -15,150 +17,62 @@ using System.Linq;
 
 namespace Hl7.Fhir.FhirPath
 {
-    // TODO: Need to keep track of related contexts
-    // $context - the original context (see below for usage)
-    // $resource - the original container resource(e.g.skip contained resources, but do not go past a root resource into a bundle, if it is contained in a bundle)
-    // $parent - the element that contains $context
-    // $focus - a reference to the current focus.This is useful where you need to refer to the focus in a function parameter (e.g. $focus in criteria)
-
-    // [WMR] Store variables as Memo<T>, i.e. evaluate expression and save result on first call
-    // Polymorphic collection - each variable has it's own value type T
-    // Important: each Evaluator instance should receive a new EvaluationContext instance - for variable scoping
-    // => Copy ctor
-
-    public class EvaluationContext
+    public class EvaluationContext : IEvaluationContext
     {
-        //AsInteger etc. implementeren op IFhirValue
-        //    Add misschien ook?
-
-
-        private IEnumerable<IFhirPathValue> _focus;
-
-        public EvaluationContext(params object[] values) : this(null, values)
+        public EvaluationContext()
         {
+
         }
 
-        public EvaluationContext(EvaluationContext parent, params object[] values)
+        public EvaluationContext(FhirClient client)
         {
-            if (values == null) throw Error.ArgumentNull("values");
-
-            _focus = values.Select(value => value is IFhirPathValue ? (IFhirPathValue)value : new TypedValue(value));
+            FhirClient = client;
         }
 
-        public EvaluationContext(EvaluationContext parent, IEnumerable<IFhirPathValue> values)
-        {
-            if (values == null) throw Error.ArgumentNull("values");
+        FhirClient FhirClient { get; set; }
 
-            _focus = values;
-        }
-
-        public EvaluationContext(IEnumerable<IFhirPathValue> values) : this(null,values)
+        public virtual void InvokeExternalFunction(string name, IList<IEnumerable<IFhirPathValue>> parameters)
         {
+            throw new NotSupportedException("Function '{0}' is unknown".FormatWith(name));
         }
 
-        public EvaluationContext Empty()
+        public virtual void Log(string argument, IEnumerable<IFhirPathValue> focus)
         {
-            return new EvaluationContext(this,!_focus.Any());
-        }
-        public EvaluationContext Not()
-        {
-            return new EvaluationContext(this,!_focus.AsBoolean());
+            System.Diagnostics.Trace.WriteLine(argument + ": " + focus.ToString());
         }
 
-        public EvaluationContext ItemAt(int index)
+        public virtual IFhirPathValue ResolveConstant(string name)
         {
-            return new EvaluationContext(this,_focus.Skip(index).Take(1));
+            string value = null;
+
+            if (name.StartsWith("ext-"))
+                value = "http://hl7.org/fhir/StructureDefinition/" + name.Substring(4);
+            else if (name.StartsWith("vs-"))
+                value = "http://hl7.org/fhir/ValueSet/" + name.Substring(3);
+            else if (name == "sct")
+                value = "http://snomed.info/sct";
+            else if (name == "loinc")
+                value = "http://loinc.org";
+            else if (name == "ucum")
+                value = "http://unitsofmeasure.org";
+
+            return value != null ? new TypedValue(value) : null;
         }
 
-        public EvaluationContext First()
+        public virtual IFhirPathElement ResolveResource(string url)
         {
-            return new EvaluationContext(this, _focus.Take(1));
-        }
+            try
+            {
+                var resource = FhirClient.Get(url);
+                if (resource == null) return null;
 
-        public EvaluationContext this[string name]
-        {
-            get { return Navigate(name); }
-        }
-
-        public EvaluationContext Children()
-        {
-            return new EvaluationContext(_focus.JustFhirPathElements().SelectMany(node => node.Children()));
-        }
-        public EvaluationContext Navigate(string name)
-        {
-            return new EvaluationContext(
-                _focus.JustFhirPathElements().SelectMany(node => node.Children().Where(child => child.IsMatch(name))));
-        }
-
-        public EvaluationContext IsEqualTo(EvaluationContext other)
-        {
-            return new EvaluationContext(_focus.IsEqualTo(other._focus));
-        }
-
-        public EvaluationContext IsEqualTo(object other)
-        {
-            return IsEqualTo(new EvaluationContext(other));
-        }
-
-        public EvaluationContext Where(Func<EvaluationContext,EvaluationContext> predicate)
-        {
-            return new EvaluationContext(_focus.Where(item => predicate(new EvaluationContext(this, item)).ToBoolean()));
-        }
-
-        public EvaluationContext Count()
-        {
-            return new EvaluationContext(this, _focus.Count());
-        }
-        public bool ToBoolean()
-        {
-            return _focus.AsBoolean();
-        }
-
-        public IFhirPathValue Single()
-        {
-            return _focus.Single();
-        }
-        public object Value()
-        {
-            return _focus.Single().Value;
-        }
-
-        public IEnumerable<object> Values()
-        {
-            return
-                from node in _focus
-                where node.Value != null
-                select node.Value;
-        }
-
-        public IEnumerable<IFhirPathValue> Result()
-        {
-            return _focus;
-        }
-
-        public static implicit operator bool(EvaluationContext ctx)
-        {
-            return ctx.ToBoolean();
-        }
-
-        public static implicit operator int(EvaluationContext ctx)
-        {
-            return (int)ctx.Value();
-        }
-
-        public static implicit operator string(EvaluationContext ctx)
-        {
-            return (string)ctx.Value();
-        }
-
-        public static implicit operator decimal(EvaluationContext ctx)
-        {
-            return (decimal)ctx.Value();
-        }
-
-        public static implicit operator PartialDateTime(EvaluationContext ctx)
-        {
-            return (PartialDateTime)ctx.Value();
+                var xml = FhirSerializer.SerializeResourceToXml(resource);
+                return TreeConstructor.FromXml(xml);                
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

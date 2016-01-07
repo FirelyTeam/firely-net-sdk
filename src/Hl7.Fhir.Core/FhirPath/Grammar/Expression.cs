@@ -20,11 +20,11 @@ namespace Hl7.Fhir.FhirPath.Grammar
         //   CONST |
         //   DATETIME;
         public static readonly Parser<Evaluator> FpConst =
-            Lexer.String.Select(s => Eval.Constant(s))
-            .XOr(Lexer.DateTime.Select(dt => Eval.Constant(dt)))
-            .Or(Lexer.DecimalNumber.Select(d => Eval.Constant(d)))
-            .Or(Lexer.Number.Select(n => Eval.Constant(n)))
-            .XOr(Lexer.Bool.Select(b => Eval.Constant(b)))
+            Lexer.String.Select(s => Eval.TypedValue(s))
+            .XOr(Lexer.DateTime.Select(dt => Eval.TypedValue(dt)))
+            .Or(Lexer.DecimalNumber.Select(d => Eval.TypedValue(d)))
+            .Or(Lexer.Number.Select(n => Eval.TypedValue(n)))
+            .XOr(Lexer.Bool.Select(b => Eval.TypedValue(b)))
             .XOr(Lexer.Const.Select(s => Eval.Constant(s)));
 
         // term:
