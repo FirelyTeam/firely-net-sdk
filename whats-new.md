@@ -2,6 +2,23 @@
 layout: default
 title: What's new?
 ---
+### In 0.90.4 (released 20160105)
+* Enhancement: Additional Extension methods for converting native types to/from FHIR types
+<pre>
+    public static DateTime? ToDateTime(this Model.FhirDateTime me)
+    public static DateTime? ToDateTime(this Model.Date me)
+    public static string ToFhirDate(this System.DateTime me)
+    public static string ToFhirDateTime(this System.DateTime me)
+    public static string ToFhirId(this System.Guid me)
+</pre>   
+* Breaking change: All `BackboneElement` derived classes are now named as found on [BackboneElement](http://hl7.org/fhir/backboneelement.html#summary) page in the specification, under the specializations heading.
+Usual fix for this will be removing the resource typename prefix from the classname, e.g. Bundle.BundleEntryComponent -> Bundle.EntryComponent
+* Fix: Elements are not serialized correctly in summary mode
+* Fix: Validate Operation does not work
+* Fix: DeepCopy does not work on Careplan f201
+* Fix: SearchParameters in ModelInfo are missing/have invalid Target values
+
+From this version on, the model is now code generated using T4 templates within the build from the specification profile files (profiles-resources.xml, profiles-types.xml, search-parameters.xml and expansions.xml)
 
 ### In 0.90.3 (released 20151201)
 * Enhancement: IConformanceResource now also exposes the xxxElement members. Thanks, wmrutten!
