@@ -74,9 +74,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             if (!areEqual)
             {
-                var tempPath = System.IO.Path.GetTempPath();
-                File.WriteAllText(System.IO.Path.Combine(tempPath, "snapshotgen-source.xml"), FhirSerializer.SerializeResourceToXml(original));
-                File.WriteAllText(System.IO.Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
+                var tempPath = Path.GetTempPath();
+                File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), FhirSerializer.SerializeResourceToXml(original));
+                File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
             }
 
             Assert.IsTrue(areEqual);

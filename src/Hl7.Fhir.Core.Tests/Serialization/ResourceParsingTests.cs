@@ -88,20 +88,20 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void EdgecaseRoundtrip()
         {
-            var tempPath = System.IO.Path.GetTempPath();
+            var tempPath = Path.GetTempPath();
             string json = File.ReadAllText(@"TestData\json-edge-cases.json");
 
             var poco = FhirParser.ParseResourceFromJson(json);
             Assert.IsNotNull(poco);
             var xml = FhirSerializer.SerializeResourceToXml(poco);
             Assert.IsNotNull(xml);
-            File.WriteAllText(System.IO.Path.Combine(tempPath, "edgecase.xml"), xml);
+            File.WriteAllText(Path.Combine(tempPath, "edgecase.xml"), xml);
 
             poco = FhirParser.ParseResourceFromXml(xml);
             Assert.IsNotNull(poco);
             var json2 = FhirSerializer.SerializeResourceToJson(poco);
             Assert.IsNotNull(json2);
-            File.WriteAllText(System.IO.Path.Combine(tempPath, "edgecase.json"), json2);
+            File.WriteAllText(Path.Combine(tempPath, "edgecase.json"), json2);
            
             JsonAssert.AreSame(json, json2);
         }
