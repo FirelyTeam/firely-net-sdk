@@ -7,6 +7,7 @@
  */
 
 
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
@@ -18,9 +19,14 @@ namespace Hl7.Fhir.FhirPath
     public static class Operations
     {
 
-        public static IEnumerable<IFhirPathElement> JustFhirPathElements(this IEnumerable<IFhirPathValue> focus)
+        public static IEnumerable<IFhirPathElement> JustElements(this IEnumerable<IFhirPathValue> focus)
         {
             return focus.OfType<IFhirPathElement>();
+        }
+
+        public static IEnumerable<IFhirPathValue> JustValues(this IEnumerable<IFhirPathValue> focus)
+        {
+            return focus.Where(f => f.Value != null);
         }
    
         public static bool AsBoolean(this IEnumerable<IFhirPathValue> focus)
@@ -32,7 +38,7 @@ namespace Hl7.Fhir.FhirPath
                 result = false;
 
             // A single result that's a boolean should be interpreted as a boolean
-            else if (focus.Count() == 1 && focus.Single().Value is Boolean)
+            else if (focus.JustValues().Count() == 1 && focus.JustValues().Single().Value is Boolean)
             {
                 return focus.Single().AsBool();
             }
@@ -56,7 +62,7 @@ namespace Hl7.Fhir.FhirPath
 
         public static long? AsInteger(this IEnumerable<IFhirPathValue> focus)
         {
-            if (focus.Count() == 1)
+            if (focus.JustValues().Count() == 1)
             {
                 var val = focus.Single().Value;
                 if(val != null)
@@ -77,9 +83,43 @@ namespace Hl7.Fhir.FhirPath
         }
 
 
+        public static IEnumerable<IFhirPathValue> StartingWith(this IEnumerable<IFhirPathValue> focus, string prefix)
+        {
+            return focus.JustValues().Where(value => value.AsStringRepresentation().StartsWith(prefix));
+        }
+
+        public static IEnumerable<IFhirPathElement> Resolve(this IEnumerable<IFhirPathValue> focus, FhirClient client)
+        {
+            return focus.Resolve(new EvaluationContext(client));
+        }
+
+        public static IEnumerable<IFhirPathElement> Resolve(this IEnumerable<IFhirPathValue> focus, IEvaluationContext context)
+        {
+            foreach (var item in focus)
+            {
+                string url = null;
+
+                // Something that looks like a Reference
+                if (item is IFhirPathElement)
+                {
+                    var maybeReference = ((IFhirPathElement)item).Children("reference").SingleOrDefault();
+
+                    if (maybeReference != null && maybeReference.Value != null && maybeReference.Value is string)
+                        url = maybeReference.AsString();
+                }
+
+                // A string as a direct url
+                if (item.Value != null && item.Value is string)
+                    url = item.AsString();
+
+                if(url != null)
+                    yield return context.ResolveResource(url);
+            }
+        }
+
         public static IEnumerable<IFhirPathElement> Children(this IEnumerable<IFhirPathValue> focus, string name)
         {
-            return focus.JustFhirPathElements().SelectMany(node => node.Children(name));
+            return focus.JustElements().SelectMany(node => node.Children(name));
         }
 
         //public static IEnumerable<IFhirPathElement> Child(this IEnumerable<IFhirPathValue> focus, string name)
@@ -105,7 +145,17 @@ namespace Hl7.Fhir.FhirPath
 
         public static IEnumerable<IFhirPathElement> Children(this IEnumerable<IFhirPathValue> focus)
         {
-            return focus.JustFhirPathElements().SelectMany(node => node.Children());
+            return focus.JustElements().SelectMany(node => node.Children());
+        }
+
+        public static IEnumerable<IFhirPathElement> Descendants(this IEnumerable<IFhirPathElement> focus)
+        {
+            return focus.SelectMany(node => node.Descendants());
+        }
+
+        public static IEnumerable<IFhirPathElement> Parents(this IEnumerable<IFhirPathElement> focus)
+        {
+            return focus.Select(node => node.Parent);
         }
 
         public static bool IsEqualTo(this IEnumerable<IFhirPathValue> us, IEnumerable<IFhirPathValue> them)

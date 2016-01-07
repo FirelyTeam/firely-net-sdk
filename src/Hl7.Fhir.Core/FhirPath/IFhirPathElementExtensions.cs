@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Navigation;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,15 @@ namespace Hl7.Fhir.FhirPath
             return element.Children().Where(c => c.IsMatch(name));
         }
 
+        public static IEnumerable<IFhirPathElement> Descendants(this IFhirPathElement element)
+        {
+            //TODO: Don't think this is performant with these nested yields
+            foreach (var child in element.Children())
+            {
+                yield return child;
+                foreach (var grandchild in child.Descendants()) yield return grandchild;
+            }
+        }
 
         private const string POLYMORPHICNAMESUFFIX = "[x]";
 

@@ -38,7 +38,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> Invoc =
             Functions.Function
             .Or(ElementPath)
-            //.XOr(Lexer.AxisSpec)
+            .XOr(Lexer.AxisSpec.Select(a => Eval.Axis(a)))
             .Token();
     }
 }

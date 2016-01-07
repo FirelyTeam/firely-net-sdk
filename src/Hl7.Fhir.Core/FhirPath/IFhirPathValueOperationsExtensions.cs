@@ -1,9 +1,11 @@
-﻿using Hl7.Fhir.Support;
+﻿using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -18,16 +20,19 @@ namespace Hl7.Fhir.FhirPath
 
         public static Int64 AsInteger(this IFhirPathValue me)
         {
+            if (me.Value == null) throw Error.ArgumentNull("me");
             return (Int64)me.Value;
         }
 
         public static decimal AsDecimal(this IFhirPathValue me)
         {
+            if (me.Value == null) throw Error.ArgumentNull("me");
             return (decimal)me.Value;
         }
 
         public static bool AsBool(this IFhirPathValue me)
         {
+            if (me.Value == null) throw Error.ArgumentNull("me");
             return (bool)me.Value;
         }
 
@@ -40,6 +45,12 @@ namespace Hl7.Fhir.FhirPath
             return (PartialDateTime)me.Value;
         }
 
+        public static string AsStringRepresentation(this IFhirPathValue me)
+        {
+            if (me.Value == null) return null;
+
+            return PrimitiveTypeConverter.ConvertTo<string>(me.Value);
+        }
 
         internal static IFhirPathValue Operator(this IFhirPathValue me, InfixOperator op, IFhirPathValue value)
         {

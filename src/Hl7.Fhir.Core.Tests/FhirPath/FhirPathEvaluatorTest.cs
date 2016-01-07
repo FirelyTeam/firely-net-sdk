@@ -47,13 +47,24 @@ namespace Hl7.Fhir.Tests.FhirPath
             //    @"(Patient.identifier.where ( use = ( 'offic' + 'ial')) = 
             //           Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = Patient.identifier.first())");
 
+            //var result = Expression.Expr.End().TryParse(
+            //    @"Patient.contact.relationship.where(coding.system = %vs-patient-contact-relationship and coding.code = 'owner').count() = 1");
+
+            //var result = Expression.Expr.End().TryParse(
+            //    @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and $focus.code = 'owner').log('test').count() = 1");
+
+            //Patient.contact.relationship.coding.where($focus.system = % vs - patient - contact - relationship and $focus.code = 'owner').log('after owner').$parent.$parent.organization.display.startsWith('Walt').empty().not()
+
             var result = Expression.Expr.End().TryParse(
-                @"Patient.contact.relationship.where(coding.system = %vs-patient-contact-relationship and coding.code = 'owner').count() = 1");
+                @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and $focus.code = 'owner')
+                    .log('after owner').$parent.$parent.organization.where(display.startsWith('Walt')).resolve().Organization.identifier.first().value = 'Gastro'");        
 
             if (result.WasSuccessful)
             {
                 var evaluator = result.Value;
-                var resultNodes = evaluator.Evaluate(tree);
+                var ctx = new EvaluationContext(new Fhir.Rest.FhirClient("http://spark.furore.com/fhir"));
+
+                var resultNodes = evaluator.Evaluate(ctx,tree);
                 Assert.AreEqual(1,resultNodes.Count());
                 Assert.AreEqual(true, resultNodes.First().AsBool());
             }

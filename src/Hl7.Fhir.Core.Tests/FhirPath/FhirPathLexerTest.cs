@@ -301,13 +301,13 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
         [TestMethod]
-        public void FhirPath_Lex_RootSpec()
+        public void FhirPath_Lex_AxisSpec()
         {
-            var parser = Lexer.RootSpec.End();
+            var parser = Lexer.AxisSpec.End();
 
-            SucceedsPrefixString(parser, "$context");
-            SucceedsPrefixString(parser, "$resource");
-            SucceedsPrefixString(parser, "$parent");
+            AssertParser.SucceedsMatch(parser, "$context", Axis.Context);
+            AssertParser.SucceedsMatch(parser, "**", Axis.Descendants);
+            AssertParser.SucceedsMatch(parser, "*", Axis.Children);
 
             AssertParser.FailsMatch(parser, "");
             AssertParser.FailsMatch(parser, "$test");
@@ -315,16 +315,8 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "$Context");
             AssertParser.FailsMatch(parser, "$Resource");
             AssertParser.FailsMatch(parser, "$Parent");
-        }
-
-        [TestMethod]
-        public void FhirPath_Lex_AxisSpec()
-        {
-            var parser = Lexer.AxisSpec.End();
 
             AssertParser.FailsMatch(parser, "");
-            AssertParser.SucceedsMatch(parser, "*");
-            AssertParser.SucceedsMatch(parser, "**");
             AssertParser.FailsMatch(parser, "***");
             AssertParser.FailsMatch(parser, "#");
             AssertParser.FailsMatch(parser, "abc");

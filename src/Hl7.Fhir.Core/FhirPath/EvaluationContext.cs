@@ -21,7 +21,6 @@ namespace Hl7.Fhir.FhirPath
     {
         public EvaluationContext()
         {
-
         }
 
         public EvaluationContext(FhirClient client)
@@ -61,6 +60,9 @@ namespace Hl7.Fhir.FhirPath
 
         public virtual IFhirPathElement ResolveResource(string url)
         {
+            if (FhirClient == null)
+                throw Error.InvalidOperation("The EvaluationContext does not have a FhirClient to use to resolve url '{0}'".FormatWith(url));
+
             try
             {
                 var resource = FhirClient.Get(url);
@@ -69,9 +71,10 @@ namespace Hl7.Fhir.FhirPath
                 var xml = FhirSerializer.SerializeResourceToXml(resource);
                 return TreeConstructor.FromXml(xml);                
             }
-            catch
+            catch(Exception e)
             {
-                return null;
+                throw e;
+                //return null;
             }
         }
     }

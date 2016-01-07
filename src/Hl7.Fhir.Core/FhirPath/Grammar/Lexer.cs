@@ -22,17 +22,17 @@ namespace Hl7.Fhir.FhirPath.Grammar
             Parse.Char('*').Once().Text().Named("Recurse");
 
         // root_spec: '$context' | '$resource' | '$parent';
-        public static readonly Parser<string> RootSpec =
+        public static readonly Parser<Axis> RootSpec =
             (from first in Parse.Char('$')
-             from spec in Parse.String("context")
-                 .Or(Parse.String("resource"))
-                 .Or(Parse.String("parent"))
-                 .Or(Parse.String("focus")).Text()
+             from spec in Parse.String("context").Return(Axis.Context)
+                 .Or(Parse.String("resource").Return(Axis.Resource))
+                 .Or(Parse.String("parent").Return(Axis.Parent))
+                 .Or(Parse.String("focus").Return(Axis.Focus))
              select spec).Named("RootSpec");
 
         // axis_spec: '*' | '**' | '$context' | '$resource' | '$parent' | '$focus';
-        public static readonly Parser<string> AxisSpec =
-            Parse.Char('*').Repeat(1, 2).Text()
+        public static readonly Parser<Axis> AxisSpec =
+                Parse.Char('*').Repeat(1, 2).Select(s => s.Count() == 1 ? Axis.Children : Axis.Descendants)
                 .XOr(RootSpec)
                 .Named("AxisSpec");
 

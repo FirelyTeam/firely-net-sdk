@@ -39,7 +39,7 @@ namespace Hl7.Fhir.FhirPath
 
         public static Evaluator Then(this Evaluator first, Evaluator then)
         {
-            return (f,c) => then(f,c);
+            return (f,c) =>  then(first(f,c),c);
         }
 
         //public static Evaluator Chain(IEnumerable<Evaluator> evaluators)
@@ -62,6 +62,30 @@ namespace Hl7.Fhir.FhirPath
         public static Evaluator Constant(string name)
         {
             return (_, ctx) => new[] { ctx.ResolveConstant(name) };
+        }
+
+
+        public static Evaluator Axis(Axis axis)
+        {
+            return (focus, ctx) =>
+            {
+                switch (axis)
+                {
+                    case FhirPath.Axis.Descendants:
+                        return focus.JustElements().Descendants();
+                    case FhirPath.Axis.Parent:
+                        return focus.JustElements().Parents();
+                    case FhirPath.Axis.Focus:
+                        return focus;
+                    case FhirPath.Axis.Children:
+                        return focus.JustElements().Children();
+                    case FhirPath.Axis.Context:
+                    case FhirPath.Axis.Resource:
+                        throw new NotImplementedException("The axes $context and $resource have not yet been implemented");
+                    default:
+                        throw new InvalidOperationException("Internal error: unknown axis '{0}'".FormatWith(axis));
+                }
+            };
         }
 
         public static Evaluator Infix(this Evaluator left, InfixOperator op, Evaluator right)
@@ -164,13 +188,38 @@ namespace Hl7.Fhir.FhirPath
 
         public static ScalarEvaluator Count()
         {
-            return (f,_) => f.Count();
+            return (f, _) => f.Count();
         }
 
         public static ScalarEvaluator AsInteger()
         {
             return (f,_) => f.AsInteger();
         }
+
+        public static Evaluator StartsWith(Evaluator prefix)
+        {
+            return (f, c) =>
+            {
+                var p = prefix(f, c).Single().AsString();
+                return f.StartingWith(p);
+            };
+        }
+
+        public static Evaluator Log(Evaluator argument)
+        {
+            return (f, c) =>
+            {
+                var arg = argument(f, c).Single().AsString();
+                c.Log(arg, f);
+                return f;
+            };
+        }
+
+        public static Evaluator Resolve()
+        {
+            return (f, c) => f.Resolve(c);
+        }
+
         public static Evaluator Children(Evaluator nameParam)
         {
             return (f,c) =>
@@ -219,6 +268,16 @@ namespace Hl7.Fhir.FhirPath
     }
 
 
+    public enum Axis
+    {
+        Children,
+        Descendants,
+        Context,
+        Resource,
+        Parent,
+        Focus
+    }
+
     public enum InfixOperator
     {
         Invoke,
@@ -246,5 +305,3 @@ namespace Hl7.Fhir.FhirPath
         Implies
     }
 }
-
-
