@@ -19,16 +19,16 @@ This library provides:
 * A REST client for working with FHIR-compliant servers
 * Helper classes to work with the specification metadata, most notably `StructureDefinition` and generation of differentials
 
-## Get Started ##
+## Getting Started ##
 Get started by reading the [online documentation][3] or downloading the NuGet packages:
 
 |Spec version|Core|Specification|
-|--|--|--|
+|---|---|---|
 |DSTU 2.1|https://www.nuget.org/packages/Hl7.Fhir.DSTU21/|https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU21/|
 |DSTU2 | https://www.nuget.org/packages/Hl7.Fhir.DSTU2/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU2/ |
 |DSTU1| https://www.nuget.org/packages/Hl7.Fhir.DSTU/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU/ |
  
-Please note that the DSTU1 release is not maintained anymore!
+**Please note that the DSTU1 release is not maintained anymore.**
 
 ## Contributing ##
 We are welcoming contributors!
