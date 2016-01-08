@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             //    @"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 3 + Patient.identifier.count()");
 
             var result = Expression.Expr.End().TryParse(
-                @"Patient.**.contains('wne') = Patient.contact.relationship.coding.system.code and
+                @"Patient.**.contains('wne') = contact.relationship.coding.system.code and
                     Patient.**.matches('i.*/gif') in Patient.photo.*");
 
             if (result.WasSuccessful)
