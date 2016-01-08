@@ -61,9 +61,15 @@ namespace Hl7.Fhir.Tests.FhirPath
             //var result = Expression.Expr.End().TryParse(
             //    @"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 3 + Patient.identifier.count()");
 
+            //var result = Expression.Expr.End().TryParse(
+            //    @"Patient.**.contains('wne') = contact.relationship.coding.system.code and
+            //        Patient.**.matches('i.*/gif') in Patient.photo.*");
+
             var result = Expression.Expr.End().TryParse(
-                @"Patient.**.contains('wne') = contact.relationship.coding.system.code and
-                    Patient.**.matches('i.*/gif') in Patient.photo.*");
+                @"'m' + gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
+                    .substring(1,4) + 
+                    gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
+                    .substring(5) = 'metrosexual'");
 
             if (result.WasSuccessful)
             {

@@ -82,7 +82,7 @@ namespace Hl7.Fhir.FhirPath
         {
             if (!Object.Equals(left.Value, right.Value)) return false;
 
-            return left.Children().IsEqualTo(right.Children());
+            return left.Children().IsEqualTo(right.Children()).AsBoolean();
         }
 
         public static bool IsEquivalentTo(this IFhirPathValue left, IFhirPathValue right)

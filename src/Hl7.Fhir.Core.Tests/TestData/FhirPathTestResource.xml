@@ -60,7 +60,11 @@
     <family value="Donald"/>
     <given value="Duck"/>
   </name>
-  <gender value="male"/>
+  <gender value="male">
+    <extension url="http://example.org/StructureDefinition/real-gender">
+      <valueCode value="metrosexual" />
+    </extension>
+  </gender>
   <deceasedBoolean value="false" />
   <photo>
     <contentType value="image/gif"/>

@@ -169,6 +169,23 @@ namespace Hl7.Fhir.FhirPath
             return FhirValueList.Empty();
         }
 
+        public static IEnumerable<IFhirPathValue> Substring(this IEnumerable<IFhirPathValue> focus, long start, long? length)
+        {
+            if(focus.Count() == 1)
+            {
+                if (focus.First().Value != null)
+                {
+                    var str = focus.First().AsStringRepresentation();
+
+                    if (length.HasValue)
+                        return FhirValueList.Create(str.Substring((int)start, (int)length.Value));
+                    else
+                        return FhirValueList.Create(str.Substring((int)start));
+                }
+            }
+
+            return FhirValueList.Empty();
+        }
 
         public static IEnumerable<IFhirPathValue> StartingWith(this IEnumerable<IFhirPathValue> focus, string prefix)
         {
@@ -210,9 +227,16 @@ namespace Hl7.Fhir.FhirPath
                 .Aggregate(0, (val, item) => Math.Max(item.AsStringRepresentation().Length, val)) );
         }
 
-        public static bool SubsetOf(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        public static IEnumerable<IFhirPathValue> SubsetOf(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
         {
             return left.All(l => right.Any(r => l.IsEqualTo(r)));
+        }
+
+
+        public static IEnumerable<IFhirPathValue> Extension(this IEnumerable<IFhirPathValue> focus, string url)
+        {
+            var urlList = FhirValueList.Create(url);
+            return focus.Children("extension").Where(es => es.Children("url").IsEqualTo(urlList));
         }
 
         public static IEnumerable<IFhirPathElement> Children(this IEnumerable<IFhirPathValue> focus, string name)
@@ -256,18 +280,18 @@ namespace Hl7.Fhir.FhirPath
             return focus.Select(node => node.Parent);
         }
 
-        public static bool IsEqualTo(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        public static IEnumerable<IFhirPathValue> IsEqualTo(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
         {
-            if (!left.Any() && !right.Any()) return true;
-            if (left.Count() != right.Count()) return false;
+            if (!left.Any() && !right.Any()) return FhirValueList.Create(true);
+            if (left.Count() != right.Count()) return FhirValueList.Create(false);
 
-            return left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x == true);
+            return FhirValueList.Create(left.Zip(right, (l, r) => l.IsEqualTo(r)).All(r => true));
         }
 
-        public static bool IsEquivalentTo(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        public static IEnumerable<IFhirPathValue> IsEquivalentTo(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
         {
-            if (!left.Any() && !right.Any()) return true;
-            if (left.Count() != right.Count()) return false;
+            if (!left.Any() && !right.Any()) return FhirValueList.Create(true);
+            if (left.Count() != right.Count()) return FhirValueList.Create(false);
 
             return left.All(l => right.Any(r => l.IsEquivalentTo(r)));
         }

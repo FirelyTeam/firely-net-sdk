@@ -89,6 +89,26 @@ namespace Hl7.Fhir.FhirPath
             return (f, _) => f.MaxLength();
         }
 
+        public static Evaluator Extension(Evaluator url)
+        {
+            return (f, c) =>
+            {
+                var u = url(f, c).AsString();
+                return f.Extension(u);
+            };
+        }
+
+        public static Evaluator Substring(Evaluator start, Evaluator length)
+        {
+            return (f, c) =>
+            {
+                long s = start(f, c).AsInteger();
+                long? l = length != null ? length(f, c).AsInteger() : (long?)null;
+
+                return f.Substring(s, l);
+            };
+        }
+
         public static Evaluator Infix(this Evaluator left, InfixOperator op, Evaluator right)
         {
             return (f,c) =>
@@ -101,9 +121,9 @@ namespace Hl7.Fhir.FhirPath
                 switch (op)
                 {
                     case InfixOperator.Equals:
-                        result = FhirValueList.Create(leftNodes.IsEqualTo(rightNodes)); break;
+                        result = leftNodes.IsEqualTo(rightNodes); break;
                     case InfixOperator.Equivalent:
-                        result = FhirValueList.Create(leftNodes.IsEquivalentTo(rightNodes)); break;
+                        result = leftNodes.IsEquivalentTo(rightNodes); break;
                     case InfixOperator.GreaterThan:
                         result = leftNodes.GreaterThan(rightNodes); break;
                     case InfixOperator.GreaterOrEqual:
@@ -133,7 +153,7 @@ namespace Hl7.Fhir.FhirPath
                     case InfixOperator.Concat:
                         result = leftNodes.Add(rightNodes); break;  // should only work for strings ;-)                        
                     case InfixOperator.In:
-                        result = FhirValueList.Create(leftNodes.SubsetOf(rightNodes)); break;
+                        result = leftNodes.SubsetOf(rightNodes); break;
                     default:
                         throw Error.NotImplemented("Infix operator '{0}' is not yet implemented".FormatWith(op));
                 }

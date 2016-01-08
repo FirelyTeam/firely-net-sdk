@@ -25,11 +25,15 @@ namespace Hl7.Fhir.FhirPath.Grammar
             return createFunctionParser(name).Select(p => invoke(func, p, name));
         }
 
-        internal static Parser<Evaluator> CreateFunctionParser(string name, string paramName, Func<Evaluator,Evaluator> func)
+        internal static Parser<Evaluator> CreateFunctionParser(string name, string paramName, Func<Evaluator,Evaluator> func, bool optional=false)
         {
-            return createFunctionParser(name).Select(p => invoke(func, p, name, paramName));
+            return createFunctionParser(name).Select(p => invoke(func, p, name, paramName, optional));
         }
 
+        internal static Parser<Evaluator> CreateFunctionParser(string name, string paramName1, string paramName2, Func<Evaluator, Evaluator, Evaluator> func, int numOptional=0)
+        {
+            return createFunctionParser(name).Select(p => invoke(func, p, name, paramName1, paramName2, numOptional));
+        }
 
         internal static Evaluator invoke(Func<Evaluator> func, IEnumerable<Evaluator> paramList, string name)
         {
@@ -39,14 +43,29 @@ namespace Hl7.Fhir.FhirPath.Grammar
                 throw Error.Argument("Function '{0}' takes no parameters".FormatWith(name));
         }
 
-        private static Evaluator invoke(Func<Evaluator, Evaluator> func, IEnumerable<Evaluator> paramList, string name, string paramName)
+        private static Evaluator invoke(Func<Evaluator, Evaluator> func, IEnumerable<Evaluator> paramList, string name, string paramName, bool optional)
         {
             if (paramList.Count() == 1)
-            {
                 return func(paramList.Single());
-            }
+            else if (paramList.Count() == 0 && optional)
+                return func(null);
             else
-                throw Error.Argument("Function '{0}' takes exactly one parameter '{1}'".FormatWith(name, paramName));
+                throw Error.Argument("Function '{0}' takes {1} parameter '{2}'".
+                    FormatWith(name, (optional ? "one optional" : "exactly one"), paramName));
+        }
+
+        private static Evaluator invoke(Func<Evaluator, Evaluator, Evaluator> func, IEnumerable<Evaluator> paramList, string name, string paramName1, string paramName2, int numOptional)
+        {
+            if (paramList.Count() == 2)
+                return func(paramList.First(), paramList.Skip(1).First());
+            else if (paramList.Count() == 1 && numOptional == 1)
+                return func(paramList.First(), null);
+            else if (paramList.Count() == 0 && numOptional == 2)
+                return func(null, null);
+            else
+                throw Error.Argument("Function '{0}' takes {1} parameter '{2}' and {3} parameter '{4}'".
+                    FormatWith(name, (numOptional == 0) ? "one" : "one optional", paramName1,
+                            (numOptional == 0) ? "one" : (numOptional == 1) ? "one optional" : "one", paramName2));
         }
 
         public static readonly Parser<Evaluator> Not = CreateFunctionParser("not", Eval.Not);
@@ -69,6 +88,8 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> Distinct = CreateFunctionParser("distinct", Eval.Distinct);
         public static readonly Parser<Evaluator> Contains = CreateFunctionParser("contains", "substring", Eval.Contains);
         public static readonly Parser<Evaluator> Matches = CreateFunctionParser("matches", "regexp", Eval.Contains);
+        public static readonly Parser<Evaluator> Extension = CreateFunctionParser("extension", "url", Eval.Extension);
+        public static readonly Parser<Evaluator> Substring = CreateFunctionParser("substring", "start", "length", Eval.Substring, numOptional:1);
 
         // function: ID '(' param_list? ')';
         // param_list: expr(',' expr)*;
@@ -82,7 +103,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
 
         public static readonly Parser<Evaluator> Function = Not.Or(Empty).Or(Where).Or(All).Or(Any).Or(Item)
                         .Or(First).Or(Last).Or(Tail).Or(Skip).Or(Take).Or(Count).Or(AsInteger).Or(StartsWith)
-                        .Or(Log).Or(Resolve).Or(Length).Or(Distinct).Or(Contains).Or(Matches)
+                        .Or(Log).Or(Resolve).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension).Or(Substring)
                         .Or(OtherFunction);
     }
 }
