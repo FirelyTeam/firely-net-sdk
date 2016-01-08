@@ -53,9 +53,13 @@ namespace Hl7.Fhir.Tests.FhirPath
             //        .log('after owner').$parent.$parent.organization.log('org').where(display.startsWith('Walt')).resolve().Organization.identifier.first().value = 'Gastro'");        
 
             // why is in an operator and not a function?
+            //var result = Expression.Expr.End().TryParse(
+            //    @"(Patient.identifier.where(use='official') in Patient.identifier) and
+            //        (Patient.identifier.first() in Patient.identifier.tail()).not()");
+
             var result = Expression.Expr.End().TryParse(
-                @"(Patient.identifier.where(use='official') in Patient.identifier) and
-                    (Patient.identifier.first() in Patient.identifier.tail()).not()");
+                @"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count().log('left') = 3 + Patient.identifier.count()");
+
 
             if (result.WasSuccessful)
             {

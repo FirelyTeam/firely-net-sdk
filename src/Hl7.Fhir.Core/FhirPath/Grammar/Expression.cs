@@ -56,8 +56,8 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> InvocExpr =
             from term in Term
             from invoc in 
-                (from firstOp in Lexer.Invoke
-                 from invocs in Parse.ChainOperator(Lexer.Invoke, Path.Invoc, (op, left, right) => left.Then(right))
+                (from firstOp in Parse.Char('.')
+                 from invocs in Parse.ChainOperator(Parse.Char('.'), Path.Invoc, (op, left, right) => left.Then(right))
                  select invocs).Optional()
             select invoc.IsEmpty ? term : term.Then(invoc.Get());
 

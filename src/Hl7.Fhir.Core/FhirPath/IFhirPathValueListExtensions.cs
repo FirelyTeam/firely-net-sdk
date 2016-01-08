@@ -119,7 +119,6 @@ namespace Hl7.Fhir.FhirPath
             return focus.Skip(index).Take(1);
         }
 
-
         public static IEnumerable<IFhirPathValue> Where(this IEnumerable<IFhirPathValue> focus, 
                         Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> condition)
         {
@@ -138,6 +137,10 @@ namespace Hl7.Fhir.FhirPath
             return FhirValueList.Create(focus.Where(v => condition(FhirValueList.Create(v)).booleanEval()));
         }
 
+        public static IEnumerable<IFhirPathValue> Distinct(this IEnumerable<IFhirPathValue> focus)
+        {
+            return focus.Distinct(new FhirPathValueEqualityComparer());
+        }
 
         public static IEnumerable<IFhirPathValue> CountItems(this IEnumerable<IFhirPathValue> focus)
         {
@@ -318,6 +321,11 @@ namespace Hl7.Fhir.FhirPath
                 yield return left.Single().Div(right.Single());
         }
 
+        //public static IEnumerable<IFhirPathValue> Union(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        //{
+        //    return left.Union(right);
+        //}
+
         ///// <summary>Enumerate the descendants of the specified nodes.</summary>
         ///// <typeparam name="T">The type of a tree node.</typeparam>
         ///// <param name="nodeSet">A set of tree nodes.</param>
@@ -370,6 +378,26 @@ namespace Hl7.Fhir.FhirPath
         //{
         //    return nodeSet.SelectMany(node => node.PrecedingSiblings());
         //}
+
+        class FhirPathValueEqualityComparer : IEqualityComparer<IFhirPathValue>
+        {
+            public bool Equals(IFhirPathValue x, IFhirPathValue y)
+            {
+                return x.IsEqualTo(y);
+            }
+
+            public int GetHashCode(IFhirPathValue value)
+            {
+                var result = value.Value != null ? value.Value.GetHashCode() : 0;
+
+                if(value is IFhirPathElement)
+                {
+                    result ^= ((IFhirPathElement)value).Name.GetHashCode();
+                }
+
+                return result;
+            }
+        }
     }
 }
 

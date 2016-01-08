@@ -76,7 +76,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
             return Parse.String(op).Token().Return(opType);
         }
 
-        internal static readonly Parser<InfixOperator> Invoke = Operator(".", InfixOperator.Invoke);
+        //internal static readonly Parser<InfixOperator> Invoke = Operator(".", InfixOperator.Invoke);
 
         internal static readonly Parser<InfixOperator> Mul = Operator("*", InfixOperator.Mul);
         internal static readonly Parser<InfixOperator> Div = Operator("/", InfixOperator.Div);

@@ -66,6 +66,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> Log = CreateFunctionParser("log", "argument", Eval.Log);
         public static readonly Parser<Evaluator> Resolve = CreateFunctionParser("resolve", Eval.Resolve);
         public static readonly Parser<Evaluator> Length = CreateFunctionParser("length", Eval.Length);
+        public static readonly Parser<Evaluator> Distinct = CreateFunctionParser("distinct", Eval.Distinct);
 
         // function: ID '(' param_list? ')';
         // param_list: expr(',' expr)*;
@@ -79,7 +80,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
 
         public static readonly Parser<Evaluator> Function = Not.Or(Empty).Or(Where).Or(All).Or(Any).Or(Item)
                         .Or(First).Or(Last).Or(Tail).Or(Skip).Or(Take).Or(Count).Or(AsInteger).Or(StartsWith)
-                        .Or(Log).Or(Resolve).Or(Length)
+                        .Or(Log).Or(Resolve).Or(Length).Or(Distinct)
                         .Or(OtherFunction);
     }
 }

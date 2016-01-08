@@ -127,6 +127,10 @@ namespace Hl7.Fhir.FhirPath
                         result = leftNodes.Xor(rightNodes); break;
                     case InfixOperator.Implies:
                         result = leftNodes.Implies(rightNodes); break;
+                    case InfixOperator.Union:
+                        result = leftNodes.Union(rightNodes); break;
+                    case InfixOperator.Concat:
+                        result = leftNodes.Add(rightNodes); break;  // should only work for strings ;-)                        
                     case InfixOperator.In:
                         result = FhirValueList.Create(leftNodes.SubsetOf(rightNodes)); break;
                     default:
@@ -239,6 +243,11 @@ namespace Hl7.Fhir.FhirPath
             return (f, c) => f.Resolve(c);
         }
 
+        public static Evaluator Distinct()
+        {
+            return (f, c) => f.Distinct();
+        }
+
         public static Evaluator Children(Evaluator nameParam)
         {
             return (f,c) =>
@@ -299,8 +308,6 @@ namespace Hl7.Fhir.FhirPath
 
     public enum InfixOperator
     {
-        Invoke,
-
         Mul,
         Div,
         Add,
