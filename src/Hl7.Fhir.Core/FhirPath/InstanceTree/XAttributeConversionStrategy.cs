@@ -4,23 +4,22 @@ using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace Hl7.Fhir.FhirPath
+namespace Hl7.Fhir.FhirPath.InstanceTree
 {
-    internal class XCommentStrategy : INodeConversionStrategy<XObject>
+    internal class XAttributeConversionStrategy : INodeConversionStrategy<XObject>
     {
-        public const string COMMENT_ELEMENT_NAME = "(comment)";
-
         public bool HandlesDocNode(XObject docNode)
         {
-            return docNode is XComment;
+            return (docNode is XAttribute) && ((XAttribute)docNode).Name.NamespaceName == "";
         }
 
         public FhirInstanceTree ConstructTreeNode(XObject docNode, FhirInstanceTree parent)
         {
-            var comment = (XComment)docNode;
+            var attr = (XAttribute)docNode;
 
-            var result = parent.AddLastChild(COMMENT_ELEMENT_NAME, (IFhirPathValue)new TypedValue(comment.Value));
-            result.AddAnnotation(new StructuralHints() { IsComment = true });
+            var newNodeName = attr.Name.LocalName;
+            var result = parent.AddLastChild(newNodeName, (IFhirPathValue)new UntypedValue(attr.Value));
+            result.AddAnnotation(new XmlRenderHints() { IsXmlAttribute = true });
 
             return result;
         }

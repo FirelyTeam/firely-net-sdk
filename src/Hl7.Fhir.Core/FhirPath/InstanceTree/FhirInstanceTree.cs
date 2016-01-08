@@ -10,7 +10,7 @@ using Hl7.Fhir.Navigation;
 using System;
 using System.Collections.Generic;
 
-namespace Hl7.Fhir.FhirPath
+namespace Hl7.Fhir.FhirPath.InstanceTree
 {
     /// <summary>Represents a FHIR navigation tree with node values of type <see cref="IFhirPathElement"/>.</summary>
     public class FhirInstanceTree : ValueNavigationTree<FhirInstanceTree, IFhirPathValue>, IFhirPathElement

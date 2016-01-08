@@ -28,27 +28,25 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void Setup()
         {
             var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
-            tree = TreeConstructor.FromXml(tpXml);
+            tree = Fhir.FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
         }
 
         [TestMethod]
         public void AsIntegerOnList()
         {
-            Assert.IsFalse(Focus.Create(1, 2).IntegerEval().Any());
-            Assert.IsFalse(Focus.Empty().IntegerEval().Any());
+            Assert.IsFalse(FhirValueList.Create(1, 2).IntegerEval().Any());
+            Assert.IsFalse(FhirValueList.Empty().IntegerEval().Any());
 
-            Assert.AreEqual(1L, Focus.Create(1).IntegerEval().AsInteger());
-            Assert.AreEqual(45L, Focus.Create("45").IntegerEval().AsInteger());
-            Assert.IsFalse(Focus.Create(4.5m).IntegerEval().Any());
-            Assert.IsFalse(Focus.Create("4.5").IntegerEval().Any());
+            Assert.AreEqual(1L, FhirValueList.Create(1).IntegerEval().AsInteger());
+            Assert.AreEqual(45L, FhirValueList.Create("45").IntegerEval().AsInteger());
+            Assert.IsFalse(FhirValueList.Create(4.5m).IntegerEval().Any());
+            Assert.IsFalse(FhirValueList.Create("4.5").IntegerEval().Any());
         }
 
         [TestMethod]
         public void CheckTypeDetermination()
         {
-            var values = Focus.Create(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now(), 
-                        new UntypedValue("1"), new UntypedValue("true"), new UntypedValue("hi"), new UntypedValue("4.0"),
-                        new UntypedValue(PartialDateTime.Now().ToString()));
+            var values = FhirValueList.Create(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now());
 
             Assert.IsInstanceOfType(values.Item(0).SingleValue(), typeof(Int64));
             Assert.IsInstanceOfType(values.Item(1).SingleValue(), typeof(Boolean));
@@ -56,12 +54,6 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.IsInstanceOfType(values.Item(3).SingleValue(), typeof(Decimal));
             Assert.IsInstanceOfType(values.Item(4).SingleValue(), typeof(Decimal));
             Assert.IsInstanceOfType(values.Item(5).SingleValue(), typeof(PartialDateTime));
-
-            Assert.IsInstanceOfType(values.Item(6).SingleValue(), typeof(Int64));
-            Assert.IsInstanceOfType(values.Item(7).SingleValue(), typeof(Boolean));
-            Assert.IsInstanceOfType(values.Item(8).SingleValue(), typeof(String));
-            Assert.IsInstanceOfType(values.Item(9).SingleValue(), typeof(Decimal));
-            Assert.IsInstanceOfType(values.Item(10).SingleValue(), typeof(PartialDateTime));
         }
 
 
@@ -69,7 +61,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void TestValueOps()
         {
             var a = new TypedValue(4);
-            var b = new UntypedValue("5");
+            var b = new TypedValue(5);
             var c = new TypedValue(5);
 
             Assert.AreEqual(9L, a.Add(b).AsInteger());
@@ -86,7 +78,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod]
         public void TestItemSelection()
         {
-            var values = Focus.Create(1, 2, 3, 4, 5, 6, 7);
+            var values = FhirValueList.Create(1, 2, 3, 4, 5, 6, 7);
 
             Assert.AreEqual((Int64)1, values.Item(0).IntegerEval().AsInteger());
             Assert.AreEqual((Int64)3, values.Item(2).IntegerEval().AsInteger());
@@ -110,7 +102,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             var values = tree;
 
             var result = values.Children("Patient").Children("identifier")
-                .Where(ctx => ctx.Children("use").IsEqualTo(Focus.Create("official"))).IsEmpty().Not();
+                .Where(ctx => ctx.Children("use").IsEqualTo(FhirValueList.Create("official"))).IsEmpty().Not();
 
             Assert.AreEqual(true, result.AsBoolean());
         }

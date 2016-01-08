@@ -8,7 +8,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Hl7.Fhir.FhirPath
+namespace Hl7.Fhir.FhirPath.InstanceTree
 {   
     public static partial class TreeConstructor
     {
@@ -108,6 +108,7 @@ namespace Hl7.Fhir.FhirPath
             return result;         
         }
 
+       
         private static XDocument xDocumentFromReader(XmlReader reader)
         {
             XDocument doc;

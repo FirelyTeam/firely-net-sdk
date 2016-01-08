@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace Hl7.Fhir.FhirPath
+namespace Hl7.Fhir.FhirPath.InstanceTree
 {
     internal class XmlLineInfoWrapper : IPositionInfo
     {

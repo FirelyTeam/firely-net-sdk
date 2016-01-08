@@ -5,7 +5,7 @@ using System.Xml.Linq;
 using System;
 using Hl7.Fhir.Navigation;
 
-namespace Hl7.Fhir.FhirPath
+namespace Hl7.Fhir.FhirPath.InstanceTree
 {
     internal class XDocumentConversionStrategy : INodeConversionStrategy<XObject>
     {        

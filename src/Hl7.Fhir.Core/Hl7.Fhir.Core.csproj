@@ -70,7 +70,7 @@
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
     <Compile Include="FhirPath\EvaluationContext.cs" />
-    <Compile Include="FhirPath\FhirInstanceTree.cs" />
+    <Compile Include="FhirPath\InstanceTree\FhirInstanceTree.cs" />
     <Compile Include="FhirPath\Grammar\Functions.cs" />
     <Compile Include="FhirPath\IEvaluationContext.cs" />
     <Compile Include="FhirPath\TypedValue.cs" />
@@ -79,7 +79,7 @@
     <Compile Include="FhirPath\IFhirPathValueExtensions.cs" />
     <Compile Include="FhirPath\PartialDateTime.cs" />
     <Compile Include="FhirPath\Grammar\Path.cs" />
-    <Compile Include="FhirPath\UntypedValue.cs" />
+    <Compile Include="FhirPath\InstanceTree\UntypedValue.cs" />
     <Compile Include="Navigation\FhirNavigationTreeOfV.cs" />
     <Compile Include="Navigation\AnnotationList.cs" />
     <Compile Include="Navigation\FhirNavigationTree.cs" />
@@ -93,18 +93,18 @@
     <Compile Include="Navigation\ValueNavigationTree.cs" />
     <Compile Include="Navigation\VariantNavigationTree.cs" />
     <Compile Include="Navigation\InstanceTreeAnnotations.cs" />
-    <Compile Include="FhirPath\XCommentStrategy.cs" />
-    <Compile Include="FhirPath\XDocumentConversionStrategy.cs" />
-    <Compile Include="FhirPath\XWhitespaceStrategy.cs" />
-    <Compile Include="FhirPath\XAttributeConversionStrategy.cs" />
-    <Compile Include="FhirPath\XElementNestedResourceConversionStrategy.cs" />
-    <Compile Include="FhirPath\XElementDivConversionStrategy.cs" />
-    <Compile Include="FhirPath\XElementConversionStrategy.cs" />
+    <Compile Include="FhirPath\InstanceTree\XCommentStrategy.cs" />
+    <Compile Include="FhirPath\InstanceTree\XDocumentConversionStrategy.cs" />
+    <Compile Include="FhirPath\InstanceTree\XWhitespaceStrategy.cs" />
+    <Compile Include="FhirPath\InstanceTree\XAttributeConversionStrategy.cs" />
+    <Compile Include="FhirPath\InstanceTree\XElementNestedResourceConversionStrategy.cs" />
+    <Compile Include="FhirPath\InstanceTree\XElementDivConversionStrategy.cs" />
+    <Compile Include="FhirPath\InstanceTree\XElementConversionStrategy.cs" />
     <Compile Include="Navigation\IAnnotatable.cs" />
     <Compile Include="Navigation\ILinkedTree.cs" />
-    <Compile Include="FhirPath\INodeConversionStrategy.cs" />
+    <Compile Include="FhirPath\InstanceTree\INodeConversionStrategy.cs" />
     <Compile Include="Support\IValueProvider.cs" />
-    <Compile Include="FhirPath\XmlLineInfoWrapper.cs" />
+    <Compile Include="FhirPath\InstanceTree\XmlLineInfoWrapper.cs" />
     <Compile Include="FhirPath\IFhirPathElementExtensions.cs" />
     <Compile Include="Navigation\LinkedTreeExtensions.cs" />
     <Compile Include="Navigation\TreeIterators.cs" />
@@ -141,7 +141,7 @@
     <Compile Include="Model\Markdown.cs" />
     <Compile Include="Model\PositiveInt.cs" />
     <Compile Include="Navigation\NavigationTree.cs" />
-    <Compile Include="FhirPath\TreeConstructorXml.cs" />
+    <Compile Include="FhirPath\InstanceTree\TreeConstructorXml.cs" />
     <Compile Include="Rest\ResourceReferenceExtensions.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
     <Compile Include="Model\Element.cs" />

@@ -82,36 +82,36 @@ namespace Hl7.Fhir.FhirPath
 
         public static IEnumerable<IFhirPathValue> BooleanEval(this IEnumerable<IFhirPathValue> focus)
         {
-            return Focus.Create(focus.booleanEval());
+            return FhirValueList.Create(focus.booleanEval());
         }
         public static IEnumerable<IFhirPathValue> IsEmpty(this IEnumerable<IFhirPathValue> focus)
         {
-            return Focus.Create(!focus.Any());
+            return FhirValueList.Create(!focus.Any());
         }
 
         public static IEnumerable<IFhirPathValue> Not(this IEnumerable<IFhirPathValue> focus)
         {
-            return Focus.Create(!focus.booleanEval());
+            return FhirValueList.Create(!focus.booleanEval());
         }
 
         public static IEnumerable<IFhirPathValue> Or(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
         {
-            return Focus.Create(left.booleanEval() || right.booleanEval());
+            return FhirValueList.Create(left.booleanEval() || right.booleanEval());
         }
 
         public static IEnumerable<IFhirPathValue> And(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
         {
-            return Focus.Create(left.booleanEval() && right.booleanEval());
+            return FhirValueList.Create(left.booleanEval() && right.booleanEval());
         }
 
         public static IEnumerable<IFhirPathValue> Xor(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
         {
-            return Focus.Create(left.booleanEval() ^ right.booleanEval());
+            return FhirValueList.Create(left.booleanEval() ^ right.booleanEval());
         }
 
         public static IEnumerable<IFhirPathValue> Implies(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
         {
-            return Focus.Create(!left.booleanEval() || right.booleanEval());
+            return FhirValueList.Create(!left.booleanEval() || right.booleanEval());
         }
 
         public static IEnumerable<IFhirPathValue> Item(this IEnumerable<IFhirPathValue> focus, int index)
@@ -123,25 +123,25 @@ namespace Hl7.Fhir.FhirPath
         public static IEnumerable<IFhirPathValue> Where(this IEnumerable<IFhirPathValue> focus, 
                         Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> condition)
         {
-            return focus.Where(v => condition(Focus.Create(v)).booleanEval());
+            return focus.Where(v => condition(FhirValueList.Create(v)).booleanEval());
         }
 
         public static IEnumerable<IFhirPathValue> All(this IEnumerable<IFhirPathValue> focus,
                 Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> condition)
         {
-            return Focus.Create(focus.All(v => condition(Focus.Create(v)).booleanEval()));
+            return FhirValueList.Create(focus.All(v => condition(FhirValueList.Create(v)).booleanEval()));
         }
 
         public static IEnumerable<IFhirPathValue> Any(this IEnumerable<IFhirPathValue> focus,
                 Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> condition)
         {
-            return Focus.Create(focus.Where(v => condition(Focus.Create(v)).booleanEval()));
+            return FhirValueList.Create(focus.Where(v => condition(FhirValueList.Create(v)).booleanEval()));
         }
 
 
         public static IEnumerable<IFhirPathValue> CountItems(this IEnumerable<IFhirPathValue> focus)
         {
-            return Focus.Create(focus.Count());
+            return FhirValueList.Create(focus.Count());
         }
 
         public static IEnumerable<IFhirPathValue> IntegerEval(this IEnumerable<IFhirPathValue> focus)
@@ -151,19 +151,19 @@ namespace Hl7.Fhir.FhirPath
                 var val = focus.Single().Value;
                 if(val != null)
                 {
-                    if (val is long) return Focus.Create((long)val);
+                    if (val is long) return FhirValueList.Create((long)val);
                     //if (val is decimal) return (Int64)Math.Round((decimal)val);
                     if (val is string)
                     {
                         long result;
                         if (Int64.TryParse((string)val, out result))
-                            return Focus.Create(result);
+                            return FhirValueList.Create(result);
                     }
 
                 }
             }
 
-            return Focus.Empty();
+            return FhirValueList.Empty();
         }
 
 
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.FhirPath
 
         public static IEnumerable<IFhirPathValue> MaxLength(this IEnumerable<IFhirPathValue> focus)
         {
-            return Focus.Create( focus.JustValues()
+            return FhirValueList.Create( focus.JustValues()
                 .Aggregate(0, (val, item) => Math.Max(item.AsStringRepresentation().Length, val)) );
         }
 

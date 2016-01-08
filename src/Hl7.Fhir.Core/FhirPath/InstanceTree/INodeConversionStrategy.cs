@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Hl7.Fhir.FhirPath
+namespace Hl7.Fhir.FhirPath.InstanceTree
 {
     internal interface INodeConversionStrategy<TInput>
     {

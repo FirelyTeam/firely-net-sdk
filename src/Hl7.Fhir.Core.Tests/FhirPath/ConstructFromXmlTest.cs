@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.FhirPath.InstanceTree;
 using Hl7.Fhir.Test.Navigation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -27,6 +28,16 @@ namespace Hl7.Fhir.Test.FhirPath
             var tree = TreeConstructor.FromXml(tpXml);
 
             Console.WriteLine(LinkedTreeTest.RenderTree(tree));
+        }
+
+        [TestMethod]
+        public void CheckTypeDetermination()
+        {
+            Assert.IsInstanceOfType(new UntypedValue("1").Value, typeof(Int64));
+            Assert.IsInstanceOfType(new UntypedValue("true").Value, typeof(Boolean));
+            Assert.IsInstanceOfType(new UntypedValue("hi").Value, typeof(String));
+            Assert.IsInstanceOfType(new UntypedValue("4.0").Value, typeof(Decimal));
+            Assert.IsInstanceOfType(new UntypedValue(PartialDateTime.Now().ToString()).Value, typeof(PartialDateTime));
         }
 
     }

@@ -29,12 +29,12 @@ namespace Hl7.Fhir.FhirPath
     {
         public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, IEvaluationContext context, IFhirPathValue instance)
         {
-            return evaluator(Focus.Create(instance), context);
+            return evaluator(FhirValueList.Create(instance), context);
         }
 
         public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, IFhirPathValue instance)
         {
-            return evaluator(Focus.Create(instance), new EvaluationContext());
+            return evaluator(FhirValueList.Create(instance), new EvaluationContext());
         }
 
         public static Evaluator Then(this Evaluator first, Evaluator then)
@@ -100,9 +100,9 @@ namespace Hl7.Fhir.FhirPath
                 switch (op)
                 {
                     case InfixOperator.Equals:
-                        result = Focus.Create(leftNodes.IsEqualTo(rightNodes)); break;
+                        result = FhirValueList.Create(leftNodes.IsEqualTo(rightNodes)); break;
                     case InfixOperator.Equivalent:
-                        result = Focus.Create(leftNodes.IsEquivalentTo(rightNodes)); break;
+                        result = FhirValueList.Create(leftNodes.IsEquivalentTo(rightNodes)); break;
                     case InfixOperator.GreaterThan:
                         result = leftNodes.GreaterThan(rightNodes); break;
                     case InfixOperator.GreaterOrEqual:
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.FhirPath
                     case InfixOperator.Implies:
                         result = leftNodes.Implies(rightNodes); break;
                     case InfixOperator.In:
-                        result = Focus.Create(leftNodes.SubsetOf(rightNodes)); break;
+                        result = FhirValueList.Create(leftNodes.SubsetOf(rightNodes)); break;
                     default:
                         throw Error.NotImplemented("Infix operator '{0}' is not yet implemented".FormatWith(op));
                 }

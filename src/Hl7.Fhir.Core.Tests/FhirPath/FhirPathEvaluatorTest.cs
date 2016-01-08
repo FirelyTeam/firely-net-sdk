@@ -18,6 +18,7 @@ using Sprache;
 using System.Diagnostics;
 using Hl7.Fhir.Navigation;
 using Hl7.Fhir.FhirPath.Grammar;
+using Hl7.Fhir.FhirPath.InstanceTree;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {

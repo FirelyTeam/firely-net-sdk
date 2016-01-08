@@ -7,6 +7,7 @@
  */
 
 
+using Hl7.Fhir.FhirPath.InstanceTree;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;

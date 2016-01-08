@@ -29,7 +29,7 @@ namespace Hl7.Fhir.FhirPath
         string Name { get; }
     }
 
-    public static class Focus
+    public static class FhirValueList
     {
         public static IEnumerable<IFhirPathValue> Create(params object[] values)
         {
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.FhirPath
                 return values.Select(value => value is IFhirPathValue ? (IFhirPathValue)value : new TypedValue(value));
             }
             else
-                return Focus.Empty();
+                return FhirValueList.Empty();
         }
 
         public static IEnumerable<IFhirPathValue> Empty()
