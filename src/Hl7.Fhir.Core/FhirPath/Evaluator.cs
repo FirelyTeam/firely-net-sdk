@@ -11,6 +11,7 @@ using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -246,6 +247,24 @@ namespace Hl7.Fhir.FhirPath
         public static Evaluator Distinct()
         {
             return (f, c) => f.Distinct();
+        }
+
+        public static Evaluator Contains(Evaluator substring)
+        {
+            return (f, c) =>
+            {
+                var subs = substring(f, c).AsString();
+                return f.JustValues().Where(v => v.AsStringRepresentation() == subs);
+            };
+        }
+
+        public static Evaluator Matches(Evaluator regexp)
+        {
+            return (f, c) =>
+            {
+                var r = regexp(f, c).AsString();
+                return f.JustValues().Where(v => Regex.IsMatch(v.AsStringRepresentation(), r));
+            };
         }
 
         public static Evaluator Children(Evaluator nameParam)

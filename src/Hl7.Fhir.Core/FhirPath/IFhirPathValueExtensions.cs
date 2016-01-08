@@ -42,7 +42,10 @@ namespace Hl7.Fhir.FhirPath
         {
             if (me.Value == null) return null;
 
-            return PrimitiveTypeConverter.ConvertTo<string>(me.Value);
+            if (me.Value is PartialDateTime)
+                return me.Value.ToString();
+            else
+                return PrimitiveTypeConverter.ConvertTo<string>(me.Value);
         }
 
         public static IFhirPathValue Add(this IFhirPathValue left, IFhirPathValue right)

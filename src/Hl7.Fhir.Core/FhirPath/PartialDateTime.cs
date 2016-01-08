@@ -62,7 +62,21 @@ namespace Hl7.Fhir.FhirPath
 
         public override string ToString()
         {
-            return XmlConvert.ToString(Value);
+            var representation = XmlConvert.ToString(Value);
+
+            switch (Prec)
+            {
+                case Precision.Year:
+                    return representation.Substring(0, 4);
+                case Precision.Month:
+                    return representation.Substring(0, 7);
+                case Precision.Day:
+                    return representation.Substring(0, 10);
+                case Precision.Time:
+                    return representation;
+                default:
+                    return representation;
+            }
         }
 
         public static PartialDateTime Now()

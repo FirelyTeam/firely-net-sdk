@@ -48,18 +48,22 @@ namespace Hl7.Fhir.Tests.FhirPath
             //    @"(Patient.identifier.where ( use = ( 'offic' + 'ial')) = 
             //           Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = Patient.identifier.first())");
 
+            // xpath gebruikt $current for $focus....waarom dat niet gebruiken?
             //var result = Expression.Expr.End().TryParse(
             //    @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and $focus.code = 'owner')
-            //        .log('after owner').$parent.$parent.organization.log('org').where(display.startsWith('Walt')).resolve().Organization.identifier.first().value = 'Gastro'");        
+            //        .log('after owner').$parent.$parent.organization.log('org').where(display.startsWith('Walt')).resolve().identifier.first().value = 'Gastro'");        
 
             // why is in an operator and not a function?
             //var result = Expression.Expr.End().TryParse(
             //    @"(Patient.identifier.where(use='official') in Patient.identifier) and
             //        (Patient.identifier.first() in Patient.identifier.tail()).not()");
 
-            var result = Expression.Expr.End().TryParse(
-                @"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count().log('left') = 3 + Patient.identifier.count()");
+            //var result = Expression.Expr.End().TryParse(
+            //    @"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 3 + Patient.identifier.count()");
 
+            var result = Expression.Expr.End().TryParse(
+                @"Patient.**.contains('wne') = Patient.contact.relationship.coding.system.code and
+                    Patient.**.matches('i.*/gif') in Patient.photo.*");
 
             if (result.WasSuccessful)
             {
