@@ -242,9 +242,8 @@ namespace Hl7.Fhir.FhirPath
 
 
         public static IEnumerable<IFhirPathValue> Extension(this IEnumerable<IFhirPathValue> focus, string url)
-        {
-            var urlList = FhirValueList.Create(url);
-            return focus.Children("extension").Where(es => es.Children("url").IsEqualTo(urlList));
+        {            
+            return focus.Children("extension").Where(es => es.Children("url").IsEqualTo(url));
         }
 
         public static IEnumerable<IFhirPathElement> Children(this IEnumerable<IFhirPathValue> focus, string name)
@@ -294,6 +293,12 @@ namespace Hl7.Fhir.FhirPath
             if (left.Count() != right.Count()) return FhirValueList.Create(false);
 
             return FhirValueList.Create(left.Zip(right, (l, r) => l.IsEqualTo(r)).All(r => true));
+        }
+
+        public static IEnumerable<IFhirPathValue> IsEqualTo(this IEnumerable<IFhirPathValue> left, object value)
+        {
+            var result = left.SingleOrDefault(v => Object.Equals(v.Value,value)) != null;
+            return FhirValueList.Create(result);
         }
 
         public static IEnumerable<IFhirPathValue> IsEquivalentTo(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)

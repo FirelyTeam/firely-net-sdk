@@ -68,12 +68,12 @@ namespace Hl7.Fhir.Tests.FhirPath
             //        gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
             //        .substring(5) = 'metrosexual'");
 
-            var result = Expression.Expr.End().TryParse(
-                @"Patient.identifier.any(use='official') and identifier.where(use='usual').any()");
-
             //var result = Expression.Expr.End().TryParse(
-            //        @"gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
-            //        .select('m' + $focus.substring(1,4) + $focus.substring(5)) = 'metrosexual'");
+            //    @"Patient.identifier.any(use='official') and identifier.where(use='usual').any()");
+
+            var result = Expression.Expr.End().TryParse(
+                    @"gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
+                    .select('m' + $focus.substring(1,4) + $focus.substring(5)) = 'metrosexual'");
 
             if (result.WasSuccessful)
             {
