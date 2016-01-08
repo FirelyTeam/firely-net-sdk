@@ -15,7 +15,7 @@ using System.Linq;
 namespace Hl7.Fhir.FhirPath
 {
     public delegate IEnumerable<IFhirPathValue> Evaluator(IEnumerable<IFhirPathValue> focus, IEvaluationContext ctx);
-    public delegate object ScalarEvaluator(IEnumerable<IFhirPathValue> focus, IEvaluationContext ctx);
+   // public delegate object ScalarEvaluator(IEnumerable<IFhirPathValue> focus, IEvaluationContext ctx);
 
     // There is a special case around the entry point, where the type of the entry point can be represented, but is optional.
     // To illustrate this point, take the path
@@ -48,11 +48,6 @@ namespace Hl7.Fhir.FhirPath
         //        evaluators.Aggregate(c, (result, next) => next(result));
         //}
 
-
-        public static Evaluator CastToCollection(ScalarEvaluator scalar)
-        {
-            return (f,c) => scalar != null ? Focus.Create(scalar(f,c)) : Focus.Empty();
-        }
 
         public static Evaluator TypedValue(object value)
         {
@@ -88,7 +83,7 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
-        public static ScalarEvaluator Length()
+        public static Evaluator Length()
         {
             return (f, _) => f.MaxLength();
         }
@@ -125,13 +120,13 @@ namespace Hl7.Fhir.FhirPath
                     case InfixOperator.Div:
                         result = leftNodes.Div(rightNodes); break;
                     case InfixOperator.And:
-                        result = Focus.Create(leftNodes.AsBoolean() && rightNodes.AsBoolean()); break;
+                        result = leftNodes.And(rightNodes); break;
                     case InfixOperator.Or:
-                        result = Focus.Create(leftNodes.AsBoolean() || rightNodes.AsBoolean()); break;
+                        result = leftNodes.Or(rightNodes); break;
                     case InfixOperator.Xor:
-                        result = Focus.Create(leftNodes.AsBoolean() ^ rightNodes.AsBoolean()); break;
+                        result = leftNodes.Xor(rightNodes); break;
                     case InfixOperator.Implies:
-                        result = Focus.Create(!leftNodes.AsBoolean() || rightNodes.AsBoolean()); break;
+                        result = leftNodes.Implies(rightNodes); break;
                     case InfixOperator.In:
                         result = Focus.Create(leftNodes.SubsetOf(rightNodes)); break;
                     default:
@@ -144,30 +139,30 @@ namespace Hl7.Fhir.FhirPath
 
         public static Evaluator Where(Evaluator condition)
         {
-            return (f,c)=> f.Where(element => condition(Focus.Create(element),c).AsBoolean());
+            return (f,c)=> f.Where(elements => condition(elements,c));
         }
 
-        public static ScalarEvaluator All(Evaluator condition)
+        public static Evaluator All(Evaluator condition)
         {
-            return (f,c) => f.Empty() || f.All(ctx => condition(Focus.Create(ctx),c).AsBoolean());
+            return (f,c) => f.All(elements => condition(elements,c));
         }
 
-        public static ScalarEvaluator Any(Evaluator condition)
+        public static Evaluator Any(Evaluator condition)
         {
-            return (f,c) => f.Any(ctx => condition(Focus.Create(ctx),c).AsBoolean());
+            return (f, c) => f.Any(elements => condition(elements, c));
         }
 
-        public static ScalarEvaluator Empty()
+        public static Evaluator Empty()
         {
-            return (f,_)=> f.Empty();
+            return (f,_)=> f.IsEmpty();
         }
 
-        public static ScalarEvaluator Not()
+        public static Evaluator Not()
         {
-            return (f,_)=> !f.AsBoolean();
+            return (f, _) => f.Not();
         }
 
-        public static ScalarEvaluator Item(Evaluator index)
+        public static Evaluator Item(Evaluator index)
         {
             return (f,c) =>
             {
@@ -176,15 +171,15 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
-        public static ScalarEvaluator First()
+        public static Evaluator First()
         {
-            return (f,_) => f.FirstOrDefault();
+            return (f,_) => f.Take(1);
         }
 
 
-        public static ScalarEvaluator Last()
+        public static Evaluator Last()
         {
-            return (f,_) => f.LastOrDefault();
+            return (f, _) => f.Reverse().Take(1);
         }
 
         public static Evaluator Tail()
@@ -210,14 +205,14 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
-        public static ScalarEvaluator Count()
+        public static Evaluator Count()
         {
-            return (f, _) => f.Count();
+            return (f, _) => f.CountItems();
         }
 
-        public static ScalarEvaluator AsInteger()
+        public static Evaluator AsInteger()
         {
-            return (f,_) => f.AsInteger();
+            return (f,_) => f.IntegerEval();
         }
 
         public static Evaluator StartsWith(Evaluator prefix)

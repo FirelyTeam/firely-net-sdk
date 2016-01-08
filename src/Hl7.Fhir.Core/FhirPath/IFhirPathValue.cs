@@ -33,7 +33,12 @@ namespace Hl7.Fhir.FhirPath
     {
         public static IEnumerable<IFhirPathValue> Create(params object[] values)
         {
-            return values.Select(value => value is IFhirPathValue ? (IFhirPathValue)value : new TypedValue(value));
+            if (values != null)
+            {
+                return values.Select(value => value is IFhirPathValue ? (IFhirPathValue)value : new TypedValue(value));
+            }
+            else
+                return Focus.Empty();
         }
 
         public static IEnumerable<IFhirPathValue> Empty()

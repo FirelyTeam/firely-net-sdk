@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 
                 var resultNodes = evaluator.Evaluate(ctx,tree);
                 Assert.AreEqual(1,resultNodes.Count());
-                Assert.AreEqual(true, resultNodes.First().AsBool());
+                Assert.AreEqual(true, resultNodes.First().AsBoolean());
             }
             else
             {

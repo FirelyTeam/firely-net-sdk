@@ -23,7 +23,7 @@ namespace Hl7.Fhir.FhirPath
             return (decimal)me.Value;
         }
 
-        public static bool AsBool(this IFhirPathValue me)
+        public static bool AsBoolean(this IFhirPathValue me)
         {
             if (me.Value == null) throw Error.ArgumentNull("me");
             return (bool)me.Value;

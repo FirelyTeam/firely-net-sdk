@@ -29,7 +29,37 @@ namespace Hl7.Fhir.FhirPath
             return focus.Where(f => f.Value != null);
         }
    
+        public static object SingleValue(this IEnumerable<IFhirPathValue> focus)
+        {
+            return focus.JustValues().Single().Value;
+        }
+
+        public static long AsInteger(this IEnumerable<IFhirPathValue> focus)
+        {
+            return focus.Single().AsInteger();
+        }
+
+        public static decimal AsDecimal(this IEnumerable<IFhirPathValue> focus)
+        {
+            return focus.Single().AsDecimal();
+        }
+
         public static bool AsBoolean(this IEnumerable<IFhirPathValue> focus)
+        {
+            return focus.Single().AsBoolean();
+        }
+
+        public static string AsString(this IEnumerable<IFhirPathValue> focus)
+        {
+            return focus.Single().AsString();
+        }
+
+        public static PartialDateTime AsDateTime(this IEnumerable<IFhirPathValue> focus)
+        {
+            return focus.Single().AsDateTime();
+        }
+
+        private static bool booleanEval(this IEnumerable<IFhirPathValue> focus)
         {
             var result = false;
 
@@ -40,7 +70,7 @@ namespace Hl7.Fhir.FhirPath
             // A single result that's a boolean should be interpreted as a boolean
             else if (focus.JustValues().Count() == 1 && focus.JustValues().Single().Value is Boolean)
             {
-                return focus.Single().AsBool();
+                return focus.Single().AsBoolean();
             }
 
             // Otherwise, we have "some" content, which we'll consider "true"
@@ -50,36 +80,90 @@ namespace Hl7.Fhir.FhirPath
             return result;
         }
 
-        public static bool Empty(this IEnumerable<IFhirPathValue> focus)
+        public static IEnumerable<IFhirPathValue> BooleanEval(this IEnumerable<IFhirPathValue> focus)
         {
-            return !focus.Any();
+            return Focus.Create(focus.booleanEval());
+        }
+        public static IEnumerable<IFhirPathValue> IsEmpty(this IEnumerable<IFhirPathValue> focus)
+        {
+            return Focus.Create(!focus.Any());
         }
 
-        public static IFhirPathValue Item(this IEnumerable<IFhirPathValue> focus, int index)
+        public static IEnumerable<IFhirPathValue> Not(this IEnumerable<IFhirPathValue> focus)
         {
-            return focus.Skip(index).FirstOrDefault();
+            return Focus.Create(!focus.booleanEval());
         }
 
-        public static long? AsInteger(this IEnumerable<IFhirPathValue> focus)
+        public static IEnumerable<IFhirPathValue> Or(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            return Focus.Create(left.booleanEval() || right.booleanEval());
+        }
+
+        public static IEnumerable<IFhirPathValue> And(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            return Focus.Create(left.booleanEval() && right.booleanEval());
+        }
+
+        public static IEnumerable<IFhirPathValue> Xor(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            return Focus.Create(left.booleanEval() ^ right.booleanEval());
+        }
+
+        public static IEnumerable<IFhirPathValue> Implies(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            return Focus.Create(!left.booleanEval() || right.booleanEval());
+        }
+
+        public static IEnumerable<IFhirPathValue> Item(this IEnumerable<IFhirPathValue> focus, int index)
+        {
+            return focus.Skip(index).Take(1);
+        }
+
+
+        public static IEnumerable<IFhirPathValue> Where(this IEnumerable<IFhirPathValue> focus, 
+                        Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> condition)
+        {
+            return focus.Where(v => condition(Focus.Create(v)).booleanEval());
+        }
+
+        public static IEnumerable<IFhirPathValue> All(this IEnumerable<IFhirPathValue> focus,
+                Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> condition)
+        {
+            return Focus.Create(focus.All(v => condition(Focus.Create(v)).booleanEval()));
+        }
+
+        public static IEnumerable<IFhirPathValue> Any(this IEnumerable<IFhirPathValue> focus,
+                Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> condition)
+        {
+            return Focus.Create(focus.Where(v => condition(Focus.Create(v)).booleanEval()));
+        }
+
+
+        public static IEnumerable<IFhirPathValue> CountItems(this IEnumerable<IFhirPathValue> focus)
+        {
+            return Focus.Create(focus.Count());
+        }
+
+        public static IEnumerable<IFhirPathValue> IntegerEval(this IEnumerable<IFhirPathValue> focus)
         {
             if (focus.JustValues().Count() == 1)
             {
                 var val = focus.Single().Value;
                 if(val != null)
                 {
-                    if (val is long) return (long)val;
+                    if (val is long) return Focus.Create((long)val);
                     //if (val is decimal) return (Int64)Math.Round((decimal)val);
                     if (val is string)
                     {
                         long result;
                         if (Int64.TryParse((string)val, out result))
-                            return result;
+                            return Focus.Create(result);
                     }
 
                 }
             }
 
-            return null;
+            return Focus.Empty();
         }
 
 
@@ -117,10 +201,10 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
-        public static int MaxLength(this IEnumerable<IFhirPathValue> focus)
+        public static IEnumerable<IFhirPathValue> MaxLength(this IEnumerable<IFhirPathValue> focus)
         {
-            return focus.JustValues()
-                .Aggregate(0, (val, item) => Math.Max(item.AsStringRepresentation().Length, val));
+            return Focus.Create( focus.JustValues()
+                .Aggregate(0, (val, item) => Math.Max(item.AsStringRepresentation().Length, val)) );
         }
 
         public static bool SubsetOf(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)

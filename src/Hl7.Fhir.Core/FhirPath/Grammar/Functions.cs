@@ -20,16 +20,6 @@ namespace Hl7.Fhir.FhirPath.Grammar
                 select paramList.GetOrElse(Enumerable.Empty<Evaluator>());
         }
 
-        internal static Parser<Evaluator> CreateScalarFunctionParser(string name, Func<ScalarEvaluator> func)
-        {
-            return createFunctionParser(name).Select(p => invoke(() => Eval.CastToCollection(func()), p, name));
-        }
-
-        internal static Parser<Evaluator> CreateScalarFunctionParser(string name, string paramName, Func<Evaluator, ScalarEvaluator> func)
-        {
-            return createFunctionParser(name).Select(p => invoke(paramEval => Eval.CastToCollection(func(paramEval)), p, name, paramName));
-        }
-
         internal static Parser<Evaluator> CreateFunctionParser(string name, Func<Evaluator> func)
         {
             return createFunctionParser(name).Select(p => invoke(func, p, name));
@@ -59,23 +49,23 @@ namespace Hl7.Fhir.FhirPath.Grammar
                 throw Error.Argument("Function '{0}' takes exactly one parameter '{1}'".FormatWith(name, paramName));
         }
 
-        public static readonly Parser<Evaluator> Not = CreateScalarFunctionParser("not", Eval.Not);
-        public static readonly Parser<Evaluator> Empty = CreateScalarFunctionParser("empty", Eval.Empty);
+        public static readonly Parser<Evaluator> Not = CreateFunctionParser("not", Eval.Not);
+        public static readonly Parser<Evaluator> Empty = CreateFunctionParser("empty", Eval.Empty);
         public static readonly Parser<Evaluator> Where = CreateFunctionParser("where", "criterium", Eval.Where);
-        public static readonly Parser<Evaluator> All = CreateScalarFunctionParser("all", "criterium", Eval.All);
-        public static readonly Parser<Evaluator> Any = CreateScalarFunctionParser("any", "criterium", Eval.Any);
-        public static readonly Parser<Evaluator> Item = CreateScalarFunctionParser("item", "index", Eval.Item);
-        public static readonly Parser<Evaluator> First = CreateScalarFunctionParser("first", Eval.First);
-        public static readonly Parser<Evaluator> Last = CreateScalarFunctionParser("last", Eval.Last);
+        public static readonly Parser<Evaluator> All = CreateFunctionParser("all", "criterium", Eval.All);
+        public static readonly Parser<Evaluator> Any = CreateFunctionParser("any", "criterium", Eval.Any);
+        public static readonly Parser<Evaluator> Item = CreateFunctionParser("item", "index", Eval.Item);
+        public static readonly Parser<Evaluator> First = CreateFunctionParser("first", Eval.First);
+        public static readonly Parser<Evaluator> Last = CreateFunctionParser("last", Eval.Last);
         public static readonly Parser<Evaluator> Tail = CreateFunctionParser("tail", Eval.Tail);
         public static readonly Parser<Evaluator> Skip = CreateFunctionParser("skip", "num", Eval.Skip);
         public static readonly Parser<Evaluator> Take = CreateFunctionParser("take", "num", Eval.Take);
-        public static readonly Parser<Evaluator> Count = CreateScalarFunctionParser("count", Eval.Count);
-        public static readonly Parser<Evaluator> AsInteger = CreateScalarFunctionParser("asInteger", Eval.AsInteger);
+        public static readonly Parser<Evaluator> Count = CreateFunctionParser("count", Eval.Count);
+        public static readonly Parser<Evaluator> AsInteger = CreateFunctionParser("asInteger", Eval.AsInteger);
         public static readonly Parser<Evaluator> StartsWith = CreateFunctionParser("startsWith", "prefix", Eval.StartsWith);
         public static readonly Parser<Evaluator> Log = CreateFunctionParser("log", "argument", Eval.Log);
         public static readonly Parser<Evaluator> Resolve = CreateFunctionParser("resolve", Eval.Resolve);
-        public static readonly Parser<Evaluator> Length = CreateScalarFunctionParser("length", Eval.Length);
+        public static readonly Parser<Evaluator> Length = CreateFunctionParser("length", Eval.Length);
 
         // function: ID '(' param_list? ')';
         // param_list: expr(',' expr)*;
