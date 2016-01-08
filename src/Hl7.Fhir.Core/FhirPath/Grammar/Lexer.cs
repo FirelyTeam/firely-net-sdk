@@ -85,7 +85,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
         internal static readonly Parser<InfixOperator> Union = Operator("|", InfixOperator.Union);
         internal static readonly Parser<InfixOperator> Concat = Operator("&", InfixOperator.Concat);
 
-        internal static readonly Parser<InfixOperator> Equal = Operator("=", InfixOperator.Equal);
+        internal static readonly Parser<InfixOperator> Equal = Operator("=", InfixOperator.Equals);
         internal static readonly Parser<InfixOperator> Equivalent = Operator("~", InfixOperator.Equivalent);
         internal static readonly Parser<InfixOperator> NotEqual = Operator("!=", InfixOperator.NotEqual);
         internal static readonly Parser<InfixOperator> NotEquivalent = Operator("!~", InfixOperator.NotEquivalent);

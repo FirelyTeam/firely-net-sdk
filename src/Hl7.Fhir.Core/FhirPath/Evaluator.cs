@@ -100,28 +100,45 @@ namespace Hl7.Fhir.FhirPath
                 var leftNodes = left(f,c);
                 var rightNodes = right(f,c);
 
+                IEnumerable<IFhirPathValue> result = null;
+
                 switch (op)
                 {
-                    case InfixOperator.Equal:
-                        return Focus.Create(leftNodes.IsEqualTo(rightNodes));
+                    case InfixOperator.Equals:
+                        result = Focus.Create(leftNodes.IsEqualTo(rightNodes)); break;
+                    case InfixOperator.Equivalent:
+                        result = Focus.Create(leftNodes.IsEquivalentTo(rightNodes)); break;
+                    case InfixOperator.GreaterThan:
+                        result = leftNodes.GreaterThan(rightNodes); break;
+                    case InfixOperator.GreaterOrEqual:
+                        result = leftNodes.GreaterOrEqual(rightNodes); break;
+                    case InfixOperator.LessThan:
+                        result = leftNodes.LessThan(rightNodes); break;
+                    case InfixOperator.LessOrEqual:
+                        result = leftNodes.LessOrEqual(rightNodes); break;
                     case InfixOperator.Add:
+                        result = leftNodes.Add(rightNodes); break;
                     case InfixOperator.Sub:
+                        result = leftNodes.Sub(rightNodes); break;
                     case InfixOperator.Mul:
+                        result = leftNodes.Mul(rightNodes); break;
                     case InfixOperator.Div:
-                        return leftNodes.Operator(op,rightNodes);
+                        result = leftNodes.Div(rightNodes); break;
                     case InfixOperator.And:
-                        return Focus.Create(leftNodes.AsBoolean() && rightNodes.AsBoolean());
+                        result = Focus.Create(leftNodes.AsBoolean() && rightNodes.AsBoolean()); break;
                     case InfixOperator.Or:
-                        return Focus.Create(leftNodes.AsBoolean() || rightNodes.AsBoolean());
+                        result = Focus.Create(leftNodes.AsBoolean() || rightNodes.AsBoolean()); break;
                     case InfixOperator.Xor:
-                        return Focus.Create(leftNodes.AsBoolean() ^ rightNodes.AsBoolean());
+                        result = Focus.Create(leftNodes.AsBoolean() ^ rightNodes.AsBoolean()); break;
                     case InfixOperator.Implies:
-                        return Focus.Create(!leftNodes.AsBoolean() || rightNodes.AsBoolean());
+                        result = Focus.Create(!leftNodes.AsBoolean() || rightNodes.AsBoolean()); break;
                     case InfixOperator.In:
-                        return Focus.Create(leftNodes.AllIn(rightNodes));
+                        result = Focus.Create(leftNodes.SubsetOf(rightNodes)); break;
                     default:
                         throw Error.NotImplemented("Infix operator '{0}' is not yet implemented".FormatWith(op));
                 }
+
+                return result;
             };
         }
 
@@ -296,7 +313,7 @@ namespace Hl7.Fhir.FhirPath
         Union,
         Concat,
 
-        Equal,
+        Equals,
         Equivalent,
         NotEqual,
         NotEquivalent,

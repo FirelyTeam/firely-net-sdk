@@ -51,6 +51,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             //    @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and $focus.code = 'owner')
             //        .log('after owner').$parent.$parent.organization.log('org').where(display.startsWith('Walt')).resolve().Organization.identifier.first().value = 'Gastro'");        
 
+            // why is in an operator and not a function?
             var result = Expression.Expr.End().TryParse(
                 @"(Patient.identifier.where(use='official') in Patient.identifier) and
                     (Patient.identifier.first() in Patient.identifier.tail()).not()");

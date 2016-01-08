@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.FhirPath
 {
-    public static class Operations
+    public static class IFhirPathValueListExtensions
     {
 
         public static IEnumerable<IFhirPathElement> JustElements(this IEnumerable<IFhirPathValue> focus)
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.FhirPath
                 .Aggregate(0, (val, item) => Math.Max(item.AsStringRepresentation().Length, val));
         }
 
-        public static bool AllIn(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        public static bool SubsetOf(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
         {
             return left.All(l => right.Any(r => l.IsEqualTo(r)));
         }
@@ -169,18 +169,69 @@ namespace Hl7.Fhir.FhirPath
             return focus.Select(node => node.Parent);
         }
 
-        public static bool IsEqualTo(this IEnumerable<IFhirPathValue> us, IEnumerable<IFhirPathValue> them)
+        public static bool IsEqualTo(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
         {
-            if (!us.Any() && !them.Any()) return true;
-            if (us.Count() != them.Count()) return false;
+            if (!left.Any() && !right.Any()) return true;
+            if (left.Count() != right.Count()) return false;
 
-            return us.Zip(them, (left, right) => left.IsEqualTo(right)).All(r => r == true);
+            return left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x == true);
         }
 
-        public static IEnumerable<IFhirPathValue> Operator(this IEnumerable<IFhirPathValue> left, InfixOperator op, IEnumerable<IFhirPathValue> right)
+        public static bool IsEquivalentTo(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            if (!left.Any() && !right.Any()) return true;
+            if (left.Count() != right.Count()) return false;
+
+            return left.All(l => right.Any(r => l.IsEquivalentTo(r)));
+        }
+
+
+        public static IEnumerable<IFhirPathValue> GreaterThan(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
         {
             if (left.Count() == 1 && right.Count() == 1)
-                yield return left.Single().Operator(op,right.Single());
+                yield return left.Single().GreaterThan(right.Single());
+        }
+
+        public static IEnumerable<IFhirPathValue> GreaterOrEqual(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            if (left.Count() == 1 && right.Count() == 1)
+                yield return left.Single().GreaterOrEqual(right.Single());
+        }
+
+        public static IEnumerable<IFhirPathValue> LessThan(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            if (left.Count() == 1 && right.Count() == 1)
+                yield return left.Single().LessThan(right.Single());
+        }
+
+        public static IEnumerable<IFhirPathValue> LessOrEqual(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            if (left.Count() == 1 && right.Count() == 1)
+                yield return left.Single().LessOrEqual(right.Single());
+        }
+
+        public static IEnumerable<IFhirPathValue> Add(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            if (left.Count() == 1 && right.Count() == 1)
+                yield return left.Single().Add(right.Single());
+        }
+
+        public static IEnumerable<IFhirPathValue> Sub(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            if (left.Count() == 1 && right.Count() == 1)
+                yield return left.Single().Sub(right.Single());
+        }
+
+        public static IEnumerable<IFhirPathValue> Mul(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            if (left.Count() == 1 && right.Count() == 1)
+                yield return left.Single().Mul(right.Single());
+        }
+
+        public static IEnumerable<IFhirPathValue> Div(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            if (left.Count() == 1 && right.Count() == 1)
+                yield return left.Single().Div(right.Single());
         }
 
         ///// <summary>Enumerate the descendants of the specified nodes.</summary>
@@ -191,7 +242,6 @@ namespace Hl7.Fhir.FhirPath
         //{
         //    return nodeSet.SelectMany(node => node.Descendants());
         //}
-
         ///// <summary>Enumerate the specified nodes and their descendants.</summary>
         ///// <typeparam name="T">The type of a tree node.</typeparam>
         ///// <param name="nodeSet">A set of tree nodes.</param>

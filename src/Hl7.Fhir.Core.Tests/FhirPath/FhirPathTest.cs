@@ -66,14 +66,21 @@ namespace Hl7.Fhir.Tests.FhirPath
 
 
         [TestMethod]
-        public void TestAdd()
+        public void TestValueOps()
         {
             var a = new TypedValue(4);
             var b = new UntypedValue("5");
+            var c = new TypedValue(5);
 
-            var result = a.Operator(InfixOperator.Add,b);
-
-            Assert.AreEqual(9L, result.AsInteger());
+            Assert.AreEqual(9L, a.Add(b).AsInteger());
+            Assert.AreEqual(-1L, a.Sub(b).AsInteger());
+            Assert.IsTrue(a.LessThan(b).AsBool());
+            Assert.IsTrue(a.LessOrEqual(b).AsBool());
+            Assert.IsFalse(a.GreaterThan(b).AsBool());
+            Assert.IsFalse(a.GreaterOrEqual(b).AsBool());
+            Assert.IsTrue(b.IsEqualTo(c));
+            Assert.IsTrue(b.LessOrEqual(c).AsBool());
+            Assert.IsTrue(b.GreaterOrEqual(c).AsBool());
         }
 
         [TestMethod]
