@@ -125,17 +125,25 @@ namespace Hl7.Fhir.FhirPath
             return focus.Where(v => condition(FhirValueList.Create(v)).booleanEval());
         }
 
+        public static IEnumerable<IFhirPathValue> Any(this IEnumerable<IFhirPathValue> focus,
+        Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> condition)
+        {
+            return FhirValueList.Create(focus.Any(v => condition(FhirValueList.Create(v)).booleanEval()));
+        }
+
         public static IEnumerable<IFhirPathValue> All(this IEnumerable<IFhirPathValue> focus,
                 Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> condition)
         {
             return FhirValueList.Create(focus.All(v => condition(FhirValueList.Create(v)).booleanEval()));
         }
 
-        public static IEnumerable<IFhirPathValue> Any(this IEnumerable<IFhirPathValue> focus,
-                Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> condition)
+
+        public static IEnumerable<IFhirPathValue> Select(this IEnumerable<IFhirPathValue> focus,
+                Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> mapper)
         {
-            return FhirValueList.Create(focus.Where(v => condition(FhirValueList.Create(v)).booleanEval()));
+            return focus.SelectMany(v => mapper(FhirValueList.Create(v)));
         }
+
 
         public static IEnumerable<IFhirPathValue> Distinct(this IEnumerable<IFhirPathValue> focus)
         {

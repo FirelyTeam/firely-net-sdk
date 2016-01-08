@@ -41,9 +41,6 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod]
         public void TestExpression()
         {
-            //var result = Expression.Expr.TryParse("(4>$parent.bla*.blie.(jee+4).bloe.where(parent>5,false != true))and(%bla>=6)");
-            //var result = Expression.FpConst.TryParse("4.5");
-
             //var result = Expression.Expr.End().TryParse(
             //    @"(Patient.identifier.where ( use = ( 'offic' + 'ial')) = 
             //           Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = Patient.identifier.first())");
@@ -65,11 +62,18 @@ namespace Hl7.Fhir.Tests.FhirPath
             //    @"Patient.**.contains('wne') = contact.relationship.coding.system.code and
             //        Patient.**.matches('i.*/gif') in Patient.photo.*");
 
+            //var result = Expression.Expr.End().TryParse(
+            //    @"'m' + gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
+            //        .substring(1,4) + 
+            //        gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
+            //        .substring(5) = 'metrosexual'");
+
             var result = Expression.Expr.End().TryParse(
-                @"'m' + gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
-                    .substring(1,4) + 
-                    gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
-                    .substring(5) = 'metrosexual'");
+                @"Patient.identifier.any(use='official') and identifier.where(use='usual').any()");
+
+            //var result = Expression.Expr.End().TryParse(
+            //        @"gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
+            //        .select('m' + $focus.substring(1,4) + $focus.substring(5)) = 'metrosexual'");
 
             if (result.WasSuccessful)
             {

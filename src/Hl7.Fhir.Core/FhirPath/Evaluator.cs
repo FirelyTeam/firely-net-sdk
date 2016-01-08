@@ -174,7 +174,18 @@ namespace Hl7.Fhir.FhirPath
 
         public static Evaluator Any(Evaluator condition)
         {
-            return (f, c) => f.Any(elements => condition(elements, c));
+            return (f, c) =>
+            {
+                if (condition != null)
+                    return f.Any(elements => condition(elements, c));
+                else
+                    return FhirValueList.Create(f.Any());
+            };
+        }
+
+        public static Evaluator Select(Evaluator mapper)
+        {
+            return (f, c) => f.Select(elements => mapper(elements, c));
         }
 
         public static Evaluator Empty()

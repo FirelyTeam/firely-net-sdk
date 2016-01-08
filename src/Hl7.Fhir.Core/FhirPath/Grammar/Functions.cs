@@ -72,7 +72,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> Empty = CreateFunctionParser("empty", Eval.Empty);
         public static readonly Parser<Evaluator> Where = CreateFunctionParser("where", "criterium", Eval.Where);
         public static readonly Parser<Evaluator> All = CreateFunctionParser("all", "criterium", Eval.All);
-        public static readonly Parser<Evaluator> Any = CreateFunctionParser("any", "criterium", Eval.Any);
+        public static readonly Parser<Evaluator> Any = CreateFunctionParser("any", "criterium", Eval.Any, optional:true);
         public static readonly Parser<Evaluator> Item = CreateFunctionParser("item", "index", Eval.Item);
         public static readonly Parser<Evaluator> First = CreateFunctionParser("first", Eval.First);
         public static readonly Parser<Evaluator> Last = CreateFunctionParser("last", Eval.Last);
@@ -90,6 +90,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> Matches = CreateFunctionParser("matches", "regexp", Eval.Contains);
         public static readonly Parser<Evaluator> Extension = CreateFunctionParser("extension", "url", Eval.Extension);
         public static readonly Parser<Evaluator> Substring = CreateFunctionParser("substring", "start", "length", Eval.Substring, numOptional:1);
+        public static readonly Parser<Evaluator> Select = CreateFunctionParser("select", "mapper", Eval.Select);
 
         // function: ID '(' param_list? ')';
         // param_list: expr(',' expr)*;
@@ -103,7 +104,8 @@ namespace Hl7.Fhir.FhirPath.Grammar
 
         public static readonly Parser<Evaluator> Function = Not.Or(Empty).Or(Where).Or(All).Or(Any).Or(Item)
                         .Or(First).Or(Last).Or(Tail).Or(Skip).Or(Take).Or(Count).Or(AsInteger).Or(StartsWith)
-                        .Or(Log).Or(Resolve).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension).Or(Substring)
+                        .Or(Log).Or(Resolve).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension)
+                        .Or(Substring).Or(Select)
                         .Or(OtherFunction);
     }
 }
