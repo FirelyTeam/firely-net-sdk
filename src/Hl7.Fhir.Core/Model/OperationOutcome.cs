@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var issue in Issue)
                 {
-                    if (!String.IsNullOrEmpty(text))
+                    if (!String.IsNullOrEmpty(issue.Diagnostics))
                         text += " ------------- ";
                 }
             }

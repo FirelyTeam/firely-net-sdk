@@ -54,6 +54,8 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(vs.Expansion.Contains.Any());
         }
 
+
+
         [TestMethod]
         public void InvokeExpandParameterValueSet()
         {
@@ -64,6 +66,21 @@ namespace Hl7.Fhir.Tests.Rest
             var vsX = client.ExpandValueSet(vs);
 
             Assert.IsTrue(vsX.Expansion.Contains.Any());
+        }
+
+        [TestMethod]
+        public void InvokeExpandUsingInstanceOp()
+        {
+            var client = new FhirClient(testEndpoint);
+
+            //    var vs = client.Read<ValueSet>("ValueSet/administrative-gender");
+
+            //   var vsX = client.ExpandValueSet(ExpandValueSet(vs);
+
+            // Assert.IsTrue(vsX.Expansion.Contains.Any());
+            var result = client.InstanceOperation(ResourceIdentity.Build("ValueSet", "extensional-case-1"),
+                FhirClientOperations.Operation.EXPAND_VALUESET);
+
         }
 
         [TestMethod]
