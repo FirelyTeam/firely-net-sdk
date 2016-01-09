@@ -28,7 +28,7 @@ namespace Hl7.Fhir.FhirPath
 
     public static class Eval
     {
-        public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, IEvaluationContext context, IFhirPathValue instance)
+        public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, IFhirPathValue instance, IEvaluationContext context)
         {
             return evaluator(FhirValueList.Create(instance), context);
         }
@@ -38,6 +38,25 @@ namespace Hl7.Fhir.FhirPath
             return evaluator(FhirValueList.Create(instance), new EvaluationContext());
         }
 
+        public static object Scalar(this Evaluator evaluator, IFhirPathValue instance, IEvaluationContext context)
+        {
+            return evaluator.Evaluate(instance, context).SingleValue();
+        }
+
+        public static object Scalar(this Evaluator evaluator, IFhirPathValue instance)
+        {
+            return evaluator.Evaluate(instance, new EvaluationContext()).SingleValue();
+        }
+
+        public static bool Predicate(this Evaluator evaluator, IFhirPathValue instance, IEvaluationContext context)
+        {
+            return evaluator.Evaluate(instance, context).BooleanEval().AsBoolean();
+        }
+
+        public static bool IsTrue(this Evaluator evaluator, IFhirPathValue instance)
+        {
+            return evaluator.Evaluate(instance, new EvaluationContext()).BooleanEval().AsBoolean();
+        }
         public static Evaluator Then(this Evaluator first, Evaluator then)
         {
             return (f,c) =>  then(first(f,c),c);
