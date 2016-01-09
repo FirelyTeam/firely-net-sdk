@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Rest
         {
             if (name == null) throw Error.ArgumentNull("name");
             if (value == null) throw Error.ArgumentNull("value");
-            if (String.IsNullOrEmpty(value)) throw Error.Argument("value", "value cannot be empty");
+            if (String.IsNullOrEmpty(value)) throw Error.Format("parameters must have a value", null);
 
             if (name == SEARCH_PARAM_QUERY) Query = value;
             else if (name == SEARCH_PARAM_TEXT) Text = value;
