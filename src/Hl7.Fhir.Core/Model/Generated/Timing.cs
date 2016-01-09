@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,107 +52,155 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Timing"; } }
         
         /// <summary>
-        /// Real world event that the relating to the schedule.
-        /// </summary>
-        [FhirEnumeration("EventTiming")]
-        public enum EventTiming
-        {
-            [EnumLiteral("HS")]
-            HS,
-            [EnumLiteral("WAKE")]
-            WAKE,
-            [EnumLiteral("C")]
-            C,
-            [EnumLiteral("CM")]
-            CM,
-            [EnumLiteral("CD")]
-            CD,
-            [EnumLiteral("CV")]
-            CV,
-            [EnumLiteral("AC")]
-            AC,
-            [EnumLiteral("ACM")]
-            ACM,
-            [EnumLiteral("ACD")]
-            ACD,
-            [EnumLiteral("ACV")]
-            ACV,
-            [EnumLiteral("PC")]
-            PC,
-            [EnumLiteral("PCM")]
-            PCM,
-            [EnumLiteral("PCD")]
-            PCD,
-            [EnumLiteral("PCV")]
-            PCV,
-        }
-        
-        /// <summary>
         /// A unit of time (units from UCUM).
+        /// (url: http://hl7.org/fhir/ValueSet/units-of-time)
         /// </summary>
         [FhirEnumeration("UnitsOfTime")]
         public enum UnitsOfTime
         {
-            [EnumLiteral("s")]
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://unitsofmeasure.org)
+            /// </summary>
+            [EnumLiteral("s"), Description("second")]
             S,
-            [EnumLiteral("min")]
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://unitsofmeasure.org)
+            /// </summary>
+            [EnumLiteral("min"), Description("minute")]
             Min,
-            [EnumLiteral("h")]
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://unitsofmeasure.org)
+            /// </summary>
+            [EnumLiteral("h"), Description("hour")]
             H,
-            [EnumLiteral("d")]
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://unitsofmeasure.org)
+            /// </summary>
+            [EnumLiteral("d"), Description("day")]
             D,
-            [EnumLiteral("wk")]
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://unitsofmeasure.org)
+            /// </summary>
+            [EnumLiteral("wk"), Description("week")]
             Wk,
-            [EnumLiteral("mo")]
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://unitsofmeasure.org)
+            /// </summary>
+            [EnumLiteral("mo"), Description("month")]
             Mo,
-            [EnumLiteral("a")]
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://unitsofmeasure.org)
+            /// </summary>
+            [EnumLiteral("a"), Description("year")]
             A,
         }
-        
+
         /// <summary>
-        /// Code for a known / defined timing pattern.
+        /// Real world event that the relating to the schedule.
+        /// (url: http://hl7.org/fhir/ValueSet/event-timing)
         /// </summary>
-        [FhirEnumeration("TimingAbbreviation")]
-        public enum TimingAbbreviation
+        [FhirEnumeration("EventTiming")]
+        public enum EventTiming
         {
             /// <summary>
-            /// Every Day at institution specified times
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("QD")]
-            QD,
+            [EnumLiteral("HS"), Description("HS")]
+            HS,
             /// <summary>
-            /// Every Other Day at institution specified times
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("QOD")]
-            QOD,
+            [EnumLiteral("WAKE"), Description("WAKE")]
+            WAKE,
             /// <summary>
-            /// Every 4 hours at institution specified times
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("Q4H")]
-            Q4H,
+            [EnumLiteral("C"), Description("C")]
+            C,
             /// <summary>
-            /// Every 6 Hours  at institution specified times
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
             /// </summary>
-            [EnumLiteral("Q6H")]
-            Q6H,
-            [EnumLiteral("BID")]
-            BID,
-            [EnumLiteral("TID")]
-            TID,
-            [EnumLiteral("QID")]
-            QID,
-            [EnumLiteral("AM")]
-            AM,
-            [EnumLiteral("PM")]
-            PM,
+            [EnumLiteral("CM"), Description("CM")]
+            CM,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// </summary>
+            [EnumLiteral("CD"), Description("CD")]
+            CD,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// </summary>
+            [EnumLiteral("CV"), Description("CV")]
+            CV,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// </summary>
+            [EnumLiteral("AC"), Description("AC")]
+            AC,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// </summary>
+            [EnumLiteral("ACM"), Description("ACM")]
+            ACM,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// </summary>
+            [EnumLiteral("ACD"), Description("ACD")]
+            ACD,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// </summary>
+            [EnumLiteral("ACV"), Description("ACV")]
+            ACV,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// </summary>
+            [EnumLiteral("PC"), Description("PC")]
+            PC,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// </summary>
+            [EnumLiteral("PCM"), Description("PCM")]
+            PCM,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// </summary>
+            [EnumLiteral("PCD"), Description("PCD")]
+            PCD,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/TimingEvent)
+            /// </summary>
+            [EnumLiteral("PCV"), Description("PCV")]
+            PCV,
         }
-        
-        [FhirType("TimingRepeatComponent")]
+
+        [FhirType("RepeatComponent")]
         [DataContract]
-        public partial class TimingRepeatComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class RepeatComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "TimingRepeatComponent"; } }
+            public override string TypeName { get { return "RepeatComponent"; } }
             
             /// <summary>
             /// Length/Range of lengths, or (Start and/or end) limits
@@ -489,7 +538,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as TimingRepeatComponent;
+                var dest = other as RepeatComponent;
                 
                 if (dest != null)
                 {
@@ -513,12 +562,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new TimingRepeatComponent());
+                return CopyTo(new RepeatComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as TimingRepeatComponent;
+                var otherT = other as RepeatComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -539,7 +588,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as TimingRepeatComponent;
+                var otherT = other as RepeatComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -599,13 +648,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("repeat", InSummary=true, Order=40)]
         [DataMember]
-        public Hl7.Fhir.Model.Timing.TimingRepeatComponent Repeat
+        public Hl7.Fhir.Model.Timing.RepeatComponent Repeat
         {
             get { return _Repeat; }
             set { _Repeat = value; OnPropertyChanged("Repeat"); }
         }
         
-        private Hl7.Fhir.Model.Timing.TimingRepeatComponent _Repeat;
+        private Hl7.Fhir.Model.Timing.RepeatComponent _Repeat;
         
         /// <summary>
         /// QD | QOD | Q4H | Q6H | BID | TID | QID | AM | PM +
@@ -628,7 +677,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(EventElement != null) dest.EventElement = new List<Hl7.Fhir.Model.FhirDateTime>(EventElement.DeepCopy());
-                if(Repeat != null) dest.Repeat = (Hl7.Fhir.Model.Timing.TimingRepeatComponent)Repeat.DeepCopy();
+                if(Repeat != null) dest.Repeat = (Hl7.Fhir.Model.Timing.RepeatComponent)Repeat.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 return dest;
             }

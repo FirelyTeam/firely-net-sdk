@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -338,7 +339,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -352,7 +353,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Claim reference
         /// </summary>
-        [FhirElement("request", Order=100)]
+        [FhirElement("request", InSummary=true, Order=100)]
         [References("ProcessRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
@@ -366,7 +367,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// complete | error
         /// </summary>
-        [FhirElement("outcome", Order=110)]
+        [FhirElement("outcome", InSummary=true, Order=110)]
         [DataMember]
         public Code<Hl7.Fhir.Model.RemittanceOutcome> OutcomeElement
         {
@@ -398,7 +399,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Disposition Message
         /// </summary>
-        [FhirElement("disposition", Order=120)]
+        [FhirElement("disposition", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DispositionElement
         {
@@ -430,7 +431,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource version
         /// </summary>
-        [FhirElement("ruleset", Order=130)]
+        [FhirElement("ruleset", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
         {
@@ -443,7 +444,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Original version
         /// </summary>
-        [FhirElement("originalRuleset", Order=140)]
+        [FhirElement("originalRuleset", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
         {
@@ -456,7 +457,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", Order=150)]
+        [FhirElement("created", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -488,7 +489,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Period covered
         /// </summary>
-        [FhirElement("period", Order=160)]
+        [FhirElement("period", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {
@@ -501,7 +502,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer
         /// </summary>
-        [FhirElement("organization", Order=170)]
+        [FhirElement("organization", InSummary=true, Order=170)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
@@ -515,7 +516,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("requestProvider", Order=180)]
+        [FhirElement("requestProvider", InSummary=true, Order=180)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
@@ -529,7 +530,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("requestOrganization", Order=190)]
+        [FhirElement("requestOrganization", InSummary=true, Order=190)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestOrganization
@@ -543,7 +544,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details
         /// </summary>
-        [FhirElement("detail", Order=200)]
+        [FhirElement("detail", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.PaymentReconciliation.DetailsComponent> Detail
@@ -557,7 +558,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Printed Form Identifier
         /// </summary>
-        [FhirElement("form", Order=210)]
+        [FhirElement("form", InSummary=true, Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Form
         {
@@ -570,7 +571,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Total amount of Payment
         /// </summary>
-        [FhirElement("total", Order=220)]
+        [FhirElement("total", InSummary=true, Order=220)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Money Total
@@ -584,7 +585,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Note text
         /// </summary>
-        [FhirElement("note", Order=230)]
+        [FhirElement("note", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.PaymentReconciliation.NotesComponent> Note

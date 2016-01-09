@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,17 +53,17 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Parameters"; } }
         
-        [FhirType("ParametersParameterComponent")]
+        [FhirType("ParameterComponent")]
         [DataContract]
-        public partial class ParametersParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ParametersParameterComponent"; } }
+            public override string TypeName { get { return "ParameterComponent"; } }
             
             /// <summary>
             /// Name from the definition
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("name", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString NameElement
@@ -95,8 +96,8 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If parameter is a data type
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
+            [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Meta))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -109,7 +110,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If parameter is a whole resource
             /// </summary>
-            [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("resource", Order=60, Choice=ChoiceType.ResourceChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
             public Hl7.Fhir.Model.Resource Resource
@@ -123,20 +124,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Named part of a parameter (e.g. Tuple)
             /// </summary>
-            [FhirElement("part", InSummary=true, Order=70)]
+            [FhirElement("part", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> Part
+            public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Part
             {
-                get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent>(); return _Part; }
+                get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(); return _Part; }
                 set { _Part = value; OnPropertyChanged("Part"); }
             }
             
-            private List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> _Part;
+            private List<Hl7.Fhir.Model.Parameters.ParameterComponent> _Part;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ParametersParameterComponent;
+                var dest = other as ParameterComponent;
                 
                 if (dest != null)
                 {
@@ -144,7 +145,7 @@ namespace Hl7.Fhir.Model
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     if(Resource != null) dest.Resource = (Hl7.Fhir.Model.Resource)Resource.DeepCopy();
-                    if(Part != null) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent>(Part.DeepCopy());
+                    if(Part != null) dest.Part = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Part.DeepCopy());
                     return dest;
                 }
                 else
@@ -153,12 +154,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ParametersParameterComponent());
+                return CopyTo(new ParameterComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ParametersParameterComponent;
+                var otherT = other as ParameterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -172,7 +173,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ParametersParameterComponent;
+                var otherT = other as ParameterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -193,13 +194,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("parameter", Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> Parameter
+        public List<Hl7.Fhir.Model.Parameters.ParameterComponent> Parameter
         {
-            get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent>(); return _Parameter; }
+            get { if(_Parameter==null) _Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(); return _Parameter; }
             set { _Parameter = value; OnPropertyChanged("Parameter"); }
         }
         
-        private List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent> _Parameter;
+        private List<Hl7.Fhir.Model.Parameters.ParameterComponent> _Parameter;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -208,7 +209,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.Parameters.ParametersParameterComponent>(Parameter.DeepCopy());
+                if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.Parameters.ParameterComponent>(Parameter.DeepCopy());
                 return dest;
             }
             else

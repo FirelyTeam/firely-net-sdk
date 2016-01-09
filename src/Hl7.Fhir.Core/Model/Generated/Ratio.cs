@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,26 +56,26 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("numerator", InSummary=true, Order=30)]
         [DataMember]
-        public Hl7.Fhir.Model.Quantity Numerator
+        public Quantity Numerator
         {
             get { return _Numerator; }
             set { _Numerator = value; OnPropertyChanged("Numerator"); }
         }
         
-        private Hl7.Fhir.Model.Quantity _Numerator;
+        private Quantity _Numerator;
         
         /// <summary>
         /// Denominator value
         /// </summary>
         [FhirElement("denominator", InSummary=true, Order=40)]
         [DataMember]
-        public Hl7.Fhir.Model.Quantity Denominator
+        public Quantity Denominator
         {
             get { return _Denominator; }
             set { _Denominator = value; OnPropertyChanged("Denominator"); }
         }
         
-        private Hl7.Fhir.Model.Quantity _Denominator;
+        private Quantity _Denominator;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -83,8 +84,8 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Numerator != null) dest.Numerator = (Hl7.Fhir.Model.Quantity)Numerator.DeepCopy();
-                if(Denominator != null) dest.Denominator = (Hl7.Fhir.Model.Quantity)Denominator.DeepCopy();
+                if(Numerator != null) dest.Numerator = (Quantity)Numerator.DeepCopy();
+                if(Denominator != null) dest.Denominator = (Quantity)Denominator.DeepCopy();
                 return dest;
             }
             else

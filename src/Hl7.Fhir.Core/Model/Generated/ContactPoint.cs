@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,71 +52,83 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ContactPoint"; } }
         
         /// <summary>
-        /// Use of contact point
-        /// </summary>
-        [FhirEnumeration("ContactPointUse")]
-        public enum ContactPointUse
-        {
-            /// <summary>
-            /// A communication contact point at a home; attempted contacts for business purposes might intrude privacy and chances are one will contact family or other household members instead of the person one wishes to call. Typically used with urgent cases, or if no other contacts are available.
-            /// </summary>
-            [EnumLiteral("home")]
-            Home,
-            /// <summary>
-            /// An office contact point. First choice for business related contacts during business hours.
-            /// </summary>
-            [EnumLiteral("work")]
-            Work,
-            /// <summary>
-            /// A temporary contact point. The period can provide more detailed information.
-            /// </summary>
-            [EnumLiteral("temp")]
-            Temp,
-            /// <summary>
-            /// This contact point is no longer in use (or was never correct, but retained for records).
-            /// </summary>
-            [EnumLiteral("old")]
-            Old,
-            /// <summary>
-            /// A telecommunication device that moves and stays with its owner. May have characteristics of all other use codes, suitable for urgent matters, not the first choice for routine business.
-            /// </summary>
-            [EnumLiteral("mobile")]
-            Mobile,
-        }
-        
-        /// <summary>
         /// Telecommunications form for contact point
+        /// (url: http://hl7.org/fhir/ValueSet/contact-point-system)
         /// </summary>
         [FhirEnumeration("ContactPointSystem")]
         public enum ContactPointSystem
         {
             /// <summary>
             /// The value is a telephone number used for voice calls. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.
+            /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("phone")]
+            [EnumLiteral("phone"), Description("Phone")]
             Phone,
             /// <summary>
             /// The value is a fax machine. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.
+            /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("fax")]
+            [EnumLiteral("fax"), Description("Fax")]
             Fax,
             /// <summary>
             /// The value is an email address.
+            /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("email")]
+            [EnumLiteral("email"), Description("Email")]
             Email,
             /// <summary>
             /// The value is a pager number. These may be local pager numbers that are only usable on a particular pager system.
+            /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("pager")]
+            [EnumLiteral("pager"), Description("Pager")]
             Pager,
             /// <summary>
             /// A contact that is not a phone, fax, or email address. The format of the value SHOULD be a URL. This is intended for various personal contacts including blogs, Twitter, Facebook, etc. Do not use for email addresses. If this is not a URL, then it will require human interpretation.
+            /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
-            [EnumLiteral("other")]
+            [EnumLiteral("other"), Description("URL")]
             Other,
         }
-        
+
+        /// <summary>
+        /// Use of contact point
+        /// (url: http://hl7.org/fhir/ValueSet/contact-point-use)
+        /// </summary>
+        [FhirEnumeration("ContactPointUse")]
+        public enum ContactPointUse
+        {
+            /// <summary>
+            /// A communication contact point at a home; attempted contacts for business purposes might intrude privacy and chances are one will contact family or other household members instead of the person one wishes to call. Typically used with urgent cases, or if no other contacts are available.
+            /// (system: http://hl7.org/fhir/contact-point-use)
+            /// </summary>
+            [EnumLiteral("home"), Description("Home")]
+            Home,
+            /// <summary>
+            /// An office contact point. First choice for business related contacts during business hours.
+            /// (system: http://hl7.org/fhir/contact-point-use)
+            /// </summary>
+            [EnumLiteral("work"), Description("Work")]
+            Work,
+            /// <summary>
+            /// A temporary contact point. The period can provide more detailed information.
+            /// (system: http://hl7.org/fhir/contact-point-use)
+            /// </summary>
+            [EnumLiteral("temp"), Description("Temp")]
+            Temp,
+            /// <summary>
+            /// This contact point is no longer in use (or was never correct, but retained for records).
+            /// (system: http://hl7.org/fhir/contact-point-use)
+            /// </summary>
+            [EnumLiteral("old"), Description("Old")]
+            Old,
+            /// <summary>
+            /// A telecommunication device that moves and stays with its owner. May have characteristics of all other use codes, suitable for urgent matters, not the first choice for routine business.
+            /// (system: http://hl7.org/fhir/contact-point-use)
+            /// </summary>
+            [EnumLiteral("mobile"), Description("Mobile")]
+            Mobile,
+        }
+
         /// <summary>
         /// phone | fax | email | pager | other
         /// </summary>

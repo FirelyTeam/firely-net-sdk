@@ -16,8 +16,8 @@ namespace Hl7.Fhir.Model
         public static OperationOutcome ForMessage(string message, OperationOutcome.IssueType code, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
         {
             return new OperationOutcome() {
-                      Issue = new List<OperationOutcome.OperationOutcomeIssueComponent>()
-                            { new OperationOutcome.OperationOutcomeIssueComponent() 
+                      Issue = new List<OperationOutcome.IssueComponent>()
+                            { new OperationOutcome.IssueComponent() 
                                     { Severity = severity, Diagnostics = message } 
                             } };
         }
@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Model
 
             while(ie != null)
             {
-                result.Issue.Add(new OperationOutcomeIssueComponent { Diagnostics = ie.Message, Severity = IssueSeverity.Information });
+                result.Issue.Add(new IssueComponent { Diagnostics = ie.Message, Severity = IssueSeverity.Information });
                 ie = ie.InnerException;
             }
 

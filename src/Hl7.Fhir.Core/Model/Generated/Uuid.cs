@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,13 +37,10 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Typed element containing the primitive uuid
-    /// </summary>
     [FhirType("uuid")]
     [DataContract]
     public partial class Uuid : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
@@ -52,14 +50,14 @@ namespace Hl7.Fhir.Model
         
         // Must conform to the pattern "urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
         public const string PATTERN = @"urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
-        
-        public Uuid(string value)
-        {
-            Value = value; 
-        }
-        
-        public Uuid(): this((string)null) {}
-        
+
+		public Uuid(string value)
+		{
+			Value = value;
+		}
+
+		public Uuid(): this((string)null) {}
+
         /// <summary>
         /// Primitive value of the element
         /// </summary>

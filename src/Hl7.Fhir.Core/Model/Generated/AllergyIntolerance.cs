@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,169 +54,197 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "AllergyIntolerance"; } }
         
         /// <summary>
-        /// Estimate of the potential clinical harm, or seriousness, of a reaction to an identified Substance.
-        /// </summary>
-        [FhirEnumeration("AllergyIntoleranceCriticality")]
-        public enum AllergyIntoleranceCriticality
-        {
-            /// <summary>
-            /// The potential clinical impact of a future reaction is estimated as low risk: exposure to substance is unlikely to result in a life threatening or organ system threatening outcome. Future exposure to the Substance is considered a relative contra-indication.
-            /// </summary>
-            [EnumLiteral("CRITL")]
-            CRITL,
-            /// <summary>
-            /// The potential clinical impact of a future reaction is estimated as high risk: exposure to substance may result in a life threatening or organ system threatening outcome. Future exposure to the Substance may be considered an absolute contra-indication.
-            /// </summary>
-            [EnumLiteral("CRITH")]
-            CRITH,
-            /// <summary>
-            /// Unable to assess the potential clinical impact with the information available.
-            /// </summary>
-            [EnumLiteral("CRITU")]
-            CRITU,
-        }
-        
-        /// <summary>
         /// Assertion about certainty associated with a propensity, or potential risk, of a reaction to the identified Substance.
+        /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-status)
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceStatus")]
         public enum AllergyIntoleranceStatus
         {
             /// <summary>
             /// An active record of a reaction to the identified Substance.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("active")]
+            [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
             /// A low level of certainty about the propensity for a reaction to the identified Substance.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("unconfirmed")]
+            [EnumLiteral("unconfirmed"), Description("Unconfirmed")]
             Unconfirmed,
             /// <summary>
             /// A high level of certainty about the propensity for a reaction to the identified Substance, which may include clinical evidence by testing or rechallenge.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("confirmed")]
+            [EnumLiteral("confirmed"), Description("Confirmed")]
             Confirmed,
             /// <summary>
             /// An inactive record of a reaction to the identified Substance.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("inactive")]
+            [EnumLiteral("inactive"), Description("Inactive")]
             Inactive,
             /// <summary>
             /// A reaction to the identified Substance has been clinically reassessed by testing or rechallenge and considered to be resolved.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("resolved")]
+            [EnumLiteral("resolved"), Description("Resolved")]
             Resolved,
             /// <summary>
             /// A propensity for a reaction to the identified Substance has been disproven with a high level of clinical certainty, which may include testing or rechallenge, and is refuted.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("refuted")]
+            [EnumLiteral("refuted"), Description("Refuted")]
             Refuted,
             /// <summary>
             /// The statement was entered in error and is not valid.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
             EnteredInError,
         }
-        
+
+        /// <summary>
+        /// Estimate of the potential clinical harm, or seriousness, of a reaction to an identified Substance.
+        /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality)
+        /// </summary>
+        [FhirEnumeration("AllergyIntoleranceCriticality")]
+        public enum AllergyIntoleranceCriticality
+        {
+            /// <summary>
+            /// The potential clinical impact of a future reaction is estimated as low risk: exposure to substance is unlikely to result in a life threatening or organ system threatening outcome. Future exposure to the Substance is considered a relative contra-indication.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
+            /// </summary>
+            [EnumLiteral("CRITL"), Description("Low Risk")]
+            CRITL,
+            /// <summary>
+            /// The potential clinical impact of a future reaction is estimated as high risk: exposure to substance may result in a life threatening or organ system threatening outcome. Future exposure to the Substance may be considered an absolute contra-indication.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
+            /// </summary>
+            [EnumLiteral("CRITH"), Description("High Risk")]
+            CRITH,
+            /// <summary>
+            /// Unable to assess the potential clinical impact with the information available.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
+            /// </summary>
+            [EnumLiteral("CRITU"), Description("Unable to determine")]
+            CRITU,
+        }
+
         /// <summary>
         /// Identification of the underlying physiological mechanism for a Reaction Risk.
+        /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-type)
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceType")]
         public enum AllergyIntoleranceType
         {
             /// <summary>
             /// A propensity for hypersensitivity reaction(s) to a substance.  These reactions are most typically type I hypersensitivity, plus other "allergy-like" reactions, including pseudoallergy.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-type)
             /// </summary>
-            [EnumLiteral("allergy")]
+            [EnumLiteral("allergy"), Description("Allergy")]
             Allergy,
             /// <summary>
             /// A propensity for adverse reactions to a substance that is not judged to be allergic or "allergy-like".  These reactions are typically (but not necessarily) non-immune.  They are to some degree idiosyncratic and/or individually specific (i.e. are not a reaction that is expected to occur with most or all patients given similar circumstances).
+            /// (system: http://hl7.org/fhir/allergy-intolerance-type)
             /// </summary>
-            [EnumLiteral("intolerance")]
+            [EnumLiteral("intolerance"), Description("Intolerance")]
             Intolerance,
         }
-        
+
         /// <summary>
         /// Category of an identified Substance.
+        /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-category)
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceCategory")]
         public enum AllergyIntoleranceCategory
         {
             /// <summary>
             /// Any substance consumed to provide nutritional support for the body.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
-            [EnumLiteral("food")]
+            [EnumLiteral("food"), Description("Food")]
             Food,
             /// <summary>
             /// Substances administered to achieve a physiological effect.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
-            [EnumLiteral("medication")]
+            [EnumLiteral("medication"), Description("Medication")]
             Medication,
             /// <summary>
             /// Substances that are encountered in the environment.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
-            [EnumLiteral("environment")]
+            [EnumLiteral("environment"), Description("Environment")]
             Environment,
             /// <summary>
             /// Other substances that are not covered by any other category.
+            /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
-            [EnumLiteral("other")]
+            [EnumLiteral("other"), Description("Other")]
             Other,
         }
-        
+
         /// <summary>
         /// Statement about the degree of clinical certainty that a Specific Substance was the cause of the Manifestation in an reaction event.
+        /// (url: http://hl7.org/fhir/ValueSet/reaction-event-certainty)
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceCertainty")]
         public enum AllergyIntoleranceCertainty
         {
             /// <summary>
             /// There is a low level of clinical certainty that the reaction was caused by the identified Substance.
+            /// (system: http://hl7.org/fhir/reaction-event-certainty)
             /// </summary>
-            [EnumLiteral("unlikely")]
+            [EnumLiteral("unlikely"), Description("Unlikely")]
             Unlikely,
             /// <summary>
             /// There is a high level of clinical certainty that the reaction was caused by the identified Substance.
+            /// (system: http://hl7.org/fhir/reaction-event-certainty)
             /// </summary>
-            [EnumLiteral("likely")]
+            [EnumLiteral("likely"), Description("Likely")]
             Likely,
             /// <summary>
             /// There is a very high level of clinical certainty that the reaction was due to the identified Substance, which may include clinical evidence by testing or rechallenge.
+            /// (system: http://hl7.org/fhir/reaction-event-certainty)
             /// </summary>
-            [EnumLiteral("confirmed")]
+            [EnumLiteral("confirmed"), Description("Confirmed")]
             Confirmed,
         }
-        
+
         /// <summary>
         /// Clinical assessment of the severity of a reaction event as a whole, potentially considering multiple different manifestations.
+        /// (url: http://hl7.org/fhir/ValueSet/reaction-event-severity)
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceSeverity")]
         public enum AllergyIntoleranceSeverity
         {
             /// <summary>
             /// Causes mild physiological effects.
+            /// (system: http://hl7.org/fhir/reaction-event-severity)
             /// </summary>
-            [EnumLiteral("mild")]
+            [EnumLiteral("mild"), Description("Mild")]
             Mild,
             /// <summary>
             /// Causes moderate physiological effects.
+            /// (system: http://hl7.org/fhir/reaction-event-severity)
             /// </summary>
-            [EnumLiteral("moderate")]
+            [EnumLiteral("moderate"), Description("Moderate")]
             Moderate,
             /// <summary>
             /// Causes severe physiological effects.
+            /// (system: http://hl7.org/fhir/reaction-event-severity)
             /// </summary>
-            [EnumLiteral("severe")]
+            [EnumLiteral("severe"), Description("Severe")]
             Severe,
         }
-        
-        [FhirType("AllergyIntoleranceReactionComponent")]
+
+        [FhirType("ReactionComponent")]
         [DataContract]
-        public partial class AllergyIntoleranceReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "AllergyIntoleranceReactionComponent"; } }
+            public override string TypeName { get { return "ReactionComponent"; } }
             
             /// <summary>
             /// Specific substance considered to be responsible for event
@@ -279,7 +308,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Description of the event as a whole
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=70)]
+            [FhirElement("description", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -388,7 +417,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Text about event not captured in other fields
             /// </summary>
-            [FhirElement("note", InSummary=true, Order=110)]
+            [FhirElement("note", Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Annotation Note
             {
@@ -400,7 +429,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as AllergyIntoleranceReactionComponent;
+                var dest = other as ReactionComponent;
                 
                 if (dest != null)
                 {
@@ -421,12 +450,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new AllergyIntoleranceReactionComponent());
+                return CopyTo(new ReactionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as AllergyIntoleranceReactionComponent;
+                var otherT = other as ReactionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -444,7 +473,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as AllergyIntoleranceReactionComponent;
+                var otherT = other as ReactionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -777,13 +806,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("reaction", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceReactionComponent> Reaction
+        public List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> Reaction
         {
-            get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceReactionComponent>(); return _Reaction; }
+            get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>(); return _Reaction; }
             set { _Reaction = value; OnPropertyChanged("Reaction"); }
         }
         
-        private List<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceReactionComponent> _Reaction;
+        private List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> _Reaction;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -805,7 +834,7 @@ namespace Hl7.Fhir.Model
                 if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>)CategoryElement.DeepCopy();
                 if(LastOccurenceElement != null) dest.LastOccurenceElement = (Hl7.Fhir.Model.FhirDateTime)LastOccurenceElement.DeepCopy();
                 if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
-                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceReactionComponent>(Reaction.DeepCopy());
+                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>(Reaction.DeepCopy());
                 return dest;
             }
             else

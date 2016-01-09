@@ -16,70 +16,71 @@ using Newtonsoft.Json;
 using System.Xml.Linq;
 using System.Xml;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Serialization
 {
     public static class FhirSerializer
     {
-        public static string SerializeResourceToXml(Resource resource, bool summary = false)
+        public static string SerializeResourceToXml(Resource resource, SummaryType summary = SummaryType.False)
         {
             return SerializeToXml(resource, summary);
         }
 
-        public static string SerializeToXml(Base data, bool summary = false, string root = null)
+        public static string SerializeToXml(Base data, SummaryType summary = SummaryType.False, string root = null)
         {
             return xmlWriterToString(xw => Serialize(data, new XmlFhirWriter(xw), summary, root));
         }
 
-        public static byte[] SerializeResourceToXmlBytes(Resource resource, bool summary = false)
+        public static byte[] SerializeResourceToXmlBytes(Resource resource, SummaryType summary = SummaryType.False)
         {
             return SerializeToXmlBytes(resource, summary);
         }
 
-        public static byte[] SerializeToXmlBytes(Base instance, bool summary = false, string root = null)
+        public static byte[] SerializeToXmlBytes(Base instance, SummaryType summary = SummaryType.False, string root = null)
         {
             return xmlWriterToBytes(xw => Serialize(instance, new XmlFhirWriter(xw), summary, root));
         }
 
 
-        public static string SerializeResourceToJson(Resource resource, bool summary = false)
+        public static string SerializeResourceToJson(Resource resource, SummaryType summary = SummaryType.False)
         {
             return SerializeToJson(resource, summary);
         }
 
 
-        public static string SerializeToJson(Base instance, bool summary = false, string root=null)
+        public static string SerializeToJson(Base instance, SummaryType summary = SummaryType.False, string root=null)
         {
             return jsonWriterToString(jw => Serialize(instance, new JsonDomFhirWriter(jw), summary, root));
         }
 
 
-        public static byte[] SerializeResourceToJsonBytes(Resource resource, bool summary = false)
+        public static byte[] SerializeResourceToJsonBytes(Resource resource, SummaryType summary = SummaryType.False)
         {
             return SerializeToJsonBytes(resource, summary);
         }
 
 
-        public static byte[] SerializeToJsonBytes(Base instance, bool summary = false, string root = null)
+        public static byte[] SerializeToJsonBytes(Base instance, SummaryType summary = SummaryType.False, string root = null)
         {
             return jsonWriterToBytes(jw => Serialize(instance, new JsonDomFhirWriter(jw), summary, root));
         }
 
 
-        public static void SerializeResource(Resource resource, XmlWriter writer, bool summary = false)
+        public static void SerializeResource(Resource resource, XmlWriter writer, SummaryType summary = SummaryType.False)
         {
             Serialize(resource, new XmlFhirWriter(writer), summary);
         }
 
-        public static void SerializeResource(Resource resource, JsonWriter writer, bool summary = false)
+        public static void SerializeResource(Resource resource, JsonWriter writer, SummaryType summary = SummaryType.False)
         {
             Serialize(resource, new JsonDomFhirWriter(writer), summary);
         }
 
 
-        internal static void Serialize(Base instance, IFhirWriter writer, bool summary = false, string root = null)
+        internal static void Serialize(Base instance, IFhirWriter writer, SummaryType summary = SummaryType.False, string root = null)
         {
-            new ResourceWriter(writer).Serialize(instance, summary, root: root);
+             new ResourceWriter(writer).Serialize(instance, summary, root: root);
         }
 
 
@@ -101,7 +102,7 @@ namespace Hl7.Fhir.Serialization
             MemoryStream stream = new MemoryStream();
 
             var sw = new StreamWriter(stream, new UTF8Encoding(false));
-            JsonWriter jw = new JsonTextWriter(sw);
+            JsonWriter jw = new BetterDecimalJsonTextWriter(sw);
 
             serializer(jw);
 
@@ -110,11 +111,32 @@ namespace Hl7.Fhir.Serialization
             return stream.ToArray();
         }
 
+
+        internal class BetterDecimalJsonTextWriter : JsonTextWriter
+        {
+            public BetterDecimalJsonTextWriter(TextWriter textWriter) : base(textWriter)
+            {
+            }
+
+            public override void WriteValue(decimal value)
+            {
+                WriteRawValue(value.ToString(this.Culture));
+            }
+
+            public override void WriteValue(decimal? value)
+            {
+                if (value.HasValue)
+                    WriteRawValue(value.Value.ToString(this.Culture));
+                else
+                    WriteNull();
+            }
+        }
+
         private static string jsonWriterToString(Action<JsonWriter> serializer)
         {
             StringBuilder resultBuilder = new StringBuilder();
             StringWriter sw = new StringWriter(resultBuilder);
-            JsonWriter jw = new JsonTextWriter(sw);
+            JsonWriter jw = new BetterDecimalJsonTextWriter(sw);
 
             serializer(jw);
             jw.Flush();

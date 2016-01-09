@@ -1,0 +1,1184 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ include file="TemplateFileManagerV2.1.ttinclude" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#
+	var manager = TemplateFileManager.Create(this);
+
+	// Load in the Source definitions from the XML documents
+	System.Xml.XmlDocument docResources = new	System.Xml.XmlDocument();
+    docResources.Load(System.IO.Path.GetDirectoryName(this.Host.TemplateFile) + "\\..\\Source\\profiles-resources.xml");
+    System.Xml.XmlNamespaceManager nsR = new System.Xml.XmlNamespaceManager(docResources.NameTable);
+    nsR.AddNamespace("fhir", "http://hl7.org/fhir");
+
+	System.Xml.XmlDocument docExpansions = new	System.Xml.XmlDocument();
+    docExpansions.Load(System.IO.Path.GetDirectoryName(this.Host.TemplateFile) + "\\..\\Source\\expansions.xml");
+    System.Xml.XmlNamespaceManager nsE = new System.Xml.XmlNamespaceManager(docExpansions.NameTable);
+    nsE.AddNamespace("fhir", "http://hl7.org/fhir");
+
+	System.Xml.XmlDocument docTypes = new	System.Xml.XmlDocument();
+    docTypes.Load(System.IO.Path.GetDirectoryName(this.Host.TemplateFile) + "\\..\\Source\\profiles-types.xml");
+    System.Xml.XmlNamespaceManager nsT = new System.Xml.XmlNamespaceManager(docTypes.NameTable);
+    nsT.AddNamespace("fhir", "http://hl7.org/fhir");
+
+	string fhirVersion = docResources.SelectSingleNode("//fhir:fhirVersion/@value", nsE).Value;
+	// string fhirVersion = "1.0.2";
+#>
+//
+// Model Generated on <#= DateTime.Now.ToString("R") #> for FHIR v<#= fhirVersion #>
+//
+<#
+	Dictionary<string, string> enums = new Dictionary<string, string>();
+	System.Collections.Generic.List<string> generatedSets = new System.Collections.Generic.List<string>();
+	foreach (System.Xml.XmlElement valueset in docExpansions.SelectNodes(
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:ValueSet", nsE))
+    {
+		if (valueset != null)
+		{
+			string enumName = valueset.SelectSingleNode("fhir:name/@value", nsE).InnerText;
+			string valuesetDescription = valueset.SelectSingleNode("fhir:description/@value", nsE).InnerText;
+			string valuesetUrl = valueset.SelectSingleNode("fhir:url/@value", nsE).Value;
+			// reformat the name so that it is a valid .NET enumeration name
+			enumName = enumName.Replace(" ", "").Replace("-", "_");
+
+			// Check to see if this is used in more than one resource
+			var nodes = docResources.DocumentElement.SelectNodes(
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]]", nsR);
+			var nodesTypes = docTypes.DocumentElement.SelectNodes(
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]]", nsT);
+			var nodePaths = docResources.DocumentElement.SelectNodes(
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]", nsR);
+			var nodePathTypes = docTypes.DocumentElement.SelectNodes(
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition/fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required' and fhir:valueSetReference/fhir:reference/@value = '"+valuesetUrl+"']]", nsT);
+			if (nodes.Count + nodesTypes.Count > 1)
+			{
+				enums.Add(valuesetUrl, "Hl7.Fhir.Model." + enumName);
+				generatedSets.Add(enumName);
+				WriteLine("// Generated Shared Enumeration: " + enumName);
+				foreach (XmlElement node in nodePaths)
+                {
+					WriteLine("	// Used in model class (resource): " + node.SelectSingleNode("fhir:path/@value", nsR).Value);
+                }
+				foreach (XmlElement node in nodePathTypes)
+                {
+					WriteLine("	// Used in model class (type): " + node.SelectSingleNode("fhir:path/@value", nsR).Value);
+                }
+				WriteLine("");
+            }
+		}
+    }
+
+	foreach (System.Xml.XmlNode e in docResources.DocumentElement.SelectNodes(
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR))
+	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = 'Communication' or fhir:id/@value = 'Basic' or fhir:id/@value = 'Appointment' or fhir:id/@value = 'Patient']", nsR))
+    {
+		if (e is System.Xml.XmlElement)
+        {
+			var resourceName = (e as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value;
+			string resourceDescription = "";
+			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+resourceName+"']/fhir:short/@value", nsR) != null)
+				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+resourceName+"']/fhir:short/@value", nsR).Value;
+			if (resourceName == "Resource" 
+			//	|| resourceName == "DomainResource"
+				)
+				continue;
+			manager.StartNewFile(resourceName + ".cs");
+
+			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
+			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR) != null)
+            {
+				resourceBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR).Value;
+				if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Resource")
+					resourceBaseType = "Hl7.Fhir.Model.Resource";
+				else if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Element")
+					resourceBaseType = "Hl7.Fhir.Model.Element";
+				else if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Quantity")
+					resourceBaseType = "Hl7.Fhir.Model.Quantity";
+				else
+					resourceBaseType = "Hl7.Fhir.Model.DomainResource";
+				if (resourceBaseType == "Hl7.Fhir.Model.Quantity")
+					continue;
+            }
+
+			bool abstractType = false;
+			if ((e as System.Xml.XmlElement).SelectSingleNode("fhir:abstract[@value='true']", nsR) != null)
+				abstractType = true;
+#>
+using System;
+using System.Collections.Generic;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Validation;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ComponentModel;
+
+/*
+  Copyright (c) 2011+, HL7, Inc.
+  All rights reserved.
+  
+  Redistribution and use in source and binary forms, with or without modification, 
+  are permitted provided that the following conditions are met:
+  
+   * Redistributions of source code must retain the above copyright notice, this 
+     list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright notice, 
+     this list of conditions and the following disclaimer in the documentation 
+     and/or other materials provided with the distribution.
+   * Neither the name of HL7 nor the names of its contributors may be used to 
+     endorse or promote products derived from this software without specific 
+     prior written permission.
+  
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+  POSSIBILITY OF SUCH DAMAGE.
+  
+
+*/
+
+//
+// Generated for FHIR v<#= fhirVersion #>
+//
+namespace Hl7.Fhir.Model
+{
+<# if (!string.IsNullOrEmpty(resourceDescription)) { #>    /// <summary>
+    /// <#= resourceDescription #>
+    /// </summary>
+<# }
+if(!abstractType) {
+ #>    [FhirType("<#= resourceName #>"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? ", IsResource=true" : "" #>)]
+<# }
+#>    [DataContract]
+    public<#= abstractType ? " abstract" : "" #> partial class <#= resourceName #> : <#= resourceBaseType #>, System.ComponentModel.INotifyPropertyChanged
+    {
+<# if (resourceBaseType != "Hl7.Fhir.Model.Element") { #>        [NotMapped]
+        public override ResourceType ResourceType { get { return ResourceType.<#= resourceName #>; } }
+<# } #>        [NotMapped]
+        public override string TypeName { get { return "<#= resourceName #>"; } }
+        
+<#
+			foreach (System.Xml.XmlNode eProp in 
+				(e as System.Xml.XmlElement).SelectNodes( //and fhir:min/@value = '1' and fhir:max/@value = '1' 
+				"fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'code' and fhir:binding[fhir:strength/@value = 'required']]", nsR))
+			{
+				if (eProp is System.Xml.XmlElement)
+				{
+					var n2 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:path/@value", nsR);
+					// if (n2.Value.EndsWith("language"))
+					//	continue;
+					// WriteLine("//		" + n2.Value);
+					string valuesetUrl = null;
+					var n3 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:binding/fhir:valueSetUri/@value", nsR);
+					if (n3 != null)
+                    {
+						// WriteLine("//		VSU: " + n3.Value);
+						valuesetUrl = n3.Value;
+                    }
+					var n4 = (eProp as System.Xml.XmlElement).SelectSingleNode("fhir:binding/fhir:valueSetReference/fhir:reference/@value", nsR);
+					if (n4 != null)
+                    {
+						// WriteLine("//		VSR: " + n4.Value);
+						valuesetUrl = n4.Value;
+                    }
+					System.Xml.XmlElement valueset = docExpansions.SelectSingleNode(
+						"/fhir:Bundle/fhir:entry/fhir:resource/fhir:ValueSet[fhir:url/@value = '"+valuesetUrl+"']", nsE)
+						 as System.Xml.XmlElement;
+					if (valueset != null)
+                    {
+					string enumName = valueset.SelectSingleNode("fhir:name/@value", nsE).InnerText;
+					string valuesetDescription = valueset.SelectSingleNode("fhir:description/@value", nsE).InnerText;
+					
+					// reformat the name so that it is a valid .NET enumeration name
+					enumName = enumName.Replace(" ", "").Replace("-", "_");
+
+					if (generatedSets.Contains(enumName))
+						continue;
+					generatedSets.Add(enumName);
+					enums.Add(valuesetUrl, "Hl7.Fhir.Model." + resourceName + "." + enumName);
+					if (enumName == "ParameterTypesusedinOperationDefinitions")
+                    {
+						WriteLine("// TODO: the enumeration ParameterTypesusedinOperationDefinitions contains an expansion that has duplicates");
+						continue;
+                    }
+#>
+        /// <summary>
+        /// <#= valuesetDescription.Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
+        /// (url: <#= valuesetUrl #>)
+        /// </summary>
+        [FhirEnumeration("<#= enumName #>")]
+        public enum <#= enumName #>
+        {
+<#
+	System.Collections.Generic.List<string> codedValues = new System.Collections.Generic.List<string>();
+	
+	foreach (System.Xml.XmlElement eval in valueset.SelectNodes("fhir:expansion/fhir:contains", nsE))
+    {
+		string system = eval.SelectSingleNode("fhir:system/@value", nsE).Value;
+		string code = eval.SelectSingleNode("fhir:code/@value", nsE).Value;
+
+		if (codedValues.Contains(system + "#" + code))
+			continue;
+		codedValues.Add(system + "#" + code);
+
+		string display = eval.SelectSingleNode("fhir:display/@value", nsE).Value;
+		string defintion = "MISSING DESCRIPTION";
+		if (valueset.SelectSingleNode("fhir:codeSystem[fhir:system/@value = '"+system+"']/fhir:concept[fhir:code/@value = '"+code+"']/fhir:definition/@value", nsE) != null)
+			defintion = valueset.SelectSingleNode("fhir:codeSystem[fhir:system/@value = '"+system+"']/fhir:concept[fhir:code/@value = '"+code+"']/fhir:definition/@value", nsE).Value;
+		if (defintion == "MISSING DESCRIPTION" && valueset.SelectSingleNode("fhir:codeSystem[fhir:system/@value = '"+system+"']/fhir:concept/fhir:concept[fhir:code/@value = '"+code+"']/fhir:definition/@value", nsE) != null)
+			defintion = valueset.SelectSingleNode("fhir:codeSystem[fhir:system/@value = '"+system+"']/fhir:concept/fhir:concept[fhir:code/@value = '"+code+"']/fhir:definition/@value", nsE).Value;
+		if (string.IsNullOrEmpty(defintion))
+			defintion = "MISSING DESCRIPTION";
+#>
+            /// <summary>
+            /// <#= defintion.Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ").Replace("<", "&lt;").Replace(">", "&gt;") #>
+            /// (system: <#= system #>)
+            /// </summary>
+            [EnumLiteral("<#= code #>"), Description("<#= display #>")]
+            <#= ConvertEnumValue(code) #>,
+<#
+    }
+#>
+        }
+
+<#					}
+                }
+			}
+
+			List<PropertyDetails> props = new List<PropertyDetails>();
+			foreach (System.Xml.XmlElement snapshotElement in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element", nsR))
+            {
+				PropertyDetails pd = PropertyDetails.Parse(resourceName, snapshotElement, nsR, enums);
+				if (pd != null)
+					props.Add(pd);
+            }
+
+	// This is the generation for the Components of the class
+	foreach (System.Xml.XmlElement e2 in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'BackboneElement']", nsR))
+    {
+		System.Xml.XmlAttribute componentElement = e2.SelectSingleNode("fhir:path/@value", nsR) as System.Xml.XmlAttribute;
+		string v = componentElement.Value;
+		if (v.Contains("."))
+        {
+			int index = v.LastIndexOf(".");
+			v = v.Substring(index+1, 1).ToUpper() + v.Substring(index+2);
+        }
+		string componentName = v + "Component";
+		System.Xml.XmlAttribute componentNameElement = (System.Xml.XmlAttribute)e2.SelectSingleNode("fhir:extension[@url = 'http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name']/fhir:valueString/@value", nsR);
+		if (componentNameElement != null)
+        {
+			componentName = componentNameElement.Value + "Component";
+        }
+
+		List<PropertyDetails> component = new List<PropertyDetails>();
+		foreach (System.Xml.XmlElement snapshotElement in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element", nsR))
+        {
+			PropertyDetails pd = PropertyDetails.Parse(componentElement.Value, snapshotElement, nsR, enums);
+			if (pd != null)
+				component.Add(pd);
+        }
+#>
+        [FhirType("<#= componentName #>")]
+        [DataContract]
+        public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "<#= componentName #>"; } }
+            
+<#
+	int nComponentPropNum = 30;
+	foreach (PropertyDetails pd in component)
+    {
+		nComponentPropNum += 10;
+#>
+            /// <summary>
+            /// <#= pd.Summary.Replace("&", "&amp;") #>
+            /// </summary>
+            [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
+<# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
+            [References(<#= pd.ReferenceTargets #>)]
+<# }
+#>
+<# if (!string.IsNullOrEmpty(pd.AllowedTypes)) {#>
+            [AllowedTypes(<#= pd.AllowedTypes #>)]
+<# }
+#>
+<# if (pd.CardMax == "*" || pd.CardMin != "0") {#>
+            [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)]
+<# }
+#>
+            [DataMember]
+            public <#= pd.PropTypeWithCard().Replace("Hl7.Fhir.Model.Code<", "Code<") #> <#= pd.Name #>
+            {
+<#if (pd.IsMultiCard()){#>                get { if(_<#= pd.Name #>==null) _<#= pd.Name #> = new <#= pd.PropTypeWithCard() #>(); return _<#= pd.Name #>; }
+<#}else{#>                get { return _<#= pd.Name #>; }
+<#}#>                set { _<#= pd.Name #> = value; OnPropertyChanged("<#= pd.Name #>"); }
+            }
+            
+            private <#= pd.PropTypeWithCard().Replace("Hl7.Fhir.Model.Code<", "Code<") #> _<#= pd.Name #>;
+            
+<#
+			if (!string.IsNullOrEmpty(pd.NativeName))
+			{
+#>
+            /// <summary>
+            /// <#= pd.Summary.Replace("&", "&amp;") #>
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+<# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
+<# }
+#>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
+            {
+<#if (pd.IsMultiCard()){#>                get { return <#= pd.Name #> != null ? <#= pd.Name #>.Select(elem => elem.Value) : null; }
+<#}else{#>                get { return <#= pd.Name #> != null ? <#= pd.Name #>.Value : null; }
+<#}#>
+                set
+                {
+                    if(value == null)
+                      <#= pd.Name #> = null; 
+                    else
+                      <#= pd.Name #> = new <#= pd.IsMultiCard() ? "List<" + pd.PropType + ">(value.Select(elem=>new "+pd.PropType+"(elem)))" : pd.PropType.Replace("Hl7.Fhir.Model.Code<", "Code<") + "(value)" #>;
+                    OnPropertyChanged("<#= pd.NativeName #>");
+                }
+            }
+            
+<#
+			}
+	    }
+#>
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as <#= componentName #>;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+<#
+	foreach (PropertyDetails pd in component)
+    {
+		if (pd.CardMax == "*")
+			WriteLine("                    if({0} != null) dest.{0} = new List<{1}>({0}.DeepCopy());", pd.Name, pd.PropType.Replace("Hl7.Fhir.Model.Code<", "Code<"), pd.CardMax);
+		else
+			WriteLine("                    if({0} != null) dest.{0} = ({1}){0}.DeepCopy();", pd.Name, pd.PropType.Replace("Hl7.Fhir.Model.Code<", "Code<"), pd.CardMax);
+    }
+#>
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+<# if (!abstractType){
+#>            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new <#= componentName #>());
+            }
+            
+<# } #>            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as <#= componentName #>;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+<#
+	foreach (PropertyDetails pd in component)
+    {
+		if (pd.CardMax == "*")
+			WriteLine("                if( !DeepComparable.Matches({0}, otherT.{0})) return false;", pd.Name, pd.PropType, pd.CardMax);
+		else
+			WriteLine("                if( !DeepComparable.Matches({0}, otherT.{0})) return false;", pd.Name, pd.PropType, pd.CardMax);
+    }
+#>
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as <#= componentName #>;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+<#
+	foreach (PropertyDetails pd in component)
+    {
+		WriteLine("                if( !DeepComparable.IsExactly({0}, otherT.{0})) return false;", pd.Name, pd.PropType, pd.CardMax);
+    }
+#>
+                
+                return true;
+            }
+            
+        }
+        
+        
+<#
+    }
+
+	// Read each of the properties out
+	int nPropNum = 80;
+	if (resourceBaseType == "Hl7.Fhir.Model.Resource")
+		nPropNum = 40;
+	if (resourceBaseType == "Hl7.Fhir.Model.Element")
+		nPropNum = 20;
+
+	foreach (PropertyDetails pd in props)
+    {
+		nPropNum += 10;
+#>
+        /// <summary>
+        /// <#= pd.Summary.Replace("&", "&amp;") #>
+        /// </summary>
+        [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
+<# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
+        [References(<#= pd.ReferenceTargets #>)]
+<# }
+#>
+<# if (!string.IsNullOrEmpty(pd.AllowedTypes)) {#>
+        [AllowedTypes(<#= pd.AllowedTypes #>)]
+<# }
+#>
+<# if (pd.CardMax != "1" || pd.CardMin != "0") {#>
+        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)]
+<# }
+#>
+        [DataMember]
+        public <#= pd.PropTypeWithCard().Replace("Hl7.Fhir.Model.Code<", "Code<") #> <#= pd.Name #>
+        {
+<#if (pd.IsMultiCard()){#>            get { if(_<#= pd.Name #>==null) _<#= pd.Name #> = new <#= pd.PropTypeWithCard() #>(); return _<#= pd.Name #>; }
+<#}else{#>            get { return _<#= pd.Name #>; }
+<#}#>            set { _<#= pd.Name #> = value; OnPropertyChanged("<#= pd.Name #>"); }
+        }
+        
+        private <#= pd.PropTypeWithCard().Replace("Hl7.Fhir.Model.Code<", "Code<") #> _<#= pd.Name #>;
+        
+<#
+		if (!string.IsNullOrEmpty(pd.NativeName))
+        {
+#>
+        /// <summary>
+        /// <#= pd.Summary.Replace("&", "&amp;") #>
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+<# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
+<# }
+#>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public <#= pd.IsMultiCard() ? "IEnumerable<" + pd.NativeType + ">" : pd.NativeType #> <#= pd.NativeName #>
+        {
+<#if (pd.IsMultiCard()){#>            get { return <#= pd.Name #> != null ? <#= pd.Name #>.Select(elem => elem.Value) : null; }
+<#}else{#>            get { return <#= pd.Name #> != null ? <#= pd.Name #>.Value : null; }
+<#}#>
+            set
+            {
+                if(value == null)
+                  <#= pd.Name #> = null; 
+                else
+                  <#= pd.Name #> = new <#= pd.IsMultiCard() ? "List<" + pd.PropType + ">(value.Select(elem=>new "+pd.PropType+"(elem)))" : pd.PropType.Replace("Hl7.Fhir.Model.Code<", "Code<") + "(value)" #>;
+                OnPropertyChanged("<#= pd.NativeName #>");
+            }
+        }
+        
+<#
+        }
+    }
+
+#>
+        public override IDeepCopyable CopyTo(IDeepCopyable other)
+        {
+            var dest = other as <#= resourceName #>;
+            
+            if (dest != null)
+            {
+                base.CopyTo(dest);
+<#
+	foreach (PropertyDetails pd in props)
+    {
+		if (pd.CardMax == "*")
+			WriteLine("                if({0} != null) dest.{0} = new List<{1}>({0}.DeepCopy());", pd.Name, pd.PropType.Replace("Hl7.Fhir.Model.Code<", "Code<"), pd.CardMax);
+		else
+			WriteLine("                if({0} != null) dest.{0} = ({1}){0}.DeepCopy();", pd.Name, pd.PropType.Replace("Hl7.Fhir.Model.Code<", "Code<"), pd.CardMax);
+    }
+#>
+                return dest;
+            }
+            else
+            	throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
+        
+<# if (!abstractType){
+#>        public override IDeepCopyable DeepCopy()
+        {
+            return CopyTo(new <#= resourceName #>());
+        }
+        
+<# } 
+#>        public override bool Matches(IDeepComparable other)
+        {
+            var otherT = other as <#= resourceName #>;
+            if(otherT == null) return false;
+            
+            if(!base.Matches(otherT)) return false;
+<#
+	foreach (PropertyDetails pd in props)
+    {
+		if (pd.CardMax == "*")
+			WriteLine("            if( !DeepComparable.Matches({0}, otherT.{0})) return false;", pd.Name, pd.PropType, pd.CardMax);
+		else
+			WriteLine("            if( !DeepComparable.Matches({0}, otherT.{0})) return false;", pd.Name, pd.PropType, pd.CardMax);
+    }
+#>
+            
+            return true;
+        }
+        
+        public override bool IsExactly(IDeepComparable other)
+        {
+            var otherT = other as <#= resourceName #>;
+            if(otherT == null) return false;
+            
+            if(!base.IsExactly(otherT)) return false;
+<#
+	foreach (PropertyDetails pd in props)
+    {
+		WriteLine("            if( !DeepComparable.IsExactly({0}, otherT.{0})) return false;", pd.Name, pd.PropType, pd.CardMax);
+    }
+#>
+            
+            return true;
+        }
+        
+    }
+    
+}
+<#
+        }
+	}
+	manager.Process();
+#>
+<#+
+
+	// convert the name into a valid Enum Value
+	string ConvertEnumValue(string name)
+	{
+		if (name.StartsWith("_"))
+			name = name.Substring(1);
+		if (name == "=")
+			return "Equal";
+		if (name == "<")
+			return "LessThan";
+		if (name == "<=")
+			return "LessOrEqual";
+		if (name == ">=")
+			return "GreaterOrEqual";
+		if (name == ">")
+			return "GreaterThan";
+		string[] bits = name.Split(new char[] {' ', '-'});
+		string result = null;
+		foreach (var bit in bits)
+        {
+			result += bit.Substring(0, 1).ToUpper();
+			result += bit.Substring(1);
+        }
+		int IsIntegerValue;
+		if (int.TryParse(result, out IsIntegerValue))
+			result = "N" + result;
+		return result;
+	}
+
+	public class PropertyDetails
+    {
+		public bool isSummaryProp;
+		public string Summary = "";
+		public string PropType;
+		public string FhirName;
+		public string Name;
+		public string CardMin;
+		public string CardMax;
+		public string ReferenceTargets;
+		public string NativeType;
+		public string NativeName;
+		public string AllowedTypes;
+		public string BackboneComponentType;
+		public string CodeRequiredBinding;
+
+		public string PropTypeWithCard()
+        {
+			if (CardMax == "*")
+				return "List<" + PropType + ">";
+				return PropType;
+		}
+
+		public bool IsMultiCard()
+        {
+			if (CardMax == "*")
+				return true;
+			return false;
+        }
+
+		public static string ConvertPropertyType(string propType, System.Xml.XmlElement element, System.Xml.XmlNamespaceManager nsR)
+        {
+			switch (propType)
+            {
+				case "id" : return "Hl7.Fhir.Model.Id";
+				case "Identifier" : return "Hl7.Fhir.Model.Identifier";
+				case "CodeableConcept" : return "Hl7.Fhir.Model.CodeableConcept";
+				case "Reference" : return "Hl7.Fhir.Model.ResourceReference";
+				case "Resource" : return "Hl7.Fhir.Model.Resource"; 
+				case "SampledData" : return "Hl7.Fhir.Model.SampledData"; 
+				case "code" : return "Hl7.Fhir.Model.Code"; 
+				case "Code" : return "Hl7.Fhir.Model.Code"; 
+				case "HumanName" : return "Hl7.Fhir.Model.HumanName"; 
+				case "ContactPoint" : return "Hl7.Fhir.Model.ContactPoint"; 
+				case "Address" : return "Hl7.Fhir.Model.Address"; 
+				case "Attachment" : return "Hl7.Fhir.Model.Attachment"; 
+				case "Ratio" : return "Hl7.Fhir.Model.Ratio"; 
+				case "Timing" : return "Hl7.Fhir.Model.Timing"; 
+				case "oid" : return "Hl7.Fhir.Model.Oid";
+				case "Annotation" : return "Hl7.Fhir.Model.Annotation";
+				case "uri" : return "Hl7.Fhir.Model.FhirUri";
+				case "boolean" : return "Hl7.Fhir.Model.FhirBoolean"; 
+				case "dateTime" : return "Hl7.Fhir.Model.FhirDateTime"; 
+				case "date" : return "Hl7.Fhir.Model.Date"; 
+				case "time" : return "Hl7.Fhir.Model.Time";
+				case "Period" : return "Hl7.Fhir.Model.Period";
+				case "base64Binary" : return "Hl7.Fhir.Model.Base64Binary"; 
+				case "Signature" : return "Hl7.Fhir.Model.Signature";
+				case "Coding" : return "Hl7.Fhir.Model.Coding";
+				case "Meta" : return "Hl7.Fhir.Model.Meta";
+				case "decimal" : return "Hl7.Fhir.Model.FhirDecimal"; 
+				case "markdown" : return "Hl7.Fhir.Model.Markdown";
+				case "instant" : return "Hl7.Fhir.Model.Instant";
+				case "integer" : return "Hl7.Fhir.Model.Integer";
+				case "unsignedInt" : return "Hl7.Fhir.Model.UnsignedInt";
+				case "positiveInt" : return "Hl7.Fhir.Model.PositiveInt"; 
+				case "Range" : return "Hl7.Fhir.Model.Range";
+				case "string" : return "Hl7.Fhir.Model.FhirString";
+				case "ElementDefinition" : return "Hl7.Fhir.Model.ElementDefinition";
+//				case "BackboneElement" : result.PropType = result.BackboneComponentType;
+//								break;
+				case "Quantity" :
+								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
+								if (typeProfile == null)
+                                {
+									// result.PropType = "Hl7.Fhir.Model.FhirString";
+                                }
+								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
+                                {
+									return "Hl7.Fhir.Model.SimpleQuantity";
+                                }
+								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
+                                {
+									return "Hl7.Fhir.Model.Money";
+                                }
+								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
+                                {
+									return "Hl7.Fhir.Model.Age";
+                                }
+								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
+                                {
+									return "Hl7.Fhir.Model.Duration";
+                                }
+								break;
+            }
+			return propType;
+        }
+
+		public static PropertyDetails Parse(string resourceName, System.Xml.XmlElement element, System.Xml.XmlNamespaceManager nsR, Dictionary<string, string> enums)
+        {
+			PropertyDetails result = new PropertyDetails();
+			if (element.SelectSingleNode("fhir:isSummary[@value = 'true']", nsR) != null)
+				result.isSummaryProp = true;
+			if (element.SelectSingleNode("fhir:short/@value", nsR) != null)
+				result.Summary = element.SelectSingleNode("fhir:short/@value", nsR).Value;
+			if (element.SelectSingleNode("fhir:type/fhir:code/@value", nsR) != null)
+				result.PropType = element.SelectSingleNode("fhir:type/fhir:code/@value", nsR).Value;
+			else
+				result.PropType = "BackboneElement";
+
+			// Check for a nameReference to another property
+			XmlAttribute attrNameRef = element.SelectSingleNode("fhir:nameReference/@value", nsR) as XmlAttribute;
+			if (attrNameRef != null)
+            {
+				string nameRef = attrNameRef.Value;
+				XmlElement elemNameRef = (element.ParentNode as XmlElement).SelectSingleNode("fhir:element[fhir:name/@value = '"+nameRef+"']", nsR) as XmlElement;
+				PropertyDetails temp = ParseType(elemNameRef, nsR, enums);
+				if (temp != null)
+                {
+					result.PropType = temp.PropType;
+					result.BackboneComponentType = temp.BackboneComponentType;
+					result.NativeType = temp.NativeType;
+					result.ReferenceTargets = temp.ReferenceTargets;
+					result.AllowedTypes = temp.AllowedTypes;
+				}
+			}
+
+			result.FhirName = element.SelectSingleNode("fhir:path/@value", nsR).Value;
+			if (!result.FhirName.Contains(".") || !result.FhirName.StartsWith(resourceName + "."))
+				return null;
+			string ResourceBase = result.FhirName.Substring(0, result.FhirName.IndexOf("."));
+			if (result.PropType == "BackboneElement")
+            {
+				string v = result.FhirName;
+				if (v.Contains("."))
+				{
+					int index = v.LastIndexOf(".");
+					v = v.Substring(index+1, 1).ToUpper() + v.Substring(index+2);
+				}
+				result.BackboneComponentType = "Hl7.Fhir.Model." + ResourceBase + "." + v + "Component";
+				System.Xml.XmlAttribute componentName = (System.Xml.XmlAttribute)element.SelectSingleNode("fhir:extension[@url = 'http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name']/fhir:valueString/@value", nsR);
+				if (componentName != null)
+                {
+					result.BackboneComponentType = "Hl7.Fhir.Model." + ResourceBase + "." + componentName.Value + "Component";
+                }
+			}
+			result.FhirName = result.FhirName.Substring(resourceName.Length + 1);
+
+			// Strip out any child component props
+			if (result.FhirName.Contains("."))
+				return null;
+
+			result.Name = result.FhirName.ToUpper().Substring(0,1) + result.FhirName.Substring(1); // convert this to the actual property name
+
+			if (enums.ContainsValue("Hl7.Fhir.Model." + ResourceBase + "." + result.Name))
+				result.Name += "_";
+
+			result.CardMin = element.SelectSingleNode("fhir:min/@value", nsR).Value;
+			result.CardMax = element.SelectSingleNode("fhir:max/@value", nsR).Value;
+
+			string[] NativeTypes = { "decimal", "dateTime", "time", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "base64Binary" };
+			if (NativeTypes.Contains(result.PropType))
+            {
+				result.NativeName = result.Name;
+				result.Name = result.Name + "Element";
+				result.NativeType = result.PropType;
+            }
+
+			switch (result.PropType)
+            {
+				case "id" : result.PropType = "Hl7.Fhir.Model.Id";
+								result.NativeType = "string";
+								break;
+				case "Identifier" : result.PropType = "Hl7.Fhir.Model.Identifier"; break;
+				case "CodeableConcept" : result.PropType = "Hl7.Fhir.Model.CodeableConcept"; break;
+				case "Reference" : result.PropType = "Hl7.Fhir.Model.ResourceReference"; break;
+				case "Code" : result.PropType = "Hl7.Fhir.Model.Code"; 
+								result.NativeType = "string";
+								// If the binding is required, then we can change to the 
+								// locally defined enumeration type
+								break;
+				case "code" : result.PropType = "Hl7.Fhir.Model.Code"; 
+								result.NativeType = "string";
+								// If the binding is required, then we can change to the 
+								// locally defined enumeration type
+								break;
+				case "HumanName" : result.PropType = "Hl7.Fhir.Model.HumanName"; 
+								break;
+				case "ContactPoint" : result.PropType = "Hl7.Fhir.Model.ContactPoint"; 
+								break;
+				case "Address" : result.PropType = "Hl7.Fhir.Model.Address"; 
+								break;
+				case "Timing" : result.PropType = "Hl7.Fhir.Model.Timing"; 
+								break;
+				case "Ratio" : result.PropType = "Hl7.Fhir.Model.Ratio"; 
+								break;
+				case "Meta" : result.PropType = "Hl7.Fhir.Model.Meta"; 
+								break;
+				case "oid" : result.PropType = "Hl7.Fhir.Model.Oid";
+								result.NativeType = "string";
+								break;
+				case "Attachment" : result.PropType = "Hl7.Fhir.Model.Attachment"; 
+								break;
+				case "integer" : result.PropType = "Hl7.Fhir.Model.Integer"; 
+								result.NativeType = "int?";
+								break;
+				case "boolean" : result.PropType = "Hl7.Fhir.Model.FhirBoolean"; 
+								result.NativeType = "bool?";
+								break;
+				case "Signature" : result.PropType = "Hl7.Fhir.Model.Signature";
+								break;
+				case "Period" : result.PropType = "Hl7.Fhir.Model.Period";
+								break;
+				case "Annotation" : result.PropType = "Hl7.Fhir.Model.Annotation";
+								break;
+				case "Coding" : result.PropType = "Hl7.Fhir.Model.Coding";
+								break;
+				case "uri" : result.PropType = "Hl7.Fhir.Model.FhirUri"; 
+								result.NativeType = "string";
+								break;
+				case "base64Binary" : result.PropType = "Hl7.Fhir.Model.Base64Binary"; 
+								result.NativeType = "byte[]";
+								break;
+				case "Resource" : result.PropType = "Hl7.Fhir.Model.Resource"; 
+								result.AllowedTypes = "typeof(Hl7.Fhir.Model.Resource)";
+								break;
+				case "dateTime" : result.PropType = "Hl7.Fhir.Model.FhirDateTime"; 
+								result.NativeType = "string";
+								break;
+				case "date" : result.PropType = "Hl7.Fhir.Model.Date"; 
+								result.NativeType = "string";
+								break;
+				case "time" : result.PropType = "Hl7.Fhir.Model.Time"; 
+								result.NativeType = "string";
+								break;
+				case "instant" : result.PropType = "Hl7.Fhir.Model.Instant"; 
+								result.NativeType = "DateTimeOffset?";
+								break;
+				case "unsignedInt" : result.PropType = "Hl7.Fhir.Model.UnsignedInt"; 
+								result.NativeType = "int?";
+								break;
+				case "positiveInt" : result.PropType = "Hl7.Fhir.Model.PositiveInt"; 
+								result.NativeType = "int?";
+								break;
+				case "decimal" : result.PropType = "Hl7.Fhir.Model.FhirDecimal"; 
+								result.NativeType = "decimal?";
+								break;
+				case "string" : result.PropType = "Hl7.Fhir.Model.FhirString";
+								result.NativeType = "string";
+								break;
+				case "Range" : result.PropType = "Hl7.Fhir.Model.Range";
+								break;
+				case "markdown" : result.PropType = "Hl7.Fhir.Model.Markdown";
+								break;
+				case "BackboneElement" : result.PropType = result.BackboneComponentType;
+								break;
+				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
+								break;
+				case "Quantity" :
+								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
+								if (typeProfile == null)
+                                {
+									// result.PropType = "Hl7.Fhir.Model.FhirString";
+                                }
+								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
+                                {
+									result.PropType = "Hl7.Fhir.Model.SimpleQuantity";
+                                }
+								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
+                                {
+									result.PropType = "Hl7.Fhir.Model.Money";
+                                }
+								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
+                                {
+									result.PropType = "Hl7.Fhir.Model.Age";
+                                }
+								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
+                                {
+									result.PropType = "Hl7.Fhir.Model.Duration";
+                                }
+								break;
+            }
+
+			if (result.Name.Contains("[x]"))
+            {
+				result.PropType = "Hl7.Fhir.Model.Element";
+				result.Name = result.Name.Substring(0, result.Name.IndexOf("["));
+				result.FhirName = result.FhirName.Substring(0, result.FhirName.IndexOf("["));
+				result.AllowedTypes = "";
+
+				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type/fhir:code/@value", nsR))
+                {
+					string allowType = "typeof(" +ConvertPropertyType(erp.Value.Substring(erp.Value.LastIndexOf("/")+1), element, nsR) + ")";
+					if (!result.AllowedTypes.Contains(allowType))
+                    {
+						if (!string.IsNullOrEmpty(result.AllowedTypes))
+							result.AllowedTypes += ",";
+						result.AllowedTypes += allowType;
+                    }
+                }
+				// result.AllowedTypes = result.ReferenceTargets.Replace("\"Resource\"", "");
+            }
+
+			if (result.PropType == "Hl7.Fhir.Model.ResourceReference")
+            {
+				// Lets find the list of reference types that are permitted:
+				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:profile/@value", nsR))
+                {
+					//if (erp.Value == "http://hl7.org/fhir/StructureDefinition/Resource")
+					//	continue;
+					if (result.ReferenceTargets != null)
+						result.ReferenceTargets += ",";
+					result.ReferenceTargets += "\"" +erp.Value.Substring(erp.Value.LastIndexOf("/")+1) + "\"";
+                }
+				result.ReferenceTargets = result.ReferenceTargets.Replace("\"Resource\"", "");
+            }
+
+			if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
+            {
+				// Grab the binding from the element
+				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", nsR) != null)
+					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", nsR).Value;
+				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
+                {
+					if (!enums.ContainsKey(result.CodeRequiredBinding))
+                    {
+						result.CodeRequiredBinding = element.SelectSingleNode("fhir:path/@value", nsR).Value;
+						if (result.CodeRequiredBinding.Contains(ResourceBase +"."))
+							result.CodeRequiredBinding = result.CodeRequiredBinding.Substring(ResourceBase.Length + 1, 1).ToUpper() + result.CodeRequiredBinding.Substring(ResourceBase.Length + 2);
+						while (result.CodeRequiredBinding.Contains("."))
+						{
+							int index = result.CodeRequiredBinding.IndexOf(".");
+							result.CodeRequiredBinding = result.CodeRequiredBinding.Substring(0, index) + result.CodeRequiredBinding.Substring(index+1, 1).ToUpper() + result.CodeRequiredBinding.Substring(index+2);
+						}
+                    }
+					else
+					{
+						result.CodeRequiredBinding = enums[result.CodeRequiredBinding];
+                    }
+					// result.CodeRequiredBinding = result.CodeRequiredBinding.Substring(ResourceBase.Length);
+					result.PropType = result.PropType + "<" + result.CodeRequiredBinding + ">";
+					result.NativeType = result.CodeRequiredBinding + "?";
+                }
+            }
+
+			if (result.NativeName != null && result.NativeName.Contains("[x]"))
+            {
+				result.NativeName = null;
+				result.NativeType = null;
+            }
+
+			return result;
+        }
+
+		public static PropertyDetails ParseType(System.Xml.XmlElement element, System.Xml.XmlNamespaceManager nsR, Dictionary<string, string> enums)
+        {
+			PropertyDetails result = new PropertyDetails();
+			string ResourceBase = element.SelectSingleNode("fhir:path/@value", nsR).Value;
+			if (ResourceBase.Contains("."))
+				ResourceBase = ResourceBase.Substring(0, ResourceBase.IndexOf("."));
+			if (element.SelectSingleNode("fhir:type/fhir:code/@value", nsR) != null)
+				result.PropType = element.SelectSingleNode("fhir:type/fhir:code/@value", nsR).Value;
+			else
+				result.PropType = "BackboneElement";
+			result.FhirName = element.SelectSingleNode("fhir:path/@value", nsR).Value;
+		//	if (result.FhirName.StartsWith(ResourceBase + "."))
+		//		result.FhirName = result.FhirName.Substring(result.FhirName.IndexOf(".") + 1);
+			result.FhirName = result.FhirName.ToUpper().Substring(0,1) + result.FhirName.Substring(1); // convert this to the actual property name
+
+			if (result.PropType == "BackboneElement")
+            {
+				string v = result.FhirName;
+				if (v.Contains("."))
+				{
+					int index = v.LastIndexOf(".");
+					v = v.Substring(index+1, 1).ToUpper() + v.Substring(index+2);
+				}
+				result.BackboneComponentType = "Hl7.Fhir.Model." + ResourceBase + "." + v + "Component";
+				System.Xml.XmlAttribute componentName = (System.Xml.XmlAttribute)element.SelectSingleNode("fhir:extension[@url = 'http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name']/fhir:valueString/@value", nsR);
+				if (componentName != null)
+                {
+					result.BackboneComponentType = "Hl7.Fhir.Model." + ResourceBase + "." + componentName.Value + "Component";
+                }
+			}
+
+			// Check for a nameReference to another property
+			XmlAttribute attrNameRef = element.SelectSingleNode("fhir:nameReference/@value", nsR) as XmlAttribute;
+			if (attrNameRef != null)
+            {
+				string nameRef = attrNameRef.Value;
+				XmlElement elemNameRef = (element.ParentNode as XmlElement).SelectSingleNode("fhir:element[fhir:name/@value = '"+nameRef+"']", nsR) as XmlElement;
+				PropertyDetails temp = ParseType(elemNameRef, nsR, enums);
+				if (temp != null)
+                {
+					result.PropType = temp.PropType;
+					result.BackboneComponentType = temp.BackboneComponentType;
+					result.NativeType = temp.NativeType;
+				}
+			}
+
+			if (result.PropType == "BackboneElement")
+            {
+				string v = result.FhirName;
+				if (v.Contains("."))
+				{
+					int index = v.LastIndexOf(".");
+					v = v.Substring(index+1, 1).ToUpper() + v.Substring(index+2);
+				}
+				result.BackboneComponentType = "Hl7.Fhir.Model." + ResourceBase + "." + v + "Component";
+				System.Xml.XmlAttribute componentName = (System.Xml.XmlAttribute)element.SelectSingleNode("fhir:extension[@url = 'http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name']/fhir:valueString/@value", nsR);
+				if (componentName != null)
+                {
+					result.BackboneComponentType = "Hl7.Fhir.Model." + ResourceBase + "." + componentName.Value + "Component";
+                }
+			}
+			string[] NativeTypes = { "decimal", "dateTime", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "base64Binary" };
+			if (NativeTypes.Contains(result.PropType))
+            {
+				result.NativeType = result.PropType;
+            }
+
+			switch (result.PropType)
+            {
+				case "id" : result.PropType = "Hl7.Fhir.Model.Id";
+								result.NativeType = "string";
+								break;
+				case "Identifier" : result.PropType = "Hl7.Fhir.Model.Identifier"; break;
+				case "CodeableConcept" : result.PropType = "Hl7.Fhir.Model.CodeableConcept"; break;
+				case "Reference" : result.PropType = "Hl7.Fhir.Model.ResourceReference"; break;
+				case "Resource" : result.PropType = "Hl7.Fhir.Model.Resource"; 
+								result.AllowedTypes = "typeof(Hl7.Fhir.Model.Resource)";
+								break;
+				case "Code" : result.PropType = "Hl7.Fhir.Model.Code"; 
+								result.NativeType = "string";
+								// If the binding is required, then we can change to the 
+								// locally defined enumeration type
+								break;
+				case "code" : result.PropType = "Hl7.Fhir.Model.Code"; 
+								result.NativeType = "string";
+								// If the binding is required, then we can change to the 
+								// locally defined enumeration type
+								break;
+				case "markdown" : result.PropType = "Hl7.Fhir.Model.Markdown";
+								break;
+				case "HumanName" : result.PropType = "Hl7.Fhir.Model.HumanName"; 
+								break;
+				case "ContactPoint" : result.PropType = "Hl7.Fhir.Model.ContactPoint"; 
+								break;
+				case "Address" : result.PropType = "Hl7.Fhir.Model.Address"; 
+								break;
+				case "Timing" : result.PropType = "Hl7.Fhir.Model.Timing"; 
+								break;
+				case "Ratio" : result.PropType = "Hl7.Fhir.Model.Ratio"; 
+								break;
+				case "Meta" : result.PropType = "Hl7.Fhir.Model.Meta"; 
+								break;
+				case "oid" : result.PropType = "Hl7.Fhir.Model.Oid";
+								result.NativeType = "string";
+								break;
+				case "Attachment" : result.PropType = "Hl7.Fhir.Model.Attachment"; 
+								break;
+				case "integer" : result.PropType = "Hl7.Fhir.Model.Integer"; 
+								result.NativeType = "int?";
+								break;
+				case "boolean" : result.PropType = "Hl7.Fhir.Model.FhirBoolean"; 
+								result.NativeType = "bool?";
+								break;
+				case "Signature" : result.PropType = "Hl7.Fhir.Model.Signature";
+								break;
+				case "Period" : result.PropType = "Hl7.Fhir.Model.Period";
+								break;
+				case "Annotation" : result.PropType = "Hl7.Fhir.Model.Annotation";
+								break;
+				case "Coding" : result.PropType = "Hl7.Fhir.Model.Coding";
+								break;
+				case "uri" : result.PropType = "Hl7.Fhir.Model.FhirUri"; 
+								result.NativeType = "string";
+								break;
+				case "base64Binary" : result.PropType = "Hl7.Fhir.Model.Base64Binary"; 
+								result.NativeType = "byte[]";
+								break;
+				case "dateTime" : result.PropType = "Hl7.Fhir.Model.FhirDateTime"; 
+								result.NativeType = "string";
+								break;
+				case "date" : result.PropType = "Hl7.Fhir.Model.Date"; 
+								result.NativeType = "string";
+								break;
+				case "time" : result.PropType = "Hl7.Fhir.Model.Time"; 
+								break;
+				case "instant" : result.PropType = "Hl7.Fhir.Model.Instant"; 
+								result.NativeType = "DateTimeOffset?";
+								break;
+				case "unsignedInt" : result.PropType = "Hl7.Fhir.Model.UnsignedInt"; 
+								result.NativeType = "int?";
+								break;
+				case "positiveInt" : result.PropType = "Hl7.Fhir.Model.PositiveInt"; 
+								result.NativeType = "int?";
+								break;
+				case "decimal" : result.PropType = "Hl7.Fhir.Model.FhirDecimal"; 
+								result.NativeType = "decimal?";
+								break;
+				case "string" : result.PropType = "Hl7.Fhir.Model.FhirString";
+								result.NativeType = "string";
+								break;
+				case "Range" : result.PropType = "Hl7.Fhir.Model.Range";
+								break;
+				case "BackboneElement" : result.PropType = result.BackboneComponentType;
+								break;
+				case "ElementDefinition" : result.PropType = "Hl7.Fhir.Model.ElementDefinition";
+								break;
+				case "Quantity" :
+								XmlAttribute typeProfile = (XmlAttribute)element.SelectSingleNode("fhir:type/fhir:profile/@value", nsR);
+								if (typeProfile == null)
+                                {
+									// result.PropType = "Hl7.Fhir.Model.FhirString";
+                                }
+								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/SimpleQuantity")
+                                {
+									result.PropType = "Hl7.Fhir.Model.SimpleQuantity";
+                                }
+								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Money")
+                                {
+									result.PropType = "Hl7.Fhir.Model.Money";
+                                }
+								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Age")
+                                {
+									result.PropType = "Hl7.Fhir.Model.Age";
+                                }
+								else if (typeProfile.Value == "http://hl7.org/fhir/StructureDefinition/Duration")
+                                {
+									result.PropType = "Hl7.Fhir.Model.Duration";
+                                }
+								break;
+            }
+
+			if (result.PropType == "Hl7.Fhir.Model.ResourceReference")
+            {
+				// Lets find the list of reference types that are permitted:
+				foreach (System.Xml.XmlAttribute erp in element.SelectNodes("fhir:type[fhir:code/@value = 'Reference']/fhir:profile/@value", nsR))
+                {
+					//if (erp.Value == "http://hl7.org/fhir/StructureDefinition/Resource")
+					//	continue;
+					if (result.ReferenceTargets != null)
+						result.ReferenceTargets += ",";
+					result.ReferenceTargets += "\"" +erp.Value.Substring(erp.Value.LastIndexOf("/")+1) + "\"";
+                }
+				result.ReferenceTargets = result.ReferenceTargets.Replace("\"Resource\"", "");
+            }
+
+			if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
+            {
+				// Grab the binding from the element
+				if (element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", nsR) != null)
+					result.CodeRequiredBinding = element.SelectSingleNode("fhir:binding[fhir:strength/@value = 'required']/fhir:valueSetReference/fhir:reference/@value", nsR).Value;
+				if (!string.IsNullOrEmpty(result.CodeRequiredBinding) && result.CodeRequiredBinding != "http://hl7.org/fhir/ValueSet/operation-parameter-type")
+                {
+					if (!enums.ContainsKey(result.CodeRequiredBinding))
+                    {
+						result.CodeRequiredBinding = element.SelectSingleNode("fhir:path/@value", nsR).Value;
+						if (result.CodeRequiredBinding.Contains(ResourceBase +"."))
+							result.CodeRequiredBinding = result.CodeRequiredBinding.Substring(ResourceBase.Length + 1, 1).ToUpper() + result.CodeRequiredBinding.Substring(ResourceBase.Length + 2);
+						while (result.CodeRequiredBinding.Contains("."))
+						{
+							int index = result.CodeRequiredBinding.IndexOf(".");
+							result.CodeRequiredBinding = result.CodeRequiredBinding.Substring(0, index) + result.CodeRequiredBinding.Substring(index+1, 1).ToUpper() + result.CodeRequiredBinding.Substring(index+2);
+						}
+                    }
+					else
+					{
+						result.CodeRequiredBinding = enums[result.CodeRequiredBinding];
+                    }
+					// result.CodeRequiredBinding = result.CodeRequiredBinding.Substring(ResourceBase.Length);
+					result.PropType = result.PropType + "<" + result.CodeRequiredBinding + ">";
+					result.NativeType = result.CodeRequiredBinding + "?";
+                }
+            }
+
+			return result;
+        }
+    }
+#>

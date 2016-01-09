@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,47 +53,55 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The use of a human name
+        /// (url: http://hl7.org/fhir/ValueSet/name-use)
         /// </summary>
         [FhirEnumeration("NameUse")]
         public enum NameUse
         {
             /// <summary>
             /// Known as/conventional/the one you normally use
+            /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("usual")]
+            [EnumLiteral("usual"), Description("Usual")]
             Usual,
             /// <summary>
             /// The formal name as registered in an official (government) registry, but which name might not be commonly used. May be called "legal name".
+            /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("official")]
+            [EnumLiteral("official"), Description("Official")]
             Official,
             /// <summary>
             /// A temporary name. Name.period can provide more detailed information. This may also be used for temporary names assigned at birth or in emergency situations.
+            /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("temp")]
+            [EnumLiteral("temp"), Description("Temp")]
             Temp,
             /// <summary>
             /// A name that is used to address the person in an informal manner, but is not part of their formal or usual name
+            /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("nickname")]
+            [EnumLiteral("nickname"), Description("Nickname")]
             Nickname,
             /// <summary>
             /// Anonymous assigned name, alias, or pseudonym (used to protect a person's identity for privacy reasons)
+            /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("anonymous")]
+            [EnumLiteral("anonymous"), Description("Anonymous")]
             Anonymous,
             /// <summary>
             /// This name is no longer in use (or was never correct, but retained for records)
+            /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("old")]
+            [EnumLiteral("old"), Description("Old")]
             Old,
             /// <summary>
             /// A name used prior to marriage. Marriage naming customs vary greatly around the world. This name use is for use by applications that collect and store "maiden" names. Though the concept of maiden name is often gender specific, the use of this term is not gender specific. The use of this term does not imply any particular history for a person's name, nor should the maiden name be determined algorithmically.
+            /// (system: http://hl7.org/fhir/name-use)
             /// </summary>
-            [EnumLiteral("maiden")]
+            [EnumLiteral("maiden"), Description("Maiden")]
             Maiden,
         }
-        
+
         /// <summary>
         /// usual | official | temp | nickname | anonymous | old | maiden
         /// </summary>

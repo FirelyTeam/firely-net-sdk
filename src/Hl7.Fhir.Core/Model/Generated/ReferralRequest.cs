@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,47 +55,55 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The status of the referral.
+        /// (url: http://hl7.org/fhir/ValueSet/referralstatus)
         /// </summary>
         [FhirEnumeration("ReferralStatus")]
         public enum ReferralStatus
         {
             /// <summary>
             /// A draft referral that has yet to be send.
+            /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("draft")]
+            [EnumLiteral("draft"), Description("Draft")]
             Draft,
             /// <summary>
             /// The referral has been transmitted, but not yet acknowledged by the recipient.
+            /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("requested")]
+            [EnumLiteral("requested"), Description("Requested")]
             Requested,
             /// <summary>
             /// The referral has been acknowledged by the recipient, and is in the process of being actioned.
+            /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("active")]
+            [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
             /// The referral has been cancelled without being completed. For example it is no longer needed.
+            /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("cancelled")]
+            [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// The recipient has agreed to deliver the care requested by the referral.
+            /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("accepted")]
+            [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// The recipient has declined to accept the referral.
+            /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("rejected")]
+            [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The referral has been completely actioned.
+            /// (system: http://hl7.org/fhir/referralstatus)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Completed")]
             Completed,
         }
-        
+
         /// <summary>
         /// draft | requested | active | cancelled | accepted | rejected | completed
         /// </summary>

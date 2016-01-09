@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,15 +37,20 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("SimpleQuantity")]
+    [FhirType("Quantity")]
     public partial class SimpleQuantity : Quantity
     {
         [NotMapped]
         public override string TypeName { get { return "SimpleQuantity"; } }
+        
+        public override IDeepCopyable DeepCopy()
+        {
+            return CopyTo(new SimpleQuantity());
+        }
         
         // TODO: Add code to enforce these constraints:
         // * The comparator is not used on a SimpleQuantity

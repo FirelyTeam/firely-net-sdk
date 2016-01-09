@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,7 +53,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Target body site
         /// </summary>
-        [FhirElement("bodySite", Order=90, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("bodySite", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element BodySite
@@ -63,7 +64,10 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Element _BodySite;
         
-        [FhirElement("whenUsed", Order=100)]
+        /// <summary>
+        /// 
+        /// </summary>
+        [FhirElement("whenUsed", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.Period WhenUsed
         {
@@ -73,7 +77,10 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Period _WhenUsed;
         
-        [FhirElement("device", Order=110)]
+        /// <summary>
+        /// 
+        /// </summary>
+        [FhirElement("device", InSummary=true, Order=110)]
         [References("Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -85,7 +92,10 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _Device;
         
-        [FhirElement("identifier", Order=120)]
+        /// <summary>
+        /// 
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -96,7 +106,10 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
-        [FhirElement("indication", Order=130)]
+        /// <summary>
+        /// 
+        /// </summary>
+        [FhirElement("indication", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Indication
@@ -107,7 +120,10 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
         
-        [FhirElement("notes", Order=140)]
+        /// <summary>
+        /// 
+        /// </summary>
+        [FhirElement("notes", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> NotesElement
@@ -118,6 +134,10 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.FhirString> _NotesElement;
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public IEnumerable<string> Notes
@@ -133,7 +153,10 @@ namespace Hl7.Fhir.Model
             }
         }
         
-        [FhirElement("recordedOn", Order=150)]
+        /// <summary>
+        /// 
+        /// </summary>
+        [FhirElement("recordedOn", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RecordedOnElement
         {
@@ -143,6 +166,10 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.FhirDateTime _RecordedOnElement;
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
         public string RecordedOn
@@ -158,7 +185,10 @@ namespace Hl7.Fhir.Model
             }
         }
         
-        [FhirElement("subject", Order=160)]
+        /// <summary>
+        /// 
+        /// </summary>
+        [FhirElement("subject", InSummary=true, Order=160)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -170,7 +200,10 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
-        [FhirElement("timing", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        /// <summary>
+        /// 
+        /// </summary>
+        [FhirElement("timing", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
         public Hl7.Fhir.Model.Element Timing

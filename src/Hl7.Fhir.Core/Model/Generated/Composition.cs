@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,283 +55,161 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The workflow/clinical status of the composition.
+        /// (url: http://hl7.org/fhir/ValueSet/composition-status)
         /// </summary>
         [FhirEnumeration("CompositionStatus")]
         public enum CompositionStatus
         {
             /// <summary>
             /// This is a preliminary composition or document (also known as initial or interim). The content may be incomplete or unverified.
+            /// (system: http://hl7.org/fhir/composition-status)
             /// </summary>
-            [EnumLiteral("preliminary")]
+            [EnumLiteral("preliminary"), Description("Preliminary")]
             Preliminary,
             /// <summary>
             /// This version of the composition is complete and verified by an appropriate person and no further work is planned. Any subsequent updates would be on a new version of the composition.
+            /// (system: http://hl7.org/fhir/composition-status)
             /// </summary>
-            [EnumLiteral("final")]
+            [EnumLiteral("final"), Description("Final")]
             Final,
             /// <summary>
             /// The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as "final" and the composition is complete and verified by an authorized person.
+            /// (system: http://hl7.org/fhir/composition-status)
             /// </summary>
-            [EnumLiteral("amended")]
+            [EnumLiteral("amended"), Description("Amended")]
             Amended,
             /// <summary>
             /// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.
+            /// (system: http://hl7.org/fhir/composition-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
             EnteredInError,
         }
-        
+
+        /// <summary>
+        ///  A set of codes specifying the security classification of acts and roles in accordance with the definition for concept domain "Confidentiality".
+        /// (url: http://hl7.org/fhir/ValueSet/v3-Confidentiality)
+        /// </summary>
+        [FhirEnumeration("v3CodeSystemConfidentiality")]
+        public enum v3CodeSystemConfidentiality
+        {
+            /// <summary>
+            /// A specializable code and its leaf codes used in Confidentiality value sets to value the Act.Confidentiality and Role.Confidentiality attribute in accordance with the definition for concept domain "Confidentiality".
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("_Confidentiality"), Description("Confidentiality")]
+            Confidentiality,
+            /// <summary>
+            /// Definition: Privacy metadata indicating that the information has been de-identified, and there are mitigating circumstances that prevent re-identification, which minimize risk of harm from unauthorized disclosure.  The information requires protection to maintain low sensitivity.
+        ///                         
+        ///                            Examples: Includes anonymized, pseudonymized, or non-personally identifiable information such as HIPAA limited data sets.
+        ///                         
+        ///                            Map: No clear map to ISO 13606-4 Sensitivity Level (1) Care Management:   RECORD_COMPONENTs that might need to be accessed by a wide range of administrative staff to manage the subject of care's access to health services.
+        ///                         
+        ///                            Usage Note: This metadata indicates the receiver may have an obligation to comply with a data use agreement.
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("L"), Description("low")]
+            L,
+            /// <summary>
+            /// Definition: Privacy metadata indicating moderately sensitive information, which presents moderate risk of harm if disclosed without authorization.
+        ///                         
+        ///                            Examples: Includes allergies of non-sensitive nature used inform food service; health information a patient authorizes to be used for marketing, released to a bank for a health credit card or savings account; or information in personal health record systems that are not governed under health privacy laws.
+        ///                         
+        ///                            Map: Partial Map to ISO 13606-4 Sensitivity Level (2) Clinical Management:  Less sensitive RECORD_COMPONENTs that might need to be accessed by a wider range of personnel not all of whom are actively caring for the patient (e.g. radiology staff).
+        ///                         
+        ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with the receiver's terms of use or privacy policies.
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("M"), Description("moderate")]
+            M,
+            /// <summary>
+            /// Definition: Privacy metadata indicating that the information is typical, non-stigmatizing health information, which presents typical risk of harm if disclosed without authorization.
+        ///                         
+        ///                            Examples: In the US, this includes what HIPAA identifies as the minimum necessary protected health information (PHI) given a covered purpose of use (treatment, payment, or operations).  Includes typical, non-stigmatizing health information disclosed in an application for health, workers compensation, disability, or life insurance.
+        ///                         
+        ///                            Map: Partial Map to ISO 13606-4 Sensitivity Level (3) Clinical Care:   Default for normal clinical care access (i.e. most clinical staff directly caring for the patient should be able to access nearly all of the EHR).   Maps to normal confidentiality for treatment information but not to ancillary care, payment and operations.
+        ///                         
+        ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with applicable jurisdictional privacy law or disclosure authorization.
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("N"), Description("normal")]
+            N,
+            /// <summary>
+            /// Privacy metadata indicating highly sensitive, potentially stigmatizing information, which presents a high risk to the information subject if disclosed without authorization. May be pre-empted by jurisdictional law, e.g. for public health reporting or emergency treatment.
+        ///                         
+        ///                            Examples: Includes information that is additionally protected such as sensitive conditions mental health, HIV, substance abuse, domestic violence, child abuse, genetic disease, and reproductive health; or sensitive demographic information such as a patient's standing as an employee or a celebrity. May be used to indicate proprietary or classified information that is not related to an individual, e.g. secret ingredients in a therapeutic substance; or the name of a manufacturer.
+        ///                         
+        ///                            Map: Partial Map to ISO 13606-4 Sensitivity Level (3) Clinical Care: Default for normal clinical care access (i.e. most clinical staff directly caring for the patient should be able to access nearly all of the EHR). Maps to normal confidentiality for treatment information but not to ancillary care, payment and operations..
+        ///                         
+        ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with applicable, prevailing (default) jurisdictional privacy law or disclosure authorization..
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("R"), Description("restricted")]
+            R,
+            /// <summary>
+            /// Definition: Privacy metadata indicating that the information is not classified as sensitive.
+        ///                         
+        ///                            Examples: Includes publicly available information, e.g. business name, phone, email or physical address.
+        ///                         
+        ///                            Usage Note: This metadata indicates that the receiver has no obligation to consider additional policies when making access control decisions.   Note that in some jurisdictions, personally identifiable information must be protected as confidential, so it would not be appropriate to assign a confidentiality code of "unrestricted"  to that information even if it is publicly available.
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("U"), Description("unrestricted")]
+            U,
+            /// <summary>
+            /// . Privacy metadata indicating that the information is extremely sensitive and likely stigmatizing health information that presents a very high risk if disclosed without authorization.  This information must be kept in the highest confidence.  
+        ///                         
+        ///                            Examples:  Includes information about a victim of abuse, patient requested information sensitivity, and taboo subjects relating to health status that must be discussed with the patient by an attending provider before sharing with the patient.  May also include information held under â€œlegal lockâ€? or attorney-client privilege
+        ///                         
+        ///                            Map:  This metadata indicates that the receiver may not disclose this information except as directed by the information custodian, who may be the information subject.
+        ///                         
+        ///                            Usage Note:  This metadata indicates that the receiver may not disclose this information except as directed by the information custodian, who may be the information subject.
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("V"), Description("very restricted")]
+            V,
+        }
+
         /// <summary>
         /// The way in which a person authenticated a composition.
+        /// (url: http://hl7.org/fhir/ValueSet/composition-attestation-mode)
         /// </summary>
         [FhirEnumeration("CompositionAttestationMode")]
         public enum CompositionAttestationMode
         {
             /// <summary>
             /// The person authenticated the content in their personal capacity.
+            /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
-            [EnumLiteral("personal")]
+            [EnumLiteral("personal"), Description("Personal")]
             Personal,
             /// <summary>
             /// The person authenticated the content in their professional capacity.
+            /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
-            [EnumLiteral("professional")]
+            [EnumLiteral("professional"), Description("Professional")]
             Professional,
             /// <summary>
             /// The person authenticated the content and accepted legal responsibility for its content.
+            /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
-            [EnumLiteral("legal")]
+            [EnumLiteral("legal"), Description("Legal")]
             Legal,
             /// <summary>
             /// The organization authenticated the content as consistent with their policies and procedures.
+            /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
-            [EnumLiteral("official")]
+            [EnumLiteral("official"), Description("Official")]
             Official,
         }
-        
-        [FhirType("SectionComponent")]
+
+        [FhirType("AttesterComponent")]
         [DataContract]
-        public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "SectionComponent"; } }
-            
-            /// <summary>
-            /// Label for section (e.g. for ToC)
-            /// </summary>
-            [FhirElement("title", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString TitleElement
-            {
-                get { return _TitleElement; }
-                set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _TitleElement;
-            
-            /// <summary>
-            /// Label for section (e.g. for ToC)
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Title
-            {
-                get { return TitleElement != null ? TitleElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TitleElement = null; 
-                    else
-                      TitleElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Title");
-                }
-            }
-            
-            /// <summary>
-            /// Classification of section (recommended)
-            /// </summary>
-            [FhirElement("code", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
-            {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Code;
-            
-            /// <summary>
-            /// Text summary of the section, for human interpretation
-            /// </summary>
-            [FhirElement("text", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.Narrative Text
-            {
-                get { return _Text; }
-                set { _Text = value; OnPropertyChanged("Text"); }
-            }
-            
-            private Hl7.Fhir.Model.Narrative _Text;
-            
-            /// <summary>
-            /// working | snapshot | changes
-            /// </summary>
-            [FhirElement("mode", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.Code ModeElement
-            {
-                get { return _ModeElement; }
-                set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Code _ModeElement;
-            
-            /// <summary>
-            /// working | snapshot | changes
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Mode
-            {
-                get { return ModeElement != null ? ModeElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      ModeElement = null; 
-                    else
-                      ModeElement = new Hl7.Fhir.Model.Code(value);
-                    OnPropertyChanged("Mode");
-                }
-            }
-            
-            /// <summary>
-            /// Order of section entries
-            /// </summary>
-            [FhirElement("orderedBy", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept OrderedBy
-            {
-                get { return _OrderedBy; }
-                set { _OrderedBy = value; OnPropertyChanged("OrderedBy"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _OrderedBy;
-            
-            /// <summary>
-            /// A reference to data that supports this section
-            /// </summary>
-            [FhirElement("entry", InSummary=true, Order=90)]
-            [References()]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> Entry
-            {
-                get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.ResourceReference>(); return _Entry; }
-                set { _Entry = value; OnPropertyChanged("Entry"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _Entry;
-            
-            /// <summary>
-            /// Why the section is empty
-            /// </summary>
-            [FhirElement("emptyReason", InSummary=true, Order=100)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept EmptyReason
-            {
-                get { return _EmptyReason; }
-                set { _EmptyReason = value; OnPropertyChanged("EmptyReason"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _EmptyReason;
-            
-            /// <summary>
-            /// Nested Section
-            /// </summary>
-            [FhirElement("section", InSummary=true, Order=110)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
-            {
-                get { if(_Section==null) _Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(); return _Section; }
-                set { _Section = value; OnPropertyChanged("Section"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as SectionComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                    if(Text != null) dest.Text = (Hl7.Fhir.Model.Narrative)Text.DeepCopy();
-                    if(ModeElement != null) dest.ModeElement = (Hl7.Fhir.Model.Code)ModeElement.DeepCopy();
-                    if(OrderedBy != null) dest.OrderedBy = (Hl7.Fhir.Model.CodeableConcept)OrderedBy.DeepCopy();
-                    if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.ResourceReference>(Entry.DeepCopy());
-                    if(EmptyReason != null) dest.EmptyReason = (Hl7.Fhir.Model.CodeableConcept)EmptyReason.DeepCopy();
-                    if(Section != null) dest.Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(Section.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new SectionComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as SectionComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-                if( !DeepComparable.Matches(Text, otherT.Text)) return false;
-                if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
-                if( !DeepComparable.Matches(OrderedBy, otherT.OrderedBy)) return false;
-                if( !DeepComparable.Matches(Entry, otherT.Entry)) return false;
-                if( !DeepComparable.Matches(EmptyReason, otherT.EmptyReason)) return false;
-                if( !DeepComparable.Matches(Section, otherT.Section)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as SectionComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-                if( !DeepComparable.IsExactly(Text, otherT.Text)) return false;
-                if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
-                if( !DeepComparable.IsExactly(OrderedBy, otherT.OrderedBy)) return false;
-                if( !DeepComparable.IsExactly(Entry, otherT.Entry)) return false;
-                if( !DeepComparable.IsExactly(EmptyReason, otherT.EmptyReason)) return false;
-                if( !DeepComparable.IsExactly(Section, otherT.Section)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("CompositionAttesterComponent")]
-        [DataContract]
-        public partial class CompositionAttesterComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "CompositionAttesterComponent"; } }
+            public override string TypeName { get { return "AttesterComponent"; } }
             
             /// <summary>
             /// personal | professional | legal | official
@@ -340,7 +219,7 @@ namespace Hl7.Fhir.Model
             [DataMember]
             public List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>> ModeElement
             {
-                get { if(_ModeElement==null) _ModeElement = new List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(); return _ModeElement; }
+                get { if(_ModeElement==null) _ModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(); return _ModeElement; }
                 set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
             }
             
@@ -360,7 +239,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       ModeElement = null; 
                     else
-                      ModeElement = new List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(value.Select(elem=>new Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(elem)));
+                      ModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(elem)));
                     OnPropertyChanged("Mode");
                 }
             }
@@ -413,7 +292,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CompositionAttesterComponent;
+                var dest = other as AttesterComponent;
                 
                 if (dest != null)
                 {
@@ -429,12 +308,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CompositionAttesterComponent());
+                return CopyTo(new AttesterComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CompositionAttesterComponent;
+                var otherT = other as AttesterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -447,7 +326,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CompositionAttesterComponent;
+                var otherT = other as AttesterComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -461,12 +340,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CompositionEventComponent")]
+        [FhirType("EventComponent")]
         [DataContract]
-        public partial class CompositionEventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "CompositionEventComponent"; } }
+            public override string TypeName { get { return "EventComponent"; } }
             
             /// <summary>
             /// Code(s) that apply to the event being documented
@@ -512,7 +391,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CompositionEventComponent;
+                var dest = other as EventComponent;
                 
                 if (dest != null)
                 {
@@ -528,12 +407,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CompositionEventComponent());
+                return CopyTo(new EventComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CompositionEventComponent;
+                var otherT = other as EventComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -546,13 +425,230 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CompositionEventComponent;
+                var otherT = other as EventComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("SectionComponent")]
+        [DataContract]
+        public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "SectionComponent"; } }
+            
+            /// <summary>
+            /// Label for section (e.g. for ToC)
+            /// </summary>
+            [FhirElement("title", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString TitleElement
+            {
+                get { return _TitleElement; }
+                set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _TitleElement;
+            
+            /// <summary>
+            /// Label for section (e.g. for ToC)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Title
+            {
+                get { return TitleElement != null ? TitleElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TitleElement = null; 
+                    else
+                      TitleElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Title");
+                }
+            }
+            
+            /// <summary>
+            /// Classification of section (recommended)
+            /// </summary>
+            [FhirElement("code", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Code
+            {
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Code;
+            
+            /// <summary>
+            /// Text summary of the section, for human interpretation
+            /// </summary>
+            [FhirElement("text", Order=60)]
+            [DataMember]
+            public Narrative Text
+            {
+                get { return _Text; }
+                set { _Text = value; OnPropertyChanged("Text"); }
+            }
+            
+            private Narrative _Text;
+            
+            /// <summary>
+            /// working | snapshot | changes
+            /// </summary>
+            [FhirElement("mode", InSummary=true, Order=70)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.ListMode> ModeElement
+            {
+                get { return _ModeElement; }
+                set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.ListMode> _ModeElement;
+            
+            /// <summary>
+            /// working | snapshot | changes
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.ListMode? Mode
+            {
+                get { return ModeElement != null ? ModeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ModeElement = null; 
+                    else
+                      ModeElement = new Code<Hl7.Fhir.Model.ListMode>(value);
+                    OnPropertyChanged("Mode");
+                }
+            }
+            
+            /// <summary>
+            /// Order of section entries
+            /// </summary>
+            [FhirElement("orderedBy", Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept OrderedBy
+            {
+                get { return _OrderedBy; }
+                set { _OrderedBy = value; OnPropertyChanged("OrderedBy"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _OrderedBy;
+            
+            /// <summary>
+            /// A reference to data that supports this section
+            /// </summary>
+            [FhirElement("entry", Order=90)]
+            [References()]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> Entry
+            {
+                get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.ResourceReference>(); return _Entry; }
+                set { _Entry = value; OnPropertyChanged("Entry"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _Entry;
+            
+            /// <summary>
+            /// Why the section is empty
+            /// </summary>
+            [FhirElement("emptyReason", Order=100)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept EmptyReason
+            {
+                get { return _EmptyReason; }
+                set { _EmptyReason = value; OnPropertyChanged("EmptyReason"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _EmptyReason;
+            
+            /// <summary>
+            /// Nested Section
+            /// </summary>
+            [FhirElement("section", Order=110)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
+            {
+                get { if(_Section==null) _Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(); return _Section; }
+                set { _Section = value; OnPropertyChanged("Section"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as SectionComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Text != null) dest.Text = (Narrative)Text.DeepCopy();
+                    if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.ListMode>)ModeElement.DeepCopy();
+                    if(OrderedBy != null) dest.OrderedBy = (Hl7.Fhir.Model.CodeableConcept)OrderedBy.DeepCopy();
+                    if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.ResourceReference>(Entry.DeepCopy());
+                    if(EmptyReason != null) dest.EmptyReason = (Hl7.Fhir.Model.CodeableConcept)EmptyReason.DeepCopy();
+                    if(Section != null) dest.Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(Section.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new SectionComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as SectionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Text, otherT.Text)) return false;
+                if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.Matches(OrderedBy, otherT.OrderedBy)) return false;
+                if( !DeepComparable.Matches(Entry, otherT.Entry)) return false;
+                if( !DeepComparable.Matches(EmptyReason, otherT.EmptyReason)) return false;
+                if( !DeepComparable.Matches(Section, otherT.Section)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as SectionComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Text, otherT.Text)) return false;
+                if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
+                if( !DeepComparable.IsExactly(OrderedBy, otherT.OrderedBy)) return false;
+                if( !DeepComparable.IsExactly(Entry, otherT.Entry)) return false;
+                if( !DeepComparable.IsExactly(EmptyReason, otherT.EmptyReason)) return false;
+                if( !DeepComparable.IsExactly(Section, otherT.Section)) return false;
                 
                 return true;
             }
@@ -704,13 +800,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("confidentiality", InSummary=true, Order=150)]
         [DataMember]
-        public Hl7.Fhir.Model.Code ConfidentialityElement
+        public Code<Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality> ConfidentialityElement
         {
             get { return _ConfidentialityElement; }
             set { _ConfidentialityElement = value; OnPropertyChanged("ConfidentialityElement"); }
         }
         
-        private Hl7.Fhir.Model.Code _ConfidentialityElement;
+        private Code<Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality> _ConfidentialityElement;
         
         /// <summary>
         /// As defined by affinity domain
@@ -718,7 +814,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Confidentiality
+        public Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality? Confidentiality
         {
             get { return ConfidentialityElement != null ? ConfidentialityElement.Value : null; }
             set
@@ -726,7 +822,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   ConfidentialityElement = null; 
                 else
-                  ConfidentialityElement = new Hl7.Fhir.Model.Code(value);
+                  ConfidentialityElement = new Code<Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality>(value);
                 OnPropertyChanged("Confidentiality");
             }
         }
@@ -767,13 +863,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("attester", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Composition.CompositionAttesterComponent> Attester
+        public List<Hl7.Fhir.Model.Composition.AttesterComponent> Attester
         {
-            get { if(_Attester==null) _Attester = new List<Hl7.Fhir.Model.Composition.CompositionAttesterComponent>(); return _Attester; }
+            get { if(_Attester==null) _Attester = new List<Hl7.Fhir.Model.Composition.AttesterComponent>(); return _Attester; }
             set { _Attester = value; OnPropertyChanged("Attester"); }
         }
         
-        private List<Hl7.Fhir.Model.Composition.CompositionAttesterComponent> _Attester;
+        private List<Hl7.Fhir.Model.Composition.AttesterComponent> _Attester;
         
         /// <summary>
         /// Organization which maintains the composition
@@ -795,13 +891,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("event", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Composition.CompositionEventComponent> Event
+        public List<Hl7.Fhir.Model.Composition.EventComponent> Event
         {
-            get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.Composition.CompositionEventComponent>(); return _Event; }
+            get { if(_Event==null) _Event = new List<Hl7.Fhir.Model.Composition.EventComponent>(); return _Event; }
             set { _Event = value; OnPropertyChanged("Event"); }
         }
         
-        private List<Hl7.Fhir.Model.Composition.CompositionEventComponent> _Event;
+        private List<Hl7.Fhir.Model.Composition.EventComponent> _Event;
         
         /// <summary>
         /// Context of the Composition
@@ -844,12 +940,12 @@ namespace Hl7.Fhir.Model
                 if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Composition.CompositionStatus>)StatusElement.DeepCopy();
-                if(ConfidentialityElement != null) dest.ConfidentialityElement = (Hl7.Fhir.Model.Code)ConfidentialityElement.DeepCopy();
+                if(ConfidentialityElement != null) dest.ConfidentialityElement = (Code<Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality>)ConfidentialityElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
-                if(Attester != null) dest.Attester = new List<Hl7.Fhir.Model.Composition.CompositionAttesterComponent>(Attester.DeepCopy());
+                if(Attester != null) dest.Attester = new List<Hl7.Fhir.Model.Composition.AttesterComponent>(Attester.DeepCopy());
                 if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
-                if(Event != null) dest.Event = new List<Hl7.Fhir.Model.Composition.CompositionEventComponent>(Event.DeepCopy());
+                if(Event != null) dest.Event = new List<Hl7.Fhir.Model.Composition.EventComponent>(Event.DeepCopy());
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Section != null) dest.Section = new List<Hl7.Fhir.Model.Composition.SectionComponent>(Section.DeepCopy());
                 return dest;

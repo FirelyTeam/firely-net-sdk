@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,94 +55,110 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The status of the request.
+        /// (url: http://hl7.org/fhir/ValueSet/procedure-request-status)
         /// </summary>
         [FhirEnumeration("ProcedureRequestStatus")]
         public enum ProcedureRequestStatus
         {
             /// <summary>
             /// The request has been proposed.
+            /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("proposed")]
+            [EnumLiteral("proposed"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// The request is in preliminary form, prior to being requested.
+            /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("draft")]
+            [EnumLiteral("draft"), Description("Draft")]
             Draft,
             /// <summary>
             /// The request has been placed.
+            /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("requested")]
+            [EnumLiteral("requested"), Description("Requested")]
             Requested,
             /// <summary>
             /// The receiving system has received the request but not yet decided whether it will be performed.
+            /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("received")]
+            [EnumLiteral("received"), Description("Received")]
             Received,
             /// <summary>
             /// The receiving system has accepted the request, but work has not yet commenced.
+            /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("accepted")]
+            [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// The work to fulfill the request is happening.
+            /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("in-progress")]
+            [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// The work has been completed, the report(s) released, and no further work is planned.
+            /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
             /// The request has been held by originating system/user request.
+            /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("suspended")]
+            [EnumLiteral("suspended"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// The receiving system has declined to fulfill the request.
+            /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("rejected")]
+            [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The request was attempted, but due to some procedural error, it could not be completed.
+            /// (system: http://hl7.org/fhir/procedure-request-status)
             /// </summary>
-            [EnumLiteral("aborted")]
+            [EnumLiteral("aborted"), Description("Aborted")]
             Aborted,
         }
-        
+
         /// <summary>
         /// The priority of the request.
+        /// (url: http://hl7.org/fhir/ValueSet/procedure-request-priority)
         /// </summary>
         [FhirEnumeration("ProcedureRequestPriority")]
         public enum ProcedureRequestPriority
         {
             /// <summary>
             /// The request has a normal priority.
+            /// (system: http://hl7.org/fhir/procedure-request-priority)
             /// </summary>
-            [EnumLiteral("routine")]
+            [EnumLiteral("routine"), Description("Routine")]
             Routine,
             /// <summary>
             /// The request should be done urgently.
+            /// (system: http://hl7.org/fhir/procedure-request-priority)
             /// </summary>
-            [EnumLiteral("urgent")]
+            [EnumLiteral("urgent"), Description("Urgent")]
             Urgent,
             /// <summary>
             /// The request is time-critical.
+            /// (system: http://hl7.org/fhir/procedure-request-priority)
             /// </summary>
-            [EnumLiteral("stat")]
+            [EnumLiteral("stat"), Description("Stat")]
             Stat,
             /// <summary>
             /// The request should be acted on as soon as possible.
+            /// (system: http://hl7.org/fhir/procedure-request-priority)
             /// </summary>
-            [EnumLiteral("asap")]
+            [EnumLiteral("asap"), Description("ASAP")]
             Asap,
         }
-        
+
         /// <summary>
         /// Unique identifier for the request
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -155,7 +172,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who the procedure should be done to
         /// </summary>
-        [FhirElement("subject", Order=100)]
+        [FhirElement("subject", InSummary=true, Order=100)]
         [References("Patient","Group")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -170,7 +187,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What procedure to perform
         /// </summary>
-        [FhirElement("code", Order=110)]
+        [FhirElement("code", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -184,7 +201,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What part of body to perform on
         /// </summary>
-        [FhirElement("bodySite", Order=120)]
+        [FhirElement("bodySite", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -198,7 +215,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why procedure should occur
         /// </summary>
-        [FhirElement("reason", Order=130, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
@@ -212,7 +229,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When procedure should occur
         /// </summary>
-        [FhirElement("scheduled", Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("scheduled", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]
         public Hl7.Fhir.Model.Element Scheduled
@@ -226,7 +243,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter request created during
         /// </summary>
-        [FhirElement("encounter", Order=150)]
+        [FhirElement("encounter", InSummary=true, Order=150)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -240,7 +257,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who should perform the procedure
         /// </summary>
-        [FhirElement("performer", Order=160)]
+        [FhirElement("performer", InSummary=true, Order=160)]
         [References("Practitioner","Organization","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Performer
@@ -254,7 +271,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// proposed | draft | requested | received | accepted | in-progress | completed | suspended | rejected | aborted
         /// </summary>
-        [FhirElement("status", Order=170)]
+        [FhirElement("status", InSummary=true, Order=170)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestStatus> StatusElement
         {
@@ -286,7 +303,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional information about desired procedure
         /// </summary>
-        [FhirElement("notes", Order=180)]
+        [FhirElement("notes", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Notes
@@ -300,7 +317,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Preconditions for procedure
         /// </summary>
-        [FhirElement("asNeeded", Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("asNeeded", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
         public Hl7.Fhir.Model.Element AsNeeded
@@ -314,7 +331,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When request was created
         /// </summary>
-        [FhirElement("orderedOn", Order=200)]
+        [FhirElement("orderedOn", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime OrderedOnElement
         {
@@ -346,7 +363,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who made request
         /// </summary>
-        [FhirElement("orderer", Order=210)]
+        [FhirElement("orderer", InSummary=true, Order=210)]
         [References("Practitioner","Patient","RelatedPerson","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Orderer
@@ -360,7 +377,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", Order=220)]
+        [FhirElement("priority", InSummary=true, Order=220)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestPriority> PriorityElement
         {

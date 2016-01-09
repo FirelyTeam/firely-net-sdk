@@ -88,154 +88,444 @@
     <Compile Include="Model\FhirString.cs" />
     <Compile Include="Model\FhirDateTime.cs" />
     <Compile Include="Model\FhirBoolean.cs" />
-    <Compile Include="Model\Generated\Account.cs" />
-    <Compile Include="Model\Generated\Annotation.cs" />
-    <Compile Include="Model\Generated\Appointment.cs" />
-    <Compile Include="Model\Generated\AppointmentResponse.cs" />
-    <Compile Include="Model\Generated\AuditEvent.cs" />
-    <Compile Include="Model\Generated\BackboneElement.cs" />
-    <Compile Include="Model\Generated\Basic.cs" />
-    <Compile Include="Model\Generated\BodySite.cs" />
-    <Compile Include="Model\Generated\Bundle.cs" />
-    <Compile Include="Model\Generated\Claim.cs" />
-    <Compile Include="Model\Generated\ClaimResponse.cs" />
-    <Compile Include="Model\Generated\ClinicalImpression.cs" />
-    <Compile Include="Model\Generated\Communication.cs" />
-    <Compile Include="Model\Generated\CommunicationRequest.cs" />
-    <Compile Include="Model\Generated\ContactPoint.cs" />
-    <Compile Include="Model\Generated\Contract.cs" />
-    <Compile Include="Model\Generated\Coverage.cs" />
-    <Compile Include="Model\Generated\DataElement.cs" />
-    <Compile Include="Model\Generated\DetectedIssue.cs" />
-    <Compile Include="Model\Generated\DeviceComponent.cs" />
-    <Compile Include="Model\Generated\DeviceMetric.cs" />
-    <Compile Include="Model\Generated\DeviceUseRequest.cs" />
-    <Compile Include="Model\Generated\DeviceUseStatement.cs" />
+    <Compile Include="Model\Generated\Account.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Annotation.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Appointment.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\AppointmentResponse.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\AuditEvent.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\BackboneElement.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Basic.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\BodySite.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Bundle.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Claim.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ClaimResponse.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ClinicalImpression.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Communication.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\CommunicationRequest.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ContactPoint.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Contract.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Coverage.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\DataElement.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\DetectedIssue.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\DeviceComponent.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\DeviceMetric.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\DeviceUseRequest.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\DeviceUseStatement.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\DomainResource.cs" />
-    <Compile Include="Model\Generated\ElementDefinition.cs" />
-    <Compile Include="Model\Generated\EligibilityRequest.cs" />
-    <Compile Include="Model\Generated\EligibilityResponse.cs" />
-    <Compile Include="Model\Generated\EnrollmentRequest.cs" />
-    <Compile Include="Model\Generated\EnrollmentResponse.cs" />
-    <Compile Include="Model\Generated\EpisodeOfCare.cs" />
-    <Compile Include="Model\Generated\ExplanationOfBenefit.cs" />
-    <Compile Include="Model\Generated\FamilyMemberHistory.cs" />
-    <Compile Include="Model\Generated\Flag.cs" />
-    <Compile Include="Model\Generated\Goal.cs" />
-    <Compile Include="Model\Generated\HealthcareService.cs" />
-    <Compile Include="Model\Generated\ImagingObjectSelection.cs" />
-    <Compile Include="Model\Generated\ImplementationGuide.cs" />
-    <Compile Include="Model\Generated\Markdown.cs" />
-    <Compile Include="Model\Generated\MedicationOrder.cs" />
-    <Compile Include="Model\Generated\Meta.cs" />
-    <Compile Include="Model\Generated\NamingSystem.cs" />
-    <Compile Include="Model\Generated\NutritionOrder.cs" />
-    <Compile Include="Model\Generated\OperationDefinition.cs" />
-    <Compile Include="Model\Generated\Parameters.cs" />
-    <Compile Include="Model\Generated\PaymentNotice.cs" />
-    <Compile Include="Model\Generated\PaymentReconciliation.cs" />
-    <Compile Include="Model\Generated\Person.cs" />
-    <Compile Include="Model\Generated\PositiveInt.cs" />
-    <Compile Include="Model\Generated\ProcedureRequest.cs" />
-    <Compile Include="Model\Generated\ProcessRequest.cs" />
-    <Compile Include="Model\Generated\ProcessResponse.cs" />
-    <Compile Include="Model\Generated\QuestionnaireResponse.cs" />
-    <Compile Include="Model\Generated\ReferralRequest.cs" />
-    <Compile Include="Model\Generated\RiskAssessment.cs" />
-    <Compile Include="Model\Generated\Schedule.cs" />
-    <Compile Include="Model\Generated\SearchParameter.cs" />
-    <Compile Include="Model\Generated\Signature.cs" />
-    <Compile Include="Model\Generated\SimpleQuantity.cs" />
-    <Compile Include="Model\Generated\Slot.cs" />
-    <Compile Include="Model\Generated\StructureDefinition.cs" />
-    <Compile Include="Model\Generated\Subscription.cs" />
-    <Compile Include="Model\Generated\SupplyDelivery.cs" />
-    <Compile Include="Model\Generated\SupplyRequest.cs" />
-    <Compile Include="Model\Generated\TestScript.cs" />
-    <Compile Include="Model\Generated\Time.cs" />
-    <Compile Include="Model\Generated\Timing.cs" />
-    <Compile Include="Model\Generated\UnsignedInt.cs" />
-    <Compile Include="Model\Generated\VisionPrescription.cs" />
+    <Compile Include="Model\Generated\ElementDefinition.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\EligibilityRequest.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\EligibilityResponse.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\EnrollmentRequest.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\EnrollmentResponse.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\EpisodeOfCare.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ExplanationOfBenefit.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\FamilyMemberHistory.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Flag.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Goal.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\HealthcareService.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ImagingObjectSelection.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ImplementationGuide.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Markdown.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\MedicationOrder.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Meta.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\NamingSystem.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\NutritionOrder.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\OperationDefinition.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Parameters.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\PaymentNotice.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\PaymentReconciliation.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Person.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\PositiveInt.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ProcedureRequest.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ProcessRequest.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ProcessResponse.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\QuestionnaireResponse.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ReferralRequest.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Resource.cs" />
+    <Compile Include="Model\Generated\RiskAssessment.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Schedule.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\SearchParameter.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Signature.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\SimpleQuantity.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Slot.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\StructureDefinition.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Subscription.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\SupplyDelivery.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\SupplyRequest.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Template-DataTypeModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Template-Model.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\Generated\Template-ModelInfo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-ModelInfo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Template-ProfiledDataTypes.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\TestScript.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Time.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Timing.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\UnsignedInt.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\VisionPrescription.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\HumanName.cs" />
     <Compile Include="Model\IConformanceResource.cs" />
     <Compile Include="Model\IDeepComparable.cs" />
     <Compile Include="Model\Integer.cs" />
     <Compile Include="Model\FhirUri.cs" />
-    <Compile Include="Model\Generated\Address.cs" />
-    <Compile Include="Model\Generated\Age.cs" />
-    <Compile Include="Model\Generated\AllergyIntolerance.cs" />
-    <Compile Include="Model\Generated\Attachment.cs" />
-    <Compile Include="Model\Generated\Base64Binary.cs" />
-    <Compile Include="Model\Generated\Binary.cs" />
-    <Compile Include="Model\Generated\Bindings.cs" />
-    <Compile Include="Model\Generated\CarePlan.cs" />
-    <Compile Include="Model\Generated\Code.cs" />
-    <Compile Include="Model\Generated\CodeableConcept.cs" />
-    <Compile Include="Model\Generated\Coding.cs" />
-    <Compile Include="Model\Generated\Composition.cs" />
-    <Compile Include="Model\Generated\ConceptMap.cs" />
-    <Compile Include="Model\Generated\Condition.cs" />
-    <Compile Include="Model\Generated\Conformance.cs" />
-    <Compile Include="Model\Generated\Count.cs" />
-    <Compile Include="Model\Generated\Date.cs" />
-    <Compile Include="Model\Generated\Device.cs" />
-    <Compile Include="Model\Generated\DiagnosticOrder.cs" />
-    <Compile Include="Model\Generated\DiagnosticReport.cs" />
-    <Compile Include="Model\Generated\Distance.cs" />
-    <Compile Include="Model\Generated\DocumentManifest.cs" />
-    <Compile Include="Model\Generated\DocumentReference.cs" />
-    <Compile Include="Model\Generated\Duration.cs" />
+    <Compile Include="Model\Generated\Address.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Age.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\AllergyIntolerance.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Attachment.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Base64Binary.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Binary.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\CarePlan.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Code.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\CodeableConcept.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Coding.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Composition.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ConceptMap.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Condition.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Conformance.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Count.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Date.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Device.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\DiagnosticOrder.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\DiagnosticReport.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Distance.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\DocumentManifest.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\DocumentReference.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Duration.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Element.cs" />
-    <Compile Include="Model\Generated\Encounter.cs" />
+    <Compile Include="Model\Generated\Encounter.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Extension.cs" />
-    <Compile Include="Model\Generated\FhirBoolean.cs" />
-    <Compile Include="Model\Generated\FhirDateTime.cs" />
-    <Compile Include="Model\Generated\FhirDecimal.cs" />
-    <Compile Include="Model\Generated\FhirString.cs" />
-    <Compile Include="Model\Generated\FhirUri.cs" />
-    <Compile Include="Model\Generated\Group.cs" />
-    <Compile Include="Model\Generated\HumanName.cs" />
-    <Compile Include="Model\Generated\Id.cs" />
-    <Compile Include="Model\Generated\Identifier.cs" />
-    <Compile Include="Model\Generated\ImagingStudy.cs" />
-    <Compile Include="Model\Generated\Immunization.cs" />
-    <Compile Include="Model\Generated\ImmunizationRecommendation.cs" />
-    <Compile Include="Model\Generated\Instant.cs" />
-    <Compile Include="Model\Generated\Integer.cs" />
-    <Compile Include="Model\Generated\List.cs" />
-    <Compile Include="Model\Generated\Location.cs" />
-    <Compile Include="Model\Generated\Media.cs" />
-    <Compile Include="Model\Generated\Medication.cs" />
-    <Compile Include="Model\Generated\MedicationAdministration.cs" />
-    <Compile Include="Model\Generated\MedicationDispense.cs" />
-    <Compile Include="Model\Generated\MedicationStatement.cs" />
-    <Compile Include="Model\Generated\MessageHeader.cs" />
-    <Compile Include="Model\Generated\ModelInfo.cs" />
-    <Compile Include="Model\Generated\Money.cs" />
+    <Compile Include="Model\Generated\FhirBoolean.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\FhirDateTime.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\FhirDecimal.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\FhirString.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\FhirUri.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Group.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\HumanName.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Id.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Identifier.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ImagingStudy.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Immunization.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ImmunizationRecommendation.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Instant.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Integer.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\List.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Location.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Media.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Medication.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\MedicationAdministration.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\MedicationDispense.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\MedicationStatement.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\MessageHeader.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Money.cs">
+      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Narrative.cs" />
-    <Compile Include="Model\Generated\Observation.cs" />
-    <Compile Include="Model\Generated\Oid.cs" />
-    <Compile Include="Model\Generated\OperationOutcome.cs" />
-    <Compile Include="Model\Generated\Order.cs" />
-    <Compile Include="Model\Generated\OrderResponse.cs" />
-    <Compile Include="Model\Generated\Organization.cs" />
-    <Compile Include="Model\Generated\Patient.cs" />
-    <Compile Include="Model\Generated\Period.cs" />
-    <Compile Include="Model\Generated\Practitioner.cs" />
-    <Compile Include="Model\Generated\Procedure.cs" />
-    <Compile Include="Model\Generated\Provenance.cs" />
-    <Compile Include="Model\Generated\Quantity.cs" />
-    <Compile Include="Model\Generated\Questionnaire.cs" />
-    <Compile Include="Model\Generated\Range.cs" />
-    <Compile Include="Model\Generated\Ratio.cs" />
-    <Compile Include="Model\Generated\RelatedPerson.cs" />
-    <Compile Include="Model\Generated\Resource.cs" />
-    <Compile Include="Model\Generated\ResourceReference.cs" />
-    <Compile Include="Model\Generated\SampledData.cs" />
-    <Compile Include="Model\Generated\Specimen.cs" />
-    <Compile Include="Model\Generated\Substance.cs" />
-    <Compile Include="Model\Generated\Uuid.cs" />
-    <Compile Include="Model\Generated\ValueSet.cs" />
+    <Compile Include="Model\Generated\Observation.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Oid.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\OperationOutcome.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Order.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\OrderResponse.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Organization.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Patient.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Period.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Practitioner.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Procedure.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Provenance.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Quantity.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Questionnaire.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Range.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Ratio.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\RelatedPerson.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ResourceReference.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\SampledData.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Specimen.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Substance.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Uuid.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ValueSet.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Id.cs" />
     <Compile Include="Model\IDeepCopyable.cs" />
     <Compile Include="Model\FhirDecimal.cs" />
@@ -250,6 +540,11 @@
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\PositiveInt.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
+    <Compile Include="Model\Generated\Template-Bindings.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-Bindings.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\UnsignedInt.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />
     <Compile Include="Rest\FhirClientOperations.cs" />
@@ -307,6 +602,8 @@
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
+    <Compile Include="Support\DateExtensions.cs" />
+    <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
@@ -357,8 +654,43 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Model\Generated\TemplateFileManagerV2.1.ttinclude" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Model\Source\expansions.xml" />
+    <None Include="Model\Source\profiles-resources.xml" />
+    <None Include="Model\Source\profiles-types.xml">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\Generated\Template-DataTypeModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-DataTypeModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Generated\Template-Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-Model.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Generated\Template-Bindings.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-Bindings.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Generated\Template-ModelInfo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-ModelInfo.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\Generated\Template-ProfiledDataTypes.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Template-ProfiledDataTypes.cs</LastGenOutput>
+    </Content>
+    <None Include="Model\Source\search-parameters.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

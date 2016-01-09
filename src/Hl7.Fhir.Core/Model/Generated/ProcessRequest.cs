@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,32 +55,37 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// List of allowable action which this resource can request.
+        /// (url: http://hl7.org/fhir/ValueSet/actionlist)
         /// </summary>
         [FhirEnumeration("ActionList")]
         public enum ActionList
         {
             /// <summary>
             /// Cancel, reverse or nullify the target resource.
+            /// (system: http://hl7.org/fhir/actionlist)
             /// </summary>
-            [EnumLiteral("cancel")]
+            [EnumLiteral("cancel"), Description("Cancel, Reverse or Nullify")]
             Cancel,
             /// <summary>
             /// Check for previously un-read/ not-retrieved resources.
+            /// (system: http://hl7.org/fhir/actionlist)
             /// </summary>
-            [EnumLiteral("poll")]
+            [EnumLiteral("poll"), Description("Poll")]
             Poll,
             /// <summary>
             /// Re-process the target resource.
+            /// (system: http://hl7.org/fhir/actionlist)
             /// </summary>
-            [EnumLiteral("reprocess")]
+            [EnumLiteral("reprocess"), Description("Re-Process")]
             Reprocess,
             /// <summary>
             /// Retrieve the processing status of the target resource.
+            /// (system: http://hl7.org/fhir/actionlist)
             /// </summary>
-            [EnumLiteral("status")]
+            [EnumLiteral("status"), Description("Status Check")]
             Status,
         }
-        
+
         [FhirType("ItemsComponent")]
         [DataContract]
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -167,7 +173,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// cancel | poll | reprocess | status
         /// </summary>
-        [FhirElement("action", Order=90)]
+        [FhirElement("action", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ProcessRequest.ActionList> ActionElement
@@ -200,7 +206,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", Order=100)]
+        [FhirElement("identifier", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -214,7 +220,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource version
         /// </summary>
-        [FhirElement("ruleset", Order=110)]
+        [FhirElement("ruleset", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
         {
@@ -227,7 +233,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Original version
         /// </summary>
-        [FhirElement("originalRuleset", Order=120)]
+        [FhirElement("originalRuleset", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
         {
@@ -240,7 +246,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", Order=130)]
+        [FhirElement("created", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -272,7 +278,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Target of the request
         /// </summary>
-        [FhirElement("target", Order=140)]
+        [FhirElement("target", InSummary=true, Order=140)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Target
@@ -286,7 +292,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("provider", Order=150)]
+        [FhirElement("provider", InSummary=true, Order=150)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Provider
@@ -300,7 +306,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("organization", Order=160)]
+        [FhirElement("organization", InSummary=true, Order=160)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
@@ -314,7 +320,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Request reference
         /// </summary>
-        [FhirElement("request", Order=170)]
+        [FhirElement("request", InSummary=true, Order=170)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
@@ -328,7 +334,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Response reference
         /// </summary>
-        [FhirElement("response", Order=180)]
+        [FhirElement("response", InSummary=true, Order=180)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Response
@@ -342,7 +348,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Nullify
         /// </summary>
-        [FhirElement("nullify", Order=190)]
+        [FhirElement("nullify", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean NullifyElement
         {
@@ -374,7 +380,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference number/string
         /// </summary>
-        [FhirElement("reference", Order=200)]
+        [FhirElement("reference", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ReferenceElement
         {
@@ -406,7 +412,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Items to re-adjudicate
         /// </summary>
-        [FhirElement("item", Order=210)]
+        [FhirElement("item", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ProcessRequest.ItemsComponent> Item
@@ -420,7 +426,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource type(s) to include
         /// </summary>
-        [FhirElement("include", Order=220)]
+        [FhirElement("include", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> IncludeElement
@@ -453,7 +459,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource type(s) to exclude
         /// </summary>
-        [FhirElement("exclude", Order=230)]
+        [FhirElement("exclude", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> ExcludeElement
@@ -486,7 +492,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Period
         /// </summary>
-        [FhirElement("period", Order=240)]
+        [FhirElement("period", InSummary=true, Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.Period Period
         {

@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,27 +55,31 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Indicates whether this flag is active and needs to be displayed to a user, or whether it is no longer needed or entered in error.
+        /// (url: http://hl7.org/fhir/ValueSet/flag-status)
         /// </summary>
         [FhirEnumeration("FlagStatus")]
         public enum FlagStatus
         {
             /// <summary>
             /// A current flag that should be displayed to a user. A system may use the category to determine which roles should view the flag.
+            /// (system: http://hl7.org/fhir/flag-status)
             /// </summary>
-            [EnumLiteral("active")]
+            [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
             /// The flag does not need to be displayed any more.
+            /// (system: http://hl7.org/fhir/flag-status)
             /// </summary>
-            [EnumLiteral("inactive")]
+            [EnumLiteral("inactive"), Description("Inactive")]
             Inactive,
             /// <summary>
             /// The flag was added in error, and should no longer be displayed.
+            /// (system: http://hl7.org/fhir/flag-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
             EnteredInError,
         }
-        
+
         /// <summary>
         /// Business identifier
         /// </summary>

@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,61 +55,42 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The current state of the list
+        /// (url: http://hl7.org/fhir/ValueSet/list-status)
         /// </summary>
         [FhirEnumeration("ListStatus")]
         public enum ListStatus
         {
             /// <summary>
             /// The list is considered to be an active part of the patient's record.
+            /// (system: http://hl7.org/fhir/list-status)
             /// </summary>
-            [EnumLiteral("current")]
+            [EnumLiteral("current"), Description("Current")]
             Current,
             /// <summary>
             /// The list is "old" and should no longer be considered accurate or relevant.
+            /// (system: http://hl7.org/fhir/list-status)
             /// </summary>
-            [EnumLiteral("retired")]
+            [EnumLiteral("retired"), Description("Retired")]
             Retired,
             /// <summary>
             /// The list was never accurate.  It is retained for medico-legal purposes only.
+            /// (system: http://hl7.org/fhir/list-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
             EnteredInError,
         }
-        
-        /// <summary>
-        /// The processing mode that applies to this list
-        /// </summary>
-        [FhirEnumeration("ListMode")]
-        public enum ListMode
-        {
-            /// <summary>
-            /// This list is the master list, maintained in an ongoing fashion with regular updates as the real world list it is tracking changes
-            /// </summary>
-            [EnumLiteral("working")]
-            Working,
-            /// <summary>
-            /// This list was prepared as a snapshot. It should not be assumed to be current
-            /// </summary>
-            [EnumLiteral("snapshot")]
-            Snapshot,
-            /// <summary>
-            /// A list that indicates where changes have been made or recommended
-            /// </summary>
-            [EnumLiteral("changes")]
-            Changes,
-        }
-        
-        [FhirType("ListEntryComponent")]
+
+        [FhirType("EntryComponent")]
         [DataContract]
-        public partial class ListEntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ListEntryComponent"; } }
+            public override string TypeName { get { return "EntryComponent"; } }
             
             /// <summary>
             /// Status/Workflow information about this item
             /// </summary>
-            [FhirElement("flag", InSummary=true, Order=40)]
+            [FhirElement("flag", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Flag
             {
@@ -121,7 +103,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If this item is actually marked as deleted
             /// </summary>
-            [FhirElement("deleted", InSummary=true, Order=50)]
+            [FhirElement("deleted", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean DeletedElement
             {
@@ -153,7 +135,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When item added to list
             /// </summary>
-            [FhirElement("date", InSummary=true, Order=60)]
+            [FhirElement("date", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateElement
             {
@@ -185,7 +167,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Actual entry
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=70)]
+            [FhirElement("item", Order=70)]
             [References()]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -199,7 +181,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ListEntryComponent;
+                var dest = other as EntryComponent;
                 
                 if (dest != null)
                 {
@@ -216,12 +198,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ListEntryComponent());
+                return CopyTo(new EntryComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ListEntryComponent;
+                var otherT = other as EntryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -235,7 +217,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ListEntryComponent;
+                var otherT = other as EntryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -435,13 +417,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("mode", InSummary=true, Order=180)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.List.ListMode> ModeElement
+        public Code<Hl7.Fhir.Model.ListMode> ModeElement
         {
             get { return _ModeElement; }
             set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.List.ListMode> _ModeElement;
+        private Code<Hl7.Fhir.Model.ListMode> _ModeElement;
         
         /// <summary>
         /// working | snapshot | changes
@@ -449,7 +431,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.List.ListMode? Mode
+        public Hl7.Fhir.Model.ListMode? Mode
         {
             get { return ModeElement != null ? ModeElement.Value : null; }
             set
@@ -457,7 +439,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   ModeElement = null; 
                 else
-                  ModeElement = new Code<Hl7.Fhir.Model.List.ListMode>(value);
+                  ModeElement = new Code<Hl7.Fhir.Model.ListMode>(value);
                 OnPropertyChanged("Mode");
             }
         }
@@ -500,13 +482,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("entry", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.List.ListEntryComponent> Entry
+        public List<Hl7.Fhir.Model.List.EntryComponent> Entry
         {
-            get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.List.ListEntryComponent>(); return _Entry; }
+            get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.List.EntryComponent>(); return _Entry; }
             set { _Entry = value; OnPropertyChanged("Entry"); }
         }
         
-        private List<Hl7.Fhir.Model.List.ListEntryComponent> _Entry;
+        private List<Hl7.Fhir.Model.List.EntryComponent> _Entry;
         
         /// <summary>
         /// Why list is empty
@@ -537,9 +519,9 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.List.ListStatus>)StatusElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(OrderedBy != null) dest.OrderedBy = (Hl7.Fhir.Model.CodeableConcept)OrderedBy.DeepCopy();
-                if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.List.ListMode>)ModeElement.DeepCopy();
+                if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.ListMode>)ModeElement.DeepCopy();
                 if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
-                if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.List.ListEntryComponent>(Entry.DeepCopy());
+                if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.List.EntryComponent>(Entry.DeepCopy());
                 if(EmptyReason != null) dest.EmptyReason = (Hl7.Fhir.Model.CodeableConcept)EmptyReason.DeepCopy();
                 return dest;
             }

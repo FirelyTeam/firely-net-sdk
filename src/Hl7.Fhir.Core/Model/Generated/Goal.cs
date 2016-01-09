@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,68 +55,78 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Indicates whether the goal has been met and is still being targeted
+        /// (url: http://hl7.org/fhir/ValueSet/goal-status)
         /// </summary>
         [FhirEnumeration("GoalStatus")]
         public enum GoalStatus
         {
             /// <summary>
             /// A goal is proposed for this patient
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("proposed")]
+            [EnumLiteral("proposed"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// A goal is planned for this patient
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("planned")]
+            [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
             /// A proposed goal was accepted
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("accepted")]
+            [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// A proposed goal was rejected
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("rejected")]
+            [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again)
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("in-progress")]
+            [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// The goal has been met and no further action is needed
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("achieved")]
+            [EnumLiteral("achieved"), Description("Achieved")]
             Achieved,
             /// <summary>
             /// The goal has been met, but ongoing activity is needed to sustain the goal objective
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("sustaining")]
+            [EnumLiteral("sustaining"), Description("Sustaining")]
             Sustaining,
             /// <summary>
             /// The goal remains a long term objective but is no longer being actively pursued for a temporary period of time.
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("on-hold")]
+            [EnumLiteral("on-hold"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// The goal is no longer being sought
+            /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
-            [EnumLiteral("cancelled")]
+            [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
         }
-        
-        [FhirType("GoalOutcomeComponent")]
+
+        [FhirType("OutcomeComponent")]
         [DataContract]
-        public partial class GoalOutcomeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class OutcomeComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "GoalOutcomeComponent"; } }
+            public override string TypeName { get { return "OutcomeComponent"; } }
             
             /// <summary>
             /// Code or observation that resulted from goal
             /// </summary>
-            [FhirElement("result", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("result", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Result
@@ -128,7 +139,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as GoalOutcomeComponent;
+                var dest = other as OutcomeComponent;
                 
                 if (dest != null)
                 {
@@ -142,12 +153,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new GoalOutcomeComponent());
+                return CopyTo(new OutcomeComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as GoalOutcomeComponent;
+                var otherT = other as OutcomeComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -158,7 +169,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as GoalOutcomeComponent;
+                var otherT = other as OutcomeComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -413,13 +424,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("outcome", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Goal.GoalOutcomeComponent> Outcome
+        public List<Hl7.Fhir.Model.Goal.OutcomeComponent> Outcome
         {
-            get { if(_Outcome==null) _Outcome = new List<Hl7.Fhir.Model.Goal.GoalOutcomeComponent>(); return _Outcome; }
+            get { if(_Outcome==null) _Outcome = new List<Hl7.Fhir.Model.Goal.OutcomeComponent>(); return _Outcome; }
             set { _Outcome = value; OnPropertyChanged("Outcome"); }
         }
         
-        private List<Hl7.Fhir.Model.Goal.GoalOutcomeComponent> _Outcome;
+        private List<Hl7.Fhir.Model.Goal.OutcomeComponent> _Outcome;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -441,7 +452,7 @@ namespace Hl7.Fhir.Model
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 if(Addresses != null) dest.Addresses = new List<Hl7.Fhir.Model.ResourceReference>(Addresses.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(Outcome != null) dest.Outcome = new List<Hl7.Fhir.Model.Goal.GoalOutcomeComponent>(Outcome.DeepCopy());
+                if(Outcome != null) dest.Outcome = new List<Hl7.Fhir.Model.Goal.OutcomeComponent>(Outcome.DeepCopy());
                 return dest;
             }
             else

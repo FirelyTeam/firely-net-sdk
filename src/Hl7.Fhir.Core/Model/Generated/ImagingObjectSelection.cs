@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -51,64 +52,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.ImagingObjectSelection; } }
         [NotMapped]
         public override string TypeName { get { return "ImagingObjectSelection"; } }
-        
-        /// <summary>
-        /// The document title code of key object selection
-        /// </summary>
-        [FhirEnumeration("KOStitle")]
-        public enum KOStitle
-        {
-            [EnumLiteral("113000")]
-            N113000,
-            [EnumLiteral("113001")]
-            N113001,
-            [EnumLiteral("113002")]
-            N113002,
-            [EnumLiteral("113003")]
-            N113003,
-            [EnumLiteral("113004")]
-            N113004,
-            [EnumLiteral("113005")]
-            N113005,
-            [EnumLiteral("113006")]
-            N113006,
-            [EnumLiteral("113007")]
-            N113007,
-            [EnumLiteral("113008")]
-            N113008,
-            [EnumLiteral("113009")]
-            N113009,
-            [EnumLiteral("113010")]
-            N113010,
-            [EnumLiteral("113013")]
-            N113013,
-            [EnumLiteral("113018")]
-            N113018,
-            [EnumLiteral("113020")]
-            N113020,
-            [EnumLiteral("113021")]
-            N113021,
-            [EnumLiteral("113030")]
-            N113030,
-            [EnumLiteral("113031")]
-            N113031,
-            [EnumLiteral("113032")]
-            N113032,
-            [EnumLiteral("113033")]
-            N113033,
-            [EnumLiteral("113034")]
-            N113034,
-            [EnumLiteral("113035")]
-            N113035,
-            [EnumLiteral("113036")]
-            N113036,
-            [EnumLiteral("113037")]
-            N113037,
-            [EnumLiteral("113038")]
-            N113038,
-            [EnumLiteral("113039")]
-            N113039,
-        }
         
         [FhirType("StudyComponent")]
         [DataContract]
@@ -398,126 +341,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FramesComponent")]
-        [DataContract]
-        public partial class FramesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "FramesComponent"; } }
-            
-            /// <summary>
-            /// Frame numbers
-            /// </summary>
-            [FhirElement("frameNumbers", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.UnsignedInt> FrameNumbersElement
-            {
-                get { if(_FrameNumbersElement==null) _FrameNumbersElement = new List<Hl7.Fhir.Model.UnsignedInt>(); return _FrameNumbersElement; }
-                set { _FrameNumbersElement = value; OnPropertyChanged("FrameNumbersElement"); }
-            }
-            
-            private List<Hl7.Fhir.Model.UnsignedInt> _FrameNumbersElement;
-            
-            /// <summary>
-            /// Frame numbers
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public IEnumerable<int?> FrameNumbers
-            {
-                get { return FrameNumbersElement != null ? FrameNumbersElement.Select(elem => elem.Value) : null; }
-                set
-                {
-                    if(value == null)
-                      FrameNumbersElement = null; 
-                    else
-                      FrameNumbersElement = new List<Hl7.Fhir.Model.UnsignedInt>(value.Select(elem=>new Hl7.Fhir.Model.UnsignedInt(elem)));
-                    OnPropertyChanged("FrameNumbers");
-                }
-            }
-            
-            /// <summary>
-            /// Retrieve frame URL
-            /// </summary>
-            [FhirElement("url", InSummary=true, Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUri UrlElement
-            {
-                get { return _UrlElement; }
-                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUri _UrlElement;
-            
-            /// <summary>
-            /// Retrieve frame URL
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Url
-            {
-                get { return UrlElement != null ? UrlElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      UrlElement = null; 
-                    else
-                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                    OnPropertyChanged("Url");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as FramesComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(FrameNumbersElement != null) dest.FrameNumbersElement = new List<Hl7.Fhir.Model.UnsignedInt>(FrameNumbersElement.DeepCopy());
-                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new FramesComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as FramesComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(FrameNumbersElement, otherT.FrameNumbersElement)) return false;
-                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as FramesComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(FrameNumbersElement, otherT.FrameNumbersElement)) return false;
-                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
         [FhirType("InstanceComponent")]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -691,10 +514,130 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("FramesComponent")]
+        [DataContract]
+        public partial class FramesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "FramesComponent"; } }
+            
+            /// <summary>
+            /// Frame numbers
+            /// </summary>
+            [FhirElement("frameNumbers", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.UnsignedInt> FrameNumbersElement
+            {
+                get { if(_FrameNumbersElement==null) _FrameNumbersElement = new List<Hl7.Fhir.Model.UnsignedInt>(); return _FrameNumbersElement; }
+                set { _FrameNumbersElement = value; OnPropertyChanged("FrameNumbersElement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.UnsignedInt> _FrameNumbersElement;
+            
+            /// <summary>
+            /// Frame numbers
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public IEnumerable<int?> FrameNumbers
+            {
+                get { return FrameNumbersElement != null ? FrameNumbersElement.Select(elem => elem.Value) : null; }
+                set
+                {
+                    if(value == null)
+                      FrameNumbersElement = null; 
+                    else
+                      FrameNumbersElement = new List<Hl7.Fhir.Model.UnsignedInt>(value.Select(elem=>new Hl7.Fhir.Model.UnsignedInt(elem)));
+                    OnPropertyChanged("FrameNumbers");
+                }
+            }
+            
+            /// <summary>
+            /// Retrieve frame URL
+            /// </summary>
+            [FhirElement("url", InSummary=true, Order=50)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri UrlElement
+            {
+                get { return _UrlElement; }
+                set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _UrlElement;
+            
+            /// <summary>
+            /// Retrieve frame URL
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Url
+            {
+                get { return UrlElement != null ? UrlElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      UrlElement = null; 
+                    else
+                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Url");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as FramesComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(FrameNumbersElement != null) dest.FrameNumbersElement = new List<Hl7.Fhir.Model.UnsignedInt>(FrameNumbersElement.DeepCopy());
+                    if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new FramesComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as FramesComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(FrameNumbersElement, otherT.FrameNumbersElement)) return false;
+                if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as FramesComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(FrameNumbersElement, otherT.FrameNumbersElement)) return false;
+                if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         /// <summary>
         /// Instance UID
         /// </summary>
-        [FhirElement("uid", Order=90)]
+        [FhirElement("uid", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Oid UidElement
@@ -727,7 +670,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient of the selected objects
         /// </summary>
-        [FhirElement("patient", Order=100)]
+        [FhirElement("patient", InSummary=true, Order=100)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -742,7 +685,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for selection
         /// </summary>
-        [FhirElement("title", Order=110)]
+        [FhirElement("title", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Title
@@ -756,7 +699,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description text
         /// </summary>
-        [FhirElement("description", Order=120)]
+        [FhirElement("description", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -788,7 +731,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Author (human or machine)
         /// </summary>
-        [FhirElement("author", Order=130)]
+        [FhirElement("author", InSummary=true, Order=130)]
         [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -802,7 +745,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Authoring time of the selection
         /// </summary>
-        [FhirElement("authoringTime", Order=140)]
+        [FhirElement("authoringTime", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AuthoringTimeElement
         {
@@ -834,7 +777,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Study identity of the selected instances
         /// </summary>
-        [FhirElement("study", Order=150)]
+        [FhirElement("study", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ImagingObjectSelection.StudyComponent> Study

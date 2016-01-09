@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// MimeType of the binary content
         /// </summary>
-        [FhirElement("contentType", Order=50)]
+        [FhirElement("contentType", InSummary=true, Order=50)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code ContentTypeElement
@@ -88,7 +89,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual content
         /// </summary>
-        [FhirElement("content", Order=60)]
+        [FhirElement("content", InSummary=true, Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary ContentElement

@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,196 +55,55 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// A code specifying the state of the prescribing event. Describes the lifecycle of the prescription.
+        /// (url: http://hl7.org/fhir/ValueSet/medication-order-status)
         /// </summary>
         [FhirEnumeration("MedicationOrderStatus")]
         public enum MedicationOrderStatus
         {
             /// <summary>
             /// The prescription is 'actionable', but not all actions that are implied by it have occurred yet.
+            /// (system: http://hl7.org/fhir/medication-order-status)
             /// </summary>
-            [EnumLiteral("active")]
+            [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
             /// Actions implied by the prescription are to be temporarily halted, but are expected to continue later.  May also be called "suspended".
+            /// (system: http://hl7.org/fhir/medication-order-status)
             /// </summary>
-            [EnumLiteral("on-hold")]
+            [EnumLiteral("on-hold"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// All actions that are implied by the prescription have occurred.
+            /// (system: http://hl7.org/fhir/medication-order-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
             /// The prescription was entered in error.
+            /// (system: http://hl7.org/fhir/medication-order-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
             EnteredInError,
             /// <summary>
             /// Actions implied by the prescription are to be permanently halted, before all of them occurred.
+            /// (system: http://hl7.org/fhir/medication-order-status)
             /// </summary>
-            [EnumLiteral("stopped")]
+            [EnumLiteral("stopped"), Description("Stopped")]
             Stopped,
             /// <summary>
             /// The prescription is not yet 'actionable', i.e. it is a work in progress, requires sign-off or verification, and needs to be run through decision support process.
+            /// (system: http://hl7.org/fhir/medication-order-status)
             /// </summary>
-            [EnumLiteral("draft")]
+            [EnumLiteral("draft"), Description("Draft")]
             Draft,
         }
-        
-        [FhirType("MedicationOrderDispenseRequestComponent")]
+
+        [FhirType("DosageInstructionComponent")]
         [DataContract]
-        public partial class MedicationOrderDispenseRequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DosageInstructionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "MedicationOrderDispenseRequestComponent"; } }
-            
-            /// <summary>
-            /// Product to be supplied
-            /// </summary>
-            [FhirElement("medication", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Medication
-            {
-                get { return _Medication; }
-                set { _Medication = value; OnPropertyChanged("Medication"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Medication;
-            
-            /// <summary>
-            /// Time period supply is authorized for
-            /// </summary>
-            [FhirElement("validityPeriod", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Period ValidityPeriod
-            {
-                get { return _ValidityPeriod; }
-                set { _ValidityPeriod = value; OnPropertyChanged("ValidityPeriod"); }
-            }
-            
-            private Hl7.Fhir.Model.Period _ValidityPeriod;
-            
-            /// <summary>
-            /// Number of refills authorized
-            /// </summary>
-            [FhirElement("numberOfRepeatsAllowed", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.PositiveInt NumberOfRepeatsAllowedElement
-            {
-                get { return _NumberOfRepeatsAllowedElement; }
-                set { _NumberOfRepeatsAllowedElement = value; OnPropertyChanged("NumberOfRepeatsAllowedElement"); }
-            }
-            
-            private Hl7.Fhir.Model.PositiveInt _NumberOfRepeatsAllowedElement;
-            
-            /// <summary>
-            /// Number of refills authorized
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public int? NumberOfRepeatsAllowed
-            {
-                get { return NumberOfRepeatsAllowedElement != null ? NumberOfRepeatsAllowedElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      NumberOfRepeatsAllowedElement = null; 
-                    else
-                      NumberOfRepeatsAllowedElement = new Hl7.Fhir.Model.PositiveInt(value);
-                    OnPropertyChanged("NumberOfRepeatsAllowed");
-                }
-            }
-            
-            /// <summary>
-            /// Amount of medication to supply per dispense
-            /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Quantity
-            {
-                get { return _Quantity; }
-                set { _Quantity = value; OnPropertyChanged("Quantity"); }
-            }
-            
-            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
-            
-            /// <summary>
-            /// Number of days supply per dispense
-            /// </summary>
-            [FhirElement("expectedSupplyDuration", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.Duration ExpectedSupplyDuration
-            {
-                get { return _ExpectedSupplyDuration; }
-                set { _ExpectedSupplyDuration = value; OnPropertyChanged("ExpectedSupplyDuration"); }
-            }
-            
-            private Hl7.Fhir.Model.Duration _ExpectedSupplyDuration;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as MedicationOrderDispenseRequestComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
-                    if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopy();
-                    if(NumberOfRepeatsAllowedElement != null) dest.NumberOfRepeatsAllowedElement = (Hl7.Fhir.Model.PositiveInt)NumberOfRepeatsAllowedElement.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                    if(ExpectedSupplyDuration != null) dest.ExpectedSupplyDuration = (Hl7.Fhir.Model.Duration)ExpectedSupplyDuration.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new MedicationOrderDispenseRequestComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as MedicationOrderDispenseRequestComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Medication, otherT.Medication)) return false;
-                if( !DeepComparable.Matches(ValidityPeriod, otherT.ValidityPeriod)) return false;
-                if( !DeepComparable.Matches(NumberOfRepeatsAllowedElement, otherT.NumberOfRepeatsAllowedElement)) return false;
-                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
-                if( !DeepComparable.Matches(ExpectedSupplyDuration, otherT.ExpectedSupplyDuration)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as MedicationOrderDispenseRequestComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Medication, otherT.Medication)) return false;
-                if( !DeepComparable.IsExactly(ValidityPeriod, otherT.ValidityPeriod)) return false;
-                if( !DeepComparable.IsExactly(NumberOfRepeatsAllowedElement, otherT.NumberOfRepeatsAllowedElement)) return false;
-                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
-                if( !DeepComparable.IsExactly(ExpectedSupplyDuration, otherT.ExpectedSupplyDuration)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("MedicationOrderDosageInstructionComponent")]
-        [DataContract]
-        public partial class MedicationOrderDosageInstructionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "MedicationOrderDosageInstructionComponent"; } }
+            public override string TypeName { get { return "DosageInstructionComponent"; } }
             
             /// <summary>
             /// Dosage instructions expressed as text
@@ -400,7 +260,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as MedicationOrderDosageInstructionComponent;
+                var dest = other as DosageInstructionComponent;
                 
                 if (dest != null)
                 {
@@ -423,12 +283,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new MedicationOrderDosageInstructionComponent());
+                return CopyTo(new DosageInstructionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as MedicationOrderDosageInstructionComponent;
+                var otherT = other as DosageInstructionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -448,7 +308,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as MedicationOrderDosageInstructionComponent;
+                var otherT = other as DosageInstructionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -469,12 +329,160 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicationOrderSubstitutionComponent")]
+        [FhirType("DispenseRequestComponent")]
         [DataContract]
-        public partial class MedicationOrderSubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "MedicationOrderSubstitutionComponent"; } }
+            public override string TypeName { get { return "DispenseRequestComponent"; } }
+            
+            /// <summary>
+            /// Product to be supplied
+            /// </summary>
+            [FhirElement("medication", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Medication
+            {
+                get { return _Medication; }
+                set { _Medication = value; OnPropertyChanged("Medication"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Medication;
+            
+            /// <summary>
+            /// Time period supply is authorized for
+            /// </summary>
+            [FhirElement("validityPeriod", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period ValidityPeriod
+            {
+                get { return _ValidityPeriod; }
+                set { _ValidityPeriod = value; OnPropertyChanged("ValidityPeriod"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _ValidityPeriod;
+            
+            /// <summary>
+            /// Number of refills authorized
+            /// </summary>
+            [FhirElement("numberOfRepeatsAllowed", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.PositiveInt NumberOfRepeatsAllowedElement
+            {
+                get { return _NumberOfRepeatsAllowedElement; }
+                set { _NumberOfRepeatsAllowedElement = value; OnPropertyChanged("NumberOfRepeatsAllowedElement"); }
+            }
+            
+            private Hl7.Fhir.Model.PositiveInt _NumberOfRepeatsAllowedElement;
+            
+            /// <summary>
+            /// Number of refills authorized
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public int? NumberOfRepeatsAllowed
+            {
+                get { return NumberOfRepeatsAllowedElement != null ? NumberOfRepeatsAllowedElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NumberOfRepeatsAllowedElement = null; 
+                    else
+                      NumberOfRepeatsAllowedElement = new Hl7.Fhir.Model.PositiveInt(value);
+                    OnPropertyChanged("NumberOfRepeatsAllowed");
+                }
+            }
+            
+            /// <summary>
+            /// Amount of medication to supply per dispense
+            /// </summary>
+            [FhirElement("quantity", InSummary=true, Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            {
+                get { return _Quantity; }
+                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+            }
+            
+            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            
+            /// <summary>
+            /// Number of days supply per dispense
+            /// </summary>
+            [FhirElement("expectedSupplyDuration", InSummary=true, Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.Duration ExpectedSupplyDuration
+            {
+                get { return _ExpectedSupplyDuration; }
+                set { _ExpectedSupplyDuration = value; OnPropertyChanged("ExpectedSupplyDuration"); }
+            }
+            
+            private Hl7.Fhir.Model.Duration _ExpectedSupplyDuration;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DispenseRequestComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
+                    if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopy();
+                    if(NumberOfRepeatsAllowedElement != null) dest.NumberOfRepeatsAllowedElement = (Hl7.Fhir.Model.PositiveInt)NumberOfRepeatsAllowedElement.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(ExpectedSupplyDuration != null) dest.ExpectedSupplyDuration = (Hl7.Fhir.Model.Duration)ExpectedSupplyDuration.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new DispenseRequestComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DispenseRequestComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Medication, otherT.Medication)) return false;
+                if( !DeepComparable.Matches(ValidityPeriod, otherT.ValidityPeriod)) return false;
+                if( !DeepComparable.Matches(NumberOfRepeatsAllowedElement, otherT.NumberOfRepeatsAllowedElement)) return false;
+                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.Matches(ExpectedSupplyDuration, otherT.ExpectedSupplyDuration)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DispenseRequestComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Medication, otherT.Medication)) return false;
+                if( !DeepComparable.IsExactly(ValidityPeriod, otherT.ValidityPeriod)) return false;
+                if( !DeepComparable.IsExactly(NumberOfRepeatsAllowedElement, otherT.NumberOfRepeatsAllowedElement)) return false;
+                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.IsExactly(ExpectedSupplyDuration, otherT.ExpectedSupplyDuration)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("SubstitutionComponent")]
+        [DataContract]
+        public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "SubstitutionComponent"; } }
             
             /// <summary>
             /// generic | formulary +
@@ -505,7 +513,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as MedicationOrderSubstitutionComponent;
+                var dest = other as SubstitutionComponent;
                 
                 if (dest != null)
                 {
@@ -520,12 +528,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new MedicationOrderSubstitutionComponent());
+                return CopyTo(new SubstitutionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as MedicationOrderSubstitutionComponent;
+                var otherT = other as SubstitutionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -537,7 +545,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as MedicationOrderSubstitutionComponent;
+                var otherT = other as SubstitutionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -553,7 +561,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// External identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -567,7 +575,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When prescription was authorized
         /// </summary>
-        [FhirElement("dateWritten", Order=100)]
+        [FhirElement("dateWritten", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateWrittenElement
         {
@@ -599,7 +607,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// active | on-hold | completed | entered-in-error | stopped | draft
         /// </summary>
-        [FhirElement("status", Order=110)]
+        [FhirElement("status", InSummary=true, Order=110)]
         [DataMember]
         public Code<Hl7.Fhir.Model.MedicationOrder.MedicationOrderStatus> StatusElement
         {
@@ -631,7 +639,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When prescription was stopped
         /// </summary>
-        [FhirElement("dateEnded", Order=120)]
+        [FhirElement("dateEnded", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateEndedElement
         {
@@ -663,7 +671,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why prescription was stopped
         /// </summary>
-        [FhirElement("reasonEnded", Order=130)]
+        [FhirElement("reasonEnded", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ReasonEnded
         {
@@ -676,7 +684,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who prescription is for
         /// </summary>
-        [FhirElement("patient", Order=140)]
+        [FhirElement("patient", InSummary=true, Order=140)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -690,7 +698,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who ordered the medication(s)
         /// </summary>
-        [FhirElement("prescriber", Order=150)]
+        [FhirElement("prescriber", InSummary=true, Order=150)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Prescriber
@@ -704,7 +712,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Created during encounter/admission/stay
         /// </summary>
-        [FhirElement("encounter", Order=160)]
+        [FhirElement("encounter", InSummary=true, Order=160)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -718,7 +726,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason or indication for writing the prescription
         /// </summary>
-        [FhirElement("reason", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
@@ -732,7 +740,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Information about the prescription
         /// </summary>
-        [FhirElement("note", Order=180)]
+        [FhirElement("note", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NoteElement
         {
@@ -764,7 +772,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication to be taken
         /// </summary>
-        [FhirElement("medication", Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("medication", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -779,47 +787,47 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How medication should be taken
         /// </summary>
-        [FhirElement("dosageInstruction", Order=200)]
+        [FhirElement("dosageInstruction", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.MedicationOrder.MedicationOrderDosageInstructionComponent> DosageInstruction
+        public List<Hl7.Fhir.Model.MedicationOrder.DosageInstructionComponent> DosageInstruction
         {
-            get { if(_DosageInstruction==null) _DosageInstruction = new List<Hl7.Fhir.Model.MedicationOrder.MedicationOrderDosageInstructionComponent>(); return _DosageInstruction; }
+            get { if(_DosageInstruction==null) _DosageInstruction = new List<Hl7.Fhir.Model.MedicationOrder.DosageInstructionComponent>(); return _DosageInstruction; }
             set { _DosageInstruction = value; OnPropertyChanged("DosageInstruction"); }
         }
         
-        private List<Hl7.Fhir.Model.MedicationOrder.MedicationOrderDosageInstructionComponent> _DosageInstruction;
+        private List<Hl7.Fhir.Model.MedicationOrder.DosageInstructionComponent> _DosageInstruction;
         
         /// <summary>
         /// Medication supply authorization
         /// </summary>
-        [FhirElement("dispenseRequest", Order=210)]
+        [FhirElement("dispenseRequest", InSummary=true, Order=210)]
         [DataMember]
-        public Hl7.Fhir.Model.MedicationOrder.MedicationOrderDispenseRequestComponent DispenseRequest
+        public Hl7.Fhir.Model.MedicationOrder.DispenseRequestComponent DispenseRequest
         {
             get { return _DispenseRequest; }
             set { _DispenseRequest = value; OnPropertyChanged("DispenseRequest"); }
         }
         
-        private Hl7.Fhir.Model.MedicationOrder.MedicationOrderDispenseRequestComponent _DispenseRequest;
+        private Hl7.Fhir.Model.MedicationOrder.DispenseRequestComponent _DispenseRequest;
         
         /// <summary>
         /// Any restrictions on medication substitution
         /// </summary>
-        [FhirElement("substitution", Order=220)]
+        [FhirElement("substitution", InSummary=true, Order=220)]
         [DataMember]
-        public Hl7.Fhir.Model.MedicationOrder.MedicationOrderSubstitutionComponent Substitution
+        public Hl7.Fhir.Model.MedicationOrder.SubstitutionComponent Substitution
         {
             get { return _Substitution; }
             set { _Substitution = value; OnPropertyChanged("Substitution"); }
         }
         
-        private Hl7.Fhir.Model.MedicationOrder.MedicationOrderSubstitutionComponent _Substitution;
+        private Hl7.Fhir.Model.MedicationOrder.SubstitutionComponent _Substitution;
         
         /// <summary>
         /// An order/prescription that this supersedes
         /// </summary>
-        [FhirElement("priorPrescription", Order=230)]
+        [FhirElement("priorPrescription", InSummary=true, Order=230)]
         [References("MedicationOrder")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PriorPrescription
@@ -848,9 +856,9 @@ namespace Hl7.Fhir.Model
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
                 if(NoteElement != null) dest.NoteElement = (Hl7.Fhir.Model.FhirString)NoteElement.DeepCopy();
                 if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
-                if(DosageInstruction != null) dest.DosageInstruction = new List<Hl7.Fhir.Model.MedicationOrder.MedicationOrderDosageInstructionComponent>(DosageInstruction.DeepCopy());
-                if(DispenseRequest != null) dest.DispenseRequest = (Hl7.Fhir.Model.MedicationOrder.MedicationOrderDispenseRequestComponent)DispenseRequest.DeepCopy();
-                if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.MedicationOrder.MedicationOrderSubstitutionComponent)Substitution.DeepCopy();
+                if(DosageInstruction != null) dest.DosageInstruction = new List<Hl7.Fhir.Model.MedicationOrder.DosageInstructionComponent>(DosageInstruction.DeepCopy());
+                if(DispenseRequest != null) dest.DispenseRequest = (Hl7.Fhir.Model.MedicationOrder.DispenseRequestComponent)DispenseRequest.DeepCopy();
+                if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.MedicationOrder.SubstitutionComponent)Substitution.DeepCopy();
                 if(PriorPrescription != null) dest.PriorPrescription = (Hl7.Fhir.Model.ResourceReference)PriorPrescription.DeepCopy();
                 return dest;
             }

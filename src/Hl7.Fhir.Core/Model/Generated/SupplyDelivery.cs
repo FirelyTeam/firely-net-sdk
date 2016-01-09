@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,31 +55,35 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Status of the supply delivery.
+        /// (url: http://hl7.org/fhir/ValueSet/supplydelivery-status)
         /// </summary>
         [FhirEnumeration("SupplyDeliveryStatus")]
         public enum SupplyDeliveryStatus
         {
             /// <summary>
             /// Supply has been requested, but not delivered.
+            /// (system: http://hl7.org/fhir/supplydelivery-status)
             /// </summary>
-            [EnumLiteral("in-progress")]
+            [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// Supply has been delivered ("completed").
+            /// (system: http://hl7.org/fhir/supplydelivery-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Delivered")]
             Completed,
             /// <summary>
             /// Dispensing was not completed.
+            /// (system: http://hl7.org/fhir/supplydelivery-status)
             /// </summary>
-            [EnumLiteral("abandoned")]
+            [EnumLiteral("abandoned"), Description("Abandoned")]
             Abandoned,
         }
-        
+
         /// <summary>
         /// External identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
         {
@@ -91,7 +96,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// in-progress | completed | abandoned
         /// </summary>
-        [FhirElement("status", Order=100)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [DataMember]
         public Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus> StatusElement
         {
@@ -123,7 +128,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient for whom the item is supplied
         /// </summary>
-        [FhirElement("patient", Order=110)]
+        [FhirElement("patient", InSummary=true, Order=110)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -137,7 +142,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Category of dispense event
         /// </summary>
-        [FhirElement("type", Order=120)]
+        [FhirElement("type", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -150,7 +155,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Amount dispensed
         /// </summary>
-        [FhirElement("quantity", Order=130)]
+        [FhirElement("quantity", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity Quantity
         {
@@ -163,7 +168,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication, Substance, or Device supplied
         /// </summary>
-        [FhirElement("suppliedItem", Order=140)]
+        [FhirElement("suppliedItem", InSummary=true, Order=140)]
         [References("Medication","Substance","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference SuppliedItem
@@ -177,7 +182,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Dispenser
         /// </summary>
-        [FhirElement("supplier", Order=150)]
+        [FhirElement("supplier", InSummary=true, Order=150)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Supplier
@@ -191,7 +196,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Dispensing time
         /// </summary>
-        [FhirElement("whenPrepared", Order=160)]
+        [FhirElement("whenPrepared", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Period WhenPrepared
         {
@@ -204,7 +209,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Handover time
         /// </summary>
-        [FhirElement("time", Order=170)]
+        [FhirElement("time", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime TimeElement
         {
@@ -236,7 +241,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the Supply was sent
         /// </summary>
-        [FhirElement("destination", Order=180)]
+        [FhirElement("destination", InSummary=true, Order=180)]
         [References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Destination
@@ -250,7 +255,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who collected the Supply
         /// </summary>
-        [FhirElement("receiver", Order=190)]
+        [FhirElement("receiver", InSummary=true, Order=190)]
         [References("Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,32 +55,37 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The free/busy status of a slot.
+        /// (url: http://hl7.org/fhir/ValueSet/slotstatus)
         /// </summary>
         [FhirEnumeration("SlotStatus")]
         public enum SlotStatus
         {
             /// <summary>
             /// Indicates that the time interval is busy because one  or more events have been scheduled for that interval.
+            /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("busy")]
+            [EnumLiteral("busy"), Description("Busy")]
             Busy,
             /// <summary>
             /// Indicates that the time interval is free for scheduling.
+            /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("free")]
+            [EnumLiteral("free"), Description("Free")]
             Free,
             /// <summary>
             /// Indicates that the time interval is busy and that the interval can not be scheduled.
+            /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("busy-unavailable")]
+            [EnumLiteral("busy-unavailable"), Description("Busy (Unavailable)")]
             BusyUnavailable,
             /// <summary>
             /// Indicates that the time interval is busy because one or more events have been tentatively scheduled for that interval.
+            /// (system: http://hl7.org/fhir/slotstatus)
             /// </summary>
-            [EnumLiteral("busy-tentative")]
+            [EnumLiteral("busy-tentative"), Description("Busy (Tentative)")]
             BusyTentative,
         }
-        
+
         /// <summary>
         /// External Ids for this item
         /// </summary>

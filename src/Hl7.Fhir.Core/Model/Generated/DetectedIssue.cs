@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,38 +55,42 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Indicates the potential degree of impact of the identified issue on the patient.
+        /// (url: http://hl7.org/fhir/ValueSet/detectedissue-severity)
         /// </summary>
         [FhirEnumeration("DetectedIssueSeverity")]
         public enum DetectedIssueSeverity
         {
             /// <summary>
             /// Indicates the issue may be life-threatening or has the potential to cause permanent injury.
+            /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
-            [EnumLiteral("high")]
+            [EnumLiteral("high"), Description("High")]
             High,
             /// <summary>
             /// Indicates the issue may result in noticeable adverse consequences but is unlikely to be life-threatening or cause permanent injury.
+            /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
-            [EnumLiteral("moderate")]
+            [EnumLiteral("moderate"), Description("Moderate")]
             Moderate,
             /// <summary>
             /// Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subject.
+            /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
-            [EnumLiteral("low")]
+            [EnumLiteral("low"), Description("Low")]
             Low,
         }
-        
-        [FhirType("DetectedIssueMitigationComponent")]
+
+        [FhirType("MitigationComponent")]
         [DataContract]
-        public partial class DetectedIssueMitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DetectedIssueMitigationComponent"; } }
+            public override string TypeName { get { return "MitigationComponent"; } }
             
             /// <summary>
             /// What mitigation?
             /// </summary>
-            [FhirElement("action", InSummary=true, Order=40)]
+            [FhirElement("action", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Action
@@ -99,7 +104,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date committed
             /// </summary>
-            [FhirElement("date", InSummary=true, Order=50)]
+            [FhirElement("date", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateElement
             {
@@ -131,7 +136,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who is committing?
             /// </summary>
-            [FhirElement("author", InSummary=true, Order=60)]
+            [FhirElement("author", Order=60)]
             [References("Practitioner")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Author
@@ -144,7 +149,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DetectedIssueMitigationComponent;
+                var dest = other as MitigationComponent;
                 
                 if (dest != null)
                 {
@@ -160,12 +165,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DetectedIssueMitigationComponent());
+                return CopyTo(new MitigationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DetectedIssueMitigationComponent;
+                var otherT = other as MitigationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -178,7 +183,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DetectedIssueMitigationComponent;
+                var otherT = other as MitigationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -395,13 +400,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("mitigation", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DetectedIssue.DetectedIssueMitigationComponent> Mitigation
+        public List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> Mitigation
         {
-            get { if(_Mitigation==null) _Mitigation = new List<Hl7.Fhir.Model.DetectedIssue.DetectedIssueMitigationComponent>(); return _Mitigation; }
+            get { if(_Mitigation==null) _Mitigation = new List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent>(); return _Mitigation; }
             set { _Mitigation = value; OnPropertyChanged("Mitigation"); }
         }
         
-        private List<Hl7.Fhir.Model.DetectedIssue.DetectedIssueMitigationComponent> _Mitigation;
+        private List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> _Mitigation;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -419,7 +424,7 @@ namespace Hl7.Fhir.Model
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirUri)ReferenceElement.DeepCopy();
-                if(Mitigation != null) dest.Mitigation = new List<Hl7.Fhir.Model.DetectedIssue.DetectedIssueMitigationComponent>(Mitigation.DeepCopy());
+                if(Mitigation != null) dest.Mitigation = new List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent>(Mitigation.DeepCopy());
                 return dest;
             }
             else

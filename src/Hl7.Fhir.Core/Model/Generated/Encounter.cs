@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,584 +55,158 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Current state of the encounter
+        /// (url: http://hl7.org/fhir/ValueSet/encounter-state)
         /// </summary>
         [FhirEnumeration("EncounterState")]
         public enum EncounterState
         {
             /// <summary>
             /// The Encounter has not yet started.
+            /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
-            [EnumLiteral("planned")]
+            [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
             /// The Patient is present for the encounter, however is not currently meeting with a practitioner.
+            /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
-            [EnumLiteral("arrived")]
+            [EnumLiteral("arrived"), Description("Arrived")]
             Arrived,
             /// <summary>
             /// The Encounter has begun and the patient is present / the practitioner and the patient are meeting.
+            /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
-            [EnumLiteral("in-progress")]
+            [EnumLiteral("in-progress"), Description("in Progress")]
             InProgress,
             /// <summary>
             /// The Encounter has begun, but the patient is temporarily on leave.
+            /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
-            [EnumLiteral("onleave")]
+            [EnumLiteral("onleave"), Description("On Leave")]
             Onleave,
             /// <summary>
             /// The Encounter has ended.
+            /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
-            [EnumLiteral("finished")]
+            [EnumLiteral("finished"), Description("Finished")]
             Finished,
             /// <summary>
             /// The Encounter has ended before it has begun.
+            /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
-            [EnumLiteral("cancelled")]
+            [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
         }
-        
+
         /// <summary>
         /// Classification of the encounter
+        /// (url: http://hl7.org/fhir/ValueSet/encounter-class)
         /// </summary>
         [FhirEnumeration("EncounterClass")]
         public enum EncounterClass
         {
             /// <summary>
             /// An encounter during which the patient is hospitalized and stays overnight.
+            /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("inpatient")]
+            [EnumLiteral("inpatient"), Description("Inpatient")]
             Inpatient,
             /// <summary>
             /// An encounter during which the patient is not hospitalized overnight.
+            /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("outpatient")]
+            [EnumLiteral("outpatient"), Description("Outpatient")]
             Outpatient,
             /// <summary>
             /// An encounter where the patient visits the practitioner in his/her office, e.g. a G.P. visit.
+            /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("ambulatory")]
+            [EnumLiteral("ambulatory"), Description("Ambulatory")]
             Ambulatory,
             /// <summary>
             /// An encounter in the Emergency Care Department.
+            /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("emergency")]
+            [EnumLiteral("emergency"), Description("Emergency")]
             Emergency,
             /// <summary>
             /// An encounter where the practitioner visits the patient at his/her home.
+            /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("home")]
+            [EnumLiteral("home"), Description("Home")]
             Home,
             /// <summary>
             /// An encounter taking place outside the regular environment for giving care.
+            /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("field")]
+            [EnumLiteral("field"), Description("Field")]
             Field,
             /// <summary>
             /// An encounter where the patient needs more prolonged treatment or investigations than outpatients, but who do not need to stay in the hospital overnight.
+            /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("daytime")]
+            [EnumLiteral("daytime"), Description("Daytime")]
             Daytime,
             /// <summary>
             /// An encounter that takes place where the patient and practitioner do not physically meet but use electronic means for contact.
+            /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("virtual")]
+            [EnumLiteral("virtual"), Description("Virtual")]
             Virtual,
             /// <summary>
             /// Any other encounter type that is not described by one of the other values. Where this is used it is expected that an implementer will include an extension value to define what the actual other type is.
+            /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
-            [EnumLiteral("other")]
+            [EnumLiteral("other"), Description("Other")]
             Other,
         }
-        
+
         /// <summary>
         /// The status of the location.
+        /// (url: http://hl7.org/fhir/ValueSet/encounter-location-status)
         /// </summary>
         [FhirEnumeration("EncounterLocationStatus")]
         public enum EncounterLocationStatus
         {
             /// <summary>
             /// The patient is planned to be moved to this location at some point in the future.
+            /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
-            [EnumLiteral("planned")]
+            [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
             /// The patient is currently at this location, or was between the period specified.
-            /// A system may update these records when the patient leaves the location to either reserved, or completed
+        /// A system may update these records when the patient leaves the location to either reserved, or completed
+            /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
-            [EnumLiteral("active")]
+            [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
             /// This location is held empty for this patient.
+            /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
-            [EnumLiteral("reserved")]
+            [EnumLiteral("reserved"), Description("Reserved")]
             Reserved,
             /// <summary>
             /// The patient was at this location during the period specified.
-            /// Not to be used when the patient is currently at the location
+        /// Not to be used when the patient is currently at the location
+            /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Completed")]
             Completed,
         }
-        
-        [FhirType("EncounterHospitalizationComponent")]
+
+        [FhirType("StatusHistoryComponent")]
         [DataContract]
-        public partial class EncounterHospitalizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "EncounterHospitalizationComponent"; } }
-            
-            /// <summary>
-            /// Pre-admission identifier
-            /// </summary>
-            [FhirElement("preAdmissionIdentifier", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Identifier PreAdmissionIdentifier
-            {
-                get { return _PreAdmissionIdentifier; }
-                set { _PreAdmissionIdentifier = value; OnPropertyChanged("PreAdmissionIdentifier"); }
-            }
-            
-            private Hl7.Fhir.Model.Identifier _PreAdmissionIdentifier;
-            
-            /// <summary>
-            /// The location from which the patient came before admission
-            /// </summary>
-            [FhirElement("origin", InSummary=true, Order=50)]
-            [References("Location")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Origin
-            {
-                get { return _Origin; }
-                set { _Origin = value; OnPropertyChanged("Origin"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Origin;
-            
-            /// <summary>
-            /// From where patient was admitted (physician referral, transfer)
-            /// </summary>
-            [FhirElement("admitSource", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept AdmitSource
-            {
-                get { return _AdmitSource; }
-                set { _AdmitSource = value; OnPropertyChanged("AdmitSource"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _AdmitSource;
-            
-            /// <summary>
-            /// The admitting diagnosis as reported by admitting practitioner
-            /// </summary>
-            [FhirElement("admittingDiagnosis", InSummary=true, Order=70)]
-            [References("Condition")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> AdmittingDiagnosis
-            {
-                get { if(_AdmittingDiagnosis==null) _AdmittingDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(); return _AdmittingDiagnosis; }
-                set { _AdmittingDiagnosis = value; OnPropertyChanged("AdmittingDiagnosis"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _AdmittingDiagnosis;
-            
-            /// <summary>
-            /// The type of hospital re-admission that has occurred (if any). If the value is absent, then this is not identified as a readmission
-            /// </summary>
-            [FhirElement("reAdmission", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept ReAdmission
-            {
-                get { return _ReAdmission; }
-                set { _ReAdmission = value; OnPropertyChanged("ReAdmission"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _ReAdmission;
-            
-            /// <summary>
-            /// Diet preferences reported by the patient
-            /// </summary>
-            [FhirElement("dietPreference", InSummary=true, Order=90)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> DietPreference
-            {
-                get { if(_DietPreference==null) _DietPreference = new List<Hl7.Fhir.Model.CodeableConcept>(); return _DietPreference; }
-                set { _DietPreference = value; OnPropertyChanged("DietPreference"); }
-            }
-            
-            private List<Hl7.Fhir.Model.CodeableConcept> _DietPreference;
-            
-            /// <summary>
-            /// Special courtesies (VIP, board member)
-            /// </summary>
-            [FhirElement("specialCourtesy", InSummary=true, Order=100)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> SpecialCourtesy
-            {
-                get { if(_SpecialCourtesy==null) _SpecialCourtesy = new List<Hl7.Fhir.Model.CodeableConcept>(); return _SpecialCourtesy; }
-                set { _SpecialCourtesy = value; OnPropertyChanged("SpecialCourtesy"); }
-            }
-            
-            private List<Hl7.Fhir.Model.CodeableConcept> _SpecialCourtesy;
-            
-            /// <summary>
-            /// Wheelchair, translator, stretcher, etc.
-            /// </summary>
-            [FhirElement("specialArrangement", InSummary=true, Order=110)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> SpecialArrangement
-            {
-                get { if(_SpecialArrangement==null) _SpecialArrangement = new List<Hl7.Fhir.Model.CodeableConcept>(); return _SpecialArrangement; }
-                set { _SpecialArrangement = value; OnPropertyChanged("SpecialArrangement"); }
-            }
-            
-            private List<Hl7.Fhir.Model.CodeableConcept> _SpecialArrangement;
-            
-            /// <summary>
-            /// Location to which the patient is discharged
-            /// </summary>
-            [FhirElement("destination", InSummary=true, Order=120)]
-            [References("Location")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Destination
-            {
-                get { return _Destination; }
-                set { _Destination = value; OnPropertyChanged("Destination"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Destination;
-            
-            /// <summary>
-            /// Category or kind of location after discharge
-            /// </summary>
-            [FhirElement("dischargeDisposition", InSummary=true, Order=130)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept DischargeDisposition
-            {
-                get { return _DischargeDisposition; }
-                set { _DischargeDisposition = value; OnPropertyChanged("DischargeDisposition"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _DischargeDisposition;
-            
-            /// <summary>
-            /// The final diagnosis given a patient before release from the hospital after all testing, surgery, and workup are complete
-            /// </summary>
-            [FhirElement("dischargeDiagnosis", InSummary=true, Order=140)]
-            [References("Condition")]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ResourceReference> DischargeDiagnosis
-            {
-                get { if(_DischargeDiagnosis==null) _DischargeDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(); return _DischargeDiagnosis; }
-                set { _DischargeDiagnosis = value; OnPropertyChanged("DischargeDiagnosis"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ResourceReference> _DischargeDiagnosis;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as EncounterHospitalizationComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(PreAdmissionIdentifier != null) dest.PreAdmissionIdentifier = (Hl7.Fhir.Model.Identifier)PreAdmissionIdentifier.DeepCopy();
-                    if(Origin != null) dest.Origin = (Hl7.Fhir.Model.ResourceReference)Origin.DeepCopy();
-                    if(AdmitSource != null) dest.AdmitSource = (Hl7.Fhir.Model.CodeableConcept)AdmitSource.DeepCopy();
-                    if(AdmittingDiagnosis != null) dest.AdmittingDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(AdmittingDiagnosis.DeepCopy());
-                    if(ReAdmission != null) dest.ReAdmission = (Hl7.Fhir.Model.CodeableConcept)ReAdmission.DeepCopy();
-                    if(DietPreference != null) dest.DietPreference = new List<Hl7.Fhir.Model.CodeableConcept>(DietPreference.DeepCopy());
-                    if(SpecialCourtesy != null) dest.SpecialCourtesy = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialCourtesy.DeepCopy());
-                    if(SpecialArrangement != null) dest.SpecialArrangement = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialArrangement.DeepCopy());
-                    if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
-                    if(DischargeDisposition != null) dest.DischargeDisposition = (Hl7.Fhir.Model.CodeableConcept)DischargeDisposition.DeepCopy();
-                    if(DischargeDiagnosis != null) dest.DischargeDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(DischargeDiagnosis.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new EncounterHospitalizationComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as EncounterHospitalizationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(PreAdmissionIdentifier, otherT.PreAdmissionIdentifier)) return false;
-                if( !DeepComparable.Matches(Origin, otherT.Origin)) return false;
-                if( !DeepComparable.Matches(AdmitSource, otherT.AdmitSource)) return false;
-                if( !DeepComparable.Matches(AdmittingDiagnosis, otherT.AdmittingDiagnosis)) return false;
-                if( !DeepComparable.Matches(ReAdmission, otherT.ReAdmission)) return false;
-                if( !DeepComparable.Matches(DietPreference, otherT.DietPreference)) return false;
-                if( !DeepComparable.Matches(SpecialCourtesy, otherT.SpecialCourtesy)) return false;
-                if( !DeepComparable.Matches(SpecialArrangement, otherT.SpecialArrangement)) return false;
-                if( !DeepComparable.Matches(Destination, otherT.Destination)) return false;
-                if( !DeepComparable.Matches(DischargeDisposition, otherT.DischargeDisposition)) return false;
-                if( !DeepComparable.Matches(DischargeDiagnosis, otherT.DischargeDiagnosis)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as EncounterHospitalizationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(PreAdmissionIdentifier, otherT.PreAdmissionIdentifier)) return false;
-                if( !DeepComparable.IsExactly(Origin, otherT.Origin)) return false;
-                if( !DeepComparable.IsExactly(AdmitSource, otherT.AdmitSource)) return false;
-                if( !DeepComparable.IsExactly(AdmittingDiagnosis, otherT.AdmittingDiagnosis)) return false;
-                if( !DeepComparable.IsExactly(ReAdmission, otherT.ReAdmission)) return false;
-                if( !DeepComparable.IsExactly(DietPreference, otherT.DietPreference)) return false;
-                if( !DeepComparable.IsExactly(SpecialCourtesy, otherT.SpecialCourtesy)) return false;
-                if( !DeepComparable.IsExactly(SpecialArrangement, otherT.SpecialArrangement)) return false;
-                if( !DeepComparable.IsExactly(Destination, otherT.Destination)) return false;
-                if( !DeepComparable.IsExactly(DischargeDisposition, otherT.DischargeDisposition)) return false;
-                if( !DeepComparable.IsExactly(DischargeDiagnosis, otherT.DischargeDiagnosis)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("EncounterLocationComponent")]
-        [DataContract]
-        public partial class EncounterLocationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "EncounterLocationComponent"; } }
-            
-            /// <summary>
-            /// Location the encounter takes place
-            /// </summary>
-            [FhirElement("location", InSummary=true, Order=40)]
-            [References("Location")]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Location
-            {
-                get { return _Location; }
-                set { _Location = value; OnPropertyChanged("Location"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Location;
-            
-            /// <summary>
-            /// planned | active | reserved | completed
-            /// </summary>
-            [FhirElement("status", InSummary=true, Order=50)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> StatusElement
-            {
-                get { return _StatusElement; }
-                set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> _StatusElement;
-            
-            /// <summary>
-            /// planned | active | reserved | completed
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Encounter.EncounterLocationStatus? Status
-            {
-                get { return StatusElement != null ? StatusElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      StatusElement = null; 
-                    else
-                      StatusElement = new Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>(value);
-                    OnPropertyChanged("Status");
-                }
-            }
-            
-            /// <summary>
-            /// Time period during which the patient was present at the location
-            /// </summary>
-            [FhirElement("period", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.Period Period
-            {
-                get { return _Period; }
-                set { _Period = value; OnPropertyChanged("Period"); }
-            }
-            
-            private Hl7.Fhir.Model.Period _Period;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as EncounterLocationComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
-                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>)StatusElement.DeepCopy();
-                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new EncounterLocationComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as EncounterLocationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Location, otherT.Location)) return false;
-                if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as EncounterLocationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
-                if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("EncounterParticipantComponent")]
-        [DataContract]
-        public partial class EncounterParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "EncounterParticipantComponent"; } }
-            
-            /// <summary>
-            /// Role of participant in encounter
-            /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> Type
-            {
-                get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
-            }
-            
-            private List<Hl7.Fhir.Model.CodeableConcept> _Type;
-            
-            /// <summary>
-            /// Period of time during the encounter participant was present
-            /// </summary>
-            [FhirElement("period", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Period Period
-            {
-                get { return _Period; }
-                set { _Period = value; OnPropertyChanged("Period"); }
-            }
-            
-            private Hl7.Fhir.Model.Period _Period;
-            
-            /// <summary>
-            /// Persons involved in the encounter other than the patient
-            /// </summary>
-            [FhirElement("individual", InSummary=true, Order=60)]
-            [References("Practitioner","RelatedPerson")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Individual
-            {
-                get { return _Individual; }
-                set { _Individual = value; OnPropertyChanged("Individual"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Individual;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as EncounterParticipantComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
-                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    if(Individual != null) dest.Individual = (Hl7.Fhir.Model.ResourceReference)Individual.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new EncounterParticipantComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as EncounterParticipantComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-                if( !DeepComparable.Matches(Individual, otherT.Individual)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as EncounterParticipantComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-                if( !DeepComparable.IsExactly(Individual, otherT.Individual)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("EncounterStatusHistoryComponent")]
-        [DataContract]
-        public partial class EncounterStatusHistoryComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "EncounterStatusHistoryComponent"; } }
+            public override string TypeName { get { return "StatusHistoryComponent"; } }
             
             /// <summary>
             /// planned | arrived | in-progress | onleave | finished | cancelled
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=40)]
+            [FhirElement("status", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Encounter.EncounterState> StatusElement
@@ -664,7 +239,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The time that the episode was in the specified status
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=50)]
+            [FhirElement("period", Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
@@ -677,7 +252,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as EncounterStatusHistoryComponent;
+                var dest = other as StatusHistoryComponent;
                 
                 if (dest != null)
                 {
@@ -692,12 +267,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new EncounterStatusHistoryComponent());
+                return CopyTo(new StatusHistoryComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as EncounterStatusHistoryComponent;
+                var otherT = other as StatusHistoryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -709,10 +284,458 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as EncounterStatusHistoryComponent;
+                var otherT = other as StatusHistoryComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("ParticipantComponent")]
+        [DataContract]
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ParticipantComponent"; } }
+            
+            /// <summary>
+            /// Role of participant in encounter
+            /// </summary>
+            [FhirElement("type", InSummary=true, Order=40)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> Type
+            {
+                get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _Type;
+            
+            /// <summary>
+            /// Period of time during the encounter participant was present
+            /// </summary>
+            [FhirElement("period", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _Period;
+            
+            /// <summary>
+            /// Persons involved in the encounter other than the patient
+            /// </summary>
+            [FhirElement("individual", InSummary=true, Order=60)]
+            [References("Practitioner","RelatedPerson")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Individual
+            {
+                get { return _Individual; }
+                set { _Individual = value; OnPropertyChanged("Individual"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Individual;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ParticipantComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                    if(Individual != null) dest.Individual = (Hl7.Fhir.Model.ResourceReference)Individual.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ParticipantComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ParticipantComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                if( !DeepComparable.Matches(Individual, otherT.Individual)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ParticipantComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                if( !DeepComparable.IsExactly(Individual, otherT.Individual)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("HospitalizationComponent")]
+        [DataContract]
+        public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "HospitalizationComponent"; } }
+            
+            /// <summary>
+            /// Pre-admission identifier
+            /// </summary>
+            [FhirElement("preAdmissionIdentifier", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.Identifier PreAdmissionIdentifier
+            {
+                get { return _PreAdmissionIdentifier; }
+                set { _PreAdmissionIdentifier = value; OnPropertyChanged("PreAdmissionIdentifier"); }
+            }
+            
+            private Hl7.Fhir.Model.Identifier _PreAdmissionIdentifier;
+            
+            /// <summary>
+            /// The location from which the patient came before admission
+            /// </summary>
+            [FhirElement("origin", Order=50)]
+            [References("Location")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Origin
+            {
+                get { return _Origin; }
+                set { _Origin = value; OnPropertyChanged("Origin"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Origin;
+            
+            /// <summary>
+            /// From where patient was admitted (physician referral, transfer)
+            /// </summary>
+            [FhirElement("admitSource", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept AdmitSource
+            {
+                get { return _AdmitSource; }
+                set { _AdmitSource = value; OnPropertyChanged("AdmitSource"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _AdmitSource;
+            
+            /// <summary>
+            /// The admitting diagnosis as reported by admitting practitioner
+            /// </summary>
+            [FhirElement("admittingDiagnosis", Order=70)]
+            [References("Condition")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> AdmittingDiagnosis
+            {
+                get { if(_AdmittingDiagnosis==null) _AdmittingDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(); return _AdmittingDiagnosis; }
+                set { _AdmittingDiagnosis = value; OnPropertyChanged("AdmittingDiagnosis"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _AdmittingDiagnosis;
+            
+            /// <summary>
+            /// The type of hospital re-admission that has occurred (if any). If the value is absent, then this is not identified as a readmission
+            /// </summary>
+            [FhirElement("reAdmission", Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept ReAdmission
+            {
+                get { return _ReAdmission; }
+                set { _ReAdmission = value; OnPropertyChanged("ReAdmission"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _ReAdmission;
+            
+            /// <summary>
+            /// Diet preferences reported by the patient
+            /// </summary>
+            [FhirElement("dietPreference", Order=90)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> DietPreference
+            {
+                get { if(_DietPreference==null) _DietPreference = new List<Hl7.Fhir.Model.CodeableConcept>(); return _DietPreference; }
+                set { _DietPreference = value; OnPropertyChanged("DietPreference"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _DietPreference;
+            
+            /// <summary>
+            /// Special courtesies (VIP, board member)
+            /// </summary>
+            [FhirElement("specialCourtesy", Order=100)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> SpecialCourtesy
+            {
+                get { if(_SpecialCourtesy==null) _SpecialCourtesy = new List<Hl7.Fhir.Model.CodeableConcept>(); return _SpecialCourtesy; }
+                set { _SpecialCourtesy = value; OnPropertyChanged("SpecialCourtesy"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _SpecialCourtesy;
+            
+            /// <summary>
+            /// Wheelchair, translator, stretcher, etc.
+            /// </summary>
+            [FhirElement("specialArrangement", Order=110)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> SpecialArrangement
+            {
+                get { if(_SpecialArrangement==null) _SpecialArrangement = new List<Hl7.Fhir.Model.CodeableConcept>(); return _SpecialArrangement; }
+                set { _SpecialArrangement = value; OnPropertyChanged("SpecialArrangement"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _SpecialArrangement;
+            
+            /// <summary>
+            /// Location to which the patient is discharged
+            /// </summary>
+            [FhirElement("destination", Order=120)]
+            [References("Location")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Destination
+            {
+                get { return _Destination; }
+                set { _Destination = value; OnPropertyChanged("Destination"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Destination;
+            
+            /// <summary>
+            /// Category or kind of location after discharge
+            /// </summary>
+            [FhirElement("dischargeDisposition", Order=130)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept DischargeDisposition
+            {
+                get { return _DischargeDisposition; }
+                set { _DischargeDisposition = value; OnPropertyChanged("DischargeDisposition"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _DischargeDisposition;
+            
+            /// <summary>
+            /// The final diagnosis given a patient before release from the hospital after all testing, surgery, and workup are complete
+            /// </summary>
+            [FhirElement("dischargeDiagnosis", Order=140)]
+            [References("Condition")]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ResourceReference> DischargeDiagnosis
+            {
+                get { if(_DischargeDiagnosis==null) _DischargeDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(); return _DischargeDiagnosis; }
+                set { _DischargeDiagnosis = value; OnPropertyChanged("DischargeDiagnosis"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ResourceReference> _DischargeDiagnosis;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as HospitalizationComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(PreAdmissionIdentifier != null) dest.PreAdmissionIdentifier = (Hl7.Fhir.Model.Identifier)PreAdmissionIdentifier.DeepCopy();
+                    if(Origin != null) dest.Origin = (Hl7.Fhir.Model.ResourceReference)Origin.DeepCopy();
+                    if(AdmitSource != null) dest.AdmitSource = (Hl7.Fhir.Model.CodeableConcept)AdmitSource.DeepCopy();
+                    if(AdmittingDiagnosis != null) dest.AdmittingDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(AdmittingDiagnosis.DeepCopy());
+                    if(ReAdmission != null) dest.ReAdmission = (Hl7.Fhir.Model.CodeableConcept)ReAdmission.DeepCopy();
+                    if(DietPreference != null) dest.DietPreference = new List<Hl7.Fhir.Model.CodeableConcept>(DietPreference.DeepCopy());
+                    if(SpecialCourtesy != null) dest.SpecialCourtesy = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialCourtesy.DeepCopy());
+                    if(SpecialArrangement != null) dest.SpecialArrangement = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialArrangement.DeepCopy());
+                    if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
+                    if(DischargeDisposition != null) dest.DischargeDisposition = (Hl7.Fhir.Model.CodeableConcept)DischargeDisposition.DeepCopy();
+                    if(DischargeDiagnosis != null) dest.DischargeDiagnosis = new List<Hl7.Fhir.Model.ResourceReference>(DischargeDiagnosis.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new HospitalizationComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as HospitalizationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(PreAdmissionIdentifier, otherT.PreAdmissionIdentifier)) return false;
+                if( !DeepComparable.Matches(Origin, otherT.Origin)) return false;
+                if( !DeepComparable.Matches(AdmitSource, otherT.AdmitSource)) return false;
+                if( !DeepComparable.Matches(AdmittingDiagnosis, otherT.AdmittingDiagnosis)) return false;
+                if( !DeepComparable.Matches(ReAdmission, otherT.ReAdmission)) return false;
+                if( !DeepComparable.Matches(DietPreference, otherT.DietPreference)) return false;
+                if( !DeepComparable.Matches(SpecialCourtesy, otherT.SpecialCourtesy)) return false;
+                if( !DeepComparable.Matches(SpecialArrangement, otherT.SpecialArrangement)) return false;
+                if( !DeepComparable.Matches(Destination, otherT.Destination)) return false;
+                if( !DeepComparable.Matches(DischargeDisposition, otherT.DischargeDisposition)) return false;
+                if( !DeepComparable.Matches(DischargeDiagnosis, otherT.DischargeDiagnosis)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as HospitalizationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(PreAdmissionIdentifier, otherT.PreAdmissionIdentifier)) return false;
+                if( !DeepComparable.IsExactly(Origin, otherT.Origin)) return false;
+                if( !DeepComparable.IsExactly(AdmitSource, otherT.AdmitSource)) return false;
+                if( !DeepComparable.IsExactly(AdmittingDiagnosis, otherT.AdmittingDiagnosis)) return false;
+                if( !DeepComparable.IsExactly(ReAdmission, otherT.ReAdmission)) return false;
+                if( !DeepComparable.IsExactly(DietPreference, otherT.DietPreference)) return false;
+                if( !DeepComparable.IsExactly(SpecialCourtesy, otherT.SpecialCourtesy)) return false;
+                if( !DeepComparable.IsExactly(SpecialArrangement, otherT.SpecialArrangement)) return false;
+                if( !DeepComparable.IsExactly(Destination, otherT.Destination)) return false;
+                if( !DeepComparable.IsExactly(DischargeDisposition, otherT.DischargeDisposition)) return false;
+                if( !DeepComparable.IsExactly(DischargeDiagnosis, otherT.DischargeDiagnosis)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("LocationComponent")]
+        [DataContract]
+        public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "LocationComponent"; } }
+            
+            /// <summary>
+            /// Location the encounter takes place
+            /// </summary>
+            [FhirElement("location", Order=40)]
+            [References("Location")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Location
+            {
+                get { return _Location; }
+                set { _Location = value; OnPropertyChanged("Location"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Location;
+            
+            /// <summary>
+            /// planned | active | reserved | completed
+            /// </summary>
+            [FhirElement("status", Order=50)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> StatusElement
+            {
+                get { return _StatusElement; }
+                set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> _StatusElement;
+            
+            /// <summary>
+            /// planned | active | reserved | completed
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.Encounter.EncounterLocationStatus? Status
+            {
+                get { return StatusElement != null ? StatusElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      StatusElement = null; 
+                    else
+                      StatusElement = new Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>(value);
+                    OnPropertyChanged("Status");
+                }
+            }
+            
+            /// <summary>
+            /// Time period during which the patient was present at the location
+            /// </summary>
+            [FhirElement("period", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _Period;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as LocationComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
+                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>)StatusElement.DeepCopy();
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new LocationComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as LocationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Location, otherT.Location)) return false;
+                if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as LocationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
                 if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 
@@ -775,13 +798,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("statusHistory", Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Encounter.EncounterStatusHistoryComponent> StatusHistory
+        public List<Hl7.Fhir.Model.Encounter.StatusHistoryComponent> StatusHistory
         {
-            get { if(_StatusHistory==null) _StatusHistory = new List<Hl7.Fhir.Model.Encounter.EncounterStatusHistoryComponent>(); return _StatusHistory; }
+            get { if(_StatusHistory==null) _StatusHistory = new List<Hl7.Fhir.Model.Encounter.StatusHistoryComponent>(); return _StatusHistory; }
             set { _StatusHistory = value; OnPropertyChanged("StatusHistory"); }
         }
         
-        private List<Hl7.Fhir.Model.Encounter.EncounterStatusHistoryComponent> _StatusHistory;
+        private List<Hl7.Fhir.Model.Encounter.StatusHistoryComponent> _StatusHistory;
         
         /// <summary>
         /// inpatient | outpatient | ambulatory | emergency +
@@ -892,13 +915,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("participant", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Encounter.EncounterParticipantComponent> Participant
+        public List<Hl7.Fhir.Model.Encounter.ParticipantComponent> Participant
         {
-            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.Encounter.EncounterParticipantComponent>(); return _Participant; }
+            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.Encounter.ParticipantComponent>(); return _Participant; }
             set { _Participant = value; OnPropertyChanged("Participant"); }
         }
         
-        private List<Hl7.Fhir.Model.Encounter.EncounterParticipantComponent> _Participant;
+        private List<Hl7.Fhir.Model.Encounter.ParticipantComponent> _Participant;
         
         /// <summary>
         /// The appointment that scheduled this encounter
@@ -974,13 +997,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("hospitalization", Order=240)]
         [DataMember]
-        public Hl7.Fhir.Model.Encounter.EncounterHospitalizationComponent Hospitalization
+        public Hl7.Fhir.Model.Encounter.HospitalizationComponent Hospitalization
         {
             get { return _Hospitalization; }
             set { _Hospitalization = value; OnPropertyChanged("Hospitalization"); }
         }
         
-        private Hl7.Fhir.Model.Encounter.EncounterHospitalizationComponent _Hospitalization;
+        private Hl7.Fhir.Model.Encounter.HospitalizationComponent _Hospitalization;
         
         /// <summary>
         /// List of locations where the patient has been
@@ -988,13 +1011,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("location", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Encounter.EncounterLocationComponent> Location
+        public List<Hl7.Fhir.Model.Encounter.LocationComponent> Location
         {
-            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.Encounter.EncounterLocationComponent>(); return _Location; }
+            get { if(_Location==null) _Location = new List<Hl7.Fhir.Model.Encounter.LocationComponent>(); return _Location; }
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         
-        private List<Hl7.Fhir.Model.Encounter.EncounterLocationComponent> _Location;
+        private List<Hl7.Fhir.Model.Encounter.LocationComponent> _Location;
         
         /// <summary>
         /// The custodian organization of this Encounter record
@@ -1033,21 +1056,21 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterState>)StatusElement.DeepCopy();
-                if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.Encounter.EncounterStatusHistoryComponent>(StatusHistory.DeepCopy());
+                if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.Encounter.StatusHistoryComponent>(StatusHistory.DeepCopy());
                 if(ClassElement != null) dest.ClassElement = (Code<Hl7.Fhir.Model.Encounter.EncounterClass>)ClassElement.DeepCopy();
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(EpisodeOfCare != null) dest.EpisodeOfCare = new List<Hl7.Fhir.Model.ResourceReference>(EpisodeOfCare.DeepCopy());
                 if(IncomingReferral != null) dest.IncomingReferral = new List<Hl7.Fhir.Model.ResourceReference>(IncomingReferral.DeepCopy());
-                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Encounter.EncounterParticipantComponent>(Participant.DeepCopy());
+                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Encounter.ParticipantComponent>(Participant.DeepCopy());
                 if(Appointment != null) dest.Appointment = (Hl7.Fhir.Model.ResourceReference)Appointment.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Length != null) dest.Length = (Hl7.Fhir.Model.Duration)Length.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.ResourceReference>(Indication.DeepCopy());
-                if(Hospitalization != null) dest.Hospitalization = (Hl7.Fhir.Model.Encounter.EncounterHospitalizationComponent)Hospitalization.DeepCopy();
-                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.Encounter.EncounterLocationComponent>(Location.DeepCopy());
+                if(Hospitalization != null) dest.Hospitalization = (Hl7.Fhir.Model.Encounter.HospitalizationComponent)Hospitalization.DeepCopy();
+                if(Location != null) dest.Location = new List<Hl7.Fhir.Model.Encounter.LocationComponent>(Location.DeepCopy());
                 if(ServiceProvider != null) dest.ServiceProvider = (Hl7.Fhir.Model.ResourceReference)ServiceProvider.DeepCopy();
                 if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
                 return dest;

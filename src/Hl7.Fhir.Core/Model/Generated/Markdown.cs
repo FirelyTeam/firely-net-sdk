@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,13 +37,10 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Typed element containing the primitive markdown
-    /// </summary>
     [FhirType("markdown")]
     [DataContract]
     public partial class Markdown : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged
@@ -50,16 +48,13 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "markdown"; } }
         
-        // Must conform to the pattern ""
-        public const string PATTERN = @"";
-        
-        public Markdown(string value)
-        {
-            Value = value; 
-        }
-        
-        public Markdown(): this((string)null) {}
-        
+		public Markdown(string value)
+		{
+			Value = value;
+		}
+
+		public Markdown(): this((string)null) {}
+
         /// <summary>
         /// Primitive value of the element
         /// </summary>

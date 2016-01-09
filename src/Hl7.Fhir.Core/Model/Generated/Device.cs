@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,27 +55,31 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The availability status of the device.
+        /// (url: http://hl7.org/fhir/ValueSet/devicestatus)
         /// </summary>
         [FhirEnumeration("DeviceStatus")]
         public enum DeviceStatus
         {
             /// <summary>
             /// The Device is available for use.
+            /// (system: http://hl7.org/fhir/devicestatus)
             /// </summary>
-            [EnumLiteral("available")]
+            [EnumLiteral("available"), Description("Available")]
             Available,
             /// <summary>
             /// The Device is no longer available for use (e.g. lost, expired, damaged).
+            /// (system: http://hl7.org/fhir/devicestatus)
             /// </summary>
-            [EnumLiteral("not-available")]
+            [EnumLiteral("not-available"), Description("Not Available")]
             NotAvailable,
             /// <summary>
             /// The Device was entered in error and voided.
+            /// (system: http://hl7.org/fhir/devicestatus)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
             EnteredInError,
         }
-        
+
         /// <summary>
         /// Instance id from manufacturer, owner, and others
         /// </summary>

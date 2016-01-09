@@ -37,16 +37,16 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private Bundle.BundleEntryComponent newEntry(Bundle.HTTPVerb method)
+        private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method)
         {
-            var newEntry = new Bundle.BundleEntryComponent();
-            newEntry.Request = new Bundle.BundleEntryRequestComponent();
+            var newEntry = new Bundle.EntryComponent();
+            newEntry.Request = new Bundle.RequestComponent();
             newEntry.Request.Method = method;
 
             return newEntry;
         }
 
-        private void addEntry(Bundle.BundleEntryComponent newEntry, RestUrl path)
+        private void addEntry(Bundle.EntryComponent newEntry, RestUrl path)
         {
             newEntry.Request.Url = path.Uri.ToString();
             _result.Entry.Add(newEntry);
@@ -173,28 +173,30 @@ namespace Hl7.Fhir.Rest
         }
 
         
-        public TransactionBuilder Conformance()
+        public TransactionBuilder Conformance(SummaryType? summary)
         {
             var entry =  newEntry(Bundle.HTTPVerb.GET);
             var path = newRestUrl().AddPath(METADATA);
+            if (summary.HasValue)
+                path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summary.Value.ToString().ToLower());
             addEntry(entry, path);
 
             return this;
         }
 
 
-        private void addHistoryEntry(RestUrl path, bool? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
+        private void addHistoryEntry(RestUrl path, SummaryType? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.GET);
 
-            if(summaryOnly.HasValue) path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, PrimitiveTypeConverter.ConvertTo<string>(summaryOnly.Value));
+            if(summaryOnly.HasValue) path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summaryOnly.Value.ToString().ToLower());
             if(pageSize.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_COUNT, pageSize.Value.ToString());
             if(since.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since.Value));
 
             addEntry(entry, path);
         }
 
-        public TransactionBuilder ResourceHistory(string resourceType, string id, bool? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
+        public TransactionBuilder ResourceHistory(string resourceType, string id, SummaryType? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
         {
             var path = newRestUrl().AddPath(resourceType, id, HISTORY);
             addHistoryEntry(path, summaryOnly, pageSize, since);
@@ -203,7 +205,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public TransactionBuilder CollectionHistory(string resourceType, bool? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
+        public TransactionBuilder CollectionHistory(string resourceType, SummaryType? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
         {            
             var path = newRestUrl().AddPath(resourceType, HISTORY);
             addHistoryEntry(path,summaryOnly, pageSize, since);
@@ -212,7 +214,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public TransactionBuilder ServerHistory(bool? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
+        public TransactionBuilder ServerHistory(SummaryType? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
         {
             var path = newRestUrl().AddPath(HISTORY);
             addHistoryEntry(path, summaryOnly, pageSize, since);
@@ -220,9 +222,9 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters)
+        public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters, bool useGet = false)
         {
-            var entry = newEntry(Bundle.HTTPVerb.POST);
+            var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST);
             entry.Resource = parameters;
             var path = new RestUrl(endpoint);
             addEntry(entry, path);
@@ -230,32 +232,32 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        public TransactionBuilder EndpointOperation(RestUrl endpoint, string name, Parameters parameters)
+        public TransactionBuilder EndpointOperation(RestUrl endpoint, string name, Parameters parameters, bool useGet = false)
         {          
             var path = new RestUrl(endpoint).AddPath(OPERATIONPREFIX + name);
 
-            return EndpointOperation(path, parameters);
+            return EndpointOperation(path, parameters, useGet);
         }
 
-        public TransactionBuilder ServerOperation(string name, Parameters parameters)
+        public TransactionBuilder ServerOperation(string name, Parameters parameters, bool useGet = false)
         {
             var path = newRestUrl().AddPath(OPERATIONPREFIX + name);
-            return EndpointOperation(path, parameters);
+            return EndpointOperation(path, parameters, useGet);
         }
 
-        public TransactionBuilder TypeOperation(string resourceType, string name, Parameters parameters)
+        public TransactionBuilder TypeOperation(string resourceType, string name, Parameters parameters, bool useGet = false)
         {
             var path = newRestUrl().AddPath(resourceType, OPERATIONPREFIX + name);
-            return EndpointOperation(path,parameters);
+            return EndpointOperation(path,parameters, useGet);
         }
 
-        public TransactionBuilder ResourceOperation(string resourceType, string id, string vid, string name, Parameters parameters)
+        public TransactionBuilder ResourceOperation(string resourceType, string id, string vid, string name, Parameters parameters, bool useGet = false)
         {
             var path = newRestUrl().AddPath(resourceType, id);
-            if(vid != null) path.AddPath(resourceType, vid);
+            if(vid != null) path.AddPath(HISTORY, vid);
             path.AddPath(OPERATIONPREFIX + name);
 
-            return EndpointOperation(path, parameters);
+            return EndpointOperation(path, parameters, useGet);
         }
 
 

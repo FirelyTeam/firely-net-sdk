@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,57 +54,65 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "VisionPrescription"; } }
         
         /// <summary>
-        /// A coded concept listing the base codes.
-        /// </summary>
-        [FhirEnumeration("VisionBase")]
-        public enum VisionBase
-        {
-            /// <summary>
-            /// top
-            /// </summary>
-            [EnumLiteral("up")]
-            Up,
-            /// <summary>
-            /// bottom
-            /// </summary>
-            [EnumLiteral("down")]
-            Down,
-            /// <summary>
-            /// inner edge
-            /// </summary>
-            [EnumLiteral("in")]
-            In,
-            /// <summary>
-            /// outer edge
-            /// </summary>
-            [EnumLiteral("out")]
-            Out,
-        }
-        
-        /// <summary>
         /// A coded concept listing the eye codes.
+        /// (url: http://hl7.org/fhir/ValueSet/vision-eye-codes)
         /// </summary>
         [FhirEnumeration("VisionEyes")]
         public enum VisionEyes
         {
             /// <summary>
             /// Right Eye
+            /// (system: http://hl7.org/fhir/vision-eye-codes)
             /// </summary>
-            [EnumLiteral("right")]
+            [EnumLiteral("right"), Description("Right Eye")]
             Right,
             /// <summary>
             /// Left Eye
+            /// (system: http://hl7.org/fhir/vision-eye-codes)
             /// </summary>
-            [EnumLiteral("left")]
+            [EnumLiteral("left"), Description("Left Eye")]
             Left,
         }
-        
-        [FhirType("VisionPrescriptionDispenseComponent")]
+
+        /// <summary>
+        /// A coded concept listing the base codes.
+        /// (url: http://hl7.org/fhir/ValueSet/vision-base-codes)
+        /// </summary>
+        [FhirEnumeration("VisionBase")]
+        public enum VisionBase
+        {
+            /// <summary>
+            /// top
+            /// (system: http://hl7.org/fhir/vision-base-codes)
+            /// </summary>
+            [EnumLiteral("up"), Description("Up")]
+            Up,
+            /// <summary>
+            /// bottom
+            /// (system: http://hl7.org/fhir/vision-base-codes)
+            /// </summary>
+            [EnumLiteral("down"), Description("Down")]
+            Down,
+            /// <summary>
+            /// inner edge
+            /// (system: http://hl7.org/fhir/vision-base-codes)
+            /// </summary>
+            [EnumLiteral("in"), Description("In")]
+            In,
+            /// <summary>
+            /// outer edge
+            /// (system: http://hl7.org/fhir/vision-base-codes)
+            /// </summary>
+            [EnumLiteral("out"), Description("Out")]
+            Out,
+        }
+
+        [FhirType("DispenseComponent")]
         [DataContract]
-        public partial class VisionPrescriptionDispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DispenseComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "VisionPrescriptionDispenseComponent"; } }
+            public override string TypeName { get { return "DispenseComponent"; } }
             
             /// <summary>
             /// Product to be supplied
@@ -550,7 +559,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as VisionPrescriptionDispenseComponent;
+                var dest = other as DispenseComponent;
                 
                 if (dest != null)
                 {
@@ -578,12 +587,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new VisionPrescriptionDispenseComponent());
+                return CopyTo(new DispenseComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as VisionPrescriptionDispenseComponent;
+                var otherT = other as DispenseComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -608,7 +617,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as VisionPrescriptionDispenseComponent;
+                var otherT = other as DispenseComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -637,7 +646,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -651,7 +660,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When prescription was authorized
         /// </summary>
-        [FhirElement("dateWritten", Order=100)]
+        [FhirElement("dateWritten", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateWrittenElement
         {
@@ -683,7 +692,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who prescription is for
         /// </summary>
-        [FhirElement("patient", Order=110)]
+        [FhirElement("patient", InSummary=true, Order=110)]
         [References("Patient")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
@@ -697,7 +706,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who authorizes the vision product
         /// </summary>
-        [FhirElement("prescriber", Order=120)]
+        [FhirElement("prescriber", InSummary=true, Order=120)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Prescriber
@@ -711,7 +720,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Created during encounter / admission / stay
         /// </summary>
-        [FhirElement("encounter", Order=130)]
+        [FhirElement("encounter", InSummary=true, Order=130)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -725,7 +734,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason or indication for writing the prescription
         /// </summary>
-        [FhirElement("reason", Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Reason
@@ -739,16 +748,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vision supply authorization
         /// </summary>
-        [FhirElement("dispense", Order=150)]
+        [FhirElement("dispense", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.VisionPrescription.VisionPrescriptionDispenseComponent> Dispense
+        public List<Hl7.Fhir.Model.VisionPrescription.DispenseComponent> Dispense
         {
-            get { if(_Dispense==null) _Dispense = new List<Hl7.Fhir.Model.VisionPrescription.VisionPrescriptionDispenseComponent>(); return _Dispense; }
+            get { if(_Dispense==null) _Dispense = new List<Hl7.Fhir.Model.VisionPrescription.DispenseComponent>(); return _Dispense; }
             set { _Dispense = value; OnPropertyChanged("Dispense"); }
         }
         
-        private List<Hl7.Fhir.Model.VisionPrescription.VisionPrescriptionDispenseComponent> _Dispense;
+        private List<Hl7.Fhir.Model.VisionPrescription.DispenseComponent> _Dispense;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -763,7 +772,7 @@ namespace Hl7.Fhir.Model
                 if(Prescriber != null) dest.Prescriber = (Hl7.Fhir.Model.ResourceReference)Prescriber.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
-                if(Dispense != null) dest.Dispense = new List<Hl7.Fhir.Model.VisionPrescription.VisionPrescriptionDispenseComponent>(Dispense.DeepCopy());
+                if(Dispense != null) dest.Dispense = new List<Hl7.Fhir.Model.VisionPrescription.DispenseComponent>(Dispense.DeepCopy());
                 return dest;
             }
             else

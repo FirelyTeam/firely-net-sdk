@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Specification.Tests
             var dest = createTestNav();
 
             var struc = new StructureDefinition();
-            struc.Snapshot = new StructureDefinition.StructureDefinitionSnapshotComponent();
+            struc.Snapshot = new StructureDefinition.SnapshotComponent();
             struc.Snapshot.Element = new List<ElementDefinition>();
             var e = struc.Snapshot.Element;
 
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Specification.Tests
         private static StructureDefinition createTestStructure()
         {
             var struc = new StructureDefinition();
-            struc.Snapshot = new StructureDefinition.StructureDefinitionSnapshotComponent();
+            struc.Snapshot = new StructureDefinition.SnapshotComponent();
             struc.Snapshot.Element = new List<ElementDefinition>();
             var e = struc.Snapshot.Element;
 

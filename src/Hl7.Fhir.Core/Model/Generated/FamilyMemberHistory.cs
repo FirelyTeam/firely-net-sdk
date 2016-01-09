@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,43 +55,48 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// A code that identifies the status of the family history record.
+        /// (url: http://hl7.org/fhir/ValueSet/history-status)
         /// </summary>
         [FhirEnumeration("FamilyHistoryStatus")]
         public enum FamilyHistoryStatus
         {
             /// <summary>
             /// Some health information is known and captured, but not complete - see notes for details.
+            /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("partial")]
+            [EnumLiteral("partial"), Description("Partial")]
             Partial,
             /// <summary>
             /// All relevant health information is known and captured.
+            /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
             /// This instance should not have been part of this patient's medical record.
+            /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered in error")]
             EnteredInError,
             /// <summary>
             /// Health information for this individual is unavailable/unknown.
+            /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
-            [EnumLiteral("health-unknown")]
+            [EnumLiteral("health-unknown"), Description("Health unknown")]
             HealthUnknown,
         }
-        
-        [FhirType("FamilyMemberHistoryConditionComponent")]
+
+        [FhirType("ConditionComponent")]
         [DataContract]
-        public partial class FamilyMemberHistoryConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "FamilyMemberHistoryConditionComponent"; } }
+            public override string TypeName { get { return "ConditionComponent"; } }
             
             /// <summary>
             /// Condition suffered by relation
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -104,7 +110,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// deceased | permanent disability | etc.
             /// </summary>
-            [FhirElement("outcome", InSummary=true, Order=50)]
+            [FhirElement("outcome", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Outcome
             {
@@ -117,7 +123,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When condition first manifested
             /// </summary>
-            [FhirElement("onset", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("onset", Order=60, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Onset
@@ -131,7 +137,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Extra information about condition
             /// </summary>
-            [FhirElement("note", InSummary=true, Order=70)]
+            [FhirElement("note", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Annotation Note
             {
@@ -143,7 +149,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as FamilyMemberHistoryConditionComponent;
+                var dest = other as ConditionComponent;
                 
                 if (dest != null)
                 {
@@ -160,12 +166,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new FamilyMemberHistoryConditionComponent());
+                return CopyTo(new ConditionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as FamilyMemberHistoryConditionComponent;
+                var otherT = other as ConditionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -179,7 +185,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as FamilyMemberHistoryConditionComponent;
+                var otherT = other as ConditionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -427,13 +433,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("condition", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FamilyMemberHistory.FamilyMemberHistoryConditionComponent> Condition
+        public List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> Condition
         {
-            get { if(_Condition==null) _Condition = new List<Hl7.Fhir.Model.FamilyMemberHistory.FamilyMemberHistoryConditionComponent>(); return _Condition; }
+            get { if(_Condition==null) _Condition = new List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent>(); return _Condition; }
             set { _Condition = value; OnPropertyChanged("Condition"); }
         }
         
-        private List<Hl7.Fhir.Model.FamilyMemberHistory.FamilyMemberHistoryConditionComponent> _Condition;
+        private List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> _Condition;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -453,7 +459,7 @@ namespace Hl7.Fhir.Model
                 if(Age != null) dest.Age = (Hl7.Fhir.Model.Element)Age.DeepCopy();
                 if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.Element)Deceased.DeepCopy();
                 if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
-                if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.FamilyMemberHistory.FamilyMemberHistoryConditionComponent>(Condition.DeepCopy());
+                if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent>(Condition.DeepCopy());
                 return dest;
             }
             else

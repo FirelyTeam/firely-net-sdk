@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -50,27 +51,9 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Account"; } }
         
         /// <summary>
-        /// Indicates whether the account is available to be used.
-        /// </summary>
-        [FhirEnumeration("AccountStatus")]
-        public enum AccountStatus
-        {
-            /// <summary>
-            /// This account is active and may be used.
-            /// </summary>
-            [EnumLiteral("active")]
-            Active,
-            /// <summary>
-            /// This account is inactive and should not be used to track financial information.
-            /// </summary>
-            [EnumLiteral("inactive")]
-            Inactive,
-        }
-        
-        /// <summary>
         /// Account number
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -84,7 +67,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Human-readable label
         /// </summary>
-        [FhirElement("name", Order=100)]
+        [FhirElement("name", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -116,7 +99,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// E.g. patient, expense, depreciation
         /// </summary>
-        [FhirElement("type", Order=110)]
+        [FhirElement("type", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -129,15 +112,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// active | inactive
         /// </summary>
-        [FhirElement("status", Order=120)]
+        [FhirElement("status", InSummary=true, Order=120)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Account.AccountStatus> StatusElement
+        public Hl7.Fhir.Model.Code StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Account.AccountStatus> _StatusElement;
+        private Hl7.Fhir.Model.Code _StatusElement;
         
         /// <summary>
         /// active | inactive
@@ -145,7 +128,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Account.AccountStatus? Status
+        public string Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -153,7 +136,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.Account.AccountStatus>(value);
+                  StatusElement = new Hl7.Fhir.Model.Code(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -161,7 +144,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Valid from..to
         /// </summary>
-        [FhirElement("activePeriod", Order=130)]
+        [FhirElement("activePeriod", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Period ActivePeriod
         {
@@ -174,7 +157,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Base currency in which balance is tracked
         /// </summary>
-        [FhirElement("currency", Order=140)]
+        [FhirElement("currency", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Currency
         {
@@ -187,7 +170,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How much is in account?
         /// </summary>
-        [FhirElement("balance", Order=150)]
+        [FhirElement("balance", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Money Balance
         {
@@ -200,7 +183,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Transaction window
         /// </summary>
-        [FhirElement("coveragePeriod", Order=160)]
+        [FhirElement("coveragePeriod", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Period CoveragePeriod
         {
@@ -213,7 +196,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What is account tied to?
         /// </summary>
-        [FhirElement("subject", Order=170)]
+        [FhirElement("subject", InSummary=true, Order=170)]
         [References("Patient","Device","Practitioner","Location","HealthcareService","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -227,7 +210,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is responsible?
         /// </summary>
-        [FhirElement("owner", Order=180)]
+        [FhirElement("owner", InSummary=true, Order=180)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Owner
@@ -241,7 +224,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Explanation of purpose/use
         /// </summary>
-        [FhirElement("description", Order=190)]
+        [FhirElement("description", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -280,7 +263,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Account.AccountStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.Code)StatusElement.DeepCopy();
                 if(ActivePeriod != null) dest.ActivePeriod = (Hl7.Fhir.Model.Period)ActivePeriod.DeepCopy();
                 if(Currency != null) dest.Currency = (Hl7.Fhir.Model.Coding)Currency.DeepCopy();
                 if(Balance != null) dest.Balance = (Hl7.Fhir.Model.Money)Balance.DeepCopy();

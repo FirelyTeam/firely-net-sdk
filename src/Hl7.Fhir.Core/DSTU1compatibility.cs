@@ -14,8 +14,35 @@ namespace Hl7.Fhir.Model
     {
     }
 
-    [Obsolete("The ResourceEntry class has been made obsolete, please change to the class Bundle.BundleEntryComponent instead", true)]
-    public class ResourceEntry<T> : Bundle.BundleEntryComponent where T : Resource
+    [Obsolete("The ResourceEntry class has been made obsolete, please change to the class Bundle.EntryComponent instead", true)]
+    public class ResourceEntry : Bundle.EntryComponent
     {
+    }
+
+
+    [Obsolete("The ResourceEntry class has been made obsolete, please change to the class Bundle.EntryComponent instead", true)]
+    public class ResourceEntry<T> : Bundle.EntryComponent where T : Resource
+    {
+        public new T Resource { get; set; }
+    }
+
+    [Obsolete("The 'Alert' resource was renamed to 'Flag' in DSTU2", true)]
+    public partial class Alert : Flag
+    {
+    }
+
+    public partial class Flag
+    {
+        [Obsolete("This property was renamed to 'Code' in DSTU2, and re-typed from string to CodeableConcept. When using un-coded values, just populate the text property of the codeableconcept", true)]
+        public CodeableConcept Note { get; set; }
+    }
+
+    public partial class Observation
+    {
+        [Obsolete("This property was renamed to 'Code' in DSTU2", true)]
+        public CodeableConcept Name { get; set; }
+
+        [Obsolete("This property was renamed to 'Effective' in DSTU2", true)]
+        public FhirDateTime Applies { get; set; }
     }
 }

@@ -66,10 +66,6 @@ namespace Hl7.Fhir.Model
                 return result;
             }
         }
-
-        [NotMapped]
-        [Obsolete("The Zip element of the ContactPoint datatype (formerly Contact) has been renamed to PostalCode, please rename this property to this for compatibility", true)]
-        public string Zip { get; set; }
     }
     
 }

@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,105 +54,122 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Appointment"; } }
         
         /// <summary>
-        /// Is the Participant required to attend the appointment.
-        /// </summary>
-        [FhirEnumeration("ParticipantRequired")]
-        public enum ParticipantRequired
-        {
-            /// <summary>
-            /// The participant is required to attend the appointment.
-            /// </summary>
-            [EnumLiteral("required")]
-            Required,
-            /// <summary>
-            /// The participant may optionally attend the appointment.
-            /// </summary>
-            [EnumLiteral("optional")]
-            Optional,
-            /// <summary>
-            /// The participant is excluded from the appointment, and may not be informed of the appointment taking place. (Appointment is about them, not for them - such as 2 doctors discussing results about a patient's test).
-            /// </summary>
-            [EnumLiteral("information-only")]
-            InformationOnly,
-        }
-        
-        /// <summary>
         /// The free/busy status of an appointment.
+        /// (url: http://hl7.org/fhir/ValueSet/appointmentstatus)
         /// </summary>
         [FhirEnumeration("AppointmentStatus")]
         public enum AppointmentStatus
         {
             /// <summary>
             /// None of the participant(s) have finalized their acceptance of the appointment request, and the start/end time may not be set yet.
+            /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("proposed")]
+            [EnumLiteral("proposed"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// Some or all of the participant(s) have not finalized their acceptance of the appointment request.
+            /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("pending")]
+            [EnumLiteral("pending"), Description("Pending")]
             Pending,
             /// <summary>
             /// All participant(s) have been considered and the appointment is confirmed to go ahead at the date/times specified.
+            /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("booked")]
+            [EnumLiteral("booked"), Description("Booked")]
             Booked,
             /// <summary>
             /// Some of the patients have arrived.
+            /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("arrived")]
+            [EnumLiteral("arrived"), Description("Arrived")]
             Arrived,
             /// <summary>
             /// This appointment has completed and may have resulted in an encounter.
+            /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("fulfilled")]
+            [EnumLiteral("fulfilled"), Description("Fulfilled")]
             Fulfilled,
             /// <summary>
             /// The appointment has been cancelled.
+            /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("cancelled")]
+            [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// Some or all of the participant(s) have not/did not appear for the appointment (usually the patient).
+            /// (system: http://hl7.org/fhir/appointmentstatus)
             /// </summary>
-            [EnumLiteral("noshow")]
+            [EnumLiteral("noshow"), Description("No Show")]
             Noshow,
         }
-        
+
+        /// <summary>
+        /// Is the Participant required to attend the appointment.
+        /// (url: http://hl7.org/fhir/ValueSet/participantrequired)
+        /// </summary>
+        [FhirEnumeration("ParticipantRequired")]
+        public enum ParticipantRequired
+        {
+            /// <summary>
+            /// The participant is required to attend the appointment.
+            /// (system: http://hl7.org/fhir/participantrequired)
+            /// </summary>
+            [EnumLiteral("required"), Description("Required")]
+            Required,
+            /// <summary>
+            /// The participant may optionally attend the appointment.
+            /// (system: http://hl7.org/fhir/participantrequired)
+            /// </summary>
+            [EnumLiteral("optional"), Description("Optional")]
+            Optional,
+            /// <summary>
+            /// The participant is excluded from the appointment, and may not be informed of the appointment taking place. (Appointment is about them, not for them - such as 2 doctors discussing results about a patient's test).
+            /// (system: http://hl7.org/fhir/participantrequired)
+            /// </summary>
+            [EnumLiteral("information-only"), Description("Information Only")]
+            InformationOnly,
+        }
+
         /// <summary>
         /// The Participation status of an appointment.
+        /// (url: http://hl7.org/fhir/ValueSet/participationstatus)
         /// </summary>
         [FhirEnumeration("ParticipationStatus")]
         public enum ParticipationStatus
         {
             /// <summary>
             /// The participant has accepted the appointment.
+            /// (system: http://hl7.org/fhir/participationstatus)
             /// </summary>
-            [EnumLiteral("accepted")]
+            [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// The participant has declined the appointment and will not participate in the appointment.
+            /// (system: http://hl7.org/fhir/participationstatus)
             /// </summary>
-            [EnumLiteral("declined")]
+            [EnumLiteral("declined"), Description("Declined")]
             Declined,
             /// <summary>
             /// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur.
+            /// (system: http://hl7.org/fhir/participationstatus)
             /// </summary>
-            [EnumLiteral("tentative")]
+            [EnumLiteral("tentative"), Description("Tentative")]
             Tentative,
             /// <summary>
             /// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses.
+            /// (system: http://hl7.org/fhir/participationstatus)
             /// </summary>
-            [EnumLiteral("needs-action")]
+            [EnumLiteral("needs-action"), Description("Needs Action")]
             NeedsAction,
         }
-        
-        [FhirType("AppointmentParticipantComponent")]
+
+        [FhirType("ParticipantComponent")]
         [DataContract]
-        public partial class AppointmentParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "AppointmentParticipantComponent"; } }
+            public override string TypeName { get { return "ParticipantComponent"; } }
             
             /// <summary>
             /// Role of participant in the appointment
@@ -216,7 +234,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// accepted | declined | tentative | needs-action
             /// </summary>
-            [FhirElement("status", InSummary=true, Order=70)]
+            [FhirElement("status", Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Appointment.ParticipationStatus> StatusElement
@@ -248,7 +266,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as AppointmentParticipantComponent;
+                var dest = other as ParticipantComponent;
                 
                 if (dest != null)
                 {
@@ -265,12 +283,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new AppointmentParticipantComponent());
+                return CopyTo(new ParticipantComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as AppointmentParticipantComponent;
+                var otherT = other as ParticipantComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -284,7 +302,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as AppointmentParticipantComponent;
+                var otherT = other as ParticipantComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -585,13 +603,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("participant", Order=200)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent> Participant
+        public List<Hl7.Fhir.Model.Appointment.ParticipantComponent> Participant
         {
-            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent>(); return _Participant; }
+            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(); return _Participant; }
             set { _Participant = value; OnPropertyChanged("Participant"); }
         }
         
-        private List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent> _Participant;
+        private List<Hl7.Fhir.Model.Appointment.ParticipantComponent> _Participant;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -611,7 +629,7 @@ namespace Hl7.Fhir.Model
                 if(MinutesDurationElement != null) dest.MinutesDurationElement = (Hl7.Fhir.Model.PositiveInt)MinutesDurationElement.DeepCopy();
                 if(Slot != null) dest.Slot = new List<Hl7.Fhir.Model.ResourceReference>(Slot.DeepCopy());
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Appointment.AppointmentParticipantComponent>(Participant.DeepCopy());
+                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Appointment.ParticipantComponent>(Participant.DeepCopy());
                 return dest;
             }
             else

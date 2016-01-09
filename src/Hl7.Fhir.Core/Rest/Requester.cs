@@ -44,14 +44,14 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public Bundle.BundleEntryComponent LastResult { get; private set; }
+        public Bundle.EntryComponent LastResult { get; private set; }
         public HttpWebResponse LastResponse { get; private set; }
         public HttpWebRequest LastRequest { get; private set; }
         public Action<HttpWebRequest, byte[]> BeforeRequest { get; set; }
         public Action<HttpWebResponse, byte[]> AfterResponse { get; set; }
 
 
-        public Bundle.BundleEntryComponent Execute(Bundle.BundleEntryComponent interaction)
+        public Bundle.EntryComponent Execute(Bundle.EntryComponent interaction)
         {
             if (interaction == null) throw Error.ArgumentNull("interaction");
 
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private Bundle.BundleEntryComponent doRequest(Bundle.BundleEntryComponent interaction)
+        private Bundle.EntryComponent doRequest(Bundle.EntryComponent interaction)
         {
             byte[] outBody;
             var request = interaction.ToHttpRequest(Prefer, PreferredFormat, UseFormatParameter, out outBody);

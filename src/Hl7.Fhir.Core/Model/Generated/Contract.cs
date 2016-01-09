@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,306 +53,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Contract"; } }
         
-        [FhirType("ComputableLanguageComponent")]
-        [DataContract]
-        public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ComputableLanguageComponent"; } }
-            
-            /// <summary>
-            /// Computable Contract Rules
-            /// </summary>
-            [FhirElement("content", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Content
-            {
-                get { return _Content; }
-                set { _Content = value; OnPropertyChanged("Content"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Content;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ComputableLanguageComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Content != null) dest.Content = (Hl7.Fhir.Model.Element)Content.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ComputableLanguageComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ComputableLanguageComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Content, otherT.Content)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ComputableLanguageComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("TermValuedItemComponent")]
-        [DataContract]
-        public partial class TermValuedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "TermValuedItemComponent"; } }
-            
-            /// <summary>
-            /// Contract Term Valued Item Type
-            /// </summary>
-            [FhirElement("entity", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Entity
-            {
-                get { return _Entity; }
-                set { _Entity = value; OnPropertyChanged("Entity"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Entity;
-            
-            /// <summary>
-            /// Contract Term Valued Item Identifier
-            /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Identifier Identifier
-            {
-                get { return _Identifier; }
-                set { _Identifier = value; OnPropertyChanged("Identifier"); }
-            }
-            
-            private Hl7.Fhir.Model.Identifier _Identifier;
-            
-            /// <summary>
-            /// Contract Term Valued Item Effective Tiem
-            /// </summary>
-            [FhirElement("effectiveTime", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirDateTime EffectiveTimeElement
-            {
-                get { return _EffectiveTimeElement; }
-                set { _EffectiveTimeElement = value; OnPropertyChanged("EffectiveTimeElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirDateTime _EffectiveTimeElement;
-            
-            /// <summary>
-            /// Contract Term Valued Item Effective Tiem
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string EffectiveTime
-            {
-                get { return EffectiveTimeElement != null ? EffectiveTimeElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      EffectiveTimeElement = null; 
-                    else
-                      EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                    OnPropertyChanged("EffectiveTime");
-                }
-            }
-            
-            /// <summary>
-            /// Contract Term Valued Item Count
-            /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.SimpleQuantity Quantity
-            {
-                get { return _Quantity; }
-                set { _Quantity = value; OnPropertyChanged("Quantity"); }
-            }
-            
-            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
-            
-            /// <summary>
-            /// Contract Term Valued Item fee, charge, or cost
-            /// </summary>
-            [FhirElement("unitPrice", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.Money UnitPrice
-            {
-                get { return _UnitPrice; }
-                set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
-            }
-            
-            private Hl7.Fhir.Model.Money _UnitPrice;
-            
-            /// <summary>
-            /// Contract Term Valued Item Price Scaling Factor
-            /// </summary>
-            [FhirElement("factor", InSummary=true, Order=90)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirDecimal FactorElement
-            {
-                get { return _FactorElement; }
-                set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirDecimal _FactorElement;
-            
-            /// <summary>
-            /// Contract Term Valued Item Price Scaling Factor
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public decimal? Factor
-            {
-                get { return FactorElement != null ? FactorElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      FactorElement = null; 
-                    else
-                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
-                    OnPropertyChanged("Factor");
-                }
-            }
-            
-            /// <summary>
-            /// Contract Term Valued Item Difficulty Scaling Factor
-            /// </summary>
-            [FhirElement("points", InSummary=true, Order=100)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirDecimal PointsElement
-            {
-                get { return _PointsElement; }
-                set { _PointsElement = value; OnPropertyChanged("PointsElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirDecimal _PointsElement;
-            
-            /// <summary>
-            /// Contract Term Valued Item Difficulty Scaling Factor
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public decimal? Points
-            {
-                get { return PointsElement != null ? PointsElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      PointsElement = null; 
-                    else
-                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
-                    OnPropertyChanged("Points");
-                }
-            }
-            
-            /// <summary>
-            /// Total Contract Term Valued Item Value
-            /// </summary>
-            [FhirElement("net", InSummary=true, Order=110)]
-            [DataMember]
-            public Hl7.Fhir.Model.Money Net
-            {
-                get { return _Net; }
-                set { _Net = value; OnPropertyChanged("Net"); }
-            }
-            
-            private Hl7.Fhir.Model.Money _Net;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as TermValuedItemComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Entity != null) dest.Entity = (Hl7.Fhir.Model.Element)Entity.DeepCopy();
-                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-                    if(EffectiveTimeElement != null) dest.EffectiveTimeElement = (Hl7.Fhir.Model.FhirDateTime)EffectiveTimeElement.DeepCopy();
-                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
-                    if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
-                    if(PointsElement != null) dest.PointsElement = (Hl7.Fhir.Model.FhirDecimal)PointsElement.DeepCopy();
-                    if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new TermValuedItemComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as TermValuedItemComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Entity, otherT.Entity)) return false;
-                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-                if( !DeepComparable.Matches(EffectiveTimeElement, otherT.EffectiveTimeElement)) return false;
-                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
-                if( !DeepComparable.Matches(UnitPrice, otherT.UnitPrice)) return false;
-                if( !DeepComparable.Matches(FactorElement, otherT.FactorElement)) return false;
-                if( !DeepComparable.Matches(PointsElement, otherT.PointsElement)) return false;
-                if( !DeepComparable.Matches(Net, otherT.Net)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as TermValuedItemComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Entity, otherT.Entity)) return false;
-                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-                if( !DeepComparable.IsExactly(EffectiveTimeElement, otherT.EffectiveTimeElement)) return false;
-                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
-                if( !DeepComparable.IsExactly(UnitPrice, otherT.UnitPrice)) return false;
-                if( !DeepComparable.IsExactly(FactorElement, otherT.FactorElement)) return false;
-                if( !DeepComparable.IsExactly(PointsElement, otherT.PointsElement)) return false;
-                if( !DeepComparable.IsExactly(Net, otherT.Net)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
         [FhirType("ActorComponent")]
         [DataContract]
         public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -362,7 +63,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Actor Type
             /// </summary>
-            [FhirElement("entity", InSummary=true, Order=40)]
+            [FhirElement("entity", Order=40)]
             [References("Contract","Device","Group","Location","Organization","Patient","Practitioner","RelatedPerson","Substance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -377,7 +78,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract  Actor Role
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=50)]
+            [FhirElement("role", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -445,7 +146,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Valued Item Type
             /// </summary>
-            [FhirElement("entity", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("entity", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Entity
@@ -459,7 +160,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Valued Item Identifier
             /// </summary>
-            [FhirElement("identifier", InSummary=true, Order=50)]
+            [FhirElement("identifier", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Identifier Identifier
             {
@@ -472,7 +173,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Valued Item Effective Tiem
             /// </summary>
-            [FhirElement("effectiveTime", InSummary=true, Order=60)]
+            [FhirElement("effectiveTime", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime EffectiveTimeElement
             {
@@ -504,7 +205,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Count of Contract Valued Items
             /// </summary>
-            [FhirElement("quantity", InSummary=true, Order=70)]
+            [FhirElement("quantity", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
@@ -517,7 +218,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Valued Item fee, charge, or cost
             /// </summary>
-            [FhirElement("unitPrice", InSummary=true, Order=80)]
+            [FhirElement("unitPrice", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.Money UnitPrice
             {
@@ -530,7 +231,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Valued Item Price Scaling Factor
             /// </summary>
-            [FhirElement("factor", InSummary=true, Order=90)]
+            [FhirElement("factor", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal FactorElement
             {
@@ -562,7 +263,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Valued Item Difficulty Scaling Factor
             /// </summary>
-            [FhirElement("points", InSummary=true, Order=100)]
+            [FhirElement("points", Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PointsElement
             {
@@ -594,7 +295,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Total Contract Valued Item Value
             /// </summary>
-            [FhirElement("net", InSummary=true, Order=110)]
+            [FhirElement("net", Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.Money Net
             {
@@ -679,7 +380,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Signer Type
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Type
@@ -693,7 +394,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Signatory Party
             /// </summary>
-            [FhirElement("party", InSummary=true, Order=50)]
+            [FhirElement("party", Order=50)]
             [References("Organization","Patient","Practitioner","RelatedPerson")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -708,7 +409,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Documentation Signature
             /// </summary>
-            [FhirElement("signature", InSummary=true, Order=60)]
+            [FhirElement("signature", Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SignatureElement
@@ -856,7 +557,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Term Type
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=70)]
+            [FhirElement("type", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Type
             {
@@ -869,7 +570,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Term Subtype
             /// </summary>
-            [FhirElement("subType", InSummary=true, Order=80)]
+            [FhirElement("subType", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept SubType
             {
@@ -882,7 +583,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Subject of this Contract Term
             /// </summary>
-            [FhirElement("subject", InSummary=true, Order=90)]
+            [FhirElement("subject", Order=90)]
             [References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Subject
@@ -896,7 +597,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Term Action
             /// </summary>
-            [FhirElement("action", InSummary=true, Order=100)]
+            [FhirElement("action", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Action
@@ -910,7 +611,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Term Action Reason
             /// </summary>
-            [FhirElement("actionReason", InSummary=true, Order=110)]
+            [FhirElement("actionReason", Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> ActionReason
@@ -924,7 +625,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Term Actor List
             /// </summary>
-            [FhirElement("actor", InSummary=true, Order=120)]
+            [FhirElement("actor", Order=120)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Contract.TermActorComponent> Actor
@@ -938,7 +639,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Human readable Contract term text
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=130)]
+            [FhirElement("text", Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -970,7 +671,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Term Valued Item
             /// </summary>
-            [FhirElement("valuedItem", InSummary=true, Order=140)]
+            [FhirElement("valuedItem", Order=140)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Contract.TermValuedItemComponent> ValuedItem
@@ -984,7 +685,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested Contract Term Group
             /// </summary>
-            [FhirElement("group", InSummary=true, Order=150)]
+            [FhirElement("group", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Contract.TermComponent> Group
@@ -1082,7 +783,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Term Actor
             /// </summary>
-            [FhirElement("entity", InSummary=true, Order=40)]
+            [FhirElement("entity", Order=40)]
             [References("Contract","Device","Group","Location","Organization","Patient","Practitioner","RelatedPerson","Substance")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -1097,7 +798,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Term Actor Role
             /// </summary>
-            [FhirElement("role", InSummary=true, Order=50)]
+            [FhirElement("role", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -1155,6 +856,240 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("TermValuedItemComponent")]
+        [DataContract]
+        public partial class TermValuedItemComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "TermValuedItemComponent"; } }
+            
+            /// <summary>
+            /// Contract Term Valued Item Type
+            /// </summary>
+            [FhirElement("entity", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Entity
+            {
+                get { return _Entity; }
+                set { _Entity = value; OnPropertyChanged("Entity"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Entity;
+            
+            /// <summary>
+            /// Contract Term Valued Item Identifier
+            /// </summary>
+            [FhirElement("identifier", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Identifier Identifier
+            {
+                get { return _Identifier; }
+                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+            }
+            
+            private Hl7.Fhir.Model.Identifier _Identifier;
+            
+            /// <summary>
+            /// Contract Term Valued Item Effective Tiem
+            /// </summary>
+            [FhirElement("effectiveTime", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDateTime EffectiveTimeElement
+            {
+                get { return _EffectiveTimeElement; }
+                set { _EffectiveTimeElement = value; OnPropertyChanged("EffectiveTimeElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDateTime _EffectiveTimeElement;
+            
+            /// <summary>
+            /// Contract Term Valued Item Effective Tiem
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string EffectiveTime
+            {
+                get { return EffectiveTimeElement != null ? EffectiveTimeElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      EffectiveTimeElement = null; 
+                    else
+                      EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                    OnPropertyChanged("EffectiveTime");
+                }
+            }
+            
+            /// <summary>
+            /// Contract Term Valued Item Count
+            /// </summary>
+            [FhirElement("quantity", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.SimpleQuantity Quantity
+            {
+                get { return _Quantity; }
+                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+            }
+            
+            private Hl7.Fhir.Model.SimpleQuantity _Quantity;
+            
+            /// <summary>
+            /// Contract Term Valued Item fee, charge, or cost
+            /// </summary>
+            [FhirElement("unitPrice", Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.Money UnitPrice
+            {
+                get { return _UnitPrice; }
+                set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
+            }
+            
+            private Hl7.Fhir.Model.Money _UnitPrice;
+            
+            /// <summary>
+            /// Contract Term Valued Item Price Scaling Factor
+            /// </summary>
+            [FhirElement("factor", Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDecimal FactorElement
+            {
+                get { return _FactorElement; }
+                set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDecimal _FactorElement;
+            
+            /// <summary>
+            /// Contract Term Valued Item Price Scaling Factor
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public decimal? Factor
+            {
+                get { return FactorElement != null ? FactorElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      FactorElement = null; 
+                    else
+                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("Factor");
+                }
+            }
+            
+            /// <summary>
+            /// Contract Term Valued Item Difficulty Scaling Factor
+            /// </summary>
+            [FhirElement("points", Order=100)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDecimal PointsElement
+            {
+                get { return _PointsElement; }
+                set { _PointsElement = value; OnPropertyChanged("PointsElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDecimal _PointsElement;
+            
+            /// <summary>
+            /// Contract Term Valued Item Difficulty Scaling Factor
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public decimal? Points
+            {
+                get { return PointsElement != null ? PointsElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      PointsElement = null; 
+                    else
+                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("Points");
+                }
+            }
+            
+            /// <summary>
+            /// Total Contract Term Valued Item Value
+            /// </summary>
+            [FhirElement("net", Order=110)]
+            [DataMember]
+            public Hl7.Fhir.Model.Money Net
+            {
+                get { return _Net; }
+                set { _Net = value; OnPropertyChanged("Net"); }
+            }
+            
+            private Hl7.Fhir.Model.Money _Net;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as TermValuedItemComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Entity != null) dest.Entity = (Hl7.Fhir.Model.Element)Entity.DeepCopy();
+                    if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                    if(EffectiveTimeElement != null) dest.EffectiveTimeElement = (Hl7.Fhir.Model.FhirDateTime)EffectiveTimeElement.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                    if(UnitPrice != null) dest.UnitPrice = (Hl7.Fhir.Model.Money)UnitPrice.DeepCopy();
+                    if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
+                    if(PointsElement != null) dest.PointsElement = (Hl7.Fhir.Model.FhirDecimal)PointsElement.DeepCopy();
+                    if(Net != null) dest.Net = (Hl7.Fhir.Model.Money)Net.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new TermValuedItemComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as TermValuedItemComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Entity, otherT.Entity)) return false;
+                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(EffectiveTimeElement, otherT.EffectiveTimeElement)) return false;
+                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.Matches(UnitPrice, otherT.UnitPrice)) return false;
+                if( !DeepComparable.Matches(FactorElement, otherT.FactorElement)) return false;
+                if( !DeepComparable.Matches(PointsElement, otherT.PointsElement)) return false;
+                if( !DeepComparable.Matches(Net, otherT.Net)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as TermValuedItemComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Entity, otherT.Entity)) return false;
+                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(EffectiveTimeElement, otherT.EffectiveTimeElement)) return false;
+                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.IsExactly(UnitPrice, otherT.UnitPrice)) return false;
+                if( !DeepComparable.IsExactly(FactorElement, otherT.FactorElement)) return false;
+                if( !DeepComparable.IsExactly(PointsElement, otherT.PointsElement)) return false;
+                if( !DeepComparable.IsExactly(Net, otherT.Net)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         [FhirType("FriendlyLanguageComponent")]
         [DataContract]
         public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -1165,7 +1100,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Easily comprehended representation of this Contract
             /// </summary>
-            [FhirElement("content", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -1231,7 +1166,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Legal Text
             /// </summary>
-            [FhirElement("content", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -1276,6 +1211,72 @@ namespace Hl7.Fhir.Model
             public override bool IsExactly(IDeepComparable other)
             {
                 var otherT = other as LegalLanguageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("ComputableLanguageComponent")]
+        [DataContract]
+        public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ComputableLanguageComponent"; } }
+            
+            /// <summary>
+            /// Computable Contract Rules
+            /// </summary>
+            [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Content
+            {
+                get { return _Content; }
+                set { _Content = value; OnPropertyChanged("Content"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Content;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ComputableLanguageComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Content != null) dest.Content = (Hl7.Fhir.Model.Element)Content.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ComputableLanguageComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ComputableLanguageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Content, otherT.Content)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ComputableLanguageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;

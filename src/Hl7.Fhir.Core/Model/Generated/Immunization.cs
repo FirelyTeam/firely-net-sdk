@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,17 +53,99 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Immunization"; } }
         
-        [FhirType("ImmunizationReactionComponent")]
+        [FhirType("ExplanationComponent")]
         [DataContract]
-        public partial class ImmunizationReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImmunizationReactionComponent"; } }
+            public override string TypeName { get { return "ExplanationComponent"; } }
+            
+            /// <summary>
+            /// Why immunization occurred
+            /// </summary>
+            [FhirElement("reason", Order=40)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> Reason
+            {
+                get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
+                set { _Reason = value; OnPropertyChanged("Reason"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
+            
+            /// <summary>
+            /// Why immunization did not occur
+            /// </summary>
+            [FhirElement("reasonNotGiven", Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> ReasonNotGiven
+            {
+                get { if(_ReasonNotGiven==null) _ReasonNotGiven = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonNotGiven; }
+                set { _ReasonNotGiven = value; OnPropertyChanged("ReasonNotGiven"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _ReasonNotGiven;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ExplanationComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
+                    if(ReasonNotGiven != null) dest.ReasonNotGiven = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonNotGiven.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ExplanationComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ExplanationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
+                if( !DeepComparable.Matches(ReasonNotGiven, otherT.ReasonNotGiven)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ExplanationComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
+                if( !DeepComparable.IsExactly(ReasonNotGiven, otherT.ReasonNotGiven)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("ReactionComponent")]
+        [DataContract]
+        public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ReactionComponent"; } }
             
             /// <summary>
             /// When reaction started
             /// </summary>
-            [FhirElement("date", InSummary=true, Order=40)]
+            [FhirElement("date", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDateTime DateElement
             {
@@ -94,7 +177,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional information on reaction
             /// </summary>
-            [FhirElement("detail", InSummary=true, Order=50)]
+            [FhirElement("detail", Order=50)]
             [References("Observation")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Detail
@@ -108,7 +191,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Indicates self-reported reaction
             /// </summary>
-            [FhirElement("reported", InSummary=true, Order=60)]
+            [FhirElement("reported", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ReportedElement
             {
@@ -139,7 +222,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImmunizationReactionComponent;
+                var dest = other as ReactionComponent;
                 
                 if (dest != null)
                 {
@@ -155,12 +238,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImmunizationReactionComponent());
+                return CopyTo(new ReactionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImmunizationReactionComponent;
+                var otherT = other as ReactionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -173,7 +256,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImmunizationReactionComponent;
+                var otherT = other as ReactionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -187,99 +270,17 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImmunizationExplanationComponent")]
+        [FhirType("VaccinationProtocolComponent")]
         [DataContract]
-        public partial class ImmunizationExplanationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImmunizationExplanationComponent"; } }
-            
-            /// <summary>
-            /// Why immunization occurred
-            /// </summary>
-            [FhirElement("reason", InSummary=true, Order=40)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> Reason
-            {
-                get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
-                set { _Reason = value; OnPropertyChanged("Reason"); }
-            }
-            
-            private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
-            
-            /// <summary>
-            /// Why immunization did not occur
-            /// </summary>
-            [FhirElement("reasonNotGiven", InSummary=true, Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> ReasonNotGiven
-            {
-                get { if(_ReasonNotGiven==null) _ReasonNotGiven = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonNotGiven; }
-                set { _ReasonNotGiven = value; OnPropertyChanged("ReasonNotGiven"); }
-            }
-            
-            private List<Hl7.Fhir.Model.CodeableConcept> _ReasonNotGiven;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ImmunizationExplanationComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
-                    if(ReasonNotGiven != null) dest.ReasonNotGiven = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonNotGiven.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ImmunizationExplanationComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ImmunizationExplanationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
-                if( !DeepComparable.Matches(ReasonNotGiven, otherT.ReasonNotGiven)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ImmunizationExplanationComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
-                if( !DeepComparable.IsExactly(ReasonNotGiven, otherT.ReasonNotGiven)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ImmunizationVaccinationProtocolComponent")]
-        [DataContract]
-        public partial class ImmunizationVaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ImmunizationVaccinationProtocolComponent"; } }
+            public override string TypeName { get { return "VaccinationProtocolComponent"; } }
             
             /// <summary>
             /// Dose number within series
             /// </summary>
-            [FhirElement("doseSequence", InSummary=true, Order=40)]
+            [FhirElement("doseSequence", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt DoseSequenceElement
@@ -312,7 +313,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Details of vaccine protocol
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=50)]
+            [FhirElement("description", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -344,7 +345,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who is responsible for protocol
             /// </summary>
-            [FhirElement("authority", InSummary=true, Order=60)]
+            [FhirElement("authority", Order=60)]
             [References("Organization")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Authority
@@ -358,7 +359,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name of vaccine series
             /// </summary>
-            [FhirElement("series", InSummary=true, Order=70)]
+            [FhirElement("series", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString SeriesElement
             {
@@ -390,7 +391,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Recommended number of doses for immunity
             /// </summary>
-            [FhirElement("seriesDoses", InSummary=true, Order=80)]
+            [FhirElement("seriesDoses", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt SeriesDosesElement
             {
@@ -422,7 +423,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Disease immunized against
             /// </summary>
-            [FhirElement("targetDisease", InSummary=true, Order=90)]
+            [FhirElement("targetDisease", Order=90)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> TargetDisease
@@ -436,7 +437,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Indicates if dose counts towards immunity
             /// </summary>
-            [FhirElement("doseStatus", InSummary=true, Order=100)]
+            [FhirElement("doseStatus", Order=100)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept DoseStatus
@@ -450,7 +451,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Why dose does (not) count
             /// </summary>
-            [FhirElement("doseStatusReason", InSummary=true, Order=110)]
+            [FhirElement("doseStatusReason", Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept DoseStatusReason
             {
@@ -462,7 +463,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImmunizationVaccinationProtocolComponent;
+                var dest = other as VaccinationProtocolComponent;
                 
                 if (dest != null)
                 {
@@ -483,12 +484,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImmunizationVaccinationProtocolComponent());
+                return CopyTo(new VaccinationProtocolComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImmunizationVaccinationProtocolComponent;
+                var otherT = other as VaccinationProtocolComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -506,7 +507,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImmunizationVaccinationProtocolComponent;
+                var otherT = other as VaccinationProtocolComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -545,13 +546,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Code StatusElement
+        public Code<Hl7.Fhir.Model.MedicationAdministrationStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Hl7.Fhir.Model.Code _StatusElement;
+        private Code<Hl7.Fhir.Model.MedicationAdministrationStatus> _StatusElement;
         
         /// <summary>
         /// in-progress | on-hold | completed | entered-in-error | stopped
@@ -559,7 +560,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Status
+        public Hl7.Fhir.Model.MedicationAdministrationStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -567,7 +568,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   StatusElement = null; 
                 else
-                  StatusElement = new Hl7.Fhir.Model.Code(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.MedicationAdministrationStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -891,13 +892,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("explanation", Order=270)]
         [DataMember]
-        public Hl7.Fhir.Model.Immunization.ImmunizationExplanationComponent Explanation
+        public Hl7.Fhir.Model.Immunization.ExplanationComponent Explanation
         {
             get { return _Explanation; }
             set { _Explanation = value; OnPropertyChanged("Explanation"); }
         }
         
-        private Hl7.Fhir.Model.Immunization.ImmunizationExplanationComponent _Explanation;
+        private Hl7.Fhir.Model.Immunization.ExplanationComponent _Explanation;
         
         /// <summary>
         /// Details of a reaction that follows immunization
@@ -905,13 +906,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("reaction", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Immunization.ImmunizationReactionComponent> Reaction
+        public List<Hl7.Fhir.Model.Immunization.ReactionComponent> Reaction
         {
-            get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.Immunization.ImmunizationReactionComponent>(); return _Reaction; }
+            get { if(_Reaction==null) _Reaction = new List<Hl7.Fhir.Model.Immunization.ReactionComponent>(); return _Reaction; }
             set { _Reaction = value; OnPropertyChanged("Reaction"); }
         }
         
-        private List<Hl7.Fhir.Model.Immunization.ImmunizationReactionComponent> _Reaction;
+        private List<Hl7.Fhir.Model.Immunization.ReactionComponent> _Reaction;
         
         /// <summary>
         /// What protocol was followed
@@ -919,13 +920,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("vaccinationProtocol", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Immunization.ImmunizationVaccinationProtocolComponent> VaccinationProtocol
+        public List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> VaccinationProtocol
         {
-            get { if(_VaccinationProtocol==null) _VaccinationProtocol = new List<Hl7.Fhir.Model.Immunization.ImmunizationVaccinationProtocolComponent>(); return _VaccinationProtocol; }
+            get { if(_VaccinationProtocol==null) _VaccinationProtocol = new List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>(); return _VaccinationProtocol; }
             set { _VaccinationProtocol = value; OnPropertyChanged("VaccinationProtocol"); }
         }
         
-        private List<Hl7.Fhir.Model.Immunization.ImmunizationVaccinationProtocolComponent> _VaccinationProtocol;
+        private List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> _VaccinationProtocol;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -935,7 +936,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.Code)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationAdministrationStatus>)StatusElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(VaccineCode != null) dest.VaccineCode = (Hl7.Fhir.Model.CodeableConcept)VaccineCode.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
@@ -952,9 +953,9 @@ namespace Hl7.Fhir.Model
                 if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                 if(DoseQuantity != null) dest.DoseQuantity = (Hl7.Fhir.Model.SimpleQuantity)DoseQuantity.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(Explanation != null) dest.Explanation = (Hl7.Fhir.Model.Immunization.ImmunizationExplanationComponent)Explanation.DeepCopy();
-                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.Immunization.ImmunizationReactionComponent>(Reaction.DeepCopy());
-                if(VaccinationProtocol != null) dest.VaccinationProtocol = new List<Hl7.Fhir.Model.Immunization.ImmunizationVaccinationProtocolComponent>(VaccinationProtocol.DeepCopy());
+                if(Explanation != null) dest.Explanation = (Hl7.Fhir.Model.Immunization.ExplanationComponent)Explanation.DeepCopy();
+                if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.Immunization.ReactionComponent>(Reaction.DeepCopy());
+                if(VaccinationProtocol != null) dest.VaccinationProtocol = new List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent>(VaccinationProtocol.DeepCopy());
                 return dest;
             }
             else

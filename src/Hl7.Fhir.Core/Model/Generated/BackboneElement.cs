@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,13 +56,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("modifierExtension", InSummary=true, Order=30)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Extension> ModifierExtension
+        public List<Extension> ModifierExtension
         {
-            get { if(_ModifierExtension==null) _ModifierExtension = new List<Hl7.Fhir.Model.Extension>(); return _ModifierExtension; }
+            get { if(_ModifierExtension==null) _ModifierExtension = new List<Extension>(); return _ModifierExtension; }
             set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
         }
         
-        private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
+        private List<Extension> _ModifierExtension;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -70,7 +71,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(ModifierExtension != null) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopy());
+                if(ModifierExtension != null) dest.ModifierExtension = new List<Extension>(ModifierExtension.DeepCopy());
                 return dest;
             }
             else

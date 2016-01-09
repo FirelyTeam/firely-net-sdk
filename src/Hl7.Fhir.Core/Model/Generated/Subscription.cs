@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,90 +54,83 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Subscription"; } }
         
         /// <summary>
-        /// The type of method used to execute a subscription.
-        /// </summary>
-        [FhirEnumeration("SubscriptionChannelType")]
-        public enum SubscriptionChannelType
-        {
-            /// <summary>
-            /// The channel is executed by making a post to the URI. If a payload is included, the URL is interpreted as the service base, and an update (PUT) is made.
-            /// </summary>
-            [EnumLiteral("rest-hook")]
-            RestHook,
-            /// <summary>
-            /// The channel is executed by sending a packet across a web socket connection maintained by the client. The URL identifies the websocket, and the client binds to this URL.
-            /// </summary>
-            [EnumLiteral("websocket")]
-            Websocket,
-            /// <summary>
-            /// The channel is executed by sending an email to the email addressed in the URI (which must be a mailto:).
-            /// </summary>
-            [EnumLiteral("email")]
-            Email,
-            /// <summary>
-            /// The channel is executed by sending an SMS message to the phone number identified in the URL (tel:).
-            /// </summary>
-            [EnumLiteral("sms")]
-            Sms,
-            /// <summary>
-            /// The channel is executed by sending a message (e.g. a Bundle with a MessageHeader resource etc.) to the application identified in the URI.
-            /// </summary>
-            [EnumLiteral("message")]
-            Message,
-        }
-        
-        /// <summary>
         /// The status of a subscription.
+        /// (url: http://hl7.org/fhir/ValueSet/subscription-status)
         /// </summary>
         [FhirEnumeration("SubscriptionStatus")]
         public enum SubscriptionStatus
         {
             /// <summary>
             /// The client has requested the subscription, and the server has not yet set it up.
+            /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
-            [EnumLiteral("requested")]
+            [EnumLiteral("requested"), Description("Requested")]
             Requested,
             /// <summary>
             /// The subscription is active.
+            /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
-            [EnumLiteral("active")]
+            [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
             /// The server has an error executing the notification.
+            /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
-            [EnumLiteral("error")]
+            [EnumLiteral("error"), Description("Error")]
             Error,
             /// <summary>
             /// Too many errors have occurred or the subscription has expired.
+            /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
-            [EnumLiteral("off")]
+            [EnumLiteral("off"), Description("Off")]
             Off,
         }
-        
+
         /// <summary>
-        /// Tags to put on a resource after subscriptions have been sent.
+        /// The type of method used to execute a subscription.
+        /// (url: http://hl7.org/fhir/ValueSet/subscription-channel-type)
         /// </summary>
-        [FhirEnumeration("SubscriptionTag")]
-        public enum SubscriptionTag
+        [FhirEnumeration("SubscriptionChannelType")]
+        public enum SubscriptionChannelType
         {
             /// <summary>
-            /// The message has been queued for processing on a destination systems.
+            /// The channel is executed by making a post to the URI. If a payload is included, the URL is interpreted as the service base, and an update (PUT) is made.
+            /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
-            [EnumLiteral("queued")]
-            Queued,
+            [EnumLiteral("rest-hook"), Description("Rest Hook")]
+            RestHook,
             /// <summary>
-            /// The message has been delivered to its intended recipient.
+            /// The channel is executed by sending a packet across a web socket connection maintained by the client. The URL identifies the websocket, and the client binds to this URL.
+            /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
-            [EnumLiteral("delivered")]
-            Delivered,
+            [EnumLiteral("websocket"), Description("Websocket")]
+            Websocket,
+            /// <summary>
+            /// The channel is executed by sending an email to the email addressed in the URI (which must be a mailto:).
+            /// (system: http://hl7.org/fhir/subscription-channel-type)
+            /// </summary>
+            [EnumLiteral("email"), Description("Email")]
+            Email,
+            /// <summary>
+            /// The channel is executed by sending an SMS message to the phone number identified in the URL (tel:).
+            /// (system: http://hl7.org/fhir/subscription-channel-type)
+            /// </summary>
+            [EnumLiteral("sms"), Description("SMS")]
+            Sms,
+            /// <summary>
+            /// The channel is executed by sending a message (e.g. a Bundle with a MessageHeader resource etc.) to the application identified in the URI.
+            /// (system: http://hl7.org/fhir/subscription-channel-type)
+            /// </summary>
+            [EnumLiteral("message"), Description("Message")]
+            Message,
         }
-        
-        [FhirType("SubscriptionChannelComponent")]
+
+        [FhirType("ChannelComponent")]
         [DataContract]
-        public partial class SubscriptionChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "SubscriptionChannelComponent"; } }
+            public override string TypeName { get { return "ChannelComponent"; } }
             
             /// <summary>
             /// rest-hook | websocket | email | sms | message
@@ -270,7 +264,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as SubscriptionChannelComponent;
+                var dest = other as ChannelComponent;
                 
                 if (dest != null)
                 {
@@ -287,12 +281,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new SubscriptionChannelComponent());
+                return CopyTo(new ChannelComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as SubscriptionChannelComponent;
+                var otherT = other as ChannelComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -306,7 +300,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as SubscriptionChannelComponent;
+                var otherT = other as ChannelComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -324,7 +318,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Rule for server push criteria
         /// </summary>
-        [FhirElement("criteria", Order=90)]
+        [FhirElement("criteria", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CriteriaElement
@@ -357,7 +351,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details for source (e.g. troubleshooting)
         /// </summary>
-        [FhirElement("contact", Order=100)]
+        [FhirElement("contact", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Contact
@@ -371,7 +365,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description of why this subscription was created
         /// </summary>
-        [FhirElement("reason", Order=110)]
+        [FhirElement("reason", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ReasonElement
@@ -404,7 +398,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// requested | active | error | off
         /// </summary>
-        [FhirElement("status", Order=120)]
+        [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus> StatusElement
@@ -437,7 +431,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Latest error note
         /// </summary>
-        [FhirElement("error", Order=130)]
+        [FhirElement("error", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ErrorElement
         {
@@ -469,21 +463,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The channel on which to report matches to the criteria
         /// </summary>
-        [FhirElement("channel", Order=140)]
+        [FhirElement("channel", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Subscription.SubscriptionChannelComponent Channel
+        public Hl7.Fhir.Model.Subscription.ChannelComponent Channel
         {
             get { return _Channel; }
             set { _Channel = value; OnPropertyChanged("Channel"); }
         }
         
-        private Hl7.Fhir.Model.Subscription.SubscriptionChannelComponent _Channel;
+        private Hl7.Fhir.Model.Subscription.ChannelComponent _Channel;
         
         /// <summary>
         /// When to automatically delete the subscription
         /// </summary>
-        [FhirElement("end", Order=150)]
+        [FhirElement("end", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Instant EndElement
         {
@@ -515,7 +509,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A tag to add to matching resources
         /// </summary>
-        [FhirElement("tag", Order=160)]
+        [FhirElement("tag", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Tag
@@ -538,7 +532,7 @@ namespace Hl7.Fhir.Model
                 if(ReasonElement != null) dest.ReasonElement = (Hl7.Fhir.Model.FhirString)ReasonElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>)StatusElement.DeepCopy();
                 if(ErrorElement != null) dest.ErrorElement = (Hl7.Fhir.Model.FhirString)ErrorElement.DeepCopy();
-                if(Channel != null) dest.Channel = (Hl7.Fhir.Model.Subscription.SubscriptionChannelComponent)Channel.DeepCopy();
+                if(Channel != null) dest.Channel = (Hl7.Fhir.Model.Subscription.ChannelComponent)Channel.DeepCopy();
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
                 if(Tag != null) dest.Tag = new List<Hl7.Fhir.Model.Coding>(Tag.DeepCopy());
                 return dest;

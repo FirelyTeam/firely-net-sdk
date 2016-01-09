@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Rest
 {
     internal static class EntryToHttpExtensions
     {
-        public static HttpWebRequest ToHttpRequest(this Bundle.BundleEntryComponent entry, 
+        public static HttpWebRequest ToHttpRequest(this Bundle.EntryComponent entry, 
             Prefer bodyPreference, ResourceFormat format, bool useFormatParameter, out byte[] body)
         {
             System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Request.Method, entry.Request.Url);
@@ -129,8 +129,8 @@ namespace Hl7.Fhir.Rest
             else
             {
                 body = format == ResourceFormat.Xml ?
-                    FhirSerializer.SerializeToXmlBytes(data, summary: false) :
-                    FhirSerializer.SerializeToJsonBytes(data, summary: false);
+                    FhirSerializer.SerializeToXmlBytes(data, summary: Fhir.Rest.SummaryType.False) :
+                    FhirSerializer.SerializeToJsonBytes(data, summary: Fhir.Rest.SummaryType.False);
 
                 request.WriteBody(body);
                 request.ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);

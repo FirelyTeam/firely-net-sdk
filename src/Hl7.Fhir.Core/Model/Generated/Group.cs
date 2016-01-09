@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,170 +55,60 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Types of resources that are part of group
+        /// (url: http://hl7.org/fhir/ValueSet/group-type)
         /// </summary>
         [FhirEnumeration("GroupType")]
         public enum GroupType
         {
             /// <summary>
             /// Group contains "person" Patient resources
+            /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("person")]
+            [EnumLiteral("person"), Description("Person")]
             Person,
             /// <summary>
             /// Group contains "animal" Patient resources
+            /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("animal")]
+            [EnumLiteral("animal"), Description("Animal")]
             Animal,
             /// <summary>
             /// Group contains healthcare practitioner resources
+            /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("practitioner")]
+            [EnumLiteral("practitioner"), Description("Practitioner")]
             Practitioner,
             /// <summary>
             /// Group contains Device resources
+            /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("device")]
+            [EnumLiteral("device"), Description("Device")]
             Device,
             /// <summary>
             /// Group contains Medication resources
+            /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("medication")]
+            [EnumLiteral("medication"), Description("Medication")]
             Medication,
             /// <summary>
             /// Group contains Substance resources
+            /// (system: http://hl7.org/fhir/group-type)
             /// </summary>
-            [EnumLiteral("substance")]
+            [EnumLiteral("substance"), Description("Substance")]
             Substance,
         }
-        
-        [FhirType("GroupMemberComponent")]
+
+        [FhirType("CharacteristicComponent")]
         [DataContract]
-        public partial class GroupMemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "GroupMemberComponent"; } }
-            
-            /// <summary>
-            /// Reference to the group member
-            /// </summary>
-            [FhirElement("entity", InSummary=true, Order=40)]
-            [References("Patient","Practitioner","Device","Medication","Substance")]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Entity
-            {
-                get { return _Entity; }
-                set { _Entity = value; OnPropertyChanged("Entity"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Entity;
-            
-            /// <summary>
-            /// Period member belonged to the group
-            /// </summary>
-            [FhirElement("period", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Period Period
-            {
-                get { return _Period; }
-                set { _Period = value; OnPropertyChanged("Period"); }
-            }
-            
-            private Hl7.Fhir.Model.Period _Period;
-            
-            /// <summary>
-            /// If member is no longer in group
-            /// </summary>
-            [FhirElement("inactive", InSummary=true, Order=60)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean InactiveElement
-            {
-                get { return _InactiveElement; }
-                set { _InactiveElement = value; OnPropertyChanged("InactiveElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirBoolean _InactiveElement;
-            
-            /// <summary>
-            /// If member is no longer in group
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public bool? Inactive
-            {
-                get { return InactiveElement != null ? InactiveElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      InactiveElement = null; 
-                    else
-                      InactiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("Inactive");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as GroupMemberComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Entity != null) dest.Entity = (Hl7.Fhir.Model.ResourceReference)Entity.DeepCopy();
-                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    if(InactiveElement != null) dest.InactiveElement = (Hl7.Fhir.Model.FhirBoolean)InactiveElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new GroupMemberComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as GroupMemberComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Entity, otherT.Entity)) return false;
-                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-                if( !DeepComparable.Matches(InactiveElement, otherT.InactiveElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as GroupMemberComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Entity, otherT.Entity)) return false;
-                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-                if( !DeepComparable.IsExactly(InactiveElement, otherT.InactiveElement)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("GroupCharacteristicComponent")]
-        [DataContract]
-        public partial class GroupCharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "GroupCharacteristicComponent"; } }
+            public override string TypeName { get { return "CharacteristicComponent"; } }
             
             /// <summary>
             /// Kind of characteristic
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("code", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
@@ -231,8 +122,8 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Value held by characteristic
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
+            [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Quantity),typeof(Hl7.Fhir.Model.Range))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
@@ -246,7 +137,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Group includes or excludes
             /// </summary>
-            [FhirElement("exclude", InSummary=true, Order=60)]
+            [FhirElement("exclude", Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ExcludeElement
@@ -279,7 +170,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Period over which characteristic is tested
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=70)]
+            [FhirElement("period", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -291,7 +182,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as GroupCharacteristicComponent;
+                var dest = other as CharacteristicComponent;
                 
                 if (dest != null)
                 {
@@ -308,12 +199,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new GroupCharacteristicComponent());
+                return CopyTo(new CharacteristicComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as GroupCharacteristicComponent;
+                var otherT = other as CharacteristicComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -327,7 +218,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as GroupCharacteristicComponent;
+                var otherT = other as CharacteristicComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -335,6 +226,123 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 if( !DeepComparable.IsExactly(ExcludeElement, otherT.ExcludeElement)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("MemberComponent")]
+        [DataContract]
+        public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "MemberComponent"; } }
+            
+            /// <summary>
+            /// Reference to the group member
+            /// </summary>
+            [FhirElement("entity", Order=40)]
+            [References("Patient","Practitioner","Device","Medication","Substance")]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Entity
+            {
+                get { return _Entity; }
+                set { _Entity = value; OnPropertyChanged("Entity"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Entity;
+            
+            /// <summary>
+            /// Period member belonged to the group
+            /// </summary>
+            [FhirElement("period", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.Period Period
+            {
+                get { return _Period; }
+                set { _Period = value; OnPropertyChanged("Period"); }
+            }
+            
+            private Hl7.Fhir.Model.Period _Period;
+            
+            /// <summary>
+            /// If member is no longer in group
+            /// </summary>
+            [FhirElement("inactive", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirBoolean InactiveElement
+            {
+                get { return _InactiveElement; }
+                set { _InactiveElement = value; OnPropertyChanged("InactiveElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirBoolean _InactiveElement;
+            
+            /// <summary>
+            /// If member is no longer in group
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public bool? Inactive
+            {
+                get { return InactiveElement != null ? InactiveElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      InactiveElement = null; 
+                    else
+                      InactiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Inactive");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as MemberComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Entity != null) dest.Entity = (Hl7.Fhir.Model.ResourceReference)Entity.DeepCopy();
+                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
+                    if(InactiveElement != null) dest.InactiveElement = (Hl7.Fhir.Model.FhirBoolean)InactiveElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new MemberComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as MemberComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Entity, otherT.Entity)) return false;
+                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
+                if( !DeepComparable.Matches(InactiveElement, otherT.InactiveElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as MemberComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Entity, otherT.Entity)) return false;
+                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
+                if( !DeepComparable.IsExactly(InactiveElement, otherT.InactiveElement)) return false;
                 
                 return true;
             }
@@ -505,13 +513,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("characteristic", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent> Characteristic
+        public List<Hl7.Fhir.Model.Group.CharacteristicComponent> Characteristic
         {
-            get { if(_Characteristic==null) _Characteristic = new List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent>(); return _Characteristic; }
+            get { if(_Characteristic==null) _Characteristic = new List<Hl7.Fhir.Model.Group.CharacteristicComponent>(); return _Characteristic; }
             set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
         }
         
-        private List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent> _Characteristic;
+        private List<Hl7.Fhir.Model.Group.CharacteristicComponent> _Characteristic;
         
         /// <summary>
         /// Who or what is in group
@@ -519,13 +527,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("member", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Group.GroupMemberComponent> Member
+        public List<Hl7.Fhir.Model.Group.MemberComponent> Member
         {
-            get { if(_Member==null) _Member = new List<Hl7.Fhir.Model.Group.GroupMemberComponent>(); return _Member; }
+            get { if(_Member==null) _Member = new List<Hl7.Fhir.Model.Group.MemberComponent>(); return _Member; }
             set { _Member = value; OnPropertyChanged("Member"); }
         }
         
-        private List<Hl7.Fhir.Model.Group.GroupMemberComponent> _Member;
+        private List<Hl7.Fhir.Model.Group.MemberComponent> _Member;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -540,8 +548,8 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.UnsignedInt)QuantityElement.DeepCopy();
-                if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent>(Characteristic.DeepCopy());
-                if(Member != null) dest.Member = new List<Hl7.Fhir.Model.Group.GroupMemberComponent>(Member.DeepCopy());
+                if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.Group.CharacteristicComponent>(Characteristic.DeepCopy());
+                if(Member != null) dest.Member = new List<Hl7.Fhir.Model.Group.MemberComponent>(Member.DeepCopy());
                 return dest;
             }
             else

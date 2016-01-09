@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,12 +53,12 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ProcessResponse"; } }
         
-        [FhirType("ProcessResponseNotesComponent")]
+        [FhirType("NotesComponent")]
         [DataContract]
-        public partial class ProcessResponseNotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ProcessResponseNotesComponent"; } }
+            public override string TypeName { get { return "NotesComponent"; } }
             
             /// <summary>
             /// display | print | printoper
@@ -106,7 +107,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ProcessResponseNotesComponent;
+                var dest = other as NotesComponent;
                 
                 if (dest != null)
                 {
@@ -121,12 +122,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ProcessResponseNotesComponent());
+                return CopyTo(new NotesComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ProcessResponseNotesComponent;
+                var otherT = other as NotesComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -138,7 +139,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ProcessResponseNotesComponent;
+                var otherT = other as NotesComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -154,7 +155,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -168,7 +169,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Request reference
         /// </summary>
-        [FhirElement("request", Order=100)]
+        [FhirElement("request", InSummary=true, Order=100)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
@@ -182,7 +183,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Processing outcome
         /// </summary>
-        [FhirElement("outcome", Order=110)]
+        [FhirElement("outcome", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Outcome
         {
@@ -195,7 +196,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Disposition Message
         /// </summary>
-        [FhirElement("disposition", Order=120)]
+        [FhirElement("disposition", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DispositionElement
         {
@@ -227,7 +228,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource version
         /// </summary>
-        [FhirElement("ruleset", Order=130)]
+        [FhirElement("ruleset", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
         {
@@ -240,7 +241,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Original version
         /// </summary>
-        [FhirElement("originalRuleset", Order=140)]
+        [FhirElement("originalRuleset", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
         {
@@ -253,7 +254,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", Order=150)]
+        [FhirElement("created", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -285,7 +286,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Authoring Organization
         /// </summary>
-        [FhirElement("organization", Order=160)]
+        [FhirElement("organization", InSummary=true, Order=160)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Organization
@@ -299,7 +300,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible Practitioner
         /// </summary>
-        [FhirElement("requestProvider", Order=170)]
+        [FhirElement("requestProvider", InSummary=true, Order=170)]
         [References("Practitioner")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestProvider
@@ -313,7 +314,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("requestOrganization", Order=180)]
+        [FhirElement("requestOrganization", InSummary=true, Order=180)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference RequestOrganization
@@ -327,7 +328,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Printed Form Identifier
         /// </summary>
-        [FhirElement("form", Order=190)]
+        [FhirElement("form", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Form
         {
@@ -340,21 +341,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Notes
         /// </summary>
-        [FhirElement("notes", Order=200)]
+        [FhirElement("notes", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ProcessResponse.ProcessResponseNotesComponent> Notes
+        public List<Hl7.Fhir.Model.ProcessResponse.NotesComponent> Notes
         {
-            get { if(_Notes==null) _Notes = new List<Hl7.Fhir.Model.ProcessResponse.ProcessResponseNotesComponent>(); return _Notes; }
+            get { if(_Notes==null) _Notes = new List<Hl7.Fhir.Model.ProcessResponse.NotesComponent>(); return _Notes; }
             set { _Notes = value; OnPropertyChanged("Notes"); }
         }
         
-        private List<Hl7.Fhir.Model.ProcessResponse.ProcessResponseNotesComponent> _Notes;
+        private List<Hl7.Fhir.Model.ProcessResponse.NotesComponent> _Notes;
         
         /// <summary>
         /// Error code
         /// </summary>
-        [FhirElement("error", Order=210)]
+        [FhirElement("error", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Coding> Error
@@ -383,7 +384,7 @@ namespace Hl7.Fhir.Model
                 if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
                 if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
                 if(Form != null) dest.Form = (Hl7.Fhir.Model.Coding)Form.DeepCopy();
-                if(Notes != null) dest.Notes = new List<Hl7.Fhir.Model.ProcessResponse.ProcessResponseNotesComponent>(Notes.DeepCopy());
+                if(Notes != null) dest.Notes = new List<Hl7.Fhir.Model.ProcessResponse.NotesComponent>(Notes.DeepCopy());
                 if(Error != null) dest.Error = new List<Hl7.Fhir.Model.Coding>(Error.DeepCopy());
                 return dest;
             }

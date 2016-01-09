@@ -77,9 +77,11 @@ namespace Hl7.Fhir.Model
 
         public CodeableConcept(string system, string code, string text = null)
         {
-            this.Coding = new List<Coding>() {
-                new Coding(system,code) };
-            
+            if (!string.IsNullOrEmpty(system) || !string.IsNullOrEmpty(code))
+            {
+                this.Coding = new List<Coding>() {
+                    new Coding(system,code) };
+            }
             this.Text = text;
         }
     }

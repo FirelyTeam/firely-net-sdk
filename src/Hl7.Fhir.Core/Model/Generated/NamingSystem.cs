@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,62 +54,71 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "NamingSystem"; } }
         
         /// <summary>
-        /// Identifies the style of unique identifier used to identify a namespace.
-        /// </summary>
-        [FhirEnumeration("NamingSystemIdentifierType")]
-        public enum NamingSystemIdentifierType
-        {
-            /// <summary>
-            /// An ISO object identifier; e.g. 1.2.3.4.5.
-            /// </summary>
-            [EnumLiteral("oid")]
-            Oid,
-            /// <summary>
-            /// A universally unique identifier of the form a5afddf4-e880-459b-876e-e4591b0acc11.
-            /// </summary>
-            [EnumLiteral("uuid")]
-            Uuid,
-            /// <summary>
-            /// A uniform resource identifier (ideally a URL - uniform resource locator); e.g. http://unitsofmeasure.org.
-            /// </summary>
-            [EnumLiteral("uri")]
-            Uri,
-            /// <summary>
-            /// Some other type of unique identifier; e.g. HL7-assigned reserved string such as LN for LOINC.
-            /// </summary>
-            [EnumLiteral("other")]
-            Other,
-        }
-        
-        /// <summary>
         /// Identifies the purpose of the naming system.
+        /// (url: http://hl7.org/fhir/ValueSet/namingsystem-type)
         /// </summary>
         [FhirEnumeration("NamingSystemType")]
         public enum NamingSystemType
         {
             /// <summary>
             /// The naming system is used to define concepts and symbols to represent those concepts; e.g. UCUM, LOINC, NDC code, local lab codes, etc.
+            /// (system: http://hl7.org/fhir/namingsystem-type)
             /// </summary>
-            [EnumLiteral("codesystem")]
+            [EnumLiteral("codesystem"), Description("Code System")]
             Codesystem,
             /// <summary>
             /// The naming system is used to manage identifiers (e.g. license numbers, order numbers, etc.).
+            /// (system: http://hl7.org/fhir/namingsystem-type)
             /// </summary>
-            [EnumLiteral("identifier")]
+            [EnumLiteral("identifier"), Description("Identifier")]
             Identifier,
             /// <summary>
             /// The naming system is used as the root for other identifiers and naming systems.
+            /// (system: http://hl7.org/fhir/namingsystem-type)
             /// </summary>
-            [EnumLiteral("root")]
+            [EnumLiteral("root"), Description("Root")]
             Root,
         }
-        
-        [FhirType("NamingSystemContactComponent")]
+
+        /// <summary>
+        /// Identifies the style of unique identifier used to identify a namespace.
+        /// (url: http://hl7.org/fhir/ValueSet/namingsystem-identifier-type)
+        /// </summary>
+        [FhirEnumeration("NamingSystemIdentifierType")]
+        public enum NamingSystemIdentifierType
+        {
+            /// <summary>
+            /// An ISO object identifier; e.g. 1.2.3.4.5.
+            /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
+            /// </summary>
+            [EnumLiteral("oid"), Description("OID")]
+            Oid,
+            /// <summary>
+            /// A universally unique identifier of the form a5afddf4-e880-459b-876e-e4591b0acc11.
+            /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
+            /// </summary>
+            [EnumLiteral("uuid"), Description("UUID")]
+            Uuid,
+            /// <summary>
+            /// A uniform resource identifier (ideally a URL - uniform resource locator); e.g. http://unitsofmeasure.org.
+            /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
+            /// </summary>
+            [EnumLiteral("uri"), Description("URI")]
+            Uri,
+            /// <summary>
+            /// Some other type of unique identifier; e.g. HL7-assigned reserved string such as LN for LOINC.
+            /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
+            /// </summary>
+            [EnumLiteral("other"), Description("Other")]
+            Other,
+        }
+
+        [FhirType("ContactComponent")]
         [DataContract]
-        public partial class NamingSystemContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NamingSystemContactComponent"; } }
+            public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
             /// Name of a individual to contact
@@ -158,7 +168,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NamingSystemContactComponent;
+                var dest = other as ContactComponent;
                 
                 if (dest != null)
                 {
@@ -173,12 +183,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NamingSystemContactComponent());
+                return CopyTo(new ContactComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NamingSystemContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -190,7 +200,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NamingSystemContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -203,17 +213,17 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NamingSystemUniqueIdComponent")]
+        [FhirType("UniqueIdComponent")]
         [DataContract]
-        public partial class NamingSystemUniqueIdComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "NamingSystemUniqueIdComponent"; } }
+            public override string TypeName { get { return "UniqueIdComponent"; } }
             
             /// <summary>
             /// oid | uuid | uri | other
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
+            [FhirElement("type", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> TypeElement
@@ -246,7 +256,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The unique identifier
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=50)]
+            [FhirElement("value", Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ValueElement
@@ -279,7 +289,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Is this the id that should be used for this type
             /// </summary>
-            [FhirElement("preferred", InSummary=true, Order=60)]
+            [FhirElement("preferred", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean PreferredElement
             {
@@ -311,7 +321,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When is identifier valid?
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=70)]
+            [FhirElement("period", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -323,7 +333,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as NamingSystemUniqueIdComponent;
+                var dest = other as UniqueIdComponent;
                 
                 if (dest != null)
                 {
@@ -340,12 +350,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new NamingSystemUniqueIdComponent());
+                return CopyTo(new UniqueIdComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as NamingSystemUniqueIdComponent;
+                var otherT = other as UniqueIdComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -359,7 +369,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as NamingSystemUniqueIdComponent;
+                var otherT = other as UniqueIdComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -511,13 +521,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contact", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent> Contact
+        public List<Hl7.Fhir.Model.NamingSystem.ContactComponent> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.NamingSystem.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent> _Contact;
+        private List<Hl7.Fhir.Model.NamingSystem.ContactComponent> _Contact;
         
         /// <summary>
         /// Who maintains system namespace?
@@ -681,13 +691,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("uniqueId", Order=200)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent> UniqueId
+        public List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> UniqueId
         {
-            get { if(_UniqueId==null) _UniqueId = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent>(); return _UniqueId; }
+            get { if(_UniqueId==null) _UniqueId = new List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent>(); return _UniqueId; }
             set { _UniqueId = value; OnPropertyChanged("UniqueId"); }
         }
         
-        private List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent> _UniqueId;
+        private List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> _UniqueId;
         
         /// <summary>
         /// Use this instead
@@ -714,14 +724,14 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType>)KindElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.NamingSystem.ContactComponent>(Contact.DeepCopy());
                 if(ResponsibleElement != null) dest.ResponsibleElement = (Hl7.Fhir.Model.FhirString)ResponsibleElement.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
                 if(UsageElement != null) dest.UsageElement = (Hl7.Fhir.Model.FhirString)UsageElement.DeepCopy();
-                if(UniqueId != null) dest.UniqueId = new List<Hl7.Fhir.Model.NamingSystem.NamingSystemUniqueIdComponent>(UniqueId.DeepCopy());
+                if(UniqueId != null) dest.UniqueId = new List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent>(UniqueId.DeepCopy());
                 if(ReplacedBy != null) dest.ReplacedBy = (Hl7.Fhir.Model.ResourceReference)ReplacedBy.DeepCopy();
                 return dest;
             }

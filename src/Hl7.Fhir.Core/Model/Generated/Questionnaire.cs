@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,111 +54,131 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Questionnaire"; } }
         
         /// <summary>
-        /// The expected format of an answer.
-        /// </summary>
-        [FhirEnumeration("AnswerFormat")]
-        public enum AnswerFormat
-        {
-            /// <summary>
-            /// Answer is a yes/no answer.
-            /// </summary>
-            [EnumLiteral("boolean")]
-            Boolean,
-            /// <summary>
-            /// Answer is a floating point number.
-            /// </summary>
-            [EnumLiteral("decimal")]
-            Decimal,
-            /// <summary>
-            /// Answer is an integer.
-            /// </summary>
-            [EnumLiteral("integer")]
-            Integer,
-            /// <summary>
-            /// Answer is a date.
-            /// </summary>
-            [EnumLiteral("date")]
-            Date,
-            /// <summary>
-            /// Answer is a date and time.
-            /// </summary>
-            [EnumLiteral("dateTime")]
-            DateTime,
-            /// <summary>
-            /// Answer is a system timestamp.
-            /// </summary>
-            [EnumLiteral("instant")]
-            Instant,
-            /// <summary>
-            /// Answer is a time (hour/minute/second) independent of date.
-            /// </summary>
-            [EnumLiteral("time")]
-            Time,
-            /// <summary>
-            /// Answer is a short (few words to short sentence) free-text entry.
-            /// </summary>
-            [EnumLiteral("string")]
-            String,
-            /// <summary>
-            /// Answer is a long (potentially multi-paragraph) free-text entry (still captured as a string).
-            /// </summary>
-            [EnumLiteral("text")]
-            Text,
-            /// <summary>
-            /// Answer is a url (website, FTP site, etc.).
-            /// </summary>
-            [EnumLiteral("url")]
-            Url,
-            /// <summary>
-            /// Answer is a Coding drawn from a list of options.
-            /// </summary>
-            [EnumLiteral("choice")]
-            Choice,
-            /// <summary>
-            /// Answer is a Coding drawn from a list of options or a free-text entry.
-            /// </summary>
-            [EnumLiteral("open-choice")]
-            OpenChoice,
-            /// <summary>
-            /// Answer is binary content such as a image, PDF, etc.
-            /// </summary>
-            [EnumLiteral("attachment")]
-            Attachment,
-            /// <summary>
-            /// Answer is a reference to another resource (practitioner, organization, etc.).
-            /// </summary>
-            [EnumLiteral("reference")]
-            Reference,
-            /// <summary>
-            /// Answer is a combination of a numeric value and unit, potentially with a comparator (&lt;, &gt;, etc.).
-            /// </summary>
-            [EnumLiteral("quantity")]
-            Quantity,
-        }
-        
-        /// <summary>
         /// Lifecycle status of the questionnaire.
+        /// (url: http://hl7.org/fhir/ValueSet/questionnaire-status)
         /// </summary>
         [FhirEnumeration("QuestionnaireStatus")]
         public enum QuestionnaireStatus
         {
             /// <summary>
             /// This Questionnaire is not ready for official use.
+            /// (system: http://hl7.org/fhir/questionnaire-status)
             /// </summary>
-            [EnumLiteral("draft")]
+            [EnumLiteral("draft"), Description("Draft")]
             Draft,
             /// <summary>
             /// This Questionnaire is ready for use.
+            /// (system: http://hl7.org/fhir/questionnaire-status)
             /// </summary>
-            [EnumLiteral("published")]
+            [EnumLiteral("published"), Description("Published")]
             Published,
             /// <summary>
             /// This Questionnaire should no longer be used to gather data.
+            /// (system: http://hl7.org/fhir/questionnaire-status)
             /// </summary>
-            [EnumLiteral("retired")]
+            [EnumLiteral("retired"), Description("Retired")]
             Retired,
         }
-        
+
+        /// <summary>
+        /// The expected format of an answer.
+        /// (url: http://hl7.org/fhir/ValueSet/answer-format)
+        /// </summary>
+        [FhirEnumeration("AnswerFormat")]
+        public enum AnswerFormat
+        {
+            /// <summary>
+            /// Answer is a yes/no answer.
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("boolean"), Description("Boolean")]
+            Boolean,
+            /// <summary>
+            /// Answer is a floating point number.
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("decimal"), Description("Decimal")]
+            Decimal,
+            /// <summary>
+            /// Answer is an integer.
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("integer"), Description("Integer")]
+            Integer,
+            /// <summary>
+            /// Answer is a date.
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("date"), Description("Date")]
+            Date,
+            /// <summary>
+            /// Answer is a date and time.
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("dateTime"), Description("Date Time")]
+            DateTime,
+            /// <summary>
+            /// Answer is a system timestamp.
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("instant"), Description("Instant")]
+            Instant,
+            /// <summary>
+            /// Answer is a time (hour/minute/second) independent of date.
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("time"), Description("Time")]
+            Time,
+            /// <summary>
+            /// Answer is a short (few words to short sentence) free-text entry.
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("string"), Description("String")]
+            String,
+            /// <summary>
+            /// Answer is a long (potentially multi-paragraph) free-text entry (still captured as a string).
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("text"), Description("Text")]
+            Text,
+            /// <summary>
+            /// Answer is a url (website, FTP site, etc.).
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("url"), Description("Url")]
+            Url,
+            /// <summary>
+            /// Answer is a Coding drawn from a list of options.
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("choice"), Description("Choice")]
+            Choice,
+            /// <summary>
+            /// Answer is a Coding drawn from a list of options or a free-text entry.
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("open-choice"), Description("Open Choice")]
+            OpenChoice,
+            /// <summary>
+            /// Answer is binary content such as a image, PDF, etc.
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("attachment"), Description("Attachment")]
+            Attachment,
+            /// <summary>
+            /// Answer is a reference to another resource (practitioner, organization, etc.).
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("reference"), Description("Reference")]
+            Reference,
+            /// <summary>
+            /// Answer is a combination of a numeric value and unit, potentially with a comparator (&lt;, &gt;, etc.).
+            /// (system: http://hl7.org/fhir/answer-format)
+            /// </summary>
+            [EnumLiteral("quantity"), Description("Quantity")]
+            Quantity,
+        }
+
         [FhirType("GroupComponent")]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -168,7 +189,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// To link questionnaire with questionnaire response
             /// </summary>
-            [FhirElement("linkId", InSummary=true, Order=40)]
+            [FhirElement("linkId", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString LinkIdElement
             {
@@ -246,7 +267,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additional text for the group
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=70)]
+            [FhirElement("text", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -278,7 +299,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether the group must be included in data results
             /// </summary>
-            [FhirElement("required", InSummary=true, Order=80)]
+            [FhirElement("required", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RequiredElement
             {
@@ -310,7 +331,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether the group may repeat
             /// </summary>
-            [FhirElement("repeats", InSummary=true, Order=90)]
+            [FhirElement("repeats", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RepeatsElement
             {
@@ -342,7 +363,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested questionnaire group
             /// </summary>
-            [FhirElement("group", InSummary=true, Order=100)]
+            [FhirElement("group", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group
@@ -356,7 +377,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Questions in this group
             /// </summary>
-            [FhirElement("question", InSummary=true, Order=110)]
+            [FhirElement("question", Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.QuestionComponent> Question
@@ -442,7 +463,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// To link questionnaire with questionnaire response
             /// </summary>
-            [FhirElement("linkId", InSummary=true, Order=40)]
+            [FhirElement("linkId", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString LinkIdElement
             {
@@ -474,7 +495,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Concept that represents this question on a questionnaire
             /// </summary>
-            [FhirElement("concept", InSummary=true, Order=50)]
+            [FhirElement("concept", Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Concept
@@ -488,7 +509,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Text of the question as it is shown to the user
             /// </summary>
-            [FhirElement("text", InSummary=true, Order=60)]
+            [FhirElement("text", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString TextElement
             {
@@ -520,7 +541,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// boolean | decimal | integer | date | dateTime +
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=70)]
+            [FhirElement("type", Order=70)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Questionnaire.AnswerFormat> TypeElement
             {
@@ -552,7 +573,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether the question must be answered in data results
             /// </summary>
-            [FhirElement("required", InSummary=true, Order=80)]
+            [FhirElement("required", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RequiredElement
             {
@@ -584,7 +605,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether the question  can have multiple answers
             /// </summary>
-            [FhirElement("repeats", InSummary=true, Order=90)]
+            [FhirElement("repeats", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean RepeatsElement
             {
@@ -616,7 +637,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Valueset containing permitted answers
             /// </summary>
-            [FhirElement("options", InSummary=true, Order=100)]
+            [FhirElement("options", Order=100)]
             [References("ValueSet")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Options
@@ -630,7 +651,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Permitted answer
             /// </summary>
-            [FhirElement("option", InSummary=true, Order=110)]
+            [FhirElement("option", Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Coding> Option
@@ -644,7 +665,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested questionnaire group
             /// </summary>
-            [FhirElement("group", InSummary=true, Order=120)]
+            [FhirElement("group", Order=120)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Questionnaire.GroupComponent> Group
@@ -886,13 +907,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("subjectType", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Code> SubjectTypeElement
+        public List<Code<Hl7.Fhir.Model.ResourceType>> SubjectTypeElement
         {
-            get { if(_SubjectTypeElement==null) _SubjectTypeElement = new List<Hl7.Fhir.Model.Code>(); return _SubjectTypeElement; }
+            get { if(_SubjectTypeElement==null) _SubjectTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(); return _SubjectTypeElement; }
             set { _SubjectTypeElement = value; OnPropertyChanged("SubjectTypeElement"); }
         }
         
-        private List<Hl7.Fhir.Model.Code> _SubjectTypeElement;
+        private List<Code<Hl7.Fhir.Model.ResourceType>> _SubjectTypeElement;
         
         /// <summary>
         /// Resource that can be subject of QuestionnaireResponse
@@ -900,7 +921,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IEnumerable<string> SubjectType
+        public IEnumerable<Hl7.Fhir.Model.ResourceType?> SubjectType
         {
             get { return SubjectTypeElement != null ? SubjectTypeElement.Select(elem => elem.Value) : null; }
             set
@@ -908,7 +929,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   SubjectTypeElement = null; 
                 else
-                  SubjectTypeElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
+                  SubjectTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>(elem)));
                 OnPropertyChanged("SubjectType");
             }
         }
@@ -940,7 +961,7 @@ namespace Hl7.Fhir.Model
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
-                if(SubjectTypeElement != null) dest.SubjectTypeElement = new List<Hl7.Fhir.Model.Code>(SubjectTypeElement.DeepCopy());
+                if(SubjectTypeElement != null) dest.SubjectTypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(SubjectTypeElement.DeepCopy());
                 if(Group != null) dest.Group = (Hl7.Fhir.Model.Questionnaire.GroupComponent)Group.DeepCopy();
                 return dest;
             }

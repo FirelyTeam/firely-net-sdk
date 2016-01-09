@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,58 +55,66 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The status of the diagnostic report as a whole.
+        /// (url: http://hl7.org/fhir/ValueSet/diagnostic-report-status)
         /// </summary>
         [FhirEnumeration("DiagnosticReportStatus")]
         public enum DiagnosticReportStatus
         {
             /// <summary>
             /// The existence of the report is registered, but there is nothing yet available.
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("registered")]
+            [EnumLiteral("registered"), Description("Registered")]
             Registered,
             /// <summary>
             /// This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified.
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("partial")]
+            [EnumLiteral("partial"), Description("Partial")]
             Partial,
             /// <summary>
             /// The report is complete and verified by an authorized person.
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("final")]
+            [EnumLiteral("final"), Description("Final")]
             Final,
             /// <summary>
             /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("corrected")]
+            [EnumLiteral("corrected"), Description("Corrected")]
             Corrected,
             /// <summary>
             /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed.
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("appended")]
+            [EnumLiteral("appended"), Description("Appended")]
             Appended,
             /// <summary>
             /// The report is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("cancelled")]
+            [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// The report has been withdrawn following a previous final release.
+            /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
-            [EnumLiteral("entered-in-error")]
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
             EnteredInError,
         }
-        
-        [FhirType("DiagnosticReportImageComponent")]
+
+        [FhirType("ImageComponent")]
         [DataContract]
-        public partial class DiagnosticReportImageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DiagnosticReportImageComponent"; } }
+            public override string TypeName { get { return "ImageComponent"; } }
             
             /// <summary>
             /// Comment about the image (e.g. explanation)
             /// </summary>
-            [FhirElement("comment", InSummary=true, Order=40)]
+            [FhirElement("comment", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString CommentElement
             {
@@ -151,7 +160,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DiagnosticReportImageComponent;
+                var dest = other as ImageComponent;
                 
                 if (dest != null)
                 {
@@ -166,12 +175,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DiagnosticReportImageComponent());
+                return CopyTo(new ImageComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DiagnosticReportImageComponent;
+                var otherT = other as ImageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -183,7 +192,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DiagnosticReportImageComponent;
+                var otherT = other as ImageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -428,13 +437,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("image", InSummary=true, Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportImageComponent> Image
+        public List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent> Image
         {
-            get { if(_Image==null) _Image = new List<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportImageComponent>(); return _Image; }
+            get { if(_Image==null) _Image = new List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent>(); return _Image; }
             set { _Image = value; OnPropertyChanged("Image"); }
         }
         
-        private List<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportImageComponent> _Image;
+        private List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent> _Image;
         
         /// <summary>
         /// Clinical Interpretation of test results
@@ -516,7 +525,7 @@ namespace Hl7.Fhir.Model
                 if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
                 if(Result != null) dest.Result = new List<Hl7.Fhir.Model.ResourceReference>(Result.DeepCopy());
                 if(ImagingStudy != null) dest.ImagingStudy = new List<Hl7.Fhir.Model.ResourceReference>(ImagingStudy.DeepCopy());
-                if(Image != null) dest.Image = new List<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportImageComponent>(Image.DeepCopy());
+                if(Image != null) dest.Image = new List<Hl7.Fhir.Model.DiagnosticReport.ImageComponent>(Image.DeepCopy());
                 if(ConclusionElement != null) dest.ConclusionElement = (Hl7.Fhir.Model.FhirString)ConclusionElement.DeepCopy();
                 if(CodedDiagnosis != null) dest.CodedDiagnosis = new List<Hl7.Fhir.Model.CodeableConcept>(CodedDiagnosis.DeepCopy());
                 if(PresentedForm != null) dest.PresentedForm = new List<Hl7.Fhir.Model.Attachment>(PresentedForm.DeepCopy());

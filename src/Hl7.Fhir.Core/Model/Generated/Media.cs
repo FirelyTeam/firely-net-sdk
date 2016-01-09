@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,27 +55,31 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Whether the Media is a photo, video, or audio
+        /// (url: http://hl7.org/fhir/ValueSet/digital-media-type)
         /// </summary>
         [FhirEnumeration("DigitalMediaType")]
         public enum DigitalMediaType
         {
             /// <summary>
             /// The media consists of one or more unmoving images, including photographs, computer-generated graphs and charts, and scanned documents
+            /// (system: http://hl7.org/fhir/digital-media-type)
             /// </summary>
-            [EnumLiteral("photo")]
+            [EnumLiteral("photo"), Description("Photo")]
             Photo,
             /// <summary>
             /// The media consists of a series of frames that capture a moving image
+            /// (system: http://hl7.org/fhir/digital-media-type)
             /// </summary>
-            [EnumLiteral("video")]
+            [EnumLiteral("video"), Description("Video")]
             Video,
             /// <summary>
             /// The media consists of a sound recording
+            /// (system: http://hl7.org/fhir/digital-media-type)
             /// </summary>
-            [EnumLiteral("audio")]
+            [EnumLiteral("audio"), Description("Audio")]
             Audio,
         }
-        
+
         /// <summary>
         /// photo | video | audio
         /// </summary>
@@ -273,7 +278,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Number of frames if &gt; 1 (photo)
+        /// Number of frames if > 1 (photo)
         /// </summary>
         [FhirElement("frames", InSummary=true, Order=180)]
         [DataMember]
@@ -286,7 +291,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.PositiveInt _FramesElement;
         
         /// <summary>
-        /// Number of frames if &gt; 1 (photo)
+        /// Number of frames if > 1 (photo)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

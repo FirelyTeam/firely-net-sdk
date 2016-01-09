@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Model
         public partial class ValueSet : Hl7.Fhir.Model.DomainResource
         {
             [Obsolete("This property was renamed in DSTU2 to CodeSystem", true)]
-            public ValueSetCodeSystemComponent Define { get; set; }
+            public CodeSystemComponent Define { get; set; }
 
     //        public static bool CodeEquals(string code, string value, bool caseSensitive)
     //        {

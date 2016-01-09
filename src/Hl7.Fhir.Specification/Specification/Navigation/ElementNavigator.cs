@@ -356,16 +356,25 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public bool Duplicate()
         {
-            if (OrdinalPosition == null) return false;
+            var bm = Bookmark();
+            return DuplicateAfter(bm);
+        }
 
+        public bool DuplicateAfter(Bookmark target)
+        {
+            if (OrdinalPosition == null) return false;
             var start = OrdinalPosition.Value;
             var end = positionAfter();
+
+            if (!ReturnToBookmark(target)) return false;
+            var dest = positionAfter();
 
             var source = Elements.Skip(start).Take(end-start).ToList();
 
             foreach (var elem in source.Reverse<ElementDefinition>())
-                Elements.Insert(start, (ElementDefinition)elem.DeepCopy());
+                Elements.Insert(dest, (ElementDefinition)elem.DeepCopy());
 
+            OrdinalPosition = dest;
             return true;
         }
     

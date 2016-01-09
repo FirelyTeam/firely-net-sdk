@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,17 +53,17 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "RiskAssessment"; } }
         
-        [FhirType("RiskAssessmentPredictionComponent")]
+        [FhirType("PredictionComponent")]
         [DataContract]
-        public partial class RiskAssessmentPredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "RiskAssessmentPredictionComponent"; } }
+            public override string TypeName { get { return "PredictionComponent"; } }
             
             /// <summary>
             /// Possible outcome for the subject
             /// </summary>
-            [FhirElement("outcome", InSummary=true, Order=40)]
+            [FhirElement("outcome", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Outcome
@@ -76,7 +77,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Likelihood of specified outcome
             /// </summary>
-            [FhirElement("probability", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("probability", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
             public Hl7.Fhir.Model.Element Probability
@@ -90,7 +91,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Relative likelihood
             /// </summary>
-            [FhirElement("relativeRisk", InSummary=true, Order=60)]
+            [FhirElement("relativeRisk", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal RelativeRiskElement
             {
@@ -122,7 +123,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Timeframe or age range
             /// </summary>
-            [FhirElement("when", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("when", Order=70, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element When
@@ -136,7 +137,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Explanation of prediction
             /// </summary>
-            [FhirElement("rationale", InSummary=true, Order=80)]
+            [FhirElement("rationale", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString RationaleElement
             {
@@ -167,7 +168,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as RiskAssessmentPredictionComponent;
+                var dest = other as PredictionComponent;
                 
                 if (dest != null)
                 {
@@ -185,12 +186,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new RiskAssessmentPredictionComponent());
+                return CopyTo(new PredictionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as RiskAssessmentPredictionComponent;
+                var otherT = other as PredictionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -205,7 +206,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as RiskAssessmentPredictionComponent;
+                var otherT = other as PredictionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -356,13 +357,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("prediction", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent> Prediction
+        public List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent> Prediction
         {
-            get { if(_Prediction==null) _Prediction = new List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent>(); return _Prediction; }
+            get { if(_Prediction==null) _Prediction = new List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent>(); return _Prediction; }
             set { _Prediction = value; OnPropertyChanged("Prediction"); }
         }
         
-        private List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent> _Prediction;
+        private List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent> _Prediction;
         
         /// <summary>
         /// How to reduce risk
@@ -411,7 +412,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Basis != null) dest.Basis = new List<Hl7.Fhir.Model.ResourceReference>(Basis.DeepCopy());
-                if(Prediction != null) dest.Prediction = new List<Hl7.Fhir.Model.RiskAssessment.RiskAssessmentPredictionComponent>(Prediction.DeepCopy());
+                if(Prediction != null) dest.Prediction = new List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent>(Prediction.DeepCopy());
                 if(MitigationElement != null) dest.MitigationElement = (Hl7.Fhir.Model.FhirString)MitigationElement.DeepCopy();
                 return dest;
             }

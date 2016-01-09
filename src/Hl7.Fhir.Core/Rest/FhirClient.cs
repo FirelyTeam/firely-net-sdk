@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        private bool _returnFullResource = false;
+        //private bool _returnFullResource = false;
 
         /// <summary>
         /// Should calls to Create, Update and transaction operations return the whole updated content?
@@ -123,11 +123,10 @@ namespace Hl7.Fhir.Rest
         {
             get 
             {
-                return _returnFullResource;
+                return _requester.Prefer == Prefer.ReturnRepresentation;
             }
             set 
             {
-                _returnFullResource = value;
                 _requester.Prefer = value==true ? Prefer.ReturnRepresentation : Prefer.ReturnMinimal; 
             }
         }
@@ -136,7 +135,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
         /// </summary>
-        public Bundle.BundleEntryResponseComponent LastResult
+        public Bundle.ResponseComponent LastResult
         {
             get { return _requester.LastResult != null ? _requester.LastResult.Response : null; }
         }
@@ -375,9 +374,9 @@ namespace Hl7.Fhir.Rest
         /// Get a conformance statement for the system
         /// </summary>
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
-        public Conformance Conformance()
+        public Conformance Conformance(SummaryType? summary = null)
         {
-            var tx = new TransactionBuilder(Endpoint).Conformance().ToBundle();          
+            var tx = new TransactionBuilder(Endpoint).Conformance(summary).ToBundle();
             return execute<Conformance>(tx, HttpStatusCode.OK);
         }
 
@@ -391,7 +390,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>        
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-	    public Bundle TypeHistory(string resourceType, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+	    public Bundle TypeHistory(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {          
             return internalHistory(resourceType, null, since, pageSize, summary);
         }
@@ -405,7 +404,7 @@ namespace Hl7.Fhir.Rest
         /// <typeparam name="TResource">The type of Resource to get the history for</typeparam>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null, bool summary = false) where TResource : Resource, new()
+        public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False) where TResource : Resource, new()
         {
             string collection = typeof(TResource).GetCollectionName();
             return internalHistory(collection, null, since, pageSize, summary);
@@ -420,7 +419,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+        public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             if (location == null) throw Error.ArgumentNull("location");
 
@@ -429,7 +428,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+        public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             return History(new Uri(location, UriKind.Relative), since, pageSize, summary);
         }
@@ -443,12 +442,12 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Indicates whether the returned resources should just contain the minimal set of elements</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             return internalHistory(null, null, since, pageSize, summary);
         }
 
-        private Bundle internalHistory(string resourceType = null, string id = null, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+        private Bundle internalHistory(string resourceType = null, string id = null, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             TransactionBuilder history;
 
@@ -478,58 +477,58 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public Resource WholeSystemOperation(string operationName, Parameters parameters = null)
+        public Resource WholeSystemOperation(string operationName, Parameters parameters = null, bool useGet = false)
         {
             if (operationName == null) throw Error.ArgumentNull("operationName");
-            return internalOperation(operationName, parameters: parameters);
+            return internalOperation(operationName, parameters: parameters, useGet: useGet);
         }
 
-        public Resource TypeOperation<TResource>(string operationName, Parameters parameters = null) where TResource : Resource
+        public Resource TypeOperation<TResource>(string operationName, Parameters parameters = null, bool useGet = false) where TResource : Resource
         {
             if (operationName == null) throw Error.ArgumentNull("operationName");
 
             var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
-            return TypeOperation(operationName, typeName, parameters);
+            return TypeOperation(operationName, typeName, parameters, useGet: useGet);
         }
 
-        public Resource TypeOperation(string operationName, string typeName, Parameters parameters = null)
+        public Resource TypeOperation(string operationName, string typeName, Parameters parameters = null, bool useGet = false)
         {
             if (operationName == null) throw Error.ArgumentNull("operationName");
             if (typeName == null) throw Error.ArgumentNull("typeName");
 
-            return internalOperation(operationName, typeName, parameters: parameters);
+            return internalOperation(operationName, typeName, parameters: parameters, useGet: useGet);
         }
 
-        public Resource InstanceOperation(Uri location, string operationName, Parameters parameters = null)
+        public Resource InstanceOperation(Uri location, string operationName, Parameters parameters = null, bool useGet = false)
         {
             if (location == null) throw Error.ArgumentNull("location");
             if (operationName == null) throw Error.ArgumentNull("operationName");
 
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
 
-            return internalOperation(operationName, id.ResourceType, id.Id, id.VersionId, parameters);
+            return internalOperation(operationName, id.ResourceType, id.Id, id.VersionId, parameters, useGet);
         }
 
-        public Resource Operation(Uri location, string operationName, Parameters parameters = null)
+        public Resource Operation(Uri location, string operationName, Parameters parameters = null, bool useGet = false)
         {
             if (location == null) throw Error.ArgumentNull("location");
             if (operationName == null) throw Error.ArgumentNull("operationName");
 
-            var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters).ToBundle();
+            var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(location), operationName, parameters, useGet).ToBundle();
 
             return execute<Resource>(tx, HttpStatusCode.OK);
         }
 
-        public Resource Operation(Uri operation, Parameters parameters = null)
+        public Resource Operation(Uri operation, Parameters parameters = null, bool useGet = false)
         {
             if (operation == null) throw Error.ArgumentNull("operation");
 
-            var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters).ToBundle();
+            var tx = new TransactionBuilder(Endpoint).EndpointOperation(new RestUrl(operation), parameters, useGet).ToBundle();
 
             return execute<Resource>(tx, HttpStatusCode.OK);
         }
 
-        private Resource internalOperation(string operationName, string type = null, string id = null, string vid = null, Parameters parameters = null)
+        private Resource internalOperation(string operationName, string type = null, string id = null, string vid = null, Parameters parameters = null, bool useGet = false)
         {
             // Brian: Not sure why we would create this parameters object as empty.
             //        I would imagine that a null parameters object is different to an empty one?
@@ -538,11 +537,11 @@ namespace Hl7.Fhir.Rest
             Bundle tx;
 
             if (type == null)
-                tx = new TransactionBuilder(Endpoint).ServerOperation(operationName, parameters).ToBundle();
+                tx = new TransactionBuilder(Endpoint).ServerOperation(operationName, parameters, useGet).ToBundle();
             else if (id == null)
-                tx = new TransactionBuilder(Endpoint).TypeOperation(type, operationName, parameters).ToBundle();
+                tx = new TransactionBuilder(Endpoint).TypeOperation(type, operationName, parameters, useGet).ToBundle();
             else
-                tx = new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters).ToBundle();
+                tx = new TransactionBuilder(Endpoint).ResourceOperation(type, id, vid, operationName, parameters, useGet).ToBundle();
 
             return execute<Resource>(tx, HttpStatusCode.OK);
         }
@@ -820,7 +819,9 @@ namespace Hl7.Fhir.Rest
             // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
             // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
             var noRealBody = response.Resource == null || response.Resource is OperationOutcome;
-            if (noRealBody && isPostOrPut(request) && ReturnFullResource && response.Response.Location != null)
+            if (noRealBody && isPostOrPut(request) 
+                && ReturnFullResource && response.Response.Location != null
+                && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity()) // Check that it isn't an operation too
             {
                 result = Get(response.Response.Location);
             }
@@ -845,7 +846,7 @@ namespace Hl7.Fhir.Rest
                 return result as TResource;
         }
 
-        private bool isPostOrPut(Bundle.BundleEntryComponent interaction)
+        private bool isPostOrPut(Bundle.EntryComponent interaction)
         {
             var method = interaction.Request.Method;
             return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;

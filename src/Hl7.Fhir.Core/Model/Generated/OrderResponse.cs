@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,61 +55,71 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The status of the response to an order.
+        /// (url: http://hl7.org/fhir/ValueSet/order-status)
         /// </summary>
         [FhirEnumeration("OrderStatus")]
         public enum OrderStatus
         {
             /// <summary>
             /// The order is known, but no processing has occurred at this time
+            /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("pending")]
+            [EnumLiteral("pending"), Description("Pending")]
             Pending,
             /// <summary>
             /// The order is undergoing initial processing to determine whether it will be accepted (usually this involves human review)
+            /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("review")]
+            [EnumLiteral("review"), Description("Review")]
             Review,
             /// <summary>
             /// The order was rejected because of a workflow/business logic reason
+            /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("rejected")]
+            [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The order was unable to be processed because of a technical error (i.e. unexpected error)
+            /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("error")]
+            [EnumLiteral("error"), Description("Error")]
             Error,
             /// <summary>
             /// The order has been accepted, and work is in progress.
+            /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("accepted")]
+            [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// Processing the order was halted at the initiators request.
+            /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("cancelled")]
+            [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// The order has been cancelled and replaced by another.
+            /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("replaced")]
+            [EnumLiteral("replaced"), Description("Replaced")]
             Replaced,
             /// <summary>
             /// Processing the order was stopped because of some workflow/business logic reason.
+            /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("aborted")]
+            [EnumLiteral("aborted"), Description("Aborted")]
             Aborted,
             /// <summary>
             /// The order has been completed.
+            /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Completed")]
             Completed,
         }
-        
+
         /// <summary>
         /// Identifiers assigned to this order by the orderer or by the receiver
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -122,7 +133,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The order that this is a response to
         /// </summary>
-        [FhirElement("request", Order=100)]
+        [FhirElement("request", InSummary=true, Order=100)]
         [References("Order")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -137,7 +148,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the response was made
         /// </summary>
-        [FhirElement("date", Order=110)]
+        [FhirElement("date", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
         {
@@ -169,7 +180,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who made the response
         /// </summary>
-        [FhirElement("who", Order=120)]
+        [FhirElement("who", InSummary=true, Order=120)]
         [References("Practitioner","Organization","Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Who
@@ -183,7 +194,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// pending | review | rejected | error | accepted | cancelled | replaced | aborted | completed
         /// </summary>
-        [FhirElement("orderStatus", Order=130)]
+        [FhirElement("orderStatus", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.OrderResponse.OrderStatus> OrderStatus_Element
@@ -216,7 +227,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional description of the response
         /// </summary>
-        [FhirElement("description", Order=140)]
+        [FhirElement("description", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -248,7 +259,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details of the outcome of performing the order
         /// </summary>
-        [FhirElement("fulfillment", Order=150)]
+        [FhirElement("fulfillment", InSummary=true, Order=150)]
         [References()]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]

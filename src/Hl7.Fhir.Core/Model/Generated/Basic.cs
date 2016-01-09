@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +56,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Business identifier
         /// </summary>
-        [FhirElement("identifier", Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -69,7 +70,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Kind of Resource
         /// </summary>
-        [FhirElement("code", Order=100)]
+        [FhirElement("code", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Code
@@ -83,7 +84,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Identifies the focus of this resource
         /// </summary>
-        [FhirElement("subject", Order=110)]
+        [FhirElement("subject", InSummary=true, Order=110)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -97,7 +98,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who created
         /// </summary>
-        [FhirElement("author", Order=120)]
+        [FhirElement("author", InSummary=true, Order=120)]
         [References("Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -111,7 +112,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When created
         /// </summary>
-        [FhirElement("created", Order=130)]
+        [FhirElement("created", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Date CreatedElement
         {

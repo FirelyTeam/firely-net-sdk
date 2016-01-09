@@ -14,7 +14,7 @@ namespace Hl7.Fhir.Support
     {
         internal static void Info(string messageFormat, params object[] messageArgs)
         {
-#if DEBUG
+#if DEBUGX
             Debug.WriteLine(Error.formatMessage(messageFormat,messageArgs));
 #endif
         }

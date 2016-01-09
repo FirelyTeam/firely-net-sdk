@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
             _inspector = SerializationConfig.Inspector;
         }
 
-        internal void Serialize(ClassMapping mapping, object instance, bool summary, SerializationMode mode = SerializationMode.AllMembers)
+        internal void Serialize(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode = SerializationMode.AllMembers)
         {
             if (mapping == null) throw Error.ArgumentNull("mapping");
 
@@ -48,16 +48,32 @@ namespace Hl7.Fhir.Serialization
 
             // Emit members that need xml /attributes/ first (to facilitate stream writer API)
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint == XmlSerializationHint.Attribute))
-                if(!summary || prop.InSummary || instance is Bundle || prop.Name == "id") write(mapping, instance, summary, prop, mode);
+            {
+                WriteProperties(mapping, instance, summary, mode, prop);
+            }
 
             // Then emit the rest
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint != XmlSerializationHint.Attribute))
-                if (!summary || prop.InSummary || instance is Bundle || prop.Name == "id") write(mapping, instance, summary, prop, mode);
+            {
+                WriteProperties(mapping, instance, summary, mode, prop);
+            }
 
             _writer.WriteEndComplexContent();
         }
 
-        private void write(ClassMapping mapping, object instance, bool summary, PropertyMapping prop, SerializationMode mode)
+        private void WriteProperties(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode, PropertyMapping prop)
+        {
+            if (instance is Bundle && !(summary == Rest.SummaryType.Count && prop.Name.ToLower() == "entry")
+                || prop.Name == "id"
+                || summary == Rest.SummaryType.True && prop.InSummary
+                || summary == Rest.SummaryType.False
+                || summary == Rest.SummaryType.Data && prop.Name.ToLower() != "text"
+                || summary == Rest.SummaryType.Text && (prop.Name.ToLower() == "text" || prop.IsMandatoryElement)
+                )
+                write(mapping, instance, summary, prop, mode);
+        }
+
+        private void write(ClassMapping mapping, object instance, Rest.SummaryType summary, PropertyMapping prop, SerializationMode mode)
         {
             // Check whether we are asked to just serialize the value element (Value members of primitive Fhir datatypes)
             // or only the other members (Extension, Id etc in primitive Fhir datatypes)
@@ -77,7 +93,9 @@ namespace Hl7.Fhir.Serialization
                 // For Choice properties, determine the actual name of the element
                 // by appending its type to the base property name (i.e. deceasedBoolean, deceasedDate)
                 if (prop.Choice == ChoiceType.DatatypeChoice)
-                    memberName = determineElementMemberName(prop.Name, value.GetType());
+                {
+                    memberName = determineElementMemberName(prop.Name, GetSerializationTypeForDataTypeChoiceElements(prop, value));
+                }
 
                 _writer.WriteStartProperty(memberName);
                
@@ -98,6 +116,31 @@ namespace Hl7.Fhir.Serialization
 
                 _writer.WriteEndProperty();
             }
+        }
+
+        private Type GetSerializationTypeForDataTypeChoiceElements( PropertyMapping prop, object value)
+        {
+            Type serializationType = value.GetType();
+            if (!prop.IsPrimitive && false)
+            {
+#if PORTABLE45
+                Type baseType = serializationType.GetTypeInfo().BaseType;
+                while (baseType != typeof(Element) && baseType != typeof(object))
+                {
+                    serializationType = baseType;
+                    baseType = baseType.GetTypeInfo().BaseType;
+                }
+#else
+                Type baseType = serializationType.BaseType;
+                while (baseType != typeof(Element) && baseType != typeof(object))
+                {
+                    serializationType = baseType;
+                    baseType = baseType.BaseType;
+                }
+#endif
+            }
+
+            return serializationType;
         }
 
 

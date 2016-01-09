@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,166 +54,194 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DeviceMetric"; } }
         
         /// <summary>
-        /// Describes the type of a metric calibration.
-        /// </summary>
-        [FhirEnumeration("DeviceMetricCalibrationType")]
-        public enum DeviceMetricCalibrationType
-        {
-            /// <summary>
-            /// TODO
-            /// </summary>
-            [EnumLiteral("unspecified")]
-            Unspecified,
-            /// <summary>
-            /// TODO
-            /// </summary>
-            [EnumLiteral("offset")]
-            Offset,
-            /// <summary>
-            /// TODO
-            /// </summary>
-            [EnumLiteral("gain")]
-            Gain,
-            /// <summary>
-            /// TODO
-            /// </summary>
-            [EnumLiteral("two-point")]
-            TwoPoint,
-        }
-        
-        /// <summary>
-        /// Describes the typical color of representation.
-        /// </summary>
-        [FhirEnumeration("DeviceMetricColor")]
-        public enum DeviceMetricColor
-        {
-            /// <summary>
-            /// Color for representation - black.
-            /// </summary>
-            [EnumLiteral("black")]
-            Black,
-            /// <summary>
-            /// Color for representation - red.
-            /// </summary>
-            [EnumLiteral("red")]
-            Red,
-            /// <summary>
-            /// Color for representation - green.
-            /// </summary>
-            [EnumLiteral("green")]
-            Green,
-            /// <summary>
-            /// Color for representation - yellow.
-            /// </summary>
-            [EnumLiteral("yellow")]
-            Yellow,
-            /// <summary>
-            /// Color for representation - blue.
-            /// </summary>
-            [EnumLiteral("blue")]
-            Blue,
-            /// <summary>
-            /// Color for representation - magenta.
-            /// </summary>
-            [EnumLiteral("magenta")]
-            Magenta,
-            /// <summary>
-            /// Color for representation - cyan.
-            /// </summary>
-            [EnumLiteral("cyan")]
-            Cyan,
-            /// <summary>
-            /// Color for representation - white.
-            /// </summary>
-            [EnumLiteral("white")]
-            White,
-        }
-        
-        /// <summary>
-        /// Describes the state of a metric calibration.
-        /// </summary>
-        [FhirEnumeration("DeviceMetricCalibrationState")]
-        public enum DeviceMetricCalibrationState
-        {
-            /// <summary>
-            /// The metric has not been calibrated.
-            /// </summary>
-            [EnumLiteral("not-calibrated")]
-            NotCalibrated,
-            /// <summary>
-            /// The metric needs to be calibrated.
-            /// </summary>
-            [EnumLiteral("calibration-required")]
-            CalibrationRequired,
-            /// <summary>
-            /// The metric has been calibrated.
-            /// </summary>
-            [EnumLiteral("calibrated")]
-            Calibrated,
-            /// <summary>
-            /// The state of calibration of this metric is unspecified.
-            /// </summary>
-            [EnumLiteral("unspecified")]
-            Unspecified,
-        }
-        
-        /// <summary>
         /// Describes the operational status of the DeviceMetric.
+        /// (url: http://hl7.org/fhir/ValueSet/metric-operational-status)
         /// </summary>
         [FhirEnumeration("DeviceMetricOperationalStatus")]
         public enum DeviceMetricOperationalStatus
         {
             /// <summary>
             /// The DeviceMetric is operating and will generate DeviceObservations.
+            /// (system: http://hl7.org/fhir/metric-operational-status)
             /// </summary>
-            [EnumLiteral("on")]
+            [EnumLiteral("on"), Description("On")]
             On,
             /// <summary>
             /// The DeviceMetric is not operating.
+            /// (system: http://hl7.org/fhir/metric-operational-status)
             /// </summary>
-            [EnumLiteral("off")]
+            [EnumLiteral("off"), Description("Off")]
             Off,
             /// <summary>
             /// The DeviceMetric is operating, but will not generate any DeviceObservations.
+            /// (system: http://hl7.org/fhir/metric-operational-status)
             /// </summary>
-            [EnumLiteral("standby")]
+            [EnumLiteral("standby"), Description("Standby")]
             Standby,
         }
-        
+
+        /// <summary>
+        /// Describes the typical color of representation.
+        /// (url: http://hl7.org/fhir/ValueSet/metric-color)
+        /// </summary>
+        [FhirEnumeration("DeviceMetricColor")]
+        public enum DeviceMetricColor
+        {
+            /// <summary>
+            /// Color for representation - black.
+            /// (system: http://hl7.org/fhir/metric-color)
+            /// </summary>
+            [EnumLiteral("black"), Description("Color Black")]
+            Black,
+            /// <summary>
+            /// Color for representation - red.
+            /// (system: http://hl7.org/fhir/metric-color)
+            /// </summary>
+            [EnumLiteral("red"), Description("Color Red")]
+            Red,
+            /// <summary>
+            /// Color for representation - green.
+            /// (system: http://hl7.org/fhir/metric-color)
+            /// </summary>
+            [EnumLiteral("green"), Description("Color Green")]
+            Green,
+            /// <summary>
+            /// Color for representation - yellow.
+            /// (system: http://hl7.org/fhir/metric-color)
+            /// </summary>
+            [EnumLiteral("yellow"), Description("Color Yellow")]
+            Yellow,
+            /// <summary>
+            /// Color for representation - blue.
+            /// (system: http://hl7.org/fhir/metric-color)
+            /// </summary>
+            [EnumLiteral("blue"), Description("Color Blue")]
+            Blue,
+            /// <summary>
+            /// Color for representation - magenta.
+            /// (system: http://hl7.org/fhir/metric-color)
+            /// </summary>
+            [EnumLiteral("magenta"), Description("Color Magenta")]
+            Magenta,
+            /// <summary>
+            /// Color for representation - cyan.
+            /// (system: http://hl7.org/fhir/metric-color)
+            /// </summary>
+            [EnumLiteral("cyan"), Description("Color Cyan")]
+            Cyan,
+            /// <summary>
+            /// Color for representation - white.
+            /// (system: http://hl7.org/fhir/metric-color)
+            /// </summary>
+            [EnumLiteral("white"), Description("Color White")]
+            White,
+        }
+
         /// <summary>
         /// Describes the category of the metric.
+        /// (url: http://hl7.org/fhir/ValueSet/metric-category)
         /// </summary>
         [FhirEnumeration("DeviceMetricCategory")]
         public enum DeviceMetricCategory
         {
             /// <summary>
             /// DeviceObservations generated for this DeviceMetric are measured.
+            /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
-            [EnumLiteral("measurement")]
+            [EnumLiteral("measurement"), Description("Measurement")]
             Measurement,
             /// <summary>
             /// DeviceObservations generated for this DeviceMetric is a setting that will influence the behavior of the Device.
+            /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
-            [EnumLiteral("setting")]
+            [EnumLiteral("setting"), Description("Setting")]
             Setting,
             /// <summary>
             /// DeviceObservations generated for this DeviceMetric are calculated.
+            /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
-            [EnumLiteral("calculation")]
+            [EnumLiteral("calculation"), Description("Calculation")]
             Calculation,
             /// <summary>
             /// The category of this DeviceMetric is unspecified.
+            /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
-            [EnumLiteral("unspecified")]
+            [EnumLiteral("unspecified"), Description("Unspecified")]
             Unspecified,
         }
-        
-        [FhirType("DeviceMetricCalibrationComponent")]
+
+        /// <summary>
+        /// Describes the type of a metric calibration.
+        /// (url: http://hl7.org/fhir/ValueSet/metric-calibration-type)
+        /// </summary>
+        [FhirEnumeration("DeviceMetricCalibrationType")]
+        public enum DeviceMetricCalibrationType
+        {
+            /// <summary>
+            /// TODO
+            /// (system: http://hl7.org/fhir/metric-calibration-type)
+            /// </summary>
+            [EnumLiteral("unspecified"), Description("Unspecified")]
+            Unspecified,
+            /// <summary>
+            /// TODO
+            /// (system: http://hl7.org/fhir/metric-calibration-type)
+            /// </summary>
+            [EnumLiteral("offset"), Description("Offset")]
+            Offset,
+            /// <summary>
+            /// TODO
+            /// (system: http://hl7.org/fhir/metric-calibration-type)
+            /// </summary>
+            [EnumLiteral("gain"), Description("Gain")]
+            Gain,
+            /// <summary>
+            /// TODO
+            /// (system: http://hl7.org/fhir/metric-calibration-type)
+            /// </summary>
+            [EnumLiteral("two-point"), Description("Two Point")]
+            TwoPoint,
+        }
+
+        /// <summary>
+        /// Describes the state of a metric calibration.
+        /// (url: http://hl7.org/fhir/ValueSet/metric-calibration-state)
+        /// </summary>
+        [FhirEnumeration("DeviceMetricCalibrationState")]
+        public enum DeviceMetricCalibrationState
+        {
+            /// <summary>
+            /// The metric has not been calibrated.
+            /// (system: http://hl7.org/fhir/metric-calibration-state)
+            /// </summary>
+            [EnumLiteral("not-calibrated"), Description("Not Calibrated")]
+            NotCalibrated,
+            /// <summary>
+            /// The metric needs to be calibrated.
+            /// (system: http://hl7.org/fhir/metric-calibration-state)
+            /// </summary>
+            [EnumLiteral("calibration-required"), Description("Calibration Required")]
+            CalibrationRequired,
+            /// <summary>
+            /// The metric has been calibrated.
+            /// (system: http://hl7.org/fhir/metric-calibration-state)
+            /// </summary>
+            [EnumLiteral("calibrated"), Description("Calibrated")]
+            Calibrated,
+            /// <summary>
+            /// The state of calibration of this metric is unspecified.
+            /// (system: http://hl7.org/fhir/metric-calibration-state)
+            /// </summary>
+            [EnumLiteral("unspecified"), Description("Unspecified")]
+            Unspecified,
+        }
+
+        [FhirType("CalibrationComponent")]
         [DataContract]
-        public partial class DeviceMetricCalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "DeviceMetricCalibrationComponent"; } }
+            public override string TypeName { get { return "CalibrationComponent"; } }
             
             /// <summary>
             /// unspecified | offset | gain | two-point
@@ -312,7 +341,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as DeviceMetricCalibrationComponent;
+                var dest = other as CalibrationComponent;
                 
                 if (dest != null)
                 {
@@ -328,12 +357,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new DeviceMetricCalibrationComponent());
+                return CopyTo(new CalibrationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as DeviceMetricCalibrationComponent;
+                var otherT = other as CalibrationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -346,7 +375,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as DeviceMetricCalibrationComponent;
+                var otherT = other as CalibrationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -363,7 +392,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of metric
         /// </summary>
-        [FhirElement("type", Order=90)]
+        [FhirElement("type", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
@@ -377,7 +406,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique identifier of this DeviceMetric
         /// </summary>
-        [FhirElement("identifier", Order=100)]
+        [FhirElement("identifier", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Identifier Identifier
@@ -391,7 +420,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unit of metric
         /// </summary>
-        [FhirElement("unit", Order=110)]
+        [FhirElement("unit", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Unit
         {
@@ -404,7 +433,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Describes the link to the source Device
         /// </summary>
-        [FhirElement("source", Order=120)]
+        [FhirElement("source", InSummary=true, Order=120)]
         [References("Device")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
@@ -418,7 +447,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Describes the link to the parent DeviceComponent
         /// </summary>
-        [FhirElement("parent", Order=130)]
+        [FhirElement("parent", InSummary=true, Order=130)]
         [References("DeviceComponent")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Parent
@@ -432,7 +461,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// on | off | standby
         /// </summary>
-        [FhirElement("operationalStatus", Order=140)]
+        [FhirElement("operationalStatus", InSummary=true, Order=140)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus> OperationalStatusElement
         {
@@ -464,7 +493,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// black | red | green | yellow | blue | magenta | cyan | white
         /// </summary>
-        [FhirElement("color", Order=150)]
+        [FhirElement("color", InSummary=true, Order=150)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor> ColorElement
         {
@@ -496,7 +525,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// measurement | setting | calculation | unspecified
         /// </summary>
-        [FhirElement("category", Order=160)]
+        [FhirElement("category", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory> CategoryElement
@@ -529,7 +558,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Describes the measurement repetition time
         /// </summary>
-        [FhirElement("measurementPeriod", Order=170)]
+        [FhirElement("measurementPeriod", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Timing MeasurementPeriod
         {
@@ -542,16 +571,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Describes the calibrations that have been performed or that are required to be performed
         /// </summary>
-        [FhirElement("calibration", Order=180)]
+        [FhirElement("calibration", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationComponent> Calibration
+        public List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> Calibration
         {
-            get { if(_Calibration==null) _Calibration = new List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationComponent>(); return _Calibration; }
+            get { if(_Calibration==null) _Calibration = new List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>(); return _Calibration; }
             set { _Calibration = value; OnPropertyChanged("Calibration"); }
         }
         
-        private List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationComponent> _Calibration;
+        private List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> _Calibration;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -569,7 +598,7 @@ namespace Hl7.Fhir.Model
                 if(ColorElement != null) dest.ColorElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>)ColorElement.DeepCopy();
                 if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>)CategoryElement.DeepCopy();
                 if(MeasurementPeriod != null) dest.MeasurementPeriod = (Hl7.Fhir.Model.Timing)MeasurementPeriod.DeepCopy();
-                if(Calibration != null) dest.Calibration = new List<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationComponent>(Calibration.DeepCopy());
+                if(Calibration != null) dest.Calibration = new List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent>(Calibration.DeepCopy());
                 return dest;
             }
             else

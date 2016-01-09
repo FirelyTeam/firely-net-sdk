@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,56 +55,63 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Indicates whether the location is still in use.
+        /// (url: http://hl7.org/fhir/ValueSet/location-status)
         /// </summary>
         [FhirEnumeration("LocationStatus")]
         public enum LocationStatus
         {
             /// <summary>
             /// The location is operational.
+            /// (system: http://hl7.org/fhir/location-status)
             /// </summary>
-            [EnumLiteral("active")]
+            [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
             /// The location is temporarily closed.
+            /// (system: http://hl7.org/fhir/location-status)
             /// </summary>
-            [EnumLiteral("suspended")]
+            [EnumLiteral("suspended"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// The location is no longer used.
+            /// (system: http://hl7.org/fhir/location-status)
             /// </summary>
-            [EnumLiteral("inactive")]
+            [EnumLiteral("inactive"), Description("Inactive")]
             Inactive,
         }
-        
+
         /// <summary>
         /// Indicates whether a resource instance represents a specific location or a class of locations.
+        /// (url: http://hl7.org/fhir/ValueSet/location-mode)
         /// </summary>
         [FhirEnumeration("LocationMode")]
         public enum LocationMode
         {
             /// <summary>
             /// The Location resource represents a specific instance of a location (e.g. Operating Theatre 1A).
+            /// (system: http://hl7.org/fhir/location-mode)
             /// </summary>
-            [EnumLiteral("instance")]
+            [EnumLiteral("instance"), Description("Instance")]
             Instance,
             /// <summary>
             /// The Location represents a class of locations (e.g. Any Operating Theatre) although this class of locations could be constrained within a specific boundary (such as organization, or parent location, address etc.).
+            /// (system: http://hl7.org/fhir/location-mode)
             /// </summary>
-            [EnumLiteral("kind")]
+            [EnumLiteral("kind"), Description("Kind")]
             Kind,
         }
-        
-        [FhirType("LocationPositionComponent")]
+
+        [FhirType("PositionComponent")]
         [DataContract]
-        public partial class LocationPositionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "LocationPositionComponent"; } }
+            public override string TypeName { get { return "PositionComponent"; } }
             
             /// <summary>
             /// Longitude with WGS84 datum
             /// </summary>
-            [FhirElement("longitude", InSummary=true, Order=40)]
+            [FhirElement("longitude", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal LongitudeElement
@@ -136,7 +144,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Latitude with WGS84 datum
             /// </summary>
-            [FhirElement("latitude", InSummary=true, Order=50)]
+            [FhirElement("latitude", Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal LatitudeElement
@@ -169,7 +177,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Altitude with WGS84 datum
             /// </summary>
-            [FhirElement("altitude", InSummary=true, Order=60)]
+            [FhirElement("altitude", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal AltitudeElement
             {
@@ -200,7 +208,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as LocationPositionComponent;
+                var dest = other as PositionComponent;
                 
                 if (dest != null)
                 {
@@ -216,12 +224,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new LocationPositionComponent());
+                return CopyTo(new PositionComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as LocationPositionComponent;
+                var otherT = other as PositionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -234,7 +242,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as LocationPositionComponent;
+                var otherT = other as PositionComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -448,13 +456,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("position", Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.Location.LocationPositionComponent Position
+        public Hl7.Fhir.Model.Location.PositionComponent Position
         {
             get { return _Position; }
             set { _Position = value; OnPropertyChanged("Position"); }
         }
         
-        private Hl7.Fhir.Model.Location.LocationPositionComponent _Position;
+        private Hl7.Fhir.Model.Location.PositionComponent _Position;
         
         /// <summary>
         /// Organization responsible for provisioning and upkeep
@@ -500,7 +508,7 @@ namespace Hl7.Fhir.Model
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Address != null) dest.Address = (Hl7.Fhir.Model.Address)Address.DeepCopy();
                 if(PhysicalType != null) dest.PhysicalType = (Hl7.Fhir.Model.CodeableConcept)PhysicalType.DeepCopy();
-                if(Position != null) dest.Position = (Hl7.Fhir.Model.Location.LocationPositionComponent)Position.DeepCopy();
+                if(Position != null) dest.Position = (Hl7.Fhir.Model.Location.PositionComponent)Position.DeepCopy();
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
                 return dest;

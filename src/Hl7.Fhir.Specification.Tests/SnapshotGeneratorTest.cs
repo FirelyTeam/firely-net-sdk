@@ -17,7 +17,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using System.Collections.Generic;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Specification.Expansion;
+using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Navigation;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -29,69 +29,35 @@ namespace Hl7.Fhir.Specification.Tests
     public class SnapshotGeneratorTest
 #endif
     {
-        private ArtifactResolver _source;
+        private ArtifactResolver _testSource;
 
         [TestInitialize]
         public void Setup()
         {
-            _source = ArtifactResolver.CreateOffline();
+            _testSource = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/snapshot-test")));
         }
 
 
-        [TestMethod, Ignore]
-        public void GenerateLipidSnapshot()
-        {            
-            var sd = _source.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/lipidprofile");
+        [TestMethod]
+        public void GenerateSingleSnapshot()
+        {                                  
+            var sd = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/genetics");
             Assert.IsNotNull(sd);
 
-            generateSnapshotAndCompare(sd, _source);
+            generateSnapshotAndCompare(sd, _testSource);
         }
 
-
-        [TestMethod, Ignore]
-        public void GenerateNorwegianSnapshots()
-        {
-            var mySource = new FileDirectoryArtifactSource(@"C:\Git\helsenord.ig\Source\Chapter.3.Package", includeSubdirectories: false);
-            var stdSource = ZipArtifactSource.CreateValidationSource();
-            var resolver = new ArtifactResolver(new MultiArtifactSource(mySource, stdSource));
-
-            var sources = new[] { "noHealthcareService", "noHealthcareServiceLocation", "noOrganization", "noPractitioner", "acronym" };
-
-            var generator = new SnapshotGenerator(resolver, markChanges: false);        
-
-            foreach (var source in sources)
-            {
-                var sd = resolver.GetStructureDefinition("http://hl7.no/fhir/StructureDefinition/" + source);
-                Assert.IsNotNull(sd, "Cannot find SD " + sd.Url);
-
-                generator.Generate(sd);
-                File.WriteAllText(@"C:\Git\helsenord.ig\Source\Chapter.3.Package\structure." + source + ".xml", FhirSerializer.SerializeResourceToXml(sd));
-            }           
-        }
-
-
-        [TestMethod,Ignore]
+  
+        [TestMethod]
         public void GenerateSnapshot()
         {           
             foreach (var original in findConstraintStrucDefs())
             {
                 if (original.Snapshot == null) continue;        // nothing to test, original does not have a snapshot
 
-                // Fix choiceXXX -> choice[x] bug in Grahame's differentials
-           //     repairChoiceBug(original.Snapshot);
-                repairChoiceBug(original.Differential);
-
                 Debug.WriteLine("Generating Snapshot for " + original.Url);
 
-                if (original.Url == "http://hl7.org/fhir/StructureDefinition/condition-daf-dafcondition" ||
-                    original.Url == "http://hl7.org/fhir/StructureDefinition/valueset-sdc-structureddatacapturevalueset" ||
-                      original.Url == "http://hl7.org/fhir/StructureDefinition/valueset-sdc-de-structureddatacapturevalueset" ||
-                    original.Url == "http://hl7.org/fhir/StructureDefinition/medicationdispense-daf-dafmedicationdispense")
-                {
-                    Debug.WriteLine("skipped");
-                }
-                else
-                    generateSnapshotAndCompare(original, _source);
+                generateSnapshotAndCompare(original, _testSource);
             }
         }
 
@@ -103,20 +69,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(original.IsExactly(expanded));
 
             generator.Generate(expanded);
-
-            // Simulate bug in Grahame's expander
-            if (original.Snapshot.Element.Count == expanded.Snapshot.Element.Count)
-            {
-                for (var ix = 0; ix < expanded.Snapshot.Element.Count; ix++)
-                {
-                    if (original.Snapshot.Element[ix].Path == expanded.Snapshot.Element[ix].Path)
-                    {
-                        expanded.Snapshot.Element[ix].Min = original.Snapshot.Element[ix].Min;
-                        expanded.Snapshot.Element[ix].MustSupport = original.Snapshot.Element[ix].MustSupport;
-                    }
-                }
-            }
-            
+           
             var areEqual = original.IsExactly(expanded);
 
             if (!areEqual)
@@ -127,37 +80,19 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsTrue(areEqual);
         }
-
-        private static void repairChoiceBug(IElementList original)
-        {
-            foreach (var elem in original.Element)
-            {
-                if (!elem.Type.IsNullOrEmpty())
-                {
-                    var typeName = elem.Type.First().Code;
-                    if (elem.Path.ToUpper().EndsWith(typeName.ToUpper()) && elem.Path.Length > typeName.Length 
-                        && elem.Path[elem.Path.Length-typeName.Length-1] != '.' && !elem.IsExtension() &&
-                        elem.Path!="ValueSet.lockedDate")
-                    {
-                        elem.Path = elem.Path.Substring(0, elem.Path.Length - typeName.Length) + "[x]";
-                    }
-                }
-            }
-        }
-
-
+   
         private IEnumerable<StructureDefinition> findConstraintStrucDefs()
         {
-            var sdsInSpec = _source.ListConformanceResources().Where(ci => ci.Type == ResourceType.StructureDefinition);
+            var testSDs = _testSource.ListConformanceResources().Where(ci => ci.Type == ResourceType.StructureDefinition);
 
-            foreach (var sdInfo in sdsInSpec)
+            foreach (var sdInfo in testSDs)
             {
-                var sd = _source.GetStructureDefinition(sdInfo.Url);
+                var sd = _testSource.GetStructureDefinition(sdInfo.Url);
 
                 if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
                     "but could not get structure definition by that url later on!").FormatWith(sdInfo.Url, sdInfo.Origin));
 
-                if (sd.IsConstraint)
+                if (sd.IsConstraint || sd.IsExtension)
                     yield return sd;
             }
         }
@@ -201,18 +136,18 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestExpandChild()
         {            
-            var qStructDef = _source.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            var qStructDef = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Questionnaire");
             Assert.IsNotNull(qStructDef);
             Assert.IsNotNull(qStructDef.Snapshot);
 
             var nav = new ElementNavigator(qStructDef.Snapshot.Element);
             
             nav.JumpToFirst("Questionnaire.telecom");
-            Assert.IsTrue(nav.ExpandElement(_source));
+            Assert.IsTrue(SnapshotGenerator.ExpandElement(nav,_testSource));
             Assert.IsTrue(nav.MoveToChild("period"), "Did not move into complex datatype ContactPoint");
 
             nav.JumpToFirst("Questionnaire.group");
-            Assert.IsTrue(nav.ExpandElement(_source));
+            Assert.IsTrue(SnapshotGenerator.ExpandElement(nav,_testSource));
             Assert.IsTrue(nav.MoveToChild("title"), "Did not move into internally defined backbone element Group");
         }
 

@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,115 +54,234 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ImplementationGuide"; } }
         
         /// <summary>
-        /// Why a resource is included in the guide.
-        /// </summary>
-        [FhirEnumeration("GuideResourcePurpose")]
-        public enum GuideResourcePurpose
-        {
-            /// <summary>
-            /// The resource is intended as an example.
-            /// </summary>
-            [EnumLiteral("example")]
-            Example,
-            /// <summary>
-            /// The resource defines a value set or concept map used in the implementation guide.
-            /// </summary>
-            [EnumLiteral("terminology")]
-            Terminology,
-            /// <summary>
-            /// The resource defines a profile (StructureDefinition) that is used in the implementation guide.
-            /// </summary>
-            [EnumLiteral("profile")]
-            Profile,
-            /// <summary>
-            /// The resource defines an extension (StructureDefinition) that is used in the implementation guide.
-            /// </summary>
-            [EnumLiteral("extension")]
-            Extension,
-            /// <summary>
-            /// The resource contains a dictionary that is part of the implementation guide.
-            /// </summary>
-            [EnumLiteral("dictionary")]
-            Dictionary,
-            /// <summary>
-            /// The resource defines a logical model (in a StructureDefinition) that is used in the implementation guide.
-            /// </summary>
-            [EnumLiteral("logical")]
-            Logical,
-        }
-        
-        /// <summary>
-        /// The kind of an included page.
-        /// </summary>
-        [FhirEnumeration("GuidePageKind")]
-        public enum GuidePageKind
-        {
-            /// <summary>
-            /// This is a page of content that is included in the implementation guide. It has no particular function.
-            /// </summary>
-            [EnumLiteral("page")]
-            Page,
-            /// <summary>
-            /// This is a page that represents a human readable rendering of an example.
-            /// </summary>
-            [EnumLiteral("example")]
-            Example,
-            /// <summary>
-            /// This is a page that represents a list of resources of one or more types.
-            /// </summary>
-            [EnumLiteral("list")]
-            List,
-            /// <summary>
-            /// This is a page showing where an included guide is injected.
-            /// </summary>
-            [EnumLiteral("include")]
-            Include,
-            /// <summary>
-            /// This is a page that lists the resources of a given type, and also creates pages for all the listed types as other pages in the section.
-            /// </summary>
-            [EnumLiteral("directory")]
-            Directory,
-            /// <summary>
-            /// This is a page that creates the listed resources as a dictionary.
-            /// </summary>
-            [EnumLiteral("dictionary")]
-            Dictionary,
-            /// <summary>
-            /// This is a generated page that contains the table of contents.
-            /// </summary>
-            [EnumLiteral("toc")]
-            Toc,
-            /// <summary>
-            /// This is a page that represents a presented resource. This is typically used for generated conformance resource presentations.
-            /// </summary>
-            [EnumLiteral("resource")]
-            Resource,
-        }
-        
-        /// <summary>
         /// How a dependency is represented when the guide is published.
+        /// (url: http://hl7.org/fhir/ValueSet/guide-dependency-type)
         /// </summary>
         [FhirEnumeration("GuideDependencyType")]
         public enum GuideDependencyType
         {
             /// <summary>
             /// The guide is referred to by URL.
+            /// (system: http://hl7.org/fhir/guide-dependency-type)
             /// </summary>
-            [EnumLiteral("reference")]
+            [EnumLiteral("reference"), Description("Reference")]
             Reference,
             /// <summary>
             /// The guide is embedded in this guide when published.
+            /// (system: http://hl7.org/fhir/guide-dependency-type)
             /// </summary>
-            [EnumLiteral("inclusion")]
+            [EnumLiteral("inclusion"), Description("Inclusion")]
             Inclusion,
         }
-        
-        [FhirType("ImplementationGuideDependencyComponent")]
+
+        /// <summary>
+        /// Why a resource is included in the guide.
+        /// (url: http://hl7.org/fhir/ValueSet/guide-resource-purpose)
+        /// </summary>
+        [FhirEnumeration("GuideResourcePurpose")]
+        public enum GuideResourcePurpose
+        {
+            /// <summary>
+            /// The resource is intended as an example.
+            /// (system: http://hl7.org/fhir/guide-resource-purpose)
+            /// </summary>
+            [EnumLiteral("example"), Description("Example")]
+            Example,
+            /// <summary>
+            /// The resource defines a value set or concept map used in the implementation guide.
+            /// (system: http://hl7.org/fhir/guide-resource-purpose)
+            /// </summary>
+            [EnumLiteral("terminology"), Description("Terminology")]
+            Terminology,
+            /// <summary>
+            /// The resource defines a profile (StructureDefinition) that is used in the implementation guide.
+            /// (system: http://hl7.org/fhir/guide-resource-purpose)
+            /// </summary>
+            [EnumLiteral("profile"), Description("Profile")]
+            Profile,
+            /// <summary>
+            /// The resource defines an extension (StructureDefinition) that is used in the implementation guide.
+            /// (system: http://hl7.org/fhir/guide-resource-purpose)
+            /// </summary>
+            [EnumLiteral("extension"), Description("Extension")]
+            Extension,
+            /// <summary>
+            /// The resource contains a dictionary that is part of the implementation guide.
+            /// (system: http://hl7.org/fhir/guide-resource-purpose)
+            /// </summary>
+            [EnumLiteral("dictionary"), Description("Dictionary")]
+            Dictionary,
+            /// <summary>
+            /// The resource defines a logical model (in a StructureDefinition) that is used in the implementation guide.
+            /// (system: http://hl7.org/fhir/guide-resource-purpose)
+            /// </summary>
+            [EnumLiteral("logical"), Description("Logical Model")]
+            Logical,
+        }
+
+        /// <summary>
+        /// The kind of an included page.
+        /// (url: http://hl7.org/fhir/ValueSet/guide-page-kind)
+        /// </summary>
+        [FhirEnumeration("GuidePageKind")]
+        public enum GuidePageKind
+        {
+            /// <summary>
+            /// This is a page of content that is included in the implementation guide. It has no particular function.
+            /// (system: http://hl7.org/fhir/guide-page-kind)
+            /// </summary>
+            [EnumLiteral("page"), Description("Page")]
+            Page,
+            /// <summary>
+            /// This is a page that represents a human readable rendering of an example.
+            /// (system: http://hl7.org/fhir/guide-page-kind)
+            /// </summary>
+            [EnumLiteral("example"), Description("Example")]
+            Example,
+            /// <summary>
+            /// This is a page that represents a list of resources of one or more types.
+            /// (system: http://hl7.org/fhir/guide-page-kind)
+            /// </summary>
+            [EnumLiteral("list"), Description("List")]
+            List,
+            /// <summary>
+            /// This is a page showing where an included guide is injected.
+            /// (system: http://hl7.org/fhir/guide-page-kind)
+            /// </summary>
+            [EnumLiteral("include"), Description("Include")]
+            Include,
+            /// <summary>
+            /// This is a page that lists the resources of a given type, and also creates pages for all the listed types as other pages in the section.
+            /// (system: http://hl7.org/fhir/guide-page-kind)
+            /// </summary>
+            [EnumLiteral("directory"), Description("Directory")]
+            Directory,
+            /// <summary>
+            /// This is a page that creates the listed resources as a dictionary.
+            /// (system: http://hl7.org/fhir/guide-page-kind)
+            /// </summary>
+            [EnumLiteral("dictionary"), Description("Dictionary")]
+            Dictionary,
+            /// <summary>
+            /// This is a generated page that contains the table of contents.
+            /// (system: http://hl7.org/fhir/guide-page-kind)
+            /// </summary>
+            [EnumLiteral("toc"), Description("Table Of Contents")]
+            Toc,
+            /// <summary>
+            /// This is a page that represents a presented resource. This is typically used for generated conformance resource presentations.
+            /// (system: http://hl7.org/fhir/guide-page-kind)
+            /// </summary>
+            [EnumLiteral("resource"), Description("Resource")]
+            Resource,
+        }
+
+        [FhirType("ContactComponent")]
         [DataContract]
-        public partial class ImplementationGuideDependencyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImplementationGuideDependencyComponent"; } }
+            public override string TypeName { get { return "ContactComponent"; } }
+            
+            /// <summary>
+            /// Name of a individual to contact
+            /// </summary>
+            [FhirElement("name", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _NameElement;
+            
+            /// <summary>
+            /// Name of a individual to contact
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NameElement = null; 
+                    else
+                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
+                }
+            }
+            
+            /// <summary>
+            /// Contact details for individual or publisher
+            /// </summary>
+            [FhirElement("telecom", InSummary=true, Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ContactPoint> Telecom
+            {
+                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+                set { _Telecom = value; OnPropertyChanged("Telecom"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as ContactComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new ContactComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as ContactComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as ContactComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("DependencyComponent")]
+        [DataContract]
+        public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DependencyComponent"; } }
             
             /// <summary>
             /// reference | inclusion
@@ -231,7 +351,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImplementationGuideDependencyComponent;
+                var dest = other as DependencyComponent;
                 
                 if (dest != null)
                 {
@@ -246,12 +366,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImplementationGuideDependencyComponent());
+                return CopyTo(new DependencyComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuideDependencyComponent;
+                var otherT = other as DependencyComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -263,7 +383,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuideDependencyComponent;
+                var otherT = other as DependencyComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -276,12 +396,148 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuidePackageResourceComponent")]
+        [FhirType("PackageComponent")]
         [DataContract]
-        public partial class ImplementationGuidePackageResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImplementationGuidePackageResourceComponent"; } }
+            public override string TypeName { get { return "PackageComponent"; } }
+            
+            /// <summary>
+            /// Name used .page.package
+            /// </summary>
+            [FhirElement("name", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString NameElement
+            {
+                get { return _NameElement; }
+                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _NameElement;
+            
+            /// <summary>
+            /// Name used .page.package
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Name
+            {
+                get { return NameElement != null ? NameElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      NameElement = null; 
+                    else
+                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Name");
+                }
+            }
+            
+            /// <summary>
+            /// Human readable text describing the package
+            /// </summary>
+            [FhirElement("description", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// Human readable text describing the package
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      DescriptionElement = null; 
+                    else
+                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
+            
+            /// <summary>
+            /// Resource in the implementation guide
+            /// </summary>
+            [FhirElement("resource", InSummary=true, Order=60)]
+            [Cardinality(Min=1,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent> Resource
+            {
+                get { if(_Resource==null) _Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent>(); return _Resource; }
+                set { _Resource = value; OnPropertyChanged("Resource"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent> _Resource;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as PackageComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                    if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent>(Resource.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new PackageComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as PackageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as PackageComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
+        [FhirType("ResourceComponent")]
+        [DataContract]
+        public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "ResourceComponent"; } }
             
             /// <summary>
             /// example | terminology | profile | extension | dictionary | logical
@@ -351,7 +607,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reason why included in guide
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=60)]
+            [FhirElement("description", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -383,7 +639,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Short code to identify the resource
             /// </summary>
-            [FhirElement("acronym", InSummary=true, Order=70)]
+            [FhirElement("acronym", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString AcronymElement
             {
@@ -430,7 +686,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Resource this is an example of (if applicable)
             /// </summary>
-            [FhirElement("exampleFor", InSummary=true, Order=90)]
+            [FhirElement("exampleFor", Order=90)]
             [References("StructureDefinition")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ExampleFor
@@ -443,7 +699,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImplementationGuidePackageResourceComponent;
+                var dest = other as ResourceComponent;
                 
                 if (dest != null)
                 {
@@ -462,12 +718,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImplementationGuidePackageResourceComponent());
+                return CopyTo(new ResourceComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuidePackageResourceComponent;
+                var otherT = other as ResourceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -483,7 +739,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuidePackageResourceComponent;
+                var otherT = other as ResourceComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -500,12 +756,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuideGlobalComponent")]
+        [FhirType("GlobalComponent")]
         [DataContract]
-        public partial class ImplementationGuideGlobalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImplementationGuideGlobalComponent"; } }
+            public override string TypeName { get { return "GlobalComponent"; } }
             
             /// <summary>
             /// Type this profiles applies to
@@ -513,13 +769,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Code TypeElement
+            public Code<Hl7.Fhir.Model.ResourceType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
-            private Hl7.Fhir.Model.Code _TypeElement;
+            private Code<Hl7.Fhir.Model.ResourceType> _TypeElement;
             
             /// <summary>
             /// Type this profiles applies to
@@ -527,7 +783,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Type
+            public Hl7.Fhir.Model.ResourceType? Type
             {
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
@@ -535,7 +791,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       TypeElement = null; 
                     else
-                      TypeElement = new Hl7.Fhir.Model.Code(value);
+                      TypeElement = new Code<Hl7.Fhir.Model.ResourceType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -557,12 +813,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImplementationGuideGlobalComponent;
+                var dest = other as GlobalComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ResourceType>)TypeElement.DeepCopy();
                     if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
                     return dest;
                 }
@@ -572,12 +828,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImplementationGuideGlobalComponent());
+                return CopyTo(new GlobalComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuideGlobalComponent;
+                var otherT = other as GlobalComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -589,7 +845,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuideGlobalComponent;
+                var otherT = other as GlobalComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -602,148 +858,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuidePackageComponent")]
+        [FhirType("PageComponent")]
         [DataContract]
-        public partial class ImplementationGuidePackageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ImplementationGuidePackageComponent"; } }
-            
-            /// <summary>
-            /// Name used .page.package
-            /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Name used .page.package
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      NameElement = null; 
-                    else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Human readable text describing the package
-            /// </summary>
-            [FhirElement("description", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString DescriptionElement
-            {
-                get { return _DescriptionElement; }
-                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _DescriptionElement;
-            
-            /// <summary>
-            /// Human readable text describing the package
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Description
-            {
-                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      DescriptionElement = null; 
-                    else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Description");
-                }
-            }
-            
-            /// <summary>
-            /// Resource in the implementation guide
-            /// </summary>
-            [FhirElement("resource", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageResourceComponent> Resource
-            {
-                get { if(_Resource==null) _Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageResourceComponent>(); return _Resource; }
-                set { _Resource = value; OnPropertyChanged("Resource"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageResourceComponent> _Resource;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ImplementationGuidePackageComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageResourceComponent>(Resource.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ImplementationGuidePackageComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ImplementationGuidePackageComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ImplementationGuidePackageComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-                if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ImplementationGuidePageComponent")]
-        [DataContract]
-        public partial class ImplementationGuidePageComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ImplementationGuidePageComponent"; } }
+            public override string TypeName { get { return "PageComponent"; } }
             
             /// <summary>
             /// Where to find that page
@@ -847,16 +967,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Kind of resource to include in the list
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=70)]
+            [FhirElement("type", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Code> TypeElement
+            public List<Code<Hl7.Fhir.Model.ResourceType>> TypeElement
             {
-                get { if(_TypeElement==null) _TypeElement = new List<Hl7.Fhir.Model.Code>(); return _TypeElement; }
+                get { if(_TypeElement==null) _TypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(); return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
-            private List<Hl7.Fhir.Model.Code> _TypeElement;
+            private List<Code<Hl7.Fhir.Model.ResourceType>> _TypeElement;
             
             /// <summary>
             /// Kind of resource to include in the list
@@ -864,7 +984,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IEnumerable<string> Type
+            public IEnumerable<Hl7.Fhir.Model.ResourceType?> Type
             {
                 get { return TypeElement != null ? TypeElement.Select(elem => elem.Value) : null; }
                 set
@@ -872,7 +992,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       TypeElement = null; 
                     else
-                      TypeElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
+                      TypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>(elem)));
                     OnPropertyChanged("Type");
                 }
             }
@@ -880,7 +1000,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Name of package to include
             /// </summary>
-            [FhirElement("package", InSummary=true, Order=80)]
+            [FhirElement("package", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirString> PackageElement
@@ -913,7 +1033,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Format of the page (e.g. html, markdown, etc.)
             /// </summary>
-            [FhirElement("format", InSummary=true, Order=90)]
+            [FhirElement("format", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.Code FormatElement
             {
@@ -945,20 +1065,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nested Pages / Sections
             /// </summary>
-            [FhirElement("page", InSummary=true, Order=100)]
+            [FhirElement("page", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent> Page
+            public List<Hl7.Fhir.Model.ImplementationGuide.PageComponent> Page
             {
-                get { if(_Page==null) _Page = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent>(); return _Page; }
+                get { if(_Page==null) _Page = new List<Hl7.Fhir.Model.ImplementationGuide.PageComponent>(); return _Page; }
                 set { _Page = value; OnPropertyChanged("Page"); }
             }
             
-            private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent> _Page;
+            private List<Hl7.Fhir.Model.ImplementationGuide.PageComponent> _Page;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ImplementationGuidePageComponent;
+                var dest = other as PageComponent;
                 
                 if (dest != null)
                 {
@@ -966,10 +1086,10 @@ namespace Hl7.Fhir.Model
                     if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)SourceElement.DeepCopy();
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind>)KindElement.DeepCopy();
-                    if(TypeElement != null) dest.TypeElement = new List<Hl7.Fhir.Model.Code>(TypeElement.DeepCopy());
+                    if(TypeElement != null) dest.TypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(TypeElement.DeepCopy());
                     if(PackageElement != null) dest.PackageElement = new List<Hl7.Fhir.Model.FhirString>(PackageElement.DeepCopy());
                     if(FormatElement != null) dest.FormatElement = (Hl7.Fhir.Model.Code)FormatElement.DeepCopy();
-                    if(Page != null) dest.Page = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent>(Page.DeepCopy());
+                    if(Page != null) dest.Page = new List<Hl7.Fhir.Model.ImplementationGuide.PageComponent>(Page.DeepCopy());
                     return dest;
                 }
                 else
@@ -978,12 +1098,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ImplementationGuidePageComponent());
+                return CopyTo(new PageComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuidePageComponent;
+                var otherT = other as PageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1000,7 +1120,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ImplementationGuidePageComponent;
+                var otherT = other as PageComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1011,106 +1131,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(PackageElement, otherT.PackageElement)) return false;
                 if( !DeepComparable.IsExactly(FormatElement, otherT.FormatElement)) return false;
                 if( !DeepComparable.IsExactly(Page, otherT.Page)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ImplementationGuideContactComponent")]
-        [DataContract]
-        public partial class ImplementationGuideContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ImplementationGuideContactComponent"; } }
-            
-            /// <summary>
-            /// Name of a individual to contact
-            /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Name of a individual to contact
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      NameElement = null; 
-                    else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Contact details for individual or publisher
-            /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ContactPoint> Telecom
-            {
-                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
-                set { _Telecom = value; OnPropertyChanged("Telecom"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ImplementationGuideContactComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ImplementationGuideContactComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ImplementationGuideContactComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ImplementationGuideContactComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
                 
                 return true;
             }
@@ -1319,13 +1339,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contact", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideContactComponent> Contact
+        public List<Hl7.Fhir.Model.ImplementationGuide.ContactComponent> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ImplementationGuide.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideContactComponent> _Contact;
+        private List<Hl7.Fhir.Model.ImplementationGuide.ContactComponent> _Contact;
         
         /// <summary>
         /// Date for this version of the Implementation Guide
@@ -1475,13 +1495,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("dependency", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideDependencyComponent> Dependency
+        public List<Hl7.Fhir.Model.ImplementationGuide.DependencyComponent> Dependency
         {
-            get { if(_Dependency==null) _Dependency = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideDependencyComponent>(); return _Dependency; }
+            get { if(_Dependency==null) _Dependency = new List<Hl7.Fhir.Model.ImplementationGuide.DependencyComponent>(); return _Dependency; }
             set { _Dependency = value; OnPropertyChanged("Dependency"); }
         }
         
-        private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideDependencyComponent> _Dependency;
+        private List<Hl7.Fhir.Model.ImplementationGuide.DependencyComponent> _Dependency;
         
         /// <summary>
         /// Group of resources as used in .page.package
@@ -1489,13 +1509,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("package", InSummary=true, Order=220)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageComponent> Package
+        public List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent> Package
         {
-            get { if(_Package==null) _Package = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageComponent>(); return _Package; }
+            get { if(_Package==null) _Package = new List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent>(); return _Package; }
             set { _Package = value; OnPropertyChanged("Package"); }
         }
         
-        private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageComponent> _Package;
+        private List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent> _Package;
         
         /// <summary>
         /// Profiles that apply globally
@@ -1503,13 +1523,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("global", InSummary=true, Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideGlobalComponent> Global
+        public List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent> Global
         {
-            get { if(_Global==null) _Global = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideGlobalComponent>(); return _Global; }
+            get { if(_Global==null) _Global = new List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent>(); return _Global; }
             set { _Global = value; OnPropertyChanged("Global"); }
         }
         
-        private List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideGlobalComponent> _Global;
+        private List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent> _Global;
         
         /// <summary>
         /// Image, css, script, etc.
@@ -1550,13 +1570,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("page", InSummary=true, Order=250)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent Page
+        public Hl7.Fhir.Model.ImplementationGuide.PageComponent Page
         {
             get { return _Page; }
             set { _Page = value; OnPropertyChanged("Page"); }
         }
         
-        private Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent _Page;
+        private Hl7.Fhir.Model.ImplementationGuide.PageComponent _Page;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1571,17 +1591,17 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ImplementationGuide.ContactComponent>(Contact.DeepCopy());
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
                 if(FhirVersionElement != null) dest.FhirVersionElement = (Hl7.Fhir.Model.Id)FhirVersionElement.DeepCopy();
-                if(Dependency != null) dest.Dependency = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideDependencyComponent>(Dependency.DeepCopy());
-                if(Package != null) dest.Package = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePackageComponent>(Package.DeepCopy());
-                if(Global != null) dest.Global = new List<Hl7.Fhir.Model.ImplementationGuide.ImplementationGuideGlobalComponent>(Global.DeepCopy());
+                if(Dependency != null) dest.Dependency = new List<Hl7.Fhir.Model.ImplementationGuide.DependencyComponent>(Dependency.DeepCopy());
+                if(Package != null) dest.Package = new List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent>(Package.DeepCopy());
+                if(Global != null) dest.Global = new List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent>(Global.DeepCopy());
                 if(BinaryElement != null) dest.BinaryElement = new List<Hl7.Fhir.Model.FhirUri>(BinaryElement.DeepCopy());
-                if(Page != null) dest.Page = (Hl7.Fhir.Model.ImplementationGuide.ImplementationGuidePageComponent)Page.DeepCopy();
+                if(Page != null) dest.Page = (Hl7.Fhir.Model.ImplementationGuide.PageComponent)Page.DeepCopy();
                 return dest;
             }
             else

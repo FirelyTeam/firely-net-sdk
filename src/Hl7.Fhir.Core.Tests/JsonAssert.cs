@@ -35,14 +35,17 @@ namespace Hl7.Fhir.Tests
 
         private static void areSame(JToken left, JToken right)
         {
-            if ((left.Type == JTokenType.Integer && right.Type == JTokenType.Float)||
-                (left.Type == JTokenType.Float && right.Type == JTokenType.Integer) )
+            if ((left.Type == JTokenType.Integer && right.Type == JTokenType.Float) ||
+                (left.Type == JTokenType.Float && right.Type == JTokenType.Integer))
             {
+                JValue leftVal = (JValue)left;
+                JValue rightVal = (JValue)right;
+
+                Assert.AreEqual(leftVal.ToString(), rightVal.ToString());
                 // Bug in json.net, will sometimes convert to integer instead of float
-                Assert.AreEqual(left.Value<int>(), right.Value<int>());
                 return;
             }
-            
+
             if (left.Type != right.Type)
                 throw new AssertFailedException("Token type is not the same at " + right.Path);
 

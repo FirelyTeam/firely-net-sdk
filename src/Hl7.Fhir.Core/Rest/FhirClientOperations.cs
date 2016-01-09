@@ -166,51 +166,67 @@ namespace Hl7.Fhir.Rest
             return expect<Parameters>(client.TypeOperation<ValueSet>(Operation.CONCEPT_LOOKUP, par));
         }
 
-        //[base]/$meta
-        public static Parameters Meta(this FhirClient client)
+
+        private static Meta extractMeta(Parameters parms)
         {
-            return expect<Parameters>(client.WholeSystemOperation(Operation.META));
+            if(!parms.Parameter.IsNullOrEmpty())
+            {
+                var parm = parms.Parameter[0];
+                if(parm != null)
+                {
+                    if (parm.Value is Meta)
+                        return (Meta)parm.Value;
+                }
+            }
+
+            return null;
+        }
+
+        //[base]/$meta
+        public static Meta Meta(this FhirClient client)
+        {
+            return extractMeta(expect<Parameters>(client.WholeSystemOperation(Operation.META, useGet:true)));
         }
 
         //[base]/Resource/$meta
-        public static Parameters Meta(this FhirClient client, ResourceType type)
+        public static Meta Meta(this FhirClient client, ResourceType type)
         {             
-            return expect<Parameters>(client.TypeOperation(Operation.META, type.ToString()));
+            return extractMeta(expect<Parameters>(client.TypeOperation(Operation.META, type.ToString(), useGet: true)));
         }
 
         //[base]/Resource/id/$meta/[_history/vid]
-        public static Parameters Meta(this FhirClient client, Uri location)
+        public static Meta Meta(this FhirClient client, Uri location)
         {
             Resource result;
-            result = client.InstanceOperation(location, Operation.META);
+            result = client.InstanceOperation(location, Operation.META, useGet: true);
 
-            return expect<Parameters>(result);
+            return extractMeta(expect<Parameters>(result));
         }
 
-        public static Parameters Meta(this FhirClient client, string location)
+        public static Meta Meta(this FhirClient client, string location)
         {
             return Meta(client, new Uri(location, UriKind.RelativeOrAbsolute));
         }
 
 
-        public static Parameters AddMeta(this FhirClient client, Uri location, Meta meta)
+        public static Meta AddMeta(this FhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
-            return expect<Parameters>(client.InstanceOperation(location, Operation.META_ADD, par));
+            return extractMeta(expect<Parameters>(client.InstanceOperation(location, Operation.META_ADD, par)));
         }
 
-        public static Parameters AddMeta(this FhirClient client, string location, Meta meta)
+        public static Meta AddMeta(this FhirClient client, string location, Meta meta)
         {
             return AddMeta(client, new Uri(location, UriKind.RelativeOrAbsolute), meta);
         }
 
-        public static Parameters DeleteMeta(this FhirClient client, Uri location, Meta meta)
+        public static Meta DeleteMeta(this FhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
-            return expect<Parameters>(client.InstanceOperation(location, Operation.META_DELETE, par));
+            return extractMeta(expect<Parameters>(client.InstanceOperation(location, Operation.META_DELETE, par)));
         }
 
-        public static Parameters DeleteMeta(this FhirClient client, string location, Meta meta)
+        public static Meta DeleteMeta(this FhirClient client, string location, Meta meta)
         {
             return DeleteMeta(client, new Uri(location, UriKind.RelativeOrAbsolute), meta);
         }

@@ -12,16 +12,29 @@ This library provides:
 * Class models for working with the FHIR data model using POCO's
 * Xml and Json parsers and serializers
 * A REST client for working with FHIR-compliant servers
+* Helper classes to work with the specification metadata, most notably `StructureDefinition` and generation of differentials
 
-### Get Started ###
-Get started by reading the [online documentation][3] or downloading the [NuGet package][2] 
+## Getting Started ##
+Get started by reading the [online documentation][3] or downloading the NuGet packages:
+
+|Spec version|Core|Specification|
+|---|---|---|
+|DSTU 2.1|https://www.nuget.org/packages/Hl7.Fhir.DSTU21/|https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU21/|
+|DSTU2 | https://www.nuget.org/packages/Hl7.Fhir.DSTU2/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU2/ |
+|DSTU1| https://www.nuget.org/packages/Hl7.Fhir.DSTU/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU/ |
+ 
+**Please note that the DSTU1 release is not maintained anymore.**
+
+## Contributing ##
+We are welcoming contributors!
 
 If you want to participate in this project, we're using [Git Flow][4] for our branch management, so new development is done on (feature branches from) /develop.
 
 [1]: http://www.hl7.org/fhir
-[2]: http://www.nuget.org/packages/Hl7.Fhir
+[dstu1]: http://www.nuget.org/packages/Hl7.Fhir
 [3]: http://ewoutkramer.github.io/fhir-net-api
 [4]: http://nvie.com/posts/a-successful-git-branching-model/
+[dstu2]: http://www.nuget.org/packages/Hl7.
 
 ### GIT branching strategy 
 - [NVIE](http://nvie.com/posts/a-successful-git-branching-model/)

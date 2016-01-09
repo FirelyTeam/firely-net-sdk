@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,32 +53,37 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Identifies the purpose for this identifier, if known .
+        /// (url: http://hl7.org/fhir/ValueSet/identifier-use)
         /// </summary>
         [FhirEnumeration("IdentifierUse")]
         public enum IdentifierUse
         {
             /// <summary>
             /// The identifier recommended for display and use in real-world interactions.
+            /// (system: http://hl7.org/fhir/identifier-use)
             /// </summary>
-            [EnumLiteral("usual")]
+            [EnumLiteral("usual"), Description("Usual")]
             Usual,
             /// <summary>
             /// The identifier considered to be most trusted for the identification of this item.
+            /// (system: http://hl7.org/fhir/identifier-use)
             /// </summary>
-            [EnumLiteral("official")]
+            [EnumLiteral("official"), Description("Official")]
             Official,
             /// <summary>
             /// A temporary identifier.
+            /// (system: http://hl7.org/fhir/identifier-use)
             /// </summary>
-            [EnumLiteral("temp")]
+            [EnumLiteral("temp"), Description("Temp")]
             Temp,
             /// <summary>
             /// An identifier that was assigned in secondary use - it serves to identify the object in a relative context, but cannot be consistently assigned to the same object again in a different context.
+            /// (system: http://hl7.org/fhir/identifier-use)
             /// </summary>
-            [EnumLiteral("secondary")]
+            [EnumLiteral("secondary"), Description("Secondary")]
             Secondary,
         }
-        
+
         /// <summary>
         /// usual | official | temp | secondary (If known)
         /// </summary>

@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -56,13 +57,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("text", Order=50)]
         [DataMember]
-        public Hl7.Fhir.Model.Narrative Text
+        public Narrative Text
         {
             get { return _Text; }
             set { _Text = value; OnPropertyChanged("Text"); }
         }
         
-        private Hl7.Fhir.Model.Narrative _Text;
+        private Narrative _Text;
         
         /// <summary>
         /// Contained, inline Resources
@@ -85,13 +86,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("extension", Order=70)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Extension> Extension
+        public List<Extension> Extension
         {
-            get { if(_Extension==null) _Extension = new List<Hl7.Fhir.Model.Extension>(); return _Extension; }
+            get { if(_Extension==null) _Extension = new List<Extension>(); return _Extension; }
             set { _Extension = value; OnPropertyChanged("Extension"); }
         }
         
-        private List<Hl7.Fhir.Model.Extension> _Extension;
+        private List<Extension> _Extension;
         
         /// <summary>
         /// Extensions that cannot be ignored
@@ -99,13 +100,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("modifierExtension", Order=80)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Extension> ModifierExtension
+        public List<Extension> ModifierExtension
         {
-            get { if(_ModifierExtension==null) _ModifierExtension = new List<Hl7.Fhir.Model.Extension>(); return _ModifierExtension; }
+            get { if(_ModifierExtension==null) _ModifierExtension = new List<Extension>(); return _ModifierExtension; }
             set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
         }
         
-        private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
+        private List<Extension> _ModifierExtension;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -114,10 +115,10 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Text != null) dest.Text = (Hl7.Fhir.Model.Narrative)Text.DeepCopy();
+                if(Text != null) dest.Text = (Narrative)Text.DeepCopy();
                 if(Contained != null) dest.Contained = new List<Hl7.Fhir.Model.Resource>(Contained.DeepCopy());
-                if(Extension != null) dest.Extension = new List<Hl7.Fhir.Model.Extension>(Extension.DeepCopy());
-                if(ModifierExtension != null) dest.ModifierExtension = new List<Hl7.Fhir.Model.Extension>(ModifierExtension.DeepCopy());
+                if(Extension != null) dest.Extension = new List<Extension>(Extension.DeepCopy());
+                if(ModifierExtension != null) dest.ModifierExtension = new List<Extension>(ModifierExtension.DeepCopy());
                 return dest;
             }
             else

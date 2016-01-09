@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -52,17 +53,17 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Organization"; } }
         
-        [FhirType("OrganizationContactComponent")]
+        [FhirType("ContactComponent")]
         [DataContract]
-        public partial class OrganizationContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "OrganizationContactComponent"; } }
+            public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
             /// The type of contact
             /// </summary>
-            [FhirElement("purpose", InSummary=true, Order=40)]
+            [FhirElement("purpose", Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Purpose
             {
@@ -75,7 +76,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A name associated with the contact
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=50)]
+            [FhirElement("name", Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.HumanName Name
             {
@@ -88,7 +89,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contact details (telephone, email, etc.)  for a contact
             /// </summary>
-            [FhirElement("telecom", InSummary=true, Order=60)]
+            [FhirElement("telecom", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -102,7 +103,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Visiting or postal addresses for the contact
             /// </summary>
-            [FhirElement("address", InSummary=true, Order=70)]
+            [FhirElement("address", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Address Address
             {
@@ -114,7 +115,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as OrganizationContactComponent;
+                var dest = other as ContactComponent;
                 
                 if (dest != null)
                 {
@@ -131,12 +132,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new OrganizationContactComponent());
+                return CopyTo(new ContactComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as OrganizationContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -150,7 +151,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as OrganizationContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -304,13 +305,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contact", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Organization.OrganizationContactComponent> Contact
+        public List<Hl7.Fhir.Model.Organization.ContactComponent> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.Organization.OrganizationContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.Organization.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.Organization.OrganizationContactComponent> _Contact;
+        private List<Hl7.Fhir.Model.Organization.ContactComponent> _Contact;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -326,7 +327,7 @@ namespace Hl7.Fhir.Model
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Organization.OrganizationContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Organization.ContactComponent>(Contact.DeepCopy());
                 return dest;
             }
             else

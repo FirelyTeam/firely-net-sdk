@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,43 +55,48 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The level of confidence that this link represents the same actual person, based on NIST Authentication Levels.
+        /// (url: http://hl7.org/fhir/ValueSet/identity-assuranceLevel)
         /// </summary>
         [FhirEnumeration("IdentityAssuranceLevel")]
         public enum IdentityAssuranceLevel
         {
             /// <summary>
             /// Little or no confidence in the asserted identity's accuracy.
+            /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
-            [EnumLiteral("level1")]
+            [EnumLiteral("level1"), Description("Level 1")]
             Level1,
             /// <summary>
             /// Some confidence in the asserted identity's accuracy.
+            /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
-            [EnumLiteral("level2")]
+            [EnumLiteral("level2"), Description("Level 2")]
             Level2,
             /// <summary>
             /// High confidence in the asserted identity's accuracy.
+            /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
-            [EnumLiteral("level3")]
+            [EnumLiteral("level3"), Description("Level 3")]
             Level3,
             /// <summary>
             /// Very high confidence in the asserted identity's accuracy.
+            /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
-            [EnumLiteral("level4")]
+            [EnumLiteral("level4"), Description("Level 4")]
             Level4,
         }
-        
-        [FhirType("PersonLinkComponent")]
+
+        [FhirType("LinkComponent")]
         [DataContract]
-        public partial class PersonLinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "PersonLinkComponent"; } }
+            public override string TypeName { get { return "LinkComponent"; } }
             
             /// <summary>
             /// The resource to which this actual person is associated
             /// </summary>
-            [FhirElement("target", InSummary=true, Order=40)]
+            [FhirElement("target", Order=40)]
             [References("Patient","Practitioner","RelatedPerson","Person")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -105,7 +111,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// level1 | level2 | level3 | level4
             /// </summary>
-            [FhirElement("assurance", InSummary=true, Order=50)]
+            [FhirElement("assurance", Order=50)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel> AssuranceElement
             {
@@ -136,7 +142,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as PersonLinkComponent;
+                var dest = other as LinkComponent;
                 
                 if (dest != null)
                 {
@@ -151,12 +157,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new PersonLinkComponent());
+                return CopyTo(new LinkComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as PersonLinkComponent;
+                var otherT = other as LinkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -168,7 +174,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as PersonLinkComponent;
+                var otherT = other as LinkComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -366,13 +372,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("link", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Person.PersonLinkComponent> Link
+        public List<Hl7.Fhir.Model.Person.LinkComponent> Link
         {
-            get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Person.PersonLinkComponent>(); return _Link; }
+            get { if(_Link==null) _Link = new List<Hl7.Fhir.Model.Person.LinkComponent>(); return _Link; }
             set { _Link = value; OnPropertyChanged("Link"); }
         }
         
-        private List<Hl7.Fhir.Model.Person.PersonLinkComponent> _Link;
+        private List<Hl7.Fhir.Model.Person.LinkComponent> _Link;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -390,7 +396,7 @@ namespace Hl7.Fhir.Model
                 if(Photo != null) dest.Photo = (Hl7.Fhir.Model.Attachment)Photo.DeepCopy();
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
-                if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Person.PersonLinkComponent>(Link.DeepCopy());
+                if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Person.LinkComponent>(Link.DeepCopy());
                 return dest;
             }
             else

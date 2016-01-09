@@ -156,6 +156,12 @@ namespace Hl7.Fhir.Tests.Serialization
                 var xml = File.ReadAllText(inputFile);
                 var resource = FhirParser.ParseResourceFromXml(xml);
 
+                var r2 = resource.DeepCopy();
+                Assert.IsTrue(resource.Matches(r2 as Resource), "Serialization of " + inputFile + " did not match output - Matches test");
+                Assert.IsTrue(resource.IsExactly(r2 as Resource), "Serialization of " + inputFile + " did not match output - IsExactly test");
+                Assert.IsFalse(resource.Matches(null), "Serialization of " + inputFile + " matched null - Matches test");
+                Assert.IsFalse(resource.IsExactly(null), "Serialization of " + inputFile + " matched null - IsExactly test");
+
                 var json = FhirSerializer.SerializeResourceToJson(resource);
                 File.WriteAllText(outputFile, json);
             }

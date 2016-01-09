@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ComponentModel;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -36,7 +37,7 @@ using System.Runtime.Serialization;
 */
 
 //
-// Generated on Tue, Sep 22, 2015 20:02+1000 for FHIR v1.0.1
+// Generated for FHIR v1.0.2
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,95 +54,111 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "DeviceUseRequest"; } }
         
         /// <summary>
-        /// Codes representing the priority of the request.
-        /// </summary>
-        [FhirEnumeration("DeviceUseRequestPriority")]
-        public enum DeviceUseRequestPriority
-        {
-            /// <summary>
-            /// The request has a normal priority.
-            /// </summary>
-            [EnumLiteral("routine")]
-            Routine,
-            /// <summary>
-            /// The request should be done urgently.
-            /// </summary>
-            [EnumLiteral("urgent")]
-            Urgent,
-            /// <summary>
-            /// The request is time-critical.
-            /// </summary>
-            [EnumLiteral("stat")]
-            Stat,
-            /// <summary>
-            /// The request should be acted on as soon as possible.
-            /// </summary>
-            [EnumLiteral("asap")]
-            Asap,
-        }
-        
-        /// <summary>
         /// Codes representing the status of the request.
+        /// (url: http://hl7.org/fhir/ValueSet/device-use-request-status)
         /// </summary>
         [FhirEnumeration("DeviceUseRequestStatus")]
         public enum DeviceUseRequestStatus
         {
             /// <summary>
             /// The request has been proposed.
+            /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
-            [EnumLiteral("proposed")]
+            [EnumLiteral("proposed"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// The request has been planned.
+            /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
-            [EnumLiteral("planned")]
+            [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
             /// The request has been placed.
+            /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
-            [EnumLiteral("requested")]
+            [EnumLiteral("requested"), Description("Requested")]
             Requested,
             /// <summary>
             /// The receiving system has received the request but not yet decided whether it will be performed.
+            /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
-            [EnumLiteral("received")]
+            [EnumLiteral("received"), Description("Received")]
             Received,
             /// <summary>
             /// The receiving system has accepted the request but work has not yet commenced.
+            /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
-            [EnumLiteral("accepted")]
+            [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
             /// The work to fulfill the order is happening.
+            /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
-            [EnumLiteral("in-progress")]
+            [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// The work has been complete, the report(s) released, and no further work is planned.
+            /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
-            [EnumLiteral("completed")]
+            [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
             /// The request has been held by originating system/user request.
+            /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
-            [EnumLiteral("suspended")]
+            [EnumLiteral("suspended"), Description("Suspended")]
             Suspended,
             /// <summary>
             /// The receiving system has declined to fulfill the request.
+            /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
-            [EnumLiteral("rejected")]
+            [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
             /// The request was attempted, but due to some procedural error, it could not be completed.
+            /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
-            [EnumLiteral("aborted")]
+            [EnumLiteral("aborted"), Description("Aborted")]
             Aborted,
         }
-        
+
+        /// <summary>
+        /// Codes representing the priority of the request.
+        /// (url: http://hl7.org/fhir/ValueSet/device-use-request-priority)
+        /// </summary>
+        [FhirEnumeration("DeviceUseRequestPriority")]
+        public enum DeviceUseRequestPriority
+        {
+            /// <summary>
+            /// The request has a normal priority.
+            /// (system: http://hl7.org/fhir/device-use-request-priority)
+            /// </summary>
+            [EnumLiteral("routine"), Description("Routine")]
+            Routine,
+            /// <summary>
+            /// The request should be done urgently.
+            /// (system: http://hl7.org/fhir/device-use-request-priority)
+            /// </summary>
+            [EnumLiteral("urgent"), Description("Urgent")]
+            Urgent,
+            /// <summary>
+            /// The request is time-critical.
+            /// (system: http://hl7.org/fhir/device-use-request-priority)
+            /// </summary>
+            [EnumLiteral("stat"), Description("Stat")]
+            Stat,
+            /// <summary>
+            /// The request should be acted on as soon as possible.
+            /// (system: http://hl7.org/fhir/device-use-request-priority)
+            /// </summary>
+            [EnumLiteral("asap"), Description("ASAP")]
+            Asap,
+        }
+
         /// <summary>
         /// Target body site
         /// </summary>
-        [FhirElement("bodySite", Order=90, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("bodySite", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element BodySite
@@ -155,7 +172,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// proposed | planned | requested | received | accepted | in-progress | completed | suspended | rejected | aborted
         /// </summary>
-        [FhirElement("status", Order=100)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestStatus> StatusElement
         {
@@ -187,7 +204,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Device requested
         /// </summary>
-        [FhirElement("device", Order=110)]
+        [FhirElement("device", InSummary=true, Order=110)]
         [References("Device")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -202,7 +219,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Encounter motivating request
         /// </summary>
-        [FhirElement("encounter", Order=120)]
+        [FhirElement("encounter", InSummary=true, Order=120)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -216,7 +233,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Request identifier
         /// </summary>
-        [FhirElement("identifier", Order=130)]
+        [FhirElement("identifier", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -230,7 +247,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for request
         /// </summary>
-        [FhirElement("indication", Order=140)]
+        [FhirElement("indication", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Indication
@@ -244,7 +261,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Notes or comments
         /// </summary>
-        [FhirElement("notes", Order=150)]
+        [FhirElement("notes", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> NotesElement
@@ -277,7 +294,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// PRN
         /// </summary>
-        [FhirElement("prnReason", Order=160)]
+        [FhirElement("prnReason", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> PrnReason
@@ -291,7 +308,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When ordered
         /// </summary>
-        [FhirElement("orderedOn", Order=170)]
+        [FhirElement("orderedOn", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime OrderedOnElement
         {
@@ -323,7 +340,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When recorded
         /// </summary>
-        [FhirElement("recordedOn", Order=180)]
+        [FhirElement("recordedOn", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime RecordedOnElement
         {
@@ -355,7 +372,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Focus of request
         /// </summary>
-        [FhirElement("subject", Order=190)]
+        [FhirElement("subject", InSummary=true, Order=190)]
         [References("Patient")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
@@ -370,7 +387,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Schedule for use
         /// </summary>
-        [FhirElement("timing", Order=200, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("timing", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
         public Hl7.Fhir.Model.Element Timing
@@ -384,7 +401,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", Order=210)]
+        [FhirElement("priority", InSummary=true, Order=210)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestPriority> PriorityElement
         {

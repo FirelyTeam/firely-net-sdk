@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Rest
             string[] pair = param.Split('=');
 
             var key = Uri.UnescapeDataString(pair[0]);
-            var value = pair.Length >= 2 ? String.Join("?", pair.Skip(1)) : null;
+            var value = pair.Length >= 2 ? String.Join("=", pair.Skip(1)) : null;
             if (value != null) value = Uri.UnescapeDataString(value);
 
             return new Tuple<string, string>(key, value);
