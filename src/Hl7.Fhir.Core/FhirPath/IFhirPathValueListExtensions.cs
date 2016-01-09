@@ -292,7 +292,7 @@ namespace Hl7.Fhir.FhirPath
             if (!left.Any() && !right.Any()) return FhirValueList.Create(true);
             if (left.Count() != right.Count()) return FhirValueList.Create(false);
 
-            return FhirValueList.Create(left.Zip(right, (l, r) => l.IsEqualTo(r)).All(r => true));
+            return FhirValueList.Create(left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x));
         }
 
         public static IEnumerable<IFhirPathValue> IsEqualTo(this IEnumerable<IFhirPathValue> left, object value)

@@ -56,6 +56,11 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
         {
             Representation = representation;
             Value = parseValue(Representation);
-        }      
+        }
+
+        public override string ToString()
+        {
+            return Representation;
+        }
     }
 }

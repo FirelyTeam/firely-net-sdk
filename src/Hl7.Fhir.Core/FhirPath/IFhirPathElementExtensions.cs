@@ -22,8 +22,7 @@ namespace Hl7.Fhir.FhirPath
             var result = element.Children().Where(c => c.IsMatch(name));
 
             // If we are at a resource, we should match a path that is possibly not rooted in the resource
-            // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")
-            
+            // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")        
             if (!result.Any()) 
             {
                 var resourceRoot = element.Children().SingleOrDefault(node => Char.IsUpper(node.Name[0]));

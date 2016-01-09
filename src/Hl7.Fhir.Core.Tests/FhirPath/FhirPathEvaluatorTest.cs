@@ -19,6 +19,7 @@ using System.Diagnostics;
 using Hl7.Fhir.Navigation;
 using Hl7.Fhir.FhirPath.Grammar;
 using Hl7.Fhir.FhirPath.InstanceTree;
+using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -41,54 +42,45 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod]
         public void TestExpression()
         {
-            //var result = Expression.Expr.End().TryParse(
-            //    @"(Patient.identifier.where ( use = ( 'offic' + 'ial')) = 
-            //           Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = Patient.identifier.first())");
+            Assert.IsTrue(PathExpression.Predicate(@"(Patient.identifier.where ( use = ( 'offic' + 'ial')) = 
+                       Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = 
+                        Patient.identifier.first())", tree));
 
-            // xpath gebruikt $current for $focus....waarom dat niet gebruiken?
-            //var result = Expression.Expr.End().TryParse(
-            //    @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and $focus.code = 'owner')
-            //        .log('after owner').$parent.$parent.organization.log('org').where(display.startsWith('Walt')).resolve().identifier.first().value = 'Gastro'");        
+            //// xpath gebruikt $current for $focus....waarom dat niet gebruiken?
+            Assert.IsTrue(PathExpression.Predicate(
+                  @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and 
+                        $focus.code = 'owner').log('after owner').$parent.$parent.organization.log('org')
+                        .where(display.startsWith('Walt')).resolve().identifier.first().value = 'Gastro'", tree,
+                                new EvaluationContext(new FhirClient("http://spark.furore.com/fhir"))));
 
-            // why is in an operator and not a function?
-            //var result = Expression.Expr.End().TryParse(
-            //    @"(Patient.identifier.where(use='official') in Patient.identifier) and
-            //        (Patient.identifier.first() in Patient.identifier.tail()).not()");
+            //// why is in an operator and not a function?
+            Assert.IsTrue(PathExpression.Predicate(
+                 @"(Patient.identifier.where(use='official') in Patient.identifier) and
+                       (Patient.identifier.first() in Patient.identifier.tail()).not()", tree));
 
-            //var result = Expression.Expr.End().TryParse(
-            //    @"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 3 + Patient.identifier.count()");
+            Assert.IsTrue(PathExpression.Predicate(
+                @"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
+                        3 + Patient.identifier.count()", tree));
 
-            //var result = Expression.Expr.End().TryParse(
-            //    @"Patient.**.contains('wne') = contact.relationship.coding.system.code and
-            //        Patient.**.matches('i.*/gif') in Patient.photo.*");
+            Assert.IsTrue(PathExpression.Predicate(
+                        @"(1|2|3|4|5).where($focus > 2 and $focus <= 4) = (3|4)", tree));
 
-            //var result = Expression.Expr.End().TryParse(
-            //    @"'m' + gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
-            //        .substring(1,4) + 
-            //        gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
-            //        .substring(5) = 'metrosexual'");
+            Assert.IsTrue(PathExpression.Predicate(
+                    @"Patient.**.contains('wne') = contact.relationship.coding.system.code and
+                    Patient.**.matches('i.*/gif') in Patient.photo.*", tree));
 
-            //var result = Expression.Expr.End().TryParse(
-            //    @"Patient.identifier.any(use='official') and identifier.where(use='usual').any()");
+            Assert.IsTrue(PathExpression.Predicate(
+                @"'m' + gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
+                    .substring(1,4) + 
+                    gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
+                    .substring(5) = 'metrosexual'", tree));
 
-            var result = Expression.Expr.End().TryParse(
+            Assert.IsTrue(PathExpression.Predicate(
+                    @"Patient.identifier.any(use='official') and identifier.where(use='usual').any()", tree));
+
+            Assert.IsTrue(PathExpression.Predicate(
                     @"gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
-                    .select('m' + $focus.substring(1,4) + $focus.substring(5)) = 'metrosexual'");
-
-            if (result.WasSuccessful)
-            {
-                var evaluator = result.Value;
-                var ctx = new EvaluationContext(new Fhir.Rest.FhirClient("http://spark.furore.com/fhir"));
-
-                var resultNodes = evaluator.Evaluate(ctx,tree);
-                Assert.AreEqual(1,resultNodes.Count());
-                Assert.AreEqual(true, resultNodes.First().AsBoolean());
-            }
-            else
-            {
-                Debug.WriteLine("Expectations: " + String.Join(",",result.Expectations));
-                Assert.Fail(result.ToString());
-            }            
+                    .select('m' + $focus.substring(1,4) + $focus.substring(5)) = 'metrosexual'", tree));
         }
 
 

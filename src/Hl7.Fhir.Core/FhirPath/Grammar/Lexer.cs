@@ -101,15 +101,16 @@ namespace Hl7.Fhir.FhirPath.Grammar
         internal static readonly Parser<InfixOperator> Implies = Operator("implies", InfixOperator.Implies);
 
         // COMP: '=' | '~' | '!=' | '!~' | '>' | '<' | '<=' | '>=' | 'in';
+        // NOTE: ORDER MATTERS, since otherwise shorter ops will be recognized before longer ones!
         public static readonly Parser<InfixOperator> Comp =
             Equal
             .Or(Equivalent)
             .Or(NotEqual)
             .Or(NotEquivalent)
-            .Or(GreaterThan)
-            .Or(LessThan)
             .Or(LessOrEqual)
             .Or(GreaterOrEqual)
+            .Or(GreaterThan)
+            .Or(LessThan)
             .Or(In)
             .Named("Comp");
 
