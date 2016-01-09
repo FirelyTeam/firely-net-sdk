@@ -24,7 +24,6 @@ namespace Hl7.Fhir.FhirPath
         IFhirPathElement Parent { get; }
 
         IEnumerable<IFhirPathElement> Children();
-        bool HasChildren();
 
         string Name { get; }
     }

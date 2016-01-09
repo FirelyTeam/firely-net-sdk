@@ -23,7 +23,7 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
             var result = parent.AddLastChild(element.Name.LocalName, (IFhirPathValue)new TypedValue(value));
 
             result.AddAnnotation(new XmlRenderHints() { IsXhtmlDiv = true });
-
+            result.AddAnnotation(docNode);
             return result;
         }
 

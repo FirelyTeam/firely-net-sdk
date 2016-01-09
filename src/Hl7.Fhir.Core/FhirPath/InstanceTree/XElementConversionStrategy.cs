@@ -23,10 +23,15 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
 
             var value = docElement.TryGetAttribute(XVALUE, out hasValue);
 
+            FhirInstanceTree result = null;
+
             if (hasValue)
-                return parent.AddLastChild(newNodeName, (IFhirPathValue)new UntypedValue(value));
+                result = parent.AddLastChild(newNodeName, (IFhirPathValue)new UntypedValue(value));
             else
-                return parent.AddLastChild(newNodeName);
+                result = parent.AddLastChild(newNodeName);
+
+            result.AddAnnotation(docElement);
+            return result;
         }
 
         public virtual IEnumerable<XObject> SelectChildren(XObject docNode, FhirInstanceTree treeNode)

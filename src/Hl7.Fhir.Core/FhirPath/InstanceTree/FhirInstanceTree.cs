@@ -60,11 +60,6 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
             return LinkedTreeExtensions.Children(this);
         }
 
-        bool IFhirPathElement.HasChildren()
-        {
-            return LinkedTreeExtensions.HasChildren(this);
-        }
-
         IFhirPathElement IFhirPathElement.Parent
         {
             get { return Parent; }

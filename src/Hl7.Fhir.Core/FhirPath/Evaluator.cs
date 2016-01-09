@@ -304,7 +304,7 @@ namespace Hl7.Fhir.FhirPath
             return (f, c) =>
             {
                 var subs = substring(f, c).AsString();
-                return f.JustValues().Where(v => v.AsStringRepresentation() == subs);
+                return f.JustValues().Where(v => v.AsStringRepresentation().Contains(subs));
             };
         }
 

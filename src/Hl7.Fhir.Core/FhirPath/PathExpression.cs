@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FhirPath
 {
-    public class PathExpression
+    public static class PathExpression
     {
         private static ConcurrentDictionary<string, Evaluator> _cache = new ConcurrentDictionary<string, Evaluator>();
 
@@ -25,11 +25,12 @@ namespace Hl7.Fhir.FhirPath
             if (compilation.WasSuccessful)
             {
                 _cache.TryAdd(cacheName, compilation.Value);
+//                if(_cache.Count)
                 return compilation.Value;
             }
             else
             {
-                throw new ParseException(compilation.ToString());
+                throw new FormatException("Compilation failed: " + compilation.ToString());
             }
         }
 

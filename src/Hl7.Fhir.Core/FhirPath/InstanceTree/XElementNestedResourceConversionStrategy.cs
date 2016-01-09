@@ -23,6 +23,7 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
             var nestedResourceName = ((XElement)docNode).Elements().First().Name.LocalName;
 
             result.AddAnnotation(new XmlRenderHints { NestedResourceName = nestedResourceName });
+            result.AddAnnotation((XElement)docNode);
 
             return result;
         }
