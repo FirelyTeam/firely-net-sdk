@@ -225,7 +225,11 @@ namespace Hl7.Fhir.Rest
         public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters, bool useGet = false)
         {
             var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST);
+
+            if (parameters == null)
+                parameters = new Parameters();
             entry.Resource = parameters;
+
             var path = new RestUrl(endpoint);
             addEntry(entry, path);
 
