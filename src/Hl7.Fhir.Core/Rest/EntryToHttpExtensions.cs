@@ -65,7 +65,10 @@ namespace Hl7.Fhir.Rest
                 request.Headers["Prefer"] = bodyPreference == Prefer.ReturnMinimal ? "return=minimal" : "return=representation";
             }
 
-            if (entry.Resource != null) setBodyAndContentType(request, entry.Resource, format, out body);
+            if (entry.Resource != null)
+                setBodyAndContentType(request, entry.Resource, format, out body);
+            else
+                request.ContentLength = 0;
 
             return request;
         }
