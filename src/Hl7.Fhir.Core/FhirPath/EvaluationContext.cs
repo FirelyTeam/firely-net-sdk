@@ -24,10 +24,24 @@ namespace Hl7.Fhir.FhirPath
         {
         }
 
-        public EvaluationContext(FhirClient client)
+        public EvaluationContext(FhirClient client) : this(client, null)
+        {
+        }
+
+        public EvaluationContext(IFhirPathElement originalResource) : this(null, originalResource)
+        {
+        }
+
+        public EvaluationContext(FhirClient client, IFhirPathElement originalResource)
         {
             FhirClient = client;
+            OriginalResource = originalResource;
         }
+
+
+        public IEnumerable<IFhirPathValue> OriginalContext { get; set; }
+
+        public IFhirPathElement OriginalResource { get; set; }
 
         FhirClient FhirClient { get; set; }
 

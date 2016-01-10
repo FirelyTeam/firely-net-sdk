@@ -20,7 +20,7 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
             var newNodeName = attr.Name.LocalName;
             var result = parent.AddLastChild(newNodeName, (IFhirPathValue)new UntypedValue(attr.Value));
             result.AddAnnotation(new XmlRenderHints() { IsXmlAttribute = true });
-
+            result.AddAnnotation(docNode);
             return result;
         }
 

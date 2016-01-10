@@ -36,5 +36,9 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="name"></param>
         /// <returns>Return null when the constant is not known</returns>
         IFhirPathValue ResolveConstant(string name);
+
+        IEnumerable<IFhirPathValue> OriginalContext { get; set; }
+
+        IFhirPathElement OriginalResource { get; }
     }
 }

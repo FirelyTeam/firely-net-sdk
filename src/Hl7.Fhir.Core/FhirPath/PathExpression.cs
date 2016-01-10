@@ -30,7 +30,7 @@ namespace Hl7.Fhir.FhirPath
             }
             else
             {
-                throw new FormatException("Compilation failed: " + compilation.ToString());
+               throw new FormatException("Compilation failed: " + compilation.ToString());
             }
         }
 

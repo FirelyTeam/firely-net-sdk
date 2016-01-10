@@ -81,6 +81,9 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.IsTrue(PathExpression.Predicate(
                     @"gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
                     .select('m' + $focus.substring(1,4) + $focus.substring(5)) = 'metrosexual'", tree));
+
+            Assert.IsTrue(PathExpression.Predicate(
+                    @"Patient.**.where($focus.contains('222')).item(1) = $context.contained.address.line", tree));
         }
 
 

@@ -21,7 +21,7 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
 
             var result = parent.AddLastChild(COMMENT_ELEMENT_NAME, (IFhirPathValue)new TypedValue(comment.Value));
             result.AddAnnotation(new StructuralHints() { IsComment = true });
-
+            result.AddAnnotation(docNode);
             return result;
         }
 

@@ -30,12 +30,15 @@ namespace Hl7.Fhir.FhirPath
     {
         public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, IFhirPathValue instance, IEvaluationContext context)
         {
-            return evaluator(FhirValueList.Create(instance), context);
+            var original = FhirValueList.Create(instance);
+            context.OriginalContext = original;
+            return evaluator(original, context);
         }
 
         public static IEnumerable<IFhirPathValue> Evaluate(this Evaluator evaluator, IFhirPathValue instance)
         {
-            return evaluator(FhirValueList.Create(instance), new EvaluationContext());
+            var original = FhirValueList.Create(instance);
+            return evaluator.Evaluate(instance, new EvaluationContext());
         }
 
         public static object Scalar(this Evaluator evaluator, IFhirPathValue instance, IEvaluationContext context)
@@ -95,8 +98,15 @@ namespace Hl7.Fhir.FhirPath
                     case FhirPath.Axis.Children:
                         return focus.JustElements().Children();
                     case FhirPath.Axis.Context:
+                        if (ctx.OriginalContext == null)
+                            throw new InvalidOperationException("Cannot resolve the $context, the Evaluator did not provide it at runtime");
+                        else
+                            return ctx.OriginalContext;
                     case FhirPath.Axis.Resource:
-                        throw new NotImplementedException("The axes $context and $resource have not yet been implemented");
+                        if (ctx.OriginalResource == null)
+                            throw new InvalidOperationException("Cannot resolve the $resource, the evaluation context has no information about it.");
+                        else
+                            return FhirValueList.Create(ctx.OriginalResource);
                     default:
                         throw new InvalidOperationException("Internal error: unknown axis '{0}'".FormatWith(axis));
                 }
