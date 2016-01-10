@@ -24,7 +24,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
             .XOr(Lexer.DateTime.Select(dt => Eval.TypedValue(dt)))
             .Or(Lexer.DecimalNumber.Select(d => Eval.TypedValue(d)))
             .Or(Lexer.Number.Select(n => Eval.TypedValue(n)))
-            .XOr(Lexer.Bool.Select(b => Eval.TypedValue(b)))
+            .Or(Lexer.Bool.Select(b => Eval.TypedValue(b)))
             .XOr(Lexer.Const.Select(s => Eval.Constant(s)));
 
         // term:
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
 
         public static readonly Parser<Evaluator> Term =
             FpConst
-            .XOr(Path.Invoc)
+            .Or(Path.Invoc)
             .XOr(BracketExpr)
             .Token()
             .Named("Term");

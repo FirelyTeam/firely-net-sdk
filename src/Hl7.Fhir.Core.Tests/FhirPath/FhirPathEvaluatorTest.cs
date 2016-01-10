@@ -66,7 +66,10 @@ namespace Hl7.Fhir.Tests.FhirPath
                         @"(1|2|3|4|5).where($focus > 2 and $focus <= 4) = (3|4)", tree));
 
             Assert.IsTrue(PathExpression.Predicate(
-                    @"Patient.**.contains('wne') = contact.relationship.coding.system.code and
+                        @"Patient.name.select(given|family).count() = 2", tree));
+
+            Assert.IsTrue(PathExpression.Predicate(
+                    @"Patient.**.contains('wne') = contact.relationship.coding.code and
                     Patient.**.matches('i.*/gif') in Patient.photo.*", tree));
 
             Assert.IsTrue(PathExpression.Predicate(
