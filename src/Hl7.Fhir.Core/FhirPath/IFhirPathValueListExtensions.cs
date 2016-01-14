@@ -266,7 +266,7 @@ namespace Hl7.Fhir.FhirPath
         {
             if (focus is IFhirPathElement)
             {
-                return ((IFhirPathElement)focus).Children();
+                return ((IFhirPathElement)focus).Children().Select(c=>c.Child);
             }
 
             return Enumerable.Empty<IFhirPathElement>();
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.FhirPath
 
         public static IEnumerable<IFhirPathElement> Children(this IEnumerable<IFhirPathValue> focus)
         {
-            return focus.JustElements().SelectMany(node => node.Children());
+            return focus.JustElements().SelectMany(node => node.Children().Select(c=>c.Child));
         }
 
         public static IEnumerable<IFhirPathElement> Descendants(this IEnumerable<IFhirPathElement> focus)
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.FhirPath
             if (!left.Any() && !right.Any()) return FhirValueList.Create(true);
             if (left.Count() != right.Count()) return FhirValueList.Create(false);
 
-            return left.All(l => right.Any(r => l.IsEquivalentTo(r)));
+            return FhirValueList.Create(left.All((IFhirPathValue l) => right.Any(r => l.IsEquivalentTo(r))));
         }
 
 
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.FhirPath
 
                 if(value is IFhirPathElement)
                 {
-                    result ^= ((IFhirPathElement)value).Name.GetHashCode();
+                    result ^= (((IFhirPathElement)value).Children().Take(1).Select(c => c.Name).SingleOrDefault() ?? "key").GetHashCode();
                 }
 
                 return result;

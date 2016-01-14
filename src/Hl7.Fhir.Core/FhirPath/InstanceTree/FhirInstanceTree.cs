@@ -9,6 +9,7 @@
 using Hl7.Fhir.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.FhirPath.InstanceTree
 {
@@ -55,9 +56,9 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
             }
         }
 
-        IEnumerable<IFhirPathElement> IFhirPathElement.Children()
+        IEnumerable<ChildNode> IFhirPathElement.Children()
         {
-            return LinkedTreeExtensions.Children(this);
+            return LinkedTreeExtensions.Children(this).Select(c => new ChildNode(c.Name,c));
         }
 
         IFhirPathElement IFhirPathElement.Parent

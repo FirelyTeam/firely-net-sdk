@@ -11,9 +11,50 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.FhirPath
 {
+    public class ChildNode
+    {
+        public ChildNode(string name, IFhirPathElement child)
+        {
+            Name = name;
+            Child = child;
+        }
+
+        public string Name { get; private set; }
+        public IFhirPathElement Child { get; private set; }
+
+        private const string POLYMORPHICNAMESUFFIX = "[x]";
+
+        public bool IsMatch(string name)
+        {
+            if (string.IsNullOrEmpty(name)) { throw Error.ArgumentNull("name"); } // nameof(name)
+
+            return Name == name | isPolymorphicMatch(Name, name);
+        }
+
+        private static bool isPolymorphicMatch(string childName, string name)
+        {
+            if (name.EndsWith(POLYMORPHICNAMESUFFIX))
+            {
+                var prefixLength = name.Length - POLYMORPHICNAMESUFFIX.Length;
+                return String.Compare(childName, 0, name, 0, Math.Max(0, prefixLength)) == 0
+                    && isValidTypeName(childName.Substring(prefixLength));
+            }
+            return false;
+        }
+
+        private static bool isValidTypeName(string name)
+        {
+            // EK: Only way is to use ModelInfo. If you don't want that dependency here, we should move the
+            // FHIR extensions to a more "fhiry" place
+            return ModelInfo.IsDataType(name) || ModelInfo.IsPrimitive(name.ToLower());
+        }
+
+    }
+
     public interface IFhirPathValue
     {
         object Value { get; }
@@ -23,9 +64,7 @@ namespace Hl7.Fhir.FhirPath
     {
         IFhirPathElement Parent { get; }
 
-        IEnumerable<IFhirPathElement> Children();
-
-        string Name { get; }
+        IEnumerable<ChildNode> Children();
     }
 
     public static class FhirValueList

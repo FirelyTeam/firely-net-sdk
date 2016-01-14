@@ -93,7 +93,7 @@ namespace Hl7.Fhir.FhirPath
                 var lElem = (IFhirPathElement)left;
                 var rElem = (IFhirPathElement)right;
 
-                if (lElem.Name == "id" && rElem.Name == "id")
+              //  if (lElem.Name == "id" && rElem.Name == "id")
                     return true;
             }
 
