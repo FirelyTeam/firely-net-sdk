@@ -57,39 +57,20 @@ namespace Hl7.Fhir.Rest
 
             LastResult = doRequest(interaction);
             var status = LastResult.Response.Status;
-            HttpStatusCode statusCode;
-            if (!Enum.TryParse<HttpStatusCode>(status, out statusCode))
-            {
-                // If the status code is unable to be parsed, then report
-                // in internal server error
-                statusCode = HttpStatusCode.InternalServerError;
-            }
+            var outcome = LastResult.Resource as OperationOutcome;
 
-            if (status.StartsWith("2"))      // 2xx codes - success
-            {
-                return LastResult;
-            }
-            else if (status.StartsWith("3") || status.StartsWith("1"))      // 3xx codes - we don't handle them, unless the .NET API did it for us
-            {
-                throw Error.NotSupported("Server returned a status code '{0}', which is not supported by the FhirClient".FormatWith(status));
-            }
-            else if (status.StartsWith("4") || status.StartsWith("5"))      // 4xx/5xx codes - client or server error.
-            {
-                var message = String.Format("Operation was unsuccessful, and returned status {0}.", status);
+            Exception httpException = HttpStatusToException(status, outcome);
 
-                var outcome = LastResult.Resource as OperationOutcome;
-                if (outcome != null)
-                {
-                    throw new FhirOperationException(message + " OperationOutcome: " + outcome.ToString(), statusCode, outcome);
-                }
-                else
-                    throw new FhirOperationException(message, statusCode);
+            if (httpException == null)
+            {
+                return LastResult; // Everything good, return result
             }
             else
             {
-                throw Error.NotSupported("Server returned an illegal http status code '{0}', which is not defined by the Http standard".FormatWith(status));
+                throw httpException;   // Http request failed, throw exception
             }
         }
+
 
         private Bundle.EntryComponent doRequest(Bundle.EntryComponent interaction)
         {
@@ -107,6 +88,13 @@ namespace Hl7.Fhir.Rest
             // using (HttpWebResponse webResponse = (HttpWebResponse)await request.GetResponseAsync(new TimeSpan(0, 0, 0, 0, Timeout)))
             using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponseNoEx())
             {
+                // A status 500 code can still happen here. This leads to exceptions such as "FormatException". This turns it into FhirOperationExceptions
+                Exception httpException = HttpStatusToException(((int)webResponse.StatusCode).ToString(), null);
+                if (httpException != null)
+                {
+                    throw httpException;
+                }
+
                 try
                 {
                     //Read body before we call the hook, so the hook cannot read the body before we do
@@ -143,6 +131,52 @@ namespace Hl7.Fhir.Rest
             }
             else
                 return null;
-        }      
+        }
+
+
+
+        /// <summary>
+        /// Convert a status code into an exception, or null if everything is fine.
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="outcome"></param>
+        /// <returns></returns>
+        private static Exception HttpStatusToException(string status, OperationOutcome outcome)
+        {
+            HttpStatusCode statusCode;
+
+            if (!Enum.TryParse<HttpStatusCode>(status, out statusCode))
+            {
+                // If the status code is unable to be parsed, then report
+                // in internal server error
+                statusCode = HttpStatusCode.InternalServerError;
+            }
+
+            if (status.StartsWith("2"))      // 2xx codes - success
+            {
+                return null;   // success
+            }
+            else if (status.StartsWith("3") || status.StartsWith("1"))      // 3xx codes - we don't handle them, unless the .NET API did it for us
+            {
+                return Error.NotSupported("Server returned a status code '{0}', which is not supported by the FhirClient".FormatWith(status));
+            }
+            else if (status.StartsWith("4") || status.StartsWith("5"))      // 4xx/5xx codes - client or server error.
+            {
+                var message = String.Format("Operation was unsuccessful, and returned status {0}.", status);
+
+                if (outcome != null)
+                {
+                    return new FhirOperationException(message + " OperationOutcome: " + outcome.ToString(), statusCode, outcome);
+                }
+                else
+                {
+                    return new FhirOperationException(message, statusCode);
+                }
+            }
+            else
+            {
+                return Error.NotSupported("Server returned an illegal http status code '{0}', which is not defined by the Http standard".FormatWith(status));
+            }
+        }
     }
 }
