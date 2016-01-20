@@ -385,28 +385,4 @@ namespace Hl7.Fhir.FhirPath
         Focus
     }
 
-    public enum InfixOperator
-    {
-        Mul,
-        Div,
-        Add,
-        Sub,
-        Union,
-        Concat,
-
-        Equals,
-        Equivalent,
-        NotEqual,
-        NotEquivalent,
-        GreaterThan,
-        LessThan,
-        LessOrEqual,
-        GreaterOrEqual,
-        In,
-
-        And,
-        Or,
-        Xor,
-        Implies
-    }
-}
+  }

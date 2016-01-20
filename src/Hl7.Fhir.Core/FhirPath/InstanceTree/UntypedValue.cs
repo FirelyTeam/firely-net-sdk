@@ -16,6 +16,14 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
             get;  private set;
         }
 
+        public IFhirPathElement Parent
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         private static object parseValue(string rep)
         {
             if (rep.ToLower() == "true") return true;
@@ -61,6 +69,11 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
         public override string ToString()
         {
             return Representation;
+        }
+
+        public IEnumerable<ChildNode> Children()
+        {
+            return Enumerable.Empty<ChildNode>();
         }
     }
 }

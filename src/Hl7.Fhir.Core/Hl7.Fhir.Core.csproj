@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
     <Compile Include="FhirPath\EvaluationContext.cs" />
+    <Compile Include="FhirPath\InfixOperator.cs" />
     <Compile Include="FhirPath\PathExpression.cs" />
     <Compile Include="FhirPath\InstanceTree\FhirInstanceTree.cs" />
     <Compile Include="FhirPath\Grammar\Functions.cs" />
