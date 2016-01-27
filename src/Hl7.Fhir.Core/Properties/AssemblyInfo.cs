@@ -25,6 +25,6 @@ using System.Runtime.InteropServices;
 [assembly:AssemblyKeyFileAttribute("..\\FhirNetApi.snk")]
 #endif
 
-[assembly: CLSCompliant(true)]
+[assembly: CLSCompliant(false)]
 
 [assembly: AssemblyVersion("0.90.6.*")]
