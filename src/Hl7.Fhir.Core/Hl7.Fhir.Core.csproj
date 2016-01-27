@@ -27,7 +27,7 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>3016, 3015, 1591</NoWarn>
+    <NoWarn>1591</NoWarn>
     <DocumentationFile>bin\Debug\Net45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNet45|AnyCPU' ">
@@ -37,7 +37,8 @@
     <DefineConstants>TRACE;RELEASE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>3016, 3015</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <DocumentationFile>bin\Release\Net45\Hl7.Fhir.Core.xml</DocumentationFile>
     <DefineConstants>RELEASE;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
