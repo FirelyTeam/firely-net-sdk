@@ -21,11 +21,10 @@ properties {
   $workingDir = "$baseDir\$workingName"
   $workingSourceDir = "$workingDir\src"
   $builds = @(
-#    @{Name = "Newtonsoft.Json.Dotnet"; TestsName = "Newtonsoft.Json.Tests.Dotnet"; BuildFunction = "DnxBuild"; TestsFunction = "DnxTests"; Constants="dotnet"; FinalDir=$null; NuGetDir = $null; Framework=$null},
-    @{Name = "Hl7.Fhir"; TestsName = "Newtonsoft.Json.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants=""; FinalDir="Net45"; NuGetDir = "net45"; Framework="net-4.0"},
-    @{Name = "Newtonsoft.Json.Portable"; TestsName = "Newtonsoft.Json.Tests.Portable"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="PORTABLE"; FinalDir="Portable"; NuGetDir = "portable-net45+wp80+win8+wpa81+dnxcore50"; Framework="net-4.0"},
-    @{Name = "Newtonsoft.Json.Portable40"; TestsName = "Newtonsoft.Json.Tests.Portable40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="PORTABLE40"; FinalDir="Portable40"; NuGetDir = "portable-net40+sl5+wp80+win8+wpa81"; Framework="net-4.0"},
-    @{Name = "Newtonsoft.Json.Net40"; TestsName = "Newtonsoft.Json.Tests.Net40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="NET40"; FinalDir="Net40"; NuGetDir = "net40"; Framework="net-4.0"}
+    @{Name = "Hl7.Fhir"; TestsName = "Hl7.Fhir.Core.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "MSTests"; Constants="NET45"; FinalDir="Net45"; NuGetDir = "net45"; Framework="net-4.0"}
+#    @{Name = "Newtonsoft.Json.Portable"; TestsName = "Newtonsoft.Json.Tests.Portable"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="PORTABLE"; FinalDir="Portable"; NuGetDir = "portable-net45+wp80+win8+wpa81+dnxcore50"; Framework="net-4.0"},
+#    @{Name = "Newtonsoft.Json.Portable40"; TestsName = "Newtonsoft.Json.Tests.Portable40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="PORTABLE40"; FinalDir="Portable40"; NuGetDir = "portable-net40+sl5+wp80+win8+wpa81"; Framework="net-4.0"},
+#    @{Name = "Newtonsoft.Json.Net40"; TestsName = "Newtonsoft.Json.Tests.Net40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="NET40"; FinalDir="Net40"; NuGetDir = "net40"; Framework="net-4.0"}
   )
 }
 
@@ -57,9 +56,8 @@ task Build -depends Clean {
 
   Write-Host -ForegroundColor Green "Updating assembly version"
   Write-Host
-  Update-AssemblyInfoFiles $workingSourceDir ($majorVersion + '.0.0') $version
+  Update-AssemblyInfoFiles $workingSourceDir ($majorVersion + '.0.0') $version  # TODO: Why not to full version?
 
-  Update-Project $workingSourceDir\Newtonsoft.Json\project.json $signAssemblies
 
   foreach ($build in $builds)
   {
@@ -273,20 +271,6 @@ function Edit-XmlNodes {
     }
 }
 
-function Update-Project {
-  param (
-    [string] $projectPath,
-    [string] $sign
-  )
-
-  $file = switch($sign) { $true { $signKeyPath } default { $null } }
-
-  $json = (Get-Content $projectPath) -join "`n" | ConvertFrom-Json
-  $options = @{"warningsAsErrors" = $true; "keyFile" = $file; "define" = ((GetConstants "dotnet" $sign) -split ";") }
-  Add-Member -InputObject $json -MemberType NoteProperty -Name "compilationOptions" -Value $options -Force
-
-  ConvertTo-Json $json -Depth 10 | Set-Content $projectPath
-}
 
 function Execute-Command($command) {
     $currentRetry = 0
