@@ -1,29 +1,28 @@
 properties { 
+  $majorWithReleaseVersion = "0.90.6"    # Update this for a new release
+
+  $baseDir  = resolve-path ..
+  $sourceDir = "$baseDir\src"
+
   $zipFileName = "FhirNetApi.zip"
-  $majorVersion = "0.90"
-  $majorWithReleaseVersion = "0.90.6"
   $nugetPrelease = $null
   $version = GetVersion $majorWithReleaseVersion
   $packageId = "Hl7.Fhir.DSTU21"
-  $signAssemblies = $false
-  $signKeyPath = "C:\Development\Releases\FhirNetApi.snk"
-  $buildDocumentation = $false
+  $signAssemblies = $true
+  $signKeyPath = "$sourceDir\FhirNetApi.snk"
   $buildNuGet = $true
   $treatWarningsAsErrors = $false
   $workingName = if ($workingName) {$workingName} else {"working"}
   
-  $baseDir  = resolve-path ..
   $buildDir = "$baseDir\build"
-  $sourceDir = "$baseDir\src"
   $toolsDir = "$baseDir\tools"
   $docDir = "$baseDir\doc"
   $releaseDir = "$baseDir\release"
   $workingDir = "$baseDir\$workingName"
   $workingSourceDir = "$workingDir\src"
   $builds = @(
-    @{Name = "Hl7.Fhir.Net45"; TestsName = "Hl7.Fhir.Core.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "MSTests"; Constants="NET45"; FinalDir="Net45"; NuGetDir = "net45"; Framework="net-4.0"}
-#    @{Name = "Newtonsoft.Json.Portable"; TestsName = "Newtonsoft.Json.Tests.Portable"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="PORTABLE"; FinalDir="Portable"; NuGetDir = "portable-net45+wp80+win8+wpa81+dnxcore50"; Framework="net-4.0"},
-#    @{Name = "Newtonsoft.Json.Portable40"; TestsName = "Newtonsoft.Json.Tests.Portable40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="PORTABLE40"; FinalDir="Portable40"; NuGetDir = "portable-net40+sl5+wp80+win8+wpa81"; Framework="net-4.0"},
+    @{SlnName = "Hl7.Fhir.Net45"; PrjNames = "Hl7.Fhir.Core","Hl7.Fhir.Specification"; TestsNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "MSTests"; Constants="NET45"; FinalDir="Net45"; NuGetDir = "net45"; Framework="net-4.0"}
+#    @{Name = "Newtonsoft.Json.Portable45"; TestsName = "Newtonsoft.Json.Tests.Portable40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="PORTABLE45"; FinalDir="Portable45"; NuGetDir = "portable-net45+netcore45+wpa81+wp8"; Framework="net-4.0"},
 #    @{Name = "Newtonsoft.Json.Net40"; TestsName = "Newtonsoft.Json.Tests.Net40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="NET40"; FinalDir="Net40"; NuGetDir = "net40"; Framework="net-4.0"}
   )
 }
@@ -56,17 +55,17 @@ task Build -depends Clean {
 
   Write-Host -ForegroundColor Green "Updating assembly version"
   Write-Host
-  Update-AssemblyInfoFiles $workingSourceDir ($majorVersion + '.0.0') $version  # TODO: Why not to full version?
+  Update-AssemblyInfoFiles $workingSourceDir ($majorWithReleaseVersion) $version
 
 
   foreach ($build in $builds)
   {
-    $name = $build.Name
-    if ($name -ne $null)
+    $slnName = $build.SlnName
+    if ($slnName -ne $null)
     {
-      Write-Host -ForegroundColor Green "Building " $name
-      Write-Host -ForegroundColor Green "Signed " $signAssemblies
-      Write-Host -ForegroundColor Green "Key " $signKeyPath
+      Write-Host -ForegroundColor Green "Building solution: " $slnName
+      Write-Host -ForegroundColor Green "Strong Name:       " $signAssemblies
+      Write-Host -ForegroundColor Green "Strong Name Key:   " $signKeyPath
 
       & $build.BuildFunction $build
     }
@@ -77,10 +76,13 @@ task Build -depends Clean {
 task Package -depends Build {
   foreach ($build in $builds)
   {
-    $name = $build.TestsName
+    $prjNames = $build.PrjNames
     $finalDir = $build.FinalDir
     
-    robocopy "$workingSourceDir\Newtonsoft.Json\bin\Release\$finalDir" $workingDir\Package\Bin\$finalDir *.dll *.pdb *.xml /NFL /NDL /NJS /NC /NS /NP /XO /XF *.CodeAnalysisLog.xml | Out-Default
+    foreach($prj in $prjNames)
+    {
+        robocopy "$workingSourceDir\$prj\bin\Release\$finalDir" $workingDir\Package\Bin\$finalDir *.dll *.pdb *.xml /NFL /NDL /NJS /NC /NS /NP /XO /XF *.CodeAnalysisLog.xml | Out-Default
+    }
   }
   
   if ($buildNuGet)
@@ -93,19 +95,26 @@ task Package -depends Build {
 
     New-Item -Path $workingDir\NuGet -ItemType Directory
 
-    $nuspecPath = "$workingDir\NuGet\Newtonsoft.Json.nuspec"
-    Copy-Item -Path "$buildDir\Newtonsoft.Json.nuspec" -Destination $nuspecPath -recurse
+    foreach($build in $builds)
+    {
+      $prjNames = $build.PrjNames
+      foreach($prj in $prjNames)
+      {
+        $nuspecPath = "$workingDir\NuGet\$prj.nuspec"
+        Copy-Item -Path "$buildDir\$prj.nuspec" -Destination $nuspecPath -recurse
 
-    Write-Host "Updating nuspec file at $nuspecPath" -ForegroundColor Green
-    Write-Host
+        Write-Host "Updating nuspec file at $nuspecPath" -ForegroundColor Green
+        Write-Host
 
-    $xml = [xml](Get-Content $nuspecPath)
-    Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'id']" -value $packageId
-    Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'version']" -value $nugetVersion
+        $xml = [xml](Get-Content $nuspecPath)
+        Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'id']" -value $packageId
+        Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'version']" -value $nugetVersion
 
-    Write-Host $xml.OuterXml
+        Write-Host $xml.OuterXml
 
-    $xml.save($nuspecPath)
+        $xml.save($nuspecPath)
+      }
+    }
 
     New-Item -Path $workingDir\NuGet\tools -ItemType Directory
     Copy-Item -Path "$buildDir\install.ps1" -Destination $workingDir\NuGet\tools\install.ps1 -recurse
@@ -120,46 +129,43 @@ task Package -depends Build {
         
         foreach ($frameworkDir in $frameworkDirs)
         {
-          robocopy "$workingSourceDir\Newtonsoft.Json\bin\Release\$finalDir" $workingDir\NuGet\lib\$frameworkDir *.dll *.pdb *.xml /NFL /NDL /NJS /NC /NS /NP /XO /XF *.CodeAnalysisLog.xml | Out-Default
+          $prjNames = $build.PrjNames
+    
+          foreach($prj in $prjNames)
+          {
+            robocopy "$workingSourceDir\$prj\bin\Release\$finalDir" $workingDir\NuGet\lib\$frameworkDir *.dll *.pdb *.xml /NFL /NDL /NJS /NC /NS /NP /XO /XF *.CodeAnalysisLog.xml | Out-Default
+          }
         }
       }
     }
   
-    robocopy $workingSourceDir $workingDir\NuGet\src *.cs /S /NFL /NDL /NJS /NC /NS /NP /XD Newtonsoft.Json.Tests Newtonsoft.Json.TestConsole obj .vs artifacts | Out-Default
+# TODO: Use Test Names from build parameter for /XD parameter  
+    robocopy $workingSourceDir $workingDir\NuGet\src *.cs /S /NFL /NDL /NJS /NC /NS /NP /XD Fhir.Core.Tests Fhir.Specification.Tests obj .vs artifacts | Out-Default
 
     Write-Host "Building NuGet package with ID $packageId and version $nugetVersion" -ForegroundColor Green
     Write-Host
 
-    exec { .\Tools\NuGet\NuGet.exe pack $nuspecPath -Symbols }
+    exec { & "$toolsDir\NuGet\NuGet.exe" pack $nuspecPath -Symbols }
     move -Path .\*.nupkg -Destination $workingDir\NuGet
   }
 
-  Write-Host "Build documentation: $buildDocumentation"
-  
-  if ($buildDocumentation)
-  {
-    $mainBuild = $builds | where { $_.Name -eq "Newtonsoft.Json" } | select -first 1
-    $mainBuildFinalDir = $mainBuild.FinalDir
-    $documentationSourcePath = "$workingDir\Package\Bin\$mainBuildFinalDir"
-    $docOutputPath = "$workingDir\Documentation\"
-    Write-Host -ForegroundColor Green "Building documentation from $documentationSourcePath"
-    Write-Host "Documentation output to $docOutputPath"
-
-    # Sandcastle has issues when compiling with .NET 4 MSBuild - http://shfb.codeplex.com/Thread/View.aspx?ThreadId=50652
-    exec { msbuild "/t:Clean;Rebuild" /p:Configuration=Release "/p:DocumentationSourcePath=$documentationSourcePath" "/p:OutputPath=$docOutputPath" $docDir\doc.shfbproj | Out-Default } "Error building documentation. Check that you have Sandcastle, Sandcastle Help File Builder and HTML Help Workshop installed."
-    
-    move -Path $workingDir\Documentation\LastBuild.log -Destination $workingDir\Documentation.log
-  }
-  
-  Copy-Item -Path $docDir\readme.txt -Destination $workingDir\Package\
-  Copy-Item -Path $docDir\license.txt -Destination $workingDir\Package\
+ 
+# TODO: Include a Readme and a License  
+#  Copy-Item -Path $docDir\readme.txt -Destination $workingDir\Package\
+#  Copy-Item -Path $docDir\license.txt -Destination $workingDir\Package\
 
   robocopy $workingSourceDir $workingDir\Package\Source\Src /MIR /NFL /NDL /NJS /NC /NS /NP /XD bin obj TestResults AppPackages .vs artifacts /XF *.suo *.user *.lock.json | Out-Default
   robocopy $buildDir $workingDir\Package\Source\Build /MIR /NFL /NDL /NJS /NC /NS /NP /XF runbuild.txt | Out-Default
   robocopy $docDir $workingDir\Package\Source\Doc /MIR /NFL /NDL /NJS /NC /NS /NP | Out-Default
   robocopy $toolsDir $workingDir\Package\Source\Tools /MIR /NFL /NDL /NJS /NC /NS /NP | Out-Default
-  
-  exec { .\Tools\7-zip\7za.exe a -tzip $workingDir\$zipFileName $workingDir\Package\* | Out-Default } "Error zipping"
+ 
+  $destinationZip = "$workingDir\$zipFileName"
+  $sourceDir = "$workingDir\Package"
+  $includeBaseDirectory = $false
+  $compressionLevel= [System.IO.Compression.CompressionLevel]::Optimal 
+  If(Test-path $destinationZip) {Remove-item $destinationZip}
+  Add-Type -assembly "system.io.compression.filesystem"
+  exec { [io.compression.zipfile]::CreateFromDirectory($sourceDir, $destinationZip, $compressionLevel, $includeBaseDirectory) } "Error zipping"
 }
 
 # Unzip package to a location
@@ -183,20 +189,20 @@ task Test -depends Deploy {
 
 function MSBuildBuild($build)
 {
-  $name = $build.Name
+  $slnName = $build.SlnName
   $finalDir = $build.FinalDir
 
   Write-Host
-  Write-Host "Restoring $workingSourceDir\$name.sln" -ForegroundColor Green
+  Write-Host "Restoring $workingSourceDir\$slnName.sln" -ForegroundColor Green
   [Environment]::SetEnvironmentVariable("EnableNuGetPackageRestore", "true", "Process")
-  exec { .\Tools\NuGet\NuGet.exe update -self }
-  exec { .\Tools\NuGet\NuGet.exe restore "$workingSourceDir\$name.sln" -verbosity detailed -configfile $workingSourceDir\nuget.config | Out-Default } "Error restoring $name"
+  exec { & "$toolsDir\NuGet\NuGet.exe" update -self }
+  exec { & "$toolsDir\NuGet\NuGet.exe" restore "$workingSourceDir\$slnName.sln" -verbosity detailed -configfile $workingSourceDir\nuget.config | Out-Default } "Error restoring $slnName"
 
   $constants = GetConstants $build.Constants $signAssemblies
 
   Write-Host
-  Write-Host "Building $workingSourceDir\$name.sln" -ForegroundColor Green
-  exec { msbuild "/t:Clean;Rebuild" /p:Configuration=Release "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" /p:OutputPath=bin\Release\$finalDir\ /p:AssemblyOriginatorKeyFile=$signKeyPath "/p:SignAssembly=$signAssemblies" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$name.sln" | Out-Default } "Error building $name"
+  Write-Host "Building $workingSourceDir\$slnName.sln" -ForegroundColor Green
+  exec { msbuild "/t:Clean;Rebuild" /p:Configuration=Release "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" /p:OutputPath=bin\Release\$finalDir\ /p:AssemblyOriginatorKeyFile=$signKeyPath "/p:SignAssembly=$signAssemblies" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$slnName.sln" | Out-Default } "Error building $slnName"
 }
 
 
