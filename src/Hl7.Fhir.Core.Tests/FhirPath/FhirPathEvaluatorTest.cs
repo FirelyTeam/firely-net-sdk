@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             tree = TreeConstructor.FromXml(tpXml);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void TestExpression()
         {
             Assert.IsTrue(PathExpression.Predicate(@"(Patient.identifier.where ( use = ( 'offic' + 'ial')) = 
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void TestExpression2()
         {
             var result = Expression.Expr.TryParse("Patient.deceased[x]");

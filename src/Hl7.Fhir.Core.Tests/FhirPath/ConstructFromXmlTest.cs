@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Test.FhirPath
     [TestClass]
     public class ConstructFromXmlTest
     {
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void ConstructTestPatient()
         {
             var tpXml = File.ReadAllText("TestData\\TestPatient.xml");
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Test.FhirPath
             Console.WriteLine(LinkedTreeTest.RenderTree(tree));
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void CheckTypeDetermination()
         {
             Assert.IsInstanceOfType(new UntypedValue("1").Value, typeof(Int64));

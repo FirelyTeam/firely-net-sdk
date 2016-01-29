@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             tree = Fhir.FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void AsIntegerOnList()
         {
             Assert.IsFalse(FhirValueList.Create(1, 2).IntegerEval().Any());
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.IsFalse(FhirValueList.Create("4.5").IntegerEval().Any());
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void CheckTypeDetermination()
         {
             var values = FhirValueList.Create(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now());
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void TestValueOps()
         {
             var a = new TypedValue(4);
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.IsTrue(b.GreaterOrEqual(c).AsBoolean());
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void TestItemSelection()
         {
             var values = FhirValueList.Create(1, 2, 3, 4, 5, 6, 7);
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.IsFalse(values.Item(100).Any());
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void TestNavigation()
         {
             var values = tree;
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.AreEqual("usual", result.First().AsString());
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void TestExpression()
         {
             var values = tree;

@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Tests.FhirPath
     {
         // TODO: Implement .Named() method to provide error info - also unit test!
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Identifier()
         {
             var parser = Lexer.Id.End();
@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Element()
         {
             var parser = Lexer.Element.End();
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.SucceedsMatch(parser, expr, expr.Substring(1));
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Const()
         {
             var parser = Lexer.Const.End();
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "%*");
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_DateTime()
         {
             var parser = Lexer.DateTime.End();
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.SucceedsWith(parser, "2015-01-03T12:34:34+02:30", result => Assert.AreEqual(PartialDateTime.Precision.Time, result.Prec));            
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Unicode()
         {
             var parser = Lexer.Unicode.End();
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "ugggg");
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Escape()
         {
             var parser = Lexer.Escape.End();
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.SucceedsMatch(parser, s, s.Substring(1, s.Length - 2));
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_String()
         {
             var parser = Lexer.String.End();
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, @"""mixed quotes'");
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Bool()
         {
             var parser = Lexer.Bool.End();
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 #if false
         // [WMR] All numbers are parsed as decimal
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Int()
         {
             var parser = Lexer.Number.End();
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 #endif
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Decimal()
         {
             var parser = Lexer.DecimalNumber.End();
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "01");
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Logic()
         {
             var parser = Lexer.Logic;
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "not");
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Comp()
         {
             var parser = Lexer.Comp.End();
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, ">>");
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_AxisSpec()
         {
             var parser = Lexer.AxisSpec.End();
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "abc");
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Recurse()
         {
             var parser = Lexer.Recurse.End();
