@@ -24,7 +24,7 @@
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\Net45\</OutputPath>
     <DefineConstants>TRACE;DEBUG;PORTABLE45, NET45</DefineConstants>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>1591</NoWarn>
@@ -40,7 +40,7 @@
     <NoWarn>
     </NoWarn>
     <DocumentationFile>bin\Release\Net45\Hl7.Fhir.Core.xml</DocumentationFile>
-    <DefineConstants>RELEASE;TRACE</DefineConstants>
+    <DefineConstants>NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Net45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>

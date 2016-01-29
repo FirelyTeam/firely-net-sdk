@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Hl7.Fhir.Core.Tests")]
 #endif
 
-#if RELEASE
+#if !DEBUG
 [assembly:AssemblyKeyFileAttribute("..\\FhirNetApi.snk")]
 #endif
 
