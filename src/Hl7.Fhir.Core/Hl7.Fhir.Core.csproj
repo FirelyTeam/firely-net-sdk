@@ -37,8 +37,7 @@
     <DefineConstants>TRACE;RELEASE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>
-    </NoWarn>
+    <NoWarn>1591</NoWarn>
     <DocumentationFile>bin\Release\Net45\Hl7.Fhir.Core.xml</DocumentationFile>
     <DefineConstants>NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
