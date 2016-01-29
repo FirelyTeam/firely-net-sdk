@@ -33,3 +33,8 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.90.3.*")]
+
+// Sign this for trusted friendship to tested Assembly. See: https://msdn.microsoft.com/en-us/library/bb385180.aspx
+#if !DEBUG
+[assembly: AssemblyKeyFileAttribute("..\\FhirNetApi.snk")]
+#endif
