@@ -784,7 +784,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest"), Ignore]   // Currently ignoring, as spark.furore.com returns Status 500.
         public void TestReceiveHtmlIsHandled()
         {
             var client = new FhirClient("http://spark.furore.com/");        // an address that returns html
@@ -802,6 +802,28 @@ namespace Hl7.Fhir.Tests.Rest
             catch (Exception)
             {
                 Assert.Fail("Failed to throw FormatException on illegal body");
+            }
+        }
+
+
+        [TestMethod]
+        [TestCategory("FhirClient")]
+        public void TestReceiveStatus500IsHandled()
+        {
+            var client = new FhirClient("http://spark.furore.com/");        // an address that returns Status 500
+
+            try
+            {
+                var pat = client.Read<Patient>("Patient/1");
+                Assert.Fail("Failed to throw an Exception on status 500");
+            }
+            catch (FhirOperationException)
+            {
+                // Expected exception happened
+            }
+            catch (Exception)
+            {
+                Assert.Fail("Failed to throw FhirOperationException on status 500");
             }
         }
 
