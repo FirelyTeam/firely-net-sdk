@@ -1,5 +1,6 @@
 properties { 
   $majorWithReleaseVersion = "0.90.6"    # Update this for a new release
+  $packageId = "Hl7.Fhir.DSTU21"         # Update this for new DSTU version
 
   $baseDir  = resolve-path ..
   $sourceDir = "$baseDir\src"
@@ -7,7 +8,6 @@ properties {
   $zipFileName = "FhirNetApi.zip"
   $nugetPrelease = $null
   $version = GetVersion $majorWithReleaseVersion
-  $packageId = "Hl7.Fhir.DSTU21"
   $signAssemblies = $true
   $signKeyPath = "$sourceDir\FhirNetApi.snk"
   $buildNuGet = $true
@@ -21,13 +21,65 @@ properties {
   $workingDir = "$baseDir\$workingName"
   $workingSourceDir = "$workingDir\src"
   $builds = @(
-    @{SlnName = "Hl7.Fhir.Net45"; PrjNames = "Hl7.Fhir.Core","Hl7.Fhir.Specification"; TestsNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "MSTests"; Constants="NET45"; FinalDir="Net45"; NuGetDir = "net45"; Framework="net-4.0"}
+    @{SlnName = "Hl7.Fhir.Net45"; PrjNames = "Hl7.Fhir.Core","Hl7.Fhir.Specification"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "MSTests"; Constants="NET45"; FinalDir="Net45"; NuGetDir = "net45"}
 #    @{Name = "Newtonsoft.Json.Portable45"; TestsName = "Newtonsoft.Json.Tests.Portable40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="PORTABLE45"; FinalDir="Portable45"; NuGetDir = "portable-net45+netcore45+wpa81+wp8"; Framework="net-4.0"},
 #    @{Name = "Newtonsoft.Json.Net40"; TestsName = "Newtonsoft.Json.Tests.Net40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="NET40"; FinalDir="Net40"; NuGetDir = "net40"; Framework="net-4.0"}
   )
+
+  $Script:MSBuild = "MSBuild"
+  $Script:MSTest = "MSTest"
 }
 
+
 framework '4.6x86'
+
+
+TaskSetup {
+
+    if (-not (Get-Command $MSBuild -ea SilentlyContinue))
+    {
+        Write-Verbose "Looking for location of MSBuild..."
+        $Keys = 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\MSBuild', 'HKLM:\SOFTWARE\Microsoft\MSBuild'
+        $MSBuild = $Keys | Get-ChildItem -ea SilentlyContinue | Where-Object { $_.PSChildName -match '\d+\.\d+' } `
+                         | Get-ItemProperty -Name MSBuildOverrideTasksPath -ea SilentlyContinue `
+                         | Where-Object { Test-Path (Join-Path $_.MSBuildOverrideTasksPath 'MSBuild.exe') } `
+                         | Select-Object MSBuildOverrideTasksPath -First 1 `
+                         | ForEach-Object { Join-Path $_.MSBuildOverrideTasksPath 'MSBuild.exe' }
+
+        if ($MSBuild.Length)
+        {
+            $Script:MSBuild = $MSBuild
+            Write-Host "Found MSBuild at '$MSBuild'." -ForegroundColor Green
+        }
+        else
+        {
+            Write-Warning "MSBuild could not be found. Will simply invoke 'MSBuild'."
+       }
+    }
+
+    if (-not (Get-Command $MSTest -ea SilentlyContinue))
+    {
+        Write-Verbose "Looking for location of MSTest..."
+        $Keys = 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\12.0\Setup\VS', 'HKLM:\SOFTWARE\Microsoft\VisualStudio\12.0\Setup\VS',
+                'HKLM:\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\11.0\Setup\VS', 'HKLM:\SOFTWARE\Microsoft\VisualStudio\11.0\Setup\VS',
+                'HKLM:\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\14.0\Setup\VS', 'HKLM:\SOFTWARE\Microsoft\VisualStudio\14.0\Setup\VS'
+        $MSTest = $Keys | Get-Item -ea SilentlyContinue | Get-ItemProperty -Name ProductDir -ea SilentlyContinue `
+                        | Where-Object { Test-Path (Join-Path $_.ProductDir 'Common7\IDE\MSTest.exe') } `
+                        | Select-Object ProductDir -First 1 `
+                        | ForEach-Object { Join-Path $_.ProductDir 'Common7\IDE\MSTest.exe' }
+
+        if ($MSTest.Length)
+        {
+            $Script:MSTest = $MSTest
+            Write-Host "Found MSTest at '$MSTest'." -ForegroundColor Green
+        }
+        else
+        {
+            Write-Warning "MSTest could not be found. Will simply invoke 'MSTest'."
+        }
+    }
+}
+
 
 task default -depends Test
 
@@ -159,8 +211,11 @@ task Package -depends Build {
   robocopy $docDir $workingDir\Package\Source\Doc /MIR /NFL /NDL /NJS /NC /NS /NP | Out-Default
   robocopy $toolsDir $workingDir\Package\Source\Tools /MIR /NFL /NDL /NJS /NC /NS /NP | Out-Default
  
+
   $destinationZip = "$workingDir\$zipFileName"
   $sourceDir = "$workingDir\Package"
+  Write-Host "Zipping $sourceDir to $destinationZip" -ForegroundColor Green 
+  Write-Host
   $includeBaseDirectory = $false
   $compressionLevel= [System.IO.Compression.CompressionLevel]::Optimal 
   If(Test-path $destinationZip) {Remove-item $destinationZip}
@@ -170,14 +225,18 @@ task Package -depends Build {
 
 # Unzip package to a location
 task Deploy -depends Package {
-  exec { .\Tools\7-zip\7za.exe x -y "-o$workingDir\Deployed" $workingDir\$zipFileName | Out-Default } "Error unzipping"
+  $sourceZip = "$workingDir\$zipFileName"
+  $destinationDir = "$workingDir\Deployed"
+
+  Write-Host "Extracting $sourceZip to $destinationDir" -ForegroundColor Green
+  Write-Host
+  Add-Type -assembly "system.io.compression.filesystem"
+  exec { [io.compression.zipfile]::ExtractToDirectory($sourceZip, $destinationDir) } "Error un-zipping"
 }
 
 # Run tests on deployed files
-task Test -depends Deploy {
-
-  Update-Project $workingSourceDir\Newtonsoft.Json\project.json $false
-
+# task Test -depends Deploy {   # TODO: Restore this after development
+task Test {
   foreach ($build in $builds)
   {
     if ($build.TestsFunction -ne $null)
@@ -202,9 +261,35 @@ function MSBuildBuild($build)
 
   Write-Host
   Write-Host "Building $workingSourceDir\$slnName.sln" -ForegroundColor Green
-  exec { msbuild "/t:Clean;Rebuild" /p:Configuration=Release "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" /p:OutputPath=bin\Release\$finalDir\ /p:AssemblyOriginatorKeyFile=$signKeyPath "/p:SignAssembly=$signAssemblies" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$slnName.sln" | Out-Default } "Error building $slnName"
+  exec { & "$MSBuild" "/t:Clean;Rebuild" /p:Configuration=Release "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" /p:OutputPath=bin\Release\$finalDir\ /p:AssemblyOriginatorKeyFile=$signKeyPath "/p:SignAssembly=$signAssemblies" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$slnName.sln" | Out-Default } "Error building $slnName"
 }
 
+
+function MSTests($build)
+{
+  $testNames = $build.TestNames
+  $finalDir = $build.FinalDir
+
+  foreach($testName in $testNames)
+  {
+    Write-Host -ForegroundColor Green "Copying test assembly for $testName to deployed directory"
+    robocopy "$workingSourceDir\$testName\bin\Release\$finalDir" $workingDir\Deployed\Bin\$finalDir /MIR /NFL /NDL /NJS /NC /NS /NP /XO | Out-Default
+
+    Copy-Item -Path "$workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll" -Destination $workingDir\Deployed\Bin\$finalDir\
+
+    $resultsDir = "$workingDir\TestResults\$finalDir"
+    if (-Not (Test-Path -path $resultsDir))
+    {
+      New-Item -Path $resultsDir -ItemType Directory
+    }
+
+    $timestamp = Get-Date -Format u | foreach {$_ -replace ":", "." -replace " ", "_"}
+  
+    Write-Host "Testing $testName" -ForegroundColor Green
+    Write-Host
+    exec { & "$MSTest" /testcontainer:$workingDir\Deployed\Bin\$finalDir\$testName.dll /testsettings:$workingSourceDir\Local.testsettings /resultsfile:$resultsDir\$testName-$timestamp.trx /category:"!IntegrationTest" | Out-Default } "Error testing $testName"
+  }
+}
 
 
 function GetConstants($constants, $includeSigned)
