@@ -817,9 +817,17 @@ namespace Hl7.Fhir.Tests.Rest
                 var pat = client.Read<Patient>("Patient/1");
                 Assert.Fail("Failed to throw an Exception on status 500");
             }
-            catch (FhirOperationException)
+            catch (FhirOperationException fe)
             {
                 // Expected exception happened
+                if (fe.Status != HttpStatusCode.InternalServerError)
+                    Assert.Fail("Server response of 500 did not result in FhirOperationException with status 500.");
+
+                if (client.LastResult == null)
+                    Assert.Fail("LastResult not set in error case.");
+
+                if (client.LastResult.Status != "500")
+                    Assert.Fail("LastResult.Status is not 500.");
             }
             catch (Exception)
             {
