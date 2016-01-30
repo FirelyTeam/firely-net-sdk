@@ -23,12 +23,6 @@ using Hl7.Fhir.Specification.Navigation;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-    [DeploymentItem(@"TestData\snapshot-test\extension-string-translation.xml", @"TestData\snapshot-test")]
-    [DeploymentItem(@"TestData\snapshot-test\profiles-others.xml", @"TestData\snapshot-test")]
-    [DeploymentItem(@"TestData\snapshot-test\profiles-resources.xml", @"TestData\snapshot-test")]
-    [DeploymentItem(@"TestData\snapshot-test\profiles-types.xml", @"TestData\snapshot-test")]
-    [DeploymentItem(@"TestData\snapshot-test\structdef-human-group.xml", @"TestData\snapshot-test")]
-    [DeploymentItem(@"TestData\snapshot-test\valueset-group-type-human.xml", @"TestData\snapshot-test")]
 #if PORTABLE45
 	public class PortableSnapshotGeneratorTest
 #else

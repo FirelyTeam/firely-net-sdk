@@ -19,8 +19,6 @@ using System.Globalization;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-    [DeploymentItem(@"TestData\TestPatient.json", "TestData")]
-    [DeploymentItem(@"TestData\TestPatient.xml", "TestData")]
 #if PORTABLE45
 	public class PortableSerializationTests
 #else

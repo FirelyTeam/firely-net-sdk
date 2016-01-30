@@ -27,7 +27,6 @@ namespace Hl7.Fhir.Tests.Model
 #endif
     {
         [TestMethod]
-        [DeploymentItem(@"TestData\TestPatient.xml", "TestData")]
         public void CheckCopyAllFields()
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
@@ -39,7 +38,6 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        [DeploymentItem(@"TestData\careplan-example-f201-renal.xml", "TestData")]
         public void CheckCopyCarePlan()
         {
             string xml = File.ReadAllText(@"TestData\careplan-example-f201-renal.xml");

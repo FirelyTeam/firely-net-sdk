@@ -20,14 +20,14 @@ properties {
   $releaseDir = "$baseDir\release"
   $workingDir = "$baseDir\$workingName"
   $workingSourceDir = "$workingDir\src"
-  $builds = @(
-    @{SlnName = "Hl7.Fhir.Net45"; PrjNames = "Hl7.Fhir.Core","Hl7.Fhir.Specification"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "MSTests"; Constants="NET45"; FinalDir="Net45"; NuGetDir = "net45"}
+  $builds = @(  # TODO: Include all target frameworks
+    @{SlnName = "Hl7.Fhir.Net45"; PrjNames = "Hl7.Fhir.Core","Hl7.Fhir.Specification"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"; NuGetDir = "net45"}
 #    @{Name = "Newtonsoft.Json.Portable45"; TestsName = "Newtonsoft.Json.Tests.Portable40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="PORTABLE45"; FinalDir="Portable45"; NuGetDir = "portable-net45+netcore45+wpa81+wp8"; Framework="net-4.0"},
 #    @{Name = "Newtonsoft.Json.Net40"; TestsName = "Newtonsoft.Json.Tests.Net40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="NET40"; FinalDir="Net40"; NuGetDir = "net40"; Framework="net-4.0"}
   )
 
   $Script:MSBuild = "MSBuild"
-  $Script:MSTest = "MSTest"
+  $Script:VSTest = "VSTest.Console"
 }
 
 
@@ -57,25 +57,25 @@ TaskSetup {
        }
     }
 
-    if (-not (Get-Command $MSTest -ea SilentlyContinue))
+    if (-not (Get-Command $VSTest -ea SilentlyContinue))
     {
         Write-Verbose "Looking for location of MSTest..."
         $Keys = 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\12.0\Setup\VS', 'HKLM:\SOFTWARE\Microsoft\VisualStudio\12.0\Setup\VS',
                 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\11.0\Setup\VS', 'HKLM:\SOFTWARE\Microsoft\VisualStudio\11.0\Setup\VS',
                 'HKLM:\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\14.0\Setup\VS', 'HKLM:\SOFTWARE\Microsoft\VisualStudio\14.0\Setup\VS'
-        $MSTest = $Keys | Get-Item -ea SilentlyContinue | Get-ItemProperty -Name ProductDir -ea SilentlyContinue `
-                        | Where-Object { Test-Path (Join-Path $_.ProductDir 'Common7\IDE\MSTest.exe') } `
+        $VSTest = $Keys | Get-Item -ea SilentlyContinue | Get-ItemProperty -Name ProductDir -ea SilentlyContinue `
+                        | Where-Object { Test-Path (Join-Path $_.ProductDir 'Common7\IDE\CommonExtensions\Microsoft\TestWindow\VSTest.Console.exe') } `
                         | Select-Object ProductDir -First 1 `
-                        | ForEach-Object { Join-Path $_.ProductDir 'Common7\IDE\MSTest.exe' }
+                        | ForEach-Object { Join-Path $_.ProductDir 'Common7\IDE\CommonExtensions\Microsoft\TestWindow\VSTest.Console.exe' }
 
-        if ($MSTest.Length)
+        if ($VSTest.Length)
         {
-            $Script:MSTest = $MSTest
-            Write-Host "Found MSTest at '$MSTest'." -ForegroundColor Green
+            $Script:VSTest = $VSTest
+            Write-Host "Found VSTest at '$VSTest'." -ForegroundColor Green
         }
         else
         {
-            Write-Warning "MSTest could not be found. Will simply invoke 'MSTest'."
+            Write-Warning "VSTest could not be found. Will simply invoke 'VSTest.Console'."
         }
     }
 }
@@ -124,7 +124,8 @@ task Build -depends Clean {
   }
 }
 
-# Optional build documentation, add files to final zip
+# TODO: Should Packaging depend on successful testing?
+# Optional build NuGet, add files to final zip
 task Package -depends Build {
   foreach ($build in $builds)
   {
@@ -137,6 +138,7 @@ task Package -depends Build {
     }
   }
   
+  # TODO: Right now this accumulates all NuGet targets into a single package !!!!
   if ($buildNuGet)
   {
     $nugetVersion = $majorWithReleaseVersion
@@ -169,7 +171,11 @@ task Package -depends Build {
     }
 
     New-Item -Path $workingDir\NuGet\tools -ItemType Directory
-    Copy-Item -Path "$buildDir\install.ps1" -Destination $workingDir\NuGet\tools\install.ps1 -recurse
+    Copy-Item -Path "$buildDir\install.ps1" -Destination $workingDir\NuGet\tools -recurse
+
+    New-Item -Path $workingDir\NuGet\content -ItemType Directory
+    Copy-Item -Path "$sourceDir\Hl7.Fhir.Specification\validation.xml.zip" -Destination $workingDir\NuGet\content -recurse
+
     
     foreach ($build in $builds)
     {
@@ -235,7 +241,7 @@ task Deploy -depends Package {
 }
 
 # Run tests on deployed files
-# task Test -depends Deploy {   # TODO: Restore this after development
+# task Test -depends Deploy {   # TODO: Restore this after development. What should it really depend on? MS suggests in-place testing. I.E. depend on Build, not on Deploy
 task Test {
   foreach ($build in $builds)
   {
@@ -265,29 +271,30 @@ function MSBuildBuild($build)
 }
 
 
-function MSTests($build)
+function VSTests($build)
 {
   $testNames = $build.TestNames
   $finalDir = $build.FinalDir
 
   foreach($testName in $testNames)
   {
-    Write-Host -ForegroundColor Green "Copying test assembly for $testName to deployed directory"
-    robocopy "$workingSourceDir\$testName\bin\Release\$finalDir" $workingDir\Deployed\Bin\$finalDir /MIR /NFL /NDL /NJS /NC /NS /NP /XO | Out-Default
-
-    Copy-Item -Path "$workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll" -Destination $workingDir\Deployed\Bin\$finalDir\
-
     $resultsDir = "$workingDir\TestResults\$finalDir"
     if (-Not (Test-Path -path $resultsDir))
     {
       New-Item -Path $resultsDir -ItemType Directory
     }
 
-    $timestamp = Get-Date -Format u | foreach {$_ -replace ":", "." -replace " ", "_"}
+    Push-Location $resultsDir          # VSTest creates Test Results relative to current directory
   
     Write-Host "Testing $testName" -ForegroundColor Green
     Write-Host
-    exec { & "$MSTest" /testcontainer:$workingDir\Deployed\Bin\$finalDir\$testName.dll /testsettings:$workingSourceDir\Local.testsettings /resultsfile:$resultsDir\$testName-$timestamp.trx /category:"!IntegrationTest" | Out-Default } "Error testing $testName"
+    try
+    {
+       & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:”TestCategory!=IntegrationTest" | Out-Default     # TODO: Find out why Trx logger is not writing anything to file.
+    }
+    catch {}
+
+    Pop-Location
   }
 }
 
