@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Tests.Rest
             System.Diagnostics.Trace.WriteLine("Testing against fhir server: " + testEndpoint);
         }
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void FetchConformance()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromFormatParam("application/fhir+json"));
         }
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void ReadWithFormat()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void Read()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void ReadRelative()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Tests.Rest
 			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 		}
 #endif
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void Search()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 #endif
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void Paging()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(firstId, prevId);
         }
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void PagingInJson()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Tests.Rest
             var pat = client.Read<Patient>("Patient/1"); // "/_history/spark680");
         }
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CreateAndFullRepresentation()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -366,7 +366,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// This test is also used as a "setup" test for the History test.
         /// If you change the number of operations in here, this will make the History test fail.
         /// </summary>
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CreateEditDelete()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         //Test for github issue https://github.com/ewoutkramer/fhir-net-api/issues/145
         public void Create_ObservationWithValueAsSimpleQuantity_ReadReturnsValueAsQuantity()
         {
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// This test will fail if the system records AuditEvents 
         /// and counts them in the WholeSystemHistory
         /// </summary>
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void History()
         {
             DateTimeOffset timestampBeforeCreationAndDeletions = DateTimeOffset.Now;
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod]
-        [TestCategory("FhirClient")]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestWithParam()
         {
             var client = new FhirClient(testEndpoint);
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(res);
         }
 
-        [TestMethod, TestCategory("FhirClient")]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void ManipulateMeta()
         {
            FhirClient client = new FhirClient(testEndpoint);
@@ -659,7 +659,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod]
-        [TestCategory("FhirClient")]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestSearchByPersonaCode()
         {
             var client = new FhirClient(testEndpoint);
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod]
-        [TestCategory("FhirClient")]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CreateDynamic()
         {
             Resource furore = new Organization
@@ -692,7 +692,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("FhirClient")]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CallsCallbacks()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("FhirClient")]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void RequestFullResource()
         {
             var client = new FhirClient(testEndpoint);
@@ -784,7 +784,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("FhirClient")]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestReceiveHtmlIsHandled()
         {
             var client = new FhirClient("http://spark.furore.com/");        // an address that returns html
@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("FhirClient")]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void FhirVersionIsChecked()
         {
             var testEndpointDSTU2 = new Uri("http://spark-dstu2.furore.com/fhir");

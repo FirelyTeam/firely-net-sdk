@@ -87,6 +87,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
+        [DeploymentItem(@"TestData\json-edge-cases.json", "TestData")]
         public void EdgecaseRoundtrip()
         {
             string json = File.ReadAllText(@"TestData\json-edge-cases.json");

@@ -52,6 +52,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        [DeploymentItem(@"TestData\TestPatient.xml", "TestData")]
         public void TestSchemaCollectionValidation()
         {
             var s = File.ReadAllText(@"TestData\TestPatient.xml");

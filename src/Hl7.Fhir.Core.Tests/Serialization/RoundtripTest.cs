@@ -31,6 +31,8 @@ namespace Hl7.Fhir.Tests.Serialization
 #endif
     {    
         [TestMethod]
+        [DeploymentItem(@"TestData\examples.zip", "TestData")]
+        [DeploymentItem(@"TestData\examples-json.zip", "TestData")]
         public void FullRoundtripOfAllExamples()
         {
             string examplesXml = @"TestData\examples.zip";
