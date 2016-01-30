@@ -28,6 +28,7 @@ namespace Hl7.Fhir.Tests.Validation
 #endif    
     {
         [TestMethod]
+        [DeploymentItem(@"TestData\TestPatient.xml", "TestData")]
         public void ValidateDemoPatient()
         {
             var s = new StringReader(File.ReadAllText(@"TestData\TestPatient.xml"));
