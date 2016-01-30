@@ -1,6 +1,11 @@
+
 properties { 
   $majorWithReleaseVersion = "0.90.6"    # Update this for a new release
-  $packageId = "Hl7.Fhir.DSTU21"         # Update this for new DSTU version
+  $nugetPkgs = @(                        # Update this for new DSTU version
+    @{CsProj="Hl7.Fhir.Core"; AssemblyPattern="Hl7.Fhir.*.Core"; PkgId="Hl7.Fhir.DSTU21"},
+    @{CsProj="Hl7.Fhir.Specification"; AssemblyPattern="Hl7.Fhir.*.Specification"; PkgId="Hl7.Fhir.Specification.DSTU21"}
+   )
+
 
   $baseDir  = resolve-path ..
   $sourceDir = "$baseDir\src"
@@ -10,18 +15,25 @@ properties {
   $version = GetVersion $majorWithReleaseVersion
   $signAssemblies = $true
   $signKeyPath = "$sourceDir\FhirNetApi.snk"
+
   $buildNuGet = $true
+  $dirPairs = @(
+    @{BinDir="Net40"; LibDir="net40"},
+    @{BinDir="Net45"; LibDir="net45"},
+    @{BinDir="Portable45"; LibDir="portable-net45+netcore45+wpa81+wp8"}
+  )
+
   $treatWarningsAsErrors = $false
-  $workingName = if ($workingName) {$workingName} else {"working"}
   
   $buildDir = "$baseDir\build"
   $toolsDir = "$baseDir\tools"
   $docDir = "$baseDir\doc"
   $releaseDir = "$baseDir\release"
-  $workingDir = "$baseDir\$workingName"
+  $workingDir = "$baseDir\working"
   $workingSourceDir = "$workingDir\src"
-  $builds = @(  # TODO: Include all target frameworks
-    @{SlnName = "Hl7.Fhir.Net45"; PrjNames = "Hl7.Fhir.Core","Hl7.Fhir.Specification"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"; NuGetDir = "net45"}
+
+  $builds = @(                           # Update this to add new target frameworks 
+    @{SlnName = "Hl7.Fhir.Net45"; PrjNames = "Hl7.Fhir.Core","Hl7.Fhir.Specification"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"}
 #    @{Name = "Newtonsoft.Json.Portable45"; TestsName = "Newtonsoft.Json.Tests.Portable40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="PORTABLE45"; FinalDir="Portable45"; NuGetDir = "portable-net45+netcore45+wpa81+wp8"; Framework="net-4.0"},
 #    @{Name = "Newtonsoft.Json.Net40"; TestsName = "Newtonsoft.Json.Tests.Net40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="NET40"; FinalDir="Net40"; NuGetDir = "net40"; Framework="net-4.0"}
   )
@@ -31,7 +43,7 @@ properties {
 }
 
 
-framework '4.6x86'
+framework '4.6x86'   # TODO: 4.6 is rather high. Lower framework OK?
 
 
 TaskSetup {
@@ -131,14 +143,14 @@ task Package -depends Build {
   {
     $prjNames = $build.PrjNames
     $finalDir = $build.FinalDir
-    
+
     foreach($prj in $prjNames)
     {
         robocopy "$workingSourceDir\$prj\bin\Release\$finalDir" $workingDir\Package\Bin\$finalDir *.dll *.pdb *.xml /NFL /NDL /NJS /NC /NS /NP /XO /XF *.CodeAnalysisLog.xml | Out-Default
     }
   }
   
-  # TODO: Right now this accumulates all NuGet targets into a single package !!!!
+  # Build NuGet packages
   if ($buildNuGet)
   {
     $nugetVersion = $majorWithReleaseVersion
@@ -147,64 +159,67 @@ task Package -depends Build {
       $nugetVersion = $nugetVersion + "-" + $nugetPrelease
     }
 
-    New-Item -Path $workingDir\NuGet -ItemType Directory
+    $nugetDir = "$workingDir\NuGet"
 
-    foreach($build in $builds)
+    foreach($nugetPkg in $nugetPkgs)
     {
-      $prjNames = $build.PrjNames
-      foreach($prj in $prjNames)
+      $pkg = $nugetPkg.CsProj
+      $packageId = $nugetPkg.PkgId
+
+      # Start out each package with a fresh directory
+      if (Test-Path -path $nugetDir)
       {
-        $nuspecPath = "$workingDir\NuGet\$prj.nuspec"
-        Copy-Item -Path "$buildDir\$prj.nuspec" -Destination $nuspecPath -recurse
-
-        Write-Host "Updating nuspec file at $nuspecPath" -ForegroundColor Green
-        Write-Host
-
-        $xml = [xml](Get-Content $nuspecPath)
-        Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'id']" -value $packageId
-        Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'version']" -value $nugetVersion
-
-        Write-Host $xml.OuterXml
-
-        $xml.save($nuspecPath)
-      }
-    }
-
-    New-Item -Path $workingDir\NuGet\tools -ItemType Directory
-    Copy-Item -Path "$buildDir\install.ps1" -Destination $workingDir\NuGet\tools -recurse
-
-    New-Item -Path $workingDir\NuGet\content -ItemType Directory
-    Copy-Item -Path "$sourceDir\Hl7.Fhir.Specification\validation.xml.zip" -Destination $workingDir\NuGet\content -recurse
-
+        Write-Host "Deleting existing working directory $nugetDir"
     
-    foreach ($build in $builds)
-    {
-      if ($build.NuGetDir)
-      {
-        $name = $build.TestsName
-        $finalDir = $build.FinalDir
-        $frameworkDirs = $build.NuGetDir.Split(",")
-        
-        foreach ($frameworkDir in $frameworkDirs)
-        {
-          $prjNames = $build.PrjNames
-    
-          foreach($prj in $prjNames)
-          {
-            robocopy "$workingSourceDir\$prj\bin\Release\$finalDir" $workingDir\NuGet\lib\$frameworkDir *.dll *.pdb *.xml /NFL /NDL /NJS /NC /NS /NP /XO /XF *.CodeAnalysisLog.xml | Out-Default
-          }
-        }
+        Execute-Command -command { del $nugetDir -Recurse -Force }
       }
-    }
   
-# TODO: Use Test Names from build parameter for /XD parameter  
-    robocopy $workingSourceDir $workingDir\NuGet\src *.cs /S /NFL /NDL /NJS /NC /NS /NP /XD Fhir.Core.Tests Fhir.Specification.Tests obj .vs artifacts | Out-Default
+      Write-Host "Creating working directory $nugetDir"
+      New-Item -Path $nugetDir -ItemType Directory
 
-    Write-Host "Building NuGet package with ID $packageId and version $nugetVersion" -ForegroundColor Green
-    Write-Host
+      $nuspecPath = "$nugetDir\$pkg.nuspec"
+      Copy-Item -Path "$buildDir\nuget\$pkg\$pkg.nuspec" -Destination $nuspecPath -recurse
 
-    exec { & "$toolsDir\NuGet\NuGet.exe" pack $nuspecPath -Symbols }
-    move -Path .\*.nupkg -Destination $workingDir\NuGet
+      Write-Host "Updating nuspec file at $nuspecPath" -ForegroundColor Green
+      Write-Host
+
+      $xml = [xml](Get-Content $nuspecPath)
+      Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'id']" -value $packageId
+      Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'version']" -value $nugetVersion
+
+      Write-Host $xml.OuterXml
+
+      $xml.save($nuspecPath)
+
+
+      New-Item -Path $workingDir\NuGet\tools -ItemType Directory
+      if (Test-Path "$buildDir\nuget\$pkg\tools\")
+      {
+        Copy-Item -Path "$buildDir\nuget\$pkg\tools\*.ps1" -Destination $workingDir\NuGet\tools -recurse
+      }
+
+      # Copy e.g. validation data zip file.
+      New-Item -Path $workingDir\NuGet\content -ItemType Directory
+      Copy-Item -Path "$sourceDir\$pkg\*.xml.zip" -Destination $workingDir\NuGet\content -recurse
+
+      # Copy the Assemblies to the /lib directories
+      foreach($dirPair in $dirPairs)
+      {
+        $binDir = $dirPair.BinDir
+        $libDir = $dirPair.LibDir
+        $assemblyPattern = $nugetPkg.AssemblyPattern
+        robocopy "$workingSourceDir\$pkg\bin\Release\$binDir" "$workingDir\NuGet\lib\$libDir" "$assemblyPattern.dll" "$assemblyPattern.pdb" "$assemblyPattern.xml" /NFL /NDL /NJS /NC /NS /NP /XO /XF *.CodeAnalysisLog.xml | Out-Default
+      }
+
+      # Copy source code for symbol package
+      robocopy "$workingSourceDir\$pkg" "$workingDir\NuGet\src\$pkg" "*.cs" /S /NFL /NDL /NJS /NC /NS /NP /XD obj .vs artifacts | Out-Default
+
+      Write-Host "Building NuGet package with ID $packageId and version $nugetVersion" -ForegroundColor Green
+      Write-Host
+
+      exec { & "$toolsDir\NuGet\NuGet.exe" pack $nuspecPath -Symbols }
+      move -Path .\*.nupkg -Destination $workingDir
+    }  
   }
 
  
@@ -229,19 +244,9 @@ task Package -depends Build {
   exec { [io.compression.zipfile]::CreateFromDirectory($sourceDir, $destinationZip, $compressionLevel, $includeBaseDirectory) } "Error zipping"
 }
 
-# Unzip package to a location
-task Deploy -depends Package {
-  $sourceZip = "$workingDir\$zipFileName"
-  $destinationDir = "$workingDir\Deployed"
 
-  Write-Host "Extracting $sourceZip to $destinationDir" -ForegroundColor Green
-  Write-Host
-  Add-Type -assembly "system.io.compression.filesystem"
-  exec { [io.compression.zipfile]::ExtractToDirectory($sourceZip, $destinationDir) } "Error un-zipping"
-}
-
-# Run tests on deployed files
-# task Test -depends Deploy {   # TODO: Restore this after development. What should it really depend on? MS suggests in-place testing. I.E. depend on Build, not on Deploy
+# Run tests on built projects
+# task Test -depends Build {   # TODO: Restore this after development of script.
 task Test {
   foreach ($build in $builds)
   {
