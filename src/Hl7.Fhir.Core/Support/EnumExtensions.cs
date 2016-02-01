@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.Introspection;
 using System;
+using System.ComponentModel;
 
 namespace Hl7.Fhir.Support
 {
@@ -17,10 +18,10 @@ namespace Hl7.Fhir.Support
 
         public static string GetDocumentation(this Enum e)
         {
-            var attr = e.GetAttributeOnEnum<EnumDocumentationAttribute>();
+            var attr = e.GetAttributeOnEnum<DescriptionAttribute>();
 
             if (attr != null)
-                return attr.Documentation;
+                return attr.Description;
             else
                 return null;
         }

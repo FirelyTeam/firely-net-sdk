@@ -35,17 +35,6 @@ using System.ComponentModel;
 //
 namespace Hl7.Fhir.Model
 {
-#if PORTABLE45
-	public class DescriptionAttribute : Attribute
-	{
-		public DescriptionAttribute(string desc)
-		{
-			Value = desc;
-		}
-
-		public string Value { get; private set; }
-	}
-#endif
 
     /// <summary>
     /// The lifecycle status of a Value Set or Concept Map.

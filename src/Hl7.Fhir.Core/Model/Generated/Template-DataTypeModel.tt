@@ -371,7 +371,7 @@ if (!abstractType){
             /// <#= defintion.Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ").Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;") #>
             /// (system: <#= system #>)
             /// </summary>
-            [EnumLiteral("<#= code #>"), EnumDocumentation("<#= display #>")]
+            [EnumLiteral("<#= code #>"), Description("<#= display #>")]
             <#= ConvertEnumValue(code) #>,
 <#
     }
