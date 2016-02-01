@@ -1,10 +1,5 @@
 ﻿using Hl7.Fhir.Introspection;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Support
 {
@@ -22,10 +17,10 @@ namespace Hl7.Fhir.Support
 
         public static string GetDocumentation(this Enum e)
         {
-            var attr = e.GetAttributeOnEnum<DescriptionAttribute>();
+            var attr = e.GetAttributeOnEnum<EnumDocumentationAttribute>();
 
             if (attr != null)
-                return attr.Description;
+                return attr.Documentation;
             else
                 return null;
         }
