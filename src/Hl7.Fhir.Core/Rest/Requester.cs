@@ -67,14 +67,22 @@ namespace Hl7.Fhir.Rest
                     if (AfterResponse != null) AfterResponse(webResponse,inBody);
 
                     // If response has an error code which will make it impossible to turn it into bundle entries: convert it into FhirOperationException and bail out...
-                    Exception httpException = HttpStatusToException(((int)webResponse.StatusCode).ToString());
+                    var statusString = ((int)webResponse.StatusCode).ToString();
+                    Exception httpException = HttpStatusToException(statusString);
                     if (httpException != null)
                     {
+                        // Build a very minimal LastResult
+                        var errorResult = new Bundle.EntryComponent();
+                        errorResult.Response = new Bundle.ResponseComponent();
+                        errorResult.Response.Status = statusString;
+
+                        LastResult = errorResult;
                         throw httpException;
                     }
 
-                    // Do this call after AfterResponse, so this will be called, even if exceptions are thrown by ToBundleEntry()
-                    return webResponse.ToBundleEntry(inBody);
+                    // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
+                    LastResult = webResponse.ToBundleEntry(inBody);
+                    return LastResult;
                 }
                 catch (AggregateException ae)
                 {
