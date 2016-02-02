@@ -10,6 +10,7 @@ using System.Reflection;
 
 namespace Hl7.Fhir.Introspection
 {
+    [CLSCompliant(false)]
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public class ReferencesAttribute : Attribute
     {
