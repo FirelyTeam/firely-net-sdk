@@ -2,6 +2,11 @@
 layout: default
 title: What's new?
 ---
+### In 0.90.x (released 2016MMYY)
+* Enhancement: Portable45 target includes support for validation, and no longer depends on Silverlight 5 SDK. Thanks Tilo!
+* Fix: Status 500 from a FHIR server with an HTML error message results in a FhirOperationException, not a FormatException. Thanks Tilo!
+* And of course numerous bugfixes and code cleanups.
+
 ### In 0.90.4 (released 20160105)
 * Enhancement: Additional Extension methods for converting native types to/from FHIR types
 <pre>
