@@ -25,6 +25,13 @@ Get started by reading the [online documentation][3] or downloading the NuGet pa
  
 **Please note that the DSTU1 release is not maintained anymore.**
 
+## Support 
+We actively monitor the issues coming in through the GitHub repository at [https://github.com/ewoutkramer/fhir-net-api/issues](https://github.com/ewoutkramer/fhir-net-api/issues). You are welcome to register your bugs and feature suggestions there!
+
+For broader discussions, there's a ["FHIR on .NET" Google group](https://groups.google.com/forum/#!forum/fhir-dotnet).
+
+We are also members of the FHIR Skype Implementers chat.
+
 ## Contributing ##
 We are welcoming contributors!
 
