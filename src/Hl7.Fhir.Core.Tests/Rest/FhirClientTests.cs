@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod]
-        [TestCategory("FhirClient")]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestReceiveStatus500IsHandled()
         {
             var client = new FhirClient("http://spark.furore.com/");        // an address that returns Status 500
