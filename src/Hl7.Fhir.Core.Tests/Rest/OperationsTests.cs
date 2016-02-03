@@ -32,6 +32,7 @@ namespace Hl7.Fhir.Tests.Rest
 #endif
 
         [TestMethod] //Server throws error: Access violation at address 000000000129D56C in module 'FHIRServer.exe'. Read of address 0000000000000000
+        [TestCategory("IntegrationTest")]
         public void InvokeTestPatientGetEverything()
         {
             var client = new FhirClient(testEndpoint);
@@ -46,6 +47,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
+        [TestCategory("IntegrationTest")]
         public void InvokeExpandExistingValueSet()
         {
             var client = new FhirClient(testEndpoint);
@@ -55,6 +57,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
+        [TestCategory("IntegrationTest")]
         public void InvokeExpandParameterValueSet()
         {
             var client = new FhirClient(testEndpoint);
@@ -67,6 +70,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
+        [TestCategory("IntegrationTest")]
         public void InvokeLookupCoding()
         {
             var client = new FhirClient(testEndpoint);
@@ -79,6 +83,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
+        [TestCategory("IntegrationTest")]
         public void InvokeLookupCode()
         {
             var client = new FhirClient(testEndpoint);
@@ -88,7 +93,8 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);
         }
 
-        [TestMethod]//returns 500: validation of slices is not done yet.
+        [TestMethod, Ignore]//returns 500: validation of slices is not done yet.
+        [TestCategory("IntegrationTest")]
         public void InvokeResourceValidation()
         {
             var client = new FhirClient(testEndpoint);
