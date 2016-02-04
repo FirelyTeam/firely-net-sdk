@@ -1,6 +1,7 @@
 
 properties { 
   $majorWithReleaseVersion = "0.90.6"    # Update this for a new release
+  $nugetPrelease = $null                 # Set this to something like "beta", if desired
   $nugetPkgs = @(                        # Update this for new DSTU version
     @{CsProj="Hl7.Fhir.Core"; AssemblyPattern="Hl7.Fhir.*.Core"; PkgId="Hl7.Fhir.DSTU21"},
     @{CsProj="Hl7.Fhir.Specification"; AssemblyPattern="Hl7.Fhir.*.Specification"; PkgId="Hl7.Fhir.Specification.DSTU21"}
@@ -11,14 +12,19 @@ properties {
   $sourceDir = "$baseDir\src"
 
   $zipFileName = "FhirNetApi.zip"
-  $nugetPrelease = $null
   $version = GetVersion $majorWithReleaseVersion
   $signAssemblies = $true
-  $signKeyPath = "$sourceDir\FhirNetApi.snk"
-  $signKeyPublicKey = "$sourceDir\FhirNetApi-public.pk"
+  $signKeyPath = "$sourceDir\FhirNetApi.snk"   # TODO: Can this path be made relative to write it into AssemblyInfo.cs? Provide a script to extract public key string?
+  $signKeyPublicKey = "$sourceDir\FhirNetApi-public.pk"   # TODO: see: https://hanskindberg.wordpress.com/2012/04/17/get-publickey-from-snk-file-to-use-for-internalsvisibleto/
 
   $buildNuGet = $true
-  $dirPairs = @(
+  $nugetVersion = $majorWithReleaseVersion
+  if ($nugetPrelease -ne $null)
+  {
+    $nugetVersion = $nugetVersion + "-" + $nugetPrelease
+  }
+
+  $dirPairs = @(                               # Update this when new target frameworks are added
     @{BinDir="Net40"; LibDir="net40"},
     @{BinDir="Net45"; LibDir="net45"},
     @{BinDir="Portable45"; LibDir="portable-net45+netcore45+wpa81+wp8"}
@@ -154,12 +160,6 @@ task Package -depends Build {
   # Build NuGet packages
   if ($buildNuGet)
   {
-    $nugetVersion = $majorWithReleaseVersion
-    if ($nugetPrelease -ne $null)
-    {
-      $nugetVersion = $nugetVersion + "-" + $nugetPrelease
-    }
-
     $nugetDir = "$workingDir\NuGet"
 
     foreach($nugetPkg in $nugetPkgs)
@@ -179,18 +179,9 @@ task Package -depends Build {
       New-Item -Path $nugetDir -ItemType Directory
 
       $nuspecPath = "$nugetDir\$pkg.nuspec"
-      Copy-Item -Path "$buildDir\nuget\$pkg\$pkg.nuspec" -Destination $nuspecPath -recurse
+      Copy-Item -Path "$buildDir\nuget\$pkg\$pkg.nuspec" -Destination $nuspecPath
 
-      Write-Host "Updating nuspec file at $nuspecPath" -ForegroundColor Green
-      Write-Host
-
-      $xml = [xml](Get-Content $nuspecPath)
-      Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'id']" -value $packageId
-      Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'version']" -value $nugetVersion
-
-      Write-Host $xml.OuterXml
-
-      $xml.save($nuspecPath)
+      Update-NuspecFile "$nuspecPath" "$packageId" "$nugetVersion"
 
 
       New-Item -Path $workingDir\NuGet\tools -ItemType Directory
@@ -279,7 +270,16 @@ task UpdateSource {
   Write-Host
   Update-AssemblyInfoFiles $sourceDir ($majorWithReleaseVersion) $version
 
-  # TODO: Patch the .nuspec files
+  # Patch the .nuspec files
+  foreach($nugetPkg in $nugetPkgs)
+  {
+    $pkg = $nugetPkg.CsProj
+    $packageId = $nugetPkg.PkgId
+
+    $nuspecPath = "$buildDir\nuget\$pkg\$pkg.nuspec"
+
+    Update-NuspecFile "$nuspecPath" "$packageId" "$nugetVersion"
+  }
 }
 
 
@@ -373,6 +373,37 @@ function Update-AssemblyInfoFiles ([string] $workingSourceDir, [string] $assembl
     }
 }
 
+
+function Update-NuspecFile ([string] $nuspecPath, [string] $packageId, [string] $nugetVersion)
+{
+      Write-Host "Updating nuspec file at $nuspecPath ($packageId) to version $nugetVersion" -ForegroundColor Green
+      Write-Host
+
+#      $xml = [xml](Get-Content $nuspecPath)
+      $xml = New-Object System.Xml.XmlDocument
+      $xml.Load($nuspecPath)
+      Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'id']" -value $packageId
+      Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'version']" -value $nugetVersion
+
+      $depNodes=$xml.SelectNodes("/package/metadata/dependencies/dependency")
+
+      foreach ($depNode in $depNodes)
+      {
+        $dependencyId = $depNode.id;
+        Write-Verbose $dependencyId
+        if ($dependencyId -eq "Hl7.Fhir.DSTU21")   # TODO: Do not hard-code this?
+        {
+          Write-Host "Replacing dependency version for '$dependencyId' with $nugetVersion"          
+          $depNode.version = $nugetVersion
+        }
+      }
+
+      Write-Verbose $xml.OuterXml
+
+      $xml.save($nuspecPath)
+}
+
+
 function Edit-XmlNodes {
     param (
         [xml] $doc,
@@ -383,7 +414,7 @@ function Edit-XmlNodes {
     $nodes = $doc.SelectNodes($xpath)
     $count = $nodes.Count
 
-    Write-Host "Found $count nodes with path '$xpath'"
+    Write-Verbose "Found $count nodes with path '$xpath'"
     
     foreach ($node in $nodes) {
         if ($node -ne $null) {
