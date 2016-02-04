@@ -44,8 +44,23 @@ namespace Hl7.Fhir.Model
     [InvokeIValidatableObject]
     public partial class Bundle : Hl7.Fhir.Validation.IValidatableObject
     {
+        [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        [System.Diagnostics.DebuggerDisplay(@"\{FullUrl={FullUrl}}")]
         public partial class EntryComponent
         {
+            [NotMapped]
+            private string DebuggerDisplay
+            {
+                get
+                {
+                    string response = (this.Response != null && !string.IsNullOrEmpty(this.Response.Status)) ? " Result: " + this.Response.Status : null;
+                    if (this.Request != null && this.Request.Method.HasValue)
+                        return String.Format("{0}: {1}", this.Request.Method.Value, this.FullUrl);
+
+                    return String.Format("FullUrl = \"{0}\"", this.FullUrl);
+                }
+            }
+
             [Obsolete("Base no longer exists in BundleEntryComponent. You need to replace any code using this element."), NotMapped]
             public string Base { get; set; }
         }
