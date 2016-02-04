@@ -67,10 +67,12 @@ namespace Hl7.Fhir.Serialization
                 || prop.Name == "id"
                 || summary == Rest.SummaryType.True && prop.InSummary
                 || summary == Rest.SummaryType.False
-                || summary == Rest.SummaryType.Data && prop.Name.ToLower() != "text"
-                || summary == Rest.SummaryType.Text && (prop.Name.ToLower() == "text" || prop.IsMandatoryElement)
+                || summary == Rest.SummaryType.Data && !(prop.Name.ToLower() == "text" && prop.ElementType.Name == "Narrative")
+                || summary == Rest.SummaryType.Text && ((prop.Name.ToLower() == "text" && prop.ElementType.Name == "Narrative") || (prop.Name.ToLower() == "meta" && prop.ElementType.Name == "Meta") || prop.IsMandatoryElement)
                 )
-                write(mapping, instance, summary, prop, mode);
+            {
+                write(mapping, instance, (summary == Rest.SummaryType.Text && prop.Name.ToLower() == "meta" && prop.ElementType.Name == "Meta") ? Rest.SummaryType.False : summary, prop, mode);
+            }
         }
 
         private void write(ClassMapping mapping, object instance, Rest.SummaryType summary, PropertyMapping prop, SerializationMode mode)

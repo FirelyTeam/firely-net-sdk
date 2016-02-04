@@ -20,7 +20,7 @@ using System.Text;
 namespace Hl7.Fhir.Serialization
 {
     public class ResourceWriter
-    {       
+    {
         private IFhirWriter _writer;
         private ModelInspector _inspector;
 
@@ -38,9 +38,26 @@ namespace Hl7.Fhir.Serialization
 
             var rootName = root ?? mapping.Name;
 
-            _writer.WriteStartRootObject(rootName,contained);
+            _writer.WriteStartRootObject(rootName, contained);
 
             var complexSerializer = new ComplexTypeWriter(_writer);
+
+            if (summary != Rest.SummaryType.False && instance is Resource)
+            {
+                Resource r = (instance as Resource);
+                if (r != null)
+                {
+                    // If we are subsetting the instance during serialization, ensure that there 
+                    // is a meta element with that subsetting in it
+                    // (Helps make it easier to create conformant instances)
+                    if (r.Meta == null)
+                        r.Meta = new Meta();
+                    if (r.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count() == 0)
+                    {
+                        r.Meta.Tag.Add(new Coding("http://hl7.org/fhir/v3/ObservationValue", "SUBSETTED"));
+                    }
+                }
+            }
             complexSerializer.Serialize(mapping, instance, summary);
 
             _writer.WriteEndRootObject(contained);
