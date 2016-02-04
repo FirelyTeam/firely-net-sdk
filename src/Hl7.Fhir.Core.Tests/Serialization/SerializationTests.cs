@@ -150,6 +150,11 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(qText.Contains("<date value=\"2015-09-27\""));
             Assert.IsFalse(qText.Contains("<title value=\"TITLE\""));
             Assert.IsFalse(qText.Contains("<linkId value=\"linkid\""));
+            Assert.AreEqual(0, q.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
+
+            // Verify that reloading the content into an object...
+            var qInflate = FhirParser.ParseFromXml(qText) as Questionnaire;
+            Assert.AreEqual(1, qInflate.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
         }
 
         [TestMethod]
