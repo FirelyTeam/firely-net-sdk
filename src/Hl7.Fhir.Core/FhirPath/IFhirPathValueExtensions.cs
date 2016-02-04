@@ -29,6 +29,11 @@ namespace Hl7.Fhir.FhirPath
             return (bool)me.Value;
         }
 
+        /// <summary>
+        /// Cast this value to a string (not ToString, consider AsStringRepresentation if you want that)
+        /// </summary>
+        /// <param name="me"></param>
+        /// <returns></returns>
         public static string AsString(this IFhirPathValue me)
         {
             return (string)me.Value;
@@ -38,6 +43,12 @@ namespace Hl7.Fhir.FhirPath
             return (PartialDateTime)me.Value;
         }
 
+        /// <summary>
+        /// A String representation of the entity that will convert whatever type it is into a string
+        /// (unlike the AsString, which just cases to a string)
+        /// </summary>
+        /// <param name="me"></param>
+        /// <returns></returns>
         public static string AsStringRepresentation(this IFhirPathValue me)
         {
             if (me.Value == null) return null;
