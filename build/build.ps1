@@ -15,6 +15,7 @@ properties {
   $version = GetVersion $majorWithReleaseVersion
   $signAssemblies = $true
   $signKeyPath = "$sourceDir\FhirNetApi.snk"
+  $signKeyPublicKey = "$sourceDir\FhirNetApi-public.pk"
 
   $buildNuGet = $true
   $dirPairs = @(
@@ -43,7 +44,7 @@ properties {
 }
 
 
-framework '4.6x86'   # TODO: 4.6 is rather high. Lower framework OK?
+framework '4.6x86'                       # Set this to different version if required (e.g. '4.5.2x86')
 
 
 TaskSetup {
@@ -257,6 +258,31 @@ task Test {
   }
 }
 
+
+# Update source files and nuspec files WITHIN the project source (i.e. not just in a temporary working directory)
+# Use this to update a project to also build assemblies with proper version number and signature key from Visual Studio
+# I.e. set values at top of build-script to new values, then run this task
+task UpdateSource {
+  Write-Host -ForegroundColor Red "Answering yes will patch the AssembyInfo.cs files and the .nuspec files in your project."
+  Write-Host -ForegroundColor Red "If your project is controlled in a version control system, this will overwrite the source-controlled versions."
+
+  $choice = ""
+  while ($choice -notmatch "[y|n]"){
+    $choice = read-host "Do you want to continue? (Y/N)"
+  }
+
+  if ($choice -eq "n"){
+    break  
+  }
+    
+  Write-Host -ForegroundColor Green "Updating assembly info in source code project"
+  Write-Host
+  Update-AssemblyInfoFiles $sourceDir ($majorWithReleaseVersion) $version
+
+  # TODO: Patch the .nuspec files
+}
+
+
 function MSBuildBuild($build)
 {
   $slnName = $build.SlnName
@@ -335,11 +361,10 @@ function Update-AssemblyInfoFiles ([string] $workingSourceDir, [string] $assembl
     $assemblyVersion = 'AssemblyVersion("' + $assemblyVersionNumber + '")';
     $fileVersion = 'AssemblyFileVersion("' + $fileVersionNumber + '")';
     
-    Get-ChildItem -Path $workingSourceDir -r -filter AssemblyInfo.cs | ForEach-Object {
+    Get-ChildItem -Path $workingSourceDir -r -filter AssemblyInfo.cs | ? { $_.Directory.ToString() -inotmatch "packages"} | ForEach-Object {
         
         $filename = $_.Directory.ToString() + '\' + $_.Name
-        Write-Host $filename
-        $filename + ' -> ' + $version
+        Write-Host $filename + ' -> ' + $version
     
         (Get-Content $filename) | ForEach-Object {
             % {$_ -replace $assemblyVersionPattern, $assemblyVersion } |
