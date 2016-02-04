@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Hl7.Fhir.DSTU2</id>
-    <version>0.90.4</version>
+    <version>0.90.5-alpha1</version>
 	<title>HL7 FHIR Core support API for DSTU2</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
@@ -18,7 +18,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>HL7 FHIR REST parse serialize class model</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="6.0.7" />
+      <dependency id="Newtonsoft.Json" version="8.0.2" />
     </dependencies>
   </metadata>
     <files>	
