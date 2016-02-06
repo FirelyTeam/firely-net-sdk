@@ -3,21 +3,23 @@
 # ---------------------------------------------------------------------------
 cls
 
-# Script to be run from build directory
+# Script to be run from 'build' directory
 
 $server = "http://hl7-fhir.github.io";
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
-function PowerCurl($targetFile, $sourceUrl)
+# Download a file from a URL and place it at the specified target path.
+# This also has some basic capabilities to go through proxies without any additional configuration.
+function PowerCurl($targetPath, $sourceUrl)
 {
 	Try
 	{
         $webclient = New-Object System.Net.WebClient
-        $webclient.DownloadFile($sourceUrl, $targetFile)
+        $webclient.DownloadFile($sourceUrl, $targetPath)
 	} Catch
 	{
-		Write-Host "$_ occurred while downloading $sourceUrl to $targetFile"
+		Write-Host -ForegroundColor Red "$_ occurred while downloading $sourceUrl to $targetPath"
 		$_ | fl * -Force
 	}
 }
