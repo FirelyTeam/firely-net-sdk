@@ -1,28 +1,43 @@
 
-properties { 
-  $majorWithReleaseVersion = "0.90.6"    # Update this for a new release
-  $nugetPrelease = $null                 # Set this to something like "beta", if desired
+properties {
+  $productName = "Hl7.Fhir .Net Library" 
+  $productVersion = "0.90.6"             # Update this for a new release
+  $nugetPrelease = $null                 # Set this to something like "alpha", if desired
+
+  $localNugetPath = "\\karoo\Develop\Running\Furore\NUGET"    # Optional: Set this to a path where your local NuGet server resides (this is used by the "Redeploy" task)
+
+# ATTENTION: The Assembly Version scheme is Major.Minor.BUILD.Revision. 
+# Do NOT use humble Open Source numbering, e.g. "0.90.6", as this would put the 6 into the BUILD number, not into the Minor number.
+# Bump up Major, if the new library is not backward compatible to the old one. Bump up Minor, if it is FULLY backward compatible, but enhanced.
+# See the following for some explanations: http://blogs.msdn.com/b/jjameson/archive/2009/04/03/best-practices-for-net-assembly-versioning.aspx 
+  $assemblyVersion = "1.0"               # Update this according to the assembly version scheme, with Major.Minor. DO NOT INCLUDE BUILD OR REVISION here! 
+
   $nugetPkgs = @(                        # Update this for new DSTU version
     @{CsProj="Hl7.Fhir.Core"; AssemblyPattern="Hl7.Fhir.*.Core"; PkgId="Hl7.Fhir.DSTU21"},
     @{CsProj="Hl7.Fhir.Specification"; AssemblyPattern="Hl7.Fhir.*.Specification"; PkgId="Hl7.Fhir.Specification.DSTU21"}
    )
 
+  $zipFileName = "FhirNetApi.zip"
+
 
   $baseDir  = resolve-path ..
   $sourceDir = "$baseDir\src"
 
-  $zipFileName = "FhirNetApi.zip"
-  $version = GetVersion $majorWithReleaseVersion
-  $signAssemblies = $true
-  $signKeyPath = "$sourceDir\FhirNetApi.snk"   # TODO: Can this path be made relative to write it into AssemblyInfo.cs? Provide a script to extract public key string?
-  $signKeyPublicKey = "$sourceDir\FhirNetApi-public.pk"   # TODO: see: https://hanskindberg.wordpress.com/2012/04/17/get-publickey-from-snk-file-to-use-for-internalsvisibleto/
-
   $buildNuGet = $true
-  $nugetVersion = $majorWithReleaseVersion
+  $nugetVersion = $productVersion
   if ($nugetPrelease -ne $null)
   {
     $nugetVersion = $nugetVersion + "-" + $nugetPrelease
   }
+
+  $assemblyFileVersion = GetAssemblyFileVersion $assemblyVersion
+  $assemblyVersion = $assemblyVersion + ".0.0"
+  $assemblyInfoVersion = $productName + " " + $productVersion
+
+# TODO: Support Debug builds as well?
+  $signAssemblies = $false
+  $signKeyPath = "$sourceDir\FhirNetApi.snk"   # TODO: Clarify everything around usage of the key. Secret: Yes/No? Dedicated key for unit tests? How to get matching PublicToken into AssemblyInfo?
+  
 
   $dirPairs = @(                               # Update this when new target frameworks are added
     @{BinDir="Net40"; LibDir="net40"},
@@ -38,11 +53,12 @@ properties {
   $releaseDir = "$baseDir\release"
   $workingDir = "$baseDir\working"
   $workingSourceDir = "$workingDir\src"
+  $packageDirs = "$sourceDir\packages"         # Comment this out if you need to build while offline
 
   $builds = @(                           # Update this to add new target frameworks 
-    @{SlnName = "Hl7.Fhir.Net45"; PrjNames = "Hl7.Fhir.Core","Hl7.Fhir.Specification"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"}
-#    @{Name = "Newtonsoft.Json.Portable45"; TestsName = "Newtonsoft.Json.Tests.Portable40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="PORTABLE45"; FinalDir="Portable45"; NuGetDir = "portable-net45+netcore45+wpa81+wp8"; Framework="net-4.0"},
-#    @{Name = "Newtonsoft.Json.Net40"; TestsName = "Newtonsoft.Json.Tests.Net40"; BuildFunction = "MSBuildBuild"; TestsFunction = "NUnitTests"; Constants="NET40"; FinalDir="Net40"; NuGetDir = "net40"; Framework="net-4.0"}
+#    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleaseNet45"; PrjNames = "Hl7.Fhir.Core","Hl7.Fhir.Specification"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"},
+#    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleaseNet40"; PrjNames = "Hl7.Fhir.Core.Net40","Hl7.Fhir.Specification.Net40"; TestNames = @(); BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET40"; FinalDir="Net40"},
+    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleasePCL45"; PrjNames = "Hl7.Fhir.Core.Portable45"; TestNames = "Hl7.Fhir.Core.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="PORTABLE45"; FinalDir="Portable45"}
   )
 
   $Script:MSBuild = "MSBuild"
@@ -100,7 +116,7 @@ TaskSetup {
 }
 
 
-task default -depends Test
+task default -depends Package
 
 # Ensure a clean working directory
 task Clean {
@@ -126,7 +142,7 @@ task Build -depends Clean {
 
   Write-Host -ForegroundColor Green "Updating assembly version"
   Write-Host
-  Update-AssemblyInfoFiles $workingSourceDir ($majorWithReleaseVersion) $version
+  Update-AssemblyInfoFiles $workingSourceDir ($assemblyVersion) $assemblyFileVersion ($assemblyInfoVersion)
 
 
   foreach ($build in $builds)
@@ -148,6 +164,7 @@ task Build -depends Clean {
 task Package -depends Build {
   foreach ($build in $builds)
   {
+# TODO: Can projects and final directories be pulled out of the list of builds?
     $prjNames = $build.PrjNames
     $finalDir = $build.FinalDir
 
@@ -237,9 +254,22 @@ task Package -depends Build {
 }
 
 
-# Run tests on built projects
-# task Test -depends Build {   # TODO: Restore this after development of script.
-task Test {
+# Build the packages and place them onto a local NuGet server
+task Deploy -depends Package, Redeploy {
+}
+
+# Place an already packaged set of NuGet packages onto a local NuGet server
+task Redeploy {
+  robocopy "$workingDir\NuGet" $localNugetPath "*.nupkg" /MIR /NFL /NDL /NJS /NC /NS /NP | Out-Default 
+}
+
+
+# Build the project and test it
+task Test -depends Build, Retest {
+}
+
+# Run tests on already built projects
+task Retest {
   foreach ($build in $builds)
   {
     if ($build.TestsFunction -ne $null)
@@ -254,7 +284,7 @@ task Test {
 # Use this to update a project to also build assemblies with proper version number and signature key from Visual Studio
 # I.e. set values at top of build-script to new values, then run this task
 task UpdateSource {
-  Write-Host -ForegroundColor Red "Answering yes will patch the AssembyInfo.cs files and the .nuspec files in your project."
+  Write-Host -ForegroundColor Red "Answering yes will patch the AssemblyVersionInfo.cs files and the .nuspec files in your project."
   Write-Host -ForegroundColor Red "If your project is controlled in a version control system, this will overwrite the source-controlled versions."
 
   $choice = ""
@@ -268,7 +298,7 @@ task UpdateSource {
     
   Write-Host -ForegroundColor Green "Updating assembly info in source code project"
   Write-Host
-  Update-AssemblyInfoFiles $sourceDir ($majorWithReleaseVersion) $version
+  Update-AssemblyInfoFiles $sourceDir ($assemblyVersion) $assemblyFileVersion ($assemblyInfoVersion)
 
   # Patch the .nuspec files
   foreach($nugetPkg in $nugetPkgs)
@@ -287,6 +317,7 @@ function MSBuildBuild($build)
 {
   $slnName = $build.SlnName
   $finalDir = $build.FinalDir
+  $configuration = $build.Configuration
 
   Write-Host
   Write-Host "Restoring $workingSourceDir\$slnName.sln" -ForegroundColor Green
@@ -298,7 +329,7 @@ function MSBuildBuild($build)
 
   Write-Host
   Write-Host "Building $workingSourceDir\$slnName.sln" -ForegroundColor Green
-  exec { & "$MSBuild" "/t:Clean;Rebuild" /p:Configuration=Release "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" /p:OutputPath=bin\Release\$finalDir\ /p:AssemblyOriginatorKeyFile=$signKeyPath "/p:SignAssembly=$signAssemblies" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$slnName.sln" | Out-Default } "Error building $slnName"
+  exec { & "$MSBuild" "/t:Clean;Rebuild" /p:Configuration=$configuration "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" /p:OutputPath=bin\Release\$finalDir\ /p:AssemblyOriginatorKeyFile=$signKeyPath "/p:SignAssembly=$signAssemblies" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$slnName.sln" | Out-Default } "Error building $slnName"
 }
 
 
@@ -317,13 +348,15 @@ function VSTests($build)
 
     Push-Location $resultsDir          # VSTest creates Test Results relative to current directory
   
-    Write-Host "Testing $testName" -ForegroundColor Green
+    Write-Host "Testing $testName on $finalDir" -ForegroundColor Green
     Write-Host
     try
     {
-       & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:”TestCategory!=IntegrationTest" | Out-Default     # TODO: Find out why Trx logger is not writing anything to file.
+       & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:”TestCategory!=IntegrationTest" | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
     }
-    catch {}
+    catch {
+      Write-Host -ForegroundColor Red "Tests have failed. Continuing..."
+    }
 
     Pop-Location
   }
@@ -337,7 +370,7 @@ function GetConstants($constants, $includeSigned)
   return "CODE_ANALYSIS;TRACE;$constants$signed"
 }
 
-function GetVersion($majorVersion)
+function GetAssemblyFileVersion($majorMinorVersion)
 {
     $now = [DateTime]::Now
     
@@ -345,31 +378,43 @@ function GetVersion($majorVersion)
     $month = $now.Month
     $totalMonthsSince2000 = ($year * 12) + $month
     $day = $now.Day
-    $minor = "{0}{1:00}" -f $totalMonthsSince2000, $day
-    
-    $hour = $now.Hour
-    $minute = $now.Minute
-    $revision = "{0:00}{1:00}" -f $hour, $minute
-    
-    return $majorVersion + "." + $minor
+    $build = "{0}{1:00}" -f $totalMonthsSince2000, $day
+        
+    return $majorMinorVersion + "." + $build + ".0"
 }
 
-function Update-AssemblyInfoFiles ([string] $workingSourceDir, [string] $assemblyVersionNumber, [string] $fileVersionNumber)
+function Update-AssemblyInfoFiles ([string] $workingSourceDir, [string] $assemblyVersionNumber, [string] $fileVersionNumber, [string] $infoVersion)
 {
+    # Updates a separate version info file, as described here: http://blogs.msdn.com/b/jjameson/archive/2009/04/03/best-practices-for-net-assembly-versioning.aspx
     $assemblyVersionPattern = 'AssemblyVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
     $fileVersionPattern = 'AssemblyFileVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
-    $assemblyVersion = 'AssemblyVersion("' + $assemblyVersionNumber + '")';
-    $fileVersion = 'AssemblyFileVersion("' + $fileVersionNumber + '")';
+    $infoVersionPattern = 'AssemblyInformationalVersion\("[0-9a-zA-Z\.\- ]+"\)'
+    $assemblyVersionStatement = 'AssemblyVersion("' + $assemblyVersionNumber + '")';
+    $fileVersionStatement = 'AssemblyFileVersion("' + $fileVersionNumber + '")';
+    $infoVersionStatement = 'AssemblyInformationalVersion("' + $infoVersion + '")';
     
-    Get-ChildItem -Path $workingSourceDir -r -filter AssemblyInfo.cs | ? { $_.Directory.ToString() -inotmatch "packages"} | ForEach-Object {
+    Get-ChildItem -Path $workingSourceDir -r -filter AssemblyVersionInfo.cs | ? { $_.Directory.ToString() -inotmatch "packages"} | ForEach-Object {
         
         $filename = $_.Directory.ToString() + '\' + $_.Name
-        Write-Host $filename + ' -> ' + $version
-    
-        (Get-Content $filename) | ForEach-Object {
-            % {$_ -replace $assemblyVersionPattern, $assemblyVersion } |
-            % {$_ -replace $fileVersionPattern, $fileVersion }
-        } | Set-Content $filename
+        Write-Host $filename + ' -> ' + $assemblyVersionNumber
+
+        # Only rewrite when really changed
+        $inputFile = (Get-Content $filename)    
+        $outputFile = $inputFile | ForEach-Object {
+            % {$_ -replace $assemblyVersionPattern, $assemblyVersionStatement } |
+            % {$_ -replace $fileVersionPattern, $fileVersionStatement } |
+            % {$_ -replace $infoVersionPattern, $infoVersionStatement }
+        }
+        $deltaFile = Compare-Object ($inputFile) ($outputFile)
+        if ($deltaFile.Length -gt 0)
+        {
+          Write-Information "File contents really changed. Writing back."
+          $outputFile | Set-Content $filename
+        }
+        else
+        {
+          Write-Verbose "File contents remained identical. Not writing back."
+        }
     }
 }
 
@@ -379,7 +424,6 @@ function Update-NuspecFile ([string] $nuspecPath, [string] $packageId, [string] 
       Write-Host "Updating nuspec file at $nuspecPath ($packageId) to version $nugetVersion" -ForegroundColor Green
       Write-Host
 
-#      $xml = [xml](Get-Content $nuspecPath)
       $xml = New-Object System.Xml.XmlDocument
       $xml.Load($nuspecPath)
       Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'id']" -value $packageId
@@ -400,6 +444,7 @@ function Update-NuspecFile ([string] $nuspecPath, [string] $packageId, [string] 
 
       Write-Verbose $xml.OuterXml
 
+# TODO: Avoid rewrite when unchanged    
       $xml.save($nuspecPath)
 }
 

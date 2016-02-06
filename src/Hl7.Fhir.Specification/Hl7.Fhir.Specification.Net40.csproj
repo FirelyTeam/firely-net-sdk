@@ -32,11 +32,12 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Net40\</OutputPath>
-    <DefineConstants>TRACE;RELEASE NET40</DefineConstants>
+    <DefineConstants>TRACE;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Net40\Hl7.Fhir.DSTU2.Specification.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -75,6 +76,7 @@
     <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs">
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorModificationExtensions.cs" />

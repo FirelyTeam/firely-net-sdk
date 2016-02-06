@@ -31,17 +31,17 @@
     <DefineConstants>TRACE;DEBUG;PORTABLE45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>3016, 3015, 1591</NoWarn>
+    <NoWarn>3016,1591</NoWarn>
     <DocumentationFile>bin\Debug\Portable45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleasePCL45|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Portable45\</OutputPath>
-    <DefineConstants>RELEASE;TRACE;PORTABLE45</DefineConstants>
+    <DefineConstants>TRACE;PORTABLE45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>3016, 3015</NoWarn>
+    <NoWarn>3016,1591</NoWarn>
     <DocumentationFile>bin\Release\Portable45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
@@ -558,6 +558,7 @@
     <Compile Include="Model\PositiveInt.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
     <Compile Include="Model\UnsignedInt.cs" />
+    <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />
     <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\FhirClientSearch.cs" />
