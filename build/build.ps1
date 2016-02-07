@@ -1,4 +1,3 @@
-
 properties {
   $productName = "Hl7.Fhir .Net Library" 
   $productVersion = "0.90.6"             # Update this for a new release
@@ -63,6 +62,8 @@ properties {
 
   $Script:MSBuild = "MSBuild"
   $Script:VSTest = "VSTest.Console"
+
+  $ProgressColor = "Magenta"
 }
 
 
@@ -84,7 +85,7 @@ TaskSetup {
         if ($MSBuild.Length)
         {
             $Script:MSBuild = $MSBuild
-            Write-Host "Found MSBuild at '$MSBuild'." -ForegroundColor Green
+            Write-Information "Found MSBuild at '$MSBuild'."
         }
         else
         {
@@ -106,7 +107,7 @@ TaskSetup {
         if ($VSTest.Length)
         {
             $Script:VSTest = $VSTest
-            Write-Host "Found VSTest at '$VSTest'." -ForegroundColor Green
+            Write-Information "Found VSTest at '$VSTest'."
         }
         else
         {
@@ -138,9 +139,10 @@ task Clean {
 task Build -depends Clean { 
 
   Write-Host "Copying source to working source directory $workingSourceDir"
-  robocopy $sourceDir $workingSourceDir /MIR /NP /XD bin obj TestResults AppPackages $packageDirs .vs artifacts /XF *.suo *.user *.lock.json | Out-Default
+  Copy-Robot -sourcePath "$sourceDir" -destPath "$workingSourceDir" -excludeDirectories "bin","obj","TestResults","AppPackages","$packageDirs",".vs","artifacts" -excludeFiles "*.suo","*.user","*.lock.json"
 
-  Write-Host -ForegroundColor Green "Updating assembly version"
+
+  Write-Host -ForegroundColor $ProgressColor "Updating assembly version"
   Write-Host
   Update-AssemblyInfoFiles $workingSourceDir ($assemblyVersion) $assemblyFileVersion ($assemblyInfoVersion)
 
@@ -150,9 +152,9 @@ task Build -depends Clean {
     $slnName = $build.SlnName
     if ($slnName -ne $null)
     {
-      Write-Host -ForegroundColor Green "Building solution: " $slnName
-      Write-Host -ForegroundColor Green "Strong Name:       " $signAssemblies
-      Write-Host -ForegroundColor Green "Strong Name Key:   " $signKeyPath
+      Write-Host -ForegroundColor $ProgressColor "Building solution: " $slnName
+      Write-Host -ForegroundColor $ProgressColor "Strong Name:       " $signAssemblies
+      Write-Host -ForegroundColor $ProgressColor "Strong Name Key:   " $signKeyPath
 
       & $build.BuildFunction $build
     }
@@ -170,7 +172,7 @@ task Package -depends Build {
 
     foreach($prj in $prjNames)
     {
-        robocopy "$workingSourceDir\$prj\bin\Release\$finalDir" $workingDir\Package\Bin\$finalDir *.dll *.pdb *.xml /NFL /NDL /NJS /NC /NS /NP /XO /XF *.CodeAnalysisLog.xml | Out-Default
+      Copy-Robot -sourcePath "$workingSourceDir\$prj\bin\Release\$finalDir" -destPath "$workingDir\Package\Bin\$finalDir" -includeFiles "*.dll","*.pdb","*.xml" -excludeFiles "*.CodeAnalysisLog.xml"
     }
   }
   
@@ -217,13 +219,13 @@ task Package -depends Build {
         $binDir = $dirPair.BinDir
         $libDir = $dirPair.LibDir
         $assemblyPattern = $nugetPkg.AssemblyPattern
-        robocopy "$workingSourceDir\$pkg\bin\Release\$binDir" "$workingDir\NuGet\lib\$libDir" "$assemblyPattern.dll" "$assemblyPattern.pdb" "$assemblyPattern.xml" /NFL /NDL /NJS /NC /NS /NP /XO /XF *.CodeAnalysisLog.xml | Out-Default
+        Copy-Robot -sourcePath "$workingSourceDir\$pkg\bin\Release\$binDir" -destPath "$workingDir\NuGet\lib\$libDir" -includeFiles "$assemblyPattern.dll","$assemblyPattern.pdb","$assemblyPattern.xml" -excludeFiles "*.CodeAnalysisLog.xml" -params "/XO"
       }
 
       # Copy source code for symbol package
-      robocopy "$workingSourceDir\$pkg" "$workingDir\NuGet\src\$pkg" "*.cs" /S /NFL /NDL /NJS /NC /NS /NP /XD obj .vs artifacts | Out-Default
+      Copy-Robot -sourcePath "$workingSourceDir\$pkg" -destPath "$workingDir\NuGet\src\$pkg" -includeFiles "*.cs" -params "/S" -excludeDirectories "obj",".vs","artifacts"
 
-      Write-Host "Building NuGet package with ID $packageId and version $nugetVersion" -ForegroundColor Green
+      Write-Host "Building NuGet package with ID $packageId and version $nugetVersion" -ForegroundColor $ProgressColor
       Write-Host
 
       exec { & "$toolsDir\NuGet\NuGet.exe" pack $nuspecPath -Symbols }
@@ -236,15 +238,14 @@ task Package -depends Build {
 #  Copy-Item -Path $docDir\readme.txt -Destination $workingDir\Package\
 #  Copy-Item -Path $docDir\license.txt -Destination $workingDir\Package\
 
-  robocopy $workingSourceDir $workingDir\Package\Source\Src /MIR /NFL /NDL /NJS /NC /NS /NP /XD bin obj TestResults AppPackages .vs artifacts /XF *.suo *.user *.lock.json | Out-Default
-  robocopy $buildDir $workingDir\Package\Source\Build /MIR /NFL /NDL /NJS /NC /NS /NP /XF runbuild.txt | Out-Default
-  robocopy $docDir $workingDir\Package\Source\Doc /MIR /NFL /NDL /NJS /NC /NS /NP | Out-Default
-  robocopy $toolsDir $workingDir\Package\Source\Tools /MIR /NFL /NDL /NJS /NC /NS /NP | Out-Default
- 
+  Copy-Robot -sourcePath "$workingSourceDir" -destPath "$workingDir\Package\Source\Src" -excludeDirectories "bin","obj","TestResults","AppPackages",".vs","artifacts" -excludeFiles "*.suo","*.user","*.lock.json"
+  Copy-Robot -sourcePath "$buildDir" -destPath "$workingDir\Package\Source\Build" -excludeFiles "runbuild.txt" 
+  Copy-Robot -sourcePath "$docDir" -destPath "$workingDir\Package\Source\Doc"
+  Copy-Robot -sourcePath "$toolsDir" -destPath "$workingDir\Package\Source\Tools" 
 
   $destinationZip = "$workingDir\$zipFileName"
   $sourceDir = "$workingDir\Package"
-  Write-Host "Zipping $sourceDir to $destinationZip" -ForegroundColor Green 
+  Write-Host "Zipping $sourceDir to $destinationZip" -ForegroundColor $ProgressColor 
   Write-Host
   $includeBaseDirectory = $false
   $compressionLevel= [System.IO.Compression.CompressionLevel]::Optimal 
@@ -260,7 +261,7 @@ task Deploy -depends Package, Redeploy {
 
 # Place an already packaged set of NuGet packages onto a local NuGet server
 task Redeploy {
-  robocopy "$workingDir\NuGet" $localNugetPath "*.nupkg" /MIR /NFL /NDL /NJS /NC /NS /NP | Out-Default 
+  Copy-Robot -sourcePath "$workingDir\NuGet" -destPath "$localNugetPath" -includeFiles "*.nupkg"
 }
 
 
@@ -284,8 +285,8 @@ task Retest {
 # Use this to update a project to also build assemblies with proper version number and signature key from Visual Studio
 # I.e. set values at top of build-script to new values, then run this task
 task UpdateSource {
-  Write-Host -ForegroundColor Red "Answering yes will patch the AssemblyVersionInfo.cs files and the .nuspec files in your project."
-  Write-Host -ForegroundColor Red "If your project is controlled in a version control system, this will overwrite the source-controlled versions."
+  Write-Warning "Answering yes will patch the AssemblyVersionInfo.cs files and the .nuspec files in your project."
+  Write-Warning "If your project is controlled in a version control system, this will overwrite the source-controlled versions."
 
   $choice = ""
   while ($choice -notmatch "[y|n]"){
@@ -296,7 +297,7 @@ task UpdateSource {
     break  
   }
     
-  Write-Host -ForegroundColor Green "Updating assembly info in source code project"
+  Write-Host -ForegroundColor $ProgressColor "Updating assembly info in source code project"
   Write-Host
   Update-AssemblyInfoFiles $sourceDir ($assemblyVersion) $assemblyFileVersion ($assemblyInfoVersion)
 
@@ -320,7 +321,7 @@ function MSBuildBuild($build)
   $configuration = $build.Configuration
 
   Write-Host
-  Write-Host "Restoring $workingSourceDir\$slnName.sln" -ForegroundColor Green
+  Write-Host "Restoring $workingSourceDir\$slnName.sln"
   [Environment]::SetEnvironmentVariable("EnableNuGetPackageRestore", "true", "Process")
   exec { & "$toolsDir\NuGet\NuGet.exe" update -self }
   exec { & "$toolsDir\NuGet\NuGet.exe" restore "$workingSourceDir\$slnName.sln" -verbosity detailed -configfile $workingSourceDir\nuget.config | Out-Default } "Error restoring $slnName"
@@ -328,8 +329,8 @@ function MSBuildBuild($build)
   $constants = GetConstants $build.Constants $signAssemblies
 
   Write-Host
-  Write-Host "Building $workingSourceDir\$slnName.sln" -ForegroundColor Green
-  exec { & "$MSBuild" "/t:Clean;Rebuild" /p:Configuration=$configuration "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" /p:OutputPath=bin\Release\$finalDir\ /p:AssemblyOriginatorKeyFile=$signKeyPath "/p:SignAssembly=$signAssemblies" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$slnName.sln" | Out-Default } "Error building $slnName"
+  Write-Host "Building $workingSourceDir\$slnName.sln" -ForegroundColor $ProgressColor
+  exec { & "$MSBuild" "/verbosity:minimal" "/t:Clean;Rebuild" /p:Configuration=$configuration "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" /p:OutputPath=bin\Release\$finalDir\ /p:AssemblyOriginatorKeyFile=$signKeyPath "/p:SignAssembly=$signAssemblies" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$slnName.sln" | Out-Default } "Error building $slnName"
 }
 
 
@@ -348,7 +349,7 @@ function VSTests($build)
 
     Push-Location $resultsDir          # VSTest creates Test Results relative to current directory
   
-    Write-Host "Testing $testName on $finalDir" -ForegroundColor Green
+    Write-Host "Testing $testName on $finalDir" -ForegroundColor $ProgressColor
     Write-Host
     try
     {
@@ -421,7 +422,7 @@ function Update-AssemblyInfoFiles ([string] $workingSourceDir, [string] $assembl
 
 function Update-NuspecFile ([string] $nuspecPath, [string] $packageId, [string] $nugetVersion)
 {
-      Write-Host "Updating nuspec file at $nuspecPath ($packageId) to version $nugetVersion" -ForegroundColor Green
+      Write-Host "Updating nuspec file at $nuspecPath ($packageId) to version $nugetVersion" -ForegroundColor $ProgressColor
       Write-Host
 
       $xml = New-Object System.Xml.XmlDocument
@@ -473,6 +474,39 @@ function Edit-XmlNodes {
             }
         }
     }
+}
+
+# Execute robocopy with parameters as required, proper handling of output, proper handling of error codes.
+function Copy-Robot {
+  param(
+      [string] $sourcePath = $(throw "sourcePath is a required parameter"),
+      [string] $destPath = $(throw "destPath is a required parameter"),
+      [string[]] $includeFiles = @(),
+      [string[]] $excludeDirectories = $null,
+      [string[]] $excludeFiles = $null,
+      [string[]] $params = @()
+  )
+
+  $defaultParams = @("/MIR","/NP","/NFL","/NDL","/NJS","/NC","/NS")  # Mirror and be quiet :-)
+
+  $xdParams = @()
+
+  if ($excludeDirectories -ne $null)
+  {
+    $xdParams = @("/XD")
+    $xdParams += $excludeDirectories
+  }
+
+  $xfParams = @()
+
+  if ($excludeFiles -ne $null)
+  {
+    $xfParams = @("/XF")
+    $xfParams += $excludeFiles
+  }
+
+  # TODO: Handle output codes and console output.
+  & "robocopy" $robocommand $sourcePath $destPath $includeFiles $defaultParams $params $xdParams $xfParams
 }
 
 
