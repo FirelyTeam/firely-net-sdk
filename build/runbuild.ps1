@@ -1,5 +1,5 @@
 param(
-    [string] $task = "Test",
+    [string] $task = "Help",
     [hashtable] $parameters = @{},
     [hashtable] $properties = @{}
 )
@@ -11,17 +11,17 @@ Import-Module ($path + '\..\tools\PSake\psake.psm1')
 
 Try
 {
-  write-host "Starting build.ps1"
+  write-host "Starting $task"
   Invoke-psake ($path + '\build.ps1') $task -properties $properties -parameters $parameters
 
   if ($psake.build_success -eq $false)
   {
-    write-host "build.ps1 failed" -fore RED
+    write-host "$task failed" -fore RED
     exit 1
   }
   else
   {
-    write-host "build.ps1 succeeded" -fore GREEN
+    write-host "$task succeeded" -fore GREEN
     exit 0
   }
 }

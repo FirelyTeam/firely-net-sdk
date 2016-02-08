@@ -85,7 +85,7 @@ TaskSetup {
         if ($MSBuild.Length)
         {
             $Script:MSBuild = $MSBuild
-            Write-Verbose "Found MSBuild at '$MSBuild'."
+            Write-Information "Found MSBuild at '$MSBuild'."
         }
         else
         {
@@ -107,7 +107,7 @@ TaskSetup {
         if ($VSTest.Length)
         {
             $Script:VSTest = $VSTest
-            Write-Verbose "Found VSTest at '$VSTest'."
+            Write-Information "Found VSTest at '$VSTest'."
         }
         else
         {
@@ -117,10 +117,15 @@ TaskSetup {
 }
 
 
-task default -depends Package
+task default -depends Help
+
+task Help -description "Show help text" {
+  WriteDocumentation($false)
+}
+
 
 # Ensure a clean working directory
-task Clean {
+task Clean -description "Clean all output and temporary files from previous builds" {
   Write-Host "Setting location to $baseDir"
   Set-Location $baseDir
   
@@ -136,7 +141,7 @@ task Clean {
 }
 
 # Build each solution, optionally signed
-task Build -depends Clean { 
+task Build -depends Clean -description "Build all targets. Output to various bin/ directories." { 
 
   Write-Host "Copying source to working source directory $workingSourceDir"
   Copy-Robot -sourcePath "$sourceDir" -destPath "$workingSourceDir" -excludeDirectories "bin","obj","TestResults","AppPackages","$packageDirs",".vs","artifacts" -excludeFiles "*.suo","*.user","*.lock.json"
@@ -163,7 +168,7 @@ task Build -depends Clean {
 
 # TODO: Should Packaging depend on successful testing?
 # Optional build NuGet, add files to final zip
-task Package -depends Build {
+task Package -depends Build -description "Build, then package into NuGet packages and a Zip file." {
   foreach ($build in $builds)
   {
 # TODO: Can projects and final directories be pulled out of the list of builds?
@@ -256,21 +261,21 @@ task Package -depends Build {
 
 
 # Build the packages and place them onto a local NuGet server
-task Deploy -depends Package, Redeploy {
+task Deploy -depends Package, Redeploy -description "Build, package, then copy NuGet packages to a deployment directory." {
 }
 
 # Place an already packaged set of NuGet packages onto a local NuGet server
-task Redeploy {
+task Redeploy -description "Copy NuGet packages from a previous packaging run and copy them to a deployment directory." {
   Copy-Robot -sourcePath "$workingDir\NuGet" -destPath "$localNugetPath" -includeFiles "*.nupkg"
 }
 
 
 # Build the project and test it
-task Test -depends Build, Retest {
+task Test -depends Build, Retest -description "Build and test everything." {
 }
 
 # Run tests on already built projects
-task Retest {
+task Retest -description "Retest a previously executed build." {
   foreach ($build in $builds)
   {
     if ($build.TestsFunction -ne $null)
@@ -281,10 +286,10 @@ task Retest {
 }
 
 
-# Update source files and nuspec files WITHIN the project source (i.e. not just in a temporary working directory)
+# Update assembly version files and nuspec files WITHIN the project source (i.e. not just in a temporary working directory)
 # Use this to update a project to also build assemblies with proper version number and signature key from Visual Studio
 # I.e. set values at top of build-script to new values, then run this task
-task UpdateSource {
+task UpdateSource -description "Update assembly version files and nuspec files WITHIN the project source (i.e. not just in a temporary working directory)" {
   Write-Warning "Answering yes will patch the AssemblyVersionInfo.cs files and the .nuspec files in your project."
   Write-Warning "If your project is controlled in a version control system, this will overwrite the source-controlled versions."
 
@@ -409,7 +414,7 @@ function Update-AssemblyInfoFiles ([string] $workingSourceDir, [string] $assembl
         $deltaFile = Compare-Object ($inputFile) ($outputFile)
         if ($deltaFile.Length -gt 0)
         {
-          Write-Host "File contents really changed. Writing back."
+          Write-Information "File contents really changed. Writing back."
           $outputFile | Set-Content $filename
         }
         else
