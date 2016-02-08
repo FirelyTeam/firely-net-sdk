@@ -143,9 +143,7 @@ task Clean -description "Clean all output and temporary files from previous buil
 # Build each solution, optionally signed
 task Build -depends Clean -description "Build all targets. Output to various bin/ directories." { 
 
-  Write-Host "Copying source to working source directory $workingSourceDir"
-  Copy-Robot -sourcePath "$sourceDir" -destPath "$workingSourceDir" -excludeDirectories "bin","obj","TestResults","AppPackages","$packageDirs",".vs","artifacts" -excludeFiles "*.suo","*.user","*.lock.json"
-
+  Copy-Robot -sourcePath "$sourceDir" -destPath "$workingSourceDir" -excludeDirectories "bin","obj","TestResults","AppPackages","$packageDirs",".vs","artifacts" -excludeFiles "*.suo","*.user","*.lock.json" -item "source"
 
   Write-Host -ForegroundColor $ProgressColor "Updating assembly version"
   Write-Host
@@ -155,11 +153,20 @@ task Build -depends Clean -description "Build all targets. Output to various bin
   foreach ($build in $builds)
   {
     $slnName = $build.SlnName
+    $configName = $build.Configuration
     if ($slnName -ne $null)
     {
-      Write-Host -ForegroundColor $ProgressColor "Building solution: " $slnName
-      Write-Host -ForegroundColor $ProgressColor "Strong Name:       " $signAssemblies
-      Write-Host -ForegroundColor $ProgressColor "Strong Name Key:   " $signKeyPath
+      Write-Host -ForegroundColor $ProgressColor "Building:          " $configName " from " $slnName
+ 
+      if ($signAssemblies)
+      {
+        Write-Host -ForegroundColor $ProgressColor "Strong Name:       " $signAssemblies
+        Write-Host -ForegroundColor $ProgressColor "Strong Name Key:   " $signKeyPath
+      }
+      else
+      {
+        Write-Warning "Building Release build without a strong name"
+      }
 
       & $build.BuildFunction $build
     }
@@ -177,7 +184,7 @@ task Package -depends Build -description "Build, then package into NuGet package
 
     foreach($prj in $prjNames)
     {
-      Copy-Robot -sourcePath "$workingSourceDir\$prj\bin\Release\$finalDir" -destPath "$workingDir\Package\Bin\$finalDir" -includeFiles "*.dll","*.pdb","*.xml" -excludeFiles "*.CodeAnalysisLog.xml"
+      Copy-Robot -sourcePath "$workingSourceDir\$prj\bin\Release\$finalDir" -destPath "$workingDir\Package\Bin\$finalDir" -includeFiles "*.dll","*.pdb","*.xml" -excludeFiles "*.CodeAnalysisLog.xml" -item "compiled binaries"
     }
   }
   
@@ -224,11 +231,11 @@ task Package -depends Build -description "Build, then package into NuGet package
         $binDir = $dirPair.BinDir
         $libDir = $dirPair.LibDir
         $assemblyPattern = $nugetPkg.AssemblyPattern
-        Copy-Robot -sourcePath "$workingSourceDir\$pkg\bin\Release\$binDir" -destPath "$workingDir\NuGet\lib\$libDir" -includeFiles "$assemblyPattern.dll","$assemblyPattern.pdb","$assemblyPattern.xml" -excludeFiles "*.CodeAnalysisLog.xml" -params "/XO"
+        Copy-Robot -sourcePath "$workingSourceDir\$pkg\bin\Release\$binDir" -destPath "$workingDir\NuGet\lib\$libDir" -includeFiles "$assemblyPattern.dll","$assemblyPattern.pdb","$assemblyPattern.xml" -excludeFiles "*.CodeAnalysisLog.xml" -params "/XO" -item "assemblies for NuGet package"
       }
 
       # Copy source code for symbol package
-      Copy-Robot -sourcePath "$workingSourceDir\$pkg" -destPath "$workingDir\NuGet\src\$pkg" -includeFiles "*.cs" -params "/S" -excludeDirectories "obj",".vs","artifacts"
+      Copy-Robot -sourcePath "$workingSourceDir\$pkg" -destPath "$workingDir\NuGet\src\$pkg" -includeFiles "*.cs" -params "/S" -excludeDirectories "obj",".vs","artifacts" -item "source code for symbol package"
 
       Write-Host "Building NuGet package with ID $packageId and version $nugetVersion" -ForegroundColor $ProgressColor
       Write-Host
@@ -334,7 +341,7 @@ function MSBuildBuild($build)
   $constants = GetConstants $build.Constants $signAssemblies
 
   Write-Host
-  Write-Host "Building $workingSourceDir\$slnName.sln" -ForegroundColor $ProgressColor
+  Write-Host "Building configuration $configuration from $workingSourceDir\$slnName.sln" -ForegroundColor $ProgressColor
   exec { & "$MSBuild" "/verbosity:minimal" "/t:Clean;Rebuild" /p:Configuration=$configuration "/p:CopyNuGetImplementations=true" "/p:Platform=Any CPU" "/p:PlatformTarget=AnyCPU" /p:OutputPath=bin\Release\$finalDir\ /p:AssemblyOriginatorKeyFile=$signKeyPath "/p:SignAssembly=$signAssemblies" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:VisualStudioVersion=14.0" /p:DefineConstants=`"$constants`" "$workingSourceDir\$slnName.sln" | Out-Default } "Error building $slnName"
 }
 
@@ -489,8 +496,11 @@ function Copy-Robot {
       [string[]] $includeFiles = @(),
       [string[]] $excludeDirectories = $null,
       [string[]] $excludeFiles = $null,
-      [string[]] $params = @()
+      [string[]] $params = @(),
+      [string] $item = ""
   )
+
+  Write-Host "Copying $item from $sourcePath -> $destPath"
 
   $defaultParams = @("/MIR","/NP","/NFL","/NDL","/NJS","/NC","/NS")  # Mirror and be quiet :-)
 
@@ -511,7 +521,24 @@ function Copy-Robot {
   }
 
   # TODO: Handle output codes and console output.
-  & "robocopy" $robocommand $sourcePath $destPath $includeFiles $defaultParams $params $xdParams $xfParams
+  & "robocopy" $robocommand $sourcePath $destPath $includeFiles $defaultParams $params $xdParams $xfParams | Out-Null
+
+  if (($LASTEXITCODE -ge 0) -and ($LASTEXITCODE -le 3))
+  {
+    Write-Verbose "Robocopy success: $LASTEXITCODE"               
+  }
+  elseif (($LASTEXITCODE -gt 0) -and ($LASTEXITCODE -lt 16))
+  {
+    Write-Warning "Robocopy exit code: $LASTEXITCODE"
+  }
+  elseif ($LASTEXITCODE -eq 16)
+  {
+    Write-Host "Robocopy did not copy anything."
+  }
+  else
+  {
+    Write-Warning "Robocopy unknown exit code: $LASTEXITCODE"
+  }
 }
 
 
