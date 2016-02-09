@@ -372,9 +372,9 @@ function VSTests($build)
     Write-Host
     try
     {
-       if (!$appVeyor)
+       if ($appVeyor)
        {
-         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor /TestCaseFilter:”TestCategory!=IntegrationTest" | Out-Default
+         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor /TestCaseFilter:”TestCategory!=IntegrationTest&TestCategory!=LongRunner" | Out-Default  # TODO: Include LongRunners again.
        }
        else
        {
