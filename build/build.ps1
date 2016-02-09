@@ -85,7 +85,7 @@ TaskSetup {
         if ($MSBuild.Length)
         {
             $Script:MSBuild = $MSBuild
-            Write-Information "Found MSBuild at '$MSBuild'."
+            Write-Host "Found MSBuild at '$MSBuild'."
         }
         else
         {
@@ -107,7 +107,7 @@ TaskSetup {
         if ($VSTest.Length)
         {
             $Script:VSTest = $VSTest
-            Write-Information "Found VSTest at '$VSTest'."
+            Write-Host "Found VSTest at '$VSTest'."
         }
         else
         {
@@ -421,7 +421,7 @@ function Update-AssemblyInfoFiles ([string] $workingSourceDir, [string] $assembl
         $deltaFile = Compare-Object ($inputFile) ($outputFile)
         if ($deltaFile.Length -gt 0)
         {
-          Write-Information "File contents really changed. Writing back."
+          Write-Host "File contents really changed. Writing back."
           $outputFile | Set-Content $filename
         }
         else
