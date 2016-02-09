@@ -5,6 +5,15 @@ properties {
 
   $localNugetPath = "\\karoo\Develop\Running\Furore\NUGET"    # Optional: Set this to a path where your local NuGet server resides (this is used by the "Redeploy" task)
 
+  $ProgressColor = "Magenta"
+
+  $appVeyor = $false
+  if(Test-Path -Path env:\APPVEYOR) 
+  {
+    $appVeyor = $true
+    Write-Host -ForegroundColor $ProgressColor "Running on Appveyor"
+  }
+
 # ATTENTION: The Assembly Version scheme is Major.Minor.BUILD.Revision. 
 # Do NOT use humble Open Source numbering, e.g. "0.90.6", as this would put the 6 into the BUILD number, not into the Minor number.
 # Bump up Major, if the new library is not backward compatible to the old one. Bump up Minor, if it is FULLY backward compatible, but enhanced.
@@ -62,8 +71,6 @@ properties {
 
   $Script:MSBuild = "MSBuild"
   $Script:VSTest = "VSTest.Console"
-
-  $ProgressColor = "Magenta"
 }
 
 
@@ -365,7 +372,14 @@ function VSTests($build)
     Write-Host
     try
     {
-       & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:”TestCategory!=IntegrationTest" | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
+       if (!$appVeyor)
+       {
+         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor /TestCaseFilter:”TestCategory!=IntegrationTest" | Out-Default
+       }
+       else
+       {
+         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:”TestCategory!=IntegrationTest" | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
+       }
     }
     catch {
       Write-Host -ForegroundColor Red "Tests have failed. Continuing..."
