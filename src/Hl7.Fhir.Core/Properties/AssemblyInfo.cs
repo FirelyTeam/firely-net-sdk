@@ -8,7 +8,9 @@ using System.Security;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-#if PORTABLE45
+#if DOTNET
+[assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core Portable dotnet")]
+#elif PORTABLE45
 [assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core Portable .Net 4.5")]
 #elif NET45
 [assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core .Net 4.5")]
