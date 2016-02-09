@@ -68,21 +68,38 @@ namespace Hl7.Fhir.Rest
 
                     // If response has an error code which will make it impossible to turn it into bundle entries: convert it into FhirOperationException and bail out...
                     var statusString = ((int)webResponse.StatusCode).ToString();
-                    Exception httpException = HttpStatusToException(statusString);
-                    if (httpException != null)
+
+                    // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
+                    try
                     {
+                        LastResult = webResponse.ToBundleEntry(inBody);
+                        Exception httpException = HttpStatusToException(statusString, LastResult.Resource as OperationOutcome);
+
+                        if (httpException != null)
+                        {
+                            throw httpException;
+                        }
+                        else
+                        {
+                            return LastResult;
+                        }
+                    }
+                    catch(FormatException fe)
+                    {
+                        // The server responded with HTML code. Still build a FhirOperationException and set a LastResult.
                         // Build a very minimal LastResult
                         var errorResult = new Bundle.EntryComponent();
                         errorResult.Response = new Bundle.ResponseComponent();
                         errorResult.Response.Status = statusString;
 
+                        OperationOutcome operationOutcome = OperationOutcome.ForException(fe, OperationOutcome.IssueType.Invalid);
+
+                        errorResult.Resource = operationOutcome;
                         LastResult = errorResult;
+
+                        Exception httpException = HttpStatusToException(statusString, operationOutcome, true);
                         throw httpException;
                     }
-
-                    // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
-                    LastResult = webResponse.ToBundleEntry(inBody);
-                    return LastResult;
                 }
                 catch (AggregateException ae)
                 {
@@ -116,9 +133,11 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Convert a status code into an exception, or null if everything is fine.
         /// </summary>
-        /// <param name="status"></param>
+        /// <param name="status">HTTP status code</param>
+        /// <param name="outcome">OperationOutcome to be used informationally in exception message</param>
+        /// <param name="forceException">Force the creation of an exception with the information from status and outcome</param>
         /// <returns></returns>
-        private static Exception HttpStatusToException(string status)
+        private static Exception HttpStatusToException(string status, OperationOutcome outcome, bool forceException = false)
         {
             HttpStatusCode statusCode;
 
@@ -129,7 +148,7 @@ namespace Hl7.Fhir.Rest
                 statusCode = HttpStatusCode.InternalServerError;
             }
 
-            if (status.StartsWith("2"))      // 2xx codes - success
+            if (status.StartsWith("2") && !forceException)      // 2xx codes - success
             {
                 return null;   // success
             }
@@ -137,11 +156,17 @@ namespace Hl7.Fhir.Rest
             {
                 return Error.NotSupported("Server returned a status code '{0}', which is not supported by the FhirClient".FormatWith(status));
             }
-            else if (status.StartsWith("4") || status.StartsWith("5"))      // 4xx/5xx codes - client or server error.
+            else if (status.StartsWith("4") || status.StartsWith("5") || forceException)      // 4xx/5xx codes - client or server error.
             {
                 var message = string.Format("Operation was unsuccessful, and returned status {0}.", status);
-
-                return new FhirOperationException(message, statusCode);
+                if (outcome != null)
+                {
+                    return new FhirOperationException(message + " OperationOutcome: " + outcome.ToString(), statusCode, outcome);
+                }
+                else
+                {
+                    return new FhirOperationException(message, statusCode);
+                }
             }
             else
             {
