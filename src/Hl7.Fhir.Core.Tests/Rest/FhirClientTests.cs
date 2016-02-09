@@ -935,7 +935,7 @@ namespace Hl7.Fhir.Tests.Rest
                 p = client.Conformance();
                 Assert.Fail("Getting DSTU1 data using DSTU2 parsers should have failed");
             }
-            catch (FormatException)
+            catch (Exception)
             {
                 // OK
             }
