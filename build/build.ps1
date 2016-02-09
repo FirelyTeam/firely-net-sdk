@@ -280,7 +280,16 @@ task Deploy -depends Package, Redeploy -description "Build, package, then copy N
 
 # Place an already packaged set of NuGet packages onto a local NuGet server
 task Redeploy -description "Copy NuGet packages from a previous packaging run and copy them to a deployment directory." {
-  Copy-Robot -sourcePath "$workingDir\NuGet" -destPath "$localNugetPath" -includeFiles "*.nupkg"
+  $destinationZip = "$workingDir\$zipFileName"
+
+  if ($appveyor)
+  {
+    Push-AppveyorArtifact $destinationZip
+  }
+  else
+  {
+    Copy-Robot -sourcePath "$workingDir\NuGet" -destPath "$localNugetPath" -includeFiles "*.nupkg"
+  }
 }
 
 
