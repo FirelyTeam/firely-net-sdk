@@ -4,6 +4,12 @@ title: What's new?
 ---
 ### In 0.90.x (released 2016MMYY)
 * Enhancement: Portable45 target includes support for validation, and no longer depends on Silverlight 5 SDK. Thanks Tilo!
+* Enhancement: Support for serialization where _summary=data (and automatically adds the Subsetted flag - temporarily adds the Tag then removes after serialization, if it wasn't there already)
+* Enhancement: Debugger Display for BundleEntries to show the HttpMethod and FullURL
+* Enhancement: Additional method in ModelInfo (Thanks Marten)
+<pre>
+    public static bool IsKnownResource(FhirDefinedType type)
+</pre>  
 * Fix: Status 500 from a FHIR server with an HTML error message results in a FhirOperationException, not a FormatException. Thanks Tilo!
 * And of course numerous bugfixes and code cleanups.
 
