@@ -37,9 +37,6 @@
     <NoWarn>3016,1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\Hl7.Fhir.Core\Model\Generated\TemplateFileManagerV2.1.ttinclude">
-      <Link>Model\Generated\TemplateFileManagerV2.1.ttinclude</Link>
-    </None>
     <None Include="..\Hl7.Fhir.Core\Validation\xhtml\fhir-xhtml.xsd">
       <Link>Validation\xhtml\fhir-xhtml.xsd</Link>
       <SubType>Designer</SubType>
@@ -189,9 +186,6 @@
     </Compile>
     <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Binary.cs">
       <Link>Model\Generated\Binary.cs</Link>
-    </Compile>
-    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Bindings.cs">
-      <Link>Model\Generated\Bindings.cs</Link>
     </Compile>
     <Compile Include="..\Hl7.Fhir.Core\Model\Generated\BodySite.cs">
       <Link>Model\Generated\BodySite.cs</Link>
@@ -559,47 +553,17 @@
     <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-Bindings.cs">
       <Link>Model\Generated\Template-Bindings.cs</Link>
     </Compile>
-    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-Bindings1.cs">
-      <Link>Model\Generated\Template-Bindings1.cs</Link>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Template-Bindings.tt</DependentUpon>
-    </Compile>
     <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-DataTypeModel.cs">
       <Link>Model\Generated\Template-DataTypeModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-DataTypeModel1.cs">
-      <Link>Model\Generated\Template-DataTypeModel1.cs</Link>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-Model.cs">
       <Link>Model\Generated\Template-Model.cs</Link>
     </Compile>
-    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-Model1.cs">
-      <Link>Model\Generated\Template-Model1.cs</Link>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-ModelInfo.cs">
       <Link>Model\Generated\Template-ModelInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-ModelInfo1.cs">
-      <Link>Model\Generated\Template-ModelInfo1.cs</Link>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Template-ModelInfo.tt</DependentUpon>
-    </Compile>
     <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-ProfiledDataTypes.cs">
       <Link>Model\Generated\Template-ProfiledDataTypes.cs</Link>
-    </Compile>
-    <Compile Include="..\Hl7.Fhir.Core\Model\Generated\Template-ProfiledDataTypes1.cs">
-      <Link>Model\Generated\Template-ProfiledDataTypes1.cs</Link>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
     </Compile>
     <Compile Include="..\Hl7.Fhir.Core\Model\Generated\TestScript.cs">
       <Link>Model\Generated\TestScript.cs</Link>
@@ -912,31 +876,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="..\Hl7.Fhir.Core\Model\Generated\Template-Bindings.tt">
-      <Link>Model\Generated\Template-Bindings.tt</Link>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Bindings1.cs</LastGenOutput>
-    </Content>
-    <Content Include="..\Hl7.Fhir.Core\Model\Generated\Template-DataTypeModel.tt">
-      <Link>Model\Generated\Template-DataTypeModel.tt</Link>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-DataTypeModel1.cs</LastGenOutput>
-    </Content>
-    <Content Include="..\Hl7.Fhir.Core\Model\Generated\Template-Model.tt">
-      <Link>Model\Generated\Template-Model.tt</Link>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Model1.cs</LastGenOutput>
-    </Content>
-    <Content Include="..\Hl7.Fhir.Core\Model\Generated\Template-ModelInfo.tt">
-      <Link>Model\Generated\Template-ModelInfo.tt</Link>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-ModelInfo1.cs</LastGenOutput>
-    </Content>
-    <Content Include="..\Hl7.Fhir.Core\Model\Generated\Template-ProfiledDataTypes.tt">
-      <Link>Model\Generated\Template-ProfiledDataTypes.tt</Link>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-ProfiledDataTypes1.cs</LastGenOutput>
-    </Content>
     <Content Include="..\Hl7.Fhir.Core\Model\Source\expansions.xml">
       <Link>Model\Source\expansions.xml</Link>
     </Content>
