@@ -7,6 +7,7 @@
   "dependencies": {
     "Microsoft.NETCore": "5.0.0",
     "Microsoft.NETCore.Portable.Compatibility": "1.0.0",
+    "Newtonsoft.Json": "8.0.2",
     "System.Net.Requests": "4.0.10",
     "System.Runtime.Serialization.Primitives": "4.0.10"
   },
