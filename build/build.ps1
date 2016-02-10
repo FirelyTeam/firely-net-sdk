@@ -64,9 +64,9 @@ properties {
   $packageDirs = "$sourceDir\packages"         # Comment this out if you need to build while offline
 
   $builds = @(                           # Update this to add new target frameworks 
-    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleaseNet45"; PrjNames = "Hl7.Fhir.Core.Net45","Hl7.Fhir.Specification.Net45"; TestNames = "Hl7.Fhir.Core.Net45.Tests","Hl7.Fhir.Specification.Net45.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"},
+    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleaseNet45"; PrjNames = "Hl7.Fhir.Core.Net45","Hl7.Fhir.Specification.Net45"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"},
     @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleaseNet40"; PrjNames = "Hl7.Fhir.Core.Net40","Hl7.Fhir.Specification.Net40"; TestNames = @(); BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET40"; FinalDir="Net40"},
-    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleasePCL45"; PrjNames = "Hl7.Fhir.Core.Portable45"; TestNames = "Hl7.Fhir.Core.Portable45.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="PORTABLE45"; FinalDir="Portable45"}
+    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleasePCL45"; PrjNames = "Hl7.Fhir.Core.Portable45"; TestNames = "Hl7.Fhir.Core.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="PORTABLE45"; FinalDir="Portable45"}
   )
 
   $Script:MSBuild = "MSBuild"
@@ -310,12 +310,20 @@ task Test -depends Build, Retest -description "Build and test everything." {
 
 # Run tests on already built projects
 task Retest -description "Retest a previously executed build." {
+  $testFailCount = 0
+
   foreach ($build in $builds)
   {
     if ($build.TestsFunction -ne $null)
     {
-      & $build.TestsFunction $build
+      $testFailure = VSTests($build)
+      if ($testFailure) { $testFailCount += 1}
     }
+  }
+
+  if ($testFailCount -gt 0)
+  {
+    throw "$testFailCount sets of tests have failed"
   }
 }
 
@@ -423,6 +431,8 @@ function VSTests($build)
   $testNames = $build.TestNames
   $finalDir = $build.FinalDir
 
+  $testFailure = $false
+
   foreach($testName in $testNames)
   {
     $resultsDir = "$workingDir\TestResults\$finalDir"
@@ -447,11 +457,15 @@ function VSTests($build)
        }
     }
     catch {
-      Write-Host -ForegroundColor Red "Tests have failed. Continuing..."
+      Write-Warning $_
+      Write-Host -ForegroundColor Red "Tests of $testName have failed. Moving on..."
+      $testFailure = $true
     }
 
     Pop-Location
   }
+
+  return $testFailure
 }
 
 
