@@ -44,7 +44,7 @@ properties {
 
 # TODO: Support Debug builds as well?
   $signAssemblies = $false
-  $signKeyPath = "$sourceDir\FhirNetApi.snk"   # TODO: Clarify everything around usage of the key. Secret: Yes/No? Dedicated key for unit tests? How to get matching PublicToken into AssemblyInfo?
+  $signKeyPath = "$sourceDir\FhirNetApi.snk"   # This key has to be placed by the build server, e.g. as described here: https://www.appveyor.com/docs/how-to/secure-files
   
 
   $dirPairs = @(                               # Update this when new target frameworks are added
@@ -64,9 +64,9 @@ properties {
   $packageDirs = "$sourceDir\packages"         # Comment this out if you need to build while offline
 
   $builds = @(                           # Update this to add new target frameworks 
-    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleaseNet45"; PrjNames = "Hl7.Fhir.Core","Hl7.Fhir.Specification"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"},
+    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleaseNet45"; PrjNames = "Hl7.Fhir.Core.Net45","Hl7.Fhir.Specification.Net45"; TestNames = "Hl7.Fhir.Core.Net45.Tests","Hl7.Fhir.Specification.Net45.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"},
     @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleaseNet40"; PrjNames = "Hl7.Fhir.Core.Net40","Hl7.Fhir.Specification.Net40"; TestNames = @(); BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET40"; FinalDir="Net40"},
-    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleasePCL45"; PrjNames = "Hl7.Fhir.Core.Portable45"; TestNames = "Hl7.Fhir.Core.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="PORTABLE45"; FinalDir="Portable45"}
+    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleasePCL45"; PrjNames = "Hl7.Fhir.Core.Portable45"; TestNames = "Hl7.Fhir.Core.Portable45.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="PORTABLE45"; FinalDir="Portable45"}
   )
 
   $Script:MSBuild = "MSBuild"
@@ -157,6 +157,26 @@ task Build -depends Clean -description "Build all targets. Output to various bin
   Update-AssemblyInfoFiles $workingSourceDir ($assemblyVersion) $assemblyFileVersion ($assemblyInfoVersion)
 
 
+# Check all pre-conditions for strong names
+  if ($signAssemblies)
+  {
+    if (Test-Path -Path $signKeyPath)
+    {
+        Write-Host -ForegroundColor Green "Strong Name with SNK keyfile:   " $signKeyPath
+    }
+    else
+    {
+        Write-Warning "SNK keyfile not found: " $signKeyPath
+        $signAssemblies = $false;
+    }
+  }
+  else
+  {
+    Write-Warning "Building Release build without a strong name"
+    $signAssemblies = $false;
+  }
+
+
   foreach ($build in $builds)
   {
     $slnName = $build.SlnName
@@ -165,15 +185,6 @@ task Build -depends Clean -description "Build all targets. Output to various bin
     {
       Write-Host -ForegroundColor $ProgressColor "Building:          " $configName " from " $slnName
  
-      if ($signAssemblies)
-      {
-        Write-Host -ForegroundColor $ProgressColor "Strong Name:       " $signAssemblies
-        Write-Host -ForegroundColor $ProgressColor "Strong Name Key:   " $signKeyPath
-      }
-      else
-      {
-        Write-Warning "Building Release build without a strong name"
-      }
 
       & $build.BuildFunction $build
     }
@@ -342,6 +353,51 @@ task UpdateSource -description "Update assembly version files and nuspec files W
 }
 
 
+task SNKforAppVeyor -description "Guide through the encryption of an SNK file for usage with Appveyor secure file facility" {
+  $encSignKeyPath = $signKeyPath + ".enc"
+  if (Test-Path -Path $signKeyPath)
+  {
+     # SNK file already exists
+     if (Test-Path -Path $encSignKeyPath)
+     {
+       Write-Host "SNK file and encrypted SNK file found."
+     }
+     else
+     {
+       Write-Host "SNK file found, but no encrypted SNK file."
+
+       New-Item -Path $workingDir -ItemType Directory -Force | Out-Null
+
+       Push-Location $workingDir
+       exec { & "$toolsDir\NuGet\NuGet.exe" install secure-file -ExcludeVersion }
+       Pop-Location
+
+       Write-Warning "The passphrase should only be known to you and will later be required again."
+       $passPhrase = read-host "Enter a passphrase to protect your SNK file"
+
+       exec { & "$workingDir\secure-file\tools\secure-file.exe" -encrypt "$signKeyPath" -secret $passPhrase }
+     }
+  }
+  else
+  {
+    Write-Host "No SNK file called $signKeyPath found."
+    Write-Host -ForegroundColor Yellow "Manual instructions"
+    Write-Host "Launch 'Developer Command Prompt for VS201x'"
+    Write-Host "Enter the following commands:"
+    Write-Host "sn -k $signKeyPath"
+    Write-Host
+    Write-Host "Then repeat running SNKforAppVeyor"
+    break
+  }
+
+  Write-Host -ForegroundColor Green "Results"
+  Write-Host "Strong Name Keyfile (do NOT check into source control): $signKeyPath" 
+  Write-Host "Encrypted Keyfile (should be included in source control): $encSignKeyPath"
+  Write-Host
+  Write-Host -ForegroundColor Yellow "In AppVeyor: Settings->Environment->Environment Variables enter an Encrypted Variable with name 'snk_passphrase' and your passphrase as the encrypted value."
+}
+
+
 function MSBuildBuild($build)
 {
   $slnName = $build.SlnName
@@ -351,8 +407,8 @@ function MSBuildBuild($build)
   Write-Host
   Write-Host "Restoring $workingSourceDir\$slnName.sln"
   [Environment]::SetEnvironmentVariable("EnableNuGetPackageRestore", "true", "Process")
-  exec { & "$toolsDir\NuGet\NuGet.exe" update -self }
-  exec { & "$toolsDir\NuGet\NuGet.exe" restore "$workingSourceDir\$slnName.sln" -verbosity detailed -configfile $workingSourceDir\nuget.config | Out-Default } "Error restoring $slnName"
+  exec { & "$toolsDir\NuGet\NuGet.exe" update -self -Verbosity Quiet }
+  exec { & "$toolsDir\NuGet\NuGet.exe" restore "$workingSourceDir\$slnName.sln" -configfile $workingSourceDir\nuget.config | Out-Default } "Error restoring $slnName"
 
   $constants = GetConstants $build.Constants $signAssemblies
 

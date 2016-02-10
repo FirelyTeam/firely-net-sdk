@@ -30,7 +30,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\Net45\</OutputPath>
-	<BaseIntermediateOutputPath>obj\Debug\Net45\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Net45\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -41,7 +41,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Net45\</OutputPath>
-	<BaseIntermediateOutputPath>obj\Release\Net45\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\Release\Net45\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -130,9 +130,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Net45.csproj">
       <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
-      <Name>Hl7.Fhir.Core</Name>
+      <Name>Hl7.Fhir.Core.Net45</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
