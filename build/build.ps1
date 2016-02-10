@@ -43,7 +43,7 @@ properties {
   $assemblyInfoVersion = $productName + " " + $productVersion
 
 # TODO: Support Debug builds as well?
-  $signAssemblies = $false
+  $signAssemblies = $true
   $signKeyPath = "$sourceDir\FhirNetApi.snk"   # This key has to be placed by the build server, e.g. as described here: https://www.appveyor.com/docs/how-to/secure-files
   
 
