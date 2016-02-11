@@ -53,6 +53,7 @@ properties {
     @{BinDir="Net40"; LibDir="net40"},
     @{BinDir="Net45"; LibDir="net45"},
     @{BinDir="Portable45"; LibDir="portable-net45+netcore45+wpa81+wp8"}
+#    @{BinDir="Portable45"; LibDir="dotnet"}    # TODO: add a PCL 259 based dotnet library
   )
 
   $treatWarningsAsErrors = $false
@@ -66,9 +67,9 @@ properties {
   $packageDirs = "$sourceDir\packages"         # Comment this out if you need to build while offline
 
   $builds = @(                           # Update this to add new target frameworks 
-    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleaseNet45"; PrjNames = "Hl7.Fhir.Core.Net45","Hl7.Fhir.Specification.Net45"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"},
-    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleaseNet40"; PrjNames = "Hl7.Fhir.Core.Net40","Hl7.Fhir.Specification.Net40"; TestNames = @(); BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET40"; FinalDir="Net40"},
-    @{SlnName = "Hl7.Fhir.MultiTarget"; Configuration="ReleasePCL45"; PrjNames = "Hl7.Fhir.Core.Portable45"; TestNames = "Hl7.Fhir.Core.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="PORTABLE45"; FinalDir="Portable45"}
+    @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNet45"; PrjNames = "Hl7.Fhir.Core.Net45","Hl7.Fhir.Specification.Net45"; TestNames = "Hl7.Fhir.Core.Tests","Hl7.Fhir.Specification.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET45"; FinalDir="Net45"},
+    @{SlnName = "Hl7.Fhir"; Configuration="ReleaseNet40"; PrjNames = "Hl7.Fhir.Core.Net40","Hl7.Fhir.Specification.Net40"; TestNames = @(); BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="NET40"; FinalDir="Net40"},
+    @{SlnName = "Hl7.Fhir"; Configuration="ReleasePCL45"; PrjNames = "Hl7.Fhir.Core.Portable45"; TestNames = "Hl7.Fhir.Core.Tests"; BuildFunction = "MSBuildBuild"; TestsFunction = "VSTests"; Constants="PORTABLE45"; FinalDir="Portable45"}
   )
 
   $Script:MSBuild = "MSBuild"
@@ -544,7 +545,7 @@ function Update-NuspecFile ([string] $nuspecPath, [string] $packageId, [string] 
       Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'id']" -value $packageId
       Edit-XmlNodes -doc $xml -xpath "//*[local-name() = 'version']" -value $nugetVersion
 
-      $depNodes=$xml.SelectNodes("/package/metadata/dependencies/dependency")
+      $depNodes=$xml.SelectNodes("/package/metadata/dependencies/group/dependency")
 
       foreach ($depNode in $depNodes)
       {

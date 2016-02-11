@@ -16,7 +16,30 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>HL7 FHIR REST parse serialize class model</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="8.0.2" />
+      <group>
+        <dependency id="Newtonsoft.Json" version="8.0.2" />
+      </group>
+
+      <!-- see: https://github.com/onovotny/ReferenceGenerator -->
+<!--      <group targetFramework="net45" />
+      <group targetFramework="win8" />
+      <group targetFramework="xamarin.ios" />
+      <group targetFramework="monotouch" />
+      <group targetFramework="monoandroid" />
+-->      
+      <group targetFramework="portable-net45+netcore45+wpa81+wp8">
+        <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
+        <dependency id="Microsoft.Bcl" version="1.1.9" />
+        <dependency id="Microsoft.Net.Http" version="2.2.28" />
+      </group>
+<!-- TODO: This would be the new dotnet project, but unclear what is needed for PCL 259 based dotnet project
+      <group targetFramework="dotnet">
+        <dependency id="Microsoft.NETCore" version="5.0.0" />
+        <dependency id="Microsoft.NETCore.Portable.Compatibility" version="1.0.0" />
+        <dependency id="System.Net.Requests" version="4.0.10" />
+        <dependency id="System.Runtime.Serialization.Primitives" version="4.0.10" />
+      </group>
+-->
     </dependencies>
   </metadata>
 </package>
