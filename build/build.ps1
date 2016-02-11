@@ -3,6 +3,8 @@ properties {
   $productVersion = "0.90.6"             # Update this for a new release
   $nugetPrelease = $null                 # Set this to something like "alpha", if desired
 
+  $ignoreTestFailure = $true             # Report build success, if though tests failed. Useful for alpha versions
+
   $localNugetPath = "\\karoo\Develop\Running\Furore\NUGET"    # Optional: Set this to a path where your local NuGet server resides (this is used by the "Redeploy" task)
 
   $ProgressColor = "Magenta"
@@ -323,7 +325,14 @@ task Retest -description "Retest a previously executed build." {
 
   if ($testFailCount -gt 0)
   {
-    throw "$testFailCount sets of tests have failed"
+    if ($ignoreTestFailure)
+    {
+      Write-Warning "$testFailCount sets of tests have failed. ignoreTestFailure is set to true. => Continuing."
+    }
+    else
+    {
+      throw "$testFailCount sets of tests have failed"
+    }
   }
 }
 

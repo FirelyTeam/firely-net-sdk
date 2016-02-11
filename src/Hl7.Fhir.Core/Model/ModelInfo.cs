@@ -127,6 +127,12 @@ namespace Hl7.Fhir.Model
             return name != null && IsKnownResource(name);
         }
 
+        public static bool IsKnownResource(FHIRDefinedType type)
+        {
+            var name = FhirTypeToFhirTypeName(type);
+            return name != null && IsKnownResource(name);
+        }
+
         [Obsolete("Use GetTypeForFhirType() which covers all types, not just resources")]
         public static Type GetTypeForResourceName(string name)
         {

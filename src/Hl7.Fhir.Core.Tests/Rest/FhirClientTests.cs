@@ -808,9 +808,9 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void TestReceiveStatus500IsHandled()
+        public void TestReceiveErrorStatusWithHtmlIsHandled()
         {
-            var client = new FhirClient("http://spark.furore.com/");        // an address that returns Status 500
+            var client = new FhirClient("http://spark.furore.com/");        // an address that returns Status 500 with HTML in its body
 
             try
             {
@@ -828,12 +828,69 @@ namespace Hl7.Fhir.Tests.Rest
 
                 if (client.LastResult.Status != "500")
                     Assert.Fail("LastResult.Status is not 500.");
+
+                if (!fe.Message.Contains("a valid FHIR xml/json body type was expected") && !fe.Message.Contains("not recognized as either xml or json"))
+                    Assert.Fail("Failed to recognize invalid body contents");
+
+                // Check that LastResult is of type OperationOutcome and properly filled.
+                OperationOutcome operationOutcome = client.LastBodyAsResource as OperationOutcome;
+                Assert.IsNotNull(operationOutcome, "Returned resource is not an OperationOutcome");
+
+                Assert.IsTrue(operationOutcome.Issue.Count > 0, "OperationOutcome does not contain an issue");
+
+                Assert.IsTrue(operationOutcome.Issue[0].Severity == OperationOutcome.IssueSeverity.Error, "OperationOutcome is not of severity 'error'");
+
+                string message = operationOutcome.Issue[0].Diagnostics;
+                if (!message.Contains("a valid FHIR xml/json body type was expected") && !message.Contains("not recognized as either xml or json"))
+                    Assert.Fail("Failed to carry error message over into OperationOutcome");
             }
             catch (Exception)
             {
                 Assert.Fail("Failed to throw FhirOperationException on status 500");
             }
         }
+
+
+        [TestMethod]
+        [TestCategory("FhirClient")]
+        public void TestReceiveErrorStatusWithOperationOutcomeIsHandled()
+        {
+            var client = new FhirClient("http://fhir2.healthintersections.com.au/open");  // an address that returns Status 404 with an OperationOutcome
+
+            try
+            {
+                var pat = client.Read<Patient>("Patient/doesnotexist");
+                Assert.Fail("Failed to throw an Exception on status 404");
+            }
+            catch (FhirOperationException fe)
+            {
+                // Expected exception happened
+                if (fe.Status != HttpStatusCode.NotFound)
+                    Assert.Fail("Server response of 404 did not result in FhirOperationException with status 404.");
+
+                if (client.LastResult == null)
+                    Assert.Fail("LastResult not set in error case.");
+
+                Bundle.ResponseComponent entryComponent = client.LastResult;
+
+                if (entryComponent.Status != "404")
+                    Assert.Fail("LastResult.Status is not 404.");
+
+                // Check that LastResult is of type OperationOutcome and properly filled.
+                OperationOutcome operationOutcome = client.LastBodyAsResource as OperationOutcome;
+                Assert.IsNotNull(operationOutcome, "Returned resource is not an OperationOutcome");
+
+                Assert.IsTrue(operationOutcome.Issue.Count > 0, "OperationOutcome does not contain an issue");
+
+                Assert.IsTrue(operationOutcome.Issue[0].Severity == OperationOutcome.IssueSeverity.Error, "OperationOutcome is not of severity 'error'");
+            }
+            catch (Exception e)
+            {
+                Assert.Fail("Failed to throw FhirOperationException on status 404: " + e.Message);
+            }
+        }
+
+
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -878,7 +935,7 @@ namespace Hl7.Fhir.Tests.Rest
                 p = client.Conformance();
                 Assert.Fail("Getting DSTU1 data using DSTU2 parsers should have failed");
             }
-            catch (FormatException)
+            catch (Exception)
             {
                 // OK
             }
