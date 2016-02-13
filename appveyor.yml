@@ -5,7 +5,7 @@ build_script:
 
     secure-file\tools\secure-file -decrypt src\FhirNetApi.snk.enc -secret $Env:snk_passphrase
 
-    build/runbuild.ps1 Deploy
+    build/runbuild.ps1 Package
 test_script:
 - ps: build/runbuild.ps1 Retest
 artifacts:

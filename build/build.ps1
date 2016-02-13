@@ -3,7 +3,7 @@ properties {
   $productVersion = "0.90.6"             # Update this for a new release
   $nugetPrelease = $null                 # Set this to something like "alpha", if desired
 
-  $ignoreTestFailure = $true             # Report build success, if though tests failed. Useful for alpha versions
+  $ignoreTestFailure = $true             # Report build success, even though tests failed. Useful for alpha versions
 
   $localNugetPath = "\\karoo\Develop\Running\Furore\NUGET"    # Optional: Set this to a path where your local NuGet server resides (this is used by the "Redeploy" task)
 
@@ -298,7 +298,7 @@ task Redeploy -description "Copy NuGet packages from a previous packaging run an
 
   if ($appveyor)
   {
-    Push-AppveyorArtifact $destinationZip
+    Write-Warning "Executing on AppVeyor => Do nothing. Control deployment through AppVeyor mechanisms."
   }
   else
   {
@@ -412,7 +412,7 @@ task SNKforAppVeyor -description "Guide through the encryption of an SNK file fo
   Write-Host "Strong Name Keyfile (do NOT check into source control): $signKeyPath" 
   Write-Host "Encrypted Keyfile (should be included in source control): $encSignKeyPath"
   Write-Host
-  Write-Host -ForegroundColor Yellow "In AppVeyor: Settings->Environment->Environment Variables enter an Encrypted Variable with name 'snk_passphrase' and your passphrase as the encrypted value."
+  Write-Host -ForegroundColor Yellow "In AppVeyor: Settings->Environment->Environment Variables add an Encrypted Variable with name 'snk_passphrase' and your passphrase as the encrypted value."
 }
 
 
