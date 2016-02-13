@@ -44,10 +44,11 @@ properties {
   $assemblyVersion = $assemblyVersion + ".0.0"
   $assemblyInfoVersion = $productName + " " + $productVersion
 
-# TODO: Support Debug builds as well?
   $signAssemblies = $true
   $signKeyPath = "$sourceDir\FhirNetApi.snk"   # This key has to be placed by the build server, e.g. as described here: https://www.appveyor.com/docs/how-to/secure-files
-  
+  $ignoreSignatureFailure = $true              # Should an inability to strong-name the library be tolerated (e.g. due to missing SNK file)?
+
+  $signatureFailed = $false  
 
   $dirPairs = @(                               # Update this when new target frameworks are added
     @{BinDir="Net40"; LibDir="net40"},
@@ -153,7 +154,7 @@ task Clean -description "Clean all output and temporary files from previous buil
 # Build each solution, optionally signed
 task Build -depends Clean -description "Build all targets. Output to various bin/ directories." { 
 
-  Copy-Robot -sourcePath "$sourceDir" -destPath "$workingSourceDir" -excludeDirectories "bin","obj","TestResults","AppPackages","$packageDirs",".vs","artifacts" -excludeFiles "*.suo","*.user","*.lock.json" -item "source"
+  Copy-Robot -sourcePath "$sourceDir" -destPath "$workingSourceDir" -excludeDirectories "bin","obj","TestResults","AppPackages","$packageDirs",".vs","artifacts" -excludeFiles "*.suo","*.user","project.json","*.lock.json" -item "source"
 
   Write-Host -ForegroundColor $ProgressColor "Updating assembly version"
   Write-Host
@@ -165,18 +166,18 @@ task Build -depends Clean -description "Build all targets. Output to various bin
   {
     if (Test-Path -Path $signKeyPath)
     {
-        Write-Host -ForegroundColor Green "Strong Name with SNK keyfile:   " $signKeyPath
+        Write-Host -ForegroundColor Green "Strong Name with SNK keyfile: $signKeyPath"
     }
     else
     {
-        Write-Warning "SNK keyfile not found: " $signKeyPath
-        $signAssemblies = $false;
+        Write-Warning "SNK keyfile not found: $signKeyPath - Building Release build without a strong name"
+        $signAssemblies = $false
+        $signatureFailed = $true
     }
   }
   else
   {
     Write-Warning "Building Release build without a strong name"
-    $signAssemblies = $false;
   }
 
 
@@ -186,11 +187,16 @@ task Build -depends Clean -description "Build all targets. Output to various bin
     $configName = $build.Configuration
     if ($slnName -ne $null)
     {
-      Write-Host -ForegroundColor $ProgressColor "Building:          " $configName " from " $slnName
+      Write-Host -ForegroundColor $ProgressColor "Building: $configName from $slnName"
  
 
       & $build.BuildFunction $build
     }
+  }
+
+  if ($signatureFailed -and !$ignoreSignatureFailure)
+  {
+    throw "Could not sign assembly and ignoreSignatureFailure is not set => Reporting build failure."
   }
 }
 
@@ -425,7 +431,6 @@ function MSBuildBuild($build)
   Write-Host
   Write-Host "Restoring $workingSourceDir\$slnName.sln"
   [Environment]::SetEnvironmentVariable("EnableNuGetPackageRestore", "true", "Process")
-  exec { & "$toolsDir\NuGet\NuGet.exe" update -self -Verbosity Quiet }
   exec { & "$toolsDir\NuGet\NuGet.exe" restore "$workingSourceDir\$slnName.sln" -configfile $workingSourceDir\nuget.config | Out-Default } "Error restoring $slnName"
 
   $constants = GetConstants $build.Constants $signAssemblies
