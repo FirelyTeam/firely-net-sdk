@@ -19,5 +19,5 @@ using System.Runtime.InteropServices;
 
 // Sign this for trusted friendship to tested Assembly. See: https://msdn.microsoft.com/en-us/library/bb385180.aspx
 #if SIGNED
-[assembly: AssemblyKeyFileAttribute("..\\TestKey.snk")]
+[assembly: AssemblyKeyFileAttribute("..\\FhirNetApi.snk")]
 #endif

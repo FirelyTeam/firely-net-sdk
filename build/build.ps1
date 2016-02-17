@@ -75,6 +75,8 @@ properties {
 
   $Script:MSBuild = "MSBuild"
   $Script:VSTest = "VSTest.Console"
+
+  $testCaseFilter = ”TestCategory!=IntegrationTest&TestCategory!=LongRunner"
 }
 
 
@@ -464,11 +466,11 @@ function VSTests($build)
     {
        if ($appVeyor)
        {
-         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor /TestCaseFilter:”TestCategory!=IntegrationTest&TestCategory!=LongRunner" | Out-Default  # TODO: Include LongRunners again.
+         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Appveyor /TestCaseFilter:”$testCaseFilter" | Out-Default  # TODO: Include LongRunners again.
        }
        else
        {
-         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:”TestCategory!=IntegrationTest" | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
+         & "$VSTest" $workingSourceDir\$testName\bin\Release\$finalDir\$testName.dll /Logger:Trx /TestCaseFilter:”$testCaseFilter" | Out-Default     # TODO: Find out why Trx logger is often not writing anything to file.
        }
     }
     catch {
@@ -510,10 +512,13 @@ function Update-AssemblyInfoFiles ([string] $workingSourceDir, [string] $assembl
     $assemblyVersionPattern = 'AssemblyVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
     $fileVersionPattern = 'AssemblyFileVersion\("[0-9]+(\.([0-9]+|\*)){1,3}"\)'
     $infoVersionPattern = 'AssemblyInformationalVersion\("[0-9a-zA-Z\.\- ]+"\)'
-    $assemblyVersionStatement = 'AssemblyVersion("' + $assemblyVersionNumber + '")';
-    $fileVersionStatement = 'AssemblyFileVersion("' + $fileVersionNumber + '")';
-    $infoVersionStatement = 'AssemblyInformationalVersion("' + $infoVersion + '")';
-    
+    $publicKeyPattern = 'PublicKey=[0-9a-zA-Z]+'
+    $assemblyVersionStatement = 'AssemblyVersion("' + $assemblyVersionNumber + '")'
+    $fileVersionStatement = 'AssemblyFileVersion("' + $fileVersionNumber + '")'
+    $infoVersionStatement = 'AssemblyInformationalVersion("' + $infoVersion + '")'
+    $publicKey = PublicKeyFromSNK($signKeyPath)
+    $publicKeyStatement = 'PublicKey=' + $publicKey
+
     Get-ChildItem -Path $workingSourceDir -r -filter AssemblyVersionInfo.cs | ? { $_.Directory.ToString() -inotmatch "packages"} | ForEach-Object {
         
         $filename = $_.Directory.ToString() + '\' + $_.Name
@@ -524,7 +529,8 @@ function Update-AssemblyInfoFiles ([string] $workingSourceDir, [string] $assembl
         $outputFile = $inputFile | ForEach-Object {
             % {$_ -replace $assemblyVersionPattern, $assemblyVersionStatement } |
             % {$_ -replace $fileVersionPattern, $fileVersionStatement } |
-            % {$_ -replace $infoVersionPattern, $infoVersionStatement }
+            % {$_ -replace $infoVersionPattern, $infoVersionStatement } |
+            % {$_ -replace $publicKeyPattern, $publicKeyStatement }
         }
         $deltaFile = Compare-Object ($inputFile) ($outputFile)
         if ($deltaFile.Length -gt 0)
@@ -646,6 +652,24 @@ function Copy-Robot {
   else
   {
     Write-Warning "Robocopy unknown exit code: $LASTEXITCODE"
+  }
+}
+
+
+function PublicKeyFromSNK {
+  param(
+    [string] $keyPath = $(throw "keyPath is a required parameter")
+  )
+  if (Test-Path $keyPath)
+  {
+    $snkStream = New-Object IO.FileStream "$keyPath", 'Open'
+    $snkPair = New-Object Reflection.StrongNameKeyPair $snkStream
+    $publicKey = [BitConverter]::ToString($snkPair.PublicKey) -replace "-",""
+    $publicKey   # Place this on the return pipeline
+  }
+  else
+  {
+    "001234567800"  # Place dummy value on stack
   }
 }
 
