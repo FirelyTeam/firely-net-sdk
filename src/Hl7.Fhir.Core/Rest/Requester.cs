@@ -66,23 +66,15 @@ namespace Hl7.Fhir.Rest
                     LastResponse = webResponse;
                     if (AfterResponse != null) AfterResponse(webResponse,inBody);
 
-                    // If response has an error code which will make it impossible to turn it into bundle entries: convert it into FhirOperationException and bail out...
-                    var statusString = ((int)webResponse.StatusCode).ToString();
-
                     // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
                     try
                     {
                         LastResult = webResponse.ToBundleEntry(inBody);
-                        Exception httpException = HttpStatusToException(statusString, LastResult.Resource as OperationOutcome);
 
-                        if (httpException != null)
-                        {
-                            throw httpException;
-                        }
-                        else
-                        {
+                        if (webResponse.StatusCode.IsSuccessful())
                             return LastResult;
-                        }
+                        else
+                            throw httpNonSuccessStatusToException(webResponse.StatusCode, LastResult.Resource);
                     }
                     catch(FormatException fe)
                     {
@@ -90,15 +82,14 @@ namespace Hl7.Fhir.Rest
                         // Build a very minimal LastResult
                         var errorResult = new Bundle.EntryComponent();
                         errorResult.Response = new Bundle.ResponseComponent();
-                        errorResult.Response.Status = statusString;
+                        errorResult.Response.Status = ((int)webResponse.StatusCode).ToString();
 
                         OperationOutcome operationOutcome = OperationOutcome.ForException(fe, OperationOutcome.IssueType.Invalid);
 
                         errorResult.Resource = operationOutcome;
                         LastResult = errorResult;
 
-                        Exception httpException = HttpStatusToException(statusString, operationOutcome, true);
-                        throw httpException;
+                        throw buildFhirOperationException(webResponse.StatusCode, operationOutcome);
                     }
                 }
                 catch (AggregateException ae)
@@ -134,43 +125,37 @@ namespace Hl7.Fhir.Rest
         /// Convert a status code into an exception, or null if everything is fine.
         /// </summary>
         /// <param name="status">HTTP status code</param>
-        /// <param name="outcome">OperationOutcome to be used informationally in exception message</param>
-        /// <param name="forceException">Force the creation of an exception with the information from status and outcome</param>
+        /// <param name="body">Content delivered by the server, parsed as a FHIR resource</param>
         /// <returns></returns>
-        private static Exception HttpStatusToException(string status, OperationOutcome outcome, bool forceException = false)
+        private static Exception httpNonSuccessStatusToException(HttpStatusCode status, Resource body)
         {
-            HttpStatusCode statusCode;
-
-            if (!Enum.TryParse<HttpStatusCode>(status, out statusCode))
-            {
-                // If the status code is unable to be parsed, then report
-                // in internal server error
-                statusCode = HttpStatusCode.InternalServerError;
-            }
-
-            if (status.StartsWith("2") && !forceException)      // 2xx codes - success
-            {
-                return null;   // success
-            }
-            else if (status.StartsWith("3") || status.StartsWith("1"))      // 3xx codes - we don't handle them, unless the .NET API did it for us
+            if (status.IsInformational() || status.IsRedirection())      // 1xx and 3xx codes - we don't handle them, unless the .NET API did it for us
             {
                 return Error.NotSupported("Server returned a status code '{0}', which is not supported by the FhirClient".FormatWith(status));
             }
-            else if (status.StartsWith("4") || status.StartsWith("5") || forceException)      // 4xx/5xx codes - client or server error.
+            else if (status.IsClientError() || status.IsServerError())      // 4xx/5xx codes - client or server error.
             {
-                var message = string.Format("Operation was unsuccessful, and returned status {0}.", status);
-                if (outcome != null)
-                {
-                    return new FhirOperationException(message + " OperationOutcome: " + outcome.ToString(), statusCode, outcome);
-                }
-                else
-                {
-                    return new FhirOperationException(message, statusCode);
-                }
+                return buildFhirOperationException(status, body);
             }
             else
             {
                 return Error.NotSupported("Server returned an illegal http status code '{0}', which is not defined by the Http standard".FormatWith(status));
+            }
+        }
+
+        private static Exception buildFhirOperationException(HttpStatusCode status, Resource body)
+        {
+            var message = string.Format("Operation was unsuccessful, and returned status {0}.", status);
+            var outcome = body as OperationOutcome;
+
+            if (outcome != null)
+            {
+                // Body is an OperationOutcome
+                return new FhirOperationException(message + " OperationOutcome: " + outcome.ToString(), status, outcome);
+            }
+            else
+            {
+                return new FhirOperationException(message + " Body contains a " + body.TypeName, status);
             }
         }
     }

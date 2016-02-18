@@ -164,6 +164,30 @@ namespace Hl7.Fhir.Rest
 
             return Regex.IsMatch(uri, RESTURI_PATTERN);
         }
+
+        public static bool IsInformational(this HttpStatusCode code)
+        {
+            return (int)code >= 100 && (int)code < 200;
+        }
+        public static bool IsSuccessful(this HttpStatusCode code)
+        {
+            return (int)code >= 200 && (int)code < 300;
+        }
+
+        public static bool IsRedirection(this HttpStatusCode code)
+        {
+            return (int)code >= 300 && (int)code < 400;
+        }
+
+        public static bool IsClientError(this HttpStatusCode code)
+        {
+            return (int)code >= 400 && (int)code < 500;
+        }
+
+        public static bool IsServerError(this HttpStatusCode code)
+        {
+            return (int)code >= 500 && (int)code < 600;
+        }
     }
 
 
