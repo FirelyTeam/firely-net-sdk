@@ -53,8 +53,17 @@ properties {
   $dirPairs = @(                               # Update this when new target frameworks are added
     @{BinDir="Net40"; LibDir="net40"},
     @{BinDir="Net45"; LibDir="net45"},
-    @{BinDir="Portable45"; LibDir="portable-net45+netcore45+wpa81+wp8"}
-#    @{BinDir="Portable45"; LibDir="dotnet"}    # TODO: add a PCL 259 based dotnet library
+    @{BinDir="Portable45"; LibDir="portable-net45+win+wpa81+wp80"},
+    @{BinDir="Portable45"; LibDir="netcore45"},
+    @{BinDir="Portable45"; LibDir="wp8"},
+    @{BinDir="Portable45"; LibDir="wpa81"},
+    @{BinDir="Portable45"; LibDir="win81"},
+    @{BinDir="Portable45"; LibDir="portable-win81+wpa81"},
+#    @{BinDir="Net45"; LibDir="uap"},
+    @{BinDir="Portable45"; LibDir="MonoAndroid"},
+    @{BinDir="Portable45"; LibDir="Xamarin.iOS10"},
+    @{BinDir="Portable45"; LibDir="Xamarin.Mac20"},
+    @{BinDir="Portable45"; LibDir="dotnet"}    # This is using the PCL Profile 259 library as the dotnet library
   )
 
   $treatWarningsAsErrors = $false
