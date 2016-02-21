@@ -38,14 +38,17 @@
 
       <group targetFramework="MonoAndroid">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
+        <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
       </group>
 
       <group targetFramework="Xamarin.iOS10">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
+        <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
       </group>
 
       <group targetFramework="Xamarin.Mac20">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
+        <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
       </group>
             
       <group targetFramework="portable-net45+win+wpa81+wp80">
