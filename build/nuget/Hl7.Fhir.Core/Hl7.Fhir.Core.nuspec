@@ -25,6 +25,10 @@
 
 <!--      <group targetFramework="uap" />  -->
 
+      <group targetFramework="win">
+        <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
+      </group>
+        
       <group targetFramework="wpa">
         <dependency id="Portable-Strong.DataAnnotations" version="1.0.0" />
       </group>
