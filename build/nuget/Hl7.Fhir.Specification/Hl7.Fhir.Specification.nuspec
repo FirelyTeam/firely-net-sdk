@@ -16,12 +16,14 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema</tags>
     <dependencies>
-      <group>
+      <group targetFramework="net45">
         <dependency id="Hl7.Fhir.DSTU21" version="0.90.6" />
         <dependency id="Newtonsoft.Json" version="8.0.2" />
       </group>
 
       <group targetFramework="net40">
+        <dependency id="Hl7.Fhir.DSTU21" version="0.90.6" />
+        <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="SharpZipLib" version="0.86.0" />
       </group>
     </dependencies>
