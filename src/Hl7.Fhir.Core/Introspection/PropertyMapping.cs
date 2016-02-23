@@ -19,6 +19,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Introspection
 {
+    [System.Diagnostics.DebuggerDisplay(@"\{Name={Name} ElementType={ElementType.Name}}")]
     public class PropertyMapping
     {
         public string Name { get; private set; }
