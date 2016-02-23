@@ -10,6 +10,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Tests.Introspection
 {
@@ -38,6 +39,24 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.AreEqual("Item1", mapping.GetLiteral(TestEnum.Item1));
         }
 
+
+
+        [TestMethod]
+        public void GetInfoFromEnumMember()
+        {
+            var t = FHIRDefinedType.Markdown;
+
+            Assert.AreEqual("markdown", t.GetLiteral());
+            Assert.AreEqual("markdown", t.GetDocumentation());
+        }
+
+        [TestMethod]
+        public void ParseFhirTypeName()
+        {
+            Assert.AreEqual(FHIRDefinedType.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
+            Assert.AreEqual(FHIRDefinedType.Markdown, ModelInfo.FhirTypeNameToFhirType("Markdown"));
+            Assert.AreEqual(FHIRDefinedType.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
+        }
 
         [FhirEnumeration("Testee")]
         enum TestEnum

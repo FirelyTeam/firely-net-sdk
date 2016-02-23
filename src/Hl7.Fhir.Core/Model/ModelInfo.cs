@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {
@@ -76,6 +77,21 @@ namespace Hl7.Fhir.Model
         }
 
 
+        public static string FhirTypeToFhirTypeName(FHIRDefinedType type)
+        {
+            return type.GetLiteral();
+        }
+
+        public static FHIRDefinedType? FhirTypeNameToFhirType(string name)
+        {
+            FHIRDefinedType result = FHIRDefinedType.Patient;
+
+            if (Enum.TryParse<FHIRDefinedType>(name, ignoreCase: true, result: out result))
+                return result;
+            else
+                return null;
+        }
+
         public static Type GetTypeForFhirType(string name)
         {
             if (!FhirTypeToCsType.ContainsKey(name))
@@ -85,7 +101,7 @@ namespace Hl7.Fhir.Model
         }
 
 
-        public static string GetFhirTypeForType(Type type)
+        public static string GetFhirTypeNameForType(Type type)
         {
             if (!FhirCsTypeToString.ContainsKey(type))
                 return null;
@@ -93,6 +109,11 @@ namespace Hl7.Fhir.Model
                 return FhirCsTypeToString[type];
         }
 
+        [Obsolete("Use GetFhirTypeNameForType() instead")]
+        public static string GetFhirTypeForType(Type type)
+        {
+            return GetFhirTypeNameForType(type);
+        }
 
         public static bool IsKnownResource(string name)
         {
@@ -101,11 +122,18 @@ namespace Hl7.Fhir.Model
 
         public static bool IsKnownResource(Type type)
         {
-            var name = GetFhirTypeForType(type);
+            var name = GetFhirTypeNameForType(type);
 
             return name != null && IsKnownResource(name);
         }
 
+        public static bool IsKnownResource(FHIRDefinedType type)
+        {
+            var name = FhirTypeToFhirTypeName(type);
+            return name != null && IsKnownResource(name);
+        }
+
+        [Obsolete("Use GetTypeForFhirType() which covers all types, not just resources")]
         public static Type GetTypeForResourceName(string name)
         {
             if (!IsKnownResource(name)) return null;
@@ -113,6 +141,7 @@ namespace Hl7.Fhir.Model
             return GetTypeForFhirType(name);
         }
 
+        [Obsolete("Use GetFhirTypeNameForType() which covers all types, not just resources")]
         public static string GetResourceNameForType(Type type)
         {
             var name = GetFhirTypeForType(type);
@@ -125,6 +154,8 @@ namespace Hl7.Fhir.Model
 
         public static bool IsPrimitive(string name)
         {
+            if (String.IsNullOrEmpty(name)) return false;
+
             return FhirTypeToCsType.ContainsKey(name) && Char.IsLower(name[0]);
         }
 
@@ -133,8 +164,16 @@ namespace Hl7.Fhir.Model
             return IsPrimitive(type.Name);
         }
 
+        public static bool IsPrimitive(FHIRDefinedType type)
+        {
+            return IsPrimitive(FhirTypeToFhirTypeName(type));
+        }
+
+
         public static bool IsDataType(string name)
         {
+            if (String.IsNullOrEmpty(name)) return false;
+
             return FhirTypeToCsType.ContainsKey(name) && !IsKnownResource(name) && !IsPrimitive(name);
         }
 
@@ -142,6 +181,11 @@ namespace Hl7.Fhir.Model
         public static bool IsDataType(Type type)
         {
             return IsDataType(type.Name);
+        }
+
+        public static bool IsDataType(FHIRDefinedType type)
+        {
+            return IsDataType(FhirTypeToFhirTypeName(type));
         }
 
         public static bool IsReference(string name)
@@ -154,6 +198,12 @@ namespace Hl7.Fhir.Model
             return IsReference(type.Name);
         }
 
+        public static bool IsReference(FHIRDefinedType type)
+        {
+            return type == FHIRDefinedType.Reference;
+        }
+
+
         public static bool IsConformanceResource(Type type)
         {
             return IsConformanceResource(type.Name);
@@ -161,11 +211,26 @@ namespace Hl7.Fhir.Model
 
         public static bool IsConformanceResource(string name)
         {
-            return ConformanceResources.Contains(name);
+            if (string.IsNullOrEmpty(name)) return false;
+
+            var t = FhirTypeNameToFhirType(name);
+
+            if (t != null)
+                return IsConformanceResource(t.Value);
+            else
+                return false;
         }
 
-        public static readonly string[] ConformanceResources = { "Conformance", "StructureDefinition", "ValueSet", "ConceptMap",
-                "DataElement", "OperationDefinition", "SearchParameter", "NamingSystem", "ImplementationGuide", "TestScript" };
+        public static bool IsConformanceResource(FHIRDefinedType type)
+        {
+            return ConformanceResources.Contains(type);
+        }
+
+
+
+        public static readonly FHIRDefinedType[] ConformanceResources = { FHIRDefinedType.Conformance, FHIRDefinedType.StructureDefinition, FHIRDefinedType.ValueSet,
+            FHIRDefinedType.ConceptMap, FHIRDefinedType.DataElement, FHIRDefinedType.OperationDefinition, FHIRDefinedType.SearchParameter, FHIRDefinedType.NamingSystem,
+             FHIRDefinedType.ImplementationGuide, FHIRDefinedType.TestScript };
 
         /// <summary>
         /// Is the given type a core Resource, Datatype or primitive
@@ -194,9 +259,8 @@ namespace Hl7.Fhir.Model
     {
         public static string GetCollectionName(this Type type)
         {
-            // if (typeof(Resource).IsAssignableFrom(type))
             if (type.CanBeTreatedAsType(typeof(Resource)))
-                return ModelInfo.GetResourceNameForType(type);
+                return ModelInfo.GetFhirTypeNameForType(type);
             else
                 throw new ArgumentException(String.Format(
                     "Cannot determine collection name, type {0} is not a resource type", type.Name));

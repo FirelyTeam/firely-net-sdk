@@ -53,8 +53,22 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var issue in Issue)
                 {
-                    if (!String.IsNullOrEmpty(issue.Diagnostics))
-                        text += " ------------- ";
+                    if (!String.IsNullOrEmpty(text))
+                        text += " ------------- ";  // Add divider after each issue
+
+                    if (issue.Severity != null)
+                    {
+                        text += issue.Severity.ToString() + ": ";
+                    }
+
+                    if (issue.Diagnostics != null)
+                    {
+                        text += issue.Diagnostics;
+                    }
+                    else
+                    {
+                        text += "No diagnostics";
+                    }
                 }
             }
 

@@ -77,16 +77,19 @@ namespace Hl7.Fhir.Serialization
             }
 
             ClassMapping mapping = _inspector.ImportType(instance.GetType());
+            var st = summary;
+            if (prop.IsMandatoryElement && st == Rest.SummaryType.Text && mapping.HasPrimitiveValueMember)
+                st = Rest.SummaryType.False;
 
             if (mode == ComplexTypeWriter.SerializationMode.AllMembers || mode == ComplexTypeWriter.SerializationMode.NonValueElements)
             {
                 var cplxWriter = new ComplexTypeWriter(_writer);
-                cplxWriter.Serialize(mapping, instance, summary, mode);
+                cplxWriter.Serialize(mapping, instance, st, mode);
             }
             else
             {
                 object value = mapping.PrimitiveValueProperty.GetValue(instance);
-                write(mapping.PrimitiveValueProperty, value, summary, ComplexTypeWriter.SerializationMode.AllMembers);
+                write(mapping.PrimitiveValueProperty, value, st, ComplexTypeWriter.SerializationMode.AllMembers);
             }
         }
     }
