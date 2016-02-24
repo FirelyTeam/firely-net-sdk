@@ -153,9 +153,13 @@ namespace Hl7.Fhir.Rest
                 // Body is an OperationOutcome
                 return new FhirOperationException(message + " OperationOutcome: " + outcome.ToString(), status, outcome);
             }
-            else
+            else if (body != null)
             {
                 return new FhirOperationException(message + " Body contains a " + body.TypeName, status);
+            }
+            else
+            {
+                return new FhirOperationException(message + " Body is null", status);
             }
         }
     }
