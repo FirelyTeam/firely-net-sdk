@@ -60,6 +60,25 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
+        // overload operator <
+        public static bool operator < (PartialDateTime a, PartialDateTime b)
+        {
+            return a.Value < b.Value;
+        }
+
+        // overload operator >
+        public static bool operator >(PartialDateTime a, PartialDateTime b)
+        {
+            return a.Value > b.Value;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is PartialDateTime)
+                return (obj as PartialDateTime).Value == Value;
+            return base.Equals(obj);
+        }
+
         public override string ToString()
         {
             var representation = XmlConvert.ToString(Value);

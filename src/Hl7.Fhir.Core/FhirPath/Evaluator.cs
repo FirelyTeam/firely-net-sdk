@@ -299,6 +299,11 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
+        public static Evaluator Today()
+        {
+            return Eval.TypedValue(PartialDateTime.Parse(DateTime.Today.ToFhirDate()));
+        }
+
         public static Evaluator Resolve()
         {
             return (f, c) => f.Resolve(c);

@@ -20,6 +20,7 @@ using Hl7.Fhir.Navigation;
 using Hl7.Fhir.FhirPath.Grammar;
 using Hl7.Fhir.FhirPath.InstanceTree;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -87,6 +88,22 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             Assert.IsTrue(PathExpression.Predicate(
                     @"Patient.**.where($focus.contains('222')).item(1) = $context.contained.address.line", tree));
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestExpressionTodayFunction()
+        {
+            // Check that date comes in
+            Assert.AreEqual(PartialDateTime.Parse(DateTime.Today.ToFhirDate()).ToString(), PathExpression.Evaluate("today()", tree).AsDateTime().ToString());
+
+            // Check greater than
+            Assert.IsTrue(PathExpression.Predicate("today() < " + DateTime.Today.AddDays(1).ToFhirDate(), tree));
+
+            // Check less than
+            Assert.IsTrue(PathExpression.Predicate("today() > " + DateTime.Today.AddDays(-1).ToFhirDate(), tree));
+
+            // Check ==
+            Assert.IsTrue(PathExpression.Predicate("today() = " + DateTime.Today.ToFhirDate(), tree));
         }
 
 
