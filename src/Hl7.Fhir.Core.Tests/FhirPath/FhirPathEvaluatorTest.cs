@@ -106,6 +106,21 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.IsTrue(PathExpression.Predicate("today() = " + DateTime.Today.ToFhirDate(), tree));
         }
 
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestExpressionSubstringFunction()
+        {
+            // Check that date comes in
+            Assert.IsTrue(PathExpression.Predicate("QuestionnaireResponse.group.group.where(linkId=\"Section - C\").question.where(linkId=\"C1\").answer.group.where(linkId = \"C1fields\").question.where(linkId = \"DateReturnToNormalDuties\").answer.valueDate.empty()", tree));
+
+            Assert.IsFalse(PathExpression.Predicate("QuestionnaireResponse.group.group.where(linkId=\"Section - C\").question.where(linkId=\"C1\").answer.group.where(linkId = \"C1fields\").question.where(linkId = \"DateReturnToNormalDuties\").answer.valueDate.empty().not()", tree));
+
+            // Assert.AreEqual("1973-05-31", PathExpression.Evaluate("Patient.contained.Patient.birthDate.substring(0,10)", tree).ToString());
+
+            // Assert.AreEqual(null, PathExpression.Evaluate("Patient.birthDate2", tree).ToString());
+
+            // Assert.AreEqual(null, PathExpression.Evaluate("Patient.birthDate2.substring(0,10)", tree).ToString());
+        }
+
 
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpression2()
