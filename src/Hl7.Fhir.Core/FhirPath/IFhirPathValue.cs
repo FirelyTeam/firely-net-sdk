@@ -73,7 +73,7 @@ namespace Hl7.Fhir.FhirPath
         {
             if (values != null)
             {
-                return values.Select(value => value is IFhirPathValue ? (IFhirPathValue)value : new TypedValue(value));
+                return values.Select(value => value == null ? null : value is IFhirPathValue ? (IFhirPathValue)value : new TypedValue(value));
             }
             else
                 return FhirValueList.Empty();
