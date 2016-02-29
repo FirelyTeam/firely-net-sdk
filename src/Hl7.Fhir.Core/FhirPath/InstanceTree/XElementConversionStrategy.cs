@@ -21,8 +21,20 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
             var newNodeName = docElement.Name.LocalName;       // ignore namespace, it's always FHIRNS
             bool hasValue = false;
 
-            var value = docElement.TryGetAttribute(XVALUE, out hasValue);
-
+#if NET40
+            string value = null;
+            if (docElement.HasAttributes)
+            {
+                var attr = docElement.Attribute(XVALUE);
+                if (attr != null)
+                {
+                    value = attr.Value;
+                    hasValue = true;
+                }
+            }
+#else
+            string value = docElement.TryGetAttribute(XVALUE, out hasValue);
+#endif
             FhirInstanceTree result = null;
 
             if (hasValue)

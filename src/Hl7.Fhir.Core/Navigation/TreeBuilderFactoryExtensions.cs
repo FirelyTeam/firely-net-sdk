@@ -68,7 +68,11 @@ namespace Hl7.Fhir.Navigation
 
                     // root.AddLastChild(prop.Name, (dynamic)prop.GetValue(obj));
                     var name = prop.Name;
+#if NET40
+                    var value = (dynamic)prop.GetValue(obj, null);
+#else
                     var value = (dynamic)prop.GetValue(obj);
+#endif
                     if (root.IsLeaf)
                     {
                         root.AddFirstChild(name, value);
@@ -84,7 +88,11 @@ namespace Hl7.Fhir.Navigation
                 else
                 {
                     // Internal node; emit node and recurse
+#if NET40
+                    var childObj = prop.GetValue(obj, null);
+#else
                     var childObj = prop.GetValue(obj);
+#endif
                     var childNode = root.AddLastChild(prop.Name);
                     AddChildrenFromObject(childNode, childObj, predicate);
                 }
