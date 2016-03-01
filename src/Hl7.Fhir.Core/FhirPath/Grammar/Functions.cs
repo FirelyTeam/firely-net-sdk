@@ -88,7 +88,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> Length = CreateFunctionParser("length", Eval.Length);
         public static readonly Parser<Evaluator> Distinct = CreateFunctionParser("distinct", Eval.Distinct);
         public static readonly Parser<Evaluator> Contains = CreateFunctionParser("contains", "substring", Eval.Contains);
-        public static readonly Parser<Evaluator> Matches = CreateFunctionParser("matches", "regexp", Eval.Contains);
+        public static readonly Parser<Evaluator> Matches = CreateFunctionParser("matches", "regexp", Eval.Matches);
         public static readonly Parser<Evaluator> Extension = CreateFunctionParser("extension", "url", Eval.Extension);
         public static readonly Parser<Evaluator> Substring = CreateFunctionParser("substring", "start", "length", Eval.Substring, numOptional:1);
         public static readonly Parser<Evaluator> Select = CreateFunctionParser("select", "mapper", Eval.Select);
