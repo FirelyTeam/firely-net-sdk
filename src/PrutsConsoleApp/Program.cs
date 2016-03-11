@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System;
 using System.Collections.Generic;
@@ -17,8 +18,23 @@ namespace PrutsConsoleApp
         static void Main(string[] args)
         {
             var prg = new Program();
-            prg.resourceFromFhirTurtleByMichael();
-            prg.resourceFromFhirTurtleByGrahame();
+            //prg.resourceFromFhirTurtleByMichael();
+            //prg.resourceFromFhirTurtleByGrahame();
+            //prg.inspectorTest();
+            prg.fhirTestWriteTurtle();
+        }
+
+        private void inspectorTest()
+        {
+            ModelInspector insp = new ModelInspector();
+            insp.Import(typeof(Resource).Assembly);
+
+            ClassMapping clsMap = insp.FindClassMappingForResource("Patient");
+
+            PropertyMapping prtMap = clsMap.FindMappedElementByName("name");
+
+            Console.WriteLine(prtMap.ElementType);
+            Console.ReadLine();
         }
 
         private void resourceFromFhirTurtleByMichael()
@@ -69,7 +85,7 @@ namespace PrutsConsoleApp
             Console.ReadLine();
         }
 
-        private void fhirTest()
+        private void fhirTestPatient()
         {
             var pat = new Patient();
             pat.Name.Add(HumanName.ForFamily("Kramer").WithGiven("Ewout"));
@@ -79,11 +95,15 @@ namespace PrutsConsoleApp
 
             Console.WriteLine("---- turtle ----");
             Console.WriteLine(FhirSerializer.SerializeToTurtle(pat));
+            Console.ReadLine();
+        }
 
+        private void fhirTestWriteTurtle()
+        {
             Console.WriteLine("---- read XML resource and write as turtle to file ----");
             var resource = FhirParser.ParseFromXml(System.IO.File.ReadAllText(@"C:\VisualStudio Projects\fhir-net-api\src\Hl7.Fhir.Core.Tests\TestData\observation-example-bloodpressure.xml"));
             var turtle = FhirSerializer.SerializeToTurtle(resource);
-            System.IO.File.WriteAllText(@"c:\temp\output.ttl", turtle);
+            System.IO.File.WriteAllText(@"c:\temp\output6.ttl", turtle);
 
             Console.ReadLine();
         }
