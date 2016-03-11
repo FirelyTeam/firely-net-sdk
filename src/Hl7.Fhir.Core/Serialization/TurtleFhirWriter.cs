@@ -37,7 +37,9 @@ namespace Hl7.Fhir.Serialization
         {
             StringBuilder resultBuilder = new StringBuilder();
             System.IO.StringWriter sw = new System.IO.StringWriter(resultBuilder);
-            CompressingTurtleWriter tw = new CompressingTurtleWriter();
+            // Use TurtleSyntax.W3C so that prefixes are used.
+            // TurtleSyntax.Original will expand the prefixes.
+            CompressingTurtleWriter tw = new CompressingTurtleWriter(VDS.RDF.Parsing.TurtleSyntax.W3C);
             tw.PrettyPrintMode = true;
             tw.Save(g, sw);
             return resultBuilder.ToString();
@@ -91,6 +93,7 @@ namespace Hl7.Fhir.Serialization
 
         public void WriteEndRootObject(bool contained)
         {
+            Console.WriteLine("DEBUG: WriteEndRootObject contained={0}", contained);
         }
 
         public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
@@ -102,7 +105,7 @@ namespace Hl7.Fhir.Serialization
 
             if (_coding_system)
             {
-                Console.WriteLine("DEBUG: coding_system_value");
+                //Console.WriteLine("DEBUG: coding_system_value");
                 _coding_system_value = valueAsString;
             }
             else if (_coding_code)
@@ -148,18 +151,18 @@ namespace Hl7.Fhir.Serialization
 
             if ("coding".Equals(name))
             {
-                Console.WriteLine("DEBUG: coding");
+                //Console.WriteLine("DEBUG: coding");
                 _coding = true;
             }
             if (_coding && "system".Equals(name))
             {
-                Console.WriteLine("DEBUG: coding_system");
+                //Console.WriteLine("DEBUG: coding_system");
                 _coding_system = true;
                 _coding_code = false;
             }
             if (_coding && "code".Equals(name))
             {
-                Console.WriteLine("DEBUG: coding_code");
+                //Console.WriteLine("DEBUG: coding_code");
                 _coding_system = false;
                 _coding_code = true;
             }
@@ -167,6 +170,7 @@ namespace Hl7.Fhir.Serialization
 
         public void WriteStartRootObject(string name, bool contained)
         {
+            Console.WriteLine("DEBUG: WriteStartRootObject {0} contained={1}", name, contained);
             _currentType = name;
             _currentSubj = g.CreateBlankNode();
             IUriNode pred = g.CreateUriNode("rdf:type");

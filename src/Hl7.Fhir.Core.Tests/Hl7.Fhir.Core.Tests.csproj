@@ -110,6 +110,7 @@
     <None Include="TestData\json-edge-cases.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="TestData\observation-example-bloodpressure+types.ttl" />
     <None Include="TestData\observation-example-bloodpressure.ttl" />
     <None Include="TestData\TestPatient.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -612,6 +612,7 @@
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
+    <Compile Include="Serialization\TurtleFhirReader.cs" />
     <Compile Include="Serialization\TurtleFhirWriter.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
     <Compile Include="Serialization\JsonDomFhirReader.cs" />

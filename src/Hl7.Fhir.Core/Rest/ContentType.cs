@@ -23,7 +23,8 @@ namespace Hl7.Fhir.Rest
     {
         Xml = 1,
         Json = 2,
-        Unknown = 3
+        Turtle = 3,
+        Unknown = 4
     }
 
     public static class ContentType
@@ -38,8 +39,13 @@ namespace Hl7.Fhir.Rest
             { XML_CONTENT_HEADER, "text/xml", "application/xml",
                 "application/fhir+xml", "text/xml+fhir" };
 
+        public const string TURTLE_CONTENT_HEADER = "application/turtle+fhir";   // The formal FHIR mime type (still to be registered).
+        public static readonly string[] TURTLE_CONTENT_HEADERS = new string[]
+            { TURTLE_CONTENT_HEADER, "text/turtle" };
+
         public const string FORMAT_PARAM_XML = "xml";
         public const string FORMAT_PARAM_JSON = "json";
+        public const string FORMAT_PARAM_TURTLE = "turtle";
 
 
         /// <summary>
@@ -57,6 +63,8 @@ namespace Hl7.Fhir.Rest
                 return ResourceFormat.Json;
             else if (f == FORMAT_PARAM_XML || XML_CONTENT_HEADERS.Contains(f))
                 return ResourceFormat.Xml;
+            else if (f == FORMAT_PARAM_TURTLE || TURTLE_CONTENT_HEADERS.Contains(f))
+                return ResourceFormat.Turtle;
             else
                 return ResourceFormat.Unknown;
         }
@@ -77,6 +85,8 @@ namespace Hl7.Fhir.Rest
                 return ResourceFormat.Json;
             else if (XML_CONTENT_HEADERS.Contains(f))
                 return ResourceFormat.Xml;
+            else if (TURTLE_CONTENT_HEADERS.Contains(f))
+                return ResourceFormat.Turtle;
             else
                 return ResourceFormat.Unknown;
         }
@@ -90,6 +100,8 @@ namespace Hl7.Fhir.Rest
                 contentType = JSON_CONTENT_HEADER;
             else if (format == ResourceFormat.Xml)
                 contentType = XML_CONTENT_HEADER;
+            else if (format == ResourceFormat.Turtle)
+                contentType = TURTLE_CONTENT_HEADER;
             else
                 throw new ArgumentException("Cannot determine content type for data format " + format);
 
@@ -103,6 +115,8 @@ namespace Hl7.Fhir.Rest
                 return FORMAT_PARAM_JSON;
             else if (format == ResourceFormat.Xml)
                 return FORMAT_PARAM_XML;
+            else if (format == ResourceFormat.Turtle)
+                return FORMAT_PARAM_TURTLE;
             else
                 throw new ArgumentException("Cannot determine content type for data format " + format);
         }
@@ -116,7 +130,7 @@ namespace Hl7.Fhir.Rest
         {
             var f = new System.Net.Mime.ContentType(contentType).MediaType.ToLowerInvariant();
 
-            return JSON_CONTENT_HEADERS.Contains(f) || XML_CONTENT_HEADERS.Contains(f);
+            return JSON_CONTENT_HEADERS.Contains(f) || XML_CONTENT_HEADERS.Contains(f) || TURTLE_CONTENT_HEADERS.Contains(f);
         }
 
 

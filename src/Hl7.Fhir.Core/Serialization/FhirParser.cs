@@ -38,6 +38,11 @@ namespace Hl7.Fhir.Serialization
             return data.TrimStart().StartsWith("{");
         }
 
+        public static bool ProbeIsTurtle(string data)
+        {
+            return data.TrimStart().StartsWith("@");
+        }
+
         /// <summary>
         /// Replace all the XML specific special characters with the XHTML equivalents
         /// </summary>
@@ -268,6 +273,11 @@ namespace Hl7.Fhir.Serialization
             return reader;
         }
 
+        public static StringReader TurtleReaderFromTurtle(string turtle)
+        {
+            return new StringReader(turtle);
+        }
+
         public static XmlReader XmlReaderFromXml(string xml)
         {
             return XmlReader.Create(new StringReader(SanitizeXml(xml)));
@@ -296,7 +306,12 @@ namespace Hl7.Fhir.Serialization
             return new JsonDomFhirReader(JsonReaderFromJson(json));
         }
 
-#endregion
+        public static IFhirReader FhirReaderFromTurtle(string turtle)
+        {
+            return new TurtleFhirReader(TurtleReaderFromTurtle(turtle));
+        }
+
+        #endregion
 
         internal static Base Parse(IFhirReader reader, Type dataType = null)
         {
@@ -325,6 +340,17 @@ namespace Hl7.Fhir.Serialization
         public static Base ParseFromJson(string json, Type dataType = null)
         {
             var reader = FhirReaderFromJson(json);
+            return Parse(reader, dataType);
+        }
+
+        public static Resource ParseResourceFromTurtle(string turtle)
+        {
+            return (Resource)ParseFromTurtle(turtle);
+        }
+
+        public static Base ParseFromTurtle(string turtle, Type dataType = null)
+        {
+            var reader = FhirReaderFromTurtle(turtle);
             return Parse(reader, dataType);
         }
 
