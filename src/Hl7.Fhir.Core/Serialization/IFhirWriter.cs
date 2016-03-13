@@ -21,7 +21,8 @@ namespace Hl7.Fhir.Serialization
         void WriteStartRootObject(string name, string id, bool contained);
         void WriteEndRootObject(bool contained);
 
-        void WriteStartProperty(string name);
+        //void WriteStartProperty(string name);
+        void WriteStartProperty(string name, string className);
         void WriteEndProperty();
 
         void WriteStartComplexContent();

@@ -19,8 +19,6 @@ namespace Hl7.Fhir.Serialization
         private IGraph _g;
         private INode _currentSubj;
         private Stack<INode> _subjStack = new Stack<INode>();
-        private IUriNode _currentPred;
-        private Stack<IUriNode> _predStack = new Stack<IUriNode>();
         private string _currentTypeName;
         private Stack<string> _typeStack = new Stack<string>();
         private string _currentMemberName;
@@ -91,7 +89,6 @@ namespace Hl7.Fhir.Serialization
             }
 
             //Console.WriteLine("DEBUG: WriteEndProperty");
-            _currentPred = _predStack.Pop();
             _currentTypeName = _typeStack.Pop();
             _currentMemberName = _memberStack.Pop();
         }
@@ -103,10 +100,10 @@ namespace Hl7.Fhir.Serialization
 
         public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
         {
-            IUriNode simplePred = _g.CreateUriNode(string.Format("fhir:{0}", _currentMemberName));
+            IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}", _currentMemberName));
             var valueAsString = PrimitiveTypeConverter.ConvertTo<string>(value);
             ILiteralNode obj = _g.CreateLiteralNode(valueAsString);
-            _g.Assert(_currentSubj, simplePred, obj);
+            _g.Assert(_currentSubj, pred, obj);
 
             if (_coding_system)
             {
@@ -119,15 +116,15 @@ namespace Hl7.Fhir.Serialization
                 {
                     case "http://snomed.info/sct":
                         //Console.WriteLine("DEBUG: sct:{0}", valueAsString);
-                        IUriNode pred = _g.CreateUriNode("rdf:type");
+                        IUriNode typePred = _g.CreateUriNode("rdf:type");
                         IUriNode code = _g.CreateUriNode(string.Format("sct:{0}", valueAsString));
-                        _g.Assert(_subjStack.Peek(), pred, code);
+                        _g.Assert(_subjStack.Peek(), typePred, code);
                         break;
                     case "http://loinc.org":
                         //Console.WriteLine("DEBUG: loinc:{0}", valueAsString);
-                         pred = _g.CreateUriNode("rdf:type");
-                         code = _g.CreateUriNode(string.Format("loinc:{0}", valueAsString));
-                        _g.Assert(_subjStack.Peek(), pred, code);
+                        typePred = _g.CreateUriNode("rdf:type");
+                        code = _g.CreateUriNode(string.Format("loinc:{0}", valueAsString));
+                        _g.Assert(_subjStack.Peek(), typePred, code);
                         break;
                 }
             }
@@ -164,16 +161,15 @@ namespace Hl7.Fhir.Serialization
             _arrayIndex = -1;
         }
 
-        public void WriteStartProperty(string memberName)
+        public void WriteStartProperty(string memberName, string className)
         {
+            _currentTypeName = className;
             Console.WriteLine("DEBUG: WriteStartProperty {0}.{1}", _currentTypeName, memberName);
-            IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}.{1}", _currentTypeName, memberName));
             _typeStack.Push(_currentTypeName);
             _memberStack.Push(_currentMemberName);
-            _predStack.Push(pred);
-            _currentPred = pred;
 
             // BEGIN Try and figure out typeName
+            // TODO: figure out type of instance; now we only have the types of the class
             ClassMapping clsMap = _inspector.FindClassMappingByType(_currentTypeName);
             if (clsMap != null)
             {

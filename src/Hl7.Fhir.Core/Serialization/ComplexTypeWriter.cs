@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Serialization
                     memberName = determineElementMemberName(prop.Name, GetSerializationTypeForDataTypeChoiceElements(prop, value));
                 }
 
-                _writer.WriteStartProperty(memberName);
+                _writer.WriteStartProperty(memberName, mapping.NativeType.Name);
                
                 var writer = new DispatchingWriter(_writer);
 
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Serialization
                     // else split up between two properties, name and _name
                     writer.Serialize(prop,value, summary, SerializationMode.ValueElement);
                     _writer.WriteEndProperty();
-                    _writer.WriteStartProperty("_" + memberName);
+                    _writer.WriteStartProperty("_" + memberName, NativeType.mapping.Name);
                     writer.Serialize(prop, value, summary, SerializationMode.NonValueElements);
                 }
 
