@@ -14,15 +14,19 @@ namespace Hl7.Fhir.Serialization
     {
         private readonly ModelInspector _inspector;
 
+        const string PRIMITIVE_TYPE = "primitive";
+
         private IGraph _g;
         private INode _currentSubj;
         private Stack<INode> _subjStack = new Stack<INode>();
         private IUriNode _currentPred;
         private Stack<IUriNode> _predStack = new Stack<IUriNode>();
-        private string _currentType;
+        private string _currentTypeName;
         private Stack<string> _typeStack = new Stack<string>();
-        private string _currentName;
-        private Stack<string> _nameStack = new Stack<string>();
+        private string _currentMemberName;
+        private Stack<string> _memberStack = new Stack<string>();
+        private int _arrayIndex = -1;
+        private Stack<int> _arrayIndexStack = new Stack<int>();
 
         private bool _coding = false;
         private bool _coding_system = false;
@@ -58,6 +62,7 @@ namespace Hl7.Fhir.Serialization
         public void WriteEndArray()
         {
             //Console.WriteLine("DEBUG: WriteEndArray");
+            _arrayIndex = _arrayIndexStack.Pop();
         }
 
         public void WriteEndComplexContent()
@@ -65,7 +70,7 @@ namespace Hl7.Fhir.Serialization
             //Console.WriteLine("DEBUG: WriteEndComplexContent");
             if (_typeStack.Count > 0)
             {
-                IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}.{1}", _typeStack.Peek(), _currentName));
+                IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}.{1}", _typeStack.Peek(), _currentMemberName));
                 _g.Assert(_subjStack.Peek(), pred, _currentSubj);
                 _currentSubj = _subjStack.Pop();
             }
@@ -73,27 +78,22 @@ namespace Hl7.Fhir.Serialization
             {
                 // top level complex content, ignore
             }
+            _arrayIndex = _arrayIndexStack.Pop();
         }
 
         public void WriteEndProperty()
         {
-            if ("coding".Equals(_currentName))
+            switch(_currentMemberName)
             {
-                _coding = false;
-            }
-            else if ("system".Equals(_currentName))
-            {
-                _coding_system = false;
-            }
-            else if ("code".Equals(_currentName))
-            {
-                _coding_code = false;
+                case "coding": _coding = false; break;
+                case "system": _coding_system = false; break;
+                case "code": _coding_code = false; break;
             }
 
             //Console.WriteLine("DEBUG: WriteEndProperty");
             _currentPred = _predStack.Pop();
-            _currentType = _typeStack.Pop();
-            _currentName = _nameStack.Pop();
+            _currentTypeName = _typeStack.Pop();
+            _currentMemberName = _memberStack.Pop();
         }
 
         public void WriteEndRootObject(bool contained)
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Serialization
 
         public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
         {
-            IUriNode simplePred = _g.CreateUriNode(string.Format("fhir:{0}", _currentName));
+            IUriNode simplePred = _g.CreateUriNode(string.Format("fhir:{0}", _currentMemberName));
             var valueAsString = PrimitiveTypeConverter.ConvertTo<string>(value);
             ILiteralNode obj = _g.CreateLiteralNode(valueAsString);
             _g.Assert(_currentSubj, simplePred, obj);
@@ -115,19 +115,20 @@ namespace Hl7.Fhir.Serialization
             }
             else if (_coding_code)
             {
-                if ("http://snomed.info/sct".Equals(_coding_system_value))
+                switch (_coding_system_value)
                 {
-                    //Console.WriteLine("DEBUG: sct:{0}", valueAsString);
-                    IUriNode pred = _g.CreateUriNode("rdf:type");
-                    IUriNode code = _g.CreateUriNode(string.Format("sct:{0}", valueAsString));
-                    _g.Assert(_subjStack.Peek(), pred, code);
-                }
-                else if ("http://loinc.org".Equals(_coding_system_value))
-                {
-                    //Console.WriteLine("DEBUG: loinc:{0}", valueAsString);
-                    IUriNode pred = _g.CreateUriNode("rdf:type");
-                    IUriNode code = _g.CreateUriNode(string.Format("loinc:{0}", valueAsString));
-                    _g.Assert(_subjStack.Peek(), pred, code);
+                    case "http://snomed.info/sct":
+                        //Console.WriteLine("DEBUG: sct:{0}", valueAsString);
+                        IUriNode pred = _g.CreateUriNode("rdf:type");
+                        IUriNode code = _g.CreateUriNode(string.Format("sct:{0}", valueAsString));
+                        _g.Assert(_subjStack.Peek(), pred, code);
+                        break;
+                    case "http://loinc.org":
+                        //Console.WriteLine("DEBUG: loinc:{0}", valueAsString);
+                         pred = _g.CreateUriNode("rdf:type");
+                         code = _g.CreateUriNode(string.Format("loinc:{0}", valueAsString));
+                        _g.Assert(_subjStack.Peek(), pred, code);
+                        break;
                 }
             }
         }
@@ -135,6 +136,8 @@ namespace Hl7.Fhir.Serialization
         public void WriteStartArray()
         {
             //Console.WriteLine("DEBUG: WriteStartArray");
+            _arrayIndexStack.Push(_arrayIndex);
+            _arrayIndex = 0;
         }
 
         private bool _first = true;
@@ -145,78 +148,85 @@ namespace Hl7.Fhir.Serialization
             {
                 _subjStack.Push(_currentSubj);
                 _currentSubj = _g.CreateBlankNode();
+                if(_arrayIndex >= 0)
+                {
+                    INode pred = _g.CreateUriNode("fhir:index");
+                    INode obj = _g.CreateLiteralNode(_arrayIndex.ToString());
+                    _g.Assert(_currentSubj, pred, obj);
+                    _arrayIndex++;
+                }
             }
             else
             {
                 _first = false;
             }
+            _arrayIndexStack.Push(_arrayIndex);
+            _arrayIndex = -1;
         }
 
-        public void WriteStartProperty(string name)
+        public void WriteStartProperty(string memberName)
         {
-            Console.WriteLine("DEBUG: WriteStartProperty {0}", name);
-            IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}.{1}", _currentType, name));
-            _typeStack.Push(_currentType);
-            _nameStack.Push(_currentName);
+            Console.WriteLine("DEBUG: WriteStartProperty {0}.{1}", _currentTypeName, memberName);
+            IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}.{1}", _currentTypeName, memberName));
+            _typeStack.Push(_currentTypeName);
+            _memberStack.Push(_currentMemberName);
             _predStack.Push(pred);
             _currentPred = pred;
 
             // BEGIN Try and figure out typeName
-            ClassMapping clsMap = _inspector.FindClassMappingForResource(_currentType);
-            if (clsMap == null)
-            {
-                // try datatype
-                clsMap = _inspector.FindClassMappingForFhirDataType(_currentType);
-            }
+            ClassMapping clsMap = _inspector.FindClassMappingByType(_currentTypeName);
             if (clsMap != null)
             {
-                PropertyMapping prtMap = clsMap.FindMappedElementByName(name);
+                PropertyMapping prtMap = clsMap.FindMappedElementByName(memberName);
                 if (prtMap != null)
                 {
-                    _currentType = prtMap.ElementType.Name;
-                    _currentName = name;
+                    _currentTypeName = prtMap.ElementType.Name;
+                    _currentMemberName = memberName;
                 }
                 else
                 {
-                    _currentType = name;
-                    _currentName = name;
+                    Console.WriteLine("DEBUG XXX primitive {0}", memberName);
+                    _currentTypeName = PRIMITIVE_TYPE;
+                    _currentMemberName = memberName;
                 }
-                Console.WriteLine("DEBUG: WriteStartProperty type={0}", _currentType);
             }
             else
             {
-                Console.WriteLine("DEBUG: WriteStartProperty _currentType=name: {0}", name);
-                _currentType = name;
-                _currentName = name;
+                Console.WriteLine("DEBUG primitive {0}", memberName);
+                _currentTypeName = PRIMITIVE_TYPE;
+                _currentMemberName = memberName;
             }
             // END Try and figure out typeName
 
-            if ("coding".Equals(name))
+            switch(memberName)
             {
-                //Console.WriteLine("DEBUG: coding");
-                _coding = true;
-            }
-            if (_coding && "system".Equals(name))
-            {
-                //Console.WriteLine("DEBUG: coding_system");
-                _coding_system = true;
-                _coding_code = false;
-            }
-            if (_coding && "code".Equals(name))
-            {
-                //Console.WriteLine("DEBUG: coding_code");
-                _coding_system = false;
-                _coding_code = true;
+                case "coding":
+                    _coding = true;
+                    break;
+                case "system":
+                    if (_coding)
+                    {
+                        _coding_system = true;
+                        _coding_code = false;
+                    }
+                    break;
+                case "code":
+                    if (_coding)
+                    {
+                        _coding_system = false;
+                        _coding_code = true;
+                    }
+                    break;
             }
         }
 
-        public void WriteStartRootObject(string name, bool contained)
+        public void WriteStartRootObject(string name, string id, bool contained)
         {
             Console.WriteLine("DEBUG: WriteStartRootObject {0} contained={1}", name, contained);
-            _currentType = name;
-            _currentSubj = _g.CreateBlankNode();
+            _currentTypeName = name;
+            _currentSubj = _g.CreateBlankNode(id);
             IUriNode pred = _g.CreateUriNode("rdf:type");
-            IUriNode obj = _g.CreateUriNode("fhir:" + _currentType);
+            IUriNode obj = _g.CreateUriNode("fhir:" + _currentTypeName);
             _g.Assert(_currentSubj, pred, obj);
         }
 

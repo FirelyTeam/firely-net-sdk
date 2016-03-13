@@ -2,11 +2,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VDS.RDF;
 using VDS.RDF.Parsing;
 using VDS.RDF.Writing;
@@ -44,7 +40,7 @@ namespace PrutsConsoleApp
             var resource = FhirParser.ParseResourceFromTurtle(turtle);
 
             var xml = FhirSerializer.SerializeToXml(resource);
-            System.IO.File.WriteAllText(@"c:\temp\output-michael.xml", xml);
+            File.WriteAllText(@"c:\temp\output-michael.xml", xml);
 
             Console.WriteLine("Done");
             Console.ReadLine();
@@ -57,7 +53,7 @@ namespace PrutsConsoleApp
             var resource = FhirParser.ParseResourceFromTurtle(turtle);
 
             var xml = FhirSerializer.SerializeToXml(resource);
-            System.IO.File.WriteAllText(@"c:\temp\output-grahame.xml", xml);
+            File.WriteAllText(@"c:\temp\output-grahame.xml", xml);
 
             Console.WriteLine("Done");
             Console.ReadLine();
@@ -103,7 +99,7 @@ namespace PrutsConsoleApp
             Console.WriteLine("---- read XML resource and write as turtle to file ----");
             var resource = FhirParser.ParseFromXml(System.IO.File.ReadAllText(@"C:\VisualStudio Projects\fhir-net-api\src\Hl7.Fhir.Core.Tests\TestData\observation-example-bloodpressure.xml"));
             var turtle = FhirSerializer.SerializeToTurtle(resource);
-            System.IO.File.WriteAllText(@"c:\temp\output6.ttl", turtle);
+            File.WriteAllText(@"c:\temp\output5.ttl", turtle);
 
             Console.ReadLine();
         }

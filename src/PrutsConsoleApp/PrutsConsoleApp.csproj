@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="obs-ex-bp-v2%28fhir-net-api%29.ttl" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

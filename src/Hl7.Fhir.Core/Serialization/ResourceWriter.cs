@@ -38,7 +38,9 @@ namespace Hl7.Fhir.Serialization
 
             var rootName = root ?? mapping.Name;
 
-            _writer.WriteStartRootObject(rootName,contained);
+            var pmid = mapping.PropertyMappings.SingleOrDefault(pm => "id" == pm.Name);
+            var id = pmid.GetValue(instance);
+            _writer.WriteStartRootObject(rootName,id.ToString(),contained);
 
             var complexSerializer = new ComplexTypeWriter(_writer);
             complexSerializer.Serialize(mapping, instance, summary);

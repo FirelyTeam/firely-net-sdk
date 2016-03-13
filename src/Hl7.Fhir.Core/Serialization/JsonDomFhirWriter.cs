@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Serialization
 
         private JObject _createdRootObject;
 
-        public void WriteStartRootObject(string name, bool contained)
+        public void WriteStartRootObject(string name, string id, bool contained)
         {
             _createdRootObject = new JObject(new JProperty(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME, name));
 

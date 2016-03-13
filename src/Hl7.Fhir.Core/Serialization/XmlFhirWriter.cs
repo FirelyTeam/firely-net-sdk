@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization
             xw = XmlWriter.Create(xwriter, settings);
         }
 
-        public void WriteStartRootObject(string name, bool contained = false)
+        public void WriteStartRootObject(string name, string id, bool contained = false)
         {
             if (contained)
                 WriteStartComplexContent();
