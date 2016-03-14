@@ -1,7 +1,7 @@
 properties {
   $productName = "Hl7.Fhir .Net Library" 
-  $productVersion = "0.90.6"             # Update this for a new release
-  $nugetPrelease = $null                 # Set this to something like "alpha", if desired
+  $productVersion = "0.90.5"             # Update this for a new release
+  $nugetPrelease = "alpha2"              # Set this to something like "alpha", if desired
 
   $ignoreTestFailure = $true             # Report build success, even though tests failed. Useful for alpha versions
 
@@ -20,7 +20,9 @@ properties {
 # Do NOT use humble Open Source numbering, e.g. "0.90.6", as this would put the 6 into the BUILD number, not into the Minor number.
 # Bump up Major, if the new library is not backward compatible to the old one. Bump up Minor, if it is FULLY backward compatible, but enhanced.
 # See the following for some explanations: http://blogs.msdn.com/b/jjameson/archive/2009/04/03/best-practices-for-net-assembly-versioning.aspx 
-  $assemblyVersion = "1.0"               # Update this according to the assembly version scheme, with Major.Minor. DO NOT INCLUDE BUILD OR REVISION here! 
+#  $assemblyVersion = "1.0"               # Update this according to the assembly version scheme, with Major.Minor. DO NOT INCLUDE BUILD OR REVISION here! 
+
+  $assemblyVersion = "0.90.5.0"           # This is a violation of the assembly version scheme, but the Fhir .Net library wants to go with this for all 0.x releases.
 
   $nugetPkgs = @(                        # Update this for new DSTU version
     @{CsProj="Hl7.Fhir.Core"; AssemblyPattern="Hl7.Fhir.*.Core"; PkgId="Hl7.Fhir.DSTU21"},
@@ -40,9 +42,13 @@ properties {
     $nugetVersion = $nugetVersion + "-" + $nugetPrelease
   }
 
-  $assemblyFileVersion = GetAssemblyFileVersion $assemblyVersion
-  $assemblyVersion = $assemblyVersion + ".0.0"
-  $assemblyInfoVersion = $productName + " " + $productVersion
+# The following two have been commented out to enable Fhir .Net 0.x release assembly version scheme.
+#  $assemblyFileVersion = GetAssemblyFileVersion $assemblyVersion
+#  $assemblyVersion = $assemblyVersion + ".0.0"
+
+  $assemblyFileVersion = $assemblyVersion
+
+  $assemblyInfoVersion = $productName + " " + $nugetVersion
 
   $signAssemblies = $true
   $signKeyPath = "$sourceDir\FhirNetApi.snk"   # This key has to be placed by the build server, e.g. as described here: https://www.appveyor.com/docs/how-to/secure-files
