@@ -7,14 +7,10 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using System.Reflection;
 
 namespace Hl7.Fhir.Serialization
 {

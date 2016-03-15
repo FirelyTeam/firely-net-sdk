@@ -285,14 +285,16 @@ namespace Hl7.Fhir.Support
 		{
 			return t.GetTypeInfo().IsDefined(attributeType, inherit);
 		}
+#endif
 
-		internal static bool IsAssignableFrom(this Type t, Type otherType)
+#if PORTABLE45 && !DOTNET
+        internal static bool IsAssignableFrom(this Type t, Type otherType)
 		{
 			return t.GetTypeInfo().IsAssignableFrom(otherType.GetTypeInfo());
 		}
 #endif
 
-		internal static bool IsEnum(this Type t)
+        internal static bool IsEnum(this Type t)
 		{
 #if PORTABLE45
 			return t.GetTypeInfo().IsEnum;

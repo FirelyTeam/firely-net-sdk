@@ -14,7 +14,6 @@ using System.Text;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json.Linq;
 using System.Globalization;
 
 namespace Hl7.Fhir.Tests.Serialization
@@ -23,7 +22,7 @@ namespace Hl7.Fhir.Tests.Serialization
 #if PORTABLE45
 	public class PortableSerializationTests
 #else
-	public class SerializationTests
+    public class SerializationTests
 #endif
     {
         private const string metaXml = "<meta xmlns=\"http://hl7.org/fhir\"><versionId value=\"3141\" /><lastUpdated value=\"2014-12-24T16:30:56.031+01:00\" /></meta>";
