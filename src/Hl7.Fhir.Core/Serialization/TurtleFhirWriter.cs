@@ -28,6 +28,7 @@ namespace Hl7.Fhir.Serialization
         private bool _coding_system = false;
         private string _coding_system_value;
         private bool _coding_code = false;
+        private bool _emitType = false;
 
         public TurtleFhirWriter()
         {
@@ -66,7 +67,7 @@ namespace Hl7.Fhir.Serialization
             //Console.WriteLine("DEBUG: WriteEndComplexContent");
             if (_typeStack.Count > 0)
             {
-                IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}.{1}", _typeStack.Peek(), _currentMemberName));
+                IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}.{1}", _typeStack.Peek(), _memberStack.Peek()));
                 _g.Assert(_subjStack.Peek(), pred, _currentSubj);
                 _currentSubj = _subjStack.Pop();
             }
@@ -79,16 +80,16 @@ namespace Hl7.Fhir.Serialization
 
         public void WriteEndProperty()
         {
-            switch(_currentMemberName)
+            //Console.WriteLine("DEBUG: WriteEndProperty");
+            _currentTypeName = _typeStack.Pop();
+            _currentMemberName = _memberStack.Pop();
+            switch (_currentMemberName)
             {
                 case "coding": _coding = false; break;
                 case "system": _coding_system = false; break;
                 case "code": _coding_code = false; break;
             }
-
-            //Console.WriteLine("DEBUG: WriteEndProperty");
-            _currentTypeName = _typeStack.Pop();
-            _currentMemberName = _memberStack.Pop();
+            _emitType = false;
         }
 
         public void WriteEndRootObject(bool contained)
@@ -96,10 +97,23 @@ namespace Hl7.Fhir.Serialization
             Console.WriteLine("DEBUG: WriteEndRootObject contained={0}", contained);
         }
 
+        private static string lowerCamel(string p)
+        {
+            if (p == null) return p;
+
+            var c = p[0];
+
+            return Char.ToLowerInvariant(c) + p.Remove(0, 1);
+        }
+
         public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
         {
-            //IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}", _currentMemberName));
-            IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}.{1}", _currentTypeName, _currentMemberName));
+            if (_emitType)
+            {
+                IUriNode obj = _g.CreateUriNode("fhir:" + _currentTypeName);
+                _g.Assert(_currentSubj, _g.CreateUriNode("rdf:type"), obj);
+            }
+            IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}", _currentMemberName));
             var valueAsString = PrimitiveTypeConverter.ConvertTo<string>(value);
             if ("FhirUri" == _currentTypeName)
             {
@@ -123,15 +137,13 @@ namespace Hl7.Fhir.Serialization
                 {
                     case "http://snomed.info/sct":
                         //Console.WriteLine("DEBUG: sct:{0}", valueAsString);
-                        IUriNode typePred = _g.CreateUriNode("rdf:type");
                         IUriNode code = _g.CreateUriNode(string.Format("sct:{0}", valueAsString));
-                        _g.Assert(_subjStack.Peek(), typePred, code);
+                        _g.Assert(_subjStack.Peek(), _g.CreateUriNode("rdf:type"), code);
                         break;
                     case "http://loinc.org":
                         //Console.WriteLine("DEBUG: loinc:{0}", valueAsString);
-                        typePred = _g.CreateUriNode("rdf:type");
                         code = _g.CreateUriNode(string.Format("loinc:{0}", valueAsString));
-                        _g.Assert(_subjStack.Peek(), typePred, code);
+                        _g.Assert(_subjStack.Peek(), _g.CreateUriNode("rdf:type"), code);
                         break;
                 }
             }
@@ -150,6 +162,11 @@ namespace Hl7.Fhir.Serialization
             //Console.WriteLine("DEBUG: WriteStartComplexContent");
             if (!_first)
             {
+                if (_emitType)
+                {
+                    IUriNode obj = _g.CreateUriNode("fhir:" + _currentTypeName);
+                    _g.Assert(_currentSubj, _g.CreateUriNode("rdf:type"), obj);
+                }
                 _subjStack.Push(_currentSubj);
                 _currentSubj = _g.CreateBlankNode();
                 if(_arrayIndex >= 0)
@@ -168,31 +185,19 @@ namespace Hl7.Fhir.Serialization
             _arrayIndex = -1;
         }
 
-        public void WriteStartProperty(string memberName, string className)
+        public void WriteStartProperty(PropertyMapping propMap, string memberName)
         {
-            _currentTypeName = className;
-            Console.WriteLine("DEBUG: WriteStartProperty {0}.{1}", _currentTypeName, memberName);
+            _currentTypeName = propMap.DefiningType.Name;
+            _currentMemberName = propMap.Name;
+            Console.WriteLine("DEBUG: WriteStartProperty {0}.{1}", _currentTypeName, _currentMemberName);
+            if (propMap.Choice != ChoiceType.None)
+            {
+                _emitType = true;
+            }
             _typeStack.Push(_currentTypeName);
             _memberStack.Push(_currentMemberName);
 
-            // BEGIN Try and figure out typeName
-            // TODO: figure out type of instance; now we only have the types of the class
-            ClassMapping clsMap = _inspector.FindClassMappingByType(_currentTypeName);
-            if (clsMap != null)
-            {
-                PropertyMapping prtMap = clsMap.FindMappedElementByName(memberName);
-                if (prtMap == null) throw Support.Error.ArgumentNull("prtMap");
-                _currentTypeName = prtMap.ElementType.Name;
-                _currentMemberName = memberName;
-            }
-            else
-            {
-                //_currentTypeName = PRIMITIVE_TYPE;
-                _currentMemberName = memberName;
-            }
-            // END Try and figure out typeName
-
-            switch(memberName)
+            switch(_currentMemberName)
             {
                 case "coding":
                     _coding = true;

@@ -22,13 +22,13 @@ namespace Hl7.Fhir.Serialization
         void WriteEndRootObject(bool contained);
 
         //void WriteStartProperty(string name);
-        void WriteStartProperty(string name, string className);
+        void WriteStartProperty(PropertyMapping propMap, string name);
         void WriteEndProperty();
 
         void WriteStartComplexContent();
         void WriteEndComplexContent();
 
-        void WritePrimitiveContents(object value,XmlSerializationHint xmlFormatHint);
+        void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint);
 
         void WriteStartArray();
         //void WriteStartArrayElement(string name);

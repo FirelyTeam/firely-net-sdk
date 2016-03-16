@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Serialization
 
             var rootName = root ?? mapping.Name;
 
-            var pmid = mapping.PropertyMappings.SingleOrDefault(pm => "id" == pm.Name);
+            var pmid = mapping.FindMappedElementByName("id");
             var id = pmid.GetValue(instance);
             _writer.WriteStartRootObject(rootName,id.ToString(),contained);
 

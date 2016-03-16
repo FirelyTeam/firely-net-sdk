@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Serialization
 
 
 
-        public void WriteStartProperty(string name, string className)
+        public void WriteStartProperty(PropertyMapping propMap, string name)
         {
             var prop = new JProperty(name, null);
             ((JObject)_current).Add(prop);

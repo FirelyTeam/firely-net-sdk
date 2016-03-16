@@ -99,7 +99,7 @@ namespace PrutsConsoleApp
             Console.WriteLine("---- read XML resource and write as turtle to file ----");
             var resource = FhirParser.ParseFromXml(System.IO.File.ReadAllText(@"C:\VisualStudio Projects\fhir-net-api\src\Hl7.Fhir.Core.Tests\TestData\observation-example-bloodpressure.xml"));
             var turtle = FhirSerializer.SerializeToTurtle(resource);
-            File.WriteAllText(@"c:\temp\output7.ttl", turtle);
+            File.WriteAllText(@"c:\temp\output2.ttl", turtle);
 
             Console.ReadLine();
         }

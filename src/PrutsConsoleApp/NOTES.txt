@@ -1,0 +1,12 @@
+﻿
+
+
+PropertyMapping added getting of DefiningType e.g. for Resource.id
+Determining memberName is different in XML/JSON and Turtle.
+
+issues
+- datatypes: FhirDateTime
+- ComponentComponent?
+- when cardinality > 1
+- composed attributes like AllergyIntolerance.reaction.subject
+
