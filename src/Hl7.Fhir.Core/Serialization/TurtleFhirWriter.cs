@@ -14,8 +14,6 @@ namespace Hl7.Fhir.Serialization
     {
         private readonly ModelInspector _inspector;
 
-        const string PRIMITIVE_TYPE = "primitive";
-
         private IGraph _g;
         private INode _currentSubj;
         private Stack<INode> _subjStack = new Stack<INode>();
@@ -38,7 +36,7 @@ namespace Hl7.Fhir.Serialization
             _g = new Graph();
             _g.NamespaceMap.AddNamespace("fhir", UriFactory.Create("http://hl7.org/fhir/"));
             _g.NamespaceMap.AddNamespace("sct", UriFactory.Create("http://snomed.info/sct/"));
-            _g.NamespaceMap.AddNamespace("loinc", UriFactory.Create("http://loinc.org/"));
+            _g.NamespaceMap.AddNamespace("loinc", UriFactory.Create("http://loinc.org/owl#"));
         }
 
         public string turtleAsString()
@@ -100,10 +98,19 @@ namespace Hl7.Fhir.Serialization
 
         public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
         {
-            IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}", _currentMemberName));
+            //IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}", _currentMemberName));
+            IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}.{1}", _currentTypeName, _currentMemberName));
             var valueAsString = PrimitiveTypeConverter.ConvertTo<string>(value);
-            ILiteralNode obj = _g.CreateLiteralNode(valueAsString);
-            _g.Assert(_currentSubj, pred, obj);
+            if ("FhirUri" == _currentTypeName)
+            {
+                IUriNode obj = _g.CreateUriNode(new Uri(valueAsString));
+                _g.Assert(_currentSubj, pred, obj);
+            }
+            else
+            { 
+                ILiteralNode obj = _g.CreateLiteralNode(valueAsString);
+                _g.Assert(_currentSubj, pred, obj);
+            }
 
             if (_coding_system)
             {
@@ -174,22 +181,13 @@ namespace Hl7.Fhir.Serialization
             if (clsMap != null)
             {
                 PropertyMapping prtMap = clsMap.FindMappedElementByName(memberName);
-                if (prtMap != null)
-                {
-                    _currentTypeName = prtMap.ElementType.Name;
-                    _currentMemberName = memberName;
-                }
-                else
-                {
-                    Console.WriteLine("DEBUG XXX primitive {0}", memberName);
-                    _currentTypeName = PRIMITIVE_TYPE;
-                    _currentMemberName = memberName;
-                }
+                if (prtMap == null) throw Support.Error.ArgumentNull("prtMap");
+                _currentTypeName = prtMap.ElementType.Name;
+                _currentMemberName = memberName;
             }
             else
             {
-                Console.WriteLine("DEBUG primitive {0}", memberName);
-                _currentTypeName = PRIMITIVE_TYPE;
+                //_currentTypeName = PRIMITIVE_TYPE;
                 _currentMemberName = memberName;
             }
             // END Try and figure out typeName

@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Serialization
                     // else split up between two properties, name and _name
                     writer.Serialize(prop,value, summary, SerializationMode.ValueElement);
                     _writer.WriteEndProperty();
-                    _writer.WriteStartProperty("_" + memberName, NativeType.mapping.Name);
+                    _writer.WriteStartProperty("_" + memberName, mapping.NativeType.Name);
                     writer.Serialize(prop, value, summary, SerializationMode.NonValueElements);
                 }
 
