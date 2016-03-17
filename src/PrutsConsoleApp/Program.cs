@@ -17,8 +17,8 @@ namespace PrutsConsoleApp
             //prg.resourceFromFhirTurtleByMichael();
             //prg.resourceFromFhirTurtleByGrahame();
             //prg.inspectorTest();
-            //prg.fhirTestWriteTurtle();
-            prg.resourceFromFhirTurtleTest();
+            prg.fhirTestWriteTurtle();
+            //prg.resourceFromFhirTurtleTest();
         }
 
         private void inspectorTest()

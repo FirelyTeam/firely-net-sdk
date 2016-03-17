@@ -18,6 +18,8 @@ issues
 - composed attributes like AllergyIntolerance.reaction.subject
 
 
+TODO:
+- Move Program.cs to Hl7.Fhir.Core.Tests and use relative and Tempfolder paths!
 
 -------------
 - removed: ElementDefinition / BindingComponent
