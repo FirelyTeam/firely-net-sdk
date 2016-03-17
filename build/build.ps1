@@ -25,8 +25,8 @@ properties {
   $assemblyVersion = "0.90.5.0"           # This is a violation of the assembly version scheme, but the Fhir .Net library wants to go with this for all 0.x releases.
 
   $nugetPkgs = @(                        # Update this for new DSTU version
-    @{CsProj="Hl7.Fhir.Core"; AssemblyPattern="Hl7.Fhir.*.Core"; PkgId="Hl7.Fhir.DSTU21"},
-    @{CsProj="Hl7.Fhir.Specification"; AssemblyPattern="Hl7.Fhir.*.Specification"; PkgId="Hl7.Fhir.Specification.DSTU21"}
+    @{CsProj="Hl7.Fhir.Core"; AssemblyPattern="Hl7.Fhir.*.Core"; PkgId="Hl7.Fhir.DSTU2"},
+    @{CsProj="Hl7.Fhir.Specification"; AssemblyPattern="Hl7.Fhir.*.Specification"; PkgId="Hl7.Fhir.Specification.DSTU2"}
    )
 
   $zipFileName = "FhirNetApi.zip"
@@ -65,7 +65,6 @@ properties {
     @{BinDir="Portable45"; LibDir="wpa81"},
     @{BinDir="Portable45"; LibDir="win81"},
     @{BinDir="Portable45"; LibDir="portable-win81+wpa81"},
-#    @{BinDir="Net45"; LibDir="uap"},
     @{BinDir="Portable45"; LibDir="MonoAndroid"},
     @{BinDir="Portable45"; LibDir="Xamarin.iOS10"},
     @{BinDir="Portable45"; LibDir="Xamarin.Mac20"},
@@ -577,7 +576,7 @@ function Update-NuspecFile ([string] $nuspecPath, [string] $packageId, [string] 
       {
         $dependencyId = $depNode.id;
         Write-Verbose $dependencyId
-        if ($dependencyId -eq "Hl7.Fhir.DSTU21")   # TODO: Do not hard-code this?
+        if ($dependencyId -eq "Hl7.Fhir.DSTU2")   # TODO: Do not hard-code this?
         {
           Write-Host "Replacing dependency version for '$dependencyId' with $nugetVersion"          
           $depNode.version = $nugetVersion
@@ -649,7 +648,6 @@ function Copy-Robot {
     $xfParams += $excludeFiles
   }
 
-  # TODO: Handle output codes and console output.
   & "robocopy" $robocommand $sourcePath $destPath $includeFiles $defaultParams $params $xdParams $xfParams | Out-Null
 
   if (($LASTEXITCODE -ge 0) -and ($LASTEXITCODE -le 3))
