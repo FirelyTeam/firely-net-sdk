@@ -36,9 +36,9 @@ namespace Hl7.Fhir.Serialization
         internal object Deserialize(Type nativeType)
         {
             if (nativeType == null) throw Error.ArgumentNull("nativeType");
-                 
+
             object primitiveValue = _current.GetPrimitiveValue();
-            
+
             if (nativeType.IsEnum() && primitiveValue.GetType() == typeof(string))
             {
                 var enumMapping = _inspector.FindEnumMappingByType(nativeType);
@@ -49,7 +49,18 @@ namespace Hl7.Fhir.Serialization
                     if (enumMapping.ContainsLiteral(enumLiteral))
                         return enumMapping.ParseLiteral((string)primitiveValue);
                     else
-                        throw Error.Format("Literal {0} is not a valid value for enumeration {1}", _current, enumLiteral, enumMapping.Name);
+                    {
+                        // Silently ignore unknown literals if AcceptUnknownMembers is configured (DSTU version mismatches?)
+                        if (SerializationConfig.AcceptUnknownMembers)
+                        {
+                            Message.Info("Skipping unknown enum member " + enumLiteral);
+                            return null;
+                        }
+                        else
+                        {
+                            throw Error.Format("Literal {0} is not a valid value for enumeration {1}", _current, enumLiteral, enumMapping.Name);
+                        }
+                    }
                 }
                 else
                     throw Error.Format("Cannot find an enumeration mapping for enum " + nativeType.Name, _current);
