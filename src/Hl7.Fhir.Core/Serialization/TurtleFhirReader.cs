@@ -66,20 +66,25 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("Cannot parse turtle: " + e.Message, null);
             }
 
+            //
+            // Find the tripple with predicate rdf:type that has a subject that is never used as object == root!
+            //
             IUriNode typePred = _g.CreateUriNode("rdf:type");
-            _currentSubj = _g.Triples.First().Subject;
-            foreach (Triple t in _g.GetTriplesWithSubject(_currentSubj))
+            foreach (Triple t in _g.GetTriplesWithPredicate(typePred))
             {
-                if (typePred.Equals(t.Predicate))
+                if (_g.GetTriplesWithObject(t.Subject).Count() == 0)
                 {
                     //Console.WriteLine("DEBUG type={0}", t.Object);
                     string uri = t.Object.ToString();
                     if (uri.StartsWith(FHIR_PREFIX))
                     {
+                        _currentSubj = t.Subject;
                         _typeName = uri.Substring(uri.LastIndexOf('/') + 1);
+                        return;
                     }
                 }
             }
+            throw Error.Format("Unable to determin resourcetype from turtle", null);
         }
 
         public int LineNumber
@@ -109,7 +114,21 @@ namespace Hl7.Fhir.Serialization
                 {
                     string typePlusMemberName = pred.Substring(pred.LastIndexOf('/') + 1);
                     string memberName = typePlusMemberName.Substring(typePlusMemberName.IndexOf('.') + 1);
-                    members.Add(new Tuple<string, IFhirReader>(memberName, new TurtleFhirReader(_g, t.Object, t.Predicate)));
+                    if ("index" != memberName)
+                    {
+                        // Is rdf:type specified? then append to memberName for now
+                        IUriNode typePred = _g.CreateUriNode("rdf:type");
+                        Triple typeTriple = _g.GetTriplesWithSubject(t.Object).SingleOrDefault<Triple>(tr => typePred.Equals(tr.Predicate));
+                        if (typeTriple != null)
+                        {
+                            string uri = typeTriple.Object.ToString();
+                            if (uri.StartsWith(FHIR_PREFIX))
+                            {
+                                memberName += uri.Substring(uri.LastIndexOf('/') + 1);
+                            }
+                        }
+                        members.Add(new Tuple<string, IFhirReader>(memberName, new TurtleFhirReader(_g, t.Object, t.Predicate)));
+                    }
                 }
             }
             return members.AsEnumerable<Tuple<string, IFhirReader>>();

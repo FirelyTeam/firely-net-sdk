@@ -17,7 +17,8 @@ namespace PrutsConsoleApp
             //prg.resourceFromFhirTurtleByMichael();
             //prg.resourceFromFhirTurtleByGrahame();
             //prg.inspectorTest();
-            prg.fhirTestWriteTurtle();
+            //prg.fhirTestWriteTurtle();
+            prg.resourceFromFhirTurtleTest();
         }
 
         private void inspectorTest()
@@ -30,6 +31,20 @@ namespace PrutsConsoleApp
             PropertyMapping prtMap = clsMap.FindMappedElementByName("name");
 
             Console.WriteLine(prtMap.ElementType);
+            Console.WriteLine("Done");
+            Console.ReadLine();
+        }
+
+        private void resourceFromFhirTurtleTest()
+        {
+            SerializationConfig.AcceptUnknownMembers = false;
+            string turtle = File.ReadAllText(@"C:\Users\zelm\AppData\Local\Temp\FHIRRoundTripTest\FromXml\intermediate1\address.profile.ttl");
+            var resource = FhirParser.ParseResourceFromTurtle(turtle);
+
+            var xml = FhirSerializer.SerializeToXml(resource);
+            File.WriteAllText(@"c:\temp\output-michael.xml", xml);
+
+            Console.WriteLine("Done");
             Console.ReadLine();
         }
 
@@ -78,6 +93,7 @@ namespace PrutsConsoleApp
                     Console.WriteLine(t.ToString());
                 }
             }
+            Console.WriteLine("Done");
             Console.ReadLine();
         }
 
@@ -91,6 +107,7 @@ namespace PrutsConsoleApp
 
             Console.WriteLine("---- turtle ----");
             Console.WriteLine(FhirSerializer.SerializeToTurtle(pat));
+            Console.WriteLine("Done");
             Console.ReadLine();
         }
 
@@ -101,6 +118,7 @@ namespace PrutsConsoleApp
             var turtle = FhirSerializer.SerializeToTurtle(resource);
             File.WriteAllText(@"c:\temp\output2.ttl", turtle);
 
+            Console.WriteLine("Done");
             Console.ReadLine();
         }
 

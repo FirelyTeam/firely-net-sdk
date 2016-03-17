@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Serialization
 
         public void WriteEndRootObject(bool contained)
         {
-            Console.WriteLine("DEBUG: WriteEndRootObject contained={0}", contained);
+            //Console.WriteLine("DEBUG: WriteEndRootObject contained={0}", contained);
         }
 
         private static string lowerCamel(string p)
@@ -117,7 +117,17 @@ namespace Hl7.Fhir.Serialization
             var valueAsString = PrimitiveTypeConverter.ConvertTo<string>(value);
             if ("FhirUri" == _currentTypeName)
             {
-                IUriNode obj = _g.CreateUriNode(new Uri(valueAsString));
+                INode obj;
+                Uri valueAsUri = null;
+                if (Uri.TryCreate(valueAsString, UriKind.Absolute, out valueAsUri))
+                {
+                    obj = _g.CreateUriNode(valueAsUri);
+                }
+                else
+                {
+                    Console.WriteLine("DEBUG uri is relative fall back to literal: {0}", valueAsString);
+                    obj = _g.CreateLiteralNode(valueAsString);
+                }
                 _g.Assert(_currentSubj, pred, obj);
             }
             else
@@ -189,7 +199,7 @@ namespace Hl7.Fhir.Serialization
         {
             _currentTypeName = propMap.DefiningType.Name;
             _currentMemberName = propMap.Name;
-            Console.WriteLine("DEBUG: WriteStartProperty {0}.{1}", _currentTypeName, _currentMemberName);
+            //Console.WriteLine("DEBUG: WriteStartProperty {0}.{1}", _currentTypeName, _currentMemberName);
             if (propMap.Choice != ChoiceType.None)
             {
                 _emitType = true;
@@ -221,9 +231,12 @@ namespace Hl7.Fhir.Serialization
 
         public void WriteStartRootObject(string name, string id, bool contained)
         {
-            Console.WriteLine("DEBUG: WriteStartRootObject {0} contained={1}", name, contained);
+            //Console.WriteLine("DEBUG: WriteStartRootObject {0} contained={1}", name, contained);
             _currentTypeName = name;
-            _currentSubj = _g.CreateBlankNode(id);
+            if (id != null)
+                _currentSubj = _g.CreateBlankNode(id);
+            else
+                _currentSubj = _g.CreateBlankNode();
             IUriNode pred = _g.CreateUriNode("rdf:type");
             IUriNode obj = _g.CreateUriNode("fhir:" + _currentTypeName);
             _g.Assert(_currentSubj, pred, obj);

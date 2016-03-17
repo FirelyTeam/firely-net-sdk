@@ -39,8 +39,10 @@ namespace Hl7.Fhir.Serialization
             var rootName = root ?? mapping.Name;
 
             var pmid = mapping.FindMappedElementByName("id");
-            var id = pmid.GetValue(instance);
-            _writer.WriteStartRootObject(rootName,id.ToString(),contained);
+            var id = (Id)pmid.GetValue(instance);
+            // ??resource Parameter has no id?? so check for null
+            var idvalue = id != null ? id.Value : null;
+            _writer.WriteStartRootObject(rootName, idvalue, contained);
 
             var complexSerializer = new ComplexTypeWriter(_writer);
             complexSerializer.Serialize(mapping, instance, summary);

@@ -1,12 +1,28 @@
 ﻿
+PropertyMapping.cs
+- added getting of DefiningType e.g. for Resource.id
 
+RoundtripTest.cs
+- Added xml->turtle->xml to 
 
-PropertyMapping added getting of DefiningType e.g. for Resource.id
-Determining memberName is different in XML/JSON and Turtle.
+TurtleFhirParser
+- Determine resourceType rule is: find triple with predicate rdf:type and a subject that is never the object.
+
 
 issues
+- N.B. Determining memberName is different in XML/JSON and Turtle.
+-- XML and JSON have typeinfo appended, where in Turtle "rdf:type" is used.
 - datatypes: FhirDateTime
 - ComponentComponent?
 - when cardinality > 1
 - composed attributes like AllergyIntolerance.reaction.subject
 
+
+
+-------------
+- removed: ElementDefinition / BindingComponent
+Renamed
+- ResourceReference -> Reference
+- FhirString -> String
+- FhirDecimal -> Decimal
+- FhirDateTime -> DateTime

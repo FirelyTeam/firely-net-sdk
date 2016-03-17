@@ -65,6 +65,11 @@ namespace Hl7.Fhir.Serialization
             return jsonWriterToBytes(jw => Serialize(instance, new JsonDomFhirWriter(jw), summary, root));
         }
 
+        // Only used in RoundtripTest
+        public static string SerializeResourceToTurtle(Resource resource)
+        {
+            return SerializeToTurtle(resource);
+        }
 
         public static string SerializeToTurtle(Base instance, bool summary = false, string root = null)
         {
