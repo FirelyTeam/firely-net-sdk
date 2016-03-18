@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fhir\EvaluationContext.cs" />
+    <Compile Include="Fhir\BaseEvaluationContext.cs" />
+    <Compile Include="Fhir\FhirEvaluationContext.cs" />
     <Compile Include="Fhir\ChildNode.cs" />
     <Compile Include="FluentPath\Evaluator.cs" />
     <Compile Include="FluentPath\Grammar\Expression.cs" />
@@ -95,7 +96,9 @@
     <Compile Include="Support\IValueProvider.cs" />
     <Compile Include="Support\IValueProviderExtensions.cs" />
     <Compile Include="Support\Logging.cs" />
+    <Compile Include="Support\PrimitiveTypeConverter.cs" />
     <Compile Include="Support\ReflectionHelper.cs" />
+    <Compile Include="Support\SerializationUtil.cs" />
     <Compile Include="Support\StringExtensions.cs" />
     <Compile Include="Support\XmlNs.cs" />
     <Compile Include="Support\XObjectExtensions.cs" />

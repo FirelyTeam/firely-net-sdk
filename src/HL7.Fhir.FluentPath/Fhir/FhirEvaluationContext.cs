@@ -8,9 +8,6 @@
 
 
 using Hl7.Fhir.FluentPath.InstanceTree;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -18,21 +15,22 @@ using System.Linq;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public class EvaluationContext : IEvaluationContext
+#if MOVED_TO_FHIR_ASSEMBLY
+    public class FhirEvaluationContext : BaseEvaluationContext
     {
-        public EvaluationContext()
+        public FhirEvaluationContext()
         {
         }
 
-        public EvaluationContext(FhirClient client) : this(client, null)
+        public FhirEvaluationContext(FhirClient client) : this(client, null)
         {
         }
 
-        public EvaluationContext(IFluentPathElement originalResource) : this(null, originalResource)
+        public FhirEvaluationContext(IFluentPathElement originalResource) : this(null, originalResource)
         {
         }
 
-        public EvaluationContext(FhirClient client, IFluentPathElement originalResource)
+        public FhirEvaluationContext(FhirClient client, IFluentPathElement originalResource)
         {
             FhirClient = client;
             OriginalResource = originalResource;
@@ -61,7 +59,7 @@ namespace Hl7.Fhir.FluentPath
             }
         }
 
-        public virtual IFluentPathValue ResolveConstant(string name)
+        public override IFluentPathValue ResolveConstant(string name)
         {
             string value = null;
 
@@ -99,4 +97,5 @@ namespace Hl7.Fhir.FluentPath
             }
         }
     }
+#endif
 }

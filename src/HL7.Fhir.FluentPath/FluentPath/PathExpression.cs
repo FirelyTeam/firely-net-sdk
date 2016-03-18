@@ -43,7 +43,7 @@ namespace Hl7.Fhir.FluentPath
         public static IEnumerable<IFluentPathValue> Evaluate(string expression, IFluentPathValue instance)
         {
             var evaluator = Compile(expression);
-            return evaluator(FhirValueList.Create(instance), new EvaluationContext());
+            return evaluator(FhirValueList.Create(instance), new BaseEvaluationContext());
         }
 
         public static object Scalar(string expression, IFluentPathValue instance, IEvaluationContext context)
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.FluentPath
         public static object Scalar(string expression, IFluentPathValue instance)
         {
             var evaluator = Compile(expression);
-            return evaluator.Scalar(instance, new EvaluationContext());
+            return evaluator.Scalar(instance, new BaseEvaluationContext());
         }
 
         public static bool Predicate(string expression, IFluentPathValue instance, IEvaluationContext context)
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.FluentPath
         public static bool Predicate(string expression, IFluentPathValue instance)
         {
             var evaluator = Compile(expression);
-            return evaluator.Predicate(instance, new EvaluationContext());
+            return evaluator.Predicate(instance, new BaseEvaluationContext());
         }
 
     }

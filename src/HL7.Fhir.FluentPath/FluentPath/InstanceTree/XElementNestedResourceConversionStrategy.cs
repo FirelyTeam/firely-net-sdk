@@ -60,7 +60,11 @@ namespace Hl7.Fhir.FluentPath.InstanceTree
 
         private static bool isNestedResource(XElement element)
         {
+#if MOVED_TO_FHIR_ASSEMBLY
             return Char.IsUpper(element.Name.LocalName[0]) && ModelInfo.IsKnownResource(element.Name.LocalName);
+#else
+            return Char.IsUpper(element.Name.LocalName[0]);
+#endif
         }
     }
 }

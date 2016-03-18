@@ -76,12 +76,20 @@ namespace Hl7.Fhir.FluentPath.InstanceTree
                 // skip xmlns declarations
                 if (attr.IsNamespaceDeclaration) continue;
 
+#if MOVED_TO_FHIR_ASSEMBLY
                 // skip xmlns:xsi declaration
                 if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !SerializationConfig.EnforceNoXsiAttributesOnRoot) continue;
 
                 // skip schemaLocation
                 if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !SerializationConfig.EnforceNoXsiAttributesOnRoot) continue;
+#else
+                // skip xmlns:xsi declaration
+                if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi")) continue;
 
+                // skip schemaLocation
+                if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation")) continue;
+
+#endif
                 if (attr.Name.NamespaceName == "")
                     yield return attr;
                 else

@@ -84,7 +84,7 @@ namespace Hl7.Fhir.FluentPath.Grammar
         public static readonly Parser<Evaluator> StartsWith = CreateFunctionParser("startsWith", "prefix", Eval.StartsWith);
         public static readonly Parser<Evaluator> Log = CreateFunctionParser("log", "argument", Eval.Log);
         public static readonly Parser<Evaluator> Today = CreateFunctionParser("today", Eval.Today);
-        public static readonly Parser<Evaluator> Resolve = CreateFunctionParser("resolve", Eval.Resolve);
+        //public static readonly Parser<Evaluator> Resolve = CreateFunctionParser("resolve", Eval.Resolve);
         public static readonly Parser<Evaluator> Length = CreateFunctionParser("length", Eval.Length);
         public static readonly Parser<Evaluator> Distinct = CreateFunctionParser("distinct", Eval.Distinct);
         public static readonly Parser<Evaluator> Contains = CreateFunctionParser("contains", "substring", Eval.Contains);
@@ -105,7 +105,8 @@ namespace Hl7.Fhir.FluentPath.Grammar
 
         public static readonly Parser<Evaluator> Function = Not.Or(Empty).Or(Where).Or(All).Or(Any).Or(Item)
                         .Or(First).Or(Last).Or(Tail).Or(Skip).Or(Take).Or(Count).Or(AsInteger).Or(StartsWith)
-                        .Or(Log).Or(Resolve).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension)
+                        //.Or(Log).Or(Resolve).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension)
+                        .Or(Log).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension)
                         .Or(Substring).Or(Select).Or(Today)
                         .Or(OtherFunction);
     }

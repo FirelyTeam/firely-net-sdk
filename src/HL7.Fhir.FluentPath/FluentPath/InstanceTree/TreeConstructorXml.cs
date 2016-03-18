@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Support;
+﻿using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Support;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

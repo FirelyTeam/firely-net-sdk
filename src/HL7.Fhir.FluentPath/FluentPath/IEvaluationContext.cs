@@ -24,13 +24,6 @@ namespace Hl7.Fhir.FluentPath
         void InvokeExternalFunction(string name, IList<IEnumerable<IFluentPathValue>> parameters);
 
         /// <summary>
-        /// Fetch a resource by its url. Gets invoked when a resolve() function is encountered in an expression
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns>Return null is the resource could not be resolved</returns>
-        IFluentPathElement ResolveResource(string url);
-
-        /// <summary>
         /// Provide a value when a constant expression (%name) is encountered in an expression
         /// </summary>
         /// <param name="name"></param>

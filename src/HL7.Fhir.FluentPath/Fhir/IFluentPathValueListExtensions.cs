@@ -197,34 +197,34 @@ namespace Hl7.Fhir.FluentPath
             return focus.JustValues().Where(value => value.AsStringRepresentation().StartsWith(prefix));
         }
 
-        public static IEnumerable<IFluentPathElement> Resolve(this IEnumerable<IFluentPathValue> focus, FhirClient client)
-        {
-            return focus.Resolve(new EvaluationContext(client));
-        }
+        //public static IEnumerable<IFluentPathElement> Resolve(this IEnumerable<IFluentPathValue> focus, FhirClient client)
+        //{
+        //    return focus.Resolve(new BaseEvaluationContext(client));
+        //}
 
-        public static IEnumerable<IFluentPathElement> Resolve(this IEnumerable<IFluentPathValue> focus, IEvaluationContext context)
-        {
-            foreach (var item in focus)
-            {
-                string url = null;
+        //public static IEnumerable<IFluentPathElement> Resolve(this IEnumerable<IFluentPathValue> focus, IEvaluationContext context)
+        //{
+        //    foreach (var item in focus)
+        //    {
+        //        string url = null;
 
-                // Something that looks like a Reference
-                if (item is IFluentPathElement)
-                {
-                    var maybeReference = ((IFluentPathElement)item).Children("reference").SingleOrDefault();
+        //        // Something that looks like a Reference
+        //        if (item is IFluentPathElement)
+        //        {
+        //            var maybeReference = ((IFluentPathElement)item).Children("reference").SingleOrDefault();
 
-                    if (maybeReference != null && maybeReference.Value != null && maybeReference.Value is string)
-                        url = maybeReference.AsString();
-                }
+        //            if (maybeReference != null && maybeReference.Value != null && maybeReference.Value is string)
+        //                url = maybeReference.AsString();
+        //        }
 
-                // A string as a direct url
-                if (item.Value != null && item.Value is string)
-                    url = item.AsString();
+        //        // A string as a direct url
+        //        if (item.Value != null && item.Value is string)
+        //            url = item.AsString();
 
-                if(url != null)
-                    yield return context.ResolveResource(url);
-            }
-        }
+        //        if(url != null)
+        //            yield return context.ResolveResource(url);
+        //    }
+        //}
 
         public static IEnumerable<IFluentPathValue> MaxLength(this IEnumerable<IFluentPathValue> focus)
         {

@@ -1,5 +1,4 @@
-﻿using Hl7.Fhir.Introspection;
-using System;
+﻿using System;
 using System.ComponentModel;
 
 namespace Hl7.Fhir.Support

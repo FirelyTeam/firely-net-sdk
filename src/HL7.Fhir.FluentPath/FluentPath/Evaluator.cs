@@ -5,7 +5,8 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
- 
+
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace Hl7.Fhir.FluentPath
         public static IEnumerable<IFluentPathValue> Evaluate(this Evaluator evaluator, IFluentPathValue instance)
         {
             var original = FhirValueList.Create(instance);
-            return evaluator.Evaluate(instance, new EvaluationContext());
+            return evaluator.Evaluate(instance, new BaseEvaluationContext());
         }
 
         public static object Scalar(this Evaluator evaluator, IFluentPathValue instance, IEvaluationContext context)
@@ -47,7 +48,7 @@ namespace Hl7.Fhir.FluentPath
 
         public static object Scalar(this Evaluator evaluator, IFluentPathValue instance)
         {
-            return evaluator.Evaluate(instance, new EvaluationContext()).SingleValue();
+            return evaluator.Evaluate(instance, new BaseEvaluationContext()).SingleValue();
         }
 
         public static bool Predicate(this Evaluator evaluator, IFluentPathValue instance, IEvaluationContext context)
@@ -57,7 +58,7 @@ namespace Hl7.Fhir.FluentPath
 
         public static bool IsTrue(this Evaluator evaluator, IFluentPathValue instance)
         {
-            return evaluator.Evaluate(instance, new EvaluationContext()).BooleanEval().AsBoolean();
+            return evaluator.Evaluate(instance, new BaseEvaluationContext()).BooleanEval().AsBoolean();
         }
         public static Evaluator Then(this Evaluator first, Evaluator then)
         {
@@ -300,12 +301,7 @@ namespace Hl7.Fhir.FluentPath
 
         public static Evaluator Today()
         {
-            return Eval.TypedValue(PartialDateTime.Parse(DateTime.Today.ToFhirDate()));
-        }
-
-        public static Evaluator Resolve()
-        {
-            return (f, c) => f.Resolve(c);
+            return Eval.TypedValue(PartialDateTime.Parse(PrimitiveTypeConverter.ConvertTo<string>(DateTime.Today)));
         }
 
         public static Evaluator Distinct()
