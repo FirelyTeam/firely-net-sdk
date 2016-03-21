@@ -13,6 +13,7 @@ This library provides:
 * Xml, Json and Turtle parsers and serializers
 * A REST client for working with FHIR-compliant servers
 * Helper classes to work with the specification metadata, most notably `StructureDefinition` and generation of differentials
+DISCLAIMER: The Turtle implementation and specs are still a WIP.
 
 ## Getting Started ##
 Get started by reading the [online documentation][3] or downloading the NuGet packages:
