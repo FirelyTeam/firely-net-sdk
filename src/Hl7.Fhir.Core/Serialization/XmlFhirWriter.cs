@@ -30,12 +30,12 @@ namespace Hl7.Fhir.Serialization
             xw = XmlWriter.Create(xwriter, settings);
         }
 
-        public void WriteStartRootObject(string name, bool contained = false)
+        public void WriteStartRootObject(string name, string id, bool contained = false)
         {
             if (contained)
                 WriteStartComplexContent();
 
-            WriteStartProperty(name);
+            WriteStartProperty(null, name);
         }
 
         public void WriteEndRootObject(bool contained=false)
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Serialization
         private string _currentMemberName = null;
 
 
-        public void WriteStartProperty(string name)
+        public void WriteStartProperty(PropertyMapping propMap, string name)
         {
             _currentMemberName = name;
         }

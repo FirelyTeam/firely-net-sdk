@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><Observation xmlns="http://hl7.org/fhir">
+  <id value="blood-pressure"/>
+  <meta>
+    <lastUpdated value="2014-01-30T22:35:23+11:00"/>
+  </meta>
+  <!--  	EH  Narrative created by build
+	<text>
+		<status value="generated"/>
+		<div xmlns="http://www.w3.org/1999/xhtml">Sept 17, 2012: Systolic Blood pressure 107/60 mmHg (low)</div>
+	</text>
+  -->
+  <text><status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: blood-pressure</p><p><b>meta</b>: </p><p><b>identifier</b>: urn:uuid:187e0c12-8dd2-67e2-99b2-bf273c878281</p><p><b>status</b>: final</p><p><b>code</b>: Blood pressure systolic &amp; diastolic <span>(Details : {LOINC code &#39;55284-4&#39; = &#39;Blood pressure systolic and diastolic&#39;, given as &#39;Blood pressure systolic &amp; diastolic&#39;})</span></p><p><b>subject</b>: <a>Patient/example</a></p><p><b>effective</b>: Sep 17, 2012</p><p><b>performer</b>: <a>Practitioner/example</a></p><p><b>interpretation</b>: Below low normal <span>(Details : {http://hl7.org/fhir/v2/0078 code &#39;L&#39; = &#39;Low&#39;, given as &#39;low&#39;})</span></p><p><b>bodySite</b>: Right arm <span>(Details : {SNOMED CT code &#39;368209003&#39; = &#39;368209003&#39;, given as &#39;Right arm&#39;})</span></p><blockquote><p><b>component</b></p><p><b>code</b>: Systolic blood pressure <span>(Details : {LOINC code &#39;8480-6&#39; = &#39;Systolic blood pressure&#39;, given as &#39;Systolic blood pressure&#39;}; {SNOMED CT code &#39;271649006&#39; = &#39;271649006&#39;, given as &#39;Systolic blood pressure&#39;}; {http://acme.org/devices/clinical-codes code &#39;bp-s&#39; = &#39;??&#39;, given as &#39;Systolic Blood pressure&#39;})</span></p><p><b>value</b>: 107 mm[Hg]</p></blockquote><blockquote><p><b>component</b></p><p><b>code</b>: Diastolic blood pressure <span>(Details : {LOINC code &#39;8462-4&#39; = &#39;Diastolic blood pressure&#39;, given as &#39;Diastolic blood pressure&#39;})</span></p><p><b>value</b>: 60 mm[Hg]</p></blockquote></div></text><identifier>
+    <system value="urn:ietf:rfc:3986"/>
+    <value value="urn:uuid:187e0c12-8dd2-67e2-99b2-bf273c878281"/>
+  </identifier>
+  <status value="final"/>
+  <code>
+    <coding>
+      <system value="http://loinc.org"/>
+      <code value="55284-4"/>
+      <display value="Blood pressure systolic &amp; diastolic"/>
+    </coding>
+  </code>
+  <subject>
+    <reference value="Patient/example"/>
+  </subject>
+  <effectiveDateTime value="2012-09-17"/>
+  <performer>
+    <reference value="Practitioner/example"/>
+  </performer>
+  <!--   an interpretation offered to the combination observation
+        generally, it would only be appropriate to offer an interpretation
+        of an observation that has no value if it has "COMP" (component)
+        observations   -->
+  <interpretation>
+    <coding>
+      <system value="http://hl7.org/fhir/v2/0078"/>
+      <code value="L"/>
+      <display value="low"/>
+    </coding>
+    <text value="Below low normal"/>
+  </interpretation>
+  <bodySite>
+    <coding>
+      <system value="http://snomed.info/sct"/>
+      <code value="368209003"/>
+      <display value="Right arm"/>
+    </coding>
+  </bodySite>
+  <component>
+    <!--  
+           Observations are often coded in multiple code systems.
+           - LOINC provides a very specific code (though not more specific in this particular case)
+           - snomed provides a clinically relevant code that is usually less granular than LOINC
+           - the source system provides its own code, which may be less or more granular than LOINC
+           -->
+    <code>
+      <!--   LOINC -code   -->
+      <coding>
+        <system value="http://loinc.org"/>
+        <code value="8480-6"/>
+        <display value="Systolic blood pressure"/>
+      </coding>
+      <!--   SNOMED CT Codes   -->
+      <coding>
+        <system value="http://snomed.info/sct"/>
+        <code value="271649006"/>
+        <display value="Systolic blood pressure"/>
+      </coding>
+      <!--   Also, a local code specific to the source system   -->
+      <coding>
+        <system value="http://acme.org/devices/clinical-codes"/>
+        <code value="bp-s"/>
+        <display value="Systolic Blood pressure"/>
+      </coding>
+      <!--   that shows the concept. The next two codes only have a LOINC code   -->
+    </code>
+    <!--   no standard units used in this example   -->
+    <valueQuantity>
+      <value value="107"/>
+      <unit value="mm[Hg]"/>
+    </valueQuantity>
+  </component>
+  <component>
+    <code>
+      <coding>
+        <system value="http://loinc.org"/>
+        <code value="8462-4"/>
+        <display value="Diastolic blood pressure"/>
+      </coding>
+    </code>
+    <!--   no formal units in this example   -->
+    <valueQuantity>
+      <value value="60"/>
+      <unit value="mm[Hg]"/>
+    </valueQuantity>
+  </component>
+</Observation>
