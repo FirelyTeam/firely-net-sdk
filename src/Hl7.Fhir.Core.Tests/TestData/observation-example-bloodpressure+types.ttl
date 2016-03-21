@@ -1,0 +1,98 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sct: <http://snomed.info/sct/> .
+
+# - resource -------------------------------------------------------------------
+
+_:blood-pressure a fhir:Observation;
+  fhir:Resource.id [ fhir:value "blood-pressure"];
+  fhir:Resource.meta [
+     fhir:Meta.lastUpdated [ fhir:value "2014-01-30T22:35:23+11:00" ]
+  ];
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ]
+  ];
+  fhir:Observation.identifier [
+     fhir:index 0;
+     fhir:Identifier.system [ fhir:value "urn:ietf:rfc:3986" ];
+     fhir:Identifier.value [ fhir:value "urn:uuid:187e0c12-8dd2-67e2-99b2-bf273c878281" ]
+  ];
+  fhir:Observation.status [ fhir:value "final"];
+  fhir:Observation.code [
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://loinc.org" ];
+       fhir:Coding.code [ fhir:value "55284-4" ];
+       fhir:Coding.display [ fhir:value "Blood pressure systolic & diastolic" ]     ]
+  ];
+  fhir:Observation.subject [
+     a fhir:Reference;
+     fhir:Reference.reference [ fhir:value "Patient/example" ]
+  ];
+  fhir:Observation.effectiveDateTime [
+     a fhir:dateTime;
+     fhir:value "2012-09-17"
+  ];
+  fhir:Observation.performer [
+     a fhir:Reference;
+     fhir:index 0;
+     fhir:Reference.reference [ fhir:value "Practitioner/example" ]
+  ];
+  fhir:Observation.interpretation [
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       fhir:Coding.system [ fhir:value "http://hl7.org/fhir/v2/0078" ];
+       fhir:Coding.code [ fhir:value "L" ];
+       fhir:Coding.display [ fhir:value "low" ]     ];
+     fhir:CodeableConcept.text [ fhir:value "Below low normal" ]
+  ];
+  fhir:Observation.bodySite [
+     a sct:368209003;
+     fhir:CodeableConcept.coding [
+       fhir:index 0;
+       a sct:368209003;
+       fhir:Coding.system [ fhir:value "http://snomed.info/sct" ];
+       fhir:Coding.code [ fhir:value "368209003" ];
+       fhir:Coding.display [ fhir:value "Right arm" ]     ]
+  ];
+  fhir:Observation.component [
+     fhir:index 0;
+     fhir:Observation.code [
+       a sct:271649006;
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         fhir:Coding.system [ fhir:value "http://loinc.org" ];
+         fhir:Coding.code [ fhir:value "8480-6" ];
+         fhir:Coding.display [ fhir:value "Systolic blood pressure" ]       ];
+       fhir:CodeableConcept.coding [
+         fhir:index 1;
+         a sct:271649006;
+         fhir:Coding.system [ fhir:value "http://snomed.info/sct" ];
+         fhir:Coding.code [ fhir:value "271649006" ];
+         fhir:Coding.display [ fhir:value "Systolic blood pressure" ]       ];
+       fhir:CodeableConcept.coding [
+         fhir:index 2;
+         fhir:Coding.system [ fhir:value "http://acme.org/devices/clinical-codes" ];
+         fhir:Coding.code [ fhir:value "bp-s" ];
+         fhir:Coding.display [ fhir:value "Systolic Blood pressure" ]       ]     ];
+     fhir:Observation.valueQuantity [
+       a fhir:Quantity;
+       fhir:Quantity.value [ fhir:value "107" ];
+       fhir:Quantity.unit [ fhir:value "mm[Hg]" ]     ]
+  ];
+  fhir:Observation.component [
+     fhir:index 1;
+     fhir:Observation.code [
+       fhir:CodeableConcept.coding [
+         fhir:index 0;
+         fhir:Coding.system [ fhir:value "http://loinc.org" ];
+         fhir:Coding.code [ fhir:value "8462-4" ];
+         fhir:Coding.display [ fhir:value "Diastolic blood pressure" ]       ]     ];
+     fhir:Observation.valueQuantity [
+       a fhir:Quantity;
+       fhir:Quantity.value [ fhir:value "60" ];
+       fhir:Quantity.unit [ fhir:value "mm[Hg]" ]     ]
+  ].
+
+# -------------------------------------------------------------------------------------
+
