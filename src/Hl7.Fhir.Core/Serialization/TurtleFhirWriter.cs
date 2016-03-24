@@ -237,9 +237,9 @@ namespace Hl7.Fhir.Serialization
                 _currentSubj = _g.CreateBlankNode(id);
             else
                 _currentSubj = _g.CreateBlankNode();
-            IUriNode pred = _g.CreateUriNode("rdf:type");
-            IUriNode obj = _g.CreateUriNode("fhir:" + _currentTypeName);
-            _g.Assert(_currentSubj, pred, obj);
+
+            _g.Assert(_currentSubj, _g.CreateUriNode("rdf:type"), _g.CreateUriNode("fhir:" + _currentTypeName));
+            _g.Assert(_currentSubj, _g.CreateUriNode("fhir:root"), _g.CreateLiteralNode("true"));
         }
 
         public void Dispose()

@@ -66,22 +66,33 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("Cannot parse turtle: " + e.Message, null);
             }
 
-            //
             // Find the tripple with predicate rdf:type that has a subject that is never used as object == root!
-            //
-            IUriNode typePred = _g.CreateUriNode("rdf:type");
-            foreach (Triple t in _g.GetTriplesWithPredicate(typePred))
+            /*            IUriNode typePred = _g.CreateUriNode("rdf:type");
+                        foreach (Triple t in _g.GetTriplesWithPredicate(typePred))
+                        {
+                            if (_g.GetTriplesWithObject(t.Subject).Count() == 0)
+                            {
+                                //Console.WriteLine("DEBUG type={0}", t.Object);
+                                string uri = t.Object.ToString();
+                                if (uri.StartsWith(FHIR_PREFIX))
+                                {
+                                    _currentSubj = t.Subject;
+                                    _typeName = uri.Substring(uri.LastIndexOf('/') + 1);
+                                    return;
+                                }
+                            }
+                        }*/
+            // As per discission 2016-mrt-24; find subject with property fhir:root=true
+            var fhirRootTriples = _g.GetTriplesWithPredicateObject(_g.CreateUriNode("fhir:root"), _g.CreateLiteralNode("true"));
+            if (fhirRootTriples.Count() == 1)
             {
-                if (_g.GetTriplesWithObject(t.Subject).Count() == 0)
+                Triple t = fhirRootTriples.First<Triple>();
+                string uri = t.Object.ToString();
+                if (uri.StartsWith(FHIR_PREFIX))
                 {
-                    //Console.WriteLine("DEBUG type={0}", t.Object);
-                    string uri = t.Object.ToString();
-                    if (uri.StartsWith(FHIR_PREFIX))
-                    {
-                        _currentSubj = t.Subject;
-                        _typeName = uri.Substring(uri.LastIndexOf('/') + 1);
-                        return;
-                    }
+                    _currentSubj = t.Subject;
+                    _typeName = uri.Substring(uri.LastIndexOf('/') + 1);
+                    return;
                 }
             }
             throw Error.Format("Unable to determin resourcetype from turtle", null);
