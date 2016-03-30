@@ -36,14 +36,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (structure.Differential == null) throw Error.Argument("structure", "structure does not contain a differential specification");
             if (!structure.IsConstraint) throw Error.Argument("structure", "structure is not a constraint or extension");
-            if(structure.Base == null) throw Error.Argument("structure", "structure is a constraint, but no base has been specified");
+            if(structure.BaseDefinition == null) throw Error.Argument("structure", "structure is a constraint, but no base has been specified");
 
             var differential = structure.Differential;
 
-            var baseStructure = _resolver.GetStructureDefinition(structure.Base);
+            var baseStructure = _resolver.GetStructureDefinition(structure.BaseDefinition);
 
-            if (baseStructure == null) throw Error.InvalidOperation("Could not locate the base StructureDefinition for url " + structure.Base);
-            if (baseStructure.Snapshot == null) throw Error.InvalidOperation("Snapshot generator required the base at {0} to have a snapshot representation", structure.Base);
+            if (baseStructure == null) throw Error.InvalidOperation("Could not locate the base StructureDefinition for url " + structure.BaseDefinition);
+            if (baseStructure.Snapshot == null) throw Error.InvalidOperation("Snapshot generator required the base at {0} to have a snapshot representation", structure.BaseDefinition);
 
             var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
             generateBaseElements(snapshot.Element);
@@ -209,13 +209,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             var defn = nav.Current;
 
-            if (!String.IsNullOrEmpty(defn.NameReference))
+            if (!String.IsNullOrEmpty(defn.ContentReference))
             {
                 var sourceNav = new ElementNavigator(nav);
-                var success = sourceNav.JumpToNameReference(defn.NameReference);
+                // This likely needs more work
+                var success = sourceNav.JumpToNameReference(defn.ContentReference);
 
                 if (!success)
-                    throw Error.InvalidOperation("Trying to navigate down a node that has a nameReference of '{0}', which cannot be found in the StructureDefinition".FormatWith(defn.NameReference));
+                    throw Error.InvalidOperation("Trying to navigate down a node that has a nameReference of '{0}', which cannot be found in the StructureDefinition".FormatWith(defn.ContentReference));
 
                 nav.CopyChildren(sourceNav);
             }
