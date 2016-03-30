@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,19 +61,19 @@ namespace Hl7.Fhir.Model
         public enum LinkType
         {
             /// <summary>
-            /// The patient resource containing this link must no longer be used. The link points forward to another patient resource that must be used in lieu of the patient resource that contains this link.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/link-type)
             /// </summary>
             [EnumLiteral("replace"), Description("Replace")]
             Replace,
             /// <summary>
-            /// The patient resource containing this link is in use and valid but not considered the main source of information about a patient. The link points forward to another patient resource that should be consulted to retrieve additional patient information.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/link-type)
             /// </summary>
             [EnumLiteral("refer"), Description("Refer")]
             Refer,
             /// <summary>
-            /// The patient resource containing this link is in use and valid, but points to another patient resource that is known to contain data about the same person. Data in this resource might overlap or contradict information found in the other patient resource. This link does not indicate any relative importance of the resources concerned, and both should be regarded as equally valid.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/link-type)
             /// </summary>
             [EnumLiteral("seealso"), Description("See also")]

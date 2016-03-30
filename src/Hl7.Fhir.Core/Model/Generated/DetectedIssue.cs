@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,19 +61,19 @@ namespace Hl7.Fhir.Model
         public enum DetectedIssueSeverity
         {
             /// <summary>
-            /// Indicates the issue may be life-threatening or has the potential to cause permanent injury.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
             [EnumLiteral("high"), Description("High")]
             High,
             /// <summary>
-            /// Indicates the issue may result in noticeable adverse consequences but is unlikely to be life-threatening or cause permanent injury.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
             [EnumLiteral("moderate"), Description("Moderate")]
             Moderate,
             /// <summary>
-            /// Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subject.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/detectedissue-severity)
             /// </summary>
             [EnumLiteral("low"), Description("Low")]

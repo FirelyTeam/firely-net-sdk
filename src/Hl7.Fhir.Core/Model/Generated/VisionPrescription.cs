@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,13 +61,13 @@ namespace Hl7.Fhir.Model
         public enum VisionEyes
         {
             /// <summary>
-            /// Right Eye
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/vision-eye-codes)
             /// </summary>
             [EnumLiteral("right"), Description("Right Eye")]
             Right,
             /// <summary>
-            /// Left Eye
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/vision-eye-codes)
             /// </summary>
             [EnumLiteral("left"), Description("Left Eye")]
@@ -82,25 +82,25 @@ namespace Hl7.Fhir.Model
         public enum VisionBase
         {
             /// <summary>
-            /// top
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/vision-base-codes)
             /// </summary>
             [EnumLiteral("up"), Description("Up")]
             Up,
             /// <summary>
-            /// bottom
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/vision-base-codes)
             /// </summary>
             [EnumLiteral("down"), Description("Down")]
             Down,
             /// <summary>
-            /// inner edge
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/vision-base-codes)
             /// </summary>
             [EnumLiteral("in"), Description("In")]
             In,
             /// <summary>
-            /// outer edge
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/vision-base-codes)
             /// </summary>
             [EnumLiteral("out"), Description("Out")]

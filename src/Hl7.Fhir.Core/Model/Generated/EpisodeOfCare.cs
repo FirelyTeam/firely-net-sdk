@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,44 +54,44 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "EpisodeOfCare"; } }
         
         /// <summary>
-        /// The status of the encounter.
+        /// The status of the episode of care.
         /// (url: http://hl7.org/fhir/ValueSet/episode-of-care-status)
         /// </summary>
         [FhirEnumeration("EpisodeOfCareStatus")]
         public enum EpisodeOfCareStatus
         {
             /// <summary>
-            /// This episode of care is planned to start at the date specified in the period.start. During this status an organization may perform assessments to determine if they are eligible to receive services, or be organizing to make resources available to provide care services.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
             [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
-            /// This episode has been placed on a waitlist, pending the episode being made active (or cancelled).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
             [EnumLiteral("waitlist"), Description("Waitlist")]
             Waitlist,
             /// <summary>
-            /// This episode of care is current.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
             [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
-            /// This episode of care is on hold, the organization has limited responsibility for the patient (such as while on respite).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
             [EnumLiteral("onhold"), Description("On Hold")]
             Onhold,
             /// <summary>
-            /// This episode of care is finished at the organization is not expecting to be providing care to the patient. Can also be known as "closed", "completed" or other similar terms.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
             [EnumLiteral("finished"), Description("Finished")]
             Finished,
             /// <summary>
-            /// The episode of care was cancelled, or withdrawn from service, often selected during the planned stage as the patient may have gone elsewhere, or the circumstances have changed and the organization is unable to provide the care. It indicates that services terminated outside the planned/expected workflow.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/episode-of-care-status)
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]
@@ -192,104 +192,6 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("CareTeamComponent")]
-        [DataContract]
-        public partial class CareTeamComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "CareTeamComponent"; } }
-            
-            /// <summary>
-            /// Role taken by this team member
-            /// </summary>
-            [FhirElement("role", Order=40)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.CodeableConcept> Role
-            {
-                get { if(_Role==null) _Role = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Role; }
-                set { _Role = value; OnPropertyChanged("Role"); }
-            }
-            
-            private List<Hl7.Fhir.Model.CodeableConcept> _Role;
-            
-            /// <summary>
-            /// Period of time for this role
-            /// </summary>
-            [FhirElement("period", Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Period Period
-            {
-                get { return _Period; }
-                set { _Period = value; OnPropertyChanged("Period"); }
-            }
-            
-            private Hl7.Fhir.Model.Period _Period;
-            
-            /// <summary>
-            /// The practitioner (or Organization) within the team
-            /// </summary>
-            [FhirElement("member", Order=60)]
-            [References("Practitioner","Organization")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Member
-            {
-                get { return _Member; }
-                set { _Member = value; OnPropertyChanged("Member"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Member;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as CareTeamComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Role != null) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(Role.DeepCopy());
-                    if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                    if(Member != null) dest.Member = (Hl7.Fhir.Model.ResourceReference)Member.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new CareTeamComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as CareTeamComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
-                if( !DeepComparable.Matches(Period, otherT.Period)) return false;
-                if( !DeepComparable.Matches(Member, otherT.Member)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as CareTeamComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
-                if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
-                if( !DeepComparable.IsExactly(Member, otherT.Member)) return false;
                 
                 return true;
             }
@@ -461,16 +363,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Other practitioners facilitating this episode of care
         /// </summary>
-        [FhirElement("careTeam", Order=190)]
+        [FhirElement("team", Order=190)]
+        [References("CareTeam")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.EpisodeOfCare.CareTeamComponent> CareTeam
+        public List<Hl7.Fhir.Model.ResourceReference> Team
         {
-            get { if(_CareTeam==null) _CareTeam = new List<Hl7.Fhir.Model.EpisodeOfCare.CareTeamComponent>(); return _CareTeam; }
-            set { _CareTeam = value; OnPropertyChanged("CareTeam"); }
+            get { if(_Team==null) _Team = new List<Hl7.Fhir.Model.ResourceReference>(); return _Team; }
+            set { _Team = value; OnPropertyChanged("Team"); }
         }
         
-        private List<Hl7.Fhir.Model.EpisodeOfCare.CareTeamComponent> _CareTeam;
+        private List<Hl7.Fhir.Model.ResourceReference> _Team;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -489,7 +392,7 @@ namespace Hl7.Fhir.Model
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(ReferralRequest != null) dest.ReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(ReferralRequest.DeepCopy());
                 if(CareManager != null) dest.CareManager = (Hl7.Fhir.Model.ResourceReference)CareManager.DeepCopy();
-                if(CareTeam != null) dest.CareTeam = new List<Hl7.Fhir.Model.EpisodeOfCare.CareTeamComponent>(CareTeam.DeepCopy());
+                if(Team != null) dest.Team = new List<Hl7.Fhir.Model.ResourceReference>(Team.DeepCopy());
                 return dest;
             }
             else
@@ -517,7 +420,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(ReferralRequest, otherT.ReferralRequest)) return false;
             if( !DeepComparable.Matches(CareManager, otherT.CareManager)) return false;
-            if( !DeepComparable.Matches(CareTeam, otherT.CareTeam)) return false;
+            if( !DeepComparable.Matches(Team, otherT.Team)) return false;
             
             return true;
         }
@@ -538,7 +441,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(ReferralRequest, otherT.ReferralRequest)) return false;
             if( !DeepComparable.IsExactly(CareManager, otherT.CareManager)) return false;
-            if( !DeepComparable.IsExactly(CareTeam, otherT.CareTeam)) return false;
+            if( !DeepComparable.IsExactly(Team, otherT.Team)) return false;
             
             return true;
         }

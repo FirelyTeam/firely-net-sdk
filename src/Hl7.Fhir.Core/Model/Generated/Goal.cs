@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,55 +61,55 @@ namespace Hl7.Fhir.Model
         public enum GoalStatus
         {
             /// <summary>
-            /// A goal is proposed for this patient
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
             [EnumLiteral("proposed"), Description("Proposed")]
             Proposed,
             /// <summary>
-            /// A goal is planned for this patient
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
             [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
-            /// A proposed goal was accepted
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
             [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
-            /// A proposed goal was rejected
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
             [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
-            /// The goal is being sought but has not yet been reached.  (Also applies if goal was reached in the past but there has been regression and goal is being sought again)
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
             [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
-            /// The goal has been met and no further action is needed
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
             [EnumLiteral("achieved"), Description("Achieved")]
             Achieved,
             /// <summary>
-            /// The goal has been met, but ongoing activity is needed to sustain the goal objective
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
             [EnumLiteral("sustaining"), Description("Sustaining")]
             Sustaining,
             /// <summary>
-            /// The goal remains a long term objective but is no longer being actively pursued for a temporary period of time.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
             [EnumLiteral("on-hold"), Description("On Hold")]
             OnHold,
             /// <summary>
-            /// The goal is no longer being sought
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/goal-status)
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,25 +61,25 @@ namespace Hl7.Fhir.Model
         public enum IdentityAssuranceLevel
         {
             /// <summary>
-            /// Little or no confidence in the asserted identity's accuracy.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
             [EnumLiteral("level1"), Description("Level 1")]
             Level1,
             /// <summary>
-            /// Some confidence in the asserted identity's accuracy.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
             [EnumLiteral("level2"), Description("Level 2")]
             Level2,
             /// <summary>
-            /// High confidence in the asserted identity's accuracy.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
             [EnumLiteral("level3"), Description("Level 3")]
             Level3,
             /// <summary>
-            /// Very high confidence in the asserted identity's accuracy.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/identity-assuranceLevel)
             /// </summary>
             [EnumLiteral("level4"), Description("Level 4")]

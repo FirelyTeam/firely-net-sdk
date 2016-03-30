@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,25 +61,25 @@ namespace Hl7.Fhir.Model
         public enum SupplyRequestStatus
         {
             /// <summary>
-            /// Supply has been requested, but not dispensed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
             [EnumLiteral("requested"), Description("Requested")]
             Requested,
             /// <summary>
-            /// Supply has been received by the requestor.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Received")]
             Completed,
             /// <summary>
-            /// The supply will not be completed because the supplier was unable or unwilling to supply the item.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
             [EnumLiteral("failed"), Description("Failed")]
             Failed,
             /// <summary>
-            /// The orderer of the supply cancelled the request.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplyrequest-status)
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]

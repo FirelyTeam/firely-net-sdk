@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,37 +61,37 @@ namespace Hl7.Fhir.Model
         public enum EncounterState
         {
             /// <summary>
-            /// The Encounter has not yet started.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
             [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
-            /// The Patient is present for the encounter, however is not currently meeting with a practitioner.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
             [EnumLiteral("arrived"), Description("Arrived")]
             Arrived,
             /// <summary>
-            /// The Encounter has begun and the patient is present / the practitioner and the patient are meeting.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
             [EnumLiteral("in-progress"), Description("in Progress")]
             InProgress,
             /// <summary>
-            /// The Encounter has begun, but the patient is temporarily on leave.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
             [EnumLiteral("onleave"), Description("On Leave")]
             Onleave,
             /// <summary>
-            /// The Encounter has ended.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
             [EnumLiteral("finished"), Description("Finished")]
             Finished,
             /// <summary>
-            /// The Encounter has ended before it has begun.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-state)
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]
@@ -106,55 +106,55 @@ namespace Hl7.Fhir.Model
         public enum EncounterClass
         {
             /// <summary>
-            /// An encounter during which the patient is hospitalized and stays overnight.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
             [EnumLiteral("inpatient"), Description("Inpatient")]
             Inpatient,
             /// <summary>
-            /// An encounter during which the patient is not hospitalized overnight.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
             [EnumLiteral("outpatient"), Description("Outpatient")]
             Outpatient,
             /// <summary>
-            /// An encounter where the patient visits the practitioner in his/her office, e.g. a G.P. visit.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
             [EnumLiteral("ambulatory"), Description("Ambulatory")]
             Ambulatory,
             /// <summary>
-            /// An encounter in the Emergency Care Department.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
             [EnumLiteral("emergency"), Description("Emergency")]
             Emergency,
             /// <summary>
-            /// An encounter where the practitioner visits the patient at his/her home.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
             [EnumLiteral("home"), Description("Home")]
             Home,
             /// <summary>
-            /// An encounter taking place outside the regular environment for giving care.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
             [EnumLiteral("field"), Description("Field")]
             Field,
             /// <summary>
-            /// An encounter where the patient needs more prolonged treatment or investigations than outpatients, but who do not need to stay in the hospital overnight.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
             [EnumLiteral("daytime"), Description("Daytime")]
             Daytime,
             /// <summary>
-            /// An encounter that takes place where the patient and practitioner do not physically meet but use electronic means for contact.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
             [EnumLiteral("virtual"), Description("Virtual")]
             Virtual,
             /// <summary>
-            /// Any other encounter type that is not described by one of the other values. Where this is used it is expected that an implementer will include an extension value to define what the actual other type is.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-class)
             /// </summary>
             [EnumLiteral("other"), Description("Other")]
@@ -169,27 +169,25 @@ namespace Hl7.Fhir.Model
         public enum EncounterLocationStatus
         {
             /// <summary>
-            /// The patient is planned to be moved to this location at some point in the future.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
             [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
-            /// The patient is currently at this location, or was between the period specified.
-        /// A system may update these records when the patient leaves the location to either reserved, or completed
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
             [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
-            /// This location is held empty for this patient.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
             [EnumLiteral("reserved"), Description("Reserved")]
             Reserved,
             /// <summary>
-            /// The patient was at this location during the period specified.
-        /// Not to be used when the patient is currently at the location
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-location-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Completed")]

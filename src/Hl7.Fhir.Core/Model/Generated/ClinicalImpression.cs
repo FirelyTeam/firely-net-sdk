@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,19 +61,19 @@ namespace Hl7.Fhir.Model
         public enum ClinicalImpressionStatus
         {
             /// <summary>
-            /// The assessment is still on-going and results are not yet final.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/clinical-impression-status)
             /// </summary>
             [EnumLiteral("in-progress"), Description("In progress")]
             InProgress,
             /// <summary>
-            /// The assessment is done and the results are final.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/clinical-impression-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
-            /// This assessment was never actually done and the record is erroneous (e.g. Wrong patient).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/clinical-impression-status)
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered in Error")]

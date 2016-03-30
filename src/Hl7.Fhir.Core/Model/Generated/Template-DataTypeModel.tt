@@ -82,7 +82,7 @@
 	foreach (System.Xml.XmlNode e in docResources.DocumentElement.SelectNodes(
 	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR))
 	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = 'Address' or fhir:id/@value = 'Coding' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment']", nsR))
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:base/@value = 'http://hl7.org/fhir/StructureDefinition/Element' or fhir:id/@value = 'Coding' or fhir:id/@value = 'code' or fhir:id/@value = 'oid' or fhir:id/@value = 'id' or fhir:id/@value = 'uuid' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment' or fhir:id/@value = 'unsignedInt' or fhir:id/@value = 'positiveInt' or fhir:id/@value = 'markdown']", nsR))
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:baseDefinition/@value = 'http://hl7.org/fhir/StructureDefinition/Element' or fhir:id/@value = 'Coding' or fhir:id/@value = 'code' or fhir:id/@value = 'oid' or fhir:id/@value = 'id' or fhir:id/@value = 'uuid' or fhir:id/@value = 'Annotation' or fhir:id/@value = 'Attachment' or fhir:id/@value = 'unsignedInt' or fhir:id/@value = 'positiveInt' or fhir:id/@value = 'markdown']", nsR))
     {
 		if (e is System.Xml.XmlElement)
         {
@@ -168,9 +168,9 @@
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
 			bool isPrimitive = false;
-			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR) != null)
+			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null)
             {
-				var definedBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR).Value;
+				var definedBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value;
 				resourceBaseType = definedBaseType;
 				if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Element")
                 {

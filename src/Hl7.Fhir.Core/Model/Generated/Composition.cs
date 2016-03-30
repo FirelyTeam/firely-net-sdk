@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,25 +61,25 @@ namespace Hl7.Fhir.Model
         public enum CompositionStatus
         {
             /// <summary>
-            /// This is a preliminary composition or document (also known as initial or interim). The content may be incomplete or unverified.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-status)
             /// </summary>
             [EnumLiteral("preliminary"), Description("Preliminary")]
             Preliminary,
             /// <summary>
-            /// This version of the composition is complete and verified by an appropriate person and no further work is planned. Any subsequent updates would be on a new version of the composition.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-status)
             /// </summary>
             [EnumLiteral("final"), Description("Final")]
             Final,
             /// <summary>
-            /// The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as "final" and the composition is complete and verified by an authorized person.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-status)
             /// </summary>
             [EnumLiteral("amended"), Description("Amended")]
             Amended,
             /// <summary>
-            /// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-status)
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered in Error")]
@@ -94,81 +94,107 @@ namespace Hl7.Fhir.Model
         public enum v3CodeSystemConfidentiality
         {
             /// <summary>
-            /// A specializable code and its leaf codes used in Confidentiality value sets to value the Act.Confidentiality and Role.Confidentiality attribute in accordance with the definition for concept domain "Confidentiality".
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
             [EnumLiteral("_Confidentiality"), Description("Confidentiality")]
             Confidentiality,
             /// <summary>
-            /// Definition: Privacy metadata indicating that the information has been de-identified, and there are mitigating circumstances that prevent re-identification, which minimize risk of harm from unauthorized disclosure.  The information requires protection to maintain low sensitivity.
-        ///                         
-        ///                            Examples: Includes anonymized, pseudonymized, or non-personally identifiable information such as HIPAA limited data sets.
-        ///                         
-        ///                            Map: No clear map to ISO 13606-4 Sensitivity Level (1) Care Management:   RECORD_COMPONENTs that might need to be accessed by a wide range of administrative staff to manage the subject of care's access to health services.
-        ///                         
-        ///                            Usage Note: This metadata indicates the receiver may have an obligation to comply with a data use agreement.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
             [EnumLiteral("L"), Description("low")]
             L,
             /// <summary>
-            /// Definition: Privacy metadata indicating moderately sensitive information, which presents moderate risk of harm if disclosed without authorization.
-        ///                         
-        ///                            Examples: Includes allergies of non-sensitive nature used inform food service; health information a patient authorizes to be used for marketing, released to a bank for a health credit card or savings account; or information in personal health record systems that are not governed under health privacy laws.
-        ///                         
-        ///                            Map: Partial Map to ISO 13606-4 Sensitivity Level (2) Clinical Management:  Less sensitive RECORD_COMPONENTs that might need to be accessed by a wider range of personnel not all of whom are actively caring for the patient (e.g. radiology staff).
-        ///                         
-        ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with the receiver's terms of use or privacy policies.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
             [EnumLiteral("M"), Description("moderate")]
             M,
             /// <summary>
-            /// Definition: Privacy metadata indicating that the information is typical, non-stigmatizing health information, which presents typical risk of harm if disclosed without authorization.
-        ///                         
-        ///                            Examples: In the US, this includes what HIPAA identifies as the minimum necessary protected health information (PHI) given a covered purpose of use (treatment, payment, or operations).  Includes typical, non-stigmatizing health information disclosed in an application for health, workers compensation, disability, or life insurance.
-        ///                         
-        ///                            Map: Partial Map to ISO 13606-4 Sensitivity Level (3) Clinical Care:   Default for normal clinical care access (i.e. most clinical staff directly caring for the patient should be able to access nearly all of the EHR).   Maps to normal confidentiality for treatment information but not to ancillary care, payment and operations.
-        ///                         
-        ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with applicable jurisdictional privacy law or disclosure authorization.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
             [EnumLiteral("N"), Description("normal")]
             N,
             /// <summary>
-            /// Privacy metadata indicating highly sensitive, potentially stigmatizing information, which presents a high risk to the information subject if disclosed without authorization. May be pre-empted by jurisdictional law, e.g. for public health reporting or emergency treatment.
-        ///                         
-        ///                            Examples: Includes information that is additionally protected such as sensitive conditions mental health, HIV, substance abuse, domestic violence, child abuse, genetic disease, and reproductive health; or sensitive demographic information such as a patient's standing as an employee or a celebrity. May be used to indicate proprietary or classified information that is not related to an individual, e.g. secret ingredients in a therapeutic substance; or the name of a manufacturer.
-        ///                         
-        ///                            Map: Partial Map to ISO 13606-4 Sensitivity Level (3) Clinical Care: Default for normal clinical care access (i.e. most clinical staff directly caring for the patient should be able to access nearly all of the EHR). Maps to normal confidentiality for treatment information but not to ancillary care, payment and operations..
-        ///                         
-        ///                            Usage Note: This metadata indicates that the receiver may be obligated to comply with applicable, prevailing (default) jurisdictional privacy law or disclosure authorization..
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
             [EnumLiteral("R"), Description("restricted")]
             R,
             /// <summary>
-            /// Definition: Privacy metadata indicating that the information is not classified as sensitive.
-        ///                         
-        ///                            Examples: Includes publicly available information, e.g. business name, phone, email or physical address.
-        ///                         
-        ///                            Usage Note: This metadata indicates that the receiver has no obligation to consider additional policies when making access control decisions.   Note that in some jurisdictions, personally identifiable information must be protected as confidential, so it would not be appropriate to assign a confidentiality code of "unrestricted"  to that information even if it is publicly available.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
             [EnumLiteral("U"), Description("unrestricted")]
             U,
             /// <summary>
-            /// . Privacy metadata indicating that the information is extremely sensitive and likely stigmatizing health information that presents a very high risk if disclosed without authorization.  This information must be kept in the highest confidence.  
-        ///                         
-        ///                            Examples:  Includes information about a victim of abuse, patient requested information sensitivity, and taboo subjects relating to health status that must be discussed with the patient by an attending provider before sharing with the patient.  May also include information held under â€œlegal lockâ€? or attorney-client privilege
-        ///                         
-        ///                            Map:  This metadata indicates that the receiver may not disclose this information except as directed by the information custodian, who may be the information subject.
-        ///                         
-        ///                            Usage Note:  This metadata indicates that the receiver may not disclose this information except as directed by the information custodian, who may be the information subject.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/v3/Confidentiality)
             /// </summary>
             [EnumLiteral("V"), Description("very restricted")]
             V,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("B"), Description("business")]
+            B,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("D"), Description("clinician")]
+            D,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("I"), Description("individual")]
+            I,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("ETH"), Description("substance abuse related")]
+            ETH,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("HIV"), Description("HIV related")]
+            HIV,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("PSY"), Description("psychiatry relate")]
+            PSY,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("SDV"), Description("sexual and domestic violence related")]
+            SDV,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("C"), Description("celebrity")]
+            C,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("S"), Description("sensitive")]
+            S,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/v3/Confidentiality)
+            /// </summary>
+            [EnumLiteral("T"), Description("taboo")]
+            T,
         }
 
         /// <summary>
@@ -179,25 +205,25 @@ namespace Hl7.Fhir.Model
         public enum CompositionAttestationMode
         {
             /// <summary>
-            /// The person authenticated the content in their personal capacity.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
             [EnumLiteral("personal"), Description("Personal")]
             Personal,
             /// <summary>
-            /// The person authenticated the content in their professional capacity.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
             [EnumLiteral("professional"), Description("Professional")]
             Professional,
             /// <summary>
-            /// The person authenticated the content and accepted legal responsibility for its content.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
             [EnumLiteral("legal"), Description("Legal")]
             Legal,
             /// <summary>
-            /// The organization authenticated the content as consistent with their policies and procedures.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/composition-attestation-mode)
             /// </summary>
             [EnumLiteral("official"), Description("Official")]

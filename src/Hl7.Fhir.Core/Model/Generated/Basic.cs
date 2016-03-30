@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -96,23 +96,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Who created
-        /// </summary>
-        [FhirElement("author", InSummary=true, Order=120)]
-        [References("Practitioner","Patient","RelatedPerson")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Author
-        {
-            get { return _Author; }
-            set { _Author = value; OnPropertyChanged("Author"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Author;
-        
-        /// <summary>
         /// When created
         /// </summary>
-        [FhirElement("created", InSummary=true, Order=130)]
+        [FhirElement("created", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Date CreatedElement
         {
@@ -141,6 +127,20 @@ namespace Hl7.Fhir.Model
             }
         }
         
+        /// <summary>
+        /// Who created
+        /// </summary>
+        [FhirElement("author", InSummary=true, Order=130)]
+        [References("Practitioner","Patient","RelatedPerson")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Author
+        {
+            get { return _Author; }
+            set { _Author = value; OnPropertyChanged("Author"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Author;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Basic;
@@ -151,8 +151,8 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.Date)CreatedElement.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 return dest;
             }
             else
@@ -173,8 +173,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             
             return true;
         }
@@ -188,8 +188,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
+            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             
             return true;
         }

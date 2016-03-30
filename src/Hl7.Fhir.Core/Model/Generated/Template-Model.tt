@@ -91,9 +91,9 @@
 			manager.StartNewFile(resourceName + ".cs");
 
 			string resourceBaseType = "Hl7.Fhir.Model.DomainResource";
-			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR) != null)
+			if((e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null)
             {
-				resourceBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR).Value;
+				resourceBaseType = (e as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value;
 				if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Resource")
 					resourceBaseType = "Hl7.Fhir.Model.Resource";
 				else if (resourceBaseType == "http://hl7.org/fhir/StructureDefinition/Element")
@@ -306,7 +306,7 @@ if(!abstractType) {
             /// <#= pd.Summary.Replace("&", "&amp;") #>
             /// </summary>
             [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
-<# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
+<# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference" && pd.ReferenceTargets != null) {#>
             [References(<#= pd.ReferenceTargets #>)]
 <# }
 #>
@@ -915,7 +915,8 @@ if(!abstractType) {
 						result.ReferenceTargets += ",";
 					result.ReferenceTargets += "\"" +erp.Value.Substring(erp.Value.LastIndexOf("/")+1) + "\"";
                 }
-				result.ReferenceTargets = result.ReferenceTargets.Replace("\"Resource\"", "");
+				if (!string.IsNullOrEmpty(result.ReferenceTargets))
+					result.ReferenceTargets = result.ReferenceTargets.Replace("\"Resource\"", "");
             }
 
 			if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")
@@ -1147,7 +1148,8 @@ if(!abstractType) {
 						result.ReferenceTargets += ",";
 					result.ReferenceTargets += "\"" +erp.Value.Substring(erp.Value.LastIndexOf("/")+1) + "\"";
                 }
-				result.ReferenceTargets = result.ReferenceTargets.Replace("\"Resource\"", "");
+				if (!string.IsNullOrEmpty(result.ReferenceTargets))
+					result.ReferenceTargets = result.ReferenceTargets.Replace("\"Resource\"", "");
             }
 
 			if (result.PropType == "Code" || result.PropType == "Hl7.Fhir.Model.Code")

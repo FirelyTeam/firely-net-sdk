@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -128,44 +128,185 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer
         /// </summary>
-        [FhirElement("target", InSummary=true, Order=130)]
-        [References("Organization")]
+        [FhirElement("target", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Target
+        public Hl7.Fhir.Model.Element Target
         {
             get { return _Target; }
             set { _Target = value; OnPropertyChanged("Target"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Target;
+        private Hl7.Fhir.Model.Element _Target;
         
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("provider", InSummary=true, Order=140)]
-        [References("Practitioner")]
+        [FhirElement("provider", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Provider
+        public Hl7.Fhir.Model.Element Provider
         {
             get { return _Provider; }
             set { _Provider = value; OnPropertyChanged("Provider"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Provider;
+        private Hl7.Fhir.Model.Element _Provider;
         
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("organization", InSummary=true, Order=150)]
-        [References("Organization")]
+        [FhirElement("organization", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Organization
+        public Hl7.Fhir.Model.Element Organization
         {
             get { return _Organization; }
             set { _Organization = value; OnPropertyChanged("Organization"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Organization;
+        private Hl7.Fhir.Model.Element _Organization;
+        
+        /// <summary>
+        /// Desired processing priority
+        /// </summary>
+        [FhirElement("priority", InSummary=true, Order=160)]
+        [DataMember]
+        public Hl7.Fhir.Model.Coding Priority
+        {
+            get { return _Priority; }
+            set { _Priority = value; OnPropertyChanged("Priority"); }
+        }
+        
+        private Hl7.Fhir.Model.Coding _Priority;
+        
+        /// <summary>
+        /// Author
+        /// </summary>
+        [FhirElement("enterer", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Enterer
+        {
+            get { return _Enterer; }
+            set { _Enterer = value; OnPropertyChanged("Enterer"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Enterer;
+        
+        /// <summary>
+        /// Servicing Facility
+        /// </summary>
+        [FhirElement("facility", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Facility
+        {
+            get { return _Facility; }
+            set { _Facility = value; OnPropertyChanged("Facility"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Facility;
+        
+        /// <summary>
+        /// The subject of the Products and Services
+        /// </summary>
+        [FhirElement("patient", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Patient
+        {
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Patient;
+        
+        /// <summary>
+        /// Insurance or medical plan
+        /// </summary>
+        [FhirElement("coverage", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Coverage
+        {
+            get { return _Coverage; }
+            set { _Coverage = value; OnPropertyChanged("Coverage"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Coverage;
+        
+        /// <summary>
+        /// Business agreement
+        /// </summary>
+        [FhirElement("businessArrangement", InSummary=true, Order=210)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString BusinessArrangementElement
+        {
+            get { return _BusinessArrangementElement; }
+            set { _BusinessArrangementElement = value; OnPropertyChanged("BusinessArrangementElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _BusinessArrangementElement;
+        
+        /// <summary>
+        /// Business agreement
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string BusinessArrangement
+        {
+            get { return BusinessArrangementElement != null ? BusinessArrangementElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  BusinessArrangementElement = null; 
+                else
+                  BusinessArrangementElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("BusinessArrangement");
+            }
+        }
+        
+        /// <summary>
+        /// Estimated date or dates of Service
+        /// </summary>
+        [FhirElement("serviced", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Serviced
+        {
+            get { return _Serviced; }
+            set { _Serviced = value; OnPropertyChanged("Serviced"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Serviced;
+        
+        /// <summary>
+        /// Benefit Category
+        /// </summary>
+        [FhirElement("benefitCategory", InSummary=true, Order=230)]
+        [DataMember]
+        public Hl7.Fhir.Model.Coding BenefitCategory
+        {
+            get { return _BenefitCategory; }
+            set { _BenefitCategory = value; OnPropertyChanged("BenefitCategory"); }
+        }
+        
+        private Hl7.Fhir.Model.Coding _BenefitCategory;
+        
+        /// <summary>
+        /// Benefit SubCategory
+        /// </summary>
+        [FhirElement("benefitSubCategory", InSummary=true, Order=240)]
+        [DataMember]
+        public Hl7.Fhir.Model.Coding BenefitSubCategory
+        {
+            get { return _BenefitSubCategory; }
+            set { _BenefitSubCategory = value; OnPropertyChanged("BenefitSubCategory"); }
+        }
+        
+        private Hl7.Fhir.Model.Coding _BenefitSubCategory;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -178,9 +319,18 @@ namespace Hl7.Fhir.Model
                 if(Ruleset != null) dest.Ruleset = (Hl7.Fhir.Model.Coding)Ruleset.DeepCopy();
                 if(OriginalRuleset != null) dest.OriginalRuleset = (Hl7.Fhir.Model.Coding)OriginalRuleset.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
-                if(Target != null) dest.Target = (Hl7.Fhir.Model.ResourceReference)Target.DeepCopy();
-                if(Provider != null) dest.Provider = (Hl7.Fhir.Model.ResourceReference)Provider.DeepCopy();
-                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
+                if(Target != null) dest.Target = (Hl7.Fhir.Model.Element)Target.DeepCopy();
+                if(Provider != null) dest.Provider = (Hl7.Fhir.Model.Element)Provider.DeepCopy();
+                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.Element)Organization.DeepCopy();
+                if(Priority != null) dest.Priority = (Hl7.Fhir.Model.Coding)Priority.DeepCopy();
+                if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.Element)Enterer.DeepCopy();
+                if(Facility != null) dest.Facility = (Hl7.Fhir.Model.Element)Facility.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.Element)Patient.DeepCopy();
+                if(Coverage != null) dest.Coverage = (Hl7.Fhir.Model.Element)Coverage.DeepCopy();
+                if(BusinessArrangementElement != null) dest.BusinessArrangementElement = (Hl7.Fhir.Model.FhirString)BusinessArrangementElement.DeepCopy();
+                if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.Element)Serviced.DeepCopy();
+                if(BenefitCategory != null) dest.BenefitCategory = (Hl7.Fhir.Model.Coding)BenefitCategory.DeepCopy();
+                if(BenefitSubCategory != null) dest.BenefitSubCategory = (Hl7.Fhir.Model.Coding)BenefitSubCategory.DeepCopy();
                 return dest;
             }
             else
@@ -205,6 +355,15 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Target, otherT.Target)) return false;
             if( !DeepComparable.Matches(Provider, otherT.Provider)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
+            if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
+            if( !DeepComparable.Matches(Enterer, otherT.Enterer)) return false;
+            if( !DeepComparable.Matches(Facility, otherT.Facility)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
+            if( !DeepComparable.Matches(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
+            if( !DeepComparable.Matches(Serviced, otherT.Serviced)) return false;
+            if( !DeepComparable.Matches(BenefitCategory, otherT.BenefitCategory)) return false;
+            if( !DeepComparable.Matches(BenefitSubCategory, otherT.BenefitSubCategory)) return false;
             
             return true;
         }
@@ -222,6 +381,15 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
             if( !DeepComparable.IsExactly(Provider, otherT.Provider)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
+            if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
+            if( !DeepComparable.IsExactly(Enterer, otherT.Enterer)) return false;
+            if( !DeepComparable.IsExactly(Facility, otherT.Facility)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
+            if( !DeepComparable.IsExactly(BusinessArrangementElement, otherT.BusinessArrangementElement)) return false;
+            if( !DeepComparable.IsExactly(Serviced, otherT.Serviced)) return false;
+            if( !DeepComparable.IsExactly(BenefitCategory, otherT.BenefitCategory)) return false;
+            if( !DeepComparable.IsExactly(BenefitSubCategory, otherT.BenefitSubCategory)) return false;
             
             return true;
         }

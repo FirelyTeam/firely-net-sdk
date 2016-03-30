@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,55 +61,55 @@ namespace Hl7.Fhir.Model
         public enum OrderStatus
         {
             /// <summary>
-            /// The order is known, but no processing has occurred at this time
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
             [EnumLiteral("pending"), Description("Pending")]
             Pending,
             /// <summary>
-            /// The order is undergoing initial processing to determine whether it will be accepted (usually this involves human review)
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
             [EnumLiteral("review"), Description("Review")]
             Review,
             /// <summary>
-            /// The order was rejected because of a workflow/business logic reason
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
             [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
-            /// The order was unable to be processed because of a technical error (i.e. unexpected error)
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
             [EnumLiteral("error"), Description("Error")]
             Error,
             /// <summary>
-            /// The order has been accepted, and work is in progress.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
             [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
-            /// Processing the order was halted at the initiators request.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
             /// <summary>
-            /// The order has been cancelled and replaced by another.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
             [EnumLiteral("replaced"), Description("Replaced")]
             Replaced,
             /// <summary>
-            /// Processing the order was stopped because of some workflow/business logic reason.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
             [EnumLiteral("aborted"), Description("Aborted")]
             Aborted,
             /// <summary>
-            /// The order has been completed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/order-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Completed")]

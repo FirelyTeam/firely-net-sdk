@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,31 +59,31 @@ namespace Hl7.Fhir.Model
         public enum ContactPointSystem
         {
             /// <summary>
-            /// The value is a telephone number used for voice calls. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
             [EnumLiteral("phone"), Description("Phone")]
             Phone,
             /// <summary>
-            /// The value is a fax machine. Use of full international numbers starting with + is recommended to enable automatic dialing support but not required.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
             [EnumLiteral("fax"), Description("Fax")]
             Fax,
             /// <summary>
-            /// The value is an email address.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
             [EnumLiteral("email"), Description("Email")]
             Email,
             /// <summary>
-            /// The value is a pager number. These may be local pager numbers that are only usable on a particular pager system.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
             [EnumLiteral("pager"), Description("Pager")]
             Pager,
             /// <summary>
-            /// A contact that is not a phone, fax, or email address. The format of the value SHOULD be a URL. This is intended for various personal contacts including blogs, Twitter, Facebook, etc. Do not use for email addresses. If this is not a URL, then it will require human interpretation.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-system)
             /// </summary>
             [EnumLiteral("other"), Description("URL")]
@@ -98,31 +98,31 @@ namespace Hl7.Fhir.Model
         public enum ContactPointUse
         {
             /// <summary>
-            /// A communication contact point at a home; attempted contacts for business purposes might intrude privacy and chances are one will contact family or other household members instead of the person one wishes to call. Typically used with urgent cases, or if no other contacts are available.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-use)
             /// </summary>
             [EnumLiteral("home"), Description("Home")]
             Home,
             /// <summary>
-            /// An office contact point. First choice for business related contacts during business hours.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-use)
             /// </summary>
             [EnumLiteral("work"), Description("Work")]
             Work,
             /// <summary>
-            /// A temporary contact point. The period can provide more detailed information.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-use)
             /// </summary>
             [EnumLiteral("temp"), Description("Temp")]
             Temp,
             /// <summary>
-            /// This contact point is no longer in use (or was never correct, but retained for records).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-use)
             /// </summary>
             [EnumLiteral("old"), Description("Old")]
             Old,
             /// <summary>
-            /// A telecommunication device that moves and stays with its owner. May have characteristics of all other use codes, suitable for urgent matters, not the first choice for routine business.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/contact-point-use)
             /// </summary>
             [EnumLiteral("mobile"), Description("Mobile")]

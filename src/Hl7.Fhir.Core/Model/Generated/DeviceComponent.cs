@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,67 +61,67 @@ namespace Hl7.Fhir.Model
         public enum Measmnt_Principle
         {
             /// <summary>
-            /// Measurement principle isn't in the list.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("other"), Description("MSP Other")]
             Other,
             /// <summary>
-            /// Measurement is done using the chemical principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("chemical"), Description("MSP Chemical")]
             Chemical,
             /// <summary>
-            /// Measurement is done using the electrical principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("electrical"), Description("MSP Electrical")]
             Electrical,
             /// <summary>
-            /// Measurement is done using the impedance principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("impedance"), Description("MSP Impedance")]
             Impedance,
             /// <summary>
-            /// Measurement is done using the nuclear principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("nuclear"), Description("MSP Nuclear")]
             Nuclear,
             /// <summary>
-            /// Measurement is done using the optical principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("optical"), Description("MSP Optical")]
             Optical,
             /// <summary>
-            /// Measurement is done using the thermal principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("thermal"), Description("MSP Thermal")]
             Thermal,
             /// <summary>
-            /// Measurement is done using the biological principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("biological"), Description("MSP Biological")]
             Biological,
             /// <summary>
-            /// Measurement is done using the mechanical principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("mechanical"), Description("MSP Mechanical")]
             Mechanical,
             /// <summary>
-            /// Measurement is done using the acoustical principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("acoustical"), Description("MSP Acoustical")]
             Acoustical,
             /// <summary>
-            /// Measurement is done using the manual principle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/measurement-principle)
             /// </summary>
             [EnumLiteral("manual"), Description("MSP Manual")]

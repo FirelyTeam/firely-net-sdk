@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -59,11 +59,29 @@ namespace Hl7.Fhir.Model
         public enum PropertyRepresentation
         {
             /// <summary>
-            /// In XML, this property is represented as an attribute not an element.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/property-representation)
             /// </summary>
             [EnumLiteral("xmlAttr"), Description("XML Attribute")]
             XmlAttr,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/property-representation)
+            /// </summary>
+            [EnumLiteral("xmlText"), Description("XML Text")]
+            XmlText,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/property-representation)
+            /// </summary>
+            [EnumLiteral("typeAttr"), Description("Type Attribute")]
+            TypeAttr,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/property-representation)
+            /// </summary>
+            [EnumLiteral("cdaText"), Description("CDA Text Format")]
+            CdaText,
         }
 
         /// <summary>
@@ -74,19 +92,19 @@ namespace Hl7.Fhir.Model
         public enum SlicingRules
         {
             /// <summary>
-            /// No additional content is allowed other than that described by the slices in this profile.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-slicing-rules)
             /// </summary>
             [EnumLiteral("closed"), Description("Closed")]
             Closed,
             /// <summary>
-            /// Additional content is allowed anywhere in the list.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-slicing-rules)
             /// </summary>
             [EnumLiteral("open"), Description("Open")]
             Open,
             /// <summary>
-            /// Additional content is allowed, but only at the end of the list. Note that using this requires that the slices be ordered, which makes it hard to share uses. This should only be done where absolutely required.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-slicing-rules)
             /// </summary>
             [EnumLiteral("openAtEnd"), Description("Open at End")]
@@ -101,23 +119,50 @@ namespace Hl7.Fhir.Model
         public enum AggregationMode
         {
             /// <summary>
-            /// The reference is a local reference to a contained resource.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-aggregation-mode)
             /// </summary>
             [EnumLiteral("contained"), Description("Contained")]
             Contained,
             /// <summary>
-            /// The reference to a resource that has to be resolved externally to the resource that includes the reference.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-aggregation-mode)
             /// </summary>
             [EnumLiteral("referenced"), Description("Referenced")]
             Referenced,
             /// <summary>
-            /// The resource the reference points to will be found in the same bundle as the resource that includes the reference.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-aggregation-mode)
             /// </summary>
             [EnumLiteral("bundled"), Description("Bundled")]
             Bundled,
+        }
+
+        /// <summary>
+        /// Whether a reference needs to be version specific or version independent, or whetehr either can be used
+        /// (url: http://hl7.org/fhir/ValueSet/reference-version-rules)
+        /// </summary>
+        [FhirEnumeration("ReferenceVersionRules")]
+        public enum ReferenceVersionRules
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/reference-version-rules)
+            /// </summary>
+            [EnumLiteral("either"), Description("Either Specific or independent")]
+            Either,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/reference-version-rules)
+            /// </summary>
+            [EnumLiteral("independent"), Description("Version independent")]
+            Independent,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/reference-version-rules)
+            /// </summary>
+            [EnumLiteral("specific"), Description("Version Specific")]
+            Specific,
         }
 
         /// <summary>
@@ -128,13 +173,13 @@ namespace Hl7.Fhir.Model
         public enum ConstraintSeverity
         {
             /// <summary>
-            /// If the constraint is violated, the resource is not conformant.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/constraint-severity)
             /// </summary>
             [EnumLiteral("error"), Description("Error")]
             Error,
             /// <summary>
-            /// If the constraint is violated, the resource is conformant, but it is not necessarily following best practice.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/constraint-severity)
             /// </summary>
             [EnumLiteral("warning"), Description("Warning")]
@@ -149,7 +194,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "SlicingComponent"; } }
             
             /// <summary>
-            /// Element values that used to distinguish the slices
+            /// Element values that are used to distinguish the slices
             /// </summary>
             [FhirElement("discriminator", InSummary=true, Order=40)]
             [Cardinality(Min=0,Max=-1)]
@@ -163,7 +208,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.FhirString> _DiscriminatorElement;
             
             /// <summary>
-            /// Element values that used to distinguish the slices
+            /// Element values that are used to distinguish the slices
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -593,6 +638,38 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// either | independent | specific
+            /// </summary>
+            [FhirElement("versioning", InSummary=true, Order=70)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules> VersioningElement
+            {
+                get { return _VersioningElement; }
+                set { _VersioningElement = value; OnPropertyChanged("VersioningElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules> _VersioningElement;
+            
+            /// <summary>
+            /// either | independent | specific
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules? Versioning
+            {
+                get { return VersioningElement != null ? VersioningElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      VersioningElement = null; 
+                    else
+                      VersioningElement = new Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules>(value);
+                    OnPropertyChanged("Versioning");
+                }
+            }
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as TypeRefComponent;
@@ -603,6 +680,7 @@ namespace Hl7.Fhir.Model
                     if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.FHIRDefinedType>)CodeElement.DeepCopy();
                     if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(ProfileElement.DeepCopy());
                     if(AggregationElement != null) dest.AggregationElement = new List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>>(AggregationElement.DeepCopy());
+                    if(VersioningElement != null) dest.VersioningElement = (Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules>)VersioningElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -623,6 +701,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.Matches(ProfileElement, otherT.ProfileElement)) return false;
                 if( !DeepComparable.Matches(AggregationElement, otherT.AggregationElement)) return false;
+                if( !DeepComparable.Matches(VersioningElement, otherT.VersioningElement)) return false;
                 
                 return true;
             }
@@ -636,6 +715,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
                 if( !DeepComparable.IsExactly(AggregationElement, otherT.AggregationElement)) return false;
+                if( !DeepComparable.IsExactly(VersioningElement, otherT.VersioningElement)) return false;
                 
                 return true;
             }
@@ -684,7 +764,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Why this constraint necessary or appropriate
+            /// Why this constraint is necessary or appropriate
             /// </summary>
             [FhirElement("requirements", InSummary=true, Order=50)]
             [DataMember]
@@ -697,7 +777,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _RequirementsElement;
             
             /// <summary>
-            /// Why this constraint necessary or appropriate
+            /// Why this constraint is necessary or appropriate
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -782,9 +862,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// FluentPath expression of constraint
+            /// </summary>
+            [FhirElement("expression", InSummary=true, Order=80)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString ExpressionElement
+            {
+                get { return _ExpressionElement; }
+                set { _ExpressionElement = value; OnPropertyChanged("ExpressionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _ExpressionElement;
+            
+            /// <summary>
+            /// FluentPath expression of constraint
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Expression
+            {
+                get { return ExpressionElement != null ? ExpressionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ExpressionElement = null; 
+                    else
+                      ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Expression");
+                }
+            }
+            
+            /// <summary>
             /// XPath expression of constraint
             /// </summary>
-            [FhirElement("xpath", InSummary=true, Order=80)]
+            [FhirElement("xpath", InSummary=true, Order=90)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString XpathElement
@@ -825,6 +937,7 @@ namespace Hl7.Fhir.Model
                     if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
                     if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.ElementDefinition.ConstraintSeverity>)SeverityElement.DeepCopy();
                     if(HumanElement != null) dest.HumanElement = (Hl7.Fhir.Model.FhirString)HumanElement.DeepCopy();
+                    if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
                     if(XpathElement != null) dest.XpathElement = (Hl7.Fhir.Model.FhirString)XpathElement.DeepCopy();
                     return dest;
                 }
@@ -847,6 +960,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
                 if( !DeepComparable.Matches(SeverityElement, otherT.SeverityElement)) return false;
                 if( !DeepComparable.Matches(HumanElement, otherT.HumanElement)) return false;
+                if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
                 if( !DeepComparable.Matches(XpathElement, otherT.XpathElement)) return false;
                 
                 return true;
@@ -862,6 +976,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
                 if( !DeepComparable.IsExactly(SeverityElement, otherT.SeverityElement)) return false;
                 if( !DeepComparable.IsExactly(HumanElement, otherT.HumanElement)) return false;
+                if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
                 if( !DeepComparable.IsExactly(XpathElement, otherT.XpathElement)) return false;
                 
                 return true;
@@ -1195,7 +1310,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// How this element is represented in instances
+        /// xmlAttr | xmlText | typeAttr | cdaText
         /// </summary>
         [FhirElement("representation", InSummary=true, Order=40)]
         [Cardinality(Min=0,Max=-1)]
@@ -1209,7 +1324,7 @@ namespace Hl7.Fhir.Model
         private List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>> _RepresentationElement;
         
         /// <summary>
-        /// How this element is represented in instances
+        /// xmlAttr | xmlText | typeAttr | cdaText
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1415,7 +1530,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Why is this needed?
+        /// Why this resource has been created
         /// </summary>
         [FhirElement("requirements", InSummary=true, Order=120)]
         [DataMember]
@@ -1428,7 +1543,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Markdown _RequirementsElement;
         
         /// <summary>
-        /// Why is this needed?
+        /// Why this resource has been created
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1557,9 +1672,41 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ElementDefinition.BaseComponent _Base;
         
         /// <summary>
+        /// Reference to definition of content for the element
+        /// </summary>
+        [FhirElement("contentReference", InSummary=true, Order=170)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirUri ContentReferenceElement
+        {
+            get { return _ContentReferenceElement; }
+            set { _ContentReferenceElement = value; OnPropertyChanged("ContentReferenceElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirUri _ContentReferenceElement;
+        
+        /// <summary>
+        /// Reference to definition of content for the element
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string ContentReference
+        {
+            get { return ContentReferenceElement != null ? ContentReferenceElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ContentReferenceElement = null; 
+                else
+                  ContentReferenceElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("ContentReference");
+            }
+        }
+        
+        /// <summary>
         /// Data type and Profile for this element
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=170)]
+        [FhirElement("type", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ElementDefinition.TypeRefComponent> Type
@@ -1571,39 +1718,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ElementDefinition.TypeRefComponent> _Type;
         
         /// <summary>
-        /// To another element constraint (by element.name)
-        /// </summary>
-        [FhirElement("nameReference", InSummary=true, Order=180)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString NameReferenceElement
-        {
-            get { return _NameReferenceElement; }
-            set { _NameReferenceElement = value; OnPropertyChanged("NameReferenceElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _NameReferenceElement;
-        
-        /// <summary>
-        /// To another element constraint (by element.name)
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string NameReference
-        {
-            get { return NameReferenceElement != null ? NameReferenceElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  NameReferenceElement = null; 
-                else
-                  NameReferenceElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("NameReference");
-            }
-        }
-        
-        /// <summary>
-        /// Specified value it missing from instance
+        /// Specified value if missing from instance
         /// </summary>
         [FhirElement("defaultValue", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Meta))]
@@ -1677,7 +1792,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Pattern;
         
         /// <summary>
-        /// Example value: [as defined for type]
+        /// Example value (as defined for type)
         /// </summary>
         [FhirElement("example", InSummary=true, Order=230, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Meta))]
@@ -1941,8 +2056,8 @@ namespace Hl7.Fhir.Model
                 if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.Integer)MinElement.DeepCopy();
                 if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
                 if(Base != null) dest.Base = (Hl7.Fhir.Model.ElementDefinition.BaseComponent)Base.DeepCopy();
+                if(ContentReferenceElement != null) dest.ContentReferenceElement = (Hl7.Fhir.Model.FhirUri)ContentReferenceElement.DeepCopy();
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.ElementDefinition.TypeRefComponent>(Type.DeepCopy());
-                if(NameReferenceElement != null) dest.NameReferenceElement = (Hl7.Fhir.Model.FhirString)NameReferenceElement.DeepCopy();
                 if(DefaultValue != null) dest.DefaultValue = (Hl7.Fhir.Model.Element)DefaultValue.DeepCopy();
                 if(MeaningWhenMissingElement != null) dest.MeaningWhenMissingElement = (Hl7.Fhir.Model.Markdown)MeaningWhenMissingElement.DeepCopy();
                 if(Fixed != null) dest.Fixed = (Hl7.Fhir.Model.Element)Fixed.DeepCopy();
@@ -1989,8 +2104,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(MinElement, otherT.MinElement)) return false;
             if( !DeepComparable.Matches(MaxElement, otherT.MaxElement)) return false;
             if( !DeepComparable.Matches(Base, otherT.Base)) return false;
+            if( !DeepComparable.Matches(ContentReferenceElement, otherT.ContentReferenceElement)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-            if( !DeepComparable.Matches(NameReferenceElement, otherT.NameReferenceElement)) return false;
             if( !DeepComparable.Matches(DefaultValue, otherT.DefaultValue)) return false;
             if( !DeepComparable.Matches(MeaningWhenMissingElement, otherT.MeaningWhenMissingElement)) return false;
             if( !DeepComparable.Matches(Fixed, otherT.Fixed)) return false;
@@ -2030,8 +2145,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(MinElement, otherT.MinElement)) return false;
             if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
             if( !DeepComparable.IsExactly(Base, otherT.Base)) return false;
+            if( !DeepComparable.IsExactly(ContentReferenceElement, otherT.ContentReferenceElement)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-            if( !DeepComparable.IsExactly(NameReferenceElement, otherT.NameReferenceElement)) return false;
             if( !DeepComparable.IsExactly(DefaultValue, otherT.DefaultValue)) return false;
             if( !DeepComparable.IsExactly(MeaningWhenMissingElement, otherT.MeaningWhenMissingElement)) return false;
             if( !DeepComparable.IsExactly(Fixed, otherT.Fixed)) return false;

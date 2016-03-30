@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,43 +61,43 @@ namespace Hl7.Fhir.Model
         public enum ObservationStatus
         {
             /// <summary>
-            /// The existence of the observation is registered, but there is no result yet available.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
             [EnumLiteral("registered"), Description("Registered")]
             Registered,
             /// <summary>
-            /// This is an initial or interim observation: data may be incomplete or unverified.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
             [EnumLiteral("preliminary"), Description("Preliminary")]
             Preliminary,
             /// <summary>
-            /// The observation is complete and verified by an authorized person.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
             [EnumLiteral("final"), Description("Final")]
             Final,
             /// <summary>
-            /// The observation has been modified subsequent to being Final, and is complete and verified by an authorized person.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
             [EnumLiteral("amended"), Description("Amended")]
             Amended,
             /// <summary>
-            /// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
             [EnumLiteral("cancelled"), Description("cancelled")]
             Cancelled,
             /// <summary>
-            /// The observation has been withdrawn following previous final release.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
-            /// The observation status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-status)
             /// </summary>
             [EnumLiteral("unknown"), Description("Unknown Status")]
@@ -112,37 +112,37 @@ namespace Hl7.Fhir.Model
         public enum ObservationRelationshipType
         {
             /// <summary>
-            /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
             [EnumLiteral("has-member"), Description("Has Member")]
             HasMember,
             /// <summary>
-            /// The target resource (Observation or QuestionnaireResponse) is part of the information from which this observation value is derived. (e.g. calculated anion gap, Apgar score)  NOTE:  "derived-from" is only logical choice when referencing QuestionnaireResponse.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
             [EnumLiteral("derived-from"), Description("Derived From")]
             DerivedFrom,
             /// <summary>
-            /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
             [EnumLiteral("sequel-to"), Description("Sequel To")]
             SequelTo,
             /// <summary>
-            /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
             [EnumLiteral("replaces"), Description("Replaces")]
             Replaces,
             /// <summary>
-            /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipemia measure target from a plasma measure).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
             [EnumLiteral("qualified-by"), Description("Qualified By")]
             QualifiedBy,
             /// <summary>
-            /// The value of the target observation interferes (degrades quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure which has no value).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/observation-relationshiptypes)
             /// </summary>
             [EnumLiteral("interfered-by"), Description("Interfered By")]
@@ -718,15 +718,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Comments about result
         /// </summary>
-        [FhirElement("comments", Order=210)]
+        [FhirElement("comment", Order=210)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString CommentsElement
+        public Hl7.Fhir.Model.FhirString CommentElement
         {
-            get { return _CommentsElement; }
-            set { _CommentsElement = value; OnPropertyChanged("CommentsElement"); }
+            get { return _CommentElement; }
+            set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _CommentsElement;
+        private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
         /// Comments about result
@@ -734,16 +734,16 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Comments
+        public string Comment
         {
-            get { return CommentsElement != null ? CommentsElement.Value : null; }
+            get { return CommentElement != null ? CommentElement.Value : null; }
             set
             {
                 if(value == null)
-                  CommentsElement = null; 
+                  CommentElement = null; 
                 else
-                  CommentsElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Comments");
+                  CommentElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Comment");
             }
         }
         
@@ -862,7 +862,7 @@ namespace Hl7.Fhir.Model
                 if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                 if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
                 if(Interpretation != null) dest.Interpretation = (Hl7.Fhir.Model.CodeableConcept)Interpretation.DeepCopy();
-                if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
+                if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 if(BodySite != null) dest.BodySite = (Hl7.Fhir.Model.CodeableConcept)BodySite.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                 if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();
@@ -899,7 +899,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Value, otherT.Value)) return false;
             if( !DeepComparable.Matches(DataAbsentReason, otherT.DataAbsentReason)) return false;
             if( !DeepComparable.Matches(Interpretation, otherT.Interpretation)) return false;
-            if( !DeepComparable.Matches(CommentsElement, otherT.CommentsElement)) return false;
+            if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.Matches(Method, otherT.Method)) return false;
             if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
@@ -929,7 +929,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
             if( !DeepComparable.IsExactly(DataAbsentReason, otherT.DataAbsentReason)) return false;
             if( !DeepComparable.IsExactly(Interpretation, otherT.Interpretation)) return false;
-            if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
+            if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
             if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
             if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;

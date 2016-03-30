@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -63,16 +63,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Organization where the roles are performed
             /// </summary>
-            [FhirElement("managingOrganization", Order=40)]
+            [FhirElement("organization", Order=40)]
             [References("Organization")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference ManagingOrganization
+            public Hl7.Fhir.Model.ResourceReference Organization
             {
-                get { return _ManagingOrganization; }
-                set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
+                get { return _Organization; }
+                set { _Organization = value; OnPropertyChanged("Organization"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
+            private Hl7.Fhir.Model.ResourceReference _Organization;
             
             /// <summary>
             /// Roles which this practitioner may perform
@@ -102,9 +102,37 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
             
             /// <summary>
+            /// Business Identifiers that are specific to a role/location
+            /// </summary>
+            [FhirElement("identifier", InSummary=true, Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Identifier> Identifier
+            {
+                get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+                set { _Identifier = value; OnPropertyChanged("Identifier"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Identifier> _Identifier;
+            
+            /// <summary>
+            /// Contact details that are specific to the role/location/service
+            /// </summary>
+            [FhirElement("telecom", InSummary=true, Order=80)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.ContactPoint> Telecom
+            {
+                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
+                set { _Telecom = value; OnPropertyChanged("Telecom"); }
+            }
+            
+            private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
+            
+            /// <summary>
             /// The period during which the practitioner is authorized to perform in these role(s)
             /// </summary>
-            [FhirElement("period", InSummary=true, Order=70)]
+            [FhirElement("period", InSummary=true, Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -117,7 +145,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The location(s) at which this practitioner provides care
             /// </summary>
-            [FhirElement("location", Order=80)]
+            [FhirElement("location", Order=100)]
             [References("Location")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -132,7 +160,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The list of healthcare services that this worker provides for this role's Organization/Location(s)
             /// </summary>
-            [FhirElement("healthcareService", Order=90)]
+            [FhirElement("healthcareService", Order=110)]
             [References("HealthcareService")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -151,9 +179,11 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
+                    if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                     if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
                     if(Specialty != null) dest.Specialty = new List<Hl7.Fhir.Model.CodeableConcept>(Specialty.DeepCopy());
+                    if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
                     if(HealthcareService != null) dest.HealthcareService = new List<Hl7.Fhir.Model.ResourceReference>(HealthcareService.DeepCopy());
@@ -174,9 +204,11 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
+                if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
                 if( !DeepComparable.Matches(Role, otherT.Role)) return false;
                 if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
+                if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
                 if( !DeepComparable.Matches(Period, otherT.Period)) return false;
                 if( !DeepComparable.Matches(Location, otherT.Location)) return false;
                 if( !DeepComparable.Matches(HealthcareService, otherT.HealthcareService)) return false;
@@ -190,9 +222,11 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
+                if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
                 if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
                 if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
+                if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+                if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
                 if( !DeepComparable.IsExactly(HealthcareService, otherT.HealthcareService)) return false;
@@ -365,20 +399,21 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// A name associated with the person
+        /// The name(s) associated with the practitioner
         /// </summary>
         [FhirElement("name", InSummary=true, Order=110)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.HumanName Name
+        public List<Hl7.Fhir.Model.HumanName> Name
         {
-            get { return _Name; }
+            get { if(_Name==null) _Name = new List<Hl7.Fhir.Model.HumanName>(); return _Name; }
             set { _Name = value; OnPropertyChanged("Name"); }
         }
         
-        private Hl7.Fhir.Model.HumanName _Name;
+        private List<Hl7.Fhir.Model.HumanName> _Name;
         
         /// <summary>
-        /// A contact detail for the practitioner
+        /// A contact detail for the practitioner (that apply to all roles)
         /// </summary>
         [FhirElement("telecom", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
@@ -392,7 +427,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
-        /// Where practitioner can be found/visited
+        /// Address(es) of the practitioner that are not role specific (typically home address)
         /// </summary>
         [FhirElement("address", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
@@ -534,7 +569,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
-                if(Name != null) dest.Name = (Hl7.Fhir.Model.HumanName)Name.DeepCopy();
+                if(Name != null) dest.Name = new List<Hl7.Fhir.Model.HumanName>(Name.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();

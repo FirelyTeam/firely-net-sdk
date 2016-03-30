@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,62 +61,17 @@ namespace Hl7.Fhir.Model
         public enum GuideDependencyType
         {
             /// <summary>
-            /// The guide is referred to by URL.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-dependency-type)
             /// </summary>
             [EnumLiteral("reference"), Description("Reference")]
             Reference,
             /// <summary>
-            /// The guide is embedded in this guide when published.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-dependency-type)
             /// </summary>
             [EnumLiteral("inclusion"), Description("Inclusion")]
             Inclusion,
-        }
-
-        /// <summary>
-        /// Why a resource is included in the guide.
-        /// (url: http://hl7.org/fhir/ValueSet/guide-resource-purpose)
-        /// </summary>
-        [FhirEnumeration("GuideResourcePurpose")]
-        public enum GuideResourcePurpose
-        {
-            /// <summary>
-            /// The resource is intended as an example.
-            /// (system: http://hl7.org/fhir/guide-resource-purpose)
-            /// </summary>
-            [EnumLiteral("example"), Description("Example")]
-            Example,
-            /// <summary>
-            /// The resource defines a value set or concept map used in the implementation guide.
-            /// (system: http://hl7.org/fhir/guide-resource-purpose)
-            /// </summary>
-            [EnumLiteral("terminology"), Description("Terminology")]
-            Terminology,
-            /// <summary>
-            /// The resource defines a profile (StructureDefinition) that is used in the implementation guide.
-            /// (system: http://hl7.org/fhir/guide-resource-purpose)
-            /// </summary>
-            [EnumLiteral("profile"), Description("Profile")]
-            Profile,
-            /// <summary>
-            /// The resource defines an extension (StructureDefinition) that is used in the implementation guide.
-            /// (system: http://hl7.org/fhir/guide-resource-purpose)
-            /// </summary>
-            [EnumLiteral("extension"), Description("Extension")]
-            Extension,
-            /// <summary>
-            /// The resource contains a dictionary that is part of the implementation guide.
-            /// (system: http://hl7.org/fhir/guide-resource-purpose)
-            /// </summary>
-            [EnumLiteral("dictionary"), Description("Dictionary")]
-            Dictionary,
-            /// <summary>
-            /// The resource defines a logical model (in a StructureDefinition) that is used in the implementation guide.
-            /// (system: http://hl7.org/fhir/guide-resource-purpose)
-            /// </summary>
-            [EnumLiteral("logical"), Description("Logical Model")]
-            Logical,
         }
 
         /// <summary>
@@ -127,49 +82,49 @@ namespace Hl7.Fhir.Model
         public enum GuidePageKind
         {
             /// <summary>
-            /// This is a page of content that is included in the implementation guide. It has no particular function.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
             [EnumLiteral("page"), Description("Page")]
             Page,
             /// <summary>
-            /// This is a page that represents a human readable rendering of an example.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
             [EnumLiteral("example"), Description("Example")]
             Example,
             /// <summary>
-            /// This is a page that represents a list of resources of one or more types.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
             [EnumLiteral("list"), Description("List")]
             List,
             /// <summary>
-            /// This is a page showing where an included guide is injected.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
             [EnumLiteral("include"), Description("Include")]
             Include,
             /// <summary>
-            /// This is a page that lists the resources of a given type, and also creates pages for all the listed types as other pages in the section.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
             [EnumLiteral("directory"), Description("Directory")]
             Directory,
             /// <summary>
-            /// This is a page that creates the listed resources as a dictionary.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
             [EnumLiteral("dictionary"), Description("Dictionary")]
             Dictionary,
             /// <summary>
-            /// This is a generated page that contains the table of contents.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
             [EnumLiteral("toc"), Description("Table Of Contents")]
             Toc,
             /// <summary>
-            /// This is a page that represents a presented resource. This is typically used for generated conformance resource presentations.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/guide-page-kind)
             /// </summary>
             [EnumLiteral("resource"), Description("Resource")]
@@ -184,7 +139,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
-            /// Name of a individual to contact
+            /// Name of an individual to contact
             /// </summary>
             [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
@@ -197,7 +152,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
-            /// Name of a individual to contact
+            /// Name of an individual to contact
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -540,35 +495,35 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ResourceComponent"; } }
             
             /// <summary>
-            /// example | terminology | profile | extension | dictionary | logical
+            /// If not an example, has it's normal meaning
             /// </summary>
-            [FhirElement("purpose", InSummary=true, Order=40)]
+            [FhirElement("example", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.ImplementationGuide.GuideResourcePurpose> PurposeElement
+            public Hl7.Fhir.Model.FhirBoolean ExampleElement
             {
-                get { return _PurposeElement; }
-                set { _PurposeElement = value; OnPropertyChanged("PurposeElement"); }
+                get { return _ExampleElement; }
+                set { _ExampleElement = value; OnPropertyChanged("ExampleElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.ImplementationGuide.GuideResourcePurpose> _PurposeElement;
+            private Hl7.Fhir.Model.FhirBoolean _ExampleElement;
             
             /// <summary>
-            /// example | terminology | profile | extension | dictionary | logical
+            /// If not an example, has it's normal meaning
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ImplementationGuide.GuideResourcePurpose? Purpose
+            public bool? Example
             {
-                get { return PurposeElement != null ? PurposeElement.Value : null; }
+                get { return ExampleElement != null ? ExampleElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      PurposeElement = null; 
+                      ExampleElement = null; 
                     else
-                      PurposeElement = new Code<Hl7.Fhir.Model.ImplementationGuide.GuideResourcePurpose>(value);
-                    OnPropertyChanged("Purpose");
+                      ExampleElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("Example");
                 }
             }
             
@@ -704,7 +659,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(PurposeElement != null) dest.PurposeElement = (Code<Hl7.Fhir.Model.ImplementationGuide.GuideResourcePurpose>)PurposeElement.DeepCopy();
+                    if(ExampleElement != null) dest.ExampleElement = (Hl7.Fhir.Model.FhirBoolean)ExampleElement.DeepCopy();
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(AcronymElement != null) dest.AcronymElement = (Hl7.Fhir.Model.FhirString)AcronymElement.DeepCopy();
@@ -727,7 +682,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(PurposeElement, otherT.PurposeElement)) return false;
+                if( !DeepComparable.Matches(ExampleElement, otherT.ExampleElement)) return false;
                 if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(AcronymElement, otherT.AcronymElement)) return false;
@@ -743,7 +698,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(PurposeElement, otherT.PurposeElement)) return false;
+                if( !DeepComparable.IsExactly(ExampleElement, otherT.ExampleElement)) return false;
                 if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(AcronymElement, otherT.AcronymElement)) return false;

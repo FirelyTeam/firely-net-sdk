@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,19 +61,19 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricOperationalStatus
         {
             /// <summary>
-            /// The DeviceMetric is operating and will generate DeviceObservations.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-operational-status)
             /// </summary>
             [EnumLiteral("on"), Description("On")]
             On,
             /// <summary>
-            /// The DeviceMetric is not operating.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-operational-status)
             /// </summary>
             [EnumLiteral("off"), Description("Off")]
             Off,
             /// <summary>
-            /// The DeviceMetric is operating, but will not generate any DeviceObservations.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-operational-status)
             /// </summary>
             [EnumLiteral("standby"), Description("Standby")]
@@ -88,49 +88,49 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricColor
         {
             /// <summary>
-            /// Color for representation - black.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("black"), Description("Color Black")]
             Black,
             /// <summary>
-            /// Color for representation - red.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("red"), Description("Color Red")]
             Red,
             /// <summary>
-            /// Color for representation - green.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("green"), Description("Color Green")]
             Green,
             /// <summary>
-            /// Color for representation - yellow.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("yellow"), Description("Color Yellow")]
             Yellow,
             /// <summary>
-            /// Color for representation - blue.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("blue"), Description("Color Blue")]
             Blue,
             /// <summary>
-            /// Color for representation - magenta.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("magenta"), Description("Color Magenta")]
             Magenta,
             /// <summary>
-            /// Color for representation - cyan.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("cyan"), Description("Color Cyan")]
             Cyan,
             /// <summary>
-            /// Color for representation - white.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-color)
             /// </summary>
             [EnumLiteral("white"), Description("Color White")]
@@ -145,25 +145,25 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricCategory
         {
             /// <summary>
-            /// DeviceObservations generated for this DeviceMetric are measured.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
             [EnumLiteral("measurement"), Description("Measurement")]
             Measurement,
             /// <summary>
-            /// DeviceObservations generated for this DeviceMetric is a setting that will influence the behavior of the Device.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
             [EnumLiteral("setting"), Description("Setting")]
             Setting,
             /// <summary>
-            /// DeviceObservations generated for this DeviceMetric are calculated.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
             [EnumLiteral("calculation"), Description("Calculation")]
             Calculation,
             /// <summary>
-            /// The category of this DeviceMetric is unspecified.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-category)
             /// </summary>
             [EnumLiteral("unspecified"), Description("Unspecified")]
@@ -178,25 +178,25 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricCalibrationType
         {
             /// <summary>
-            /// TODO
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-calibration-type)
             /// </summary>
             [EnumLiteral("unspecified"), Description("Unspecified")]
             Unspecified,
             /// <summary>
-            /// TODO
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-calibration-type)
             /// </summary>
             [EnumLiteral("offset"), Description("Offset")]
             Offset,
             /// <summary>
-            /// TODO
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-calibration-type)
             /// </summary>
             [EnumLiteral("gain"), Description("Gain")]
             Gain,
             /// <summary>
-            /// TODO
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-calibration-type)
             /// </summary>
             [EnumLiteral("two-point"), Description("Two Point")]
@@ -211,25 +211,25 @@ namespace Hl7.Fhir.Model
         public enum DeviceMetricCalibrationState
         {
             /// <summary>
-            /// The metric has not been calibrated.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-calibration-state)
             /// </summary>
             [EnumLiteral("not-calibrated"), Description("Not Calibrated")]
             NotCalibrated,
             /// <summary>
-            /// The metric needs to be calibrated.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-calibration-state)
             /// </summary>
             [EnumLiteral("calibration-required"), Description("Calibration Required")]
             CalibrationRequired,
             /// <summary>
-            /// The metric has been calibrated.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-calibration-state)
             /// </summary>
             [EnumLiteral("calibrated"), Description("Calibrated")]
             Calibrated,
             /// <summary>
-            /// The state of calibration of this metric is unspecified.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/metric-calibration-state)
             /// </summary>
             [EnumLiteral("unspecified"), Description("Unspecified")]

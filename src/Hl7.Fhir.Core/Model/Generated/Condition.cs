@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,37 +61,37 @@ namespace Hl7.Fhir.Model
         public enum ConditionVerificationStatus
         {
             /// <summary>
-            /// This is a tentative diagnosis - still a candidate that is under consideration.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
             [EnumLiteral("provisional"), Description("Provisional")]
             Provisional,
             /// <summary>
-            /// One of a set of potential (and typically mutually exclusive) diagnosis asserted to further guide the diagnostic process and preliminary treatment.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
             [EnumLiteral("differential"), Description("Differential")]
             Differential,
             /// <summary>
-            /// There is sufficient diagnostic and/or clinical evidence to treat this as a confirmed condition.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
             [EnumLiteral("confirmed"), Description("Confirmed")]
             Confirmed,
             /// <summary>
-            /// This condition has been ruled out by diagnostic and clinical evidence.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
             [EnumLiteral("refuted"), Description("Refuted")]
             Refuted,
             /// <summary>
-            /// The statement was entered in error and is not valid.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered In Error")]
             EnteredInError,
             /// <summary>
-            /// The condition status is unknown.  Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/condition-ver-status)
             /// </summary>
             [EnumLiteral("unknown"), Description("Unknown")]

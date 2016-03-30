@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,25 +61,25 @@ namespace Hl7.Fhir.Model
         public enum ProcedureStatus
         {
             /// <summary>
-            /// The procedure is still occurring.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/procedure-status)
             /// </summary>
             [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
-            /// The procedure was terminated without completing successfully.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/procedure-status)
             /// </summary>
             [EnumLiteral("aborted"), Description("Aboted")]
             Aborted,
             /// <summary>
-            /// All actions involved in the procedure have taken place.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/procedure-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
-            /// The statement was entered in error and Is not valid.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/procedure-status)
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered in Error")]

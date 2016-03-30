@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Decimal values with spaces, or "E" | "U" | "L"
         /// </summary>
-        [FhirElement("data", InSummary=true, Order=90)]
+        [FhirElement("data", Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DataElement

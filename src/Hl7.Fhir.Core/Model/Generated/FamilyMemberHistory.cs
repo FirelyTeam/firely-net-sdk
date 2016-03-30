@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,25 +61,25 @@ namespace Hl7.Fhir.Model
         public enum FamilyHistoryStatus
         {
             /// <summary>
-            /// Some health information is known and captured, but not complete - see notes for details.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
             [EnumLiteral("partial"), Description("Partial")]
             Partial,
             /// <summary>
-            /// All relevant health information is known and captured.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
-            /// This instance should not have been part of this patient's medical record.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered in error")]
             EnteredInError,
             /// <summary>
-            /// Health information for this individual is unavailable/unknown.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/history-status)
             /// </summary>
             [EnumLiteral("health-unknown"), Description("Health unknown")]

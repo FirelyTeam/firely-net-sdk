@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -53,51 +53,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "AppointmentResponse"; } }
         
-        /// <summary>
-        /// The Participation status of an appointment.
-        /// (url: http://hl7.org/fhir/ValueSet/participantstatus)
-        /// </summary>
-        [FhirEnumeration("ParticipantStatus")]
-        public enum ParticipantStatus
-        {
-            /// <summary>
-            /// The appointment participant has accepted that they can attend the appointment at the time specified in the AppointmentResponse.
-            /// (system: http://hl7.org/fhir/participantstatus)
-            /// </summary>
-            [EnumLiteral("accepted"), Description("Accepted")]
-            Accepted,
-            /// <summary>
-            /// The appointment participant has declined the appointment.
-            /// (system: http://hl7.org/fhir/participantstatus)
-            /// </summary>
-            [EnumLiteral("declined"), Description("Declined")]
-            Declined,
-            /// <summary>
-            /// The appointment participant has tentatively accepted the appointment.
-            /// (system: http://hl7.org/fhir/participantstatus)
-            /// </summary>
-            [EnumLiteral("tentative"), Description("Tentative")]
-            Tentative,
-            /// <summary>
-            /// The participant has in-process the appointment.
-            /// (system: http://hl7.org/fhir/participantstatus)
-            /// </summary>
-            [EnumLiteral("in-process"), Description("In Process")]
-            InProcess,
-            /// <summary>
-            /// The participant has completed the appointment.
-            /// (system: http://hl7.org/fhir/participantstatus)
-            /// </summary>
-            [EnumLiteral("completed"), Description("Completed")]
-            Completed,
-            /// <summary>
-            /// This is the intitial status of an appointment participant until a participant has replied. It implies that there is no commitment for the appointment.
-            /// (system: http://hl7.org/fhir/participantstatus)
-            /// </summary>
-            [EnumLiteral("needs-action"), Description("Needs Action")]
-            NeedsAction,
-        }
-
         /// <summary>
         /// External Ids for this item
         /// </summary>
@@ -225,13 +180,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("participantStatus", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus> ParticipantStatus_Element
+        public Code<Hl7.Fhir.Model.ParticipationStatus> ParticipantStatusElement
         {
-            get { return _ParticipantStatus_Element; }
-            set { _ParticipantStatus_Element = value; OnPropertyChanged("ParticipantStatus_Element"); }
+            get { return _ParticipantStatusElement; }
+            set { _ParticipantStatusElement = value; OnPropertyChanged("ParticipantStatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus> _ParticipantStatus_Element;
+        private Code<Hl7.Fhir.Model.ParticipationStatus> _ParticipantStatusElement;
         
         /// <summary>
         /// accepted | declined | tentative | in-process | completed | needs-action
@@ -239,16 +194,16 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus? ParticipantStatus_
+        public Hl7.Fhir.Model.ParticipationStatus? ParticipantStatus
         {
-            get { return ParticipantStatus_Element != null ? ParticipantStatus_Element.Value : null; }
+            get { return ParticipantStatusElement != null ? ParticipantStatusElement.Value : null; }
             set
             {
                 if(value == null)
-                  ParticipantStatus_Element = null; 
+                  ParticipantStatusElement = null; 
                 else
-                  ParticipantStatus_Element = new Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus>(value);
-                OnPropertyChanged("ParticipantStatus_");
+                  ParticipantStatusElement = new Code<Hl7.Fhir.Model.ParticipationStatus>(value);
+                OnPropertyChanged("ParticipantStatus");
             }
         }
         
@@ -297,7 +252,7 @@ namespace Hl7.Fhir.Model
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
                 if(ParticipantType != null) dest.ParticipantType = new List<Hl7.Fhir.Model.CodeableConcept>(ParticipantType.DeepCopy());
                 if(Actor != null) dest.Actor = (Hl7.Fhir.Model.ResourceReference)Actor.DeepCopy();
-                if(ParticipantStatus_Element != null) dest.ParticipantStatus_Element = (Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus>)ParticipantStatus_Element.DeepCopy();
+                if(ParticipantStatusElement != null) dest.ParticipantStatusElement = (Code<Hl7.Fhir.Model.ParticipationStatus>)ParticipantStatusElement.DeepCopy();
                 if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                 return dest;
             }
@@ -322,7 +277,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
             if( !DeepComparable.Matches(ParticipantType, otherT.ParticipantType)) return false;
             if( !DeepComparable.Matches(Actor, otherT.Actor)) return false;
-            if( !DeepComparable.Matches(ParticipantStatus_Element, otherT.ParticipantStatus_Element)) return false;
+            if( !DeepComparable.Matches(ParticipantStatusElement, otherT.ParticipantStatusElement)) return false;
             if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
             
             return true;
@@ -340,7 +295,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
             if( !DeepComparable.IsExactly(ParticipantType, otherT.ParticipantType)) return false;
             if( !DeepComparable.IsExactly(Actor, otherT.Actor)) return false;
-            if( !DeepComparable.IsExactly(ParticipantStatus_Element, otherT.ParticipantStatus_Element)) return false;
+            if( !DeepComparable.IsExactly(ParticipantStatusElement, otherT.ParticipantStatusElement)) return false;
             if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
             
             return true;

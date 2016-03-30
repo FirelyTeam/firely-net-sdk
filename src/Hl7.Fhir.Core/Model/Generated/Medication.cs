@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -161,17 +161,17 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The product contained
             /// </summary>
-            [FhirElement("item", Order=40)]
-            [References("Substance","Medication")]
+            [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Item
+            public Hl7.Fhir.Model.Element Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Item;
+            private Hl7.Fhir.Model.Element _Item;
             
             /// <summary>
             /// Quantity of ingredient present
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Ratio)Amount.DeepCopy();
                     return dest;
                 }
@@ -440,19 +440,19 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ContentComponent"; } }
             
             /// <summary>
-            /// A product in the package
+            /// The item in the package
             /// </summary>
-            [FhirElement("item", Order=40)]
-            [References("Medication")]
+            [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Item
+            public Hl7.Fhir.Model.Element Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Item;
+            private Hl7.Fhir.Model.Element _Item;
             
             /// <summary>
             /// Quantity present in the package
@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.ResourceReference)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
                     if(Amount != null) dest.Amount = (Hl7.Fhir.Model.SimpleQuantity)Amount.DeepCopy();
                     return dest;
                 }

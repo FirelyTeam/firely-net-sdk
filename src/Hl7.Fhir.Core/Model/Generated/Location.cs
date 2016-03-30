@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,19 +61,19 @@ namespace Hl7.Fhir.Model
         public enum LocationStatus
         {
             /// <summary>
-            /// The location is operational.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/location-status)
             /// </summary>
             [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
-            /// The location is temporarily closed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/location-status)
             /// </summary>
             [EnumLiteral("suspended"), Description("Suspended")]
             Suspended,
             /// <summary>
-            /// The location is no longer used.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/location-status)
             /// </summary>
             [EnumLiteral("inactive"), Description("Inactive")]
@@ -88,13 +88,13 @@ namespace Hl7.Fhir.Model
         public enum LocationMode
         {
             /// <summary>
-            /// The Location resource represents a specific instance of a location (e.g. Operating Theatre 1A).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/location-mode)
             /// </summary>
             [EnumLiteral("instance"), Description("Instance")]
             Instance,
             /// <summary>
-            /// The Location represents a class of locations (e.g. Any Operating Theatre) although this class of locations could be constrained within a specific boundary (such as organization, or parent location, address etc.).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/location-mode)
             /// </summary>
             [EnumLiteral("kind"), Description("Kind")]
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Description of the location
+        /// Additional details about the location that could be displayed as further information to identify the location beyond its name
         /// </summary>
         [FhirElement("description", InSummary=true, Order=120)]
         [DataMember]
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
-        /// Description of the location
+        /// Additional details about the location that could be displayed as further information to identify the location beyond its name
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

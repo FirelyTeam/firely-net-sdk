@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,31 +61,31 @@ namespace Hl7.Fhir.Model
         public enum AuditEventAction
         {
             /// <summary>
-            /// Create a new database object, such as placing an order.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
             [EnumLiteral("C"), Description("Create")]
             C,
             /// <summary>
-            /// Display or print data, such as a doctor census.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
             [EnumLiteral("R"), Description("Read/View/Print")]
             R,
             /// <summary>
-            /// Update data, such as revise patient information.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
             [EnumLiteral("U"), Description("Update")]
             U,
             /// <summary>
-            /// Delete items, such as a doctor master file record.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
             [EnumLiteral("D"), Description("Delete")]
             D,
             /// <summary>
-            /// Perform a system or application function such as log-on, program execution or use of an object's method, or perform a query/search operation.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-action)
             /// </summary>
             [EnumLiteral("E"), Description("Execute")]
@@ -100,25 +100,25 @@ namespace Hl7.Fhir.Model
         public enum AuditEventOutcome
         {
             /// <summary>
-            /// The operation completed successfully (whether with warnings or not).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-outcome)
             /// </summary>
             [EnumLiteral("0"), Description("Success")]
             N0,
             /// <summary>
-            /// The action was not successful due to some kind of catered for error (often equivalent to an HTTP 400 response).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-outcome)
             /// </summary>
             [EnumLiteral("4"), Description("Minor failure")]
             N4,
             /// <summary>
-            /// The action was not successful due to some kind of unexpected error (often equivalent to an HTTP 500 response).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-outcome)
             /// </summary>
             [EnumLiteral("8"), Description("Serious failure")]
             N8,
             /// <summary>
-            /// An error of such magnitude occurred that the system is no longer available for use (i.e. the system died).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/audit-event-outcome)
             /// </summary>
             [EnumLiteral("12"), Description("Major failure")]
@@ -133,286 +133,46 @@ namespace Hl7.Fhir.Model
         public enum AuditEventParticipantNetworkType
         {
             /// <summary>
-            /// The machine name, including DNS name.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
             [EnumLiteral("1"), Description("Machine Name")]
             N1,
             /// <summary>
-            /// The assigned Internet Protocol (IP) address.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
             [EnumLiteral("2"), Description("IP Address")]
             N2,
             /// <summary>
-            /// The assigned telephone number.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
             [EnumLiteral("3"), Description("Telephone Number")]
             N3,
             /// <summary>
-            /// The assigned email address.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
             [EnumLiteral("4"), Description("Email address")]
             N4,
             /// <summary>
-            /// URI (User directory, HTTP-PUT, ftp, etc.).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/network-type)
             /// </summary>
             [EnumLiteral("5"), Description("URI")]
             N5,
         }
 
-        [FhirType("EventComponent")]
+        [FhirType("AgentComponent")]
         [DataContract]
-        public partial class EventComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "EventComponent"; } }
+            public override string TypeName { get { return "AgentComponent"; } }
             
             /// <summary>
-            /// Type/identifier of event
-            /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Coding Type
-            {
-                get { return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
-            }
-            
-            private Hl7.Fhir.Model.Coding _Type;
-            
-            /// <summary>
-            /// More specific type/id for the event
-            /// </summary>
-            [FhirElement("subtype", InSummary=true, Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Coding> Subtype
-            {
-                get { if(_Subtype==null) _Subtype = new List<Hl7.Fhir.Model.Coding>(); return _Subtype; }
-                set { _Subtype = value; OnPropertyChanged("Subtype"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Coding> _Subtype;
-            
-            /// <summary>
-            /// Type of action performed during the event
-            /// </summary>
-            [FhirElement("action", InSummary=true, Order=60)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> ActionElement
-            {
-                get { return _ActionElement; }
-                set { _ActionElement = value; OnPropertyChanged("ActionElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> _ActionElement;
-            
-            /// <summary>
-            /// Type of action performed during the event
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.AuditEvent.AuditEventAction? Action
-            {
-                get { return ActionElement != null ? ActionElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      ActionElement = null; 
-                    else
-                      ActionElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>(value);
-                    OnPropertyChanged("Action");
-                }
-            }
-            
-            /// <summary>
-            /// Time when the event occurred on source
-            /// </summary>
-            [FhirElement("dateTime", InSummary=true, Order=70)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Instant DateTimeElement
-            {
-                get { return _DateTimeElement; }
-                set { _DateTimeElement = value; OnPropertyChanged("DateTimeElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Instant _DateTimeElement;
-            
-            /// <summary>
-            /// Time when the event occurred on source
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public DateTimeOffset? DateTime
-            {
-                get { return DateTimeElement != null ? DateTimeElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      DateTimeElement = null; 
-                    else
-                      DateTimeElement = new Hl7.Fhir.Model.Instant(value);
-                    OnPropertyChanged("DateTime");
-                }
-            }
-            
-            /// <summary>
-            /// Whether the event succeeded or failed
-            /// </summary>
-            [FhirElement("outcome", InSummary=true, Order=80)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome> OutcomeElement
-            {
-                get { return _OutcomeElement; }
-                set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome> _OutcomeElement;
-            
-            /// <summary>
-            /// Whether the event succeeded or failed
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.AuditEvent.AuditEventOutcome? Outcome
-            {
-                get { return OutcomeElement != null ? OutcomeElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      OutcomeElement = null; 
-                    else
-                      OutcomeElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>(value);
-                    OnPropertyChanged("Outcome");
-                }
-            }
-            
-            /// <summary>
-            /// Description of the event outcome
-            /// </summary>
-            [FhirElement("outcomeDesc", InSummary=true, Order=90)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString OutcomeDescElement
-            {
-                get { return _OutcomeDescElement; }
-                set { _OutcomeDescElement = value; OnPropertyChanged("OutcomeDescElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _OutcomeDescElement;
-            
-            /// <summary>
-            /// Description of the event outcome
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string OutcomeDesc
-            {
-                get { return OutcomeDescElement != null ? OutcomeDescElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      OutcomeDescElement = null; 
-                    else
-                      OutcomeDescElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("OutcomeDesc");
-                }
-            }
-            
-            /// <summary>
-            /// The purposeOfUse of the event
-            /// </summary>
-            [FhirElement("purposeOfEvent", InSummary=true, Order=100)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Coding> PurposeOfEvent
-            {
-                get { if(_PurposeOfEvent==null) _PurposeOfEvent = new List<Hl7.Fhir.Model.Coding>(); return _PurposeOfEvent; }
-                set { _PurposeOfEvent = value; OnPropertyChanged("PurposeOfEvent"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Coding> _PurposeOfEvent;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as EventComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
-                    if(Subtype != null) dest.Subtype = new List<Hl7.Fhir.Model.Coding>(Subtype.DeepCopy());
-                    if(ActionElement != null) dest.ActionElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>)ActionElement.DeepCopy();
-                    if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.Instant)DateTimeElement.DeepCopy();
-                    if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>)OutcomeElement.DeepCopy();
-                    if(OutcomeDescElement != null) dest.OutcomeDescElement = (Hl7.Fhir.Model.FhirString)OutcomeDescElement.DeepCopy();
-                    if(PurposeOfEvent != null) dest.PurposeOfEvent = new List<Hl7.Fhir.Model.Coding>(PurposeOfEvent.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new EventComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as EventComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(Subtype, otherT.Subtype)) return false;
-                if( !DeepComparable.Matches(ActionElement, otherT.ActionElement)) return false;
-                if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
-                if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
-                if( !DeepComparable.Matches(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
-                if( !DeepComparable.Matches(PurposeOfEvent, otherT.PurposeOfEvent)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as EventComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(Subtype, otherT.Subtype)) return false;
-                if( !DeepComparable.IsExactly(ActionElement, otherT.ActionElement)) return false;
-                if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
-                if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
-                if( !DeepComparable.IsExactly(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
-                if( !DeepComparable.IsExactly(PurposeOfEvent, otherT.PurposeOfEvent)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ParticipantComponent")]
-        [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ParticipantComponent"; } }
-            
-            /// <summary>
-            /// User roles (e.g. local RBAC codes)
+            /// Agent role in the event
             /// </summary>
             [FhirElement("role", Order=40)]
             [Cardinality(Min=0,Max=-1)]
@@ -485,7 +245,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Human-meaningful name for the user
+            /// Human-meaningful name for the agent
             /// </summary>
             [FhirElement("name", Order=80)]
             [DataMember]
@@ -498,7 +258,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
-            /// Human-meaningful name for the user
+            /// Human-meaningful name for the agent
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -638,7 +398,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ParticipantComponent;
+                var dest = other as AgentComponent;
                 
                 if (dest != null)
                 {
@@ -662,12 +422,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ParticipantComponent());
+                return CopyTo(new AgentComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ParticipantComponent;
+                var otherT = other as AgentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -688,7 +448,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ParticipantComponent;
+                var otherT = other as AgentComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -945,12 +705,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ObjectComponent")]
+        [FhirType("EntityComponent")]
         [DataContract]
-        public partial class ObjectComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ObjectComponent"; } }
+            public override string TypeName { get { return "EntityComponent"; } }
             
             /// <summary>
             /// Specific instance of object (e.g. versioned)
@@ -993,7 +753,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Type;
             
             /// <summary>
-            /// What role the Object played
+            /// What role the entity played
             /// </summary>
             [FhirElement("role", Order=70)]
             [DataMember]
@@ -1033,7 +793,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Coding> _SecurityLabel;
             
             /// <summary>
-            /// Instance-specific descriptor for Object
+            /// Descriptor for entity
             /// </summary>
             [FhirElement("name", InSummary=true, Order=100)]
             [DataMember]
@@ -1046,7 +806,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
-            /// Instance-specific descriptor for Object
+            /// Descriptor for entity
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1097,7 +857,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Actual query for object
+            /// Query parameters
             /// </summary>
             [FhirElement("query", InSummary=true, Order=120)]
             [DataMember]
@@ -1110,7 +870,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Base64Binary _QueryElement;
             
             /// <summary>
-            /// Actual query for object
+            /// Query parameters
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1129,7 +889,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Additional Information about the Object
+            /// Additional Information about the entity
             /// </summary>
             [FhirElement("detail", Order=130)]
             [Cardinality(Min=0,Max=-1)]
@@ -1144,7 +904,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ObjectComponent;
+                var dest = other as EntityComponent;
                 
                 if (dest != null)
                 {
@@ -1167,12 +927,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ObjectComponent());
+                return CopyTo(new EntityComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ObjectComponent;
+                var otherT = other as EntityComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -1192,7 +952,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ObjectComponent;
+                var otherT = other as EntityComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1334,37 +1094,194 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// What was done
+        /// Type/identifier of event
         /// </summary>
-        [FhirElement("event", Order=90)]
+        [FhirElement("type", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.AuditEvent.EventComponent Event
+        public Hl7.Fhir.Model.Coding Type
         {
-            get { return _Event; }
-            set { _Event = value; OnPropertyChanged("Event"); }
+            get { return _Type; }
+            set { _Type = value; OnPropertyChanged("Type"); }
         }
         
-        private Hl7.Fhir.Model.AuditEvent.EventComponent _Event;
+        private Hl7.Fhir.Model.Coding _Type;
         
         /// <summary>
-        /// A person, a hardware device or software process
+        /// More specific type/id for the event
         /// </summary>
-        [FhirElement("participant", Order=100)]
-        [Cardinality(Min=1,Max=-1)]
+        [FhirElement("subtype", InSummary=true, Order=100)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.AuditEvent.ParticipantComponent> Participant
+        public List<Hl7.Fhir.Model.Coding> Subtype
         {
-            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.AuditEvent.ParticipantComponent>(); return _Participant; }
-            set { _Participant = value; OnPropertyChanged("Participant"); }
+            get { if(_Subtype==null) _Subtype = new List<Hl7.Fhir.Model.Coding>(); return _Subtype; }
+            set { _Subtype = value; OnPropertyChanged("Subtype"); }
         }
         
-        private List<Hl7.Fhir.Model.AuditEvent.ParticipantComponent> _Participant;
+        private List<Hl7.Fhir.Model.Coding> _Subtype;
+        
+        /// <summary>
+        /// Type of action performed during the event
+        /// </summary>
+        [FhirElement("action", InSummary=true, Order=110)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> ActionElement
+        {
+            get { return _ActionElement; }
+            set { _ActionElement = value; OnPropertyChanged("ActionElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> _ActionElement;
+        
+        /// <summary>
+        /// Type of action performed during the event
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.AuditEvent.AuditEventAction? Action
+        {
+            get { return ActionElement != null ? ActionElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ActionElement = null; 
+                else
+                  ActionElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>(value);
+                OnPropertyChanged("Action");
+            }
+        }
+        
+        /// <summary>
+        /// Time when the event occurred on source
+        /// </summary>
+        [FhirElement("recorded", InSummary=true, Order=120)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.Instant RecordedElement
+        {
+            get { return _RecordedElement; }
+            set { _RecordedElement = value; OnPropertyChanged("RecordedElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Instant _RecordedElement;
+        
+        /// <summary>
+        /// Time when the event occurred on source
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public DateTimeOffset? Recorded
+        {
+            get { return RecordedElement != null ? RecordedElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  RecordedElement = null; 
+                else
+                  RecordedElement = new Hl7.Fhir.Model.Instant(value);
+                OnPropertyChanged("Recorded");
+            }
+        }
+        
+        /// <summary>
+        /// Whether the event succeeded or failed
+        /// </summary>
+        [FhirElement("outcome", InSummary=true, Order=130)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome> OutcomeElement
+        {
+            get { return _OutcomeElement; }
+            set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome> _OutcomeElement;
+        
+        /// <summary>
+        /// Whether the event succeeded or failed
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.AuditEvent.AuditEventOutcome? Outcome
+        {
+            get { return OutcomeElement != null ? OutcomeElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  OutcomeElement = null; 
+                else
+                  OutcomeElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>(value);
+                OnPropertyChanged("Outcome");
+            }
+        }
+        
+        /// <summary>
+        /// Description of the event outcome
+        /// </summary>
+        [FhirElement("outcomeDesc", InSummary=true, Order=140)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString OutcomeDescElement
+        {
+            get { return _OutcomeDescElement; }
+            set { _OutcomeDescElement = value; OnPropertyChanged("OutcomeDescElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _OutcomeDescElement;
+        
+        /// <summary>
+        /// Description of the event outcome
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string OutcomeDesc
+        {
+            get { return OutcomeDescElement != null ? OutcomeDescElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  OutcomeDescElement = null; 
+                else
+                  OutcomeDescElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("OutcomeDesc");
+            }
+        }
+        
+        /// <summary>
+        /// The purposeOfUse of the event
+        /// </summary>
+        [FhirElement("purposeOfEvent", InSummary=true, Order=150)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Coding> PurposeOfEvent
+        {
+            get { if(_PurposeOfEvent==null) _PurposeOfEvent = new List<Hl7.Fhir.Model.Coding>(); return _PurposeOfEvent; }
+            set { _PurposeOfEvent = value; OnPropertyChanged("PurposeOfEvent"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Coding> _PurposeOfEvent;
+        
+        /// <summary>
+        /// Actor involved in the event
+        /// </summary>
+        [FhirElement("agent", Order=160)]
+        [Cardinality(Min=1,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.AuditEvent.AgentComponent> Agent
+        {
+            get { if(_Agent==null) _Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(); return _Agent; }
+            set { _Agent = value; OnPropertyChanged("Agent"); }
+        }
+        
+        private List<Hl7.Fhir.Model.AuditEvent.AgentComponent> _Agent;
         
         /// <summary>
         /// Application systems and processes
         /// </summary>
-        [FhirElement("source", Order=110)]
+        [FhirElement("source", Order=170)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.AuditEvent.SourceComponent Source
@@ -1378,16 +1295,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specific instances of data or objects that have been accessed
         /// </summary>
-        [FhirElement("object", Order=120)]
+        [FhirElement("entity", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.AuditEvent.ObjectComponent> Object
+        public List<Hl7.Fhir.Model.AuditEvent.EntityComponent> Entity
         {
-            get { if(_Object==null) _Object = new List<Hl7.Fhir.Model.AuditEvent.ObjectComponent>(); return _Object; }
-            set { _Object = value; OnPropertyChanged("Object"); }
+            get { if(_Entity==null) _Entity = new List<Hl7.Fhir.Model.AuditEvent.EntityComponent>(); return _Entity; }
+            set { _Entity = value; OnPropertyChanged("Entity"); }
         }
         
-        private List<Hl7.Fhir.Model.AuditEvent.ObjectComponent> _Object;
+        private List<Hl7.Fhir.Model.AuditEvent.EntityComponent> _Entity;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1396,10 +1313,16 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Event != null) dest.Event = (Hl7.Fhir.Model.AuditEvent.EventComponent)Event.DeepCopy();
-                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.AuditEvent.ParticipantComponent>(Participant.DeepCopy());
+                if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
+                if(Subtype != null) dest.Subtype = new List<Hl7.Fhir.Model.Coding>(Subtype.DeepCopy());
+                if(ActionElement != null) dest.ActionElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>)ActionElement.DeepCopy();
+                if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
+                if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>)OutcomeElement.DeepCopy();
+                if(OutcomeDescElement != null) dest.OutcomeDescElement = (Hl7.Fhir.Model.FhirString)OutcomeDescElement.DeepCopy();
+                if(PurposeOfEvent != null) dest.PurposeOfEvent = new List<Hl7.Fhir.Model.Coding>(PurposeOfEvent.DeepCopy());
+                if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(Agent.DeepCopy());
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.AuditEvent.SourceComponent)Source.DeepCopy();
-                if(Object != null) dest.Object = new List<Hl7.Fhir.Model.AuditEvent.ObjectComponent>(Object.DeepCopy());
+                if(Entity != null) dest.Entity = new List<Hl7.Fhir.Model.AuditEvent.EntityComponent>(Entity.DeepCopy());
                 return dest;
             }
             else
@@ -1417,10 +1340,16 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Event, otherT.Event)) return false;
-            if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(Subtype, otherT.Subtype)) return false;
+            if( !DeepComparable.Matches(ActionElement, otherT.ActionElement)) return false;
+            if( !DeepComparable.Matches(RecordedElement, otherT.RecordedElement)) return false;
+            if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
+            if( !DeepComparable.Matches(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
+            if( !DeepComparable.Matches(PurposeOfEvent, otherT.PurposeOfEvent)) return false;
+            if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
-            if( !DeepComparable.Matches(Object, otherT.Object)) return false;
+            if( !DeepComparable.Matches(Entity, otherT.Entity)) return false;
             
             return true;
         }
@@ -1431,10 +1360,16 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
-            if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(Subtype, otherT.Subtype)) return false;
+            if( !DeepComparable.IsExactly(ActionElement, otherT.ActionElement)) return false;
+            if( !DeepComparable.IsExactly(RecordedElement, otherT.RecordedElement)) return false;
+            if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
+            if( !DeepComparable.IsExactly(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
+            if( !DeepComparable.IsExactly(PurposeOfEvent, otherT.PurposeOfEvent)) return false;
+            if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
-            if( !DeepComparable.IsExactly(Object, otherT.Object)) return false;
+            if( !DeepComparable.IsExactly(Entity, otherT.Entity)) return false;
             
             return true;
         }

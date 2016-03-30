@@ -50,8 +50,8 @@
 	foreach (System.Xml.XmlElement e in nodeTypes)
 		sortedTypes.Add(e);
 	sortedTypes.Sort((a, b)=> string.Compare(
-			(a as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR) != null && (a as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR).Value == "http://hl7.org/fhir/StructureDefinition/Element" ? "1ob-" : "dt-" + (a as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value, 
-			(b as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR) != null && (b as System.Xml.XmlElement).SelectSingleNode("fhir:base/@value", nsR).Value == "http://hl7.org/fhir/StructureDefinition/Element" ? "1ob-" : "dt-" + (b as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value));
+			(a as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null && (a as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value == "http://hl7.org/fhir/StructureDefinition/Element" ? "1ob-" : "dt-" + (a as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value, 
+			(b as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR) != null && (b as System.Xml.XmlElement).SelectSingleNode("fhir:baseDefinition/@value", nsR).Value == "http://hl7.org/fhir/StructureDefinition/Element" ? "1ob-" : "dt-" + (b as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value));
 	sortedTypes.Sort((a, b)=> string.Compare((a as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value, (b as System.Xml.XmlElement).SelectSingleNode("fhir:name/@value", nsR).Value));
 
 	XmlElement elemConformance = docResources.DocumentElement.SelectSingleNode("/fhir:Bundle/fhir:entry/fhir:resource/fhir:Conformance", nsR) as XmlElement;
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
 					sc.Add("ResourceType." + et.Value);
 					target += "ResourceType." + et.Value + ", ";
 				}
-				var exprNode = sp.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/searchparameter-expression']/fhir:valueString/@value", nsR);
+				var exprNode = sp.SelectSingleNode("fhir:expression/@value", nsR);
 				if (exprNode != null)
 					expression = exprNode.Value;
 				if (!string.IsNullOrEmpty(target))

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Data inline, base64ed
         /// </summary>
-        [FhirElement("data", InSummary=true, Order=50)]
+        [FhirElement("data", Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary DataElement
         {

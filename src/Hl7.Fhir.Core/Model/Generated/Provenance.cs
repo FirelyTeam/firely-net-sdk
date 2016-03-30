@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,29 +61,35 @@ namespace Hl7.Fhir.Model
         public enum ProvenanceEntityRole
         {
             /// <summary>
-            /// A transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
             [EnumLiteral("derivation"), Description("Derivation")]
             Derivation,
             /// <summary>
-            /// A derivation for which the resulting entity is a revised version of some original.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
             [EnumLiteral("revision"), Description("Revision")]
             Revision,
             /// <summary>
-            /// The repeat of (some or all of) an entity, such as text or image, by someone who may or may not be its original author.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
             [EnumLiteral("quotation"), Description("Quotation")]
             Quotation,
             /// <summary>
-            /// A primary source for a topic refers to something produced by some agent with direct experience and knowledge about the topic, at the time of the topic's study, without benefit from hindsight.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/provenance-entity-role)
             /// </summary>
             [EnumLiteral("source"), Description("Source")]
             Source,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/provenance-entity-role)
+            /// </summary>
+            [EnumLiteral("removal"), Description("Removal")]
+            Removal,
         }
 
         [FhirType("AgentComponent")]
@@ -310,7 +316,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "EntityComponent"; } }
             
             /// <summary>
-            /// derivation | revision | quotation | source
+            /// derivation | revision | quotation | source | removal
             /// </summary>
             [FhirElement("role", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -324,7 +330,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole> _RoleElement;
             
             /// <summary>
-            /// derivation | revision | quotation | source
+            /// derivation | revision | quotation | source | removal
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -557,26 +563,26 @@ namespace Hl7.Fhir.Model
         [FhirElement("reason", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Reason
+        public List<Hl7.Fhir.Model.Coding> Reason
         {
-            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.Coding>(); return _Reason; }
             set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
-        private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
+        private List<Hl7.Fhir.Model.Coding> _Reason;
         
         /// <summary>
         /// Activity that occurred
         /// </summary>
         [FhirElement("activity", InSummary=true, Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Activity
+        public Hl7.Fhir.Model.Coding Activity
         {
             get { return _Activity; }
             set { _Activity = value; OnPropertyChanged("Activity"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Activity;
+        private Hl7.Fhir.Model.Coding _Activity;
         
         /// <summary>
         /// Where the activity occurred, if relevant
@@ -626,10 +632,10 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Agents involved in creating resource
+        /// Actor involved
         /// </summary>
         [FhirElement("agent", InSummary=true, Order=160)]
-        [Cardinality(Min=0,Max=-1)]
+        [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Provenance.AgentComponent> Agent
         {
@@ -677,8 +683,8 @@ namespace Hl7.Fhir.Model
                 if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
-                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
-                if(Activity != null) dest.Activity = (Hl7.Fhir.Model.CodeableConcept)Activity.DeepCopy();
+                if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.Coding>(Reason.DeepCopy());
+                if(Activity != null) dest.Activity = (Hl7.Fhir.Model.Coding)Activity.DeepCopy();
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
                 if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Provenance.AgentComponent>(Agent.DeepCopy());

@@ -37,12 +37,12 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// An instance of a manufactured te that is used in the provision of healthcare
+    /// Item used in healthcare
     /// </summary>
     [FhirType("Device", IsResource=true)]
     [DataContract]
@@ -61,19 +61,19 @@ namespace Hl7.Fhir.Model
         public enum DeviceStatus
         {
             /// <summary>
-            /// The Device is available for use.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/devicestatus)
             /// </summary>
             [EnumLiteral("available"), Description("Available")]
             Available,
             /// <summary>
-            /// The Device is no longer available for use (e.g. lost, expired, damaged).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/devicestatus)
             /// </summary>
             [EnumLiteral("not-available"), Description("Not Available")]
             NotAvailable,
             /// <summary>
-            /// The Device was entered in error and voided.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/devicestatus)
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered in Error")]
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Instance id from manufacturer, owner, and others
+        /// Instance identifier
         /// </summary>
         [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -95,37 +95,22 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// What kind of device this is
+        /// Unique Device Identifier (UDI) Barcode string
         /// </summary>
-        [FhirElement("type", Order=100)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("udiCarrier", Order=100)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
+        public Hl7.Fhir.Model.Identifier UdiCarrier
         {
-            get { return _Type; }
-            set { _Type = value; OnPropertyChanged("Type"); }
+            get { return _UdiCarrier; }
+            set { _UdiCarrier = value; OnPropertyChanged("UdiCarrier"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Type;
-        
-        /// <summary>
-        /// Device notes and comments
-        /// </summary>
-        [FhirElement("note", Order=110)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Annotation> Note
-        {
-            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
-            set { _Note = value; OnPropertyChanged("Note"); }
-        }
-        
-        private List<Hl7.Fhir.Model.Annotation> _Note;
+        private Hl7.Fhir.Model.Identifier _UdiCarrier;
         
         /// <summary>
         /// available | not-available | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=true, Order=110)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Device.DeviceStatus> StatusElement
         {
@@ -155,9 +140,55 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// What kind of device this is
+        /// </summary>
+        [FhirElement("type", Order=120)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Type
+        {
+            get { return _Type; }
+            set { _Type = value; OnPropertyChanged("Type"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Type;
+        
+        /// <summary>
+        /// Lot number of manufacture
+        /// </summary>
+        [FhirElement("lotNumber", Order=130)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString LotNumberElement
+        {
+            get { return _LotNumberElement; }
+            set { _LotNumberElement = value; OnPropertyChanged("LotNumberElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _LotNumberElement;
+        
+        /// <summary>
+        /// Lot number of manufacture
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string LotNumber
+        {
+            get { return LotNumberElement != null ? LotNumberElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  LotNumberElement = null; 
+                else
+                  LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("LotNumber");
+            }
+        }
+        
+        /// <summary>
         /// Name of device manufacturer
         /// </summary>
-        [FhirElement("manufacturer", Order=130)]
+        [FhirElement("manufacturer", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ManufacturerElement
         {
@@ -187,9 +218,73 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Date when the device was made
+        /// </summary>
+        [FhirElement("manufactureDate", Order=150)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime ManufactureDateElement
+        {
+            get { return _ManufactureDateElement; }
+            set { _ManufactureDateElement = value; OnPropertyChanged("ManufactureDateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _ManufactureDateElement;
+        
+        /// <summary>
+        /// Date when the device was made
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string ManufactureDate
+        {
+            get { return ManufactureDateElement != null ? ManufactureDateElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ManufactureDateElement = null; 
+                else
+                  ManufactureDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("ManufactureDate");
+            }
+        }
+        
+        /// <summary>
+        /// Date and time of expiry of this device (if applicable)
+        /// </summary>
+        [FhirElement("expirationDate", Order=160)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime ExpirationDateElement
+        {
+            get { return _ExpirationDateElement; }
+            set { _ExpirationDateElement = value; OnPropertyChanged("ExpirationDateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _ExpirationDateElement;
+        
+        /// <summary>
+        /// Date and time of expiry of this device (if applicable)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string ExpirationDate
+        {
+            get { return ExpirationDateElement != null ? ExpirationDateElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ExpirationDateElement = null; 
+                else
+                  ExpirationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("ExpirationDate");
+            }
+        }
+        
+        /// <summary>
         /// Model id assigned by the manufacturer
         /// </summary>
-        [FhirElement("model", Order=140)]
+        [FhirElement("model", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ModelElement
         {
@@ -221,7 +316,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Version number (i.e. software)
         /// </summary>
-        [FhirElement("version", Order=150)]
+        [FhirElement("version", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -251,132 +346,18 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Manufacture date
+        /// Patient to whom Device is affixed
         /// </summary>
-        [FhirElement("manufactureDate", Order=160)]
+        [FhirElement("patient", Order=190)]
+        [References("Patient")]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime ManufactureDateElement
+        public Hl7.Fhir.Model.ResourceReference Patient
         {
-            get { return _ManufactureDateElement; }
-            set { _ManufactureDateElement = value; OnPropertyChanged("ManufactureDateElement"); }
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
-        private Hl7.Fhir.Model.FhirDateTime _ManufactureDateElement;
-        
-        /// <summary>
-        /// Manufacture date
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string ManufactureDate
-        {
-            get { return ManufactureDateElement != null ? ManufactureDateElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ManufactureDateElement = null; 
-                else
-                  ManufactureDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("ManufactureDate");
-            }
-        }
-        
-        /// <summary>
-        /// Date and time of expiry of this device (if applicable)
-        /// </summary>
-        [FhirElement("expiry", Order=170)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime ExpiryElement
-        {
-            get { return _ExpiryElement; }
-            set { _ExpiryElement = value; OnPropertyChanged("ExpiryElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirDateTime _ExpiryElement;
-        
-        /// <summary>
-        /// Date and time of expiry of this device (if applicable)
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Expiry
-        {
-            get { return ExpiryElement != null ? ExpiryElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ExpiryElement = null; 
-                else
-                  ExpiryElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("Expiry");
-            }
-        }
-        
-        /// <summary>
-        /// FDA mandated Unique Device Identifier
-        /// </summary>
-        [FhirElement("udi", Order=180)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString UdiElement
-        {
-            get { return _UdiElement; }
-            set { _UdiElement = value; OnPropertyChanged("UdiElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _UdiElement;
-        
-        /// <summary>
-        /// FDA mandated Unique Device Identifier
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Udi
-        {
-            get { return UdiElement != null ? UdiElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  UdiElement = null; 
-                else
-                  UdiElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Udi");
-            }
-        }
-        
-        /// <summary>
-        /// Lot number of manufacture
-        /// </summary>
-        [FhirElement("lotNumber", Order=190)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString LotNumberElement
-        {
-            get { return _LotNumberElement; }
-            set { _LotNumberElement = value; OnPropertyChanged("LotNumberElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _LotNumberElement;
-        
-        /// <summary>
-        /// Lot number of manufacture
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string LotNumber
-        {
-            get { return LotNumberElement != null ? LotNumberElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  LotNumberElement = null; 
-                else
-                  LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("LotNumber");
-            }
-        }
+        private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
         /// Organization responsible for device
@@ -393,37 +374,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Owner;
         
         /// <summary>
-        /// Where the resource is found
-        /// </summary>
-        [FhirElement("location", Order=210)]
-        [References("Location")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Location
-        {
-            get { return _Location; }
-            set { _Location = value; OnPropertyChanged("Location"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Location;
-        
-        /// <summary>
-        /// If the resource is affixed to a person
-        /// </summary>
-        [FhirElement("patient", Order=220)]
-        [References("Patient")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
-        {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Patient;
-        
-        /// <summary>
         /// Details for human/organization for support
         /// </summary>
-        [FhirElement("contact", Order=230)]
+        [FhirElement("contact", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Contact
@@ -435,9 +388,23 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ContactPoint> _Contact;
         
         /// <summary>
+        /// Where the resource is found
+        /// </summary>
+        [FhirElement("location", Order=220)]
+        [References("Location")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Location
+        {
+            get { return _Location; }
+            set { _Location = value; OnPropertyChanged("Location"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Location;
+        
+        /// <summary>
         /// Network address to contact device
         /// </summary>
-        [FhirElement("url", Order=240)]
+        [FhirElement("url", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
         {
@@ -466,6 +433,20 @@ namespace Hl7.Fhir.Model
             }
         }
         
+        /// <summary>
+        /// Device notes and comments
+        /// </summary>
+        [FhirElement("note", Order=240)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Annotation> Note
+        {
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Annotation> _Note;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Device;
@@ -474,21 +455,21 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+                if(UdiCarrier != null) dest.UdiCarrier = (Hl7.Fhir.Model.Identifier)UdiCarrier.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Device.DeviceStatus>)StatusElement.DeepCopy();
+                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopy();
                 if(ManufacturerElement != null) dest.ManufacturerElement = (Hl7.Fhir.Model.FhirString)ManufacturerElement.DeepCopy();
+                if(ManufactureDateElement != null) dest.ManufactureDateElement = (Hl7.Fhir.Model.FhirDateTime)ManufactureDateElement.DeepCopy();
+                if(ExpirationDateElement != null) dest.ExpirationDateElement = (Hl7.Fhir.Model.FhirDateTime)ExpirationDateElement.DeepCopy();
                 if(ModelElement != null) dest.ModelElement = (Hl7.Fhir.Model.FhirString)ModelElement.DeepCopy();
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
-                if(ManufactureDateElement != null) dest.ManufactureDateElement = (Hl7.Fhir.Model.FhirDateTime)ManufactureDateElement.DeepCopy();
-                if(ExpiryElement != null) dest.ExpiryElement = (Hl7.Fhir.Model.FhirDateTime)ExpiryElement.DeepCopy();
-                if(UdiElement != null) dest.UdiElement = (Hl7.Fhir.Model.FhirString)UdiElement.DeepCopy();
-                if(LotNumberElement != null) dest.LotNumberElement = (Hl7.Fhir.Model.FhirString)LotNumberElement.DeepCopy();
-                if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
-                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
+                if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
             else
@@ -507,21 +488,21 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+            if( !DeepComparable.Matches(UdiCarrier, otherT.UdiCarrier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+            if( !DeepComparable.Matches(LotNumberElement, otherT.LotNumberElement)) return false;
             if( !DeepComparable.Matches(ManufacturerElement, otherT.ManufacturerElement)) return false;
+            if( !DeepComparable.Matches(ManufactureDateElement, otherT.ManufactureDateElement)) return false;
+            if( !DeepComparable.Matches(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
             if( !DeepComparable.Matches(ModelElement, otherT.ModelElement)) return false;
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
-            if( !DeepComparable.Matches(ManufactureDateElement, otherT.ManufactureDateElement)) return false;
-            if( !DeepComparable.Matches(ExpiryElement, otherT.ExpiryElement)) return false;
-            if( !DeepComparable.Matches(UdiElement, otherT.UdiElement)) return false;
-            if( !DeepComparable.Matches(LotNumberElement, otherT.LotNumberElement)) return false;
-            if( !DeepComparable.Matches(Owner, otherT.Owner)) return false;
-            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Owner, otherT.Owner)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -533,21 +514,21 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+            if( !DeepComparable.IsExactly(UdiCarrier, otherT.UdiCarrier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+            if( !DeepComparable.IsExactly(LotNumberElement, otherT.LotNumberElement)) return false;
             if( !DeepComparable.IsExactly(ManufacturerElement, otherT.ManufacturerElement)) return false;
+            if( !DeepComparable.IsExactly(ManufactureDateElement, otherT.ManufactureDateElement)) return false;
+            if( !DeepComparable.IsExactly(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
             if( !DeepComparable.IsExactly(ModelElement, otherT.ModelElement)) return false;
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
-            if( !DeepComparable.IsExactly(ManufactureDateElement, otherT.ManufactureDateElement)) return false;
-            if( !DeepComparable.IsExactly(ExpiryElement, otherT.ExpiryElement)) return false;
-            if( !DeepComparable.IsExactly(UdiElement, otherT.UdiElement)) return false;
-            if( !DeepComparable.IsExactly(LotNumberElement, otherT.LotNumberElement)) return false;
-            if( !DeepComparable.IsExactly(Owner, otherT.Owner)) return false;
-            if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Owner, otherT.Owner)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
         }

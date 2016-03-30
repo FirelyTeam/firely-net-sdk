@@ -49,15 +49,17 @@ namespace Hl7.Fhir.Model
 
         public partial class DifferentialComponent : IElementList { }
 
+        // TODO: Is this the Derivation Property?
         [NotMapped]
-        public bool IsConstraint {  get { return ConstrainedType != null && !IsExtension; } }
+        public bool IsConstraint {  get { return Derivation.HasValue && Derivation == TypeDerivationRule.Constraint; } }
 
         [NotMapped]
         public bool IsExtension
         {
             get
             {
-                return ConstrainedType == FHIRDefinedType.Extension || Base == "http://hl7.org/fhir/StructureDefinition/Extension";
+                // Is this the Derivation Property? (do we still need to check the base?)
+                return Derivation.HasValue && Derivation == TypeDerivationRule.Specialization;
             }
         }
     }

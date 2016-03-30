@@ -37,12 +37,12 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A postal address
+    /// An address expressed using postal conventions (as opposed to GPS or other location definition formats)
     /// </summary>
     [FhirType("Address")]
     [DataContract]
@@ -53,32 +53,31 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// The use of an address
-        /// The use of an address (home / work / etc.).
         /// (url: http://hl7.org/fhir/ValueSet/address-use)
         /// </summary>
         [FhirEnumeration("AddressUse")]
         public enum AddressUse
         {
             /// <summary>
-            /// A communication address at a home.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
             [EnumLiteral("home"), Description("Home")]
             Home,
             /// <summary>
-            /// An office address. First choice for business related contacts during business hours.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
             [EnumLiteral("work"), Description("Work")]
             Work,
             /// <summary>
-            /// A temporary address. The period can provide more detailed information.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
             [EnumLiteral("temp"), Description("Temporary")]
             Temp,
             /// <summary>
-            /// This address is no longer in use (or was never correct, but retained for records).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-use)
             /// </summary>
             [EnumLiteral("old"), Description("Old / Incorrect")]
@@ -87,26 +86,25 @@ namespace Hl7.Fhir.Model
 
         /// <summary>
         /// The type of an address (physical / postal)
-        /// The type of an address (physical / postal).
         /// (url: http://hl7.org/fhir/ValueSet/address-type)
         /// </summary>
         [FhirEnumeration("AddressType")]
         public enum AddressType
         {
             /// <summary>
-            /// Mailing addresses - PO Boxes and care-of addresses.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-type)
             /// </summary>
             [EnumLiteral("postal"), Description("Postal")]
             Postal,
             /// <summary>
-            /// A physical address that can be visited.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-type)
             /// </summary>
             [EnumLiteral("physical"), Description("Physical")]
             Physical,
             /// <summary>
-            /// An address that is both physical and postal.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/address-type)
             /// </summary>
             [EnumLiteral("both"), Description("Postal & Physical")]

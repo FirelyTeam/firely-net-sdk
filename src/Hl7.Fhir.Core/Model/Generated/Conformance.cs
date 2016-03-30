@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,19 +61,19 @@ namespace Hl7.Fhir.Model
         public enum ConformanceStatementKind
         {
             /// <summary>
-            /// The Conformance instance represents the present capabilities of a specific system instance.  This is the kind returned by OPTIONS for a FHIR server end-point.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conformance-statement-kind)
             /// </summary>
             [EnumLiteral("instance"), Description("Instance")]
             Instance,
             /// <summary>
-            /// The Conformance instance represents the capabilities of a system or piece of software, independent of a particular installation.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conformance-statement-kind)
             /// </summary>
             [EnumLiteral("capability"), Description("Capability")]
             Capability,
             /// <summary>
-            /// The Conformance instance represents a set of requirements for other systems to meet; e.g. as part of an implementation guide or 'request for proposal'.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conformance-statement-kind)
             /// </summary>
             [EnumLiteral("requirements"), Description("Requirements")]
@@ -88,25 +88,25 @@ namespace Hl7.Fhir.Model
         public enum UnknownContentCode
         {
             /// <summary>
-            /// The application does not accept either unknown elements or extensions.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/unknown-content-code)
             /// </summary>
             [EnumLiteral("no"), Description("Neither Elements or Extensions")]
             No,
             /// <summary>
-            /// The application accepts unknown extensions, but not unknown elements.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/unknown-content-code)
             /// </summary>
             [EnumLiteral("extensions"), Description("Unknown Extensions")]
             Extensions,
             /// <summary>
-            /// The application accepts unknown elements, but not unknown extensions.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/unknown-content-code)
             /// </summary>
             [EnumLiteral("elements"), Description("Unknown Elements")]
             Elements,
             /// <summary>
-            /// The application accepts unknown elements and extensions.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/unknown-content-code)
             /// </summary>
             [EnumLiteral("both"), Description("Unknown Elements and Extensions")]
@@ -121,13 +121,13 @@ namespace Hl7.Fhir.Model
         public enum RestfulConformanceMode
         {
             /// <summary>
-            /// The application acts as a client for this resource.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-conformance-mode)
             /// </summary>
             [EnumLiteral("client"), Description("Client")]
             Client,
             /// <summary>
-            /// The application acts as a server for this resource.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-conformance-mode)
             /// </summary>
             [EnumLiteral("server"), Description("Server")]
@@ -175,12 +175,6 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
-            [EnumLiteral("validate"), Description("validate")]
-            Validate,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/restful-interaction)
-            /// </summary>
             [EnumLiteral("history-type"), Description("history-type")]
             HistoryType,
             /// <summary>
@@ -205,19 +199,19 @@ namespace Hl7.Fhir.Model
         public enum ResourceVersionPolicy
         {
             /// <summary>
-            /// VersionId meta-property is not supported (server) or used (client).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/versioning-policy)
             /// </summary>
             [EnumLiteral("no-version"), Description("No VersionId Support")]
             NoVersion,
             /// <summary>
-            /// VersionId meta-property is supported (server) or used (client).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/versioning-policy)
             /// </summary>
             [EnumLiteral("versioned"), Description("Versioned")]
             Versioned,
             /// <summary>
-            /// VersionId is must be correct for updates (server) or will be specified (If-match header) for updates (client).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/versioning-policy)
             /// </summary>
             [EnumLiteral("versioned-update"), Description("VersionId tracked fully")]
@@ -232,19 +226,19 @@ namespace Hl7.Fhir.Model
         public enum ConditionalDeleteStatus
         {
             /// <summary>
-            /// No support for conditional deletes.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conditional-delete-status)
             /// </summary>
             [EnumLiteral("not-supported"), Description("Not Supported")]
             NotSupported,
             /// <summary>
-            /// Conditional deletes are supported, but only single resources at a time.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conditional-delete-status)
             /// </summary>
             [EnumLiteral("single"), Description("Single Deletes Supported")]
             Single,
             /// <summary>
-            /// Conditional deletes are supported, and multiple resources can be deleted in a single interaction.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/conditional-delete-status)
             /// </summary>
             [EnumLiteral("multiple"), Description("Multiple Deletes Supported")]
@@ -259,61 +253,61 @@ namespace Hl7.Fhir.Model
         public enum SearchModifierCode
         {
             /// <summary>
-            /// The search parameter returns resources that have a value or not.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
             [EnumLiteral("missing"), Description("Missing")]
             Missing,
             /// <summary>
-            /// The search parameter returns resources that have a value that exactly matches the supplied parameter (the whole string, including casing and accents).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
             [EnumLiteral("exact"), Description("Exact")]
             Exact,
             /// <summary>
-            /// The search parameter returns resources that include the supplied parameter value anywhere within the field being searched.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
             [EnumLiteral("contains"), Description("Contains")]
             Contains,
             /// <summary>
-            /// The search parameter returns resources that do not contain a match .
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
             [EnumLiteral("not"), Description("Not")]
             Not,
             /// <summary>
-            /// The search parameter is processed as a string that searches text associated with the code/value - either CodeableConcept.text, Coding.display, or Identifier.type.text.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
             [EnumLiteral("text"), Description("Text")]
             Text,
             /// <summary>
-            /// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is in the specified value set.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
             [EnumLiteral("in"), Description("In")]
             In,
             /// <summary>
-            /// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is not in the specified value set.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
             [EnumLiteral("not-in"), Description("Not In")]
             NotIn,
             /// <summary>
-            /// The search parameter tests whether the value in a resource is subsumed by the specified value (is-a, or hierarchical relationships).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
             [EnumLiteral("below"), Description("Below")]
             Below,
             /// <summary>
-            /// The search parameter tests whether the value in a resource subsumes the specified value (is-a, or hierarchical relationships).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
             [EnumLiteral("above"), Description("Above")]
             Above,
             /// <summary>
-            /// The search parameter only applies to the Resource Type specified as a modifier (e.g. the modifier is not actually :type, but :Patient etc.).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-modifier-code)
             /// </summary>
             [EnumLiteral("type"), Description("Type")]
@@ -355,25 +349,25 @@ namespace Hl7.Fhir.Model
         public enum TransactionMode
         {
             /// <summary>
-            /// Neither batch or transaction is supported.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/transaction-mode)
             /// </summary>
             [EnumLiteral("not-supported"), Description("None")]
             NotSupported,
             /// <summary>
-            /// Batches are  supported.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/transaction-mode)
             /// </summary>
             [EnumLiteral("batch"), Description("Batches supported")]
             Batch,
             /// <summary>
-            /// Transactions are supported.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/transaction-mode)
             /// </summary>
             [EnumLiteral("transaction"), Description("Transactions Supported")]
             Transaction,
             /// <summary>
-            /// Both batches and transactions are supported.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/transaction-mode)
             /// </summary>
             [EnumLiteral("both"), Description("Batches & Transactions")]
@@ -388,19 +382,19 @@ namespace Hl7.Fhir.Model
         public enum MessageSignificanceCategory
         {
             /// <summary>
-            /// The message represents/requests a change that should not be processed more than once; e.g. Making a booking for an appointment.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/message-significance-category)
             /// </summary>
             [EnumLiteral("Consequence"), Description("Consequence")]
             Consequence,
             /// <summary>
-            /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/message-significance-category)
             /// </summary>
             [EnumLiteral("Currency"), Description("Currency")]
             Currency,
             /// <summary>
-            /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/message-significance-category)
             /// </summary>
             [EnumLiteral("Notification"), Description("Notification")]
@@ -415,13 +409,13 @@ namespace Hl7.Fhir.Model
         public enum ConformanceEventMode
         {
             /// <summary>
-            /// The application sends requests and receives responses.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/message-conformance-event-mode)
             /// </summary>
             [EnumLiteral("sender"), Description("Sender")]
             Sender,
             /// <summary>
-            /// The application receives requests and sends responses.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/message-conformance-event-mode)
             /// </summary>
             [EnumLiteral("receiver"), Description("Receiver")]
@@ -436,13 +430,13 @@ namespace Hl7.Fhir.Model
         public enum DocumentMode
         {
             /// <summary>
-            /// The application produces documents of the specified type.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/document-mode)
             /// </summary>
             [EnumLiteral("producer"), Description("Producer")]
             Producer,
             /// <summary>
-            /// The application consumes documents of the specified type.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/document-mode)
             /// </summary>
             [EnumLiteral("consumer"), Description("Consumer")]
@@ -457,7 +451,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
-            /// Name of a individual to contact
+            /// Name of an individual to contact
             /// </summary>
             [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
@@ -470,7 +464,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
-            /// Name of a individual to contact
+            /// Name of an individual to contact
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -911,7 +905,7 @@ namespace Hl7.Fhir.Model
             /// Resource served on the REST interface
             /// </summary>
             [FhirElement("resource", InSummary=true, Order=70)]
-            [Cardinality(Min=1,Max=-1)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Conformance.ResourceComponent> Resource
             {
@@ -1791,7 +1785,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ResourceInteractionComponent"; } }
             
             /// <summary>
-            /// read | vread | update | delete | history-instance | validate | history-type | create | search-type
+            /// read | vread | update | delete | history-instance | history-type | create | search-type
             /// </summary>
             [FhirElement("code", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -1805,7 +1799,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Conformance.TypeRestfulInteraction> _CodeElement;
             
             /// <summary>
-            /// read | vread | update | delete | history-instance | validate | history-type | create | search-type
+            /// read | vread | update | delete | history-instance | history-type | create | search-type
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -2429,7 +2423,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "MessagingComponent"; } }
             
             /// <summary>
-            /// A messaging service end-point
+            /// Where messages should be sent
             /// </summary>
             [FhirElement("endpoint", Order=40)]
             [Cardinality(Min=0,Max=-1)]
@@ -3154,6 +3148,7 @@ namespace Hl7.Fhir.Model
         /// draft | active | retired
         /// </summary>
         [FhirElement("status", InSummary=true, Order=120)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement
         {
@@ -3215,9 +3210,42 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Publication Date(/time)
+        /// </summary>
+        [FhirElement("date", InSummary=true, Order=140)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime DateElement
+        {
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _DateElement;
+        
+        /// <summary>
+        /// Publication Date(/time)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Date
+        {
+            get { return DateElement != null ? DateElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  DateElement = null; 
+                else
+                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Date");
+            }
+        }
+        
+        /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=140)]
+        [FhirElement("publisher", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -3249,7 +3277,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details of the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=150)]
+        [FhirElement("contact", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Conformance.ContactComponent> Contact
@@ -3259,39 +3287,6 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.Conformance.ContactComponent> _Contact;
-        
-        /// <summary>
-        /// Publication Date(/time)
-        /// </summary>
-        [FhirElement("date", InSummary=true, Order=160)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime DateElement
-        {
-            get { return _DateElement; }
-            set { _DateElement = value; OnPropertyChanged("DateElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirDateTime _DateElement;
-        
-        /// <summary>
-        /// Publication Date(/time)
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Date
-        {
-            get { return DateElement != null ? DateElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  DateElement = null; 
-                else
-                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("Date");
-            }
-        }
         
         /// <summary>
         /// Human description of the conformance statement
@@ -3326,9 +3321,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Why is this needed?
+        /// Content intends to support these contexts
         /// </summary>
-        [FhirElement("requirements", Order=180)]
+        [FhirElement("useContext", InSummary=true, Order=180)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> UseContext
+        {
+            get { if(_UseContext==null) _UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(); return _UseContext; }
+            set { _UseContext = value; OnPropertyChanged("UseContext"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
+        
+        /// <summary>
+        /// Why this resource has been created
+        /// </summary>
+        [FhirElement("requirements", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RequirementsElement
         {
@@ -3339,7 +3348,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _RequirementsElement;
         
         /// <summary>
-        /// Why is this needed?
+        /// Why this resource has been created
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -3360,7 +3369,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use and/or publishing restrictions
         /// </summary>
-        [FhirElement("copyright", Order=190)]
+        [FhirElement("copyright", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CopyrightElement
         {
@@ -3392,7 +3401,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// instance | capability | requirements
         /// </summary>
-        [FhirElement("kind", InSummary=true, Order=200)]
+        [FhirElement("kind", InSummary=true, Order=210)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Conformance.ConformanceStatementKind> KindElement
@@ -3425,7 +3434,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Software that is covered by this conformance statement
         /// </summary>
-        [FhirElement("software", InSummary=true, Order=210)]
+        [FhirElement("software", InSummary=true, Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.Conformance.SoftwareComponent Software
         {
@@ -3438,7 +3447,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this describes a specific instance
         /// </summary>
-        [FhirElement("implementation", InSummary=true, Order=220)]
+        [FhirElement("implementation", InSummary=true, Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.Conformance.ImplementationComponent Implementation
         {
@@ -3451,7 +3460,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// FHIR Version the system uses
         /// </summary>
-        [FhirElement("fhirVersion", InSummary=true, Order=230)]
+        [FhirElement("fhirVersion", InSummary=true, Order=240)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Id FhirVersionElement
@@ -3484,7 +3493,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// no | extensions | elements | both
         /// </summary>
-        [FhirElement("acceptUnknown", InSummary=true, Order=240)]
+        [FhirElement("acceptUnknown", InSummary=true, Order=250)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Conformance.UnknownContentCode> AcceptUnknownElement
@@ -3517,7 +3526,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// formats supported (xml | json | mime type)
         /// </summary>
-        [FhirElement("format", InSummary=true, Order=250)]
+        [FhirElement("format", InSummary=true, Order=260)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Code> FormatElement
@@ -3550,7 +3559,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Profiles for use cases supported
         /// </summary>
-        [FhirElement("profile", Order=260)]
+        [FhirElement("profile", Order=270)]
         [References("StructureDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -3565,7 +3574,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If the endpoint is a RESTful one
         /// </summary>
-        [FhirElement("rest", InSummary=true, Order=270)]
+        [FhirElement("rest", InSummary=true, Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Conformance.RestComponent> Rest
@@ -3579,7 +3588,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If messaging is supported
         /// </summary>
-        [FhirElement("messaging", Order=280)]
+        [FhirElement("messaging", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Conformance.MessagingComponent> Messaging
@@ -3593,7 +3602,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Document definition
         /// </summary>
-        [FhirElement("document", Order=290)]
+        [FhirElement("document", Order=300)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Conformance.DocumentComponent> Document
@@ -3616,10 +3625,11 @@ namespace Hl7.Fhir.Model
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
+                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Conformance.ContactComponent>(Contact.DeepCopy());
-                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
                 if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.Conformance.ConformanceStatementKind>)KindElement.DeepCopy();
@@ -3654,10 +3664,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
+            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
             if( !DeepComparable.Matches(CopyrightElement, otherT.CopyrightElement)) return false;
             if( !DeepComparable.Matches(KindElement, otherT.KindElement)) return false;
@@ -3685,10 +3696,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
             if( !DeepComparable.IsExactly(CopyrightElement, otherT.CopyrightElement)) return false;
             if( !DeepComparable.IsExactly(KindElement, otherT.KindElement)) return false;

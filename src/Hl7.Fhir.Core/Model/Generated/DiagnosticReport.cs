@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,43 +61,43 @@ namespace Hl7.Fhir.Model
         public enum DiagnosticReportStatus
         {
             /// <summary>
-            /// The existence of the report is registered, but there is nothing yet available.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
             [EnumLiteral("registered"), Description("Registered")]
             Registered,
             /// <summary>
-            /// This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
             [EnumLiteral("partial"), Description("Partial")]
             Partial,
             /// <summary>
-            /// The report is complete and verified by an authorized person.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
             [EnumLiteral("final"), Description("Final")]
             Final,
             /// <summary>
-            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
             [EnumLiteral("corrected"), Description("Corrected")]
             Corrected,
             /// <summary>
-            /// The report has been modified subsequent to being Final, and is complete and verified by an authorized person. New content has been added, but existing content hasn't changed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
             [EnumLiteral("appended"), Description("Appended")]
             Appended,
             /// <summary>
-            /// The report is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
             /// <summary>
-            /// The report has been withdrawn following a previous final release.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-report-status)
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered in Error")]

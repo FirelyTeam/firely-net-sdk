@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -117,7 +117,6 @@ namespace Hl7.Fhir.Model
         /// The technical format of the signature
         /// </summary>
         [FhirElement("contentType", InSummary=true, Order=60)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code ContentTypeElement
         {
@@ -149,8 +148,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual signature content (XML DigSig. JWT, picture, etc.)
         /// </summary>
-        [FhirElement("blob", InSummary=true, Order=70)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("blob", Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary BlobElement
         {

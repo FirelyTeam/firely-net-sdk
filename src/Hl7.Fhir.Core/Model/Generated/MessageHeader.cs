@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,19 +61,19 @@ namespace Hl7.Fhir.Model
         public enum ResponseType
         {
             /// <summary>
-            /// The message was accepted and processed without error.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/response-code)
             /// </summary>
             [EnumLiteral("ok"), Description("OK")]
             Ok,
             /// <summary>
-            /// Some internal unexpected error occurred - wait and try again. Note - this is usually used for things like database unavailable, which may be expected to resolve, though human intervention may be required.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/response-code)
             /// </summary>
             [EnumLiteral("transient-error"), Description("Transient Error")]
             TransientError,
             /// <summary>
-            /// The message was rejected because of some content in it. There is no point in re-sending without change. The response narrative SHALL describe the issue.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/response-code)
             /// </summary>
             [EnumLiteral("fatal-error"), Description("Fatal Error")]

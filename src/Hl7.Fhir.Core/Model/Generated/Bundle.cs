@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,55 +61,55 @@ namespace Hl7.Fhir.Model
         public enum BundleType
         {
             /// <summary>
-            /// The bundle is a document. The first resource is a Composition.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("document"), Description("Document")]
             Document,
             /// <summary>
-            /// The bundle is a message. The first resource is a MessageHeader.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("message"), Description("Message")]
             Message,
             /// <summary>
-            /// The bundle is a transaction - intended to be processed by a server as an atomic commit.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("transaction"), Description("Transaction")]
             Transaction,
             /// <summary>
-            /// The bundle is a transaction response. Because the response is a transaction response, the transactionhas succeeded, and all responses are error free.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("transaction-response"), Description("Transaction Response")]
             TransactionResponse,
             /// <summary>
-            /// The bundle is a transaction - intended to be processed by a server as a group of actions.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("batch"), Description("Batch")]
             Batch,
             /// <summary>
-            /// The bundle is a batch response. Note that as a batch, some responses may indicate failure and others success.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("batch-response"), Description("Batch Response")]
             BatchResponse,
             /// <summary>
-            /// The bundle is a list of resources from a history interaction on a server.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("history"), Description("History List")]
             History,
             /// <summary>
-            /// The bundle is a list of resources returned as a result of a search/query interaction, operation, or message.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("searchset"), Description("Search Results")]
             Searchset,
             /// <summary>
-            /// The bundle is a set of resources collected into a single document for ease of distribution.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/bundle-type)
             /// </summary>
             [EnumLiteral("collection"), Description("Collection")]
@@ -124,19 +124,19 @@ namespace Hl7.Fhir.Model
         public enum SearchEntryMode
         {
             /// <summary>
-            /// This resource matched the search specification.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-entry-mode)
             /// </summary>
             [EnumLiteral("match"), Description("Match")]
             Match,
             /// <summary>
-            /// This resource is returned because it is referred to from another resource in the search set.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-entry-mode)
             /// </summary>
             [EnumLiteral("include"), Description("Include")]
             Include,
             /// <summary>
-            /// An OperationOutcome that provides additional information about the processing of a search.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-entry-mode)
             /// </summary>
             [EnumLiteral("outcome"), Description("Outcome")]
@@ -151,25 +151,25 @@ namespace Hl7.Fhir.Model
         public enum HTTPVerb
         {
             /// <summary>
-            /// HTTP GET
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
             [EnumLiteral("GET"), Description("GET")]
             GET,
             /// <summary>
-            /// HTTP POST
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
             [EnumLiteral("POST"), Description("POST")]
             POST,
             /// <summary>
-            /// HTTP PUT
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
             [EnumLiteral("PUT"), Description("PUT")]
             PUT,
             /// <summary>
-            /// HTTP DELETE
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/http-verb)
             /// </summary>
             [EnumLiteral("DELETE"), Description("DELETE")]
@@ -847,7 +847,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ResponseComponent"; } }
             
             /// <summary>
-            /// Status return code for entry
+            /// Status response code (text optional)
             /// </summary>
             [FhirElement("status", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -861,7 +861,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _StatusElement;
             
             /// <summary>
-            /// Status return code for entry
+            /// Status response code (text optional)
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,83 +61,89 @@ namespace Hl7.Fhir.Model
         public enum DiagnosticOrderStatus
         {
             /// <summary>
-            /// The request has been proposed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("proposed"), Description("Proposed")]
             Proposed,
             /// <summary>
-            /// The request is in preliminary form prior to being sent.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("draft"), Description("Draft")]
             Draft,
             /// <summary>
-            /// The request has been planned.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
-            /// The request has been placed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("requested"), Description("Requested")]
             Requested,
             /// <summary>
-            /// The receiving system has received the order, but not yet decided whether it will be performed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("received"), Description("Received")]
             Received,
             /// <summary>
-            /// The receiving system has accepted the order, but work has not yet commenced.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
-            /// The work to fulfill the order is happening.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("in-progress"), Description("In-Progress")]
             InProgress,
             /// <summary>
-            /// The work is complete, and the outcomes are being reviewed for approval.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("review"), Description("Review")]
             Review,
             /// <summary>
-            /// The work has been completed, the report(s) released, and no further work is planned.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
-            /// The request has been withdrawn.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
             /// <summary>
-            /// The request has been held by originating system/user request.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("suspended"), Description("Suspended")]
             Suspended,
             /// <summary>
-            /// The receiving system has declined to fulfill the request.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
-            /// The diagnostic investigation was attempted, but due to some procedural error, it could not be completed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-status)
             /// </summary>
             [EnumLiteral("failed"), Description("Failed")]
             Failed,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/diagnostic-order-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            EnteredInError,
         }
 
         /// <summary>
@@ -148,25 +154,25 @@ namespace Hl7.Fhir.Model
         public enum DiagnosticOrderPriority
         {
             /// <summary>
-            /// The order has a normal priority .
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-priority)
             /// </summary>
             [EnumLiteral("routine"), Description("Routine")]
             Routine,
             /// <summary>
-            /// The order should be urgently.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-priority)
             /// </summary>
             [EnumLiteral("urgent"), Description("Urgent")]
             Urgent,
             /// <summary>
-            /// The order is time-critical.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-priority)
             /// </summary>
             [EnumLiteral("stat"), Description("Stat")]
             Stat,
             /// <summary>
-            /// The order should be acted on as soon as possible.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/diagnostic-order-priority)
             /// </summary>
             [EnumLiteral("asap"), Description("ASAP")]
@@ -181,7 +187,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "EventComponent"; } }
             
             /// <summary>
-            /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
+            /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error
             /// </summary>
             [FhirElement("status", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -195,7 +201,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
             
             /// <summary>
-            /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
+            /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -376,7 +382,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _BodySite;
             
             /// <summary>
-            /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
+            /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error
             /// </summary>
             [FhirElement("status", InSummary=true, Order=70)]
             [DataMember]
@@ -389,7 +395,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
             
             /// <summary>
-            /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
+            /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -478,38 +484,9 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Who and/or what test is about
-        /// </summary>
-        [FhirElement("subject", InSummary=true, Order=90)]
-        [References("Patient","Group","Location","Device")]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Subject
-        {
-            get { return _Subject; }
-            set { _Subject = value; OnPropertyChanged("Subject"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Subject;
-        
-        /// <summary>
-        /// Who ordered the test
-        /// </summary>
-        [FhirElement("orderer", InSummary=true, Order=100)]
-        [References("Practitioner")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Orderer
-        {
-            get { return _Orderer; }
-            set { _Orderer = value; OnPropertyChanged("Orderer"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Orderer;
-        
-        /// <summary>
         /// Identifiers assigned to this order
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=110)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -521,67 +498,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// The encounter that this diagnostic order is associated with
+        /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error
         /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=120)]
-        [References("Encounter")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Encounter
-        {
-            get { return _Encounter; }
-            set { _Encounter = value; OnPropertyChanged("Encounter"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Encounter;
-        
-        /// <summary>
-        /// Explanation/Justification for test
-        /// </summary>
-        [FhirElement("reason", Order=130)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.CodeableConcept> Reason
-        {
-            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
-            set { _Reason = value; OnPropertyChanged("Reason"); }
-        }
-        
-        private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
-        
-        /// <summary>
-        /// Additional clinical information
-        /// </summary>
-        [FhirElement("supportingInformation", Order=140)]
-        [References("Observation","Condition","DocumentReference")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
-        {
-            get { if(_SupportingInformation==null) _SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingInformation; }
-            set { _SupportingInformation = value; OnPropertyChanged("SupportingInformation"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
-        
-        /// <summary>
-        /// If the whole order relates to specific specimens
-        /// </summary>
-        [FhirElement("specimen", Order=150)]
-        [References("Specimen")]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Specimen
-        {
-            get { if(_Specimen==null) _Specimen = new List<Hl7.Fhir.Model.ResourceReference>(); return _Specimen; }
-            set { _Specimen = value; OnPropertyChanged("Specimen"); }
-        }
-        
-        private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
-        
-        /// <summary>
-        /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
-        /// </summary>
-        [FhirElement("status", InSummary=true, Order=160)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
         {
@@ -592,7 +511,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
         
         /// <summary>
-        /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed
+        /// proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -613,7 +532,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// routine | urgent | stat | asap
         /// </summary>
-        [FhirElement("priority", InSummary=true, Order=170)]
+        [FhirElement("priority", InSummary=true, Order=110)]
         [DataMember]
         public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority> PriorityElement
         {
@@ -641,6 +560,93 @@ namespace Hl7.Fhir.Model
                 OnPropertyChanged("Priority");
             }
         }
+        
+        /// <summary>
+        /// Who and/or what test is about
+        /// </summary>
+        [FhirElement("subject", InSummary=true, Order=120)]
+        [References("Patient","Group","Location","Device")]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Subject;
+        
+        /// <summary>
+        /// The encounter that this diagnostic order is associated with
+        /// </summary>
+        [FhirElement("encounter", InSummary=true, Order=130)]
+        [References("Encounter")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Encounter
+        {
+            get { return _Encounter; }
+            set { _Encounter = value; OnPropertyChanged("Encounter"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Encounter;
+        
+        /// <summary>
+        /// Who ordered the test
+        /// </summary>
+        [FhirElement("orderer", InSummary=true, Order=140)]
+        [References("Practitioner")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Orderer
+        {
+            get { return _Orderer; }
+            set { _Orderer = value; OnPropertyChanged("Orderer"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Orderer;
+        
+        /// <summary>
+        /// Explanation/Justification for test
+        /// </summary>
+        [FhirElement("reason", Order=150)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> Reason
+        {
+            get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
+        
+        /// <summary>
+        /// Additional clinical information
+        /// </summary>
+        [FhirElement("supportingInformation", Order=160)]
+        [References("Observation","Condition","DocumentReference")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> SupportingInformation
+        {
+            get { if(_SupportingInformation==null) _SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(); return _SupportingInformation; }
+            set { _SupportingInformation = value; OnPropertyChanged("SupportingInformation"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _SupportingInformation;
+        
+        /// <summary>
+        /// If the whole order relates to specific specimens
+        /// </summary>
+        [FhirElement("specimen", Order=170)]
+        [References("Specimen")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Specimen
+        {
+            get { if(_Specimen==null) _Specimen = new List<Hl7.Fhir.Model.ResourceReference>(); return _Specimen; }
+            set { _Specimen = value; OnPropertyChanged("Specimen"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
         
         /// <summary>
         /// A list of events of interest in the lifecycle
@@ -691,15 +697,15 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
-                if(Orderer != null) dest.Orderer = (Hl7.Fhir.Model.ResourceReference)Orderer.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>)StatusElement.DeepCopy();
+                if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority>)PriorityElement.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
+                if(Orderer != null) dest.Orderer = (Hl7.Fhir.Model.ResourceReference)Orderer.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
                 if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>)StatusElement.DeepCopy();
-                if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority>)PriorityElement.DeepCopy();
                 if(Event != null) dest.Event = new List<Hl7.Fhir.Model.DiagnosticOrder.EventComponent>(Event.DeepCopy());
                 if(Item != null) dest.Item = new List<Hl7.Fhir.Model.DiagnosticOrder.ItemComponent>(Item.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
@@ -720,15 +726,15 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.Matches(Orderer, otherT.Orderer)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(PriorityElement, otherT.PriorityElement)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.Matches(Orderer, otherT.Orderer)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(SupportingInformation, otherT.SupportingInformation)) return false;
             if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
-            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(PriorityElement, otherT.PriorityElement)) return false;
             if( !DeepComparable.Matches(Event, otherT.Event)) return false;
             if( !DeepComparable.Matches(Item, otherT.Item)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
@@ -742,15 +748,15 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
-            if( !DeepComparable.IsExactly(Orderer, otherT.Orderer)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(PriorityElement, otherT.PriorityElement)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
+            if( !DeepComparable.IsExactly(Orderer, otherT.Orderer)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(SupportingInformation, otherT.SupportingInformation)) return false;
             if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
-            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(PriorityElement, otherT.PriorityElement)) return false;
             if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
             if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;

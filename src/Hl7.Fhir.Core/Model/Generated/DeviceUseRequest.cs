@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,61 +61,61 @@ namespace Hl7.Fhir.Model
         public enum DeviceUseRequestStatus
         {
             /// <summary>
-            /// The request has been proposed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
             [EnumLiteral("proposed"), Description("Proposed")]
             Proposed,
             /// <summary>
-            /// The request has been planned.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
             [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
-            /// The request has been placed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
             [EnumLiteral("requested"), Description("Requested")]
             Requested,
             /// <summary>
-            /// The receiving system has received the request but not yet decided whether it will be performed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
             [EnumLiteral("received"), Description("Received")]
             Received,
             /// <summary>
-            /// The receiving system has accepted the request but work has not yet commenced.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
             [EnumLiteral("accepted"), Description("Accepted")]
             Accepted,
             /// <summary>
-            /// The work to fulfill the order is happening.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
             [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
-            /// The work has been complete, the report(s) released, and no further work is planned.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
-            /// The request has been held by originating system/user request.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
             [EnumLiteral("suspended"), Description("Suspended")]
             Suspended,
             /// <summary>
-            /// The receiving system has declined to fulfill the request.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
             [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
-            /// The request was attempted, but due to some procedural error, it could not be completed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-status)
             /// </summary>
             [EnumLiteral("aborted"), Description("Aborted")]
@@ -130,25 +130,25 @@ namespace Hl7.Fhir.Model
         public enum DeviceUseRequestPriority
         {
             /// <summary>
-            /// The request has a normal priority.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-priority)
             /// </summary>
             [EnumLiteral("routine"), Description("Routine")]
             Routine,
             /// <summary>
-            /// The request should be done urgently.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-priority)
             /// </summary>
             [EnumLiteral("urgent"), Description("Urgent")]
             Urgent,
             /// <summary>
-            /// The request is time-critical.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-priority)
             /// </summary>
             [EnumLiteral("stat"), Description("Stat")]
             Stat,
             /// <summary>
-            /// The request should be acted on as soon as possible.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/device-use-request-priority)
             /// </summary>
             [EnumLiteral("asap"), Description("ASAP")]

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,25 +61,25 @@ namespace Hl7.Fhir.Model
         public enum SubscriptionStatus
         {
             /// <summary>
-            /// The client has requested the subscription, and the server has not yet set it up.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
             [EnumLiteral("requested"), Description("Requested")]
             Requested,
             /// <summary>
-            /// The subscription is active.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
             [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
-            /// The server has an error executing the notification.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
             [EnumLiteral("error"), Description("Error")]
             Error,
             /// <summary>
-            /// Too many errors have occurred or the subscription has expired.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-status)
             /// </summary>
             [EnumLiteral("off"), Description("Off")]
@@ -94,31 +94,31 @@ namespace Hl7.Fhir.Model
         public enum SubscriptionChannelType
         {
             /// <summary>
-            /// The channel is executed by making a post to the URI. If a payload is included, the URL is interpreted as the service base, and an update (PUT) is made.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
             [EnumLiteral("rest-hook"), Description("Rest Hook")]
             RestHook,
             /// <summary>
-            /// The channel is executed by sending a packet across a web socket connection maintained by the client. The URL identifies the websocket, and the client binds to this URL.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
             [EnumLiteral("websocket"), Description("Websocket")]
             Websocket,
             /// <summary>
-            /// The channel is executed by sending an email to the email addressed in the URI (which must be a mailto:).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
             [EnumLiteral("email"), Description("Email")]
             Email,
             /// <summary>
-            /// The channel is executed by sending an SMS message to the phone number identified in the URL (tel:).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
             [EnumLiteral("sms"), Description("SMS")]
             Sms,
             /// <summary>
-            /// The channel is executed by sending a message (e.g. a Bundle with a MessageHeader resource etc.) to the application identified in the URI.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/subscription-channel-type)
             /// </summary>
             [EnumLiteral("message"), Description("Message")]

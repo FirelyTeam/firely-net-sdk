@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,31 +61,31 @@ namespace Hl7.Fhir.Model
         public enum CommunicationStatus
         {
             /// <summary>
-            /// The communication transmission is ongoing.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
             [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
-            /// The message transmission is complete, i.e., delivered to the recipient's destination.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
-            /// The communication transmission has been held by originating system/user request.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
             [EnumLiteral("suspended"), Description("Suspended")]
             Suspended,
             /// <summary>
-            /// The receiving system has declined to accept the message.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
             [EnumLiteral("rejected"), Description("Rejected")]
             Rejected,
             /// <summary>
-            /// There was a failure in transmitting the message out.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/communication-status)
             /// </summary>
             [EnumLiteral("failed"), Description("Failed")]

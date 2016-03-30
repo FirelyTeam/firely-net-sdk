@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,31 +61,31 @@ namespace Hl7.Fhir.Model
         public enum CarePlanStatus
         {
             /// <summary>
-            /// The plan has been suggested but no commitment to it has yet been made.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-status)
             /// </summary>
             [EnumLiteral("proposed"), Description("Proposed")]
             Proposed,
             /// <summary>
-            /// The plan is in development or awaiting use but is not yet intended to be acted upon.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-status)
             /// </summary>
             [EnumLiteral("draft"), Description("Pending")]
             Draft,
             /// <summary>
-            /// The plan is intended to be followed and used as part of patient care.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-status)
             /// </summary>
             [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
-            /// The plan is no longer in use and is not expected to be followed or used in patient care.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
-            /// The plan has been terminated prior to reaching completion (though it may have been replaced by a new plan).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-status)
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]
@@ -100,19 +100,19 @@ namespace Hl7.Fhir.Model
         public enum CarePlanRelationship
         {
             /// <summary>
-            /// The referenced plan is considered to be part of this plan.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-relationship)
             /// </summary>
             [EnumLiteral("includes"), Description("Includes")]
             Includes,
             /// <summary>
-            /// This plan takes the places of the referenced plan.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-relationship)
             /// </summary>
             [EnumLiteral("replaces"), Description("Replaces")]
             Replaces,
             /// <summary>
-            /// This plan provides details about how to perform activities defined at a higher level by the referenced plan.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-relationship)
             /// </summary>
             [EnumLiteral("fulfills"), Description("Fulfills")]
@@ -127,37 +127,37 @@ namespace Hl7.Fhir.Model
         public enum CarePlanActivityStatus
         {
             /// <summary>
-            /// Activity is planned but no action has yet been taken.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
             [EnumLiteral("not-started"), Description("Not Started")]
             NotStarted,
             /// <summary>
-            /// Appointment or other booking has occurred but activity has not yet begun.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
             [EnumLiteral("scheduled"), Description("Scheduled")]
             Scheduled,
             /// <summary>
-            /// Activity has been started but is not yet complete.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
             [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
-            /// Activity was started but has temporarily ceased with an expectation of resumption at a future time.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
             [EnumLiteral("on-hold"), Description("On Hold")]
             OnHold,
             /// <summary>
-            /// The activities have been completed (more or less) as planned.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
-            /// The activities have been ended prior to completion (perhaps even before they were started).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/care-plan-activity-status)
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]

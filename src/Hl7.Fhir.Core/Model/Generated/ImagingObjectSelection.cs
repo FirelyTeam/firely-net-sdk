@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -217,6 +217,7 @@ namespace Hl7.Fhir.Model
             /// Series instance UID
             /// </summary>
             [FhirElement("uid", InSummary=true, Order=40)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Oid UidElement
             {
@@ -450,16 +451,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The frame set
             /// </summary>
-            [FhirElement("frames", InSummary=true, Order=70)]
+            [FhirElement("frame", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent> Frames
+            public List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent> Frame
             {
-                get { if(_Frames==null) _Frames = new List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent>(); return _Frames; }
-                set { _Frames = value; OnPropertyChanged("Frames"); }
+                get { if(_Frame==null) _Frame = new List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent>(); return _Frame; }
+                set { _Frame = value; OnPropertyChanged("Frame"); }
             }
             
-            private List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent> _Frames;
+            private List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent> _Frame;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -471,7 +472,7 @@ namespace Hl7.Fhir.Model
                     if(SopClassElement != null) dest.SopClassElement = (Hl7.Fhir.Model.Oid)SopClassElement.DeepCopy();
                     if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
                     if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                    if(Frames != null) dest.Frames = new List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent>(Frames.DeepCopy());
+                    if(Frame != null) dest.Frame = new List<Hl7.Fhir.Model.ImagingObjectSelection.FramesComponent>(Frame.DeepCopy());
                     return dest;
                 }
                 else
@@ -492,7 +493,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(SopClassElement, otherT.SopClassElement)) return false;
                 if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
                 if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
-                if( !DeepComparable.Matches(Frames, otherT.Frames)) return false;
+                if( !DeepComparable.Matches(Frame, otherT.Frame)) return false;
                 
                 return true;
             }
@@ -506,7 +507,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(SopClassElement, otherT.SopClassElement)) return false;
                 if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
                 if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
-                if( !DeepComparable.IsExactly(Frames, otherT.Frames)) return false;
+                if( !DeepComparable.IsExactly(Frame, otherT.Frame)) return false;
                 
                 return true;
             }
@@ -522,35 +523,35 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "FramesComponent"; } }
             
             /// <summary>
-            /// Frame numbers
+            /// Frame reference number
             /// </summary>
-            [FhirElement("frameNumbers", InSummary=true, Order=40)]
+            [FhirElement("number", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.UnsignedInt> FrameNumbersElement
+            public List<Hl7.Fhir.Model.UnsignedInt> NumberElement
             {
-                get { if(_FrameNumbersElement==null) _FrameNumbersElement = new List<Hl7.Fhir.Model.UnsignedInt>(); return _FrameNumbersElement; }
-                set { _FrameNumbersElement = value; OnPropertyChanged("FrameNumbersElement"); }
+                get { if(_NumberElement==null) _NumberElement = new List<Hl7.Fhir.Model.UnsignedInt>(); return _NumberElement; }
+                set { _NumberElement = value; OnPropertyChanged("NumberElement"); }
             }
             
-            private List<Hl7.Fhir.Model.UnsignedInt> _FrameNumbersElement;
+            private List<Hl7.Fhir.Model.UnsignedInt> _NumberElement;
             
             /// <summary>
-            /// Frame numbers
+            /// Frame reference number
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IEnumerable<int?> FrameNumbers
+            public IEnumerable<int?> Number
             {
-                get { return FrameNumbersElement != null ? FrameNumbersElement.Select(elem => elem.Value) : null; }
+                get { return NumberElement != null ? NumberElement.Select(elem => elem.Value) : null; }
                 set
                 {
                     if(value == null)
-                      FrameNumbersElement = null; 
+                      NumberElement = null; 
                     else
-                      FrameNumbersElement = new List<Hl7.Fhir.Model.UnsignedInt>(value.Select(elem=>new Hl7.Fhir.Model.UnsignedInt(elem)));
-                    OnPropertyChanged("FrameNumbers");
+                      NumberElement = new List<Hl7.Fhir.Model.UnsignedInt>(value.Select(elem=>new Hl7.Fhir.Model.UnsignedInt(elem)));
+                    OnPropertyChanged("Number");
                 }
             }
             
@@ -594,7 +595,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(FrameNumbersElement != null) dest.FrameNumbersElement = new List<Hl7.Fhir.Model.UnsignedInt>(FrameNumbersElement.DeepCopy());
+                    if(NumberElement != null) dest.NumberElement = new List<Hl7.Fhir.Model.UnsignedInt>(NumberElement.DeepCopy());
                     if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                     return dest;
                 }
@@ -613,7 +614,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(FrameNumbersElement, otherT.FrameNumbersElement)) return false;
+                if( !DeepComparable.Matches(NumberElement, otherT.NumberElement)) return false;
                 if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
                 
                 return true;
@@ -625,7 +626,7 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(FrameNumbersElement, otherT.FrameNumbersElement)) return false;
+                if( !DeepComparable.IsExactly(NumberElement, otherT.NumberElement)) return false;
                 if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
                 
                 return true;
@@ -683,9 +684,55 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
+        /// Time when the imaging object selection was created
+        /// </summary>
+        [FhirElement("authoringTime", InSummary=true, Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime AuthoringTimeElement
+        {
+            get { return _AuthoringTimeElement; }
+            set { _AuthoringTimeElement = value; OnPropertyChanged("AuthoringTimeElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _AuthoringTimeElement;
+        
+        /// <summary>
+        /// Time when the imaging object selection was created
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string AuthoringTime
+        {
+            get { return AuthoringTimeElement != null ? AuthoringTimeElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  AuthoringTimeElement = null; 
+                else
+                  AuthoringTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("AuthoringTime");
+            }
+        }
+        
+        /// <summary>
+        /// Author (human or machine)
+        /// </summary>
+        [FhirElement("author", InSummary=true, Order=120)]
+        [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Author
+        {
+            get { return _Author; }
+            set { _Author = value; OnPropertyChanged("Author"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Author;
+        
+        /// <summary>
         /// Reason for selection
         /// </summary>
-        [FhirElement("title", InSummary=true, Order=110)]
+        [FhirElement("title", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Title
@@ -699,7 +746,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description text
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=120)]
+        [FhirElement("description", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -729,52 +776,6 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Author (human or machine)
-        /// </summary>
-        [FhirElement("author", InSummary=true, Order=130)]
-        [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Author
-        {
-            get { return _Author; }
-            set { _Author = value; OnPropertyChanged("Author"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Author;
-        
-        /// <summary>
-        /// Authoring time of the selection
-        /// </summary>
-        [FhirElement("authoringTime", InSummary=true, Order=140)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime AuthoringTimeElement
-        {
-            get { return _AuthoringTimeElement; }
-            set { _AuthoringTimeElement = value; OnPropertyChanged("AuthoringTimeElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirDateTime _AuthoringTimeElement;
-        
-        /// <summary>
-        /// Authoring time of the selection
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string AuthoringTime
-        {
-            get { return AuthoringTimeElement != null ? AuthoringTimeElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  AuthoringTimeElement = null; 
-                else
-                  AuthoringTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("AuthoringTime");
-            }
-        }
-        
-        /// <summary>
         /// Study identity of the selected instances
         /// </summary>
         [FhirElement("study", InSummary=true, Order=150)]
@@ -797,10 +798,10 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(UidElement != null) dest.UidElement = (Hl7.Fhir.Model.Oid)UidElement.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(AuthoringTimeElement != null) dest.AuthoringTimeElement = (Hl7.Fhir.Model.FhirDateTime)AuthoringTimeElement.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Title != null) dest.Title = (Hl7.Fhir.Model.CodeableConcept)Title.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
-                if(AuthoringTimeElement != null) dest.AuthoringTimeElement = (Hl7.Fhir.Model.FhirDateTime)AuthoringTimeElement.DeepCopy();
                 if(Study != null) dest.Study = new List<Hl7.Fhir.Model.ImagingObjectSelection.StudyComponent>(Study.DeepCopy());
                 return dest;
             }
@@ -821,10 +822,10 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(UidElement, otherT.UidElement)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(AuthoringTimeElement, otherT.AuthoringTimeElement)) return false;
+            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(Title, otherT.Title)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
-            if( !DeepComparable.Matches(AuthoringTimeElement, otherT.AuthoringTimeElement)) return false;
             if( !DeepComparable.Matches(Study, otherT.Study)) return false;
             
             return true;
@@ -838,10 +839,10 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(UidElement, otherT.UidElement)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(AuthoringTimeElement, otherT.AuthoringTimeElement)) return false;
+            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(Title, otherT.Title)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
-            if( !DeepComparable.IsExactly(AuthoringTimeElement, otherT.AuthoringTimeElement)) return false;
             if( !DeepComparable.IsExactly(Study, otherT.Study)) return false;
             
             return true;

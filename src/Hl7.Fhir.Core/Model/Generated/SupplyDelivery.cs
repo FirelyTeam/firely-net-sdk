@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,19 +61,19 @@ namespace Hl7.Fhir.Model
         public enum SupplyDeliveryStatus
         {
             /// <summary>
-            /// Supply has been requested, but not delivered.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplydelivery-status)
             /// </summary>
             [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
-            /// Supply has been delivered ("completed").
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplydelivery-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Delivered")]
             Completed,
             /// <summary>
-            /// Dispensing was not completed.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/supplydelivery-status)
             /// </summary>
             [EnumLiteral("abandoned"), Description("Abandoned")]

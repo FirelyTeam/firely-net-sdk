@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,31 +61,31 @@ namespace Hl7.Fhir.Model
         public enum XPathUsageType
         {
             /// <summary>
-            /// The search parameter is derived directly from the selected nodes based on the type definitions.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
             [EnumLiteral("normal"), Description("Normal")]
             Normal,
             /// <summary>
-            /// The search parameter is derived by a phonetic transform from the selected nodes.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
             [EnumLiteral("phonetic"), Description("Phonetic")]
             Phonetic,
             /// <summary>
-            /// The search parameter is based on a spatial transform of the selected nodes.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
             [EnumLiteral("nearby"), Description("Nearby")]
             Nearby,
             /// <summary>
-            /// The search parameter is based on a spatial transform of the selected nodes, using physical distance from the middle.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
             [EnumLiteral("distance"), Description("Distance")]
             Distance,
             /// <summary>
-            /// The interpretation of the xpath statement is unknown (and can't be automated).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/search-xpath-usage)
             /// </summary>
             [EnumLiteral("other"), Description("Other")]
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
-            /// Name of a individual to contact
+            /// Name of an individual to contact
             /// </summary>
             [FhirElement("name", InSummary=true, Order=40)]
             [DataMember]
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
-            /// Name of a individual to contact
+            /// Name of an individual to contact
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -323,9 +323,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Publication Date(/time)
+        /// </summary>
+        [FhirElement("date", InSummary=true, Order=130)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime DateElement
+        {
+            get { return _DateElement; }
+            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _DateElement;
+        
+        /// <summary>
+        /// Publication Date(/time)
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Date
+        {
+            get { return DateElement != null ? DateElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  DateElement = null; 
+                else
+                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Date");
+            }
+        }
+        
+        /// <summary>
         /// Name of the publisher (Organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=130)]
+        [FhirElement("publisher", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -357,7 +389,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details of the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=140)]
+        [FhirElement("contact", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.SearchParameter.ContactComponent> Contact
@@ -369,41 +401,23 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.SearchParameter.ContactComponent> _Contact;
         
         /// <summary>
-        /// Publication Date(/time)
+        /// Content intends to support these contexts
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=150)]
+        [FhirElement("useContext", InSummary=true, Order=160)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime DateElement
+        public List<Hl7.Fhir.Model.CodeableConcept> UseContext
         {
-            get { return _DateElement; }
-            set { _DateElement = value; OnPropertyChanged("DateElement"); }
+            get { if(_UseContext==null) _UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(); return _UseContext; }
+            set { _UseContext = value; OnPropertyChanged("UseContext"); }
         }
         
-        private Hl7.Fhir.Model.FhirDateTime _DateElement;
-        
-        /// <summary>
-        /// Publication Date(/time)
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Date
-        {
-            get { return DateElement != null ? DateElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  DateElement = null; 
-                else
-                  DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("Date");
-            }
-        }
+        private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
         
         /// <summary>
         /// Why this search parameter is defined
         /// </summary>
-        [FhirElement("requirements", Order=160)]
+        [FhirElement("requirements", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString RequirementsElement
         {
@@ -435,7 +449,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Code used in URL
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=170)]
+        [FhirElement("code", InSummary=true, Order=180)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Code CodeElement
@@ -468,7 +482,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The resource type this search parameter applies to
         /// </summary>
-        [FhirElement("base", InSummary=true, Order=180)]
+        [FhirElement("base", InSummary=true, Order=190)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ResourceType> BaseElement
@@ -501,7 +515,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// number | date | string | token | reference | composite | quantity | uri
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=190)]
+        [FhirElement("type", InSummary=true, Order=200)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.SearchParamType> TypeElement
@@ -534,7 +548,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Documentation for  search parameter
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=200)]
+        [FhirElement("description", InSummary=true, Order=210)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -565,9 +579,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// FluentPath expression that extracts the values
+        /// </summary>
+        [FhirElement("expression", Order=220)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString ExpressionElement
+        {
+            get { return _ExpressionElement; }
+            set { _ExpressionElement = value; OnPropertyChanged("ExpressionElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _ExpressionElement;
+        
+        /// <summary>
+        /// FluentPath expression that extracts the values
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Expression
+        {
+            get { return ExpressionElement != null ? ExpressionElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ExpressionElement = null; 
+                else
+                  ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Expression");
+            }
+        }
+        
+        /// <summary>
         /// XPath that extracts the values
         /// </summary>
-        [FhirElement("xpath", Order=210)]
+        [FhirElement("xpath", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString XpathElement
         {
@@ -599,7 +645,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// normal | phonetic | nearby | distance | other
         /// </summary>
-        [FhirElement("xpathUsage", Order=220)]
+        [FhirElement("xpathUsage", Order=240)]
         [DataMember]
         public Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType> XpathUsageElement
         {
@@ -631,7 +677,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Types of resource (if a resource reference)
         /// </summary>
-        [FhirElement("target", Order=230)]
+        [FhirElement("target", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Code<Hl7.Fhir.Model.ResourceType>> TargetElement
@@ -672,14 +718,16 @@ namespace Hl7.Fhir.Model
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
+                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.SearchParameter.ContactComponent>(Contact.DeepCopy());
-                if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
+                if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.CodeableConcept>(UseContext.DeepCopy());
                 if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.FhirString)RequirementsElement.DeepCopy();
                 if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                 if(BaseElement != null) dest.BaseElement = (Code<Hl7.Fhir.Model.ResourceType>)BaseElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.SearchParamType>)TypeElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
                 if(XpathElement != null) dest.XpathElement = (Hl7.Fhir.Model.FhirString)XpathElement.DeepCopy();
                 if(XpathUsageElement != null) dest.XpathUsageElement = (Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType>)XpathUsageElement.DeepCopy();
                 if(TargetElement != null) dest.TargetElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(TargetElement.DeepCopy());
@@ -704,14 +752,16 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
+            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
             if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.Matches(BaseElement, otherT.BaseElement)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
             if( !DeepComparable.Matches(XpathElement, otherT.XpathElement)) return false;
             if( !DeepComparable.Matches(XpathUsageElement, otherT.XpathUsageElement)) return false;
             if( !DeepComparable.Matches(TargetElement, otherT.TargetElement)) return false;
@@ -729,14 +779,16 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
+            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
             if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
+            if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
             if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
             if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
             if( !DeepComparable.IsExactly(BaseElement, otherT.BaseElement)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
             if( !DeepComparable.IsExactly(XpathElement, otherT.XpathElement)) return false;
             if( !DeepComparable.IsExactly(XpathUsageElement, otherT.XpathUsageElement)) return false;
             if( !DeepComparable.IsExactly(TargetElement, otherT.TargetElement)) return false;

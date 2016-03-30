@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.0.2
+// Generated for FHIR v1.3.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -61,74 +61,47 @@ namespace Hl7.Fhir.Model
         public enum AllergyIntoleranceStatus
         {
             /// <summary>
-            /// An active record of a reaction to the identified Substance.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
             [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
-            /// A low level of certainty about the propensity for a reaction to the identified Substance.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
             [EnumLiteral("unconfirmed"), Description("Unconfirmed")]
             Unconfirmed,
             /// <summary>
-            /// A high level of certainty about the propensity for a reaction to the identified Substance, which may include clinical evidence by testing or rechallenge.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
             [EnumLiteral("confirmed"), Description("Confirmed")]
             Confirmed,
             /// <summary>
-            /// An inactive record of a reaction to the identified Substance.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
             [EnumLiteral("inactive"), Description("Inactive")]
             Inactive,
             /// <summary>
-            /// A reaction to the identified Substance has been clinically reassessed by testing or rechallenge and considered to be resolved.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
             [EnumLiteral("resolved"), Description("Resolved")]
             Resolved,
             /// <summary>
-            /// A propensity for a reaction to the identified Substance has been disproven with a high level of clinical certainty, which may include testing or rechallenge, and is refuted.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
             [EnumLiteral("refuted"), Description("Refuted")]
             Refuted,
             /// <summary>
-            /// The statement was entered in error and is not valid.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered In Error")]
             EnteredInError,
-        }
-
-        /// <summary>
-        /// Estimate of the potential clinical harm, or seriousness, of a reaction to an identified Substance.
-        /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality)
-        /// </summary>
-        [FhirEnumeration("AllergyIntoleranceCriticality")]
-        public enum AllergyIntoleranceCriticality
-        {
-            /// <summary>
-            /// The potential clinical impact of a future reaction is estimated as low risk: exposure to substance is unlikely to result in a life threatening or organ system threatening outcome. Future exposure to the Substance is considered a relative contra-indication.
-            /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
-            /// </summary>
-            [EnumLiteral("CRITL"), Description("Low Risk")]
-            CRITL,
-            /// <summary>
-            /// The potential clinical impact of a future reaction is estimated as high risk: exposure to substance may result in a life threatening or organ system threatening outcome. Future exposure to the Substance may be considered an absolute contra-indication.
-            /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
-            /// </summary>
-            [EnumLiteral("CRITH"), Description("High Risk")]
-            CRITH,
-            /// <summary>
-            /// Unable to assess the potential clinical impact with the information available.
-            /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
-            /// </summary>
-            [EnumLiteral("CRITU"), Description("Unable to determine")]
-            CRITU,
         }
 
         /// <summary>
@@ -139,13 +112,13 @@ namespace Hl7.Fhir.Model
         public enum AllergyIntoleranceType
         {
             /// <summary>
-            /// A propensity for hypersensitivity reaction(s) to a substance.  These reactions are most typically type I hypersensitivity, plus other "allergy-like" reactions, including pseudoallergy.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-type)
             /// </summary>
             [EnumLiteral("allergy"), Description("Allergy")]
             Allergy,
             /// <summary>
-            /// A propensity for adverse reactions to a substance that is not judged to be allergic or "allergy-like".  These reactions are typically (but not necessarily) non-immune.  They are to some degree idiosyncratic and/or individually specific (i.e. are not a reaction that is expected to occur with most or all patients given similar circumstances).
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-type)
             /// </summary>
             [EnumLiteral("intolerance"), Description("Intolerance")]
@@ -160,29 +133,56 @@ namespace Hl7.Fhir.Model
         public enum AllergyIntoleranceCategory
         {
             /// <summary>
-            /// Any substance consumed to provide nutritional support for the body.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
             [EnumLiteral("food"), Description("Food")]
             Food,
             /// <summary>
-            /// Substances administered to achieve a physiological effect.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
             [EnumLiteral("medication"), Description("Medication")]
             Medication,
             /// <summary>
-            /// Substances that are encountered in the environment.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
             [EnumLiteral("environment"), Description("Environment")]
             Environment,
             /// <summary>
-            /// Other substances that are not covered by any other category.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-category)
             /// </summary>
             [EnumLiteral("other"), Description("Other")]
             Other,
+        }
+
+        /// <summary>
+        /// Estimate of the potential clinical harm, or seriousness, of a reaction to an identified Substance.
+        /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality)
+        /// </summary>
+        [FhirEnumeration("AllergyIntoleranceCriticality")]
+        public enum AllergyIntoleranceCriticality
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
+            /// </summary>
+            [EnumLiteral("low"), Description("Low Risk")]
+            Low,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
+            /// </summary>
+            [EnumLiteral("high"), Description("High Risk")]
+            High,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
+            /// </summary>
+            [EnumLiteral("unable-to-assess"), Description("Unable to Assess Risk")]
+            UnableToAssess,
         }
 
         /// <summary>
@@ -193,19 +193,19 @@ namespace Hl7.Fhir.Model
         public enum AllergyIntoleranceCertainty
         {
             /// <summary>
-            /// There is a low level of clinical certainty that the reaction was caused by the identified Substance.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reaction-event-certainty)
             /// </summary>
             [EnumLiteral("unlikely"), Description("Unlikely")]
             Unlikely,
             /// <summary>
-            /// There is a high level of clinical certainty that the reaction was caused by the identified Substance.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reaction-event-certainty)
             /// </summary>
             [EnumLiteral("likely"), Description("Likely")]
             Likely,
             /// <summary>
-            /// There is a very high level of clinical certainty that the reaction was due to the identified Substance, which may include clinical evidence by testing or rechallenge.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reaction-event-certainty)
             /// </summary>
             [EnumLiteral("confirmed"), Description("Confirmed")]
@@ -220,19 +220,19 @@ namespace Hl7.Fhir.Model
         public enum AllergyIntoleranceSeverity
         {
             /// <summary>
-            /// Causes mild physiological effects.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reaction-event-severity)
             /// </summary>
             [EnumLiteral("mild"), Description("Mild")]
             Mild,
             /// <summary>
-            /// Causes moderate physiological effects.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reaction-event-severity)
             /// </summary>
             [EnumLiteral("moderate"), Description("Moderate")]
             Moderate,
             /// <summary>
-            /// Causes severe physiological effects.
+            /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/reaction-event-severity)
             /// </summary>
             [EnumLiteral("severe"), Description("Severe")]
@@ -418,14 +418,15 @@ namespace Hl7.Fhir.Model
             /// Text about event not captured in other fields
             /// </summary>
             [FhirElement("note", Order=110)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.Annotation Note
+            public List<Hl7.Fhir.Model.Annotation> Note
             {
-                get { return _Note; }
+                get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
                 set { _Note = value; OnPropertyChanged("Note"); }
             }
             
-            private Hl7.Fhir.Model.Annotation _Note;
+            private List<Hl7.Fhir.Model.Annotation> _Note;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -441,7 +442,7 @@ namespace Hl7.Fhir.Model
                     if(OnsetElement != null) dest.OnsetElement = (Hl7.Fhir.Model.FhirDateTime)OnsetElement.DeepCopy();
                     if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>)SeverityElement.DeepCopy();
                     if(ExposureRoute != null) dest.ExposureRoute = (Hl7.Fhir.Model.CodeableConcept)ExposureRoute.DeepCopy();
-                    if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
+                    if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                     return dest;
                 }
                 else
@@ -507,130 +508,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// Date(/time) when manifestations showed
-        /// </summary>
-        [FhirElement("onset", InSummary=true, Order=100)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime OnsetElement
-        {
-            get { return _OnsetElement; }
-            set { _OnsetElement = value; OnPropertyChanged("OnsetElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirDateTime _OnsetElement;
-        
-        /// <summary>
-        /// Date(/time) when manifestations showed
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Onset
-        {
-            get { return OnsetElement != null ? OnsetElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  OnsetElement = null; 
-                else
-                  OnsetElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("Onset");
-            }
-        }
-        
-        /// <summary>
-        /// When recorded
-        /// </summary>
-        [FhirElement("recordedDate", InSummary=true, Order=110)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
-        {
-            get { return _RecordedDateElement; }
-            set { _RecordedDateElement = value; OnPropertyChanged("RecordedDateElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirDateTime _RecordedDateElement;
-        
-        /// <summary>
-        /// When recorded
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string RecordedDate
-        {
-            get { return RecordedDateElement != null ? RecordedDateElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  RecordedDateElement = null; 
-                else
-                  RecordedDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("RecordedDate");
-            }
-        }
-        
-        /// <summary>
-        /// Who recorded the sensitivity
-        /// </summary>
-        [FhirElement("recorder", InSummary=true, Order=120)]
-        [References("Practitioner","Patient")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Recorder
-        {
-            get { return _Recorder; }
-            set { _Recorder = value; OnPropertyChanged("Recorder"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Recorder;
-        
-        /// <summary>
-        /// Who the sensitivity is for
-        /// </summary>
-        [FhirElement("patient", InSummary=true, Order=130)]
-        [References("Patient")]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
-        {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Patient;
-        
-        /// <summary>
-        /// Source of the information about the allergy
-        /// </summary>
-        [FhirElement("reporter", InSummary=true, Order=140)]
-        [References("Patient","RelatedPerson","Practitioner")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Reporter
-        {
-            get { return _Reporter; }
-            set { _Reporter = value; OnPropertyChanged("Reporter"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Reporter;
-        
-        /// <summary>
-        /// Substance, (or class) considered to be responsible for risk
-        /// </summary>
-        [FhirElement("substance", InSummary=true, Order=150)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Substance
-        {
-            get { return _Substance; }
-            set { _Substance = value; OnPropertyChanged("Substance"); }
-        }
-        
-        private Hl7.Fhir.Model.CodeableConcept _Substance;
-        
-        /// <summary>
         /// active | unconfirmed | confirmed | inactive | resolved | refuted | entered-in-error
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=160)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceStatus> StatusElement
         {
@@ -660,41 +540,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// CRITL | CRITH | CRITU
-        /// </summary>
-        [FhirElement("criticality", InSummary=true, Order=170)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality> CriticalityElement
-        {
-            get { return _CriticalityElement; }
-            set { _CriticalityElement = value; OnPropertyChanged("CriticalityElement"); }
-        }
-        
-        private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality> _CriticalityElement;
-        
-        /// <summary>
-        /// CRITL | CRITH | CRITU
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality? Criticality
-        {
-            get { return CriticalityElement != null ? CriticalityElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  CriticalityElement = null; 
-                else
-                  CriticalityElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>(value);
-                OnPropertyChanged("Criticality");
-            }
-        }
-        
-        /// <summary>
         /// allergy | intolerance - Underlying mechanism (if known)
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=180)]
+        [FhirElement("type", InSummary=true, Order=110)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType> TypeElement
         {
@@ -726,7 +574,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// food | medication | environment | other - Category of Substance
         /// </summary>
-        [FhirElement("category", InSummary=true, Order=190)]
+        [FhirElement("category", InSummary=true, Order=120)]
         [DataMember]
         public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory> CategoryElement
         {
@@ -752,6 +600,159 @@ namespace Hl7.Fhir.Model
                 else
                   CategoryElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>(value);
                 OnPropertyChanged("Category");
+            }
+        }
+        
+        /// <summary>
+        /// low | high | unable-to-assess
+        /// </summary>
+        [FhirElement("criticality", InSummary=true, Order=130)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality> CriticalityElement
+        {
+            get { return _CriticalityElement; }
+            set { _CriticalityElement = value; OnPropertyChanged("CriticalityElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality> _CriticalityElement;
+        
+        /// <summary>
+        /// low | high | unable-to-assess
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality? Criticality
+        {
+            get { return CriticalityElement != null ? CriticalityElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  CriticalityElement = null; 
+                else
+                  CriticalityElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>(value);
+                OnPropertyChanged("Criticality");
+            }
+        }
+        
+        /// <summary>
+        /// Substance, (or class) considered to be responsible for risk
+        /// </summary>
+        [FhirElement("substance", InSummary=true, Order=140)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Substance
+        {
+            get { return _Substance; }
+            set { _Substance = value; OnPropertyChanged("Substance"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Substance;
+        
+        /// <summary>
+        /// Who the sensitivity is for
+        /// </summary>
+        [FhirElement("patient", InSummary=true, Order=150)]
+        [References("Patient")]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Patient
+        {
+            get { return _Patient; }
+            set { _Patient = value; OnPropertyChanged("Patient"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Patient;
+        
+        /// <summary>
+        /// When recorded
+        /// </summary>
+        [FhirElement("recordedDate", InSummary=true, Order=160)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
+        {
+            get { return _RecordedDateElement; }
+            set { _RecordedDateElement = value; OnPropertyChanged("RecordedDateElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _RecordedDateElement;
+        
+        /// <summary>
+        /// When recorded
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string RecordedDate
+        {
+            get { return RecordedDateElement != null ? RecordedDateElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  RecordedDateElement = null; 
+                else
+                  RecordedDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("RecordedDate");
+            }
+        }
+        
+        /// <summary>
+        /// Who recorded the sensitivity
+        /// </summary>
+        [FhirElement("recorder", InSummary=true, Order=170)]
+        [References("Practitioner","Patient")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Recorder
+        {
+            get { return _Recorder; }
+            set { _Recorder = value; OnPropertyChanged("Recorder"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Recorder;
+        
+        /// <summary>
+        /// Source of the information about the allergy
+        /// </summary>
+        [FhirElement("reporter", InSummary=true, Order=180)]
+        [References("Patient","RelatedPerson","Practitioner")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Reporter
+        {
+            get { return _Reporter; }
+            set { _Reporter = value; OnPropertyChanged("Reporter"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Reporter;
+        
+        /// <summary>
+        /// Date(/time) when manifestations showed
+        /// </summary>
+        [FhirElement("onset", InSummary=true, Order=190)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime OnsetElement
+        {
+            get { return _OnsetElement; }
+            set { _OnsetElement = value; OnPropertyChanged("OnsetElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _OnsetElement;
+        
+        /// <summary>
+        /// Date(/time) when manifestations showed
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Onset
+        {
+            get { return OnsetElement != null ? OnsetElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  OnsetElement = null; 
+                else
+                  OnsetElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("Onset");
             }
         }
         
@@ -791,14 +792,15 @@ namespace Hl7.Fhir.Model
         /// Additional text not captured in other fields
         /// </summary>
         [FhirElement("note", Order=210)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Annotation Note
+        public List<Hl7.Fhir.Model.Annotation> Note
         {
-            get { return _Note; }
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
             set { _Note = value; OnPropertyChanged("Note"); }
         }
         
-        private Hl7.Fhir.Model.Annotation _Note;
+        private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
         /// Adverse Reaction Events linked to exposure to substance
@@ -822,18 +824,18 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(OnsetElement != null) dest.OnsetElement = (Hl7.Fhir.Model.FhirDateTime)OnsetElement.DeepCopy();
-                if(RecordedDateElement != null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)RecordedDateElement.DeepCopy();
-                if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopy();
-                if(Substance != null) dest.Substance = (Hl7.Fhir.Model.CodeableConcept)Substance.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceStatus>)StatusElement.DeepCopy();
-                if(CriticalityElement != null) dest.CriticalityElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>)CriticalityElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType>)TypeElement.DeepCopy();
                 if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>)CategoryElement.DeepCopy();
+                if(CriticalityElement != null) dest.CriticalityElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>)CriticalityElement.DeepCopy();
+                if(Substance != null) dest.Substance = (Hl7.Fhir.Model.CodeableConcept)Substance.DeepCopy();
+                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(RecordedDateElement != null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)RecordedDateElement.DeepCopy();
+                if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
+                if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopy();
+                if(OnsetElement != null) dest.OnsetElement = (Hl7.Fhir.Model.FhirDateTime)OnsetElement.DeepCopy();
                 if(LastOccurenceElement != null) dest.LastOccurenceElement = (Hl7.Fhir.Model.FhirDateTime)LastOccurenceElement.DeepCopy();
-                if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>(Reaction.DeepCopy());
                 return dest;
             }
@@ -853,16 +855,16 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.Matches(OnsetElement, otherT.OnsetElement)) return false;
-            if( !DeepComparable.Matches(RecordedDateElement, otherT.RecordedDateElement)) return false;
-            if( !DeepComparable.Matches(Recorder, otherT.Recorder)) return false;
-            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.Matches(Reporter, otherT.Reporter)) return false;
-            if( !DeepComparable.Matches(Substance, otherT.Substance)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(CriticalityElement, otherT.CriticalityElement)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
+            if( !DeepComparable.Matches(CriticalityElement, otherT.CriticalityElement)) return false;
+            if( !DeepComparable.Matches(Substance, otherT.Substance)) return false;
+            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(RecordedDateElement, otherT.RecordedDateElement)) return false;
+            if( !DeepComparable.Matches(Recorder, otherT.Recorder)) return false;
+            if( !DeepComparable.Matches(Reporter, otherT.Reporter)) return false;
+            if( !DeepComparable.Matches(OnsetElement, otherT.OnsetElement)) return false;
             if( !DeepComparable.Matches(LastOccurenceElement, otherT.LastOccurenceElement)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(Reaction, otherT.Reaction)) return false;
@@ -877,16 +879,16 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-            if( !DeepComparable.IsExactly(OnsetElement, otherT.OnsetElement)) return false;
-            if( !DeepComparable.IsExactly(RecordedDateElement, otherT.RecordedDateElement)) return false;
-            if( !DeepComparable.IsExactly(Recorder, otherT.Recorder)) return false;
-            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.IsExactly(Reporter, otherT.Reporter)) return false;
-            if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(CriticalityElement, otherT.CriticalityElement)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
+            if( !DeepComparable.IsExactly(CriticalityElement, otherT.CriticalityElement)) return false;
+            if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
+            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(RecordedDateElement, otherT.RecordedDateElement)) return false;
+            if( !DeepComparable.IsExactly(Recorder, otherT.Recorder)) return false;
+            if( !DeepComparable.IsExactly(Reporter, otherT.Reporter)) return false;
+            if( !DeepComparable.IsExactly(OnsetElement, otherT.OnsetElement)) return false;
             if( !DeepComparable.IsExactly(LastOccurenceElement, otherT.LastOccurenceElement)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(Reaction, otherT.Reaction)) return false;
