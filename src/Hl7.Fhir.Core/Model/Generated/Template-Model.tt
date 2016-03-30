@@ -758,6 +758,10 @@ if(!abstractType) {
 			if (enums.ContainsValue("Hl7.Fhir.Model." + ResourceBase + "." + result.Name))
 				result.Name += "_";
 
+			// A property name cannot be the same as the classname, otherwise c# thinks this is a constructor!
+			if (result.Name == resourceName)
+				result.Name += "_";
+
 			result.CardMin = element.SelectSingleNode("fhir:min/@value", nsR).Value;
 			result.CardMax = element.SelectSingleNode("fhir:max/@value", nsR).Value;
 

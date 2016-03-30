@@ -755,13 +755,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("library", InSummary=true, Order=110)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.Library.LibraryComponent> Library
+        public List<Hl7.Fhir.Model.Library.LibraryComponent> Library_
         {
-            get { if(_Library==null) _Library = new List<Hl7.Fhir.Model.Library.LibraryComponent>(); return _Library; }
-            set { _Library = value; OnPropertyChanged("Library"); }
+            get { if(_Library_==null) _Library_ = new List<Hl7.Fhir.Model.Library.LibraryComponent>(); return _Library_; }
+            set { _Library_ = value; OnPropertyChanged("Library_"); }
         }
         
-        private List<Hl7.Fhir.Model.Library.LibraryComponent> _Library;
+        private List<Hl7.Fhir.Model.Library.LibraryComponent> _Library_;
         
         /// <summary>
         /// A code system used by the library
@@ -842,7 +842,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(ModuleMetadata != null) dest.ModuleMetadata = (ModuleMetadata)ModuleMetadata.DeepCopy();
                 if(Model != null) dest.Model = new List<Hl7.Fhir.Model.Library.ModelComponent>(Model.DeepCopy());
-                if(Library != null) dest.Library = new List<Hl7.Fhir.Model.Library.LibraryComponent>(Library.DeepCopy());
+                if(Library_ != null) dest.Library_ = new List<Hl7.Fhir.Model.Library.LibraryComponent>(Library_.DeepCopy());
                 if(CodeSystem != null) dest.CodeSystem = new List<Hl7.Fhir.Model.Library.CodeSystemComponent>(CodeSystem.DeepCopy());
                 if(ValueSet != null) dest.ValueSet = new List<Hl7.Fhir.Model.Library.ValueSetComponent>(ValueSet.DeepCopy());
                 if(Parameter != null) dest.Parameter = new List<ParameterDefinition>(Parameter.DeepCopy());
@@ -867,7 +867,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(ModuleMetadata, otherT.ModuleMetadata)) return false;
             if( !DeepComparable.Matches(Model, otherT.Model)) return false;
-            if( !DeepComparable.Matches(Library, otherT.Library)) return false;
+            if( !DeepComparable.Matches(Library_, otherT.Library_)) return false;
             if( !DeepComparable.Matches(CodeSystem, otherT.CodeSystem)) return false;
             if( !DeepComparable.Matches(ValueSet, otherT.ValueSet)) return false;
             if( !DeepComparable.Matches(Parameter, otherT.Parameter)) return false;
@@ -885,7 +885,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(ModuleMetadata, otherT.ModuleMetadata)) return false;
             if( !DeepComparable.IsExactly(Model, otherT.Model)) return false;
-            if( !DeepComparable.IsExactly(Library, otherT.Library)) return false;
+            if( !DeepComparable.IsExactly(Library_, otherT.Library_)) return false;
             if( !DeepComparable.IsExactly(CodeSystem, otherT.CodeSystem)) return false;
             if( !DeepComparable.IsExactly(ValueSet, otherT.ValueSet)) return false;
             if( !DeepComparable.IsExactly(Parameter, otherT.Parameter)) return false;
