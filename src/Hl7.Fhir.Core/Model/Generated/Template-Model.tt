@@ -711,12 +711,12 @@ if(!abstractType) {
 			else
 				result.PropType = "BackboneElement";
 
-			// Check for a nameReference to another property
-			XmlAttribute attrNameRef = element.SelectSingleNode("fhir:nameReference/@value", nsR) as XmlAttribute;
+			// Check for a contentReference to another property
+			XmlAttribute attrNameRef = element.SelectSingleNode("fhir:contentReference/@value", nsR) as XmlAttribute;
 			if (attrNameRef != null)
             {
 				string nameRef = attrNameRef.Value;
-				XmlElement elemNameRef = (element.ParentNode as XmlElement).SelectSingleNode("fhir:element[fhir:name/@value = '"+nameRef+"']", nsR) as XmlElement;
+				XmlElement elemNameRef = (element.ParentNode as XmlElement).SelectSingleNode("fhir:element[@id = '"+nameRef.Replace("#", "")+"']", nsR) as XmlElement;
 				PropertyDetails temp = ParseType(elemNameRef, nsR, enums);
 				if (temp != null)
                 {
@@ -987,12 +987,12 @@ if(!abstractType) {
                 }
 			}
 
-			// Check for a nameReference to another property
-			XmlAttribute attrNameRef = element.SelectSingleNode("fhir:nameReference/@value", nsR) as XmlAttribute;
+			// Check for a contentReference to another property
+			XmlAttribute attrNameRef = element.SelectSingleNode("fhir:contentReference/@value", nsR) as XmlAttribute;
 			if (attrNameRef != null)
             {
 				string nameRef = attrNameRef.Value;
-				XmlElement elemNameRef = (element.ParentNode as XmlElement).SelectSingleNode("fhir:element[fhir:name/@value = '"+nameRef+"']", nsR) as XmlElement;
+				XmlElement elemNameRef = (element.ParentNode as XmlElement).SelectSingleNode("fhir:element[@id = '"+nameRef.Replace("#", "")+"']", nsR) as XmlElement;
 				PropertyDetails temp = ParseType(elemNameRef, nsR, enums);
 				if (temp != null)
                 {

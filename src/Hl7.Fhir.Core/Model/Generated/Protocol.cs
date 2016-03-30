@@ -284,13 +284,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("exit", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Protocol.ExitComponent Exit
+            public Hl7.Fhir.Model.Protocol.PreconditionComponent Exit
             {
                 get { return _Exit; }
                 set { _Exit = value; OnPropertyChanged("Exit"); }
             }
             
-            private Hl7.Fhir.Model.Protocol.ExitComponent _Exit;
+            private Hl7.Fhir.Model.Protocol.PreconditionComponent _Exit;
             
             /// <summary>
             /// First activity within timepoint
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Duration != null) dest.Duration = (Hl7.Fhir.Model.Duration)Duration.DeepCopy();
                     if(Precondition != null) dest.Precondition = (Hl7.Fhir.Model.Protocol.PreconditionComponent)Precondition.DeepCopy();
-                    if(Exit != null) dest.Exit = (Hl7.Fhir.Model.Protocol.ExitComponent)Exit.DeepCopy();
+                    if(Exit != null) dest.Exit = (Hl7.Fhir.Model.Protocol.PreconditionComponent)Exit.DeepCopy();
                     if(FirstActivityElement != null) dest.FirstActivityElement = (Hl7.Fhir.Model.FhirUri)FirstActivityElement.DeepCopy();
                     if(Activity != null) dest.Activity = new List<Hl7.Fhir.Model.Protocol.ActivityComponent>(Activity.DeepCopy());
                     if(Next != null) dest.Next = new List<Hl7.Fhir.Model.Protocol.NextComponent>(Next.DeepCopy());
@@ -475,13 +475,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("intersection", InSummary=true, Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Protocol.IntersectionComponent> Intersection
+            public List<Hl7.Fhir.Model.Protocol.PreconditionComponent> Intersection
             {
-                get { if(_Intersection==null) _Intersection = new List<Hl7.Fhir.Model.Protocol.IntersectionComponent>(); return _Intersection; }
+                get { if(_Intersection==null) _Intersection = new List<Hl7.Fhir.Model.Protocol.PreconditionComponent>(); return _Intersection; }
                 set { _Intersection = value; OnPropertyChanged("Intersection"); }
             }
             
-            private List<Hl7.Fhir.Model.Protocol.IntersectionComponent> _Intersection;
+            private List<Hl7.Fhir.Model.Protocol.PreconditionComponent> _Intersection;
             
             /// <summary>
             /// Or conditions
@@ -489,13 +489,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("union", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Protocol.UnionComponent> Union
+            public List<Hl7.Fhir.Model.Protocol.PreconditionComponent> Union
             {
-                get { if(_Union==null) _Union = new List<Hl7.Fhir.Model.Protocol.UnionComponent>(); return _Union; }
+                get { if(_Union==null) _Union = new List<Hl7.Fhir.Model.Protocol.PreconditionComponent>(); return _Union; }
                 set { _Union = value; OnPropertyChanged("Union"); }
             }
             
-            private List<Hl7.Fhir.Model.Protocol.UnionComponent> _Union;
+            private List<Hl7.Fhir.Model.Protocol.PreconditionComponent> _Union;
             
             /// <summary>
             /// Not conditions
@@ -503,13 +503,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("exclude", InSummary=true, Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Protocol.ExcludeComponent> Exclude
+            public List<Hl7.Fhir.Model.Protocol.PreconditionComponent> Exclude
             {
-                get { if(_Exclude==null) _Exclude = new List<Hl7.Fhir.Model.Protocol.ExcludeComponent>(); return _Exclude; }
+                get { if(_Exclude==null) _Exclude = new List<Hl7.Fhir.Model.Protocol.PreconditionComponent>(); return _Exclude; }
                 set { _Exclude = value; OnPropertyChanged("Exclude"); }
             }
             
-            private List<Hl7.Fhir.Model.Protocol.ExcludeComponent> _Exclude;
+            private List<Hl7.Fhir.Model.Protocol.PreconditionComponent> _Exclude;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -520,9 +520,9 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Condition != null) dest.Condition = (Hl7.Fhir.Model.Protocol.ConditionComponent)Condition.DeepCopy();
-                    if(Intersection != null) dest.Intersection = new List<Hl7.Fhir.Model.Protocol.IntersectionComponent>(Intersection.DeepCopy());
-                    if(Union != null) dest.Union = new List<Hl7.Fhir.Model.Protocol.UnionComponent>(Union.DeepCopy());
-                    if(Exclude != null) dest.Exclude = new List<Hl7.Fhir.Model.Protocol.ExcludeComponent>(Exclude.DeepCopy());
+                    if(Intersection != null) dest.Intersection = new List<Hl7.Fhir.Model.Protocol.PreconditionComponent>(Intersection.DeepCopy());
+                    if(Union != null) dest.Union = new List<Hl7.Fhir.Model.Protocol.PreconditionComponent>(Union.DeepCopy());
+                    if(Exclude != null) dest.Exclude = new List<Hl7.Fhir.Model.Protocol.PreconditionComponent>(Exclude.DeepCopy());
                     return dest;
                 }
                 else
@@ -1234,13 +1234,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("condition", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Protocol.ConditionComponent Condition
+            public Hl7.Fhir.Model.Protocol.PreconditionComponent Condition
             {
                 get { return _Condition; }
                 set { _Condition = value; OnPropertyChanged("Condition"); }
             }
             
-            private Hl7.Fhir.Model.Protocol.ConditionComponent _Condition;
+            private Hl7.Fhir.Model.Protocol.PreconditionComponent _Condition;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1251,7 +1251,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirUri)ReferenceElement.DeepCopy();
-                    if(Condition != null) dest.Condition = (Hl7.Fhir.Model.Protocol.ConditionComponent)Condition.DeepCopy();
+                    if(Condition != null) dest.Condition = (Hl7.Fhir.Model.Protocol.PreconditionComponent)Condition.DeepCopy();
                     return dest;
                 }
                 else

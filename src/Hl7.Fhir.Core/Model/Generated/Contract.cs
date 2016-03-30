@@ -670,13 +670,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("group", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Contract.GroupComponent> Group
+            public List<Hl7.Fhir.Model.Contract.TermComponent> Group
             {
-                get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.Contract.GroupComponent>(); return _Group; }
+                get { if(_Group==null) _Group = new List<Hl7.Fhir.Model.Contract.TermComponent>(); return _Group; }
                 set { _Group = value; OnPropertyChanged("Group"); }
             }
             
-            private List<Hl7.Fhir.Model.Contract.GroupComponent> _Group;
+            private List<Hl7.Fhir.Model.Contract.TermComponent> _Group;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Model
                     if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Contract.TermAgentComponent>(Agent.DeepCopy());
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
                     if(ValuedItem != null) dest.ValuedItem = new List<Hl7.Fhir.Model.Contract.TermValuedItemComponent>(ValuedItem.DeepCopy());
-                    if(Group != null) dest.Group = new List<Hl7.Fhir.Model.Contract.GroupComponent>(Group.DeepCopy());
+                    if(Group != null) dest.Group = new List<Hl7.Fhir.Model.Contract.TermComponent>(Group.DeepCopy());
                     return dest;
                 }
                 else

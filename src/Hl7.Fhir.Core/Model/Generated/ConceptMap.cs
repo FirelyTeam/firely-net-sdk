@@ -574,13 +574,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("product", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ConceptMap.ProductComponent> Product
+            public List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> Product
             {
-                get { if(_Product==null) _Product = new List<Hl7.Fhir.Model.ConceptMap.ProductComponent>(); return _Product; }
+                get { if(_Product==null) _Product = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(); return _Product; }
                 set { _Product = value; OnPropertyChanged("Product"); }
             }
             
-            private List<Hl7.Fhir.Model.ConceptMap.ProductComponent> _Product;
+            private List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> _Product;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
                     if(EquivalenceElement != null) dest.EquivalenceElement = (Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence>)EquivalenceElement.DeepCopy();
                     if(CommentsElement != null) dest.CommentsElement = (Hl7.Fhir.Model.FhirString)CommentsElement.DeepCopy();
                     if(DependsOn != null) dest.DependsOn = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(DependsOn.DeepCopy());
-                    if(Product != null) dest.Product = new List<Hl7.Fhir.Model.ConceptMap.ProductComponent>(Product.DeepCopy());
+                    if(Product != null) dest.Product = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(Product.DeepCopy());
                     return dest;
                 }
                 else

@@ -442,13 +442,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("part", Order=130)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.OperationDefinition.PartComponent> Part
+            public List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> Part
             {
-                get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.OperationDefinition.PartComponent>(); return _Part; }
+                get { if(_Part==null) _Part = new List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent>(); return _Part; }
                 set { _Part = value; OnPropertyChanged("Part"); }
             }
             
-            private List<Hl7.Fhir.Model.OperationDefinition.PartComponent> _Part;
+            private List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> _Part;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
                     if(SearchTypeElement != null) dest.SearchTypeElement = (Code<Hl7.Fhir.Model.SearchParamType>)SearchTypeElement.DeepCopy();
                     if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
                     if(Binding != null) dest.Binding = (Hl7.Fhir.Model.OperationDefinition.BindingComponent)Binding.DeepCopy();
-                    if(Part != null) dest.Part = new List<Hl7.Fhir.Model.OperationDefinition.PartComponent>(Part.DeepCopy());
+                    if(Part != null) dest.Part = new List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent>(Part.DeepCopy());
                     return dest;
                 }
                 else

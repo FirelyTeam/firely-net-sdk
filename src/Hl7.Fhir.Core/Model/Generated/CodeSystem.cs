@@ -715,13 +715,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("concept", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.CodeSystem.ConceptComponent> Concept
+            public List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent> Concept
             {
-                get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.CodeSystem.ConceptComponent>(); return _Concept; }
+                get { if(_Concept==null) _Concept = new List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>(); return _Concept; }
                 set { _Concept = value; OnPropertyChanged("Concept"); }
             }
             
-            private List<Hl7.Fhir.Model.CodeSystem.ConceptComponent> _Concept;
+            private List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent> _Concept;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -735,7 +735,7 @@ namespace Hl7.Fhir.Model
                     if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirString)DefinitionElement.DeepCopy();
                     if(Designation != null) dest.Designation = new List<Hl7.Fhir.Model.CodeSystem.ConceptDesignationComponent>(Designation.DeepCopy());
                     if(Property != null) dest.Property = new List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent>(Property.DeepCopy());
-                    if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.CodeSystem.ConceptComponent>(Concept.DeepCopy());
+                    if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>(Concept.DeepCopy());
                     return dest;
                 }
                 else

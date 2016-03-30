@@ -213,13 +213,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("exclude", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ValueSet.ExcludeComponent> Exclude
+            public List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> Exclude
             {
-                get { if(_Exclude==null) _Exclude = new List<Hl7.Fhir.Model.ValueSet.ExcludeComponent>(); return _Exclude; }
+                get { if(_Exclude==null) _Exclude = new List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent>(); return _Exclude; }
                 set { _Exclude = value; OnPropertyChanged("Exclude"); }
             }
             
-            private List<Hl7.Fhir.Model.ValueSet.ExcludeComponent> _Exclude;
+            private List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> _Exclude;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(ImportElement != null) dest.ImportElement = new List<Hl7.Fhir.Model.FhirUri>(ImportElement.DeepCopy());
                     if(Include != null) dest.Include = new List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent>(Include.DeepCopy());
-                    if(Exclude != null) dest.Exclude = new List<Hl7.Fhir.Model.ValueSet.ExcludeComponent>(Exclude.DeepCopy());
+                    if(Exclude != null) dest.Exclude = new List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent>(Exclude.DeepCopy());
                     return dest;
                 }
                 else
