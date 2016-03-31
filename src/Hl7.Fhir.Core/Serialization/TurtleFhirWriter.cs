@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Serialization
         private bool _coding_system = false;
         private string _coding_system_value;
         private bool _coding_code = false;
-        private bool _emitType = false;
+        //private bool _emitType = false;
 
         public TurtleFhirWriter()
         {
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Serialization
                 case "system": _coding_system = false; break;
                 case "code": _coding_code = false; break;
             }
-            _emitType = false;
+            //_emitType = false;
         }
 
         public void WriteEndRootObject(bool contained)
@@ -108,11 +108,11 @@ namespace Hl7.Fhir.Serialization
 
         public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
         {
-            if (_emitType)
+            /*if (_emitType)
             {
                 IUriNode obj = _g.CreateUriNode("fhir:" + _currentTypeName);
                 _g.Assert(_currentSubj, _g.CreateUriNode("rdf:type"), obj);
-            }
+            }*/
             IUriNode pred = _g.CreateUriNode(string.Format("fhir:{0}", _currentMemberName));
             var valueAsString = PrimitiveTypeConverter.ConvertTo<string>(value);
             if ("FhirUri" == _currentTypeName)
@@ -172,18 +172,16 @@ namespace Hl7.Fhir.Serialization
             //Console.WriteLine("DEBUG: WriteStartComplexContent");
             if (!_first)
             {
-                if (_emitType)
+                /*if (_emitType)
                 {
                     IUriNode obj = _g.CreateUriNode("fhir:" + _currentTypeName);
                     _g.Assert(_currentSubj, _g.CreateUriNode("rdf:type"), obj);
-                }
+                }*/
                 _subjStack.Push(_currentSubj);
                 _currentSubj = _g.CreateBlankNode();
                 if(_arrayIndex >= 0)
                 {
-                    INode pred = _g.CreateUriNode("fhir:index");
-                    INode obj = _g.CreateLiteralNode(_arrayIndex.ToString());
-                    _g.Assert(_currentSubj, pred, obj);
+                    _g.Assert(_currentSubj, _g.CreateUriNode("fhir:index"), _g.CreateLiteralNode(_arrayIndex.ToString()));
                     _arrayIndex++;
                 }
             }
@@ -198,12 +196,16 @@ namespace Hl7.Fhir.Serialization
         public void WriteStartProperty(PropertyMapping propMap, string memberName)
         {
             _currentTypeName = propMap.DefiningType.Name;
-            _currentMemberName = propMap.Name;
+            /*
+                memberName = member with type <- thinking now 30-mrt-2016 is to use this
+                propMap.Name; = memberName without type
+            */
+            _currentMemberName = memberName;
             //Console.WriteLine("DEBUG: WriteStartProperty {0}.{1}", _currentTypeName, _currentMemberName);
-            if (propMap.Choice != ChoiceType.None)
+            /*if (propMap.Choice != ChoiceType.None)
             {
                 _emitType = true;
-            }
+            }*/
             _typeStack.Push(_currentTypeName);
             _memberStack.Push(_currentMemberName);
 
@@ -237,9 +239,8 @@ namespace Hl7.Fhir.Serialization
                 _currentSubj = _g.CreateBlankNode(id);
             else
                 _currentSubj = _g.CreateBlankNode();
-
             _g.Assert(_currentSubj, _g.CreateUriNode("rdf:type"), _g.CreateUriNode("fhir:" + _currentTypeName));
-            _g.Assert(_currentSubj, _g.CreateUriNode("fhir:root"), _g.CreateLiteralNode("true"));
+            _g.Assert(_currentSubj, _g.CreateUriNode("fhir:nodeRole"), _g.CreateUriNode("fhir:treeRoot"));
         }
 
         public void Dispose()

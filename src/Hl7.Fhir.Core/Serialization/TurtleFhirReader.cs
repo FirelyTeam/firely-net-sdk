@@ -82,8 +82,8 @@ namespace Hl7.Fhir.Serialization
                                 }
                             }
                         }*/
-            // As per discission 2016-mrt-24; find subject with property fhir:root=true
-            var fhirRootTriples = _g.GetTriplesWithPredicateObject(_g.CreateUriNode("fhir:root"), _g.CreateLiteralNode("true"));
+            // As per discission 2016-mrt-24; find subject with property fhir:nodeRole fhir:treeRoot
+            var fhirRootTriples = _g.GetTriplesWithPredicateObject(_g.CreateUriNode("fhir:nodeRole"), _g.CreateUriNode("fhir:treeRoot"));
             if (fhirRootTriples.Count() == 1)
             {
                 Triple t = fhirRootTriples.First<Triple>();
