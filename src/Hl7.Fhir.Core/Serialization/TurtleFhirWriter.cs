@@ -249,9 +249,17 @@ namespace Hl7.Fhir.Serialization
         {
             _currentTypeName = name;
             if (id != null)
-                _currentSubj = _g.CreateBlankNode(id);
+            {
+                Uri valueAsUri;
+                if (Uri.TryCreate(_g.BaseUri, id, out valueAsUri))
+                {
+                    _currentSubj = _g.CreateUriNode(valueAsUri);
+                }
+            }
             else
+            {
                 _currentSubj = _g.CreateBlankNode();
+            }
             _g.Assert(_currentSubj, _g.CreateUriNode("rdf:type"), _g.CreateUriNode("fhir:" + _currentTypeName));
             _g.Assert(_currentSubj, _g.CreateUriNode("fhir:nodeRole"), _g.CreateUriNode("fhir:treeRoot"));
         }
