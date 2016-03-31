@@ -5,23 +5,20 @@ PropertyMapping.cs
 RoundtripTest.cs
 - Added xml->turtle->xml to 
 
-TurtleFhirParser
-- Determine resourceType rule is: find triple with predicate rdf:type and a subject that is never the object.
-
-
-issues
-- ComponentComponent?
-- when cardinality > 1
-- composed attributes like AllergyIntolerance.reaction.subject
-
+ISSUES:
+- fhir-net-api related
+-- ResourceReference is actually Reference
+-- ComponentComponent: are there more like these?
+--- composed attributes like AllergyIntolerance.reaction.subject
+-- when cardinality > 1
+- Are the "special" rules really nessasary?
+-- e.g. around Reference. Now Turtle is the only format that has "Reference" added to the property
+- Difference with Grahame's examples
+-- xs:date instead of xs:dateTime for Observation.effectiveDateTime?
+-- why is the Observation.component array handled differently from Observation.component.code?
+- rdfdotnet related
+-- datatype are surraounded by lt;gt? why? <xsd:dateTime>
+-- xsd namespace instead of xs namespace?
 
 TODO:
 - Move Program.cs to Hl7.Fhir.Core.Tests and use relative and Tempfolder paths!
-
--------------
-- removed: ElementDefinition / BindingComponent
-Renamed
-- ResourceReference -> Reference
-- FhirString -> String
-- FhirDecimal -> Decimal
-- FhirDateTime -> DateTime
