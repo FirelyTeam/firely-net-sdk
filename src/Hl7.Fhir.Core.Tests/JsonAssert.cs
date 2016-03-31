@@ -20,20 +20,20 @@ namespace Hl7.Fhir.Tests
 {
     public class JsonAssert
     {
-        public static void AreSame(JObject expected, JObject actual)
+        public static void AreSame(string filename, JObject expected, JObject actual)
         {
-            areSame(expected.Root, actual.Root);
+            areSame(filename, expected.Root, actual.Root);
         }
 
-        public static void AreSame(string expected, string actual)
+        public static void AreSame(string filename, string expected, string actual)
         {
             JObject exp = SerializationUtil.JObjectFromReader(SerializationUtil.JsonReaderFromJsonText(expected));
             JObject act = SerializationUtil.JObjectFromReader(SerializationUtil.JsonReaderFromJsonText(actual));
 
-            AreSame(exp, act);
+            AreSame(filename, exp, act);
         }
 
-        private static void areSame(JToken left, JToken right)
+        private static void areSame(string filename, JToken left, JToken right)
         {
             if ((left.Type == JTokenType.Integer && right.Type == JTokenType.Float) ||
                 (left.Type == JTokenType.Float && right.Type == JTokenType.Integer))
@@ -54,11 +54,11 @@ namespace Hl7.Fhir.Tests
                 var la = (JArray)left;
                 var ra = (JArray)right;
 
-                if(la.Count != ra.Count)
+                if (la.Count != ra.Count)
                     throw new AssertFailedException("Array size is not the same at " + right.Path);
 
-                for(var i=0; i<la.Count; i++)
-                    areSame(la[i],ra[i]);
+                for (var i = 0; i < la.Count; i++)
+                    areSame(filename, la[i], ra[i]);
             }
 
             else if (left.Type == JTokenType.Object)
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Tests
                     if (!ro.TryGetValue(lMember.Key, out rMember) || rMember == null)
                         throw new AssertFailedException(String.Format("Expected member {0} not found in actual at " + left.Path, lMember.Key));
 
-                    areSame(lMember.Value, rMember);
+                    areSame(filename, lMember.Value, rMember);
                 }
 
                 foreach (var rMember in ro)
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Tests
                     var leftDoc = FhirParser.XDocumentFromXml(lValue);
                     var rightDoc = FhirParser.XDocumentFromXml(rValue);
 
-                    XmlAssert.AreSame(leftDoc, rightDoc);
+                    XmlAssert.AreSame(filename, leftDoc, rightDoc);
                 }
                 else
                 {
@@ -115,8 +115,10 @@ namespace Hl7.Fhir.Tests
                     if (rValue.EndsWith("+00:00")) rValue = rValue.Replace("+00:00", "Z");
                     if (lValue.Contains(".000+")) lValue = lValue.Replace(".000+", "+");
                     if (rValue.Contains(".000+")) rValue = rValue.Replace(".000+", "+");
+                    if (lValue.Contains(".000Z")) lValue = lValue.Replace(".000Z", "Z");
+                    if (rValue.Contains(".000Z")) rValue = rValue.Replace(".000Z", "Z");
 
-                    Assert.AreEqual(lValue, rValue);
+                    Assert.AreEqual(lValue, rValue, "Error comparing Timestamp values in:" + filename);
                 }
             }
 
@@ -127,6 +129,6 @@ namespace Hl7.Fhir.Tests
             }
         }
 
-      
+
     }
 }

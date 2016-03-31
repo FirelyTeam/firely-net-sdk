@@ -27,9 +27,9 @@ namespace Hl7.Fhir.Tests.Serialization
 #if PORTABLE45
 	public class PortableRoundtripTest
 #else
-	public class RoundtripTest
+    public class RoundtripTest
 #endif
-    {    
+    {
         [TestMethod]
         [TestCategory("LongRunner")]
         public void FullRoundtripOfAllExamples()
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Debug.WriteLine("Unzipping example files from {0} to {1}", examplesZip, examplePath);
 
             ZipFile.ExtractToDirectory(examplesZip, examplePath);
-      
+
             var intermediate1Path = Path.Combine(baseTestPath, "intermediate1");
             Debug.WriteLine("Converting files in {0} to {1}", baseTestPath, intermediate1Path);
             convertFiles(examplePath, intermediate1Path);
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 var toExt = ext == ".xml" ? ".json" : ".xml";
                 string outputFile = Path.Combine(outputPath, exampleName) + toExt;
 
-                Debug.WriteLine("Converting {0} [{1}->{2}] ",exampleName,ext,toExt);
+                Debug.WriteLine("Converting {0} [{1}->{2}] ", exampleName, ext, toExt);
 
                 if (!isFeed(file))
                     convertResource(file, outputFile);
@@ -125,10 +125,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
         private void compareFile(string expectedFile, string actualFile)
         {
-            if(expectedFile.EndsWith(".xml"))
-                XmlAssert.AreSame(File.ReadAllText(expectedFile),File.ReadAllText(actualFile));
+            if (expectedFile.EndsWith(".xml"))
+                XmlAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile), File.ReadAllText(actualFile));
             else
-                JsonAssert.AreSame(File.ReadAllText(expectedFile), File.ReadAllText(actualFile));
+                JsonAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile), File.ReadAllText(actualFile));
         }
 
         private bool isFeed(string filename)
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
         }
 
-      
+
         private void convertResource(string inputFile, string outputFile)
         {
             //TODO: call validation after reading

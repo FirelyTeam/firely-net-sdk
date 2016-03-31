@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void SerializeMeta()
         {
-            var xml = FhirSerializer.SerializeToXml(metaPoco,root:"meta");
+            var xml = FhirSerializer.SerializeToXml(metaPoco, root: "meta");
             Assert.AreEqual(metaXml, xml);
         }
 
@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ParseMeta()
         {
             var poco = (Meta)FhirParser.ParseFromXml(metaXml, typeof(Meta));
-            var xml = FhirSerializer.SerializeToXml(poco,root:"meta");
+            var xml = FhirSerializer.SerializeToXml(poco, root: "meta");
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
             Assert.AreEqual(metaXml, xml);
@@ -103,10 +103,13 @@ namespace Hl7.Fhir.Tests.Serialization
             q.Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Test Questionnaire</div>" };
             q.Status = Questionnaire.QuestionnaireStatus.Published;
             q.Date = "2015-09-27";
-            q.Group = new Questionnaire.GroupComponent();
-            q.Group.Title = "TITLE";
-            q.Group.Text = "TEXT";
-            q.Group.LinkId = "linkid";
+            q.Title = "TITLE";
+            q.Item = new List<Questionnaire.ItemComponent>();
+            q.Item.Add(new Questionnaire.ItemComponent()
+            {
+                LinkId = "linkid",
+                Text = "TEXT"
+            });
 
             var qfull = FhirSerializer.SerializeResourceToXml(q);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.False");

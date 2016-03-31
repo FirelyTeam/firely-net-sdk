@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Tests.Serialization
 #if PORTABLE45
 	public class PortableResourceParsingTests
 #else
-	public class ResourceParsingTests
+    public class ResourceParsingTests
 #endif
     {
         [TestMethod]
@@ -103,8 +103,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var json2 = FhirSerializer.SerializeResourceToJson(poco);
             Assert.IsNotNull(json2);
             File.WriteAllText(Path.Combine(tempPath, "edgecase.json"), json2);
-           
-            JsonAssert.AreSame(json, json2);
+
+            JsonAssert.AreSame("edgecase.json", json, json2);
         }
 
 
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ContainedBaseIsNotAddedToId()
         {
             var p = new Patient() { Id = "jaap" };
-            var o = new Observation() { Subject = new ResourceReference() { Reference = "#"+p.Id } };
+            var o = new Observation() { Subject = new ResourceReference() { Reference = "#" + p.Id } };
             o.Contained.Add(p);
             o.ResourceBase = new Uri("http://nu.nl/fhir");
 
