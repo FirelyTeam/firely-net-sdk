@@ -14,15 +14,16 @@ namespace Hl7.Fhir.Serialization
     {
         public const string FHIR_PREFIX = "http://hl7.org/fhir/";
         private IGraph _g;
-        private INode _currentSubj, _currentPred;
+        private INode _currentSubj, _currentPred, _currentObj;
         private string _typeName;
 
-        internal TurtleFhirReader(IGraph g, INode subj, INode pred)
+        internal TurtleFhirReader(IGraph g, Triple t)
         {
             _g = g;
-            _currentSubj = subj;
-            _currentPred = pred;
-            string predString = pred.ToString();
+            _currentSubj = t.Subject;
+            _currentPred = t.Predicate;
+            _currentObj = t.Object;
+            string predString = _currentPred.ToString();
             // get type from predicate
             if (predString.StartsWith(FHIR_PREFIX))
             {
@@ -39,11 +40,11 @@ namespace Hl7.Fhir.Serialization
             }
             // type is overruled by rdf:type
             IUriNode typePred = _g.CreateUriNode("rdf:type");
-            foreach (Triple t in _g.GetTriplesWithSubject(subj))
+            foreach (Triple t2 in _g.GetTriplesWithSubject(_currentSubj))
             {
-                if (typePred.Equals(t.Predicate))
+                if (typePred.Equals(t2.Predicate))
                 {
-                    string uri = t.Object.ToString();
+                    string uri = t2.Object.ToString();
                     if (uri.StartsWith(FHIR_PREFIX))
                     {
                         _typeName = uri.Substring(uri.LastIndexOf('/') + 1);
@@ -66,28 +67,18 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("Cannot parse turtle: " + e.Message, null);
             }
 
-            // Find the tripple with predicate rdf:type that has a subject that is never used as object == root!
-            /*            IUriNode typePred = _g.CreateUriNode("rdf:type");
-                        foreach (Triple t in _g.GetTriplesWithPredicate(typePred))
-                        {
-                            if (_g.GetTriplesWithObject(t.Subject).Count() == 0)
-                            {
-                                //Console.WriteLine("DEBUG type={0}", t.Object);
-                                string uri = t.Object.ToString();
-                                if (uri.StartsWith(FHIR_PREFIX))
-                                {
-                                    _currentSubj = t.Subject;
-                                    _typeName = uri.Substring(uri.LastIndexOf('/') + 1);
-                                    return;
-                                }
-                            }
-                        }*/
             // As per discission 2016-mrt-24; find subject with property fhir:nodeRole fhir:treeRoot
             var fhirRootTriples = _g.GetTriplesWithPredicateObject(_g.CreateUriNode("fhir:nodeRole"), _g.CreateUriNode("fhir:treeRoot"));
             if (fhirRootTriples.Count() == 1)
             {
-                Triple t = fhirRootTriples.First<Triple>();
-                string uri = t.Object.ToString();
+                Triple t = fhirRootTriples.First();
+
+                // now find type triple
+                IUriNode typePred = _g.CreateUriNode("rdf:type");
+                var typeTriples = _g.GetTriplesWithSubjectPredicate(t.Subject, typePred);
+                Triple t2 = typeTriples.First();
+
+                string uri = t2.Object.ToString();
                 if (uri.StartsWith(FHIR_PREFIX))
                 {
                     _currentSubj = t.Subject;
@@ -125,20 +116,16 @@ namespace Hl7.Fhir.Serialization
                 {
                     string typePlusMemberName = pred.Substring(pred.LastIndexOf('/') + 1);
                     string memberName = typePlusMemberName.Substring(typePlusMemberName.IndexOf('.') + 1);
-                    if ("index" != memberName)
+                    switch (memberName)
                     {
-                        // Is rdf:type specified? then append to memberName for now
-                        IUriNode typePred = _g.CreateUriNode("rdf:type");
-                        Triple typeTriple = _g.GetTriplesWithSubject(t.Object).SingleOrDefault<Triple>(tr => typePred.Equals(tr.Predicate));
-                        if (typeTriple != null)
-                        {
-                            string uri = typeTriple.Object.ToString();
-                            if (uri.StartsWith(FHIR_PREFIX))
-                            {
-                                memberName += uri.Substring(uri.LastIndexOf('/') + 1);
-                            }
-                        }
-                        members.Add(new Tuple<string, IFhirReader>(memberName, new TurtleFhirReader(_g, t.Object, t.Predicate)));
+                        // Strip turtle specific members
+                        case "index":
+                        case "nodeRole":
+                        case "reference":
+                            break;
+                        default:
+                            members.Add(new Tuple<string, IFhirReader>(memberName, new TurtleFhirReader(_g, t)));
+                            break;
                     }
                 }
             }
@@ -147,9 +134,23 @@ namespace Hl7.Fhir.Serialization
 
         public object GetPrimitiveValue()
         {
-            string pred = _currentPred.ToString();
-            string value = _currentSubj.ToString();
-            //Console.WriteLine("DEBUG GetPrimitiveValue {0}={1}", pred, value);
+            var valueTriples = _g.GetTriplesWithSubjectPredicate(_currentObj, _g.CreateUriNode("fhir:value"));
+            if (valueTriples.Count() == 0)
+            {
+                return null;
+            }
+            var valueTriple = valueTriples.First();
+            var valueNode = valueTriple.Object;
+            string value;
+            // Make sure to only get the value, for now ignore the xsd type
+            if (valueNode is ILiteralNode)
+            {
+                value = ((ILiteralNode)valueNode).Value;
+            }
+            else
+            {
+                value = valueNode.ToString();
+            }
             return value;
         }
 
