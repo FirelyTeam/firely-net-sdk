@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("FhirClient")]
         public void InvokeLookupCoding()
         {
             var client = new FhirClient(testEndpoint);

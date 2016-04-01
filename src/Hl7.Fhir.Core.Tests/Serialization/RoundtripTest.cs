@@ -93,6 +93,8 @@ namespace Hl7.Fhir.Tests.Serialization
 
                 Debug.WriteLine("Converting {0} [{1}->{2}] ", exampleName, ext, toExt);
 
+                if (file.Contains("expansions.") || file.Contains("profiles-resources") || file.Contains("profiles-others") || file.Contains("valuesets."))
+                    continue;
                 if (!isFeed(file))
                     convertResource(file, outputFile);
                 else
@@ -112,6 +114,9 @@ namespace Hl7.Fhir.Tests.Serialization
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string extension = Path.GetExtension(file);
                 string actualFile = Path.Combine(actualPath, exampleName) + extension;
+
+                if (actualFile.Contains("dataelements.") || actualFile.Contains("expansions.") || actualFile.Contains("profiles-resources") || actualFile.Contains("profiles-others") || actualFile.Contains("valuesets."))
+                    continue;
 
                 if (!File.Exists(actualFile))
                     Assert.Fail("File {0}.{1} was not converted and not found in {2}", exampleName, extension,
@@ -151,7 +156,8 @@ namespace Hl7.Fhir.Tests.Serialization
         private void convertResource(string inputFile, string outputFile)
         {
             //TODO: call validation after reading
-
+            if (inputFile.Contains("expansions.") || inputFile.Contains("profiles-resources") || inputFile.Contains("profiles-others") || inputFile.Contains("valuesets."))
+                return;
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);

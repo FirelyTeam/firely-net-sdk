@@ -29,14 +29,14 @@ namespace Hl7.Fhir.Tests.Rest
     public class FhirClientTests
 #endif
     {
-        //public static Uri testEndpoint = new Uri("http://spark-dstu2.furore.com/fhir");
+        //public static Uri testEndpoint = new Uri("http://spark-dstu3.furore.com/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        public static Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
+        public static Uri testEndpoint = new Uri("http://fhir3.healthintersections.com.au/open");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
-        //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
+        //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu3");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
-        //public static Uri testEndpoint = new Uri("http://sqlonfhir-dstu2.azurewebsites.net/fhir");
+        //public static Uri testEndpoint = new Uri("http://sqlonfhir-dstu3.azurewebsites.net/fhir");
 
         [TestInitialize]
         public void TestInitialize()
@@ -375,6 +375,8 @@ namespace Hl7.Fhir.Tests.Rest
             pat.Identifier.Clear();
             pat.Identifier.Add(new Identifier("http://hl7.org/test/2", "99999"));
 
+            System.Diagnostics.Trace.WriteLine(Hl7.Fhir.Serialization.FhirSerializer.SerializeResourceToXml(pat));
+
             var fe = client.Create(pat); // Create as we are not providing the ID to be used.
             Assert.IsNotNull(fe);
             Assert.IsNotNull(fe.Id);
@@ -686,6 +688,7 @@ namespace Hl7.Fhir.Tests.Rest
             };
 
             FhirClient client = new FhirClient(testEndpoint);
+            System.Diagnostics.Trace.WriteLine(Hl7.Fhir.Serialization.FhirSerializer.SerializeResourceToXml(furore));
 
             var fe = client.Create(furore);
             Assert.IsNotNull(fe);
@@ -855,7 +858,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient")]
         public void TestReceiveErrorStatusWithOperationOutcomeIsHandled()
         {
-            var client = new FhirClient("http://fhir2.healthintersections.com.au/open");  // an address that returns Status 404 with an OperationOutcome
+            var client = new FhirClient(testEndpoint);  // an address that returns Status 404 with an OperationOutcome
 
             try
             {
@@ -900,7 +903,7 @@ namespace Hl7.Fhir.Tests.Rest
             var testEndpointDSTU1 = new Uri("http://spark.furore.com/fhir");
             var testEndpointDSTU12 = new Uri("http://fhirtest.uhn.ca/baseDstu1");
             var testEndpointDSTU22 = new Uri("http://fhirtest.uhn.ca/baseDstu2");
-            var testEndpointDSTU23 = new Uri("http://fhir-dev.healthintersections.com.au/open");
+            var testEndpointDSTU23 = new Uri("http://fhir3.healthintersections.com.au/open");
 
             var client = new FhirClient(testEndpointDSTU1);
 
@@ -910,6 +913,10 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 client = new FhirClient(testEndpointDSTU23, verifyFhirVersion: true);
                 p = client.Conformance();
+            }
+            catch (FhirOperationException)
+            {
+                //Client uses 1.0.1, server states 1.0.0-7104
             }
             catch (NotSupportedException)
             {
