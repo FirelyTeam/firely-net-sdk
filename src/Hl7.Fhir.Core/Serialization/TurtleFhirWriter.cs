@@ -24,10 +24,13 @@ namespace Hl7.Fhir.Serialization
         private int _arrayIndex = -1;
         private Stack<int> _arrayIndexStack = new Stack<int>();
 
+        private bool _first = true;
+
         private bool _coding = false;
         private bool _coding_system = false;
         private string _coding_system_value;
         private bool _coding_code = false;
+        private bool _reference = false;
 
         public TurtleFhirWriter()
         {
@@ -86,20 +89,12 @@ namespace Hl7.Fhir.Serialization
                 case "coding": _coding = false; break;
                 case "system": _coding_system = false; break;
                 case "code": _coding_code = false; break;
+                case "reference": _reference = false; break;
             }
         }
 
         public void WriteEndRootObject(bool contained)
         {
-        }
-
-        private static string lowerCamel(string p)
-        {
-            if (p == null) return p;
-
-            var c = p[0];
-
-            return Char.ToLowerInvariant(c) + p.Remove(0, 1);
         }
 
         public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
@@ -123,6 +118,24 @@ namespace Hl7.Fhir.Serialization
                     break;
                 case "Instant":
                 case "FhirDateTime":
+                    /* TODO:
+                    if (type.equals("date") || type.equals("dateTime") ) {
+                    String v = value;
+                    if (v.length() > 10) {
+                    int i = value.substring(10).indexOf("-");
+                    if (i == -1)
+                    i = value.substring(10).indexOf("+");
+                    v = i == -1 ? value : value.substring(0, 10+i);
+                    }
+                    if (v.length() > 10)
+                    xst = "^^xs:dateTime";
+                    else if (v.length() == 10)
+                    xst = "^^xs:date";
+                    else if (v.length() == 7)
+                    xst = "^^xs:gYearMonth";
+                    else if (v.length() == 4)
+                    xst = "^^xs:gYear";
+                    }*/
                     obj = _g.CreateLiteralNode(valueAsString, UriFactory.Create("xsd:dateTime"));
                     break;
                 case "FhirDecimal":
@@ -135,19 +148,18 @@ namespace Hl7.Fhir.Serialization
             }
             _g.Assert(_currentSubj, pred, obj);
 
-            // Special handling of reference; workaround "my stack issue"
-            string typeTmp = _typeStack.Pop();
-            if (_typeStack.Peek() == "Reference")
+            // Special handling of reference and coding
+            if (_reference)
             {
+                INode subjTmp = _subjStack.Pop();
                 Uri valueAsUri;
                 if (Uri.TryCreate(_g.BaseUri, valueAsString, out valueAsUri))
                 {
-                    _g.Assert(_subjStack.Peek(), _g.CreateUriNode("fhir:reference"), _g.CreateUriNode(valueAsUri));
+                    _g.Assert(subjTmp, _g.CreateUriNode("fhir:reference"), _g.CreateUriNode(valueAsUri));
                 }
+                _subjStack.Push(subjTmp);
             }
-            _typeStack.Push(typeTmp);
-
-            if (_coding_system)
+            else if (_coding_system)
             {
                 _coding_system_value = valueAsString;
             }
@@ -175,7 +187,6 @@ namespace Hl7.Fhir.Serialization
             _arrayIndex = 0;
         }
 
-        private bool _first = true;
         public void WriteStartComplexContent()
         {
             if (!_first)
@@ -214,10 +225,14 @@ namespace Hl7.Fhir.Serialization
             {
                 _currentMemberName += "Reference";
             }
-            // Special handling of component
-            if (_currentTypeName == "ComponentComponent")
+
+            // Special handling of component types
+            // ComponentComponent, DetailComponent, EntryComponent(in Bundle)
+            if (_currentTypeName.EndsWith("Component"))
             {
-                _currentTypeName = _typeStack.Peek() + ".component";
+                int idx = _currentTypeName.LastIndexOf("Component");
+                string att = lowerCamel(_currentTypeName.Substring(0, idx));
+                _currentTypeName = string.Format("{0}.{1}", _typeStack.Peek(), att);
             }
 
             _typeStack.Push(_currentTypeName);
@@ -242,11 +257,20 @@ namespace Hl7.Fhir.Serialization
                         _coding_code = true;
                     }
                     break;
+                case "reference":
+                    _reference = true;
+                    break;
             }
         }
 
         public void WriteStartRootObject(string name, string id, bool contained)
         {
+            if (contained)
+            {
+                _subjStack.Push(_currentSubj);
+                _first = true;
+            }
+
             _currentTypeName = name;
             if (id != null)
             {
@@ -261,7 +285,10 @@ namespace Hl7.Fhir.Serialization
                 _currentSubj = _g.CreateBlankNode();
             }
             _g.Assert(_currentSubj, _g.CreateUriNode("rdf:type"), _g.CreateUriNode("fhir:" + _currentTypeName));
-            _g.Assert(_currentSubj, _g.CreateUriNode("fhir:nodeRole"), _g.CreateUriNode("fhir:treeRoot"));
+            if(!contained)
+            {
+                _g.Assert(_currentSubj, _g.CreateUriNode("fhir:nodeRole"), _g.CreateUriNode("fhir:treeRoot"));
+            }
         }
 
         public void Dispose()
@@ -273,6 +300,13 @@ namespace Hl7.Fhir.Serialization
         private void Dispose(bool disposing)
         {
             if (disposing && _g != null) ((IDisposable)_g).Dispose();
+        }
+
+        private static string lowerCamel(string p)
+        {
+            if (p == null) return p;
+            var c = p[0];
+            return Char.ToLowerInvariant(c) + p.Remove(0, 1);
         }
     }
 }
