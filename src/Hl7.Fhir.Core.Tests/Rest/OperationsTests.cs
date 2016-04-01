@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("IntegrationTest")]
+        [TestCategory("IntegrationTest"), Ignore()]
         public void InvokeExpandUsingInstanceOp()
         {
             var client = new FhirClient(testEndpoint);

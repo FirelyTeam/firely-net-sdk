@@ -20,20 +20,20 @@ namespace Hl7.Fhir.Tests
 {
     public class JsonAssert
     {
-        public static void AreSame(string filename, JObject expected, JObject actual)
+        public static void AreSame(string filename, JObject expected, JObject actual, List<string> errors)
         {
-            areSame(filename, expected.Root, actual.Root);
+            areSame(filename, expected.Root, actual.Root, errors);
         }
 
-        public static void AreSame(string filename, string expected, string actual)
+        public static void AreSame(string filename, string expected, string actual, List<string> errors)
         {
             JObject exp = SerializationUtil.JObjectFromReader(SerializationUtil.JsonReaderFromJsonText(expected));
             JObject act = SerializationUtil.JObjectFromReader(SerializationUtil.JsonReaderFromJsonText(actual));
 
-            AreSame(filename, exp, act);
+            AreSame(filename, exp, act, errors);
         }
 
-        private static void areSame(string filename, JToken left, JToken right)
+        private static void areSame(string filename, JToken left, JToken right, List<string> errors)
         {
             if ((left.Type == JTokenType.Integer && right.Type == JTokenType.Float) ||
                 (left.Type == JTokenType.Float && right.Type == JTokenType.Integer))
@@ -41,7 +41,12 @@ namespace Hl7.Fhir.Tests
                 JValue leftVal = (JValue)left;
                 JValue rightVal = (JValue)right;
 
-                Assert.AreEqual(leftVal.ToString(), rightVal.ToString());
+                if (leftVal.ToString() != rightVal.ToString())
+                {
+                    errors.Add(String.Format("Error comparing values in: {0}:{1}, {2} - {3}",
+                                filename, left.Path, leftVal.ToString(), rightVal.ToString()));
+                }
+                // Assert.AreEqual(leftVal.ToString(), rightVal.ToString());
                 // Bug in json.net, will sometimes convert to integer instead of float
                 return;
             }
@@ -58,7 +63,7 @@ namespace Hl7.Fhir.Tests
                     throw new AssertFailedException("Array size is not the same at " + right.Path);
 
                 for (var i = 0; i < la.Count; i++)
-                    areSame(filename, la[i], ra[i]);
+                    areSame(filename, la[i], ra[i], errors);
             }
 
             else if (left.Type == JTokenType.Object)
@@ -77,7 +82,7 @@ namespace Hl7.Fhir.Tests
                     if (!ro.TryGetValue(lMember.Key, out rMember) || rMember == null)
                         throw new AssertFailedException(String.Format("Expected member {0} not found in actual at " + left.Path, lMember.Key));
 
-                    areSame(filename, lMember.Value, rMember);
+                    areSame(filename, lMember.Value, rMember, errors);
                 }
 
                 foreach (var rMember in ro)
@@ -118,7 +123,31 @@ namespace Hl7.Fhir.Tests
                     if (lValue.Contains(".000Z")) lValue = lValue.Replace(".000Z", "Z");
                     if (rValue.Contains(".000Z")) rValue = rValue.Replace(".000Z", "Z");
 
-                    Assert.AreEqual(lValue, rValue, "Error comparing Timestamp values in:" + filename);
+                    if (rValue.EndsWith("Z") && lValue.EndsWith("Z"))
+                    {
+                        if (lValue != rValue)
+                        {
+                            System.Diagnostics.Trace.WriteLine(
+                                String.Format("Error comparing Timestamp values in: {0}, {1} - {2}",
+                                filename, lValue, rValue));
+                            errors.Add(String.Format("Error comparing Timestamp values in: {0}:{1}, {2} - {3}",
+                                        filename, left.Path, lValue, rValue));
+                        }
+
+                    }
+                    else
+                    {
+                        if (lValue != rValue)
+                        {
+                            System.Diagnostics.Trace.WriteLine(
+                                String.Format("Error comparing values in: {0}:{3}, {1} - {2}",
+                                filename, lValue, rValue, left.Path));
+                            // Assert.AreEqual(lValue, rValue, "Error comparing values in:" + filename);
+                            errors.Add(String.Format("Error comparing values in: {0}:{1}, {2} - {3}",
+                                        filename, left.Path, lValue, rValue));
+                        }
+                    }
+
                 }
             }
 

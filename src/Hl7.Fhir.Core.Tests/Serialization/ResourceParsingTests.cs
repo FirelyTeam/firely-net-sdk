@@ -12,6 +12,7 @@ using Hl7.Fhir.Serialization;
 using System.IO;
 using Hl7.Fhir.Model;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -104,7 +105,9 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(json2);
             File.WriteAllText(Path.Combine(tempPath, "edgecase.json"), json2);
 
-            JsonAssert.AreSame("edgecase.json", json, json2);
+            List<string> errors = new List<string>();
+            JsonAssert.AreSame("edgecase.json", json, json2, errors);
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content\r\n" + String.Join("\r\n", errors));
         }
 
 

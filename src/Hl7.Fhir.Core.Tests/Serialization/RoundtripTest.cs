@@ -75,7 +75,12 @@ namespace Hl7.Fhir.Tests.Serialization
             Debug.WriteLine("Re-converting files in {0} back to original format in {1}", intermediate1Path, intermediate2Path);
             convertFiles(intermediate1Path, intermediate2Path);
             Debug.WriteLine("Comparing files in {0} to files in {1}", baseTestPath, intermediate2Path);
-            compareFiles(examplePath, intermediate2Path);
+
+            List<string> errors = new List<string>();
+            compareFiles(examplePath, intermediate2Path, errors);
+            Console.WriteLine("------------------------------------------------");
+            Console.WriteLine(String.Join("\r\n", errors));
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
 
@@ -105,7 +110,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
 
-        private void compareFiles(string expectedPath, string actualPath)
+        private void compareFiles(string expectedPath, string actualPath, List<string> errors)
         {
             var files = Directory.EnumerateFiles(expectedPath);
 
@@ -124,16 +129,16 @@ namespace Hl7.Fhir.Tests.Serialization
 
                 Debug.WriteLine("Comparing " + exampleName);
 
-                compareFile(file, actualFile);
+                compareFile(file, actualFile, errors);
             }
         }
 
-        private void compareFile(string expectedFile, string actualFile)
+        private void compareFile(string expectedFile, string actualFile, List<string> errors)
         {
             if (expectedFile.EndsWith(".xml"))
                 XmlAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile), File.ReadAllText(actualFile));
             else
-                JsonAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile), File.ReadAllText(actualFile));
+                JsonAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile), File.ReadAllText(actualFile), errors);
         }
 
         private bool isFeed(string filename)
