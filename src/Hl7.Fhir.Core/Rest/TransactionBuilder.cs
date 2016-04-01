@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Rest
         {
             var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST);
 
-            if (parameters == null)
+            if (parameters == null && !useGet) // don't create a parameters object if using a GET method
                 parameters = new Parameters();
             entry.Resource = parameters;
 
