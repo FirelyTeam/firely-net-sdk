@@ -54,6 +54,8 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void XmlTurtleRoundtripOfAllExamples()
         {
+            SerializationConfig.AcceptUnknownMembers = true;
+
             string examplesXml = @"TestData\examples.zip";
 
             // Create an empty temporary directory for us to dump the roundtripped intermediary files in
@@ -64,6 +66,39 @@ namespace Hl7.Fhir.Tests.Serialization
             var baseTestPathXml = Path.Combine(baseTestPath, "FromXml");
             createEmptyDir(baseTestPathXml);
             doRoundTrip(examplesXml, baseTestPathXml, true);
+        }
+
+        [TestMethod]
+        public void XmlTurtleRoundtripOfAllExamples2()
+        {
+            SerializationConfig.AcceptUnknownMembers = true;
+
+            // Create an empty temporary directory for us to dump the roundtripped intermediary files in
+            string baseTestPath = Path.Combine(Path.GetTempPath(), @"FHIRRoundTripTest\FromXml");
+
+            var examplePath = Path.Combine(baseTestPath, "input");
+
+            var intermediate1Path = Path.Combine(baseTestPath, "intermediate1");
+            var intermediate2Path = Path.Combine(baseTestPath, "intermediate2");
+            Debug.WriteLine("Re-converting files in {0} back to original format in {1}", intermediate1Path, intermediate2Path);
+            convertFiles(intermediate1Path, intermediate2Path, true);
+            Debug.WriteLine("Comparing files in {0} to files in {1}", baseTestPath, intermediate2Path);
+            compareFiles(examplePath, intermediate2Path);
+        }
+
+        [TestMethod]
+        public void XmlTurtleRoundtripOfAllExamples3()
+        {
+            SerializationConfig.AcceptUnknownMembers = true;
+
+            // Create an empty temporary directory for us to dump the roundtripped intermediary files in
+            string baseTestPath = Path.Combine(Path.GetTempPath(), @"FHIRRoundTripTest\FromXml");
+
+            var examplePath = Path.Combine(baseTestPath, "input");
+
+            var intermediate2Path = Path.Combine(baseTestPath, "intermediate2");
+            Debug.WriteLine("Comparing files in {0} to files in {1}", baseTestPath, intermediate2Path);
+            compareFiles(examplePath, intermediate2Path);
         }
 
         private static void createEmptyDir(string baseTestPath)
@@ -90,7 +125,6 @@ namespace Hl7.Fhir.Tests.Serialization
             Debug.WriteLine("Comparing files in {0} to files in {1}", baseTestPath, intermediate2Path);
             compareFiles(examplePath, intermediate2Path);
         }
-
 
         private void convertFiles(string inputPath, string outputPath, bool turtle)
         {

@@ -17,8 +17,8 @@ namespace PrutsConsoleApp
             //prg.resourceFromFhirTurtleByMichael();
             //prg.resourceFromFhirTurtleByGrahame();
             //prg.inspectorTest();
-            prg.fhirTestWriteTurtle();
-            //prg.resourceFromFhirTurtleTest();
+            //prg.fhirTestWriteTurtle();
+            prg.resourceFromFhirTurtleTest();
         }
 
         private void inspectorTest()
@@ -38,7 +38,7 @@ namespace PrutsConsoleApp
         private void resourceFromFhirTurtleTest()
         {
             SerializationConfig.AcceptUnknownMembers = false;
-            string turtle = File.ReadAllText(@"C:\Users\zelm\AppData\Local\Temp\FHIRRoundTripTest\FromXml\intermediate1\address.profile.ttl");
+            string turtle = File.ReadAllText(@"C:\Users\zelm\AppData\Local\Temp\FHIRRoundTripTest\FromXml\intermediate1\basic-adverseevent-example(basic-adverseevent-example).ttl");
             var resource = FhirParser.ParseResourceFromTurtle(turtle);
 
             var xml = FhirSerializer.SerializeToXml(resource);
@@ -51,7 +51,7 @@ namespace PrutsConsoleApp
         private void resourceFromFhirTurtleByMichael()
         {
             SerializationConfig.AcceptUnknownMembers = true;
-            string turtle = File.ReadAllText(@"C:\ownCloud\__HL7\FHIR RDF W3C (2016-jan)\WIP\obs-ex-bp-v2(fhir-net-api)-adjusted.ttl");
+            string turtle = File.ReadAllText(@"C:\ownCloud\__HL7\FHIR RDF W3C (2016-jan)\WIP\obs-ex-bp v6 (fhir-net-api).ttl");
             var resource = FhirParser.ParseResourceFromTurtle(turtle);
 
             var xml = FhirSerializer.SerializeToXml(resource);
@@ -114,7 +114,9 @@ namespace PrutsConsoleApp
         private void fhirTestWriteTurtle()
         {
             Console.WriteLine("---- read XML resource and write as turtle to file ----");
-            var resource = FhirParser.ParseFromXml(System.IO.File.ReadAllText(@"C:\VisualStudio Projects\fhir-net-api\src\Hl7.Fhir.Core.Tests\TestData\observation-example-bloodpressure.xml"));
+            //var resource = FhirParser.ParseFromXml(System.IO.File.ReadAllText(@"C:\VisualStudio Projects\fhir-net-api\src\Hl7.Fhir.Core.Tests\TestData\observation-example-bloodpressure.xml"));
+            //var resource = FhirParser.ParseFromXml(System.IO.File.ReadAllText(@"C:\Users\zelm\AppData\Local\Temp\FHIRRoundTripTest\FromXml\input\diagnosticreport-examples-general(72ac8493-52ac-41bd-8d5d-7258c289b5ea).xml"));
+            var resource = FhirParser.ParseFromXml(System.IO.File.ReadAllText(@"C:\Users\zelm\AppData\Local\Temp\FHIRRoundTripTest\FromXml\input\allergyintolerance-example(allergyintolerance-example).xml"));
             var turtle = FhirSerializer.SerializeToTurtle(resource);
             File.WriteAllText(@"c:\temp\output2.ttl", turtle);
 
