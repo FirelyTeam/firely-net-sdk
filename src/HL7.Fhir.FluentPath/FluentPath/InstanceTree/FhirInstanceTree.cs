@@ -56,15 +56,27 @@ namespace Hl7.Fhir.FluentPath.InstanceTree
             }
         }
 
-        IEnumerable<ChildNode> IFluentPathElement.Children()
+        [Obsolete("This method will be removed from the interface of IFluentPathElement")]
+        //IEnumerable<ChildNode> IFluentPathElement.Children()
+        //{
+        //    return LinkedTreeExtensions.Children(this).Select(c => new ChildNode(c.Name, c));
+        //}
+
+        IEnumerable<string> IFluentPathElement.GetChildNames()
         {
-            return LinkedTreeExtensions.Children(this).Select(c => new ChildNode(c.Name,c));
+            return LinkedTreeExtensions.Children(this).Select(c => c.Name);
         }
 
-        IFluentPathElement IFluentPathElement.Parent
+        IEnumerable<IFluentPathElement> IFluentPathElement.GetChildrenByName(string name)
         {
-            get { return Parent; }
+            return LinkedTreeExtensions.Children(this).Where(c => c.Name == name);
         }
+
+        // REFACTORED: Parent is removed.
+        //IFluentPathElement IFluentPathElement.Parent
+        //{
+        //    get { return Parent; }
+        //}
 
     }
 }

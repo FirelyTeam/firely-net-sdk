@@ -71,9 +71,9 @@ namespace Hl7.Fhir.FluentPath.InstanceTree
             return Representation;
         }
 
-        public IEnumerable<ChildNode> Children()
-        {
-            return Enumerable.Empty<ChildNode>();
-        }
+        //public IEnumerable<ChildNode> Children()
+        //{
+        //    return Enumerable.Empty<ChildNode>();
+        //}
     }
 }

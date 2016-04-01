@@ -91,8 +91,11 @@ namespace Hl7.Fhir.FluentPath
                 {
                     case FluentPath.Axis.Descendants:
                         return focus.JustElements().Descendants();
-                    case FluentPath.Axis.Parent:
-                        return focus.JustElements().Parents();
+
+                    // REFACTORED: IFluentPathElement.Parent is removed
+                    //case FluentPath.Axis.Parent:
+                    //    return focus.JustElements().Parents();
+
                     case FluentPath.Axis.Focus:
                         return focus;
                     case FluentPath.Axis.Children:

@@ -8,6 +8,7 @@
 
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Hl7.Fhir.FluentPath
 {
@@ -18,9 +19,11 @@ namespace Hl7.Fhir.FluentPath
 
     public interface IFluentPathElement : IFluentPathValue
     {
-        IFluentPathElement Parent { get; }
+        // IFluentPathElement Parent { get; }
+        // IEnumerable<ChildNode> Children();
 
-        IEnumerable<ChildNode> Children();
+        IEnumerable<string> GetChildNames();
+        IEnumerable<IFluentPathElement> GetChildrenByName(string name);
     }
 
     public static class FhirValueList

@@ -263,7 +263,7 @@ namespace Hl7.Fhir.FluentPath
         {
             if (focus is IFluentPathElement)
             {
-                return ((IFluentPathElement)focus).Children().Select(c=>c.Child);
+                return ((IFluentPathElement)focus).Children();
             }
 
             return Enumerable.Empty<IFluentPathElement>();
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.FluentPath
 
         public static IEnumerable<IFluentPathElement> Children(this IEnumerable<IFluentPathValue> focus)
         {
-            return focus.JustElements().SelectMany(node => node.Children().Select(c=>c.Child));
+            return focus.JustElements().SelectMany(node => node.Children());
         }
 
         public static IEnumerable<IFluentPathElement> Descendants(this IEnumerable<IFluentPathElement> focus)
@@ -279,10 +279,11 @@ namespace Hl7.Fhir.FluentPath
             return focus.SelectMany(node => node.Descendants());
         }
 
-        public static IEnumerable<IFluentPathElement> Parents(this IEnumerable<IFluentPathElement> focus)
-        {
-            return focus.Select(node => node.Parent);
-        }
+        // REFACTORED: IFluentPathElement.Parent is removed
+        //public static IEnumerable<IFluentPathElement> Parents(this IEnumerable<IFluentPathElement> focus)
+        //{
+        //    return focus.Select(node => node.Parent);
+        //}
 
         public static IEnumerable<IFluentPathValue> IsEqualTo(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
         {
@@ -424,9 +425,9 @@ namespace Hl7.Fhir.FluentPath
             {
                 var result = value.Value != null ? value.Value.GetHashCode() : 0;
 
-                if(value is IFluentPathElement)
+                if (value is IFluentPathElement)
                 {
-                    result ^= (((IFluentPathElement)value).Children().Take(1).Select(c => c.Name).SingleOrDefault() ?? "key").GetHashCode();
+                    result ^= (((IFluentPathElement)value).GetChildNames().SingleOrDefault() ?? "key").GetHashCode();
                 }
 
                 return result;

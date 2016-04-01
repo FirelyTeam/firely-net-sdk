@@ -14,17 +14,31 @@ namespace Hl7.Fhir.FluentPath
 {
     public static class IFluentPathElementExtensions
     {
+        public static IEnumerable<IFluentPathElement> Children(this IFluentPathElement element)
+        {
+            return element.GetChildNames().SelectMany(name => element.GetChildrenByName(name));
+        }
+
+
         public static IEnumerable<IFluentPathElement> Children(this IFluentPathElement element, string name)
         {
-            var result = element.Children().Where(c => c.IsMatch(name)).Select(c => c.Child);
+
+            // REFACTOR
+            //var result = element.Children().Where(c => c.IsMatch(name)).Select(c => c.Child);
+            var result = element.GetChildrenByName(name);
 
             // If we are at a resource, we should match a path that is possibly not rooted in the resource
             // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")        
             if (!result.Any()) 
             {
-                var resourceRoot = element.Children().SingleOrDefault(node => Char.IsUpper(node.Name[0]));
-                if(resourceRoot != null)
-                    result = resourceRoot.Child.Children(name);
+                var rootname = element.GetChildNames().SingleOrDefault(n => Char.IsUpper(n[0]));
+                
+                if (rootname != null)
+                {
+                    var root = element.GetChildrenByName(rootname);
+                    result = root.Children(name);
+                }
+                    
             }
 
             return result;
@@ -35,8 +49,8 @@ namespace Hl7.Fhir.FluentPath
             //TODO: Don't think this is performant with these nested yields
             foreach (var child in element.Children())
             {
-                yield return child.Child;
-                foreach (var grandchild in child.Child.Descendants()) yield return grandchild;
+                yield return child;
+                foreach (var grandchild in child.Descendants()) yield return grandchild;
             }
         }
 

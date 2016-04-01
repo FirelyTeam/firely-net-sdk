@@ -79,6 +79,15 @@ namespace Hl7.Fhir.FluentPath
             return base.Equals(obj);
         }
 
+        public override int GetHashCode()
+        {
+            if (this is PartialDateTime)
+                return (this as PartialDateTime).Value.GetHashCode();
+            return base.GetHashCode();
+        }
+
+
+
         public override string ToString()
         {
             var representation = XmlConvert.ToString(Value);
