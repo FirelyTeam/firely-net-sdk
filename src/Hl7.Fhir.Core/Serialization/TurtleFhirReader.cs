@@ -14,15 +14,14 @@ namespace Hl7.Fhir.Serialization
     {
         public const string FHIR_PREFIX = "http://hl7.org/fhir/";
         private IGraph _g;
-        private INode _currentSubj, _currentPred, _currentObj;
+        private INode _currentPred, _currentSubj;
         private string _typeName;
 
-        internal TurtleFhirReader(IGraph g, Triple t)
+        internal TurtleFhirReader(IGraph g, INode pred, INode subj)
         {
             _g = g;
-            _currentSubj = t.Subject;
-            _currentPred = t.Predicate;
-            _currentObj = t.Object;
+            _currentPred = pred;
+            _currentSubj = subj;
             string predString = _currentPred.ToString();
             // get type from predicate
             if (predString.StartsWith(FHIR_PREFIX))
@@ -38,20 +37,6 @@ namespace Hl7.Fhir.Serialization
             {
                 _typeName = null;
             }
-            // type is overruled by rdf:type
-            IUriNode typePred = _g.CreateUriNode("rdf:type");
-            foreach (Triple t2 in _g.GetTriplesWithSubject(_currentSubj))
-            {
-                if (typePred.Equals(t2.Predicate))
-                {
-                    string uri = t2.Object.ToString();
-                    if (uri.StartsWith(FHIR_PREFIX))
-                    {
-                        _typeName = uri.Substring(uri.LastIndexOf('/') + 1);
-                    }
-                }
-            }
-            //Console.WriteLine("DEBUG Constructor subject={0} type={1}", predString, _typeName);
         }
 
         public TurtleFhirReader(StringReader stringReader)
@@ -107,7 +92,6 @@ namespace Hl7.Fhir.Serialization
 
         public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
         {
-            //Console.WriteLine("DEBUG GetMembers {0}", _currentSubj);
             var members = new List<Tuple<string, IFhirReader>>();
             foreach (Triple t in _g.GetTriplesWithSubject(_currentSubj))
             {
@@ -124,7 +108,7 @@ namespace Hl7.Fhir.Serialization
                         case "reference":
                             break;
                         default:
-                            members.Add(new Tuple<string, IFhirReader>(memberName, new TurtleFhirReader(_g, t)));
+                            members.Add(new Tuple<string, IFhirReader>(memberName, new TurtleFhirReader(_g, t.Predicate, t.Object)));
                             break;
                     }
                 }
@@ -134,13 +118,18 @@ namespace Hl7.Fhir.Serialization
 
         public object GetPrimitiveValue()
         {
-            var valueTriples = _g.GetTriplesWithSubjectPredicate(_currentObj, _g.CreateUriNode("fhir:value"));
-            if (valueTriples.Count() == 0)
+            var valueNode = _currentSubj;
+            if (_currentSubj is IUriNode)
             {
-                return null;
+                var valueTriples = _g.GetTriplesWithSubjectPredicate(_currentSubj, _g.CreateUriNode("fhir:value"));
+                if (valueTriples.Count() == 0)
+                {
+                    Error.Format("No value?", null);
+                    return "";
+                }
+                var valueTriple = valueTriples.First();
+                valueNode = valueTriple.Object;
             }
-            var valueTriple = valueTriples.First();
-            var valueNode = valueTriple.Object;
             string value;
             // Make sure to only get the value, for now ignore the xsd type
             if (valueNode is ILiteralNode)
@@ -156,7 +145,6 @@ namespace Hl7.Fhir.Serialization
 
         public string GetResourceTypeName()
         {
-            //Console.WriteLine("DEBUG GetResourceTypeName={0}", _typeName);
             return _typeName;
         }
     }
