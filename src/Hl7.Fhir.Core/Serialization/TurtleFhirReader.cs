@@ -16,6 +16,7 @@ namespace Hl7.Fhir.Serialization
         private IGraph _g;
         private INode _currentPred, _currentSubj;
         private string _typeName;
+        private static TurtleReusableNodes nodes;
 
         internal TurtleFhirReader(IGraph g, INode pred, INode subj)
         {
@@ -39,8 +40,7 @@ namespace Hl7.Fhir.Serialization
             }
             // Type is overruled by rdf:type
             // Currently this is only used in contained resources
-            IUriNode typePred = _g.CreateUriNode("rdf:type");
-            foreach (Triple t in _g.GetTriplesWithSubjectPredicate(subj, typePred))
+            foreach (Triple t in _g.GetTriplesWithSubjectPredicate(subj, nodes.type))
             {
                 string uri = t.Object.ToString();
                 if (uri.StartsWith(FHIR_PREFIX))
@@ -62,16 +62,19 @@ namespace Hl7.Fhir.Serialization
             {
                 throw Error.Format("Cannot parse turtle: " + e.Message, null);
             }
+            if (nodes == null)
+            {
+                nodes = new TurtleReusableNodes(_g);
+            }
 
             // As per discission 2016-mrt-24; find subject with property fhir:nodeRole fhir:treeRoot
-            var fhirRootTriples = _g.GetTriplesWithPredicateObject(_g.CreateUriNode("fhir:nodeRole"), _g.CreateUriNode("fhir:treeRoot"));
+            var fhirRootTriples = _g.GetTriplesWithPredicateObject(nodes.nodeRole, nodes.treeRoot);
             if (fhirRootTriples.Count() == 1)
             {
                 Triple t = fhirRootTriples.First();
 
                 // now find type triple
-                IUriNode typePred = _g.CreateUriNode("rdf:type");
-                var typeTriples = _g.GetTriplesWithSubjectPredicate(t.Subject, typePred);
+                var typeTriples = _g.GetTriplesWithSubjectPredicate(t.Subject, nodes.type);
                 Triple t2 = typeTriples.First();
 
                 string uri = t2.Object.ToString();
@@ -132,7 +135,7 @@ namespace Hl7.Fhir.Serialization
             var valueNode = _currentSubj;
             if (_currentSubj is IUriNode)
             {
-                var valueTriples = _g.GetTriplesWithSubjectPredicate(_currentSubj, _g.CreateUriNode("fhir:value"));
+                var valueTriples = _g.GetTriplesWithSubjectPredicate(_currentSubj, nodes.value);
                 if (valueTriples.Count() == 0)
                 {
                     Error.Format("No value?", null);
