@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Serialization
             if (id != null)
             {
                 Uri valueAsUri;
-                if (Uri.TryCreate(_g.BaseUri, id, out valueAsUri))
+                if (Uri.TryCreate(_g.BaseUri, _currentTypeName + '/' + id, out valueAsUri))
                 {
                     _currentSubj = _g.CreateUriNode(valueAsUri);
                 }
