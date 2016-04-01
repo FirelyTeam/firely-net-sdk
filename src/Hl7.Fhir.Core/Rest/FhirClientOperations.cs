@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Rest
             par.Add("coding", coding);
             if (date != null) par.Add("date", date);
 
-            return expect<Parameters>(client.TypeOperation<ValueSet>(Operation.CONCEPT_LOOKUP, par));
+            return expect<Parameters>(client.TypeOperation<CodeSystem>(Operation.CONCEPT_LOOKUP, par));
         }
 
         public static Parameters ConceptLookup(this FhirClient client, Code code, FhirUri system, FhirString version = null, FhirDateTime date = null)
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Rest
             if (version != null) par.Add("version", version);
             if (date != null) par.Add("date", date);
 
-            return expect<Parameters>(client.TypeOperation<ValueSet>(Operation.CONCEPT_LOOKUP, par));
+            return expect<Parameters>(client.TypeOperation<CodeSystem>(Operation.CONCEPT_LOOKUP, par));
         }
 
 
