@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Serialization
 
             // Special handling of component types
             // ComponentComponent, DetailComponent, EntryComponent(in Bundle)
-            if (_currentTypeName.EndsWith("Component"))
+            if (_currentTypeName.EndsWith("Component") && _currentTypeName != "DeviceComponent")
             {
                 int idx = _currentTypeName.LastIndexOf("Component");
                 string att = lowerCamel(_currentTypeName.Substring(0, idx));
