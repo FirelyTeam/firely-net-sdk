@@ -37,6 +37,17 @@ namespace Hl7.Fhir.Serialization
             {
                 _typeName = null;
             }
+            // Type is overruled by rdf:type
+            // Currently this is only used in contained resources
+            IUriNode typePred = _g.CreateUriNode("rdf:type");
+            foreach (Triple t in _g.GetTriplesWithSubjectPredicate(subj, typePred))
+            {
+                string uri = t.Object.ToString();
+                if (uri.StartsWith(FHIR_PREFIX))
+                {
+                    _typeName = uri.Substring(uri.LastIndexOf('/') + 1);
+                }
+            }
         }
 
         public TurtleFhirReader(StringReader stringReader)
