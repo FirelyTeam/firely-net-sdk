@@ -170,17 +170,18 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var parser = Lexer.Bool.End();
 
-            AssertParser.SucceedsMatch(parser, "true");
-            AssertParser.SucceedsMatch(parser, "false");
+            AssertParser.SucceedsMatch(parser, "true", true);
+            
+            AssertParser.SucceedsMatch(parser, "false", false);
 
-            AssertParser.FailsMatch(parser, "");
-            AssertParser.FailsMatch(parser, "True");
-            AssertParser.FailsMatch(parser, "TRUE");
-            AssertParser.FailsMatch(parser, "False");
-            AssertParser.FailsMatch(parser, "FALSE");
-            AssertParser.FailsMatch(parser, "xyz");
-            AssertParser.FailsMatch(parser, "1");
-            AssertParser.FailsMatch(parser, "0");
+            AssertParser.Fails(parser, "");
+            AssertParser.Fails(parser, "True");
+            AssertParser.Fails(parser, "TRUE");
+            AssertParser.Fails(parser, "False");
+            AssertParser.Fails(parser, "FALSE");
+            AssertParser.Fails(parser, "xyz");
+            AssertParser.Fails(parser, "1");
+            AssertParser.Fails(parser, "0");
         }
 
 #if false

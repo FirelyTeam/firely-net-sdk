@@ -86,6 +86,10 @@ namespace Hl7.Fhir.Tests.FhirPath
             FailsWith<T>(parser, input, result => { });
         }
 
+        public static void FailsMatch<T>(Parser<T> parser, string input, T match)
+        {
+            SucceedsWith<T>(parser, input, result => Assert.AreNotEqual(match, result));
+        }
     }
 
     // Internal methods copied from Sprache

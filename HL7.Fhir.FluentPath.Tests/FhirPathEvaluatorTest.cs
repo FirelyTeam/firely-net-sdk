@@ -43,6 +43,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpression()
         {
+
             Assert.IsTrue(PathExpression.Predicate(@"(Patient.identifier.where ( use = ( 'offic' + 'ial')) = 
                        Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = 
                         Patient.identifier.first())", tree));
