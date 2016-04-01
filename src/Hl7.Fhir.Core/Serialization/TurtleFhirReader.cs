@@ -34,10 +34,6 @@ namespace Hl7.Fhir.Serialization
                     _typeName = typePlusMemberName.Substring(0, dotIdx);
                 }
             }
-            else
-            {
-                _typeName = null;
-            }
             // Type is overruled by rdf:type
             // Currently this is only used in contained resources
             foreach (Triple t in _g.GetTriplesWithSubjectPredicate(subj, nodes.type))
@@ -113,18 +109,24 @@ namespace Hl7.Fhir.Serialization
                 if (pred.StartsWith(FHIR_PREFIX))
                 {
                     string typePlusMemberName = pred.Substring(pred.LastIndexOf('/') + 1);
-                    string memberName = typePlusMemberName.Substring(typePlusMemberName.IndexOf('.') + 1);
-                    switch (memberName)
+                    switch (typePlusMemberName)
                     {
-                        // Strip turtle specific members
+                        // Ignore turtle specific members
                         case "index":
                         case "nodeRole":
                         case "reference":
-                            break;
-                        default:
-                            members.Add(new Tuple<string, IFhirReader>(memberName, new TurtleFhirReader(_g, t.Predicate, t.Object)));
-                            break;
+                            continue;
                     }
+                    string memberName = typePlusMemberName.Substring(typePlusMemberName.LastIndexOf('.') + 1);
+                    /* 
+                        Special handling of References; in Turtle Reference is added to the memberName.
+                        Remove it here.
+                    */
+                    if (memberName.EndsWith("Reference"))
+                    {
+                        memberName = memberName.Substring(0, memberName.Length - 9);
+                    }
+                    members.Add(new Tuple<string, IFhirReader>(memberName, new TurtleFhirReader(_g, t.Predicate, t.Object)));
                 }
             }
             return members.AsEnumerable<Tuple<string, IFhirReader>>();
@@ -138,8 +140,8 @@ namespace Hl7.Fhir.Serialization
                 var valueTriples = _g.GetTriplesWithSubjectPredicate(_currentSubj, nodes.value);
                 if (valueTriples.Count() == 0)
                 {
-                    Error.Format("No value?", null);
-                    return "";
+                    // the subject is the value; e.g. for Coding.system
+                    return _currentSubj.ToString();
                 }
                 var valueTriple = valueTriples.First();
                 valueNode = valueTriple.Object;
