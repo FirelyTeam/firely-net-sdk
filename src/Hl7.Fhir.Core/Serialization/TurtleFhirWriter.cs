@@ -151,13 +151,15 @@ namespace Hl7.Fhir.Serialization
             // Special handling of reference and coding
             if (_reference)
             {
-                INode subjTmp = _subjStack.Pop();
-                Uri valueAsUri;
-                if (Uri.TryCreate(_g.BaseUri, valueAsString, out valueAsUri))
+                // TODO: Ignore internal references for now
+                if (valueAsString[0] != '#')
                 {
-                    _g.Assert(subjTmp, _g.CreateUriNode("fhir:reference"), _g.CreateUriNode(valueAsUri));
+                    Uri valueAsUri;
+                    if (Uri.TryCreate(_g.BaseUri, valueAsString, out valueAsUri))
+                    {
+                        _g.Assert(_subjStack.Peek(), _g.CreateUriNode("fhir:reference"), _g.CreateUriNode(valueAsUri));
+                    }
                 }
-                _subjStack.Push(subjTmp);
             }
             else if (_coding_system)
             {
