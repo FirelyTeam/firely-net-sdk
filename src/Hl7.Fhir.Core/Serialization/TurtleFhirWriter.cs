@@ -15,6 +15,7 @@ namespace Hl7.Fhir.Serialization
         private readonly ModelInspector _inspector;
 
         private IGraph _g;
+        private Uri _rootSubjectUri;
         private INode _currentSubj;
         private Stack<INode> _subjStack = new Stack<INode>();
         private string _currentTypeName;
@@ -151,11 +152,18 @@ namespace Hl7.Fhir.Serialization
             // Special handling of reference and coding
             if (_reference)
             {
-                // TODO: Ignore internal references for now
                 if (valueAsString[0] != '#')
                 {
                     Uri valueAsUri;
                     if (Uri.TryCreate(_g.BaseUri, valueAsString, out valueAsUri))
+                    {
+                        _g.Assert(_subjStack.Peek(), _g.CreateUriNode("fhir:reference"), _g.CreateUriNode(valueAsUri));
+                    }
+                }
+                else // contained resource reference!
+                {
+                    Uri valueAsUri;
+                    if (Uri.TryCreate(_rootSubjectUri, valueAsString, out valueAsUri))
                     {
                         _g.Assert(_subjStack.Peek(), _g.CreateUriNode("fhir:reference"), _g.CreateUriNode(valueAsUri));
                     }
@@ -276,10 +284,22 @@ namespace Hl7.Fhir.Serialization
             _currentTypeName = name;
             if (id != null)
             {
-                Uri valueAsUri;
-                if (Uri.TryCreate(_g.BaseUri, _currentTypeName + '/' + id, out valueAsUri))
+                if (!contained)
                 {
-                    _currentSubj = _g.CreateUriNode(valueAsUri);
+                    Uri valueAsUri;
+                    if (Uri.TryCreate(_g.BaseUri, _currentTypeName + '/' + id, out valueAsUri))
+                    {
+                        _currentSubj = _g.CreateUriNode(valueAsUri);
+                    }
+                    _rootSubjectUri = valueAsUri;
+                }
+                else
+                {
+                    Uri valueAsUri;
+                    if (Uri.TryCreate(_rootSubjectUri, '#' + id, out valueAsUri))
+                    {
+                        _currentSubj = _g.CreateUriNode(valueAsUri);
+                    }
                 }
             }
             else
