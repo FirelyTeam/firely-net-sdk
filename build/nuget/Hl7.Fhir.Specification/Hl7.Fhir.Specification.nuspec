@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>Hl7.Fhir.Specification.DSTU2</id>
-    <version>0.90.5-alpha2</version>
-    <title>HL7 FHIR Additional functionality support API for DSTU2</title>
+    <id>Hl7.Fhir.Specification.STU3</id>
+    <version>0.90.5-ConnectathonMay2016</version>
+    <title>HL7 FHIR Additional functionality support API for STU3</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
-    <description>.NET additional support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0).</description>
-    <releaseNotes>DSTU2 release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
+    <description>.NET additional support for working with HL7 FHIR. Supports FHIR STU3 (Connectathon May 2016).</description>
+    <releaseNotes>STU3 release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
     <summary>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir). It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation and publication</summary>
     <language>en-us</language>
     <projectUrl>https://github.com/ewoutkramer/fhir-net-api</projectUrl>
@@ -17,11 +17,11 @@
     <tags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema</tags>
     <dependencies>
       <group targetFramework="net45">
-        <dependency id="Hl7.Fhir.DSTU2" version="0.90.5-alpha2" />
+        <dependency id="Hl7.Fhir.STU3" version="0.90.5-ConnectathonMay2016" />
         <dependency id="Newtonsoft.Json" version="8.0.2" />
       </group>
       <group targetFramework="net40">
-        <dependency id="Hl7.Fhir.DSTU2" version="0.90.5-alpha2" />
+        <dependency id="Hl7.Fhir.STU3" version="0.90.5-ConnectathonMay2016" />
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="SharpZipLib" version="0.86.0" />
       </group>
