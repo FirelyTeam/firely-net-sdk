@@ -8,20 +8,20 @@ using System.Security;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 #if DOTNET
-[assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core Portable dotnet")]
+[assembly: AssemblyTitle("Hl7.Fhir.STU3.Core Portable dotnet")]
 #elif PORTABLE45
-[assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core Portable .Net 4.5")]
+[assembly: AssemblyTitle("Hl7.Fhir.STU3.Core Portable .Net 4.5")]
 #elif NET45
-[assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core .Net 4.5")]
+[assembly: AssemblyTitle("Hl7.Fhir.STU3.Core .Net 4.5")]
 [assembly: AllowPartiallyTrustedCallers]
 #elif NET40
-[assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core .Net 4.0")]
+[assembly: AssemblyTitle("Hl7.Fhir.STU3.Core .Net 4.0")]
 [assembly: AllowPartiallyTrustedCallers]
 #else
 #error No valid constant for target framework defined (NET40, NET45, or PORTABLE45)
 #endif
 
-[assembly: AssemblyDescription("Core .NET support for working with HL7 FHIR. Supports FHIR DSTU2 (1.0)")]
+[assembly: AssemblyDescription("Core .NET support for working with HL7 FHIR. Supports FHIR STU3")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("FHIR")]
 [assembly: AssemblyCopyright("Copyright Ewout Kramer and collaborators 2016")]
