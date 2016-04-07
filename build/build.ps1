@@ -1,7 +1,7 @@
 properties {
   $productName = "Hl7.Fhir .Net Library" 
   $productVersion = "0.90.5"             # Update this for a new release
-  $nugetPrelease = "alpha2"              # Set this to something like "alpha", if desired
+  $nugetPrelease = "ConnectathonMay2016"              # Set this to something like "alpha", if desired
 
   $ignoreTestFailure = $true             # Report build success, even though tests failed. Useful for alpha versions
 
@@ -24,9 +24,9 @@ properties {
 
   $assemblyVersion = "0.90.5.0"           # This is a violation of the assembly version scheme, but the Fhir .Net library wants to go with this for all 0.x releases.
 
-  $nugetPkgs = @(                        # Update this for new DSTU version
-    @{CsProj="Hl7.Fhir.Core"; AssemblyPattern="Hl7.Fhir.*.Core"; PkgId="Hl7.Fhir.DSTU2"},
-    @{CsProj="Hl7.Fhir.Specification"; AssemblyPattern="Hl7.Fhir.*.Specification"; PkgId="Hl7.Fhir.Specification.DSTU2"}
+  $nugetPkgs = @(                        # Update this for new specification version
+    @{CsProj="Hl7.Fhir.Core"; AssemblyPattern="Hl7.Fhir.*.Core"; PkgId="Hl7.Fhir.STU3"},
+    @{CsProj="Hl7.Fhir.Specification"; AssemblyPattern="Hl7.Fhir.*.Specification"; PkgId="Hl7.Fhir.Specification.STU3"}
    )
 
   $zipFileName = "FhirNetApi.zip"
@@ -576,7 +576,7 @@ function Update-NuspecFile ([string] $nuspecPath, [string] $packageId, [string] 
       {
         $dependencyId = $depNode.id;
         Write-Verbose $dependencyId
-        if ($dependencyId -eq "Hl7.Fhir.DSTU2")   # TODO: Do not hard-code this?
+        if ($dependencyId -like "Hl7.Fhir.*")
         {
           Write-Host "Replacing dependency version for '$dependencyId' with $nugetVersion"          
           $depNode.version = $nugetVersion
