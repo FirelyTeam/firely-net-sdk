@@ -23,6 +23,7 @@ ISSUES:
 TODO:
 - Move Program.cs to Hl7.Fhir.Core.Tests and use relative and Tempfolder paths!
 
-RoundtripTest that fail because of contained resources with faulty references.
+RoundtripTest that fail because of contained resources with ... references.
 - diagnosticreport-examples-general(72ac8493-52ac-41bd-8d5d-7258c289b5ea)
 - diagnosticreport-examples-lab-text(2763c3ea-6bce-4f15-bdc9-4b41aaceee03)
+Fixed contained reference in Bundle.entries, scope = entry / resource boundary

@@ -281,10 +281,13 @@ namespace Hl7.Fhir.Serialization
                 _first = true;
             }
 
+            bool _prevWasBundleEntry = "Bundle.entry" == _currentTypeName;
+            Console.WriteLine("DEBUG {0} {1}", _currentTypeName, name);
+
             _currentTypeName = name;
             if (id != null)
             {
-                if (!contained)
+                if (!contained || _prevWasBundleEntry)
                 {
                     Uri valueAsUri;
                     if (Uri.TryCreate(_g.BaseUri, _currentTypeName + '/' + id, out valueAsUri))
