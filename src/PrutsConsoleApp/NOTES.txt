@@ -22,8 +22,35 @@ ISSUES:
 
 TODO:
 - Move Program.cs to Hl7.Fhir.Core.Tests and use relative and Tempfolder paths!
+-----------------------------------
+1) 
+In example "bundle-response(bundle-response)", look at "fhir:Bundle.entry.response.location".
+The value is a URI, so I would like to handle this the same as with fhir:reference.
 
-RoundtripTest that fail because of contained resources with ... references.
-- diagnosticreport-examples-general(72ac8493-52ac-41bd-8d5d-7258c289b5ea)
-- diagnosticreport-examples-lab-text(2763c3ea-6bce-4f15-bdc9-4b41aaceee03)
-Fixed contained reference in Bundle.entries, scope = entry / resource boundary
+[fhir:index "0" ; 
+ fhir:Bundle.entry.fullUrl [fhir:value <http://example.org/fhir/Patient/12423>] ; 
+ fhir:Bundle.entry.resource <http://localhost/fhir/Patient/12423> ; 
+ fhir:Bundle.entry.response [fhir:Bundle.entry.response.status [fhir:value "201 Created"] ; 
+	fhir:Bundle.entry.response.location [fhir:value <http://localhost/fhir/Patient/12423/_history/1>] ; 
+	fhir:Bundle.entry.response.etag [fhir:value """W/\"1\""""] ; 
+	fhir:Bundle.entry.response.lastModified [fhir:value "2014-08-18T01:43:33+00:00"^^<xsd:dateTime>]]]
+
+- or -
+
+[fhir:index "0" ; 
+ fhir:Bundle.entry.fullUrl [fhir:value <http://example.org/fhir/Patient/12423>] ; 
+ fhir:Bundle.entry.resource <http://localhost/fhir/Patient/12423> ; 
+ fhir:Bundle.entry.response [fhir:Bundle.entry.response.status [fhir:value "201 Created"] ; 
+	fhir:Bundle.entry.response.location [fhir:value "Patient/12423/_history/1"] ; 
+	fhir:Bundle.entry.response.etag [fhir:value """W/\"1\""""] ; 
+	fhir:Bundle.entry.response.lastModified [fhir:value "2014-08-18T01:43:33+00:00"^^<xsd:dateTime>]]]
+
+2)
+Look at "fhir:Bundle.entry.resource". I put the (non anonymous) uri there for the contained resource.
+In the current examples in STU3 a anonymous class is put there.
+
+<http://localhost/fhir/Bundle/bundle-example> fhir:Bundle.entry [fhir:index "0" ; 
+	fhir:Bundle.entry.fullUrl [fhir:value <https://example.com/base/MedicationOrder/3123>] ; 
+	fhir:Bundle.entry.resource <http://localhost/fhir/MedicationOrder/3123> ; 
+	fhir:Bundle.entry.search [fhir:Bundle.entry.search.mode [fhir:value "match"] ; 
+		fhir:Bundle.entry.search.score [fhir:value "1"^^<xsd:decimal>]]]

@@ -111,9 +111,13 @@ namespace Hl7.Fhir.Serialization
                     {
                         obj = _g.CreateUriNode(valueAsUri);
                     }
+                    else if (Uri.TryCreate(_g.BaseUri, valueAsString, out valueAsUri))
+                    {
+                        obj = _g.CreateUriNode(valueAsUri);
+                    }
                     else
                     {
-                        Console.WriteLine("DEBUG uri is relative fall back to literal: {0}", valueAsString);
+                        Console.WriteLine("DEBUG uri failed fall back to literal: {0}", valueAsString);
                         obj = _g.CreateLiteralNode(valueAsString);
                     }
                     break;
@@ -280,14 +284,11 @@ namespace Hl7.Fhir.Serialization
                 _subjStack.Push(_currentSubj);
                 _first = true;
             }
-
-            bool _prevWasBundleEntry = "Bundle.entry" == _currentTypeName;
-            Console.WriteLine("DEBUG {0} {1}", _currentTypeName, name);
-
+            bool prevWasBundleEntry = "Bundle.entry" == _currentTypeName;
             _currentTypeName = name;
             if (id != null)
             {
-                if (!contained || _prevWasBundleEntry)
+                if (!contained || prevWasBundleEntry)
                 {
                     Uri valueAsUri;
                     if (Uri.TryCreate(_g.BaseUri, _currentTypeName + '/' + id, out valueAsUri))
