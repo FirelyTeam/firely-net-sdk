@@ -74,7 +74,7 @@ namespace Hl7.Fhir.FluentPath
         public virtual IFluentPathElement ResolveResource(string url)
         {
             if (FhirClient == null)
-                throw Error.InvalidOperation("The EvaluationContext does not have a FhirClient to use to resolve url '{0}'".FormatWith(url));
+                throw Error.InvalidOperation($"The EvaluationContext does not have a FhirClient to use to resolve url '{url}'");
 
             try
             {

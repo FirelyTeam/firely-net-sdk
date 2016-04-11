@@ -34,16 +34,16 @@ namespace Hl7.Fhir.FluentPath
             }
         }
 
-        public static IEnumerable<IFluentPathValue> Evaluate(string expression, IFluentPathValue instance, IEvaluationContext context)
+        public static IEnumerable<T> Select<T>(string expression, T instance, IEvaluationContext context) where T : IFluentPathValue
         {
             var evaluator = Compile(expression);
-            return evaluator(FhirValueList.Create(instance), context);
+            return evaluator(FhirValueList.Create(instance), context).Select(v => (T)v);
         }
 
-        public static IEnumerable<IFluentPathValue> Evaluate(string expression, IFluentPathValue instance)
+        public static IEnumerable<T> Select<T>(string expression, T instance) where T: IFluentPathValue
         {
             var evaluator = Compile(expression);
-            return evaluator(FhirValueList.Create(instance), new BaseEvaluationContext());
+            return evaluator(FhirValueList.Create(instance), new BaseEvaluationContext()).Select(v => (T)v);
         }
 
         public static object Scalar(string expression, IFluentPathValue instance, IEvaluationContext context)
@@ -58,16 +58,30 @@ namespace Hl7.Fhir.FluentPath
             return evaluator.Scalar(instance, new BaseEvaluationContext());
         }
 
-        public static bool Predicate(string expression, IFluentPathValue instance, IEvaluationContext context)
+        public static bool IsTrue(string expression, IFluentPathValue instance, IEvaluationContext context)
         {
             var evaluator = Compile(expression);
             return evaluator.Predicate(instance, context);
         }
 
-        public static bool Predicate(string expression, IFluentPathValue instance)
+        public static bool IsTrue(string expression, IFluentPathValue instance)
         {
             var evaluator = Compile(expression);
             return evaluator.Predicate(instance, new BaseEvaluationContext());
+        }
+
+    }
+
+    public static class PathExpressionLinq
+    {
+        public static IEnumerable<T> FluentPathSelect<T>(this T instance, string expression) where T : IFluentPathValue
+        {
+            return PathExpression.Select(expression, instance);
+        }
+
+        public static IEnumerable<T> FluentPathIsTrue<T>(this T instance, string expression) where T : IFluentPathValue
+        {
+            return PathExpression.Select(expression, instance);
         }
 
     }

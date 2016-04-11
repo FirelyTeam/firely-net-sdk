@@ -28,37 +28,37 @@ namespace Hl7.Fhir.FluentPath
 
     public static class Eval
     {
-        public static IEnumerable<IFluentPathValue> Evaluate(this Evaluator evaluator, IFluentPathValue instance, IEvaluationContext context)
+        public static IEnumerable<IFluentPathValue> Select(this Evaluator evaluator, IFluentPathValue instance, IEvaluationContext context)
         {
             var original = FhirValueList.Create(instance);
             context.OriginalContext = original;
             return evaluator(original, context);
         }
 
-        public static IEnumerable<IFluentPathValue> Evaluate(this Evaluator evaluator, IFluentPathValue instance)
+        public static IEnumerable<IFluentPathValue> Select(this Evaluator evaluator, IFluentPathValue instance)
         {
             var original = FhirValueList.Create(instance);
-            return evaluator.Evaluate(instance, new BaseEvaluationContext());
+            return evaluator.Select(instance, new BaseEvaluationContext());
         }
 
         public static object Scalar(this Evaluator evaluator, IFluentPathValue instance, IEvaluationContext context)
         {
-            return evaluator.Evaluate(instance, context).SingleValue();
+            return evaluator.Select(instance, context).SingleValue();
         }
 
         public static object Scalar(this Evaluator evaluator, IFluentPathValue instance)
         {
-            return evaluator.Evaluate(instance, new BaseEvaluationContext()).SingleValue();
+            return evaluator.Select(instance, new BaseEvaluationContext()).SingleValue();
         }
 
         public static bool Predicate(this Evaluator evaluator, IFluentPathValue instance, IEvaluationContext context)
         {
-            return evaluator.Evaluate(instance, context).BooleanEval().AsBoolean();
+            return evaluator.Select(instance, context).BooleanEval().AsBoolean();
         }
 
         public static bool IsTrue(this Evaluator evaluator, IFluentPathValue instance)
         {
-            return evaluator.Evaluate(instance, new BaseEvaluationContext()).BooleanEval().AsBoolean();
+            return evaluator.Select(instance, new BaseEvaluationContext()).BooleanEval().AsBoolean();
         }
         public static Evaluator Then(this Evaluator first, Evaluator then)
         {
