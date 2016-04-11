@@ -1,7 +1,7 @@
 properties {
   $productName = "Hl7.Fhir .Net Library" 
   $productVersion = "0.90.5"             # Update this for a new release
-  $nugetPrelease = "ConnectathonMay2016"              # Set this to something like "alpha", if desired
+  $nugetPrelease = "alpha3"              # Set this to something like "alpha", if desired
 
   $ignoreTestFailure = $true             # Report build success, even though tests failed. Useful for alpha versions
 

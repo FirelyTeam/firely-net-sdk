@@ -2,13 +2,13 @@
 <package>
   <metadata>
     <id>Hl7.Fhir.STU3</id>
-    <version>0.90.5-ConnectathonMay2016</version>
+    <version>0.90.5-alpha3</version>
     <title>HL7 FHIR Core support API for STU3</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
-    <description>Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (Connectathon May 2016).</description>
+    <description>WARNING: May 2016 WGM Connectathon Release! Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (Connectathon May 2016).</description>
     <releaseNotes>STU3 release. See http://ewoutkramer.github.io/fhir-net-api/whats-new.html</releaseNotes>
-    <summary>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</summary>
+    <summary>WARNING: May 2016 WGM Connectathon Release! This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</summary>
     <language>en-us</language>
     <projectUrl>https://github.com/ewoutkramer/fhir-net-api</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/icon-fhir-32.png</iconUrl>
