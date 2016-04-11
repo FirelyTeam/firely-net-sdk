@@ -324,5 +324,15 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(dec.ToString(CultureInfo.InvariantCulture), ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
 
+        [TestMethod]
+        public void TryScriptInject()
+        {
+            var x = new Patient();
+
+            x.Name.Add(HumanName.ForFamily("<script language='javascript'></script>"));
+
+            var xml = FhirSerializer.SerializeResourceToXml(x);
+            Assert.IsFalse(xml.Contains("<script"));
+        }
     }
 }
