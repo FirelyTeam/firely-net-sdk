@@ -33,6 +33,7 @@ namespace Hl7.Fhir.Introspection
 
         public Type ReturnType { get; private set; }
         public Type ElementType { get; private set; }
+        public Type DefiningType { get; private set; }
 
         public int Order { get; private set; }
 
@@ -98,7 +99,9 @@ namespace Hl7.Fhir.Introspection
             // See http://weblogs.asp.net/marianor/archive/2009/04/10/using-expression-trees-to-get-property-getter-and-setters.aspx
             result._getter = instance => prop.GetValue(instance, null);
             result._setter = (instance,value) => prop.SetValue(instance, value, null);
-            
+
+            result.DefiningType = prop.DeclaringType;
+
             return result;
         }
 

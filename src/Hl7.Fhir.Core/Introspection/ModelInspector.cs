@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Introspection
         // Index for easy lookup of resources, key is Tuple<upper resourcename, upper profile>
         private Dictionary<Tuple<string,string>,ClassMapping> _resourceClasses = new Dictionary<Tuple<string,string>,ClassMapping>();
 
-        // Index for easy lookup of datatypes, key is upper typenanme
+        // Index for easy lookup of datatypes, key is upper typename
         private Dictionary<string, ClassMapping> _dataTypeClasses = new Dictionary<string,ClassMapping>();
 
         // Index for easy lookup of classmappings, key is Type

@@ -121,6 +121,8 @@
     <None Include="TestData\json-edge-cases.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="TestData\observation-example-bloodpressure+types.ttl" />
+    <None Include="TestData\observation-example-bloodpressure.ttl" />
     <None Include="TestData\TestPatient.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -139,6 +141,7 @@
     <Content Include="TestData\careplan-example-f201-renal.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\observation-example-bloodpressure.xml" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

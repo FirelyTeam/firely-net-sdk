@@ -25,7 +25,6 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirParser
     {
-        #region Helper methods / stream creation methods
         public static bool ProbeIsXml(string data)
         {
             Regex xml = new Regex("^<[^>]+>");
@@ -38,9 +37,19 @@ namespace Hl7.Fhir.Serialization
             return data.TrimStart().StartsWith("{");
         }
 
+        public static bool ProbeIsTurtle(string data)
+        {
+            return data.TrimStart().StartsWith("@");
+        }
+
         public static XDocument XDocumentFromXml(string xml)
         {
             return XDocument.Parse(SerializationUtil.SanitizeXml(xml));
+        }
+
+        public static StringReader TurtleReaderFromTurtle(string turtle)
+        {
+            return new StringReader(turtle);
         }
 
         public static IFhirReader FhirReaderFromXml(string xml)
@@ -53,7 +62,10 @@ namespace Hl7.Fhir.Serialization
             return new JsonDomFhirReader(SerializationUtil.JsonReaderFromJsonText(json));
         }
 
-#endregion
+        public static IFhirReader FhirReaderFromTurtle(string turtle)
+        {
+            return new TurtleFhirReader(TurtleReaderFromTurtle(turtle));
+        }
 
         internal static Base Parse(IFhirReader reader, Type dataType = null)
         {
@@ -82,6 +94,17 @@ namespace Hl7.Fhir.Serialization
         public static Base ParseFromJson(string json, Type dataType = null)
         {
             var reader = FhirReaderFromJson(json);
+            return Parse(reader, dataType);
+        }
+
+        public static Resource ParseResourceFromTurtle(string turtle)
+        {
+            return (Resource)ParseFromTurtle(turtle);
+        }
+
+        public static Base ParseFromTurtle(string turtle, Type dataType = null)
+        {
+            var reader = FhirReaderFromTurtle(turtle);
             return Parse(reader, dataType);
         }
 
