@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -16,11 +15,9 @@ using System.Threading.Tasks;
 using Hl7.Fhir.FluentPath;
 using Sprache;
 using System.Diagnostics;
-using Hl7.Fhir.Navigation;
-using Hl7.Fhir.FluentPath.Grammar;
 using Hl7.Fhir.FluentPath.InstanceTree;
+using Hl7.Fhir.FluentPath.Grammar;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -49,7 +46,7 @@ namespace Hl7.Fhir.Tests.FhirPath
                         Patient.identifier.first())", tree));
 
             //// xpath gebruikt $current for $focus....waarom dat niet gebruiken?
-            Assert.IsTrue(PathExpression.EvaluatePredicate(
+            Assert.IsTrue(PathExpression.IsTrue(
                   @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and 
                         $focus.code = 'owner').log('after owner').$parent.$parent.organization.log('org')
                         .where(display.startsWith('Walt')).resolve().identifier.first().value = 'Gastro'", tree,

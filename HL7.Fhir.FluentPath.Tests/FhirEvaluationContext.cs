@@ -1,11 +1,11 @@
 ﻿
 using Hl7.Fhir.FluentPath.InstanceTree;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.FluentPath
 {
@@ -31,27 +31,18 @@ namespace Hl7.Fhir.FluentPath
         }
 
 
-        public IEnumerable<IFluentPathValue> OriginalContext { get; set; }
-
-        public IFluentPathElement OriginalResource { get; set; }
-
         FhirClient FhirClient { get; set; }
 
         public virtual void InvokeExternalFunction(string name, IList<IEnumerable<IFluentPathValue>> parameters)
         {
-            throw new NotSupportedException($"Function '{name}' is unknown");
-        }
-
-        public virtual void Log(string argument, IEnumerable<IFluentPathValue> focus)
-        {
-            System.Diagnostics.Trace.WriteLine(argument);
-
-            foreach (var element in focus)
+            if(name == "resolve")
             {
-                System.Diagnostics.Trace.WriteLine("=========");
-                System.Diagnostics.Trace.WriteLine(element.ToString());
+                
             }
+            else
+                throw new NotSupportedException($"Function '{name}' is unknown");
         }
+
 
         public override IFluentPathValue ResolveConstant(string name)
         {

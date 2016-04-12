@@ -19,9 +19,6 @@ namespace Hl7.Fhir.FluentPath
 
     public interface IFluentPathElement : IFluentPathValue
     {
-        // IFluentPathElement Parent { get; }
-        // IEnumerable<ChildNode> Children();
-
         IEnumerable<string> GetChildNames();
         IEnumerable<IFluentPathElement> GetChildrenByName(string name);
     }

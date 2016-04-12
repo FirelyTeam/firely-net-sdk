@@ -39,8 +39,8 @@
       <HintPath>..\packages\Hl7.Fhir.DSTU2.0.90.4\lib\net45\Hl7.Fhir.DSTU2.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sprache, Version=2.0.0.51, Culture=neutral, processorArchitecture=MSIL">
@@ -70,7 +70,38 @@
     <Compile Include="FhirPathEvaluatorTest.cs" />
     <Compile Include="FhirPathLexerTest.cs" />
     <Compile Include="FhirPathTest.cs" />
+    <Compile Include="InstanceTree\FhirInstanceTree.cs" />
+    <Compile Include="InstanceTree\INodeConversionStrategy.cs" />
+    <Compile Include="InstanceTree\TreeConstructorXml.cs" />
+    <Compile Include="InstanceTree\UntypedValue.cs" />
+    <Compile Include="InstanceTree\XAttributeConversionStrategy.cs" />
+    <Compile Include="InstanceTree\XCommentStrategy.cs" />
+    <Compile Include="InstanceTree\XDocumentConversionStrategy.cs" />
+    <Compile Include="InstanceTree\XElementConversionStrategy.cs" />
+    <Compile Include="InstanceTree\XElementDivConversionStrategy.cs" />
+    <Compile Include="InstanceTree\XElementNestedResourceConversionStrategy.cs" />
+    <Compile Include="InstanceTree\XmlLineInfoWrapper.cs" />
+    <Compile Include="InstanceTree\XWhitespaceStrategy.cs" />
+    <Compile Include="Navigation\AnnotationList.cs" />
+    <Compile Include="Navigation\FhirNavigationTree.cs" />
+    <Compile Include="Navigation\FhirNavigationTreeOfV.cs" />
+    <Compile Include="Navigation\IAnnotatable.cs" />
+    <Compile Include="Navigation\ILinkedTree.cs" />
+    <Compile Include="Navigation\INamedTree.cs" />
+    <Compile Include="Navigation\InstanceTreeAnnotations.cs" />
+    <Compile Include="Navigation\ITree.cs" />
+    <Compile Include="Navigation\ITreeBuilder.cs" />
+    <Compile Include="Navigation\LinkedTreeExtensions.cs" />
+    <Compile Include="Navigation\NavigationTree.cs" />
+    <Compile Include="Navigation\TreeBuilderExtensions.cs" />
+    <Compile Include="Navigation\TreeBuilderFactoryExtensions.cs" />
+    <Compile Include="Navigation\TreeIterators.cs" />
+    <Compile Include="Navigation\ValueNavigationTree.cs" />
+    <Compile Include="Navigation\VariantNavigationTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\SerializationUtil.cs" />
+    <Compile Include="Support\ReflectionHelper.cs" />
+    <Compile Include="Support\XObjectExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\HL7.Fhir.FluentPath\HL7.Fhir.FluentPath.csproj">
@@ -79,6 +110,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="TestData\examples-json.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -104,6 +136,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

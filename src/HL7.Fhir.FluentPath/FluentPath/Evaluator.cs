@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -304,7 +303,7 @@ namespace Hl7.Fhir.FluentPath
 
         public static Evaluator Today()
         {
-            return Eval.TypedValue(PartialDateTime.Parse(PrimitiveTypeConverter.ConvertTo<string>(DateTime.Today)));
+            return Eval.TypedValue(PartialDateTime.Today());
         }
 
         public static Evaluator Distinct()

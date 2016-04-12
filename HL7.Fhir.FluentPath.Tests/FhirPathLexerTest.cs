@@ -93,9 +93,12 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var parser = Lexer.DateTime.End();
 
-            AssertParser.SucceedsWith(parser, "2015-01", result => Assert.AreEqual(PartialDateTime.Precision.Month, result.Prec));
-            AssertParser.SucceedsWith(parser, "2015-01-02T12:34:00Z", result => Assert.AreEqual(PartialDateTime.Precision.Time, result.Prec));
-            AssertParser.SucceedsWith(parser, "2015-01-03T12:34:34+02:30", result => Assert.AreEqual(PartialDateTime.Precision.Time, result.Prec));            
+            AssertParser.SucceedsMatch(parser, "2015-01");
+            AssertParser.SucceedsMatch(parser, "2015-01-02T12:34:00Z");
+            AssertParser.SucceedsMatch(parser, "2015-01-03T12:34:34+02:30");
+            AssertParser.FailsMatch(parser, "T12:34:34+02:30");
+            AssertParser.FailsMatch(parser, "12:34:34+02:30");
+            AssertParser.FailsMatch(parser, "20150103T12:34:34+02:30");
         }
 
         [TestMethod, TestCategory("FhirPath")]
