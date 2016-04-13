@@ -60,9 +60,9 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestValueOps()
         {
-            var a = new TypedValue(4);
-            var b = new TypedValue(5);
-            var c = new TypedValue(5);
+            var a = new ConstantValue(4);
+            var b = new ConstantValue(5);
+            var c = new ConstantValue(5);
 
             Assert.AreEqual(9L, a.Add(b).AsInteger());
             Assert.AreEqual(-1L, a.Sub(b).AsInteger());

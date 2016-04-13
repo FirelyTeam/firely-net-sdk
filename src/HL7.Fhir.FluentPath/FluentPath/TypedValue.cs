@@ -13,27 +13,34 @@ using System.Linq;
 
 namespace Hl7.Fhir.FluentPath
 {
-    internal class TypedValue : IFluentPathValue
+    internal class ConstantValue : IFluentPathValue
     {
         private object _original;
 
-        public TypedValue(object value)
+        public ConstantValue(object value)
         {
             _original = value;
 
-            //TODO: Add support for FHIR types representing these values
             if (_original is Boolean)
                 Value = _original;
             else if (_original is String)
-                Value =  _original;
-            else if (_original is Int32 || _original is Int16 || _original is UInt16 || _original is UInt32 || _original is Int64)
+                Value = _original;
+            else if (_original is Uri)
+                Value = ((Uri)_original).OriginalString;
+            else if (_original is Int32 || _original is Int16 || _original is UInt16 || _original is UInt32 || _original is Int64 || _original is UInt64)
                 Value = Convert.ToInt64(_original);
             else if (_original is float || _original is double || _original is Decimal)
                 Value = Convert.ToDecimal(_original);
+            else if (_original is DateTimeOffset)
+                Value = PartialDateTime.FromDateTime((DateTimeOffset)_original);
+            else if (_original is DateTime)
+                Value = PartialDateTime.FromDateTime((DateTime)_original);
             else if (_original is PartialDateTime)
                 Value = _original;
+            else if (_original is Time)
+                Value = _original;
             else
-                throw Error.NotSupported("Cannot process values of type {0} (with value '{1}') in the FluentPath engine"
+                throw Error.NotSupported("Don't know how to convert an instance of .NET type {0} (with value '{1}') to a FluentPath constant"
                     .FormatWith(_original.GetType().Name, _original.ToString()));
         }
 

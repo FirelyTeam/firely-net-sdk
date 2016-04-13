@@ -29,7 +29,7 @@ namespace Hl7.Fhir.FluentPath
         {
             if (values != null)
             {
-                return values.Select(value => value == null ? null : value is IFluentPathValue ? (IFluentPathValue)value : new TypedValue(value));
+                return values.Select(value => value == null ? null : value is IFluentPathValue ? (IFluentPathValue)value : new ConstantValue(value));
             }
             else
                 return FhirValueList.Empty();

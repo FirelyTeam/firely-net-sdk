@@ -59,7 +59,7 @@ namespace Hl7.Fhir.FluentPath
             else if (name == "ucum")
                 value = "http://unitsofmeasure.org";
 
-            return value != null ? new TypedValue(value) : null;
+            return value != null ? new ConstantValue(value) : null;
         }
 
         public virtual IFluentPathElement ResolveResource(string url)

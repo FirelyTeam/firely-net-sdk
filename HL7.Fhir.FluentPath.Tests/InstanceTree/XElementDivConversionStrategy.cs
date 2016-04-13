@@ -19,7 +19,7 @@ namespace Hl7.Fhir.FluentPath.InstanceTree
             var element = (XElement)docNode;
 
             var value = getDivValue(element);
-            var result = parent.AddLastChild(element.Name.LocalName, (IFluentPathValue)new TypedValue(value));
+            var result = parent.AddLastChild(element.Name.LocalName, (IFluentPathValue)new ConstantValue(value));
 
             result.AddAnnotation(new XmlRenderHints() { IsXhtmlDiv = true });
             result.AddAnnotation(docNode);

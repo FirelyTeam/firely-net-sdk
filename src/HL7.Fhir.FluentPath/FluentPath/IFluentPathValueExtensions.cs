@@ -93,7 +93,7 @@ namespace Hl7.Fhir.FluentPath
             if (left.Value.GetType() != right.Value.GetType())
                 throw Error.InvalidOperation("Operands must be of the same type");
 
-            return new TypedValue(f(left.Value, right.Value));
+            return new ConstantValue(f(left.Value, right.Value));
         }
 
         public static bool IsEqualTo(this IFluentPathValue left, IFluentPathValue right)
@@ -120,22 +120,22 @@ namespace Hl7.Fhir.FluentPath
 
         public static IFluentPathValue GreaterOrEqual(this IFluentPathValue left, IFluentPathValue right)
         {
-            return new TypedValue(left.IsEqualTo(right) || left.compare(InfixOperator.GreaterThan, right));
+            return new ConstantValue(left.IsEqualTo(right) || left.compare(InfixOperator.GreaterThan, right));
         }
 
         public static IFluentPathValue LessOrEqual(this IFluentPathValue left, IFluentPathValue right)
         {
-            return new TypedValue(left.IsEqualTo(right) || left.compare(InfixOperator.LessThan, right));
+            return new ConstantValue(left.IsEqualTo(right) || left.compare(InfixOperator.LessThan, right));
         }
 
         public static IFluentPathValue LessThan(this IFluentPathValue left, IFluentPathValue right)
         {
-            return new TypedValue(left.compare(InfixOperator.LessThan, right));
+            return new ConstantValue(left.compare(InfixOperator.LessThan, right));
         }
 
         public static IFluentPathValue GreaterThan(this IFluentPathValue left, IFluentPathValue right)
         {
-            return new TypedValue(left.compare(InfixOperator.GreaterThan, right));
+            return new ConstantValue(left.compare(InfixOperator.GreaterThan, right));
         }
 
         private static bool compare(this IFluentPathValue left, InfixOperator comp, IFluentPathValue right)

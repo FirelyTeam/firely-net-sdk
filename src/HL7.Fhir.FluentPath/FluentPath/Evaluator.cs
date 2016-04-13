@@ -73,7 +73,7 @@ namespace Hl7.Fhir.FluentPath
 
         public static Evaluator TypedValue(object value)
         {
-            return (_, __) => new[] { new TypedValue(value) };
+            return (_, __) => new[] { new ConstantValue(value) };
         }
 
         public static Evaluator Constant(string name)
