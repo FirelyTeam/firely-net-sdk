@@ -29,7 +29,7 @@ namespace Hl7.Fhir.FluentPath.Grammar
         //      ;
         public static readonly Parser<string> QuotedIdentifier =
             from openQ in Parse.Char('\"')
-            from id in Parse.CharExcept('\"').Many().Text().XOr(Escape).Many()
+            from id in Parse.CharExcept(@"""\").Many().Text().Or(Escape).Many()
             from closeQ in Parse.Char('\"')
             select string.Concat(id);
 
@@ -105,17 +105,15 @@ namespace Hl7.Fhir.FluentPath.Grammar
         public static readonly Parser<string> Escape =
             from backslash in Parse.Char('\\')
             from escUnicode in
-                Parse.Chars("\"'\\/fnrt").Once().Text().XOr(Unicode)
+                Parse.Chars("\"'\\/fnrt").Once().Text().Or(Unicode)
             select backslash + escUnicode;
 
-        public static Parser<string> makeStringContentParser(char delimiter)
-        {
-            return Parse.CharExcept(delimiter + "\\").Many().Text().XOr(Escape)
-                .Many().Select(ss => ss.Aggregate(string.Empty, (a, b) => a + b))
-                .Contained(Parse.Char(delimiter), Parse.Char(delimiter));
-        }
+        public static readonly Parser<string> String =
+            from openQ in Parse.Char('\'')
+            from str in Parse.CharExcept("\'\\").Many().Text().Or(Escape).Many()
+            from closeQ in Parse.Char('\'')
+            select string.Concat(str);
 
-        public static readonly Parser<string> String = makeStringContentParser('\'');
 
         // BOOL: 'true' | 'false';
         public static readonly Parser<bool> Bool =

@@ -181,6 +181,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             SucceedsDelimitedString(parser, "\"3.1415\"");
 
             AssertParser.FailsMatch(parser, "NoQuotes");
+            AssertParser.FailsMatch(parser, @"'wrong es\qape'");
         }
 
 
@@ -241,6 +242,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             SucceedsDelimitedString(parser, @"'xxx \u0123 yyyy \\\/\f\n\r\t zzz !@#$%^&*()_-=+[]{}|;:,.<>?`~'");
 
+            AssertParser.FailsMatch(parser, @"'\q incorrect escape'");
             AssertParser.FailsMatch(parser, @"""double quotes""");
             AssertParser.FailsMatch(parser, @"no quotes");
             AssertParser.FailsMatch(parser, @"""mixed quotes'");
