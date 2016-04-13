@@ -11,120 +11,80 @@ using Sprache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace Hl7.Fhir.FluentPath.Grammar
 {
-    internal class Lexer
+    internal partial class Lexer
     {
-        // recurse: '*';
-        public static readonly Parser<string> Recurse =
-            Parse.Char('*').Once().Text().Named("Recurse");
-
-        // root_spec: '$context' | '$resource' | '$parent';
-        public static readonly Parser<Axis> RootSpec =
-            (from first in Parse.Char('$')
-             from spec in Parse.String("context").Return(Axis.Context)
-                 .Or(Parse.String("resource").Return(Axis.Resource))
-                 .Or(Parse.String("parent").Return(Axis.Parent))
-                 .Or(Parse.String("focus").Return(Axis.Focus))
-             select spec).Named("RootSpec");
-
-        // axis_spec: '*' | '**' | '$context' | '$resource' | '$parent' | '$focus';
-        public static readonly Parser<Axis> AxisSpec =
-                Parse.Char('*').Repeat(1, 2).Select(s => s.Count() == 1 ? Axis.Children : Axis.Descendants)
-                .XOr(RootSpec)
-                .Named("AxisSpec");
-
-        //ID: ALPHA ALPHANUM* ;
-        //fragment ALPHA: [a-zA-Z];
-        //fragment ALPHANUM: ALPHA | [0-9];
+        // IDENTIFIER
+        //   : ([A-Za-z] | '_')([A-Za-z0-9] | '_')*            // Added _ to support CQL (FHIR could constrain it out)
+        //   ;
         public static readonly Parser<string> Id =
-            Parse.Identifier(Parse.Letter, Parse.LetterOrDigit).Named("Id");
+            Parse.Identifier(Parse.Letter.XOr(Parse.Char('_')), Parse.LetterOrDigit.XOr(Parse.Char('_'))).Named("Identifier");
 
+        //  QUOTEDIDENTIFIER
+        //      : '"' (ESC | ~[\\"])* '"'
+        //      ;
+        public static readonly Parser<string> QuotedIdentifier =
+            from openQ in Parse.Char('\"')
+            from id in Parse.CharExcept('\"').Many().Text().XOr(Escape).Many()
+            from closeQ in Parse.Char('\"')
+            select string.Concat(id);
 
-        // CHOICE: '[x]';
-        public static readonly Parser<string> Choice =
-            Parse.String("[x]").Text().Named("Choice");
+        // identifier
+        //  : IDENTIFIER
+        //  | QUOTEDIDENTIFIER
+        //  ;
+        public static readonly Parser<string> Identifier =
+            Id.XOr(QuotedIdentifier);
 
-        // element: ID CHOICE?;
-        public static readonly Parser<string> Element =
-            (from id in Id
-            from choice in Choice.Optional()
-            select id + choice.GetOrDefault()).Named("Element");
+        // externalConstant
+        //  : '%' identifier
+        //  ;
+        public static readonly Parser<string> ExternalConstant =
+            Parse.Char('%').Then(c => Identifier).Named("ExternalConstant");
 
-        // CONST: '%' ALPHANUM(ALPHANUM | [\-.])*;
-        public static readonly Parser<string> Const =
-            (from perc in Parse.Char('%')
-            from name in Parse.LetterOrDigit.Once().Concat(
-                    Parse.LetterOrDigit
-                        .XOr(Parse.Chars("-.")).Many())
-                    .Text()
-            select name).Named("Const");
+        // DATETIME
+        //      : '@'  ....
+        // Note: I used a different regex from the spec, since this one is more complete (not allowing 99 as month for example),
+        // but disallowing partial datetimes with just the hour. EK
+        public static readonly Regex DateTimeRegEx = new Regex(
+                                @"@[0-9]{4}             # Year
+                                (
+                                    -(0[1-9]|1[0-2])                # Month
+                                    (
+                                        -(0[0-9]|[1-2][0-9]|3[0-1])         #Day
+                                        (
+                                            T
+                                            ([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?   #Time
+                                            (Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?  #Timezone
+                                        )?
+                                    )?
+                                )?", RegexOptions.IgnorePatternWhitespace);     
 
-        // NB: This regex has been modified so it REQUIRES a month to be present (otherwise we cannot distinguish a number from a year-only date
-        // This needs to be fixed in the FhirPath spec.
-        // Original: public const string DATETIME_REGEX = @"-?[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?";
-        public const string DATETIME_REGEX = @"-?[0-9]{4}(-(0[1-9]|1[0-2])(-(0[0-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)";
+        public static readonly Parser<PartialDateTime> DateTime = 
+            Parse.Regex(DateTimeRegEx).Select(s => PartialDateTime.Parse(s.Substring(1)));
 
-        public static readonly Parser<PartialDateTime> DateTime = Parse.Regex(DATETIME_REGEX)
-            .Select(s => PartialDateTime.Parse(s));
+        // TIME
+        //      : '@T'  ....
+        // Note: I used a different regex from the spec, since this one is more complete (not allowing 99 as an hour for example),
+        // but disallowing partial times with just the hour. EK
+        public static readonly Regex TimeRegEx = new Regex(
+                                @"@T
+                                            ([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?   #Time
+                                            (Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?  #Timezone
+                                 ", RegexOptions.IgnorePatternWhitespace);
 
+        public static readonly Parser<Hl7.Fhir.FluentPath.Time> Time =
+            Parse.Regex(TimeRegEx).Select(s => Hl7.Fhir.FluentPath.Time.Parse(s.Substring(1)));
 
-        internal static Parser<InfixOperator> Operator(string op, InfixOperator opType)
-        {
-            return Parse.String(op).Token().Return(opType);
-        }
-
-        //internal static readonly Parser<InfixOperator> Invoke = Operator(".", InfixOperator.Invoke);
-
-        internal static readonly Parser<InfixOperator> Mul = Operator("*", InfixOperator.Mul);
-        internal static readonly Parser<InfixOperator> Div = Operator("/", InfixOperator.Div);
-        internal static readonly Parser<InfixOperator> Add = Operator("+", InfixOperator.Add);
-        internal static readonly Parser<InfixOperator> Sub = Operator("-", InfixOperator.Sub);
-        internal static readonly Parser<InfixOperator> Union = Operator("|", InfixOperator.Union);
-        internal static readonly Parser<InfixOperator> Concat = Operator("&", InfixOperator.Concat);
-
-        internal static readonly Parser<InfixOperator> Equal = Operator("=", InfixOperator.Equals);
-        internal static readonly Parser<InfixOperator> Equivalent = Operator("~", InfixOperator.Equivalent);
-        internal static readonly Parser<InfixOperator> NotEqual = Operator("!=", InfixOperator.NotEqual);
-        internal static readonly Parser<InfixOperator> NotEquivalent = Operator("!~", InfixOperator.NotEquivalent);
-        internal static readonly Parser<InfixOperator> GreaterThan = Operator(">", InfixOperator.GreaterThan);
-        internal static readonly Parser<InfixOperator> LessThan = Operator("<", InfixOperator.LessThan);
-        internal static readonly Parser<InfixOperator> LessOrEqual = Operator("<=", InfixOperator.LessOrEqual);
-        internal static readonly Parser<InfixOperator> GreaterOrEqual = Operator(">=", InfixOperator.GreaterOrEqual);
-        internal static readonly Parser<InfixOperator> In = Operator("in", InfixOperator.In);
-
-        internal static readonly Parser<InfixOperator> And = Operator("and", InfixOperator.And);
-        internal static readonly Parser<InfixOperator> Or = Operator("or", InfixOperator.Or);
-        internal static readonly Parser<InfixOperator> Xor = Operator("xor", InfixOperator.Xor);
-        internal static readonly Parser<InfixOperator> Implies = Operator("implies", InfixOperator.Implies);
-
-        // COMP: '=' | '~' | '!=' | '!~' | '>' | '<' | '<=' | '>=' | 'in';
-        // NOTE: ORDER MATTERS, since otherwise shorter ops will be recognized before longer ones!
-        public static readonly Parser<InfixOperator> Comp =
-            Equal
-            .Or(Equivalent)
-            .Or(NotEqual)
-            .Or(NotEquivalent)
-            .Or(LessOrEqual)
-            .Or(GreaterOrEqual)
-            .Or(GreaterThan)
-            .Or(LessThan)
-            .Or(In)
-            .Named("Comp");
-
-       // LOGIC: 'and' | 'or' | 'xor' | 'implies';
-        public static readonly Parser<InfixOperator> Logic =
-            And
-            .Or(Or)
-            .Or(Xor)
-            .Or(Implies)
-            .Named("Logic");
-
-
-        public static readonly Parser<Int64> Number =
-            Parse.Number.Select(s => Int64.Parse(s));
+        // NUMBER
+        //   : [0-9]+('.' [0-9]+)?
+        //   ;
+        public static readonly Parser<Int64> IntegerNumber =
+            Parse.Number.Select(s => Int64.Parse(s)).Named("IntegerNumber");
 
         public static readonly Parser<decimal> DecimalNumber =
                    from num in Parse.Number
@@ -132,9 +92,9 @@ namespace Hl7.Fhir.FluentPath.Grammar
                    from fraction in Parse.Number
                    select XmlConvert.ToDecimal(num + dot + fraction);
 
-        // STRING: '"' (ESC | ~["\\])* '"' |           // " delineated string
-        //         '\'' (ESC | ~[\'\\])* '\'';         // ' delineated string
-        // fragment ESC: '\\' (["'\\/bfnrt] | UNICODE);    // allow \", \', \\, \/, \b, etc. and \uXXX
+
+        // STRING:  '\'' (ESC | ~[\'\\])* '\'';         // ' delineated string
+        // fragment ESC: '\\' (["'\\/fnrt] | UNICODE);    // allow \", \', \\, \/, \b, etc. and \uXXX
         // fragment UNICODE: 'u' HEX HEX HEX HEX;
         // fragment HEX: [0-9a-fA-F];
         public static readonly Parser<string> Unicode =
@@ -145,7 +105,7 @@ namespace Hl7.Fhir.FluentPath.Grammar
         public static readonly Parser<string> Escape =
             from backslash in Parse.Char('\\')
             from escUnicode in
-                Parse.Chars("\"'\\/bfnrt").Once().Text().XOr(Unicode)
+                Parse.Chars("\"'\\/fnrt").Once().Text().XOr(Unicode)
             select backslash + escUnicode;
 
         public static Parser<string> makeStringContentParser(char delimiter)
@@ -153,15 +113,33 @@ namespace Hl7.Fhir.FluentPath.Grammar
             return Parse.CharExcept(delimiter + "\\").Many().Text().XOr(Escape)
                 .Many().Select(ss => ss.Aggregate(string.Empty, (a, b) => a + b))
                 .Contained(Parse.Char(delimiter), Parse.Char(delimiter));
-
         }
 
-        public static readonly Parser<string> String =
-            makeStringContentParser('"').XOr(makeStringContentParser('\''));
+        public static readonly Parser<string> String = makeStringContentParser('\'');
 
         // BOOL: 'true' | 'false';
         public static readonly Parser<bool> Bool =
             Parse.String("true").XOr(Parse.String("false")).Text().Select(s => Boolean.Parse(s));
 
+        // literal
+        //  : ('true' | 'false')                                    #booleanLiteral
+        //  | STRING                                                #stringLiteral
+        //  | NUMBER                                                #numberLiteral
+        //  | DATETIME                                              #dateTimeLiteral
+        //  | TIME                                                  #timeLiteral
+        //  ;
+        public static readonly Parser<IFluentPathValue> Literal =
+            Lexer.String.Select(v => new ConstantValue(v))
+                .XOr(Lexer.DateTime.Select(v=> new ConstantValue(v)))
+                .XOr(Lexer.Time.Select(v => new ConstantValue(v)))
+                .XOr(Lexer.Bool.Select(v => new ConstantValue(v)))
+                .Or(Lexer.DecimalNumber.Select(v => new ConstantValue(v)))
+                .Or(Lexer.IntegerNumber.Select(v => new ConstantValue(v)));
+
+        //qualifiedIdentifier
+        //   : identifier ('.' identifier)*
+        //   ;
+        public static readonly Parser<string> QualifiedIdentifier =
+            Parse.ChainOperator(Parse.Char('.'), Identifier, (op, a, b) => a + "." + b);
     }
 }

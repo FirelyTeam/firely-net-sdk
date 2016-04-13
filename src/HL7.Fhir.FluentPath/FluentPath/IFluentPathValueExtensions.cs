@@ -120,25 +120,25 @@ namespace Hl7.Fhir.FluentPath
 
         public static IFluentPathValue GreaterOrEqual(this IFluentPathValue left, IFluentPathValue right)
         {
-            return new ConstantValue(left.IsEqualTo(right) || left.compare(InfixOperator.GreaterThan, right));
+            return new ConstantValue(left.IsEqualTo(right) || left.compare(Operator.GreaterThan, right));
         }
 
         public static IFluentPathValue LessOrEqual(this IFluentPathValue left, IFluentPathValue right)
         {
-            return new ConstantValue(left.IsEqualTo(right) || left.compare(InfixOperator.LessThan, right));
+            return new ConstantValue(left.IsEqualTo(right) || left.compare(Operator.LessThan, right));
         }
 
         public static IFluentPathValue LessThan(this IFluentPathValue left, IFluentPathValue right)
         {
-            return new ConstantValue(left.compare(InfixOperator.LessThan, right));
+            return new ConstantValue(left.compare(Operator.LessThan, right));
         }
 
         public static IFluentPathValue GreaterThan(this IFluentPathValue left, IFluentPathValue right)
         {
-            return new ConstantValue(left.compare(InfixOperator.GreaterThan, right));
+            return new ConstantValue(left.compare(Operator.GreaterThan, right));
         }
 
-        private static bool compare(this IFluentPathValue left, InfixOperator comp, IFluentPathValue right)
+        private static bool compare(this IFluentPathValue left, Operator comp, IFluentPathValue right)
         {
             if (left.Value == null || right.Value == null)
                 throw Error.InvalidOperation("'{0)' requires both operands to be values".FormatWith(comp));
@@ -148,13 +148,13 @@ namespace Hl7.Fhir.FluentPath
             if (left.Value is string)
             {
                 var result = String.Compare(left.AsString(), right.AsString());
-                if (comp == InfixOperator.LessThan) return result == -1;
-                if (comp == InfixOperator.GreaterThan) return result == 1;
+                if (comp == Operator.LessThan) return result == -1;
+                if (comp == Operator.GreaterThan) return result == 1;
             }
             else
             {
-                if (comp == InfixOperator.LessThan) return (dynamic)left.Value < (dynamic)right.Value;
-                if (comp == InfixOperator.GreaterThan) return (dynamic)left.Value > (dynamic)right.Value;
+                if (comp == Operator.LessThan) return (dynamic)left.Value < (dynamic)right.Value;
+                if (comp == Operator.GreaterThan) return (dynamic)left.Value > (dynamic)right.Value;
             }
 
             throw Error.InvalidOperation("Comparison failed on operator '{0}'".FormatWith(comp));

@@ -23,9 +23,9 @@ namespace Hl7.Fhir.FluentPath.Grammar
             Lexer.String.Select(s => Eval.TypedValue(s))
             .XOr(Lexer.DateTime.Select(dt => Eval.TypedValue(dt)))
             .Or(Lexer.DecimalNumber.Select(d => Eval.TypedValue(d)))
-            .Or(Lexer.Number.Select(n => Eval.TypedValue(n)))
+            .Or(Lexer.IntegerNumber.Select(n => Eval.TypedValue(n)))
             .Or(Lexer.Bool.Select(b => Eval.TypedValue(b)))
-            .XOr(Lexer.Const.Select(s => Eval.Constant(s)));
+            .XOr(Lexer.ExternalConstant.Select(s => Eval.Constant(s)));
 
         // term:
         //   '(' expr ')' |
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.FluentPath.Grammar
             Parse.ChainOperator(Lexer.Add.Or(Lexer.Sub), MulExpr, (op, left, right) => left.Infix(op, right));
 
         public static readonly Parser<Evaluator> JoinExpr =
-            Parse.ChainOperator(Lexer.Union.Or(Lexer.Concat), AddExpr, (op, left, right) => left.Infix(op, right));
+            Parse.ChainOperator(Lexer.Union, AddExpr, (op, left, right) => left.Infix(op, right));
 
         public static readonly Parser<Evaluator> CompExpr =
             Parse.ChainOperator(Lexer.Comp, JoinExpr, (op, left, right) => left.Infix(op, right));

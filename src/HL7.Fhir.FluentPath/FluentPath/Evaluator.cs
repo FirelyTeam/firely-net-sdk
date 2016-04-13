@@ -140,7 +140,7 @@ namespace Hl7.Fhir.FluentPath
             };
         }
 
-        public static Evaluator Infix(this Evaluator left, InfixOperator op, Evaluator right)
+        public static Evaluator Infix(this Evaluator left, Operator op, Evaluator right)
         {
             return (f,c) =>
             {
@@ -151,39 +151,39 @@ namespace Hl7.Fhir.FluentPath
 
                 switch (op)
                 {
-                    case InfixOperator.Equals:
+                    case Operator.Equal:
                         result = leftNodes.IsEqualTo(rightNodes); break;
-                    case InfixOperator.Equivalent:
+                    case Operator.Equivalent:
                         result = leftNodes.IsEquivalentTo(rightNodes); break;
-                    case InfixOperator.GreaterThan:
+                    case Operator.GreaterThan:
                         result = leftNodes.GreaterThan(rightNodes); break;
-                    case InfixOperator.GreaterOrEqual:
+                    case Operator.GreaterOrEqual:
                         result = leftNodes.GreaterOrEqual(rightNodes); break;
-                    case InfixOperator.LessThan:
+                    case Operator.LessThan:
                         result = leftNodes.LessThan(rightNodes); break;
-                    case InfixOperator.LessOrEqual:
+                    case Operator.LessOrEqual:
                         result = leftNodes.LessOrEqual(rightNodes); break;
-                    case InfixOperator.Add:
+                    case Operator.Add:
                         result = leftNodes.Add(rightNodes); break;
-                    case InfixOperator.Sub:
+                    case Operator.Sub:
                         result = leftNodes.Sub(rightNodes); break;
-                    case InfixOperator.Mul:
+                    case Operator.Mul:
                         result = leftNodes.Mul(rightNodes); break;
-                    case InfixOperator.Div:
+                    case Operator.Div:
                         result = leftNodes.Div(rightNodes); break;
-                    case InfixOperator.And:
+                    case Operator.And:
                         result = leftNodes.And(rightNodes); break;
-                    case InfixOperator.Or:
+                    case Operator.Or:
                         result = leftNodes.Or(rightNodes); break;
-                    case InfixOperator.Xor:
+                    case Operator.Xor:
                         result = leftNodes.Xor(rightNodes); break;
-                    case InfixOperator.Implies:
+                    case Operator.Implies:
                         result = leftNodes.Implies(rightNodes); break;
-                    case InfixOperator.Union:
+                    case Operator.Union:
                         result = leftNodes.Union(rightNodes); break;
-                    case InfixOperator.Concat:
+                    case Operator.Concat:
                         result = leftNodes.Add(rightNodes); break;  // should only work for strings ;-)                        
-                    case InfixOperator.In:
+                    case Operator.In:
                         result = leftNodes.SubsetOf(rightNodes); break;
                     default:
                         throw Error.NotImplemented("Infix operator '{0}' is not yet implemented".FormatWith(op));

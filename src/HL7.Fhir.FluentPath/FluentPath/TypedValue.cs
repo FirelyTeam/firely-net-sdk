@@ -54,5 +54,21 @@ namespace Hl7.Fhir.FluentPath
         {
             return Value.ToString();
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is IFluentPathValue)
+                return Object.Equals((obj as IFluentPathValue).Value,Value);
+            else
+                return false;
+        }
+
+        public override int GetHashCode()
+        {
+            if (Value != null)
+                return Value.GetHashCode();
+            else
+                return 0;
+        }
     }
 }

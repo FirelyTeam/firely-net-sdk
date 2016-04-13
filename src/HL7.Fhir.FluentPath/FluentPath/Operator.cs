@@ -14,28 +14,49 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public enum InfixOperator
+    public enum Operator
     {
+        Invoke,
+
+        Index,
+
+        Plus,
+        Minus,
+
         Mul,
         Div,
+        TruncDiv,
+        Modulo,
+
         Add,
         Sub,
+
         Union,
+
+        [Obsolete]
         Concat,
 
-        Equals,
+        LessOrEqual,
+        LessThan,
+        GreaterThan,
+        GreaterOrEqual,
+
+        Is,
+        As,
+
+        Equal,
         Equivalent,
         NotEqual,
         NotEquivalent,
-        GreaterThan,
-        LessThan,
-        LessOrEqual,
-        GreaterOrEqual,
+                   
         In,
+        Contains,
 
         And,
+
         Or,
         Xor,
+
         Implies
     }
 

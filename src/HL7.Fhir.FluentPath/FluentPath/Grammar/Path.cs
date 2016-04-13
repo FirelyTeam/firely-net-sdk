@@ -29,16 +29,13 @@ namespace Hl7.Fhir.FluentPath.Grammar
 
         // element recurse?
         public static readonly Parser<Evaluator> ElementPath =
-            from element in Lexer.Element
-            from recurse in Lexer.Recurse.Optional()
-                //            select element + recurse.GetOrDefault();
+            from element in Lexer.Identifier
             select Eval.Children(element);
 
         // item: element recurse? | function | axis_spec
         public static readonly Parser<Evaluator> Invoc =
             Functions.Function
             .Or(ElementPath)
-            .XOr(Lexer.AxisSpec.Select(a => Eval.Axis(a)))
             .Token();
     }
 }

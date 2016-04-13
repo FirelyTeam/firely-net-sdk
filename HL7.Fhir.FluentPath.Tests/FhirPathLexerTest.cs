@@ -18,50 +18,16 @@ namespace Hl7.Fhir.Tests.FhirPath
     [TestClass]
     public class FhirPathLexerTest
     {
-        // TODO: Implement .Named() method to provide error info - also unit test!
-
         [TestMethod, TestCategory("FhirPath")]
-        public void FhirPath_Lex_Identifier()
+        public void FhirPath_Lex_QualifiedIdentifier()
         {
-            var parser = Lexer.Id.End();
+            var parser = Lexer.QualifiedIdentifier.End();
 
-            AssertParser.SucceedsMatch(parser, "a");
-            AssertParser.SucceedsMatch(parser, "abcdefghijklmnopqrstuvwxyz");
-            AssertParser.SucceedsMatch(parser, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-            AssertParser.SucceedsMatch(parser, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-            AssertParser.SucceedsMatch(parser, "a0123456789");
-
-            AssertParser.FailsMatch(parser, "");
-            AssertParser.FailsMatch(parser, "_");
-            AssertParser.FailsMatch(parser, "@");
-            AssertParser.FailsMatch(parser, "#");
-            AssertParser.FailsMatch(parser, "%");
-            AssertParser.FailsMatch(parser, "$");
-            AssertParser.FailsMatch(parser, "*");
-            AssertParser.FailsMatch(parser, ".");
-            AssertParser.FailsMatch(parser, "0");
-            AssertParser.FailsMatch(parser, "0123456789");
-        }
-
-
-        [TestMethod, TestCategory("FhirPath")]
-        public void FhirPath_Lex_Element()
-        {
-            var parser = Lexer.Element.End();
-
-            AssertParser.SucceedsMatch(parser, "e");
-            AssertParser.SucceedsMatch(parser, "element");
-            AssertParser.SucceedsMatch(parser, "Element");
-            AssertParser.SucceedsMatch(parser, "ELEMENT");
-            AssertParser.SucceedsMatch(parser, "Element0123456789");
-            AssertParser.SucceedsMatch(parser, "Element[x]");
-
-            AssertParser.FailsMatch(parser, "0element");
-            AssertParser.FailsMatch(parser, "_element");
-            AssertParser.FailsMatch(parser, "[x]");
-            AssertParser.FailsMatch(parser, ".");
-            AssertParser.FailsMatch(parser, "*");
-            AssertParser.FailsMatch(parser, "**");
+            AssertParser.SucceedsMatch(parser, "name");
+            AssertParser.SucceedsMatch(parser, "name.name2");
+            AssertParser.SucceedsMatch(parser, "name.name2.name3");
+            AssertParser.SucceedsMatch(parser, "name.\"name2\"", "name.name2");
+            AssertParser.SucceedsMatch(parser, "\"name\".\"name2\"", "name.name2");
         }
 
         private void SucceedsPrefixString(Parser<string> parser, string expr)
@@ -70,17 +36,40 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
         [TestMethod, TestCategory("FhirPath")]
+        public void FhirPath_Lex_Literal()
+        {
+            var parser = Lexer.Literal.End();
+
+            SucceedsConstantValueMatch(parser, "'hi there'", "hi there");
+            SucceedsConstantValueMatch(parser, "3", 3);
+            SucceedsConstantValueMatch(parser, "3.14", 3.14m);
+            SucceedsConstantValueMatch(parser, "@2013-12", PartialDateTime.Parse("2013-12"));
+            SucceedsConstantValueMatch(parser, "@T12:23:34Z", Time.Parse("T12:23:34Z"));
+            SucceedsConstantValueMatch(parser, "true", true);
+
+            AssertParser.FailsMatch(parser, "%constant");
+            AssertParser.FailsMatch(parser, "\"quotedstring\"");
+            AssertParser.FailsMatch(parser, "A23identifier");
+        }
+
+        private void SucceedsConstantValueMatch(Parser<IFluentPathValue> parser, string expr, object value)
+        {
+            AssertParser.SucceedsMatch(parser, expr, new ConstantValue(value));
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Const()
         {
-            var parser = Lexer.Const.End();
+            var parser = Lexer.ExternalConstant.End();
 
             SucceedsPrefixString(parser, "%c");
             SucceedsPrefixString(parser, "%const");
-            SucceedsPrefixString(parser, "%0");
-            SucceedsPrefixString(parser, "%0123");
-            SucceedsPrefixString(parser, "%a-1");
-            SucceedsPrefixString(parser, "%a----1");
+            SucceedsPrefixString(parser, "%a1");
+            SucceedsPrefixString(parser, "%a__1");
+            AssertParser.SucceedsMatch(parser, "%\"forbidden-characters-1234\"", "forbidden-characters-1234");
 
+            AssertParser.FailsMatch(parser, "%0");
+            AssertParser.FailsMatch(parser, "%0123");
             AssertParser.FailsMatch(parser, "%");
             AssertParser.FailsMatch(parser, "%%");
             AssertParser.FailsMatch(parser, "%%a");
@@ -89,26 +78,116 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
         [TestMethod, TestCategory("FhirPath")]
+        public void FhirPath_Lex_Identifier()
+        {
+            var parser = Lexer.Identifier.End();
+
+            AssertParser.SucceedsMatch(parser, "A34", "A34");
+            AssertParser.SucceedsMatch(parser, "\"A\uface%$#34\"", "A\uface%$#34");
+            AssertParser.FailsMatch(parser,"34");
+            AssertParser.FailsMatch(parser,"'Hello'");
+            AssertParser.FailsMatch(parser, "@2013");
+            //AssertParser.FailsMatch(parser, "true"); - this is an identifier, parser will only call in right context so no ambiguity
+        }
+
+
+        private void SucceedsPartialDateTime(Parser<PartialDateTime> parser, string s)
+        {
+            AssertParser.SucceedsMatch(parser, s, PartialDateTime.Parse(s.Substring(1)));
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_DateTime()
         {
             var parser = Lexer.DateTime.End();
 
-            AssertParser.SucceedsMatch(parser, "2015-01");
-            AssertParser.SucceedsMatch(parser, "2015-01-02T12:34:00Z");
-            AssertParser.SucceedsMatch(parser, "2015-01-03T12:34:34+02:30");
+            SucceedsPartialDateTime(parser, "@2015-01");
+            SucceedsPartialDateTime(parser, "@2015-01-02T12:34:00Z");
+            SucceedsPartialDateTime(parser, "@2015-01-03T12:34:34+02:30");
+            SucceedsPartialDateTime(parser, "@2015-01-03T12:34:34");
+            AssertParser.FailsMatch(parser, "@2015-32-02T12:34:00Z");
+            AssertParser.FailsMatch(parser, "@2015-01-02T28:34:00Z");
             AssertParser.FailsMatch(parser, "T12:34:34+02:30");
             AssertParser.FailsMatch(parser, "12:34:34+02:30");
-            AssertParser.FailsMatch(parser, "20150103T12:34:34+02:30");
+            AssertParser.FailsMatch(parser, "@T12:34:34+02:30");
+            AssertParser.FailsMatch(parser, "@12:34:34+02:30");
+            AssertParser.FailsMatch(parser, "@20150103T12:34:34+02:30");
+            AssertParser.FailsMatch(parser, "@-2015-01");
+            AssertParser.FailsMatch(parser, "@2015-01-01T23");
         }
+
+        private void SucceedsTime(Parser<Time> parser, string s)
+        {
+            AssertParser.SucceedsMatch(parser, s, Time.Parse(s.Substring(1)));
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void FhirPath_Lex_Time()
+        {
+            var parser = Lexer.Time.End();
+
+            SucceedsTime(parser, "@T12:34:00Z");
+            SucceedsTime(parser, "@T12:34:34+02:30");
+            SucceedsTime(parser, "@T12:34:34");
+
+            AssertParser.FailsMatch(parser, "2001-01-01T12:34:34+02:30");
+            AssertParser.FailsMatch(parser, "@2001-01-01T12:34:34+02:30");
+            AssertParser.FailsMatch(parser, "T12:34:34+02:30");
+            AssertParser.FailsMatch(parser, "12:34:34+02:30");
+            AssertParser.FailsMatch(parser, "@12:34:34+02:30");
+
+            AssertParser.FailsMatch(parser, "@T12:34:34+48:30");
+            AssertParser.FailsMatch(parser, "@T12:35");
+            AssertParser.FailsMatch(parser, "@T12");
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void FhirPath_Lex_Id()
+        {
+            var parser = Lexer.Id.End();
+
+            AssertParser.SucceedsMatch(parser, "a");
+            AssertParser.SucceedsMatch(parser, "_");
+            AssertParser.SucceedsMatch(parser, "__");
+            AssertParser.SucceedsMatch(parser, "Abcdefghijklmnopqrstuvwxyz");
+            AssertParser.SucceedsMatch(parser, "_Abcdef_ghijklmnopqrstuvwxyz_");
+            AssertParser.SucceedsMatch(parser, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            AssertParser.SucceedsMatch(parser, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            AssertParser.SucceedsMatch(parser, "a0123456789");
+            AssertParser.SucceedsMatch(parser, "_a0123456789");
+
+            AssertParser.FailsMatch(parser, "");
+            AssertParser.FailsMatch(parser, "@");
+            AssertParser.FailsMatch(parser, "#");
+            AssertParser.FailsMatch(parser, "%");
+            AssertParser.FailsMatch(parser, "$");
+            AssertParser.FailsMatch(parser, "*");
+            AssertParser.FailsMatch(parser, ".");
+            AssertParser.FailsMatch(parser, "0");
+            AssertParser.FailsMatch(parser, "0123456789");
+            AssertParser.FailsMatch(parser, "2A");
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void FhirPath_Lex_QuotedIdentifier()
+        {
+            var parser = Lexer.QuotedIdentifier.End();
+
+            SucceedsDelimitedString(parser, "\"2a\"");
+            SucceedsDelimitedString(parser, "\"_\"");
+            SucceedsDelimitedString(parser, "\"_Abcdef_ghijklmnopqrstuvwxyz_\"");
+            SucceedsDelimitedString(parser, "\"Hi \uface\"");
+            SucceedsDelimitedString(parser, "\"@#$%^&*().'\"");
+            SucceedsDelimitedString(parser, "\"3.1415\"");
+
+            AssertParser.FailsMatch(parser, "NoQuotes");
+        }
+
 
         [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Unicode()
         {
             var parser = Lexer.Unicode.End();
-
-            //SucceedsPrefixString(parser, "u0000");
-            //SucceedsPrefixString(parser, "u09af");
-            //SucceedsPrefixString(parser, "uffff");
 
             AssertParser.SucceedsMatch(parser, "u0000");
             AssertParser.SucceedsMatch(parser, "u09af");
@@ -132,7 +211,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.SucceedsMatch(parser, @"\""");
             AssertParser.SucceedsMatch(parser, @"\\");
             AssertParser.SucceedsMatch(parser, @"\/");
-            AssertParser.SucceedsMatch(parser, @"\b");
+            //AssertParser.SucceedsMatch(parser, @"\b"); - removed in STU3
             AssertParser.SucceedsMatch(parser, @"\f");
             AssertParser.SucceedsMatch(parser, @"\n");
             AssertParser.SucceedsMatch(parser, @"\r");
@@ -155,15 +234,14 @@ namespace Hl7.Fhir.Tests.FhirPath
             var parser = Lexer.String.End();
 
             SucceedsDelimitedString(parser, @"'single quotes'");
+            SucceedsDelimitedString(parser, @"'""single quotes with doubles""'");
             SucceedsDelimitedString(parser, @"'single \' quotes'");
+            SucceedsDelimitedString(parser, @"'single \"" quotes'");
             SucceedsDelimitedString(parser, @"''");
 
-            SucceedsDelimitedString(parser, @"""double quotes""");
-            SucceedsDelimitedString(parser, @"""double \"" quotes""");
-            SucceedsDelimitedString(parser, @"""""");
+            SucceedsDelimitedString(parser, @"'xxx \u0123 yyyy \\\/\f\n\r\t zzz !@#$%^&*()_-=+[]{}|;:,.<>?`~'");
 
-            SucceedsDelimitedString(parser, @"'xxx \u0123 yyyy \\\/\b\f\n\r\t zzz !@#$%^&*()_-=+[]{}|;:,.<>?`~'");
-
+            AssertParser.FailsMatch(parser, @"""double quotes""");
             AssertParser.FailsMatch(parser, @"no quotes");
             AssertParser.FailsMatch(parser, @"""mixed quotes'");
         }
@@ -187,35 +265,26 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.Fails(parser, "0");
         }
 
-#if false
-        // [WMR] All numbers are parsed as decimal
 
         [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Int()
         {
-            var parser = Lexer.Number.End();
+            var parser = Lexer.IntegerNumber.End();
 
-            AssertParser.SucceedsMatch(parser, "0");
-            for (int i = 1; i < 100; i++)
+            AssertParser.SucceedsMatch(parser, "0", 0);
+            AssertParser.SucceedsMatch(parser, "01", 1);
+
+            for (long i = 1; i < 100; i++)
             {
-                AssertParser.SucceedsMatch(parser, i.ToString());
-                AssertParser.SucceedsMatch(parser, "-" + i.ToString());
+                AssertParser.SucceedsMatch(parser, i.ToString(), i);
+                
             }
-
-            // Very large integers - how to cast to (32-bit) int?
-            // [WMR] Suggestion: match all digits, but validate during conversion to int
-            // AssertParser.SucceedsMatch(parser, "100000000000000000000000000000000");
-            // AssertParser.SucceedsMatch(parser, "999999999999999999999999999999999");
-            // AssertParser.SucceedsMatch(parser, "-100000000000000000000000000000000");
-            // AssertParser.SucceedsMatch(parser, "-999999999999999999999999999999999");
-
-            // FHIR disallows leading zeroes
+            
             AssertParser.FailsMatch(parser, "");
-            AssertParser.FailsMatch(parser, "01");
             AssertParser.FailsMatch(parser, "a0");
-            // AssertParser.FailsMatch(parser, "0.1");
+            AssertParser.FailsMatch(parser, "0.1");
+            AssertParser.FailsMatch(parser, "-3");      // use unary '-' operator to make negative
         }
-#endif
 
         [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Decimal()
@@ -223,43 +292,22 @@ namespace Hl7.Fhir.Tests.FhirPath
             var parser = Lexer.DecimalNumber.End();
 
             AssertParser.SucceedsMatch(parser, "3.4", 3.4m);
+            // FHIR allows leading zeroes since STU3
+            AssertParser.SucceedsMatch(parser, "01.00", 1.00m);
+            AssertParser.SucceedsMatch(parser, "3.1415926535897932384626433", 3.1415926535897932384626433m);
+
+            // Shall not accept integer values
             AssertParser.FailsMatch(parser, "3");
-
-            // TODO: Convert integer values to integer etc.
-
-            // Test positive integer values
-            //for (decimal d = 0; d < 100M; d++)
-            //{
-            //    AssertParser.SucceedsMatch(parser, d.ToString(), d);
-            //}
-
-            //// Test negative integer values
-            //// TODO
-            //for (decimal d = 0; d > -100M; d--)
-            //{
-            //    AssertParser.SucceedsMatch(parser, d.ToString(), d);
-            //}
-
-            //// Test fraction values
-
-            //// Test max value
-            //var max = decimal.MaxValue;
-            //AssertParser.SucceedsMatch(parser, max.ToString(), max);
-            //// TODO: Handle overflow exception, convert to parsing error
-            //AssertParser.FailsMatch(parser, max.ToString() + "0");
 
             // Test invalid values
             AssertParser.FailsMatch(parser, "");
             AssertParser.FailsMatch(parser, "a0");
             AssertParser.FailsMatch(parser, "0d");
             AssertParser.FailsMatch(parser, "0x0");
-
-            // FHIR disallows leading zeroes
-            // TODO
-            AssertParser.FailsMatch(parser, "01");
+            AssertParser.FailsMatch(parser, "0.314+E01");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [TestMethod, TestCategory("FhirPath"), Ignore]
         public void FhirPath_Lex_Logic()
         {
             var parser = Lexer.Logic;
@@ -279,7 +327,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "not");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [TestMethod, TestCategory("FhirPath"), Ignore]
         public void FhirPath_Lex_Comp()
         {
             var parser = Lexer.Comp.End();
@@ -302,41 +350,6 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "=!=");
             AssertParser.FailsMatch(parser, "<<");
             AssertParser.FailsMatch(parser, ">>");
-        }
-
-        [TestMethod, TestCategory("FhirPath")]
-        public void FhirPath_Lex_AxisSpec()
-        {
-            var parser = Lexer.AxisSpec.End();
-
-            AssertParser.SucceedsMatch(parser, "$context", Axis.Context);
-            AssertParser.SucceedsMatch(parser, "**", Axis.Descendants);
-            AssertParser.SucceedsMatch(parser, "*", Axis.Children);
-
-            AssertParser.FailsMatch(parser, "");
-            AssertParser.FailsMatch(parser, "$test");
-            AssertParser.FailsMatch(parser, "$$context");
-            AssertParser.FailsMatch(parser, "$Context");
-            AssertParser.FailsMatch(parser, "$Resource");
-            AssertParser.FailsMatch(parser, "$Parent");
-
-            AssertParser.FailsMatch(parser, "");
-            AssertParser.FailsMatch(parser, "***");
-            AssertParser.FailsMatch(parser, "#");
-            AssertParser.FailsMatch(parser, "abc");
-        }
-
-        [TestMethod, TestCategory("FhirPath")]
-        public void FhirPath_Lex_Recurse()
-        {
-            var parser = Lexer.Recurse.End();
-
-            AssertParser.FailsMatch(parser, "");
-            AssertParser.SucceedsMatch(parser, "*");
-            AssertParser.FailsMatch(parser, "**");
-            AssertParser.FailsMatch(parser, "***");
-            AssertParser.FailsMatch(parser, "#");
-            AssertParser.FailsMatch(parser, "abc");
         }
     }
 }

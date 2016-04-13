@@ -52,6 +52,7 @@
     <Compile Include="FluentPath\Evaluator.cs" />
     <Compile Include="FluentPath\Grammar\Expression.cs" />
     <Compile Include="FluentPath\Grammar\Functions.cs" />
+    <Compile Include="FluentPath\Grammar\Operators.cs" />
     <Compile Include="FluentPath\Grammar\Lexer.cs" />
     <Compile Include="FluentPath\Grammar\Path.cs" />
     <Compile Include="FluentPath\IEvaluationContext.cs" />
@@ -60,7 +61,7 @@
     <Compile Include="FluentPath\IFluentPathValueExtensions.cs" />
     <Compile Include="FluentPath\IFluentPathValueListExtensions.cs" />
     <Compile Include="FluentPath\IFluentPathValueTypeExtensions.cs" />
-    <Compile Include="FluentPath\InfixOperator.cs" />
+    <Compile Include="FluentPath\Operator.cs" />
     <Compile Include="FluentPath\PartialDateTime.cs" />
     <Compile Include="FluentPath\PathExpression.cs" />
     <Compile Include="FluentPath\Time.cs" />
