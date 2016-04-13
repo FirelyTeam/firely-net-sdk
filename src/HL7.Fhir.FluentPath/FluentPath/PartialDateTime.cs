@@ -91,12 +91,23 @@ namespace Hl7.Fhir.FluentPath
 
         public static PartialDateTime Now()
         {
-            return new PartialDateTime { _value = XmlConvert.ToString(DateTimeOffset.Now) };
+            return FromDateTime(DateTimeOffset.Now);
         }
 
         public static PartialDateTime Today()
         {
             return new PartialDateTime { _value = DateTimeOffset.Now.ToString("yyyy-MM-dd") };
         }
+
+        public static PartialDateTime FromDateTime(DateTimeOffset dto)
+        {
+            return new PartialDateTime { _value = XmlConvert.ToString(dto) };
+        }
+
+        public static PartialDateTime FromDateTime(DateTime dt)
+        {
+            return new PartialDateTime { _value = XmlConvert.ToString(dt,XmlDateTimeSerializationMode.RoundtripKind) };
+        }
+
     }
 }

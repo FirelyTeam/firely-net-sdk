@@ -39,6 +39,7 @@
       <HintPath>..\packages\Hl7.Fhir.DSTU2.0.90.4\lib\net45\Hl7.Fhir.DSTU2.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -69,6 +70,7 @@
     <Compile Include="FhirEvaluationContext.cs" />
     <Compile Include="FhirPathEvaluatorTest.cs" />
     <Compile Include="FhirPathLexerTest.cs" />
+    <Compile Include="ISODateTimeTest.cs" />
     <Compile Include="FhirPathTest.cs" />
     <Compile Include="InstanceTree\FhirInstanceTree.cs" />
     <Compile Include="InstanceTree\INodeConversionStrategy.cs" />
