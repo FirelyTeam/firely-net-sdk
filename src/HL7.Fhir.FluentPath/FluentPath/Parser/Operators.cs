@@ -6,15 +6,12 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Support;
 using Sprache;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Xml;
 
-namespace Hl7.Fhir.FluentPath.Grammar
+
+namespace Hl7.Fhir.FluentPath.Parser
 {
     internal partial class Lexer
     {

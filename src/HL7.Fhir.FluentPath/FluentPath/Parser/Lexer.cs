@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Support;
 using Sprache;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace Hl7.Fhir.FluentPath.Grammar
+namespace Hl7.Fhir.FluentPath.Parser
 {
     internal partial class Lexer
     {
@@ -118,21 +117,6 @@ namespace Hl7.Fhir.FluentPath.Grammar
         // BOOL: 'true' | 'false';
         public static readonly Parser<bool> Bool =
             Parse.String("true").XOr(Parse.String("false")).Text().Select(s => Boolean.Parse(s));
-
-        // literal
-        //  : ('true' | 'false')                                    #booleanLiteral
-        //  | STRING                                                #stringLiteral
-        //  | NUMBER                                                #numberLiteral
-        //  | DATETIME                                              #dateTimeLiteral
-        //  | TIME                                                  #timeLiteral
-        //  ;
-        public static readonly Parser<IFluentPathValue> Literal =
-            Lexer.String.Select(v => new ConstantValue(v))
-                .XOr(Lexer.DateTime.Select(v=> new ConstantValue(v)))
-                .XOr(Lexer.Time.Select(v => new ConstantValue(v)))
-                .XOr(Lexer.Bool.Select(v => new ConstantValue(v)))
-                .Or(Lexer.DecimalNumber.Select(v => new ConstantValue(v)))
-                .Or(Lexer.IntegerNumber.Select(v => new ConstantValue(v)));
 
         //qualifiedIdentifier
         //   : identifier ('.' identifier)*

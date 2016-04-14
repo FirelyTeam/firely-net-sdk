@@ -21,7 +21,7 @@ using System.Linq;
 // http://www.codeproject.com/Articles/649989/Monad-like-programming-with-Csharp
 
 
-namespace Hl7.Fhir.FluentPath.Grammar
+namespace Hl7.Fhir.FluentPath.Parser
 {
 
     internal class Path

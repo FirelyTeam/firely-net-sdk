@@ -10,8 +10,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.FluentPath;
 using Sprache;
-using System.Linq;
-using Hl7.Fhir.FluentPath.Grammar;
+using Hl7.Fhir.FluentPath.Parser;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -35,28 +34,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.SucceedsMatch(parser, expr, expr.Substring(1));
         }
 
-        [TestMethod, TestCategory("FhirPath")]
-        public void FhirPath_Lex_Literal()
-        {
-            var parser = Lexer.Literal.End();
-
-            SucceedsConstantValueMatch(parser, "'hi there'", "hi there");
-            SucceedsConstantValueMatch(parser, "3", 3);
-            SucceedsConstantValueMatch(parser, "3.14", 3.14m);
-            SucceedsConstantValueMatch(parser, "@2013-12", PartialDateTime.Parse("2013-12"));
-            SucceedsConstantValueMatch(parser, "@T12:23:34Z", Time.Parse("T12:23:34Z"));
-            SucceedsConstantValueMatch(parser, "true", true);
-
-            AssertParser.FailsMatch(parser, "%constant");
-            AssertParser.FailsMatch(parser, "\"quotedstring\"");
-            AssertParser.FailsMatch(parser, "A23identifier");
-        }
-
-        private void SucceedsConstantValueMatch(Parser<IFluentPathValue> parser, string expr, object value)
-        {
-            AssertParser.SucceedsMatch(parser, expr, new ConstantValue(value));
-        }
-
+   
         [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Const()
         {

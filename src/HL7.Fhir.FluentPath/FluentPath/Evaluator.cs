@@ -71,12 +71,18 @@ namespace Hl7.Fhir.FluentPath
         //}
 
 
-        public static Evaluator TypedValue(object value)
+        public static Evaluator Return(object value)
         {
-            return (_, __) => new[] { new ConstantValue(value) };
+            return (_, __) =>
+            {
+                if (value is IFluentPathValue)
+                    return new[] { (IFluentPathValue)value };
+                else
+                    return new[] { new ConstantValue(value) };
+            };
         }
 
-        public static Evaluator Constant(string name)
+        public static Evaluator ExternalConstant(string name)
         {
             return (_, ctx) => new[] { ctx.ResolveConstant(name) };
         }
@@ -303,7 +309,7 @@ namespace Hl7.Fhir.FluentPath
 
         public static Evaluator Today()
         {
-            return Eval.TypedValue(PartialDateTime.Today());
+            return Eval.Return(PartialDateTime.Today());
         }
 
         public static Evaluator Distinct()
@@ -340,7 +346,7 @@ namespace Hl7.Fhir.FluentPath
 
         public static Evaluator Children(string name)
         {
-            return Children(Eval.TypedValue(name));
+            return Children(Eval.Return(name));
         }
 
 

@@ -6,7 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.FluentPath.Grammar;
+using Hl7.Fhir.FluentPath.Parser;
 using Sprache;
 using System;
 using System.Collections.Concurrent;
@@ -28,7 +28,7 @@ namespace Hl7.Fhir.FluentPath
             if (_cache.ContainsKey(cacheName))
                 return _cache[cacheName]; 
 
-            var compilation = Expression.Expr.End().TryParse(expression);
+            var compilation = Grammar.Expr.End().TryParse(expression);
 
             if (compilation.WasSuccessful)
             {

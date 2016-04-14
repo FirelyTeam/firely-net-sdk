@@ -16,8 +16,8 @@ using Hl7.Fhir.FluentPath;
 using Sprache;
 using System.Diagnostics;
 using Hl7.Fhir.FluentPath.InstanceTree;
-using Hl7.Fhir.FluentPath.Grammar;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.FluentPath.Parser;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpression2()
         {
-            var result = Expression.Expr.TryParse("Patient.deceased[x]");
+            var result = Grammar.Expr.TryParse("Patient.deceased[x]");
 
             if (result.WasSuccessful)
             {

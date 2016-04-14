@@ -9,28 +9,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sprache;
+using HL7.Fhir.FluentPath.FluentPath.Expressions;
 
-namespace Hl7.Fhir.FluentPath.Grammar
+namespace Hl7.Fhir.FluentPath.Parser
 {
-    internal class Expression
+    internal class Grammar
     {
-        // fpconst: STRING |
-        //   '-'? NUMBER |
-        //   BOOL |
-        //   CONST |
-        //   DATETIME;
-        public static readonly Parser<Evaluator> FpConst =
-            Lexer.String.Select(s => Eval.TypedValue(s))
-            .XOr(Lexer.DateTime.Select(dt => Eval.TypedValue(dt)))
-            .Or(Lexer.DecimalNumber.Select(d => Eval.TypedValue(d)))
-            .Or(Lexer.IntegerNumber.Select(n => Eval.TypedValue(n)))
-            .Or(Lexer.Bool.Select(b => Eval.TypedValue(b)))
-            .XOr(Lexer.ExternalConstant.Select(s => Eval.Constant(s)));
+        // literal
+        //  : ('true' | 'false')                                    #booleanLiteral
+        //  | STRING                                                #stringLiteral
+        //  | NUMBER                                                #numberLiteral
+        //  | DATETIME                                              #dateTimeLiteral
+        //  | TIME                                                  #timeLiteral
+        //  ;
+        public static readonly Parser<ConstantExpression> Literal =
+            Lexer.String.Select(v => new ConstantExpression(v, FluentPathType.String))
+                .XOr(Lexer.DateTime.Select(v => new ConstantExpression(v, FluentPathType.DateTime)))
+                .XOr(Lexer.Time.Select(v => new ConstantExpression(v, FluentPathType.Time)))
+                .XOr(Lexer.Bool.Select(v => new ConstantExpression(v, FluentPathType.Bool)))
+                .Or(Lexer.DecimalNumber.Select(v => new ConstantExpression(v, FluentPathType.Decimal)))
+                .Or(Lexer.IntegerNumber.Select(v => new ConstantExpression(v, FluentPathType.Integer)));
 
-        // term:
-        //   '(' expr ')' |
-        //   predicate |
-        //   fpconst;
+        // term
+        //      : invocation                                            #invocationTerm
+        //      | literal                                               #literalTerm
+        //      | externalConstant                                      #externalConstantTerm
+        //      | '(' expression ')'                                    #parenthesizedTerm
+        //      ;
         public static readonly Parser<Evaluator> BracketExpr =
             (from lparen in Parse.Char('(')
              from expr in Parse.Ref(() => Expr)
@@ -38,13 +43,17 @@ namespace Hl7.Fhir.FluentPath.Grammar
              select expr)
             .Named("BracketExpr");
 
+        public static readonly Parser<Evaluator> EmptyList =
+            Parse.Char('{').Token().Then(c => Parse.Char('}').Token()).Select(v => Eval.Return(FhirValueList.Create()));
+
         public static readonly Parser<Evaluator> Term =
-            FpConst
+            Literal.Select(v => Eval.Return(v))
             .Or(Path.Invoc)
+            .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
             .XOr(BracketExpr)
+            .XOr(EmptyList)
             .Token()
             .Named("Term");
-
 
         //expr:
         //  term '.' invoc |

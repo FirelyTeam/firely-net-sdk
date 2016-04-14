@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.FluentPath.Grammar
+namespace Hl7.Fhir.FluentPath.Parser
 {
     internal static class Functions
     {
@@ -15,7 +15,7 @@ namespace Hl7.Fhir.FluentPath.Grammar
             return
                 from n in Parse.String(name).Token()
                 from lparen in Parse.Char('(')
-                from paramList in Parse.Ref(() => Expression.Expr.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
+                from paramList in Parse.Ref(() => Grammar.Expr.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
                 from rparen in Parse.Char(')')
                 select paramList.GetOrElse(Enumerable.Empty<Evaluator>());
         }
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.FluentPath.Grammar
         public static readonly Parser<Evaluator> OtherFunction =
             from name in Lexer.Id.Token()
             from lparen in Parse.Char('(')
-            from paramList in Parse.Ref(() => Expression.Expr.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
+            from paramList in Parse.Ref(() => Grammar.Expr.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
             from rparen in Parse.Char(')')
             select Eval.Function(name, paramList.GetOrElse(Enumerable.Empty<Evaluator>()));
 

@@ -50,11 +50,11 @@
   <ItemGroup>
     <Compile Include="FluentPath\BaseEvaluationContext.cs" />
     <Compile Include="FluentPath\Evaluator.cs" />
-    <Compile Include="FluentPath\Grammar\Expression.cs" />
-    <Compile Include="FluentPath\Grammar\Functions.cs" />
-    <Compile Include="FluentPath\Grammar\Operators.cs" />
-    <Compile Include="FluentPath\Grammar\Lexer.cs" />
-    <Compile Include="FluentPath\Grammar\Path.cs" />
+    <Compile Include="FluentPath\Parser\Grammar.cs" />
+    <Compile Include="FluentPath\Parser\Functions.cs" />
+    <Compile Include="FluentPath\Parser\Operators.cs" />
+    <Compile Include="FluentPath\Parser\Lexer.cs" />
+    <Compile Include="FluentPath\Parser\Path.cs" />
     <Compile Include="FluentPath\IEvaluationContext.cs" />
     <Compile Include="FluentPath\IFluentPathElementExtensions.cs" />
     <Compile Include="FluentPath\IFluentPathValue.cs" />
@@ -62,6 +62,7 @@
     <Compile Include="FluentPath\IFluentPathValueListExtensions.cs" />
     <Compile Include="FluentPath\IFluentPathValueTypeExtensions.cs" />
     <Compile Include="FluentPath\Operator.cs" />
+    <Compile Include="FluentPath\Expressions\ExpressionNode.cs" />
     <Compile Include="FluentPath\PartialDateTime.cs" />
     <Compile Include="FluentPath\PathExpression.cs" />
     <Compile Include="FluentPath\Time.cs" />
