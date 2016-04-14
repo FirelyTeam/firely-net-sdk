@@ -45,9 +45,16 @@ namespace Hl7.Fhir.FluentPath
         {
             return (string)me.Value;
         }
+
         public static PartialDateTime AsDateTime(this IFluentPathValue me)
         {
             return (PartialDateTime)me.Value;
+        }
+
+
+        public static Time AsTime(this IFluentPathValue me)
+        {
+            return (Time)me.Value;
         }
 
         /// <summary>
