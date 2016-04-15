@@ -16,8 +16,9 @@ ISSUES:
 - Difference with Grahame's examples
 -- xs:date instead of xs:dateTime for Observation.effectiveDateTime?
 -- why is the Observation.component array handled differently from Observation.component.code?
+-- N.B. See pasted code from Grahame in TurtleFhirWriter!
 - rdfdotnet related
--- datatype are surraounded by lt;gt? why? <xsd:dateTime>
+-- datatype are surrounded by lt;gt? why? <xsd:dateTime>
 -- xsd namespace instead of xs namespace?
 
 TODO:
