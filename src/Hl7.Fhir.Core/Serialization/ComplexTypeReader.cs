@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Serialization
             else
             {
                 if (mapping.NativeType != existing.GetType())
-                    throw Error.Argument("existing", "Existing instance is of type {0}, but data indicates resource is a {1}", existing.GetType().Name, mapping.NativeType.Name);
+                    throw Error.Argument("existing", "Existing instance is of type {0}, but data indicates resource is a {1}".FormatWith(existing.GetType().Name, mapping.NativeType.Name));
             }
 
             IEnumerable<Tuple<string, IFhirReader>> members = null;
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Serialization
                 else
                 {
                     if (SerializationConfig.AcceptUnknownMembers == false)
-                        throw Error.Format("Encountered unknown member '{0}' while de-serializing", _current, memberName);
+                        throw Error.Format("Encountered unknown member '{0}' while de-serializing".FormatWith(memberName), _current);
                     else
                         Message.Info("Skipping unknown member " + memberName);
                 }

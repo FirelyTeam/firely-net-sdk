@@ -27,8 +27,8 @@ namespace Hl7.Fhir.Tests
 
         public static void AreSame(string expected, string actual)
         {
-            JObject exp = FhirParser.JObjectFromJson(expected);
-            JObject act = FhirParser.JObjectFromJson(actual);
+            JObject exp = SerializationUtil.JObjectFromReader(SerializationUtil.JsonReaderFromJsonText(expected));
+            JObject act = SerializationUtil.JObjectFromReader(SerializationUtil.JsonReaderFromJsonText(actual));
 
             AreSame(exp, act);
         }

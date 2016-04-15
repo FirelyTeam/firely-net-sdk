@@ -23,25 +23,27 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugPCL45|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\Portable45\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Portable45\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;PORTABLE45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>3016, 3015, 1591</NoWarn>
+    <NoWarn>3016,1591</NoWarn>
     <DocumentationFile>bin\Debug\Portable45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleasePCL45|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Portable45\</OutputPath>
-    <DefineConstants>RELEASE;TRACE;PORTABLE45</DefineConstants>
+    <BaseIntermediateOutputPath>obj\Release\Portable45\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;PORTABLE45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>3016, 3015</NoWarn>
+    <NoWarn>3016,1591</NoWarn>
     <DocumentationFile>bin\Release\Portable45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
@@ -52,6 +54,9 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="dotNetRDF">
+      <HintPath>..\packages\dotNetRDF.1.0.9.3683\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\dotNetRDF.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -558,6 +563,7 @@
     <Compile Include="Model\PositiveInt.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
     <Compile Include="Model\UnsignedInt.cs" />
+    <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />
     <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\FhirClientSearch.cs" />
@@ -605,6 +611,9 @@
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
+    <Compile Include="Serialization\TurtleFhirReader.cs" />
+    <Compile Include="Serialization\TurtleFhirWriter.cs" />
+    <Compile Include="Serialization\TurtleReusableNodes.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />

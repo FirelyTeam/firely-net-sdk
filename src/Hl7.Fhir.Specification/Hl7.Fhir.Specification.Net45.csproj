@@ -15,12 +15,13 @@
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugNet45|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\Net45\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseIntermediateOutputPath>obj\Debug\Net45\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;DEBUG;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
@@ -28,15 +29,17 @@
     <Prefer32Bit>false</Prefer32Bit>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNet45|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Net45\</OutputPath>
-    <DefineConstants>TRACE;RELEASE</DefineConstants>
+    <BaseIntermediateOutputPath>obj\Release\Net45\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Net45\Hl7.Fhir.DSTU2.Specification.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -67,6 +70,7 @@
     <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs">
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
     <Compile Include="Specification\Snapshot\ElementMatcher.cs" />
     <Compile Include="Specification\Snapshot\ElementDefnMerger.cs" />
@@ -91,9 +95,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj">
+    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Net45.csproj">
       <Project>{92cc9186-0a21-4e06-b11f-907584fbfd81}</Project>
-      <Name>Hl7.Fhir.Core</Name>
+      <Name>Hl7.Fhir.Core.Net45</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

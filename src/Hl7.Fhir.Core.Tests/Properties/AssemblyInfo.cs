@@ -1,6 +1,5 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -10,20 +9,15 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("Hl7.Fhir.Core.Tests")]
-[assembly: AssemblyCopyright("Copyright © Ewout Kramer and collaborators 2015")]
+[assembly: AssemblyCopyright("Copyright � Ewout Kramer and collaborators 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
 [assembly: ComVisible(false)]
-//[assembly: System.CLSCompliant(true)]
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.90.4.*")]
+
+[assembly: AssemblyVersion("1.0.*")]   // Stick test version to always 1.0, i.e. "pseudo-strong naming"
+
+// Sign this for trusted friendship to tested Assembly. See: https://msdn.microsoft.com/en-us/library/bb385180.aspx
+#if SIGNED
+[assembly: AssemblyKeyFileAttribute("..\\FhirNetApi.snk")]
+#endif

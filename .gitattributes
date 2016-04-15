@@ -6,7 +6,9 @@
 *.jpg binary
 *.png binary
 *.snk binary
+*.snk.enc binary
 *.zip binary
+*.exe binary
 
 *.ascx text
 *.cd text

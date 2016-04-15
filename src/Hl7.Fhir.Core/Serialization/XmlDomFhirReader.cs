@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Serialization
                 if (attr.Name.NamespaceName == "")
                     result.Add(Tuple.Create(attr.Name.LocalName, (IFhirReader)new XmlDomFhirReader(attr)));
                 else
-                    throw Error.Format("Encountered unsupported attribute {0}", this, attr.Name);
+                    throw Error.Format("Encountered unsupported attribute {0}".FormatWith(attr.Name), this);
             }
                 
             foreach(var node in rootElem.Nodes())
@@ -124,14 +124,15 @@ namespace Hl7.Fhir.Serialization
                             (IFhirReader)new XmlDomFhirReader(buildDivXText(elem))));
 
                     else
-                        throw Error.Format("Encountered element '{0}' from unsupported namespace '{1}'", this, elem.Name.LocalName, elem.Name.NamespaceName);
+                        throw Error.Format("Encountered element '{0}' from unsupported namespace '{1}'"
+                            .FormatWith(elem.Name.LocalName, elem.Name.NamespaceName), this);
                 }
                 else if(node is XComment)
                 {
                     result.Add(Tuple.Create("fhir_comments", (IFhirReader)new XmlDomFhirReader(node)));
                 }
                 else
-                    throw Error.Format("Encountered unexpected element member of type {0}", this, node.GetType().Name);
+                    throw Error.Format("Encountered unexpected element member of type {0}".FormatWith(node.GetType().Name), this);
             }
 
             return result;           
@@ -165,7 +166,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static IPostitionInfo GetLineInfo(XObject obj)
+        public static IPositionInfo GetLineInfo(XObject obj)
         {
             return new XmlDomFhirReader(obj);
         }

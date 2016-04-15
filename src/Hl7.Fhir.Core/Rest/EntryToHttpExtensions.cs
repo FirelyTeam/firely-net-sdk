@@ -65,8 +65,13 @@ namespace Hl7.Fhir.Rest
                 request.Headers["Prefer"] = bodyPreference == Prefer.ReturnMinimal ? "return=minimal" : "return=representation";
             }
 
-            if (entry.Resource != null) setBodyAndContentType(request, entry.Resource, format, out body);
-
+            if (entry.Resource != null)
+                setBodyAndContentType(request, entry.Resource, format, out body);
+#if !PORTABLE45
+            // PCL doesn't support setting the length (and in this case will be empty anyway)
+            else
+                request.ContentLength = 0;
+#endif
             return request;
         }
 

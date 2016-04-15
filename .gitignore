@@ -7,18 +7,14 @@
 *.sln.docstates
 
 # Build results
-
 [Dd]ebug/
 [Rr]elease/
 x64/
-build/
 [Bb]in/
 [Oo]bj/
 packages/
 *.ide
-
-# Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
-!packages/*/build/
+working/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -165,3 +161,4 @@ src/Hl7.Fhir.Model/EwoutFhirNetApi.snk
 *.snk
 sonar-project.properties
 src/.vs/
+build/runbuild.txt

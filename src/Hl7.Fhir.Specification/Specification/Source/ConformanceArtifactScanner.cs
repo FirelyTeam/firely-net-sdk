@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Specification.Source
         // and yield the feed entries, so only one entry is in memory at a time
         internal IEnumerable<XElement> StreamResources()
         {
-            var reader = FhirParser.XmlReaderFromStream(_input);
+            var reader = SerializationUtil.XmlReaderFromStream(_input);
 
             var root = getRootName(reader);
 

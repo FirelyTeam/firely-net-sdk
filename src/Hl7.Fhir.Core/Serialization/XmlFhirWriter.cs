@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Serialization
                 xw.WriteString(valueAsString);
             else if (xmlFormatHint == XmlSerializationHint.XhtmlElement)
             {
-                var sanitized = FhirParser.SanitizeXml(valueAsString);
+                var sanitized = SerializationUtil.SanitizeXml(valueAsString);
                 XElement xe = XElement.Parse(sanitized);
                 xe.Name = XmlNs.XHTMLNS + xe.Name.LocalName;
                     

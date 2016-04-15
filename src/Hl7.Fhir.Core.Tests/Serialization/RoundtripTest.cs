@@ -31,6 +31,7 @@ namespace Hl7.Fhir.Tests.Serialization
 #endif
     {
         [TestMethod]
+        [TestCategory("LongRunner")]
         public void FullRoundtripOfAllExamples()
         {
             string examplesXml = @"TestData\examples.zip";
