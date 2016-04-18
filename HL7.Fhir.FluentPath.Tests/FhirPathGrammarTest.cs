@@ -21,25 +21,67 @@ namespace Hl7.Fhir.Tests.FhirPath
     {
 
         [TestMethod, TestCategory("FhirPath")]
-        public void FhirPath_Lex_Literal()
+        public void FhirPath_Gramm_Literal()
         {
             var parser = Grammar.Literal.End();
 
-            SucceedsConstantValueMatch(parser, "'hi there'", "hi there");
-            SucceedsConstantValueMatch(parser, "3", 3L);
-            SucceedsConstantValueMatch(parser, "3.14", 3.14m);
-            SucceedsConstantValueMatch(parser, "@2013-12", PartialDateTime.Parse("2013-12"));
-            SucceedsConstantValueMatch(parser, "@T12:23:34Z", Time.Parse("T12:23:34Z"));
-            SucceedsConstantValueMatch(parser, "true", true);
+            AssertParser.SucceedsMatch(parser, "'hi there'", new ConstantExpression("hi there", FluentPathType.String));
+            AssertParser.SucceedsMatch(parser, "3", new ConstantExpression(3L, FluentPathType.Integer));
+            AssertParser.SucceedsMatch(parser, "3.14", new ConstantExpression(3.14m, FluentPathType.Decimal));
+            AssertParser.SucceedsMatch(parser, "@2013-12", new ConstantExpression(PartialDateTime.Parse("2013-12"), FluentPathType.DateTime));
+            AssertParser.SucceedsMatch(parser, "@T12:23:34Z", new ConstantExpression(Time.Parse("T12:23:34Z"), FluentPathType.Time));
+            AssertParser.SucceedsMatch(parser, "true", new ConstantExpression(true, FluentPathType.Bool));
 
             AssertParser.FailsMatch(parser, "%constant");
             AssertParser.FailsMatch(parser, "\"quotedstring\"");
             AssertParser.FailsMatch(parser, "A23identifier");
         }
 
-        private void SucceedsConstantValueMatch(Parser<ConstantExpression> parser, string expr, object value)
+        [TestMethod, TestCategory("FhirPath")]
+        public void FhirPath_Gramm_Invocation()
         {
-            AssertParser.SucceedsWith(parser, expr, v =>  Assert.AreEqual(v.Value, value));
+            var parser = Grammar.Invocation.End();
+
+            AssertParser.SucceedsMatch(parser, "childname", new ChildExpression("childname"));
+            AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);
+            AssertParser.SucceedsMatch(parser, "doSomething()", new FunctionCallExpression("doSomething", FluentPathType.Any));
+            AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14, 3, $this, somethingElse(true))", new FunctionCallExpression("doSomething", FluentPathType.Any,
+                        new ConstantExpression("hi", FluentPathType.String),
+                        new ConstantExpression(3.14m, FluentPathType.Decimal),
+                        new ConstantExpression(3L, FluentPathType.Integer),
+                        AxisExpression.This,
+                        new FunctionCallExpression("somethingElse", FluentPathType.Any, new ConstantExpression(true, FluentPathType.Bool))));
+
+            AssertParser.FailsMatch(parser, "$that");
+            AssertParser.FailsMatch(parser, "doSomething(");
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void FhirPath_Gramm_Term()
+        {
+            var parser = Grammar.Term.End();
+
+            AssertParser.SucceedsMatch(parser, "childname", new ChildExpression("childname"));
+            AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);
+            AssertParser.SucceedsMatch(parser, "doSomething()", new FunctionCallExpression("doSomething", FluentPathType.Any));
+            AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14)", new FunctionCallExpression("doSomething", FluentPathType.Any,
+                        new ConstantExpression("hi", FluentPathType.String), new ConstantExpression(3.14m, FluentPathType.Decimal)));
+            AssertParser.SucceedsMatch(parser, "%external", new ExternalConstantExpression("external"));
+            AssertParser.SucceedsMatch(parser, "@2013-12", new ConstantExpression(PartialDateTime.Parse("2013-12"), FluentPathType.DateTime));
+            AssertParser.SucceedsMatch(parser, "3", new ConstantExpression(3L, FluentPathType.Integer));
+            AssertParser.SucceedsMatch(parser, "true", new ConstantExpression(true, FluentPathType.Bool));
+            AssertParser.SucceedsMatch(parser, "(3)", new ConstantExpression(3L, FluentPathType.Integer));
+            AssertParser.SucceedsMatch(parser, "{}", NewNodeListInitExpression.Empty);
+        }
+
+        private void SucceedsConstantValueMatch(Parser<ConstantExpression> parser, string expr, object value, FluentPathType expected)
+        {
+            AssertParser.SucceedsWith(parser, expr,
+                    v =>
+                        {
+                            Assert.AreEqual(v.Value, value);
+                            Assert.AreEqual(v.ExpressionType, expected);
+                        });
         }
 
     }

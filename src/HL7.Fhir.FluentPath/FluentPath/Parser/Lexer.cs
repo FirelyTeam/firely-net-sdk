@@ -123,5 +123,8 @@ namespace Hl7.Fhir.FluentPath.Parser
         //   ;
         public static readonly Parser<string> QualifiedIdentifier =
             Parse.ChainOperator(Parse.Char('.'), Identifier, (op, a, b) => a + "." + b);
+
+        public static readonly Parser<string> Axis =
+            Parse.Char('$').Then(q => Parse.String("this")).Text().Select(v => v);
     }
 }

@@ -30,26 +30,35 @@ namespace Hl7.Fhir.FluentPath.Parser
                 .Or(Lexer.DecimalNumber.Select(v => new ConstantExpression(v, FluentPathType.Decimal)))
                 .Or(Lexer.IntegerNumber.Select(v => new ConstantExpression(v, FluentPathType.Integer)));
 
-        // term
-        //      : invocation                                            #invocationTerm
-        //      | literal                                               #literalTerm
-        //      | externalConstant                                      #externalConstantTerm
-        //      | '(' expression ')'                                    #parenthesizedTerm
-        //      ;
-        public static readonly Parser<Evaluator> BracketExpr =
+
+        //term
+        //  : invocation                                            #invocationTerm
+        //  | literal                                               #literalTerm
+        //  | externalConstant                                      #externalConstantTerm
+        //  | '(' expression ')'                                    #parenthesizedTerm
+        //  | '{' '}'                                               #nullLiteral
+        //  ;
+        public static readonly Parser<Expression> BracketExpr =
             (from lparen in Parse.Char('(')
              from expr in Parse.Ref(() => Expr)
              from rparen in Parse.Char(')')
              select expr)
             .Named("BracketExpr");
 
-        public static readonly Parser<Evaluator> EmptyList =
-            Parse.Char('{').Token().Then(c => Parse.Char('}').Token()).Select(v => Eval.Return(FhirValueList.Create()));
+        public static readonly Parser<Expression> EmptyList =
+            Parse.Char('{').Token().Then(c => Parse.Char('}').Token())
+                    .Select(v => NewNodeListInitExpression.Empty);
 
-        public static readonly Parser<Evaluator> Term =
-            Literal.Select(v => Eval.Return(v))
-            .Or(Path.Invoc)
-            .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
+        public static readonly Parser<Expression> Invocation = 
+                Functions.Function
+                .Or(Lexer.Identifier.Select(i => new ChildExpression(i)))
+                .XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
+                .Token();
+
+        public static readonly Parser<Expression> Term =
+            Literal
+            .Or(Invocation)
+            .XOr(Lexer.ExternalConstant.Select(n => (Expression)new ExternalConstantExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
             .XOr(BracketExpr)
             .XOr(EmptyList)
             .Token()
@@ -62,29 +71,31 @@ namespace Hl7.Fhir.FluentPath.Parser
         //  expr ('|' | '&') expr |
         //  expr COMP expr |
         //  expr LOGIC expr;
-        public static readonly Parser<Evaluator> InvocExpr =
-            from term in Term
-            from invoc in 
-                (from firstOp in Parse.Char('.')
-                 from invocs in Parse.ChainOperator(Parse.Char('.'), Path.Invoc, (op, left, right) => left.Then(right))
-                 select invocs).Optional()
-            select invoc.IsEmpty ? term : term.Then(invoc.Get());
+        //public static readonly Parser<Evaluator> InvocExpr =
+        //    from term in Term
+        //    from invoc in 
+        //        (from firstOp in Parse.Char('.')
+        //         from invocs in Parse.ChainOperator(Parse.Char('.'), Path.Invoc, (op, left, right) => left.Then(right))
+        //         select invocs).Optional()
+        //    select invoc.IsEmpty ? term : term.Then(invoc.Get());
 
-        public static readonly Parser<Evaluator> MulExpr =
-          Parse.ChainOperator(Lexer.Mul.Or(Lexer.Div), InvocExpr, (op, left, right) => left.Infix(op, right));
+        //public static readonly Parser<Evaluator> MulExpr =
+        //  Parse.ChainOperator(Lexer.Mul.Or(Lexer.Div), InvocExpr, (op, left, right) => left.Infix(op, right));
 
-        public static readonly Parser<Evaluator> AddExpr =
-            Parse.ChainOperator(Lexer.Add.Or(Lexer.Sub), MulExpr, (op, left, right) => left.Infix(op, right));
+        //public static readonly Parser<Evaluator> AddExpr =
+        //    Parse.ChainOperator(Lexer.Add.Or(Lexer.Sub), MulExpr, (op, left, right) => left.Infix(op, right));
 
-        public static readonly Parser<Evaluator> JoinExpr =
-            Parse.ChainOperator(Lexer.Union, AddExpr, (op, left, right) => left.Infix(op, right));
+        //public static readonly Parser<Evaluator> JoinExpr =
+        //    Parse.ChainOperator(Lexer.Union, AddExpr, (op, left, right) => left.Infix(op, right));
 
-        public static readonly Parser<Evaluator> CompExpr =
-            Parse.ChainOperator(Lexer.Comp, JoinExpr, (op, left, right) => left.Infix(op, right));
+        //public static readonly Parser<Evaluator> CompExpr =
+        //    Parse.ChainOperator(Lexer.Comp, JoinExpr, (op, left, right) => left.Infix(op, right));
 
-        public static readonly Parser<Evaluator> LogicExpr =
-            Parse.ChainOperator(Lexer.Logic, CompExpr, (op, left, right) => left.Infix(op, right));
+        //public static readonly Parser<Evaluator> LogicExpr =
+        //    Parse.ChainOperator(Lexer.Logic, CompExpr, (op, left, right) => left.Infix(op, right));
 
-        public static readonly Parser<Evaluator> Expr = LogicExpr;    
+        //public static readonly Parser<Evaluator> Expr = LogicExpr;
+
+        public static readonly Parser<Expression> Expr = Term;
     }
 }

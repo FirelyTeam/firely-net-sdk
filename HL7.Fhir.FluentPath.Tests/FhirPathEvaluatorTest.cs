@@ -10,14 +10,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.FluentPath;
-using Sprache;
 using System.Diagnostics;
 using Hl7.Fhir.FluentPath.InstanceTree;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.FluentPath.Parser;
+using HL7.Fhir.FluentPath.FluentPath;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -35,6 +32,15 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
             tree = TreeConstructor.FromXml(tpXml);
+        }
+
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestTreeVisualizerVisitor()
+        {
+            var expr = PathExpression.Parse("doSomething('ha!', 4, {}, $this, somethingElse(true))");
+            var result = expr.Dump();
+            Debug.WriteLine(result);
         }
 
         [TestMethod, TestCategory("FhirPath")]
@@ -137,19 +143,19 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpression2()
         {
-            var result = Grammar.Expr.TryParse("Patient.deceased[x]");
+            //var result = Grammar.Expr.TryParse("Patient.deceased[x]");
 
-            if (result.WasSuccessful)
-            {
-                var evaluator = result.Value;
-                var resultNodes = evaluator.Select(tree);
-                Assert.AreEqual(1, resultNodes.Count());
-            }
-            else
-            {
-                Debug.WriteLine("Expectations: " + String.Join(",", result.Expectations));
-                Assert.Fail(result.ToString());
-            }
+            //if (result.WasSuccessful)
+            //{
+            //    var evaluator = result.Value;
+            //    var resultNodes = evaluator.Select(tree);
+            //    Assert.AreEqual(1, resultNodes.Count());
+            //}
+            //else
+            //{
+            //    Debug.WriteLine("Expectations: " + String.Join(",", result.Expectations));
+            //    Assert.Fail(result.ToString());
+            //}
         }
 
     }

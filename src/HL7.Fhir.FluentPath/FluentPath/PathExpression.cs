@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.FluentPath.Parser;
+using HL7.Fhir.FluentPath.FluentPath.Expressions;
 using Sprache;
 using System;
 using System.Collections.Concurrent;
@@ -21,19 +22,19 @@ namespace Hl7.Fhir.FluentPath
     {
         private static ConcurrentDictionary<string, Evaluator> _cache = new ConcurrentDictionary<string, Evaluator>();
 
-        public static Evaluator Compile(string expression)
+        public static Expression Parse(string expression)
         {
-            var cacheName = expression.Replace(" ", "");
+            // TODO: Move caching to evaluation
+            //var cacheName = expression.Replace(" ", "");
 
-            if (_cache.ContainsKey(cacheName))
-                return _cache[cacheName]; 
+            //if (_cache.ContainsKey(cacheName))
+            //    return _cache[cacheName]; 
 
             var compilation = Grammar.Expr.End().TryParse(expression);
 
             if (compilation.WasSuccessful)
             {
-                _cache.TryAdd(cacheName, compilation.Value);
-//                if(_cache.Count)
+            //    _cache.TryAdd(cacheName, compilation.Value);
                 return compilation.Value;
             }
             else
@@ -44,38 +45,44 @@ namespace Hl7.Fhir.FluentPath
 
         public static IEnumerable<T> Select<T>(string expression, T instance, IEvaluationContext context) where T : IFluentPathValue
         {
-            var evaluator = Compile(expression);
-            return evaluator(FhirValueList.Create(instance), context).Select(v => (T)v);
+            var evaluator = Parse(expression);
+            throw new NotImplementedException();
+            //return evaluator(FhirValueList.Create(instance), context).Select(v => (T)v);
         }
 
         public static IEnumerable<T> Select<T>(string expression, T instance) where T: IFluentPathValue
         {
-            var evaluator = Compile(expression);
-            return evaluator(FhirValueList.Create(instance), new BaseEvaluationContext()).Select(v => (T)v);
+            var evaluator = Parse(expression);
+            throw new NotImplementedException();
+            //return evaluator(FhirValueList.Create(instance), new BaseEvaluationContext()).Select(v => (T)v);
         }
 
         public static object Scalar(string expression, IFluentPathValue instance, IEvaluationContext context)
         {
-            var evaluator = Compile(expression);
-            return evaluator.Scalar(instance, context);
+            var evaluator = Parse(expression);
+            throw new NotImplementedException();
+            //return evaluator.Scalar(instance, context);
         }
 
         public static object Scalar(string expression, IFluentPathValue instance)
         {
-            var evaluator = Compile(expression);
-            return evaluator.Scalar(instance, new BaseEvaluationContext());
+            var evaluator = Parse(expression);
+            throw new NotImplementedException();
+            //return evaluator.Scalar(instance, new BaseEvaluationContext());
         }
 
         public static bool IsTrue(string expression, IFluentPathValue instance, IEvaluationContext context)
         {
-            var evaluator = Compile(expression);
-            return evaluator.Predicate(instance, context);
+            var evaluator = Parse(expression);
+            throw new NotImplementedException();
+            //return evaluator.Predicate(instance, context);
         }
 
         public static bool IsTrue(string expression, IFluentPathValue instance)
         {
-            var evaluator = Compile(expression);
-            return evaluator.Predicate(instance, new BaseEvaluationContext());
+            var evaluator = Parse(expression);
+            throw new NotImplementedException();
+            //return evaluator.Predicate(instance, new BaseEvaluationContext());
         }
 
     }

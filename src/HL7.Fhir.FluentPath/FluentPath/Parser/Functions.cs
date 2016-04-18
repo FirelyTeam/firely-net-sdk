@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Support;
+using HL7.Fhir.FluentPath.FluentPath.Expressions;
 using Sprache;
 using System;
 using System.Collections.Generic;
@@ -10,29 +11,41 @@ namespace Hl7.Fhir.FluentPath.Parser
 {
     internal static class Functions
     {
-        internal static Parser<IEnumerable<Evaluator>> createFunctionParser(string name)
-        {
-            return
-                from n in Parse.String(name).Token()
+        public static readonly Parser<Expression> Function =
+                from n in Lexer.Identifier.Select(name => name)
                 from lparen in Parse.Char('(')
                 from paramList in Parse.Ref(() => Grammar.Expr.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
                 from rparen in Parse.Char(')')
-                select paramList.GetOrElse(Enumerable.Empty<Evaluator>());
-        }
+                select new FunctionCallExpression(n, FluentPathType.Any, paramList.GetOrElse(Enumerable.Empty<Expression>()));
+
+
+        //internal static Parser<IEnumerable<Evaluator>> createFunctionParser(string name)
+        //{
+        //    return
+        //        from n in Parse.String(name).Token()
+        //        from lparen in Parse.Char('(')
+        //        from paramList in Parse.Ref(() => Grammar.Expr.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
+        //        from rparen in Parse.Char(')')
+        //        select paramList.GetOrElse(Enumerable.Empty<Evaluator>());
+        //}
 
         internal static Parser<Evaluator> CreateFunctionParser(string name, Func<Evaluator> func)
         {
-            return createFunctionParser(name).Select(p => invoke(func, p, name));
+            return null;
+         //   return createFunctionParser(name).Select(p => invoke(func, p, name));
         }
 
         internal static Parser<Evaluator> CreateFunctionParser(string name, string paramName, Func<Evaluator,Evaluator> func, bool optional=false)
         {
-            return createFunctionParser(name).Select(p => invoke(func, p, name, paramName, optional));
+            return null;
+            // return createFunctionParser(name).Select(p => invoke(func, p, name, paramName, optional));
         }
 
         internal static Parser<Evaluator> CreateFunctionParser(string name, string paramName1, string paramName2, Func<Evaluator, Evaluator, Evaluator> func, int numOptional=0)
         {
-            return createFunctionParser(name).Select(p => invoke(func, p, name, paramName1, paramName2, numOptional));
+            return null;
+
+            // return createFunctionParser(name).Select(p => invoke(func, p, name, paramName1, paramName2, numOptional));
         }
 
         internal static Evaluator invoke(Func<Evaluator> func, IEnumerable<Evaluator> paramList, string name)
@@ -95,19 +108,19 @@ namespace Hl7.Fhir.FluentPath.Parser
 
         // function: ID '(' param_list? ')';
         // param_list: expr(',' expr)*;
-        public static readonly Parser<Evaluator> OtherFunction =
-            from name in Lexer.Id.Token()
-            from lparen in Parse.Char('(')
-            from paramList in Parse.Ref(() => Grammar.Expr.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
-            from rparen in Parse.Char(')')
-            select Eval.Function(name, paramList.GetOrElse(Enumerable.Empty<Evaluator>()));
+        //public static readonly Parser<Evaluator> OtherFunction =
+        //    from name in Lexer.Id.Token()
+        //    from lparen in Parse.Char('(')
+        //    from paramList in Parse.Ref(() => Grammar.Expr.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
+        //    from rparen in Parse.Char(')')
+        //    select Eval.Function(name, paramList.GetOrElse(Enumerable.Empty<Evaluator>()));
 
 
-        public static readonly Parser<Evaluator> Function = Not.Or(Empty).Or(Where).Or(All).Or(Any).Or(Item)
-                        .Or(First).Or(Last).Or(Tail).Or(Skip).Or(Take).Or(Count).Or(AsInteger).Or(StartsWith)
-                        //.Or(Log).Or(Resolve).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension)
-                        .Or(Log).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension)
-                        .Or(Substring).Or(Select).Or(Today)
-                        .Or(OtherFunction);
+        //public static readonly Parser<Evaluator> Function = Not.Or(Empty).Or(Where).Or(All).Or(Any).Or(Item)
+        //                .Or(First).Or(Last).Or(Tail).Or(Skip).Or(Take).Or(Count).Or(AsInteger).Or(StartsWith)
+        //                //.Or(Log).Or(Resolve).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension)
+        //                .Or(Log).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension)
+        //                .Or(Substring).Or(Select).Or(Today)
+        //                .Or(OtherFunction);
     }
 }
