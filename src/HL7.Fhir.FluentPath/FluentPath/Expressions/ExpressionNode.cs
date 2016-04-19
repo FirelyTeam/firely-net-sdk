@@ -53,6 +53,28 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
             Value = value;
         }
 
+        public ConstantExpression(object value) : base(FluentPathType.Any)
+        {
+            if (value == null) Error.ArgumentNull("value");
+
+            Value = ConstantValue.ToFluentPathValue(value);
+
+            if (Value is bool)
+                ExpressionType = FluentPathType.Bool;
+            else if (Value is string)
+                ExpressionType = FluentPathType.String;
+            else if (Value is Int64)
+                ExpressionType = FluentPathType.Integer;
+            else if (Value is Decimal)
+                ExpressionType = FluentPathType.Decimal;
+            else if (Value is PartialDateTime)
+                ExpressionType = FluentPathType.DateTime;
+            else if (Value is Time)
+                ExpressionType = FluentPathType.Time;
+            else
+                throw Error.InvalidOperation("Internal logic error: encountered unmappable Value of type " + Value.GetType().Name);
+        }
+
         public object Value { get; private set; }
 
         public override bool Equals(object obj)

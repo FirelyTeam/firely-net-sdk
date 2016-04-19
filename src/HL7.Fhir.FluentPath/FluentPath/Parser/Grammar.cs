@@ -82,17 +82,25 @@ namespace Hl7.Fhir.FluentPath.Parser
         // | expression('or' | 'xor') expression                      #orExpression
         // | expression 'implies' expression                           #impliesExpression
         // ;
+        public static readonly Parser<Expression> InvocationExpression =
+            Term.Then(expr => chainInvocOperatorRest(expr));
 
-        //public static readonly Parser<Evaluator> InvocExpr =
-        //    from term in Term
-        //    from invoc in 
-        //        (from firstOp in Parse.Char('.')
-        //         from invocs in Parse.ChainOperator(Parse.Char('.'), Path.Invoc, (op, left, right) => left.Then(right))
-        //         select invocs).Optional()
-        //    select invoc.IsEmpty ? term : term.Then(invoc.Get());
+        private static Parser<Expression> chainInvocOperatorRest(Expression first)
+        {
+            if (first == null) throw new ArgumentNullException("first");
 
-        //public static readonly Parser<Evaluator> MulExpr =
-        //  Parse.ChainOperator(Lexer.Mul.Or(Lexer.Div), InvocExpr, (op, left, right) => left.Infix(op, right));
+            return Parse.Or(Parse.Char('.').Then(opvalue =>
+                            Invocation(first).Then(second => chainInvocOperatorRest(second))),
+                                Parse.Return(first));
+        }
+
+        public static readonly Parser<Expression> IndexerExpression =
+            from invoc in InvocationExpression
+            from index in Parse.Contained(Expr, Parse.Char('['), Parse.Char(']'))
+            select new BinaryExpression(Operator.Index, invoc, index);
+
+            //public static readonly Parser<Evaluator> MulExpr =
+            //  Parse.ChainOperator(Lexer.Mul.Or(Lexer.Div), InvocExpr, (op, left, right) => left.Infix(op, right));
 
         //public static readonly Parser<Evaluator> AddExpr =
         //    Parse.ChainOperator(Lexer.Add.Or(Lexer.Sub), MulExpr, (op, left, right) => left.Infix(op, right));
@@ -108,19 +116,8 @@ namespace Hl7.Fhir.FluentPath.Parser
 
         //public static readonly Parser<Evaluator> Expr = LogicExpr;
 
-        public static readonly Parser<Expression> Expr = Term;
 
-        public static readonly Parser<Expression> InvocationExpression =
-            Expr.Then(expr => ChainInvocOperatorRest(expr));
-
-        public static Parser<Expression> ChainInvocOperatorRest(Expression first)
-        {
-            if (first == null) throw new ArgumentNullException("first");
-
-            return Parse.Or(Parse.Char('.').Then(opvalue => 
-                            Invocation(first).Then( second => ChainInvocOperatorRest(second))),
-                                Parse.Return(first));
-        }
+        public static readonly Parser<Expression> Expr = InvocationExpression;
 
     }
 }

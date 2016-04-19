@@ -67,7 +67,7 @@
     <Compile Include="FluentPath\PathExpression.cs" />
     <Compile Include="FluentPath\Time.cs" />
     <Compile Include="FluentPath\TreeVisualizerVisitor.cs" />
-    <Compile Include="FluentPath\TypedValue.cs" />
+    <Compile Include="FluentPath\ConstantValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\IValueProvider.cs" />
