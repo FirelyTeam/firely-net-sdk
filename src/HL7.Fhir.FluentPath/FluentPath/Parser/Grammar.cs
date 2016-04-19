@@ -49,28 +49,40 @@ namespace Hl7.Fhir.FluentPath.Parser
             Parse.Char('{').Token().Then(c => Parse.Char('}').Token())
                     .Select(v => NewNodeListInitExpression.Empty);
 
-        public static readonly Parser<Expression> Invocation = 
-                Functions.Function
-                .Or(Lexer.Identifier.Select(i => new ChildExpression(i)))
+        public static Parser<Expression> Invocation(Expression focus)
+        {
+            return Functions.Function(focus)
+                .Or(Lexer.Identifier.Select(i => new ChildExpression(focus, i)))
                 .XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
                 .Token();
+        }
 
         public static readonly Parser<Expression> Term =
             Literal
-            .Or(Invocation)
+            .Or(Invocation(AxisExpression.This))
             .XOr(Lexer.ExternalConstant.Select(n => (Expression)new ExternalConstantExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
             .XOr(BracketExpr)
             .XOr(EmptyList)
             .Token()
             .Named("Term");
 
-        //expr:
-        //  term '.' invoc |
-        //  expr ('*' | '/') expr |
-        //  expr ('+' | '-') expr |
-        //  expr ('|' | '&') expr |
-        //  expr COMP expr |
-        //  expr LOGIC expr;
+        //expression
+        // : term                                                      #termExpression
+        // | expression '.' invocation                                 #invocationExpression
+        // | expression '[' expression ']'                             #indexerExpression
+        // | ('+' | '-') expression                                    #polarityExpression
+        // | expression('*' | '/' | 'div' | 'mod') expression         #multiplicativeExpression
+        // | expression('+' | '-' ) expression                        #additiveExpression
+        // | expression '|' expression                                 #unionExpression
+        // | expression('<=' | '<' | '>' | '>=') expression           #inequalityExpression
+        // | expression('is' | 'as') typeSpecifier                    #typeExpression
+        // | expression('=' | '~' | '!=' | '!~' | '<>') expression    #equalityExpression
+        // | expression('in' | 'contains') expression                 #membershipExpression
+        // | expression 'and' expression                               #andExpression
+        // | expression('or' | 'xor') expression                      #orExpression
+        // | expression 'implies' expression                           #impliesExpression
+        // ;
+
         //public static readonly Parser<Evaluator> InvocExpr =
         //    from term in Term
         //    from invoc in 
@@ -97,5 +109,18 @@ namespace Hl7.Fhir.FluentPath.Parser
         //public static readonly Parser<Evaluator> Expr = LogicExpr;
 
         public static readonly Parser<Expression> Expr = Term;
+
+        public static readonly Parser<Expression> InvocationExpression =
+            Expr.Then(expr => ChainInvocOperatorRest(expr));
+
+        public static Parser<Expression> ChainInvocOperatorRest(Expression first)
+        {
+            if (first == null) throw new ArgumentNullException("first");
+
+            return Parse.Or(Parse.Char('.').Then(opvalue => 
+                            Invocation(first).Then( second => ChainInvocOperatorRest(second))),
+                                Parse.Return(first));
+        }
+
     }
 }

@@ -74,19 +74,22 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class FunctionCallExpression : Expression
     {
-        public FunctionCallExpression(string name, FluentPathType type, params Expression[] arguments) : this(name, type, (IEnumerable<Expression>) arguments)
+        public FunctionCallExpression(Expression focus, string name, FluentPathType type, params Expression[] arguments) : this(focus, name, type, (IEnumerable<Expression>) arguments)
         {
         }
 
-        public FunctionCallExpression(string name, FluentPathType type, IEnumerable<Expression> arguments) : base(type)
+        public FunctionCallExpression(Expression focus, string name, FluentPathType type, IEnumerable<Expression> arguments) : base(type)
         {
+            if (focus == null) throw Error.ArgumentNull("focus");
             if (String.IsNullOrEmpty(name)) throw Error.ArgumentNull("name");
             if (arguments == null) throw Error.ArgumentNull("arguments");
 
+            Focus = focus;
             FunctionName = name;
             Arguments = arguments;
         }
 
+        public Expression Focus { get; private set; }
         public string FunctionName { get; private set; }
 
         public IEnumerable<Expression> Arguments { get; private set; }
@@ -111,7 +114,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class ChildExpression : FunctionCallExpression
     {
-        public ChildExpression(string name) : base("children", FluentPathType.Any, new ConstantExpression(name, FluentPathType.String))
+        public ChildExpression(Expression focus, string name) : base(focus, "children", FluentPathType.Any, new ConstantExpression(name, FluentPathType.String))
         {
         }
 

@@ -11,12 +11,15 @@ namespace Hl7.Fhir.FluentPath.Parser
 {
     internal static class Functions
     {
-        public static readonly Parser<Expression> Function =
+        public static Parser<Expression> Function(Expression context)
+        {
+            return 
                 from n in Lexer.Identifier.Select(name => name)
                 from lparen in Parse.Char('(')
                 from paramList in Parse.Ref(() => Grammar.Expr.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
                 from rparen in Parse.Char(')')
-                select new FunctionCallExpression(n, FluentPathType.Any, paramList.GetOrElse(Enumerable.Empty<Expression>()));
+                select new FunctionCallExpression(context, n, FluentPathType.Any, paramList.GetOrElse(Enumerable.Empty<Expression>()));
+        }
 
 
         //internal static Parser<IEnumerable<Evaluator>> createFunctionParser(string name)
