@@ -341,13 +341,13 @@ namespace Hl7.Fhir.Serialization
         public static Base Parse(XmlReader reader, Type dataType = null)
         {
             var xmlReader = new XmlDomFhirReader(reader);
-            return Parse(xmlReader);
+            return Parse(xmlReader, dataType);
         }
 
         public static Base Parse(JsonReader reader, Type dataType = null)
         {
             var jsonReader = new JsonDomFhirReader(reader);
-            return Parse(jsonReader);
+            return Parse(jsonReader, dataType);
         }
     }
 }
