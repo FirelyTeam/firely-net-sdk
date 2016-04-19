@@ -334,5 +334,34 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = FhirSerializer.SerializeResourceToXml(x);
             Assert.IsFalse(xml.Contains("<script"));
         }
+
+
+        [TestMethod]
+        public void TryXXEExploit()
+        {
+            var input =
+                "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
+                "<!DOCTYPE foo [  \n" +
+                "<!ELEMENT foo ANY >\n" +
+                "<!ENTITY xxe SYSTEM \"file:///etc/passwd\" >]>" +
+                "<Patient xmlns=\"http://hl7.org/fhir\">" +
+                    "<text>" +
+                        "<div xmlns=\"http://www.w3.org/1999/xhtml\">TEXT &xxe; TEXT</div>\n" +
+                    "</text>" +
+                    "<address>" +
+                        "<line value=\"FOO\"/>" +
+                    "</address>" +
+                "</Patient>";
+
+            try
+            {
+                FhirParser.ParseFromXml(input);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(e.Message.Contains("DTD is prohibited"));
+            }
+        }
     }
 }
