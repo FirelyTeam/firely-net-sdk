@@ -96,6 +96,9 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class FunctionCallExpression : Expression
     {
+        protected const string OP_PREFIX = "builtin.";
+        protected static readonly int OP_PREFIX_LEN = OP_PREFIX.Length;
+
         public FunctionCallExpression(Expression focus, string name, FluentPathType type, params Expression[] arguments) : this(focus, name, type, (IEnumerable<Expression>) arguments)
         {
         }
@@ -134,9 +137,10 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         }
     }
 
+
     public class ChildExpression : FunctionCallExpression
     {
-        public ChildExpression(Expression focus, string name) : base(focus, "children", FluentPathType.Any, new ConstantExpression(name, FluentPathType.String))
+        public ChildExpression(Expression focus, string name) : base(focus, OP_PREFIX+"children", FluentPathType.Any, new ConstantExpression(name, FluentPathType.String))
         {
         }
 
@@ -146,40 +150,81 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         }
     }
 
-    public class BinaryExpression : Expression
+
+    public class IndexerExpression : FunctionCallExpression
     {
-        public BinaryExpression(Operator op, Expression left, Expression right) : base(FluentPathType.Any)
+        public IndexerExpression(Expression collection, Expression index) : base(collection, OP_PREFIX+"item", FluentPathType.Any, index)
         {
-            if (left == null) throw Error.ArgumentNull("left");
-            if (right == null) throw Error.ArgumentNull("right");
-
-            Op = op;
-            Left = left;
-            Right = right;
         }
-        public Operator Op { get; private set; }
 
-        public Expression Left { get; private set; }
-
-        public Expression Right { get; private set; }
-
-        public override bool Equals(object obj)
+        public Expression Index
         {
-            if (base.Equals(obj) && obj is BinaryExpression)
+            get
             {
-                var f = (BinaryExpression)obj;
-
-                return f.Op == Op && Object.Equals(f.Left,Left) && Object.Equals(f.Right,Right);
+                return Arguments.Skip(1).First();
             }
-            else
-                return false;
         }
+    }
 
-        public override int GetHashCode()
+    public class BinaryExpression : FunctionCallExpression
+    {
+        public BinaryExpression(char op, Expression left, Expression right) : base(left, OP_PREFIX + op, FluentPathType.Any, right)
         {
-            return base.GetHashCode() ^ Op.GetHashCode() ^ Left.GetHashCode() ^ Right.GetHashCode();
         }
 
+        public BinaryExpression(string op, Expression left, Expression right) : base(left, OP_PREFIX+op, FluentPathType.Any, right)
+        {
+        }
+        public string Op
+        {
+            get
+            {
+                return FunctionName.Substring(OP_PREFIX_LEN);
+            }
+        }
+
+        public Expression Left
+        {
+            get
+            {
+                return Arguments.First();
+            }
+        }
+
+        public Expression Right
+        {
+            get
+            {
+                return Arguments.Skip(1).First();
+            }
+        }
+    }
+
+
+    public class UnaryExpression : FunctionCallExpression
+    {
+        public UnaryExpression(char op, Expression operand) : base(operand, OP_PREFIX + op, FluentPathType.Any)
+        {
+        }
+
+        public UnaryExpression(string op, Expression operand) : base(operand, OP_PREFIX + op, FluentPathType.Any)
+        {
+        }
+        public string Op
+        {
+            get
+            {
+                return FunctionName.Substring(OP_PREFIX_LEN);
+            }
+        }
+
+        public Expression Operand
+        {
+            get
+            {
+                return Arguments.First();
+            }
+        }
     }
 
     public class LambdaExpression : Expression

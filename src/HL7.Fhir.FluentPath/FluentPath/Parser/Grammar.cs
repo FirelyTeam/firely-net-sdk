@@ -82,6 +82,8 @@ namespace Hl7.Fhir.FluentPath.Parser
         // | expression('or' | 'xor') expression                      #orExpression
         // | expression 'implies' expression                           #impliesExpression
         // ;
+
+        // | expression '.' invocation                                 #invocationExpression
         public static readonly Parser<Expression> InvocationExpression =
             Term.Then(expr => chainInvocOperatorRest(expr));
 
@@ -94,22 +96,42 @@ namespace Hl7.Fhir.FluentPath.Parser
                                 Parse.Return(first));
         }
 
+        // | expression '[' expression ']'                             #indexerExpression
         public static readonly Parser<Expression> IndexerExpression =
-            from invoc in InvocationExpression
-            from index in Parse.Contained(Expr, Parse.Char('['), Parse.Char(']'))
-            select new BinaryExpression(Operator.Index, invoc, index);
+            InvocationExpression.Then(
+                invoc => Parse.Contained(Expr, Parse.Char('['), Parse.Char(']')).Select(ix => new IndexerExpression(invoc, ix))
+                .Or(Parse.Return(invoc)));
 
-            //public static readonly Parser<Evaluator> MulExpr =
-            //  Parse.ChainOperator(Lexer.Mul.Or(Lexer.Div), InvocExpr, (op, left, right) => left.Infix(op, right));
+        // | ('+' | '-') expression                                    #polarityExpression
+        public static readonly Parser<Expression> PolarityExpression =
+            from op in Lexer.PolarityOperator.Optional()
+            from indexer in IndexerExpression
+            select op.IsEmpty ? indexer : new UnaryExpression(op.Get(), indexer);
 
-        //public static readonly Parser<Evaluator> AddExpr =
-        //    Parse.ChainOperator(Lexer.Add.Or(Lexer.Sub), MulExpr, (op, left, right) => left.Infix(op, right));
+        public static Parser<Expression> BinaryExpression(Parser<string> oper, Parser<Expression> operands)
+        {
+            return Parse.ChainOperator(oper, operands, (op, left, right) => new BinaryExpression(op, left, right));
+        }
 
-        //public static readonly Parser<Evaluator> JoinExpr =
-        //    Parse.ChainOperator(Lexer.Union, AddExpr, (op, left, right) => left.Infix(op, right));
+        // | expression('*' | '/' | 'div' | 'mod') expression         #multiplicativeExpression
+        public static readonly Parser<Expression> MulExpression = BinaryExpression(Lexer.MulOperator, PolarityExpression);
 
-        //public static readonly Parser<Evaluator> CompExpr =
-        //    Parse.ChainOperator(Lexer.Comp, JoinExpr, (op, left, right) => left.Infix(op, right));
+        // | expression('+' | '-' ) expression                        #additiveExpression
+        public static readonly Parser<Expression> AddExpression = BinaryExpression(Lexer.AddOperator, MulExpression);
+
+        // | expression '|' expression                                 #unionExpression
+        public static readonly Parser<Expression> UnionExpression = BinaryExpression(Lexer.UnionOperator, AddExpression);
+
+        // | expression('<=' | '<' | '>' | '>=') expression           #inequalityExpression
+        public static readonly Parser<Expression> InEqExpression = BinaryExpression(Lexer.InEqOperator, UnionExpression);
+
+        // | expression('is' | 'as') typeSpecifier                    #typeExpression
+        //public static readonly Parser<Expression> TypeExpression = 
+        //    InEqExpression.Then( ineq =>
+        //            from isas in Lexer.TypeOperator
+        //            from 
+            
+        //    )
 
         //public static readonly Parser<Evaluator> LogicExpr =
         //    Parse.ChainOperator(Lexer.Logic, CompExpr, (op, left, right) => left.Infix(op, right));
@@ -117,7 +139,6 @@ namespace Hl7.Fhir.FluentPath.Parser
         //public static readonly Parser<Evaluator> Expr = LogicExpr;
 
 
-        public static readonly Parser<Expression> Expr = InvocationExpression;
-
+        public static readonly Parser<Expression> Expr = InEqExpression;                       
     }
 }

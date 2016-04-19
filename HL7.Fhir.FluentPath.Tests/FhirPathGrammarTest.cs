@@ -81,9 +81,11 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             AssertParser.SucceedsMatch(parser, "Patient.name.doSomething(true)",
                     new FunctionCallExpression(patientName, "doSomething", FluentPathType.Any, new ConstantExpression(true)));
-            //AssertParser.SucceedsMatch(parser, "Patient.name.", new ChildExpression(new ChildExpression(AxisExpression.This, "Patient"), "name"));
 
             AssertParser.FailsMatch(parser, "Patient.");
+            //AssertParser.FailsMatch(parser, "Patient. name");     //oops
+            //AssertParser.FailsMatch(parser, "Patient . name");
+            //AssertParser.FailsMatch(parser, "Patient .name");
         }
         
         [TestMethod, TestCategory("FhirPath")]
@@ -91,9 +93,55 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var parser = Grammar.IndexerExpression.End();
 
-            AssertParser.SucceedsMatch(parser, "Patient.name[4]",
-                    new BinaryExpression(Operator.Index, patientName, new ConstantExpression(4L))); 
+            AssertParser.SucceedsMatch(parser, "Patient.name", patientName);
+            AssertParser.SucceedsMatch(parser, "Patient.name[4 ]",
+                    new IndexerExpression(patientName, new ConstantExpression(4)));
+
+            AssertParser.FailsMatch(parser, "Patient.name[");
+            AssertParser.FailsMatch(parser, "Patient.name]");
+            AssertParser.FailsMatch(parser, "Patient.name[]");
+            AssertParser.FailsMatch(parser, "Patient.name[4,]");
+            AssertParser.FailsMatch(parser, "Patient.name[4,5]");
         }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void FhirPath_Gramm_Expression_Polarity()
+        {
+            var parser = Grammar.PolarityExpression.End();
+
+            AssertParser.SucceedsMatch(parser, "4", new ConstantExpression(4));
+            AssertParser.SucceedsMatch(parser, "-4", new UnaryExpression('-', new ConstantExpression(4)));
+            AssertParser.SucceedsMatch(parser, "-Patient.name[4]", new UnaryExpression('-', patientName));
+            AssertParser.SucceedsMatch(parser, "+Patient.name[4]", new UnaryExpression('+', patientName));
+        }
+
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void FhirPath_Gramm_Mul()
+        {
+            var parser = Grammar.MulExpression.End();
+
+            AssertParser.SucceedsMatch(parser, "Patient.name", patientName);
+            AssertParser.SucceedsMatch(parser, "4* Patient.name", new BinaryExpression('*', new ConstantExpression(4),patientName));
+            AssertParser.SucceedsMatch(parser, "5 div 6", new BinaryExpression("div", new ConstantExpression(5), new ConstantExpression(6)));
+
+            AssertParser.FailsMatch(parser,"4*");
+            // AssertParser.FailsMatch(parser, "5div6");    oops
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void FhirPath_Gramm_Add()
+        {
+            var parser = Grammar.AddExpression.End();
+
+            AssertParser.SucceedsMatch(parser, "-4", new UnaryExpression('-', new ConstantExpression(4)));
+            AssertParser.SucceedsMatch(parser, "4 + Patient.name", new BinaryExpression('+', new ConstantExpression(4), patientName));
+
+            AssertParser.FailsMatch(parser, "4+");
+            // AssertParser.FailsMatch(parser, "5div6");    oops
+        }
+
+
 
         private void SucceedsConstantValueMatch(Parser<ConstantExpression> parser, string expr, object value, FluentPathType expected)
         {

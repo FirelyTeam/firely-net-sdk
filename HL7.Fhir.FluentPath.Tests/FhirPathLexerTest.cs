@@ -287,49 +287,45 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "0.314+E01");
         }
 
-        [TestMethod, TestCategory("FhirPath"), Ignore]
-        public void FhirPath_Lex_Logic()
+        [TestMethod, TestCategory("FhirPath")]
+        public void FhirPath_Lex_Mul()
         {
-            var parser = Lexer.Logic;
+            var parser = Lexer.MulOperator.End();
 
-            AssertParser.SucceedsMatch(parser, "and");
-            AssertParser.SucceedsMatch(parser, "or");
-            AssertParser.SucceedsMatch(parser, "xor");
+            AssertParser.SucceedsMatch(parser, "*");
+            AssertParser.SucceedsMatch(parser, "/");
+            AssertParser.SucceedsMatch(parser, "div");
+            AssertParser.SucceedsMatch(parser, "mod");
 
+            AssertParser.FailsMatch(parser, "*/");
+            AssertParser.FailsMatch(parser, "Div");
             AssertParser.FailsMatch(parser, "");
-            AssertParser.FailsMatch(parser, "AND");
-            AssertParser.FailsMatch(parser, "And");
-            AssertParser.FailsMatch(parser, "OR");
-            AssertParser.FailsMatch(parser, "Or");
-            AssertParser.FailsMatch(parser, "XOR");
-            AssertParser.FailsMatch(parser, "Xor");
-
-            AssertParser.FailsMatch(parser, "not");
         }
 
-        [TestMethod, TestCategory("FhirPath"), Ignore]
-        public void FhirPath_Lex_Comp()
-        {
-            var parser = Lexer.Comp.End();
 
-            AssertParser.SucceedsMatch(parser, "=");
-            AssertParser.SucceedsMatch(parser, "~");
-            AssertParser.SucceedsMatch(parser, "!=");
-            AssertParser.SucceedsMatch(parser, "!~");
-            AssertParser.SucceedsMatch(parser, ">");
-            AssertParser.SucceedsMatch(parser, "<");
-            AssertParser.SucceedsMatch(parser, ">=");
-            AssertParser.SucceedsMatch(parser, "<=");
-            AssertParser.SucceedsMatch(parser, "in");
+            //[TestMethod, TestCategory("FhirPath"), Ignore]
+            //public void FhirPath_Lex_Comp()
+            //{
+            //    var parser = Lexer.Comp.End();
 
-            AssertParser.FailsMatch(parser, "");
-            AssertParser.FailsMatch(parser, "In");
-            AssertParser.FailsMatch(parser, "IN");
-            AssertParser.FailsMatch(parser, "==");
-            AssertParser.FailsMatch(parser, "!==");
-            AssertParser.FailsMatch(parser, "=!=");
-            AssertParser.FailsMatch(parser, "<<");
-            AssertParser.FailsMatch(parser, ">>");
+            //    AssertParser.SucceedsMatch(parser, "=");
+            //    AssertParser.SucceedsMatch(parser, "~");
+            //    AssertParser.SucceedsMatch(parser, "!=");
+            //    AssertParser.SucceedsMatch(parser, "!~");
+            //    AssertParser.SucceedsMatch(parser, ">");
+            //    AssertParser.SucceedsMatch(parser, "<");
+            //    AssertParser.SucceedsMatch(parser, ">=");
+            //    AssertParser.SucceedsMatch(parser, "<=");
+            //    AssertParser.SucceedsMatch(parser, "in");
+
+            //    AssertParser.FailsMatch(parser, "");
+            //    AssertParser.FailsMatch(parser, "In");
+            //    AssertParser.FailsMatch(parser, "IN");
+            //    AssertParser.FailsMatch(parser, "==");
+            //    AssertParser.FailsMatch(parser, "!==");
+            //    AssertParser.FailsMatch(parser, "=!=");
+            //    AssertParser.FailsMatch(parser, "<<");
+            //    AssertParser.FailsMatch(parser, ">>");
+            //}
         }
-    }
 }

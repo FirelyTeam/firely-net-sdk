@@ -35,17 +35,6 @@ namespace HL7.Fhir.FluentPath.FluentPath
             decr();
         }
 
-        public override void VisitBinary(BinaryExpression expression)
-        {
-            append("Op {0}".FormatWith(expression.Op));
-            append(expression);
-
-            incr();
-            Visit(expression.Left);
-            Visit(expression.Right);
-            decr();
-        }
-
         public override void VisitLambda(LambdaExpression expression)
         {
             append("lambda $this -> ");

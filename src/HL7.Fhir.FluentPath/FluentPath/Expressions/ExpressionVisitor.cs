@@ -14,8 +14,6 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
                 VisitConstant((ConstantExpression)expression);
             else if (expression is FunctionCallExpression)
                 VisitFunctionCall((FunctionCallExpression)expression);
-            else if (expression is BinaryExpression)
-                VisitBinary((BinaryExpression)expression);
             else if (expression is LambdaExpression)
                 VisitLambda((LambdaExpression)expression);
             else if (expression is AxisExpression)
@@ -29,8 +27,6 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         public virtual void VisitConstant(ConstantExpression expression) { }
 
         public virtual void VisitFunctionCall(FunctionCallExpression expression) { }
-
-        public virtual void VisitBinary(BinaryExpression expression) { }
 
         public virtual void VisitLambda(LambdaExpression expression) { }
 
