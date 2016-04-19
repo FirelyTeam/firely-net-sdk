@@ -52,9 +52,19 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="dotNetRDF, Version=1.0.9.3683, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
+      <HintPath>..\packages\dotNetRDF.1.0.9.3683\lib\net40\dotNetRDF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -65,6 +75,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="VDS.Common, Version=1.6.0.0, Culture=neutral, PublicKeyToken=ab5f4eb908061bf0, processorArchitecture=MSIL">
+      <HintPath>..\packages\VDS.Common.1.6.0\lib\net40-client\VDS.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
@@ -605,6 +619,9 @@
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
+    <Compile Include="Serialization\TurtleFhirReader.cs" />
+    <Compile Include="Serialization\TurtleFhirWriter.cs" />
+    <Compile Include="Serialization\TurtleReusableNodes.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />

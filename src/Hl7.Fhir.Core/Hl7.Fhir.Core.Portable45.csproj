@@ -54,6 +54,9 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="dotNetRDF">
+      <HintPath>..\packages\dotNetRDF.1.0.9.3683\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\dotNetRDF.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -608,6 +611,9 @@
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
+    <Compile Include="Serialization\TurtleFhirReader.cs" />
+    <Compile Include="Serialization\TurtleFhirWriter.cs" />
+    <Compile Include="Serialization\TurtleReusableNodes.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
