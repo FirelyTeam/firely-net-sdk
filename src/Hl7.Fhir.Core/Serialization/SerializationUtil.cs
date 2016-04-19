@@ -48,11 +48,7 @@ namespace Hl7.Fhir.Serialization
             settings.IgnoreComments = true;
             settings.IgnoreProcessingInstructions = true;
             settings.IgnoreWhitespace = true;
-#if PORTABLE45
-            settings.DtdProcessing = DtdProcessing.Ignore;
-#else
-            settings.DtdProcessing = DtdProcessing.Parse;
-#endif
+            settings.DtdProcessing = DtdProcessing.Prohibit;
 
             return XmlReader.Create(xmlReader, settings);
         }

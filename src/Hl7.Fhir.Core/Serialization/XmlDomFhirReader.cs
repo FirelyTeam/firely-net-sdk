@@ -24,17 +24,7 @@ namespace Hl7.Fhir.Serialization
 
         public XmlDomFhirReader(XmlReader reader)
         {
-            var settings = new XmlReaderSettings();
-            settings.IgnoreComments = true;
-            settings.IgnoreProcessingInstructions = true;
-            settings.IgnoreWhitespace = true;
-#if PORTABLE45
-            settings.DtdProcessing = DtdProcessing.Ignore;
-#else
-            settings.DtdProcessing = DtdProcessing.Parse; 
-#endif
-
-            var internalReader = XmlReader.Create(reader, settings);
+            var internalReader = SerializationUtil.WrapXmlReader(reader);
             XDocument doc;
 
             try
