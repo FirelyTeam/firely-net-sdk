@@ -487,7 +487,10 @@ namespace Hl7.Fhir.Rest
         {
             if (operationName == null) throw Error.ArgumentNull("operationName");
 
-            var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
+            // [WMR 20160421] GetResourceNameForType is obsolete
+            // var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
+            var typeName = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+
             return TypeOperation(operationName, typeName, parameters, useGet: useGet);
         }
 
