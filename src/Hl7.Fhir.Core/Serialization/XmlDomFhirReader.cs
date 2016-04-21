@@ -22,6 +22,7 @@ namespace Hl7.Fhir.Serialization
     {
         XObject _current;
 
+        // [WMR 20160421] Caller can safely dispose reader after calling this ctor
         public XmlDomFhirReader(XmlReader reader)
         {
             var internalReader = SerializationUtil.WrapXmlReader(reader);

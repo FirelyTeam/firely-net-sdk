@@ -26,6 +26,7 @@ namespace Hl7.Fhir.Serialization
     public class FhirParser
     {
         #region Helper methods / stream creation methods
+
         public static bool ProbeIsXml(string data)
         {
             Regex xml = new Regex("^<[^>]+>");
@@ -45,15 +46,27 @@ namespace Hl7.Fhir.Serialization
 
         public static IFhirReader FhirReaderFromXml(string xml)
         {
-            return new XmlDomFhirReader(SerializationUtil.XmlReaderFromXmlText(xml));
+            // [WMR 20160421] Explicit disposal
+            // return new XmlDomFhirReader(SerializationUtil.XmlReaderFromXmlText(xml));
+            using (var reader = SerializationUtil.XmlReaderFromXmlText(xml))
+            {
+                // [WMR 20160421] Safely dispose reader after executing JsonDomFhirReader ctor
+                return new XmlDomFhirReader(reader);
+            }
         }
 
         public static IFhirReader FhirReaderFromJson(string json)
         {
-            return new JsonDomFhirReader(SerializationUtil.JsonReaderFromJsonText(json));
+            // [WMR 20160421] Explicit disposal
+            // return new JsonDomFhirReader(SerializationUtil.JsonReaderFromJsonText(json));
+            using (var reader = SerializationUtil.JsonReaderFromJsonText(json))
+            {
+                // [WMR 20160421] Safely dispose reader after executing JsonDomFhirReader ctor
+                return new JsonDomFhirReader(reader);
+            }
         }
 
-#endregion
+        #endregion
 
         internal static Base Parse(IFhirReader reader, Type dataType = null)
         {
@@ -85,22 +98,26 @@ namespace Hl7.Fhir.Serialization
             return Parse(reader, dataType);
         }
 
+        // [WMR 20160421] Caller is responsible for disposing reader
         public static Resource ParseResource(XmlReader reader)
         {
             return (Resource)Parse(reader);
         }
 
+        // [WMR 20160421] Caller is responsible for disposing reader
         public static Resource ParseResource(JsonReader reader)
         {
             return (Resource)Parse(reader);
         }
 
+        // [WMR 20160421] Caller is responsible for disposing reader
         public static Base Parse(XmlReader reader, Type dataType = null)
         {
             var xmlReader = new XmlDomFhirReader(reader);
             return Parse(xmlReader);
         }
 
+        // [WMR 20160421] Caller is responsible for disposing reader
         public static Base Parse(JsonReader reader, Type dataType = null)
         {
             var jsonReader = new JsonDomFhirReader(reader);
