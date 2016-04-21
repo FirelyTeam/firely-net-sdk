@@ -21,13 +21,13 @@ namespace HL7.Fhir.FluentPath.FluentPath
         public override void VisitConstant(ConstantExpression expression)
         {
             append("const {0}".FormatWith(expression.Value));
-            append(expression);
+            appendType(expression);
         }
 
         public override void VisitFunctionCall(FunctionCallExpression expression)
         {
             append("func {0}".FormatWith(expression.FunctionName));
-            append(expression);
+            appendType(expression);
 
             incr();
             expression.Focus.Accept(this);
@@ -40,7 +40,7 @@ namespace HL7.Fhir.FluentPath.FluentPath
         public override void VisitLambda(LambdaExpression expression)
         {
             append("lambda $this -> ");
-            append(expression);
+            appendType(expression);
 
             incr();
             expression.Body.Accept(this);
@@ -50,7 +50,7 @@ namespace HL7.Fhir.FluentPath.FluentPath
         public override void VisitNewNodeListInit(NewNodeListInitExpression expression)
         {
             append("new NodeSet");
-            append(expression);
+            appendType(expression);
 
             incr();
             foreach (var element in expression.Contents)
@@ -61,12 +61,18 @@ namespace HL7.Fhir.FluentPath.FluentPath
         public override void VisitVariableRef(VariableRefExpression expression)
         {
             append("var {0}".FormatWith(expression.Name));
-            append(expression);
+            appendType(expression);
         }
 
-        private void append(Expression expr)
+        public override void VisitTypeBinaryExpression(TypeBinaryExpression expression)
         {
-            if (expr.ExpressionType != FluentPathType.Any)
+            append("{0} {1}".FormatWith(expression.Op, expression.Type.Name));
+            appendType(expression);
+        }
+
+        private void appendType(Expression expr)
+        {
+            if (expr.ExpressionType != TypeInfo.Any)
                 append(" : {0}".FormatWith(expr.ExpressionType), newLine: false);
         }
 

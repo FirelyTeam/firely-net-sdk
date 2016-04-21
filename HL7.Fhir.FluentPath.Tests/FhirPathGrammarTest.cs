@@ -45,11 +45,11 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             AssertParser.SucceedsMatch(parser, "childname", new ChildExpression(AxisExpression.This, "childname"));
             AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);
-            AssertParser.SucceedsMatch(parser, "doSomething()", new FunctionCallExpression(AxisExpression.This, "doSomething", FluentPathType.Any));
-            AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14, 3, $this, somethingElse(true))", new FunctionCallExpression(AxisExpression.This,"doSomething", FluentPathType.Any,
+            AssertParser.SucceedsMatch(parser, "doSomething()", new FunctionCallExpression(AxisExpression.This, "doSomething", TypeInfo.Any));
+            AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14, 3, $this, somethingElse(true))", new FunctionCallExpression(AxisExpression.This,"doSomething", TypeInfo.Any,
                         new ConstantExpression("hi"), new ConstantExpression(3.14m), new ConstantExpression(3L),
                         AxisExpression.This,
-                        new FunctionCallExpression(AxisExpression.This, "somethingElse", FluentPathType.Any, new ConstantExpression(true))));
+                        new FunctionCallExpression(AxisExpression.This, "somethingElse", TypeInfo.Any, new ConstantExpression(true))));
 
             AssertParser.FailsMatch(parser, "$that");
             AssertParser.FailsMatch(parser, "doSomething(");
@@ -62,8 +62,8 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             AssertParser.SucceedsMatch(parser, "childname", new ChildExpression(AxisExpression.This,"childname"));
             AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);
-            AssertParser.SucceedsMatch(parser, "doSomething()", new FunctionCallExpression(AxisExpression.This, "doSomething", FluentPathType.Any));
-            AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14)", new FunctionCallExpression(AxisExpression.This, "doSomething", FluentPathType.Any,
+            AssertParser.SucceedsMatch(parser, "doSomething()", new FunctionCallExpression(AxisExpression.This, "doSomething", TypeInfo.Any));
+            AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14)", new FunctionCallExpression(AxisExpression.This, "doSomething", TypeInfo.Any,
                         new ConstantExpression("hi"), new ConstantExpression(3.14m)));
             AssertParser.SucceedsMatch(parser, "%external", new VariableRefExpression("external"));
             AssertParser.SucceedsMatch(parser, "@2013-12", new ConstantExpression(PartialDateTime.Parse("2013-12")));
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             var parser = Grammar.InvocationExpression.End();
 
             AssertParser.SucceedsMatch(parser, "Patient.name.doSomething(true)",
-                    new FunctionCallExpression(patientName, "doSomething", FluentPathType.Any, new ConstantExpression(true)));
+                    new FunctionCallExpression(patientName, "doSomething", TypeInfo.Any, new ConstantExpression(true)));
 
             AssertParser.FailsMatch(parser, "Patient.");
             //AssertParser.FailsMatch(parser, "Patient. name");     //oops
@@ -143,15 +143,16 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod, TestCategory("FhirPath"), Ignore]
+        [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Gramm_Type()
         {
             var parser = Grammar.TypeExpression.End();
 
             AssertParser.SucceedsMatch(parser, "-4 > 5", constOp(">", -4, 5));
-            AssertParser.SucceedsMatch(parser, "4 is integer", new BinaryExpression("is", new ConstantExpression(4), new ConstantExpression("integer")));
-            
-            AssertParser.FailsMatch(parser, "4 is notoddbuteven");
+            AssertParser.SucceedsMatch(parser, "4 is integer", new TypeBinaryExpression("is", new ConstantExpression(4), TypeInfo.Integer));
+            AssertParser.SucceedsMatch(parser, "8 as notoddbuteven", new TypeBinaryExpression("as", new ConstantExpression(8), TypeInfo.ByName("notoddbuteven")));
+
+            AssertParser.FailsMatch(parser, "4 is 5");
             // AssertParser.FailsMatch(parser, "5div6");    oops
         }
 
@@ -198,7 +199,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 
         //AssertParser.SucceedsMatch(parser, "4*5+6=26 implies 6+5*4=26 and (6+5)*4 (6+5)/4 <> 26 and ('h' ~ 'H' or 'a' !~ 'b')",
 
-        private void SucceedsConstantValueMatch(Parser<ConstantExpression> parser, string expr, object value, FluentPathType expected)
+        private void SucceedsConstantValueMatch(Parser<ConstantExpression> parser, string expr, object value, TypeInfo expected)
         {
             AssertParser.SucceedsWith(parser, expr,
                     v =>

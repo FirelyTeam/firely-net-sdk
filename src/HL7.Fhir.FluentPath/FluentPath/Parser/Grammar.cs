@@ -23,12 +23,12 @@ namespace Hl7.Fhir.FluentPath.Parser
         //  | TIME                                                  #timeLiteral
         //  ;
         public static readonly Parser<ConstantExpression> Literal =
-            Lexer.String.Select(v => new ConstantExpression(v, FluentPathType.String))
-                .XOr(Lexer.DateTime.Select(v => new ConstantExpression(v, FluentPathType.DateTime)))
-                .XOr(Lexer.Time.Select(v => new ConstantExpression(v, FluentPathType.Time)))
-                .XOr(Lexer.Bool.Select(v => new ConstantExpression(v, FluentPathType.Bool)))
-                .Or(Lexer.DecimalNumber.Select(v => new ConstantExpression(v, FluentPathType.Decimal)))
-                .Or(Lexer.IntegerNumber.Select(v => new ConstantExpression(v, FluentPathType.Integer)));
+            Lexer.String.Select(v => new ConstantExpression(v, TypeInfo.String))
+                .XOr(Lexer.DateTime.Select(v => new ConstantExpression(v, TypeInfo.DateTime)))
+                .XOr(Lexer.Time.Select(v => new ConstantExpression(v, TypeInfo.Time)))
+                .XOr(Lexer.Bool.Select(v => new ConstantExpression(v, TypeInfo.Bool)))
+                .Or(Lexer.DecimalNumber.Select(v => new ConstantExpression(v, TypeInfo.Decimal)))
+                .Or(Lexer.IntegerNumber.Select(v => new ConstantExpression(v, TypeInfo.Integer)));
 
 
         //term
@@ -68,8 +68,8 @@ namespace Hl7.Fhir.FluentPath.Parser
 
 
         //TODO: Should not use ConstantExpression but really convert to a FluentyType
-        public static readonly Parser<Expression> TypeSpecifier =
-            Lexer.QualifiedIdentifier.Select(qi => new ConstantExpression(qi)).Token();
+        public static readonly Parser<TypeInfo> TypeSpecifier =
+            Lexer.QualifiedIdentifier.Select(qi => TypeInfo.ByName(qi)).Token();
 
         //expression
         // : term                                                      #termExpression
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.FluentPath.Parser
             InEqExpression.Then(
                     ineq => (from isas in Lexer.TypeOperator
                              from tp in TypeSpecifier
-                             select new BinaryExpression(isas, ineq, tp))
+                             select new TypeBinaryExpression(isas, ineq, tp))
                     .Or(Parse.Return(ineq)));
 
         // | expression('=' | '~' | '!=' | '!~' | '<>') expression    #equalityExpression

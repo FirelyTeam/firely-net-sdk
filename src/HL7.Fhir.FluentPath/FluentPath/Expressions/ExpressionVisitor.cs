@@ -31,5 +31,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         public virtual void VisitNewNodeListInit(NewNodeListInitExpression expression) { }
 
         public virtual void VisitVariableRef(VariableRefExpression expression) { }
+
+        public virtual void VisitTypeBinaryExpression(TypeBinaryExpression expression) { }
     }
 }

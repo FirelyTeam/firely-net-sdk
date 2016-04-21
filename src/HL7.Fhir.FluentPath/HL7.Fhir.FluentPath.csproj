@@ -51,6 +51,7 @@
     <Compile Include="FluentPath\BaseEvaluationContext.cs" />
     <Compile Include="FluentPath\Evaluator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionVisitor.cs" />
+    <Compile Include="FluentPath\Expressions\FluentPathType.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
     <Compile Include="FluentPath\Parser\Functions.cs" />
     <Compile Include="FluentPath\Parser\Operators.cs" />

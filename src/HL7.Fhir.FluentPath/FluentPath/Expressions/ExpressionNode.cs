@@ -8,27 +8,16 @@ using System.Threading.Tasks;
 
 namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 {
-    public enum FluentPathType
-    {
-        Bool,
-        String,
-        Integer,
-        Decimal,
-        DateTime,
-        Time,
-        Any
-    }
-
     public abstract class Expression
     {
         protected const string OP_PREFIX = "builtin.";
         protected static readonly int OP_PREFIX_LEN = OP_PREFIX.Length;
 
-        protected Expression(FluentPathType type)
+        protected Expression(TypeInfo type)
         {
             ExpressionType = type;
         }
-        public FluentPathType ExpressionType { get; protected set; }
+        public TypeInfo ExpressionType { get; protected set; }
 
         public abstract void Accept(ExpressionVisitor visitor);
 
@@ -44,7 +33,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
         public override int GetHashCode()
         {
-            return (int)ExpressionType;
+            return ExpressionType.GetHashCode();
         }
 
     }
@@ -52,31 +41,31 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class ConstantExpression : Expression
     {
-        public ConstantExpression(object value, FluentPathType type) : base(type)
+        public ConstantExpression(object value, TypeInfo type) : base(type)
         {
             if (value == null) Error.ArgumentNull("value");
 
             Value = value;
         }
 
-        public ConstantExpression(object value) : base(FluentPathType.Any)
+        public ConstantExpression(object value) : base(TypeInfo.Any)
         {
             if (value == null) Error.ArgumentNull("value");
 
             Value = ConstantValue.ToFluentPathValue(value);
 
             if (Value is bool)
-                ExpressionType = FluentPathType.Bool;
+                ExpressionType = TypeInfo.Bool;
             else if (Value is string)
-                ExpressionType = FluentPathType.String;
+                ExpressionType = TypeInfo.String;
             else if (Value is Int64)
-                ExpressionType = FluentPathType.Integer;
+                ExpressionType = TypeInfo.Integer;
             else if (Value is Decimal)
-                ExpressionType = FluentPathType.Decimal;
+                ExpressionType = TypeInfo.Decimal;
             else if (Value is PartialDateTime)
-                ExpressionType = FluentPathType.DateTime;
+                ExpressionType = TypeInfo.DateTime;
             else if (Value is Time)
-                ExpressionType = FluentPathType.Time;
+                ExpressionType = TypeInfo.Time;
             else
                 throw Error.InvalidOperation("Internal logic error: encountered unmappable Value of type " + Value.GetType().Name);
         }
@@ -107,11 +96,11 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class FunctionCallExpression : Expression
     {
-        public FunctionCallExpression(Expression focus, string name, FluentPathType type, params Expression[] arguments) : this(focus, name, type, (IEnumerable<Expression>) arguments)
+        public FunctionCallExpression(Expression focus, string name, TypeInfo type, params Expression[] arguments) : this(focus, name, type, (IEnumerable<Expression>) arguments)
         {
         }
 
-        public FunctionCallExpression(Expression focus, string name, FluentPathType type, IEnumerable<Expression> arguments) : base(type)
+        public FunctionCallExpression(Expression focus, string name, TypeInfo type, IEnumerable<Expression> arguments) : base(type)
         {
             if (focus == null) throw Error.ArgumentNull("focus");
             if (String.IsNullOrEmpty(name)) throw Error.ArgumentNull("name");
@@ -153,7 +142,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class ChildExpression : FunctionCallExpression
     {
-        public ChildExpression(Expression focus, string name) : base(focus, OP_PREFIX+"children", FluentPathType.Any, new ConstantExpression(name, FluentPathType.String))
+        public ChildExpression(Expression focus, string name) : base(focus, OP_PREFIX+"children", TypeInfo.Any, new ConstantExpression(name, TypeInfo.String))
         {
         }
 
@@ -166,7 +155,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class IndexerExpression : FunctionCallExpression
     {
-        public IndexerExpression(Expression collection, Expression index) : base(collection, OP_PREFIX+"item", FluentPathType.Any, index)
+        public IndexerExpression(Expression collection, Expression index) : base(collection, OP_PREFIX+"item", TypeInfo.Any, index)
         {
         }
 
@@ -181,11 +170,11 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class BinaryExpression : FunctionCallExpression
     {
-        public BinaryExpression(char op, Expression left, Expression right) : base(left, OP_PREFIX + op, FluentPathType.Any, right)
+        public BinaryExpression(char op, Expression left, Expression right) : base(left, OP_PREFIX + op, TypeInfo.Any, right)
         {
         }
 
-        public BinaryExpression(string op, Expression left, Expression right) : base(left, OP_PREFIX+op, FluentPathType.Any, right)
+        public BinaryExpression(string op, Expression left, Expression right) : base(left, OP_PREFIX+op, TypeInfo.Any, right)
         {
         }
         public string Op
@@ -216,11 +205,11 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class UnaryExpression : FunctionCallExpression
     {
-        public UnaryExpression(char op, Expression operand) : base(operand, OP_PREFIX + op, FluentPathType.Any)
+        public UnaryExpression(char op, Expression operand) : base(operand, OP_PREFIX + op, TypeInfo.Any)
         {
         }
 
-        public UnaryExpression(string op, Expression operand) : base(operand, OP_PREFIX + op, FluentPathType.Any)
+        public UnaryExpression(string op, Expression operand) : base(operand, OP_PREFIX + op, TypeInfo.Any)
         {
         }
         public string Op
@@ -275,7 +264,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class NewNodeListInitExpression : Expression
     {
-        public NewNodeListInitExpression(IEnumerable<Expression> contents) : base(FluentPathType.Any)
+        public NewNodeListInitExpression(IEnumerable<Expression> contents) : base(TypeInfo.Any)
         {
             if (contents == null) throw Error.ArgumentNull("contents");
 
@@ -310,7 +299,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class VariableRefExpression : Expression
     {
-        public VariableRefExpression(string name) : base(FluentPathType.Any)
+        public VariableRefExpression(string name) : base(TypeInfo.Any)
         {
             if (name == null) throw Error.ArgumentNull("name");
 
@@ -360,4 +349,39 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         public static readonly AxisExpression This = new AxisExpression("this");
     }
 
+    public class TypeBinaryExpression : Expression
+    {
+        public TypeBinaryExpression(string op, Expression expression, TypeInfo type) : base(TypeInfo.Any)
+        {
+            Expression = expression;
+            Type = type;
+            Op = op;
+        }
+
+        public string Op { get; private set; }
+        public Expression Expression { get; private set; }
+
+        public TypeInfo Type { get; private set; }
+
+        public override void Accept(ExpressionVisitor visitor)
+        {
+            visitor.VisitTypeBinaryExpression(this);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (base.Equals(obj) && obj is TypeBinaryExpression)
+            {
+                var f = (TypeBinaryExpression)obj;
+                return Object.Equals(Expression, f.Expression) && Type == f.Type;
+            }
+            else
+                return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode() ^ Expression.GetHashCode() ^ Type.GetHashCode();
+        }
+    }
 }

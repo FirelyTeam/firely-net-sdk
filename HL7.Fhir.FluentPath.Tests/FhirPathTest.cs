@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sprache;
 using Hl7.Fhir.FluentPath;
+using HL7.Fhir.FluentPath.FluentPath.Expressions;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -105,6 +106,19 @@ namespace Hl7.Fhir.Tests.FhirPath
                 .Where(ctx => ctx.Children("use").IsEqualTo(FhirValueList.Create("official"))).IsEmpty().Not();
 
             Assert.AreEqual(true, result.AsBoolean());
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TypeInfoEquality()
+        {
+            Assert.AreEqual(TypeInfo.Bool, TypeInfo.Bool);
+            Assert.IsTrue(TypeInfo.Decimal == TypeInfo.ByName("decimal"));
+            Assert.AreNotEqual(TypeInfo.Bool, TypeInfo.String);
+            Assert.IsTrue(TypeInfo.Decimal == TypeInfo.ByName("decimal"));
+            Assert.AreEqual(TypeInfo.ByName("something"), TypeInfo.ByName("something"));
+            Assert.AreNotEqual(TypeInfo.ByName("something"), TypeInfo.ByName("somethingElse"));
+            Assert.IsTrue(TypeInfo.ByName("something") == TypeInfo.ByName("something"));
+            Assert.IsTrue(TypeInfo.ByName("something") != TypeInfo.ByName("somethingElse"));
         }
     }
 }

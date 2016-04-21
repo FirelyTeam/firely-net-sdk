@@ -18,7 +18,7 @@ namespace Hl7.Fhir.FluentPath.Parser
                 from lparen in Parse.Char('(')
                 from paramList in Parse.Ref(() => Grammar.Expression.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
                 from rparen in Parse.Char(')')
-                select new FunctionCallExpression(context, n, FluentPathType.Any, paramList.GetOrElse(Enumerable.Empty<Expression>()));
+                select new FunctionCallExpression(context, n, TypeInfo.Any, paramList.GetOrElse(Enumerable.Empty<Expression>()));
         }
 
 
