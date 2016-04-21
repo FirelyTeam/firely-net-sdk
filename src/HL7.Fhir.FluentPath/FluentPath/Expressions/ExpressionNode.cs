@@ -21,11 +21,16 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public abstract class Expression
     {
+        protected const string OP_PREFIX = "builtin.";
+        protected static readonly int OP_PREFIX_LEN = OP_PREFIX.Length;
+
         protected Expression(FluentPathType type)
         {
             ExpressionType = type;
         }
         public FluentPathType ExpressionType { get; protected set; }
+
+        public abstract void Accept(ExpressionVisitor visitor);
 
         public override bool Equals(object obj)
         {
@@ -41,6 +46,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         {
             return (int)ExpressionType;
         }
+
     }
 
 
@@ -77,6 +83,11 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
         public object Value { get; private set; }
 
+        public override void Accept(ExpressionVisitor visitor)
+        {
+            visitor.VisitConstant(this);
+        }
+
         public override bool Equals(object obj)
         {
             if (base.Equals(obj) && obj is ConstantExpression)
@@ -96,9 +107,6 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class FunctionCallExpression : Expression
     {
-        protected const string OP_PREFIX = "builtin.";
-        protected static readonly int OP_PREFIX_LEN = OP_PREFIX.Length;
-
         public FunctionCallExpression(Expression focus, string name, FluentPathType type, params Expression[] arguments) : this(focus, name, type, (IEnumerable<Expression>) arguments)
         {
         }
@@ -118,6 +126,11 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         public string FunctionName { get; private set; }
 
         public IEnumerable<Expression> Arguments { get; private set; }
+
+        public override void Accept(ExpressionVisitor visitor)
+        {
+            visitor.VisitFunctionCall(this);
+        }
 
         public override bool Equals(object obj)
         {
@@ -161,7 +174,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         {
             get
             {
-                return Arguments.Skip(1).First();
+                return Arguments.First();
             }
         }
     }
@@ -187,7 +200,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         {
             get
             {
-                return Arguments.First();
+                return Focus;
             }
         }
 
@@ -195,7 +208,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         {
             get
             {
-                return Arguments.Skip(1).First();
+                return Arguments.First();
             }
         }
     }
@@ -222,7 +235,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         {
             get
             {
-                return Arguments.First();
+                return Focus;
             }
         }
     }
@@ -237,6 +250,10 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         }
         public Expression Body { get; private set;  }
 
+        public override void Accept(ExpressionVisitor visitor)
+        {
+            visitor.VisitLambda(this);
+        }
         public override bool Equals(object obj)
         {
             if (base.Equals(obj) && obj is LambdaExpression)
@@ -256,39 +273,6 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     }
 
-    public class AxisExpression : Expression
-    {
-        public AxisExpression(string axisName) : base(FluentPathType.Any)
-        {
-            if (axisName == null) throw Error.ArgumentNull("axisName");
-
-            AxisName = axisName;
-        }
-
-        public string AxisName { get; private set; }
-
-        public static readonly AxisExpression This = new AxisExpression("this");
-
-        public override bool Equals(object obj)
-        {
-            if (base.Equals(obj) && obj is AxisExpression)
-            {
-                var f = (AxisExpression)obj;
-
-                return f.AxisName == AxisName;
-            }
-            else
-                return false;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode() ^ AxisName.GetHashCode();
-        }
-
-
-    }
-
     public class NewNodeListInitExpression : Expression
     {
         public NewNodeListInitExpression(IEnumerable<Expression> contents) : base(FluentPathType.Any)
@@ -300,6 +284,10 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
         public IEnumerable<Expression> Contents { get; private set;  }
 
+        public override void Accept(ExpressionVisitor visitor)
+        {
+            visitor.VisitNewNodeListInit(this);
+        }
         public override bool Equals(object obj)
         {
             if (base.Equals(obj) && obj is NewNodeListInitExpression)
@@ -320,24 +308,28 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         public static readonly NewNodeListInitExpression Empty = new NewNodeListInitExpression(Enumerable.Empty<Expression>());
     }
 
-    public class ExternalConstantExpression : Expression
+    public class VariableRefExpression : Expression
     {
-        public ExternalConstantExpression(string name) : base(FluentPathType.Any)
+        public VariableRefExpression(string name) : base(FluentPathType.Any)
         {
             if (name == null) throw Error.ArgumentNull("name");
 
-            ExternalName = name;
+            Name = name;
         }
 
-        public string ExternalName { get; private set; }
+        public string Name { get; private set; }
 
+        public override void Accept(ExpressionVisitor visitor)
+        {
+            visitor.VisitVariableRef(this);
+        }
         public override bool Equals(object obj)
         {
-            if (base.Equals(obj) && obj is ExternalConstantExpression)
+            if (base.Equals(obj) && obj is VariableRefExpression)
             {
-                var f = (ExternalConstantExpression)obj;
+                var f = (VariableRefExpression)obj;
 
-                return f.ExternalName == ExternalName;
+                return f.Name == Name;
             }
             else
                 return false;
@@ -345,9 +337,27 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
         public override int GetHashCode()
         {
-            return base.GetHashCode() ^ ExternalName.GetHashCode();
+            return base.GetHashCode() ^ Name.GetHashCode();
+        }
+    }
+
+    public class AxisExpression : VariableRefExpression
+    {
+        public AxisExpression(string axisName) : base(OP_PREFIX+axisName)
+        {
+            if (axisName == null) throw Error.ArgumentNull("axisName");
+        }
+
+        public string AxisName
+        {
+            get
+            {
+                return Name.Substring(OP_PREFIX_LEN);
+            }
         }
 
 
+        public static readonly AxisExpression This = new AxisExpression("this");
     }
+
 }

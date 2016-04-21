@@ -30,8 +30,10 @@ namespace HL7.Fhir.FluentPath.FluentPath
             append(expression);
 
             incr();
+            expression.Focus.Accept(this);
+
             foreach (var arg in expression.Arguments)
-                Visit(arg);
+                arg.Accept(this);
             decr();
         }
 
@@ -41,14 +43,8 @@ namespace HL7.Fhir.FluentPath.FluentPath
             append(expression);
 
             incr();
-            Visit(expression.Body);
+            expression.Body.Accept(this);
             decr();
-        }
-
-        public override void VisitAxis(AxisExpression expression)
-        {
-            append("axis {0}".FormatWith(expression.AxisName));
-            append(expression);
         }
 
         public override void VisitNewNodeListInit(NewNodeListInitExpression expression)
@@ -58,13 +54,13 @@ namespace HL7.Fhir.FluentPath.FluentPath
 
             incr();
             foreach (var element in expression.Contents)
-                Visit(element);
+                element.Accept(this);
             decr();
         }
 
-        public override void VisitExternalConstant(ExternalConstantExpression expression)
+        public override void VisitVariableRef(VariableRefExpression expression)
         {
-            append("external {0}".FormatWith(expression.ExternalName));
+            append("var {0}".FormatWith(expression.Name));
             append(expression);
         }
 
@@ -101,7 +97,7 @@ namespace HL7.Fhir.FluentPath.FluentPath
         public static string Dump(this Expression expr)
         {
             var dumper = new TreeVisualizerVisitor();
-            dumper.Visit(expr);
+            expr.Accept(dumper);
             return dumper.Result;
         }
     }

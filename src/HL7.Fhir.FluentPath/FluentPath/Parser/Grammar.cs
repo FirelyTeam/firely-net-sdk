@@ -40,7 +40,7 @@ namespace Hl7.Fhir.FluentPath.Parser
         //  ;
         public static readonly Parser<Expression> BracketExpr =
             (from lparen in Parse.Char('(')
-             from expr in Parse.Ref(() => Expr)
+             from expr in Parse.Ref(() => Expression)
              from rparen in Parse.Char(')')
              select expr)
             .Named("BracketExpr");
@@ -60,11 +60,16 @@ namespace Hl7.Fhir.FluentPath.Parser
         public static readonly Parser<Expression> Term =
             Literal
             .Or(Invocation(AxisExpression.This))
-            .XOr(Lexer.ExternalConstant.Select(n => (Expression)new ExternalConstantExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
+            .XOr(Lexer.ExternalConstant.Select(n => (Expression)new VariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
             .XOr(BracketExpr)
             .XOr(EmptyList)
             .Token()
             .Named("Term");
+
+
+        //TODO: Should not use ConstantExpression but really convert to a FluentyType
+        public static readonly Parser<Expression> TypeSpecifier =
+            Lexer.QualifiedIdentifier.Select(qi => new ConstantExpression(qi)).Token();
 
         //expression
         // : term                                                      #termExpression
@@ -99,7 +104,7 @@ namespace Hl7.Fhir.FluentPath.Parser
         // | expression '[' expression ']'                             #indexerExpression
         public static readonly Parser<Expression> IndexerExpression =
             InvocationExpression.Then(
-                invoc => Parse.Contained(Expr, Parse.Char('['), Parse.Char(']')).Select(ix => new IndexerExpression(invoc, ix))
+                invoc => Parse.Contained(Expression, Parse.Char('['), Parse.Char(']')).Select(ix => new IndexerExpression(invoc, ix))
                 .Or(Parse.Return(invoc)));
 
         // | ('+' | '-') expression                                    #polarityExpression
@@ -126,19 +131,25 @@ namespace Hl7.Fhir.FluentPath.Parser
         public static readonly Parser<Expression> InEqExpression = BinaryExpression(Lexer.InEqOperator, UnionExpression);
 
         // | expression('is' | 'as') typeSpecifier                    #typeExpression
-        //public static readonly Parser<Expression> TypeExpression = 
-        //    InEqExpression.Then( ineq =>
-        //            from isas in Lexer.TypeOperator
-        //            from 
-            
-        //    )
+        public static readonly Parser<Expression> TypeExpression =
+            InEqExpression.Then(
+                    ineq => (from isas in Lexer.TypeOperator
+                             from tp in TypeSpecifier
+                             select new BinaryExpression(isas, ineq, tp))
+                    .Or(Parse.Return(ineq)));
 
-        //public static readonly Parser<Evaluator> LogicExpr =
-        //    Parse.ChainOperator(Lexer.Logic, CompExpr, (op, left, right) => left.Infix(op, right));
+        // | expression('=' | '~' | '!=' | '!~' | '<>') expression    #equalityExpression
+        public static readonly Parser<Expression> EqExpression = BinaryExpression(Lexer.EqOperator, TypeExpression);
 
-        //public static readonly Parser<Evaluator> Expr = LogicExpr;
+        // | expression 'and' expression                               #andExpression
+        public static readonly Parser<Expression> AndExpression = BinaryExpression(Lexer.AndOperator, EqExpression);
 
+        // | expression('or' | 'xor') expression                      #orExpression
+        public static readonly Parser<Expression> OrExpression = BinaryExpression(Lexer.OrOperator, AndExpression);
 
-        public static readonly Parser<Expression> Expr = InEqExpression;                       
+        // | expression 'implies' expression                           #impliesExpression
+        public static readonly Parser<Expression> ImpliesExpression = BinaryExpression(Lexer.ImpliesOperator, OrExpression);
+
+        public static readonly Parser<Expression> Expression = ImpliesExpression;                       
     }
 }

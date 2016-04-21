@@ -30,7 +30,7 @@ namespace Hl7.Fhir.FluentPath
             //if (_cache.ContainsKey(cacheName))
             //    return _cache[cacheName]; 
 
-            var compilation = Grammar.Expr.End().TryParse(expression);
+            var compilation = Grammar.Expression.End().TryParse(expression);
 
             if (compilation.WasSuccessful)
             {

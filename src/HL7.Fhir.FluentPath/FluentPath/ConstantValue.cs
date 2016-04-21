@@ -25,6 +25,8 @@ namespace Hl7.Fhir.FluentPath
                 Value = value;
             else if (value is Uri)
                 Value = ((Uri)value).OriginalString;
+            else if (value is char)
+                Value = new String((char)value,1);
             else if (value is Int32 || value is Int16 || value is UInt16 || value is UInt32 || value is Int64 || value is UInt64)
                 Value = Convert.ToInt64(value);
             else if (value is float || value is double || value is Decimal)

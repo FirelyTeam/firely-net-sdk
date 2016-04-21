@@ -25,44 +25,16 @@ namespace Hl7.Fhir.FluentPath.Parser
         internal static readonly Parser<string> MulOperator = Lexer.Operator("*","/","div","mod");
         internal static readonly Parser<string> AddOperator = Lexer.Operator("+", "-");
         internal static readonly Parser<string> UnionOperator = Lexer.Operator("|");
+
+        // NOTE: ORDER MATTERS, since otherwise shorter ops will be recognized before longer ones!
         internal static readonly Parser<string> InEqOperator = Lexer.Operator("<=", "<", ">=", ">");
-        internal static readonly Parser<string> EqOperator = Lexer.Operator("=", "~", "!=", "!~", "<>");
         internal static readonly Parser<string> TypeOperator = Lexer.Operator("is", "as");
 
-        //internal static readonly Parser<Operator> IsType = Operator("is", FluentPath.Operator.Is);
-        //internal static readonly Parser<Operator> AsType = Operator("as", FluentPath.Operator.As);
-
-        //internal static readonly Parser<Operator> In = Operator("in", FluentPath.Operator.In);
-        //internal static readonly Parser<Operator> Contains = Operator("contains", FluentPath.Operator.Contains);
-
-        //internal static readonly Parser<Operator> And = Operator("and", FluentPath.Operator.And);
-
-        //internal static readonly Parser<Operator> Or = Operator("or", FluentPath.Operator.Or);
-        //internal static readonly Parser<Operator> Xor = Operator("xor", FluentPath.Operator.Xor);
-
-        //internal static readonly Parser<Operator> Implies = Operator("implies", FluentPath.Operator.Implies);
-
-        // COMP: '=' | '~' | '!=' | '!~' | '>' | '<' | '<=' | '>=' | 'in';
         // NOTE: ORDER MATTERS, since otherwise shorter ops will be recognized before longer ones!
-        // TODO: Watch out for new <> which can conflict with <
-        //public static readonly Parser<Operator> Comp =
-        //    Equal
-        //    .Or(Equivalent)
-        //    .Or(NotEqual)
-        //    .Or(NotEquivalent)
-        //    .Or(LessOrEqual)
-        //    .Or(GreaterOrEqual)
-        //    .Or(GreaterThan)
-        //    .Or(LessThan)
-        //    .Or(In)
-        //    .Named("Comp");
-
-        // LOGIC: 'and' | 'or' | 'xor' | 'implies';
-        //public static readonly Parser<Operator> Logic =
-        //    And
-        //    .Or(Or)
-        //    .Or(Xor)
-        //    .Or(Implies)
-        //    .Named("Logic");
+        internal static readonly Parser<string> EqOperator = Lexer.Operator("=", "~", "!=", "!~", "<>");
+        internal static readonly Parser<string> MembershipOperator = Lexer.Operator("in", "contains");
+        internal static readonly Parser<string> AndOperator = Lexer.Operator("and");
+        internal static readonly Parser<string> OrOperator = Lexer.Operator("or", "xor");
+        internal static readonly Parser<string> ImpliesOperator = Lexer.Operator("implies");
     }     
 }
