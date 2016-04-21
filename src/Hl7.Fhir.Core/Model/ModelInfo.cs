@@ -76,21 +76,70 @@ namespace Hl7.Fhir.Model
             public ResourceType[] Target { get; set; }
         }
 
-
+#if false
+        // [WMR 20160421] Slow, based on reflection...
         public static string FhirTypeToFhirTypeName(FHIRDefinedType type)
         {
             return type.GetLiteral();
         }
 
+        // [WMR 20160421] Wrong!
+        // FhirTypeToFhirTypeName parses the typename from EnumLiteral attribute on individual FHIRDefinedType member
+        // FhirTypeNameToFhirType converts enum member name to FHIRDefinedType enum value
+        // Currently, the EnumLiteral attribute value is always equal to the Enum member name and the C# type name
+        // However, this is not guaranteed! e.g. a FHIR type name could be a reserved word in C#
+
         public static FHIRDefinedType? FhirTypeNameToFhirType(string name)
         {
-            FHIRDefinedType result = FHIRDefinedType.Patient;
+            FHIRDefinedType result; // = FHIRDefinedType.Patient;
 
             if (Enum.TryParse<FHIRDefinedType>(name, ignoreCase: true, result: out result))
                 return result;
             else
                 return null;
         }
+
+#else
+        // [WMR 20160421] NEW - Improved & optimized
+        // 1. Convert from/to FHIR type names as defined by EnumLiteral attributes on FHIRDefinedType enum members
+        // 2. Cache lookup tables, to optimize runtime reflection
+
+        public static string FhirTypeToFhirTypeName(FHIRDefinedType type)
+        {
+            string result;
+            _fhirTypeToFhirTypeName.Value.TryGetValue(type, out result);
+            return result;
+        }
+
+        private static Lazy<IDictionary<FHIRDefinedType, string>> _fhirTypeToFhirTypeName
+            = new Lazy<IDictionary<FHIRDefinedType, string>>(InitFhirTypeToFhirTypeName, System.Threading.LazyThreadSafetyMode.PublicationOnly);
+
+        private static IDictionary<FHIRDefinedType, string> InitFhirTypeToFhirTypeName()
+        {
+            // Build reverse lookup table
+            return _fhirTypeNameToFhirType.Value.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+        }
+
+        public static FHIRDefinedType? FhirTypeNameToFhirType(string typeName)
+        {
+            FHIRDefinedType result;
+            if (_fhirTypeNameToFhirType.Value.TryGetValue(typeName, out result))
+            {
+                return result;
+            }
+            return null;
+        }
+
+        private static Lazy<IDictionary<string, FHIRDefinedType>> _fhirTypeNameToFhirType
+            = new Lazy<IDictionary<string, FHIRDefinedType>>(InitFhirTypeNameToFhirType, System.Threading.LazyThreadSafetyMode.PublicationOnly);
+
+        private static IDictionary<string, FHIRDefinedType> InitFhirTypeNameToFhirType()
+        {
+            var values = Enum.GetValues(typeof(FHIRDefinedType)).OfType<FHIRDefinedType>();
+            return values.ToDictionary(type => type.GetLiteral());
+        }
+
+#endif
 
         public static Type GetTypeForFhirType(string name)
         {
