@@ -198,10 +198,15 @@ namespace Hl7.Fhir.Rest
 
         public static byte[] GetBody(this Bundle.ResponseComponent interaction)
         {
-            if (interaction.UserData.ContainsKey(USERDATA_BODY))
-                return (byte[])interaction.UserData[USERDATA_BODY];
-            else
-                return null;
+            // [WMR 20160421] Optimization
+            //if (interaction.UserData.ContainsKey(USERDATA_BODY))
+            //    return (byte[])interaction.UserData[USERDATA_BODY];
+            //else
+            //    return null;
+            object result;
+            interaction.UserData.TryGetValue(USERDATA_BODY, out result);
+            return (byte[])result;
+
         }
 
         internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)

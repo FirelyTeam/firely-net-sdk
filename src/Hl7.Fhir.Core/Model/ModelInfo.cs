@@ -94,19 +94,27 @@ namespace Hl7.Fhir.Model
 
         public static Type GetTypeForFhirType(string name)
         {
-            if (!FhirTypeToCsType.ContainsKey(name))
-                return null;
-            else
-                return FhirTypeToCsType[name];
+            // [WMR 20160421] Optimization
+            //if (!FhirTypeToCsType.ContainsKey(name))
+            //    return null;
+            //else
+            //    return FhirTypeToCsType[name];
+            Type result;
+            FhirTypeToCsType.TryGetValue(name, out result);
+            return result;
         }
 
 
         public static string GetFhirTypeNameForType(Type type)
         {
-            if (!FhirCsTypeToString.ContainsKey(type))
-                return null;
-            else
-                return FhirCsTypeToString[type];
+            // [WMR 20160421] Optimization
+            //if (!FhirCsTypeToString.ContainsKey(type))
+            //    return null;
+            //else
+            //    return FhirCsTypeToString[type];
+            string result;
+            FhirCsTypeToString.TryGetValue(type, out result);
+            return result;
         }
 
         [Obsolete("Use GetFhirTypeNameForType() instead")]

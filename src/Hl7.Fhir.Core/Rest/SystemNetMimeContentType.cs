@@ -30,7 +30,6 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System.Collections;
 using System.Text;
 using System.Collections.Generic;
 
@@ -40,7 +39,8 @@ namespace System.Net.Mime
 {
     internal class ContentType
     {
-#region Fields
+        #region Fields
+
         static Encoding utf8unmarked;
 
         string mediaType;
@@ -48,7 +48,7 @@ namespace System.Net.Mime
 
         #endregion // Fields
 
-#region Constructors
+        #region Constructors
 
         public ContentType()
         {
@@ -87,7 +87,7 @@ namespace System.Net.Mime
 
         #endregion // Constructors
 
-#region Properties
+        #region Properties
 
         static Encoding UTF8Unmarked
         {
@@ -101,13 +101,27 @@ namespace System.Net.Mime
 
         public string Boundary
         {
-            get { return parameters.ContainsKey("boundary") ? parameters["boundary"] : null; }
+            // [WMR 20160421] Optimization
+            // get { return parameters.ContainsKey("boundary") ? parameters["boundary"] : null; }
+            get
+            {
+                string result;
+                parameters.TryGetValue("boundary", out result);
+                return result;
+            }
             set { parameters["boundary"] = value; }
         }
 
         public string CharSet
         {
-            get { return parameters.ContainsKey("charset") ? parameters["charset"] : null; }
+            // [WMR 20160421] Optimization
+            // get { return parameters.ContainsKey("charset") ? parameters["charset"] : null; }
+            get
+            {
+                string result;
+                parameters.TryGetValue("charset", out result);
+                return result;
+            }
             set { parameters["charset"] = value; }
         }
 
@@ -130,7 +144,14 @@ namespace System.Net.Mime
 
         public string Name
         {
-            get { return parameters.ContainsKey("name") ? parameters["name"] : null; }
+            // [WMR 20160421] Optimization
+            // get { return parameters.ContainsKey("name") ? parameters["name"] : null; }
+            get
+            {
+                string result;
+                parameters.TryGetValue("name", out result);
+                return result;
+            }
             set { parameters["name"] = value; }
         }
 
@@ -141,7 +162,7 @@ namespace System.Net.Mime
 
         #endregion // Properties
 
-#region Methods
+        #region Methods
 
         public override bool Equals(object obj)
         {
