@@ -8,23 +8,19 @@ using System.Threading.Tasks;
 
 namespace HL7.Fhir.FluentPath.FluentPath
 {
-    internal class TreeVisualizerVisitor : ExpressionVisitor
+    internal class TreeVisualizerVisitor : ExpressionVisitor<StringBuilder>
     {
         private StringBuilder _result = new StringBuilder();
         private int _indent = 0;
 
-        public string Result
-        {
-            get { return _result.ToString(); }
-        }
-
-        public override void VisitConstant(ConstantExpression expression)
+        public override StringBuilder VisitConstant(ConstantExpression expression)
         {
             append("const {0}".FormatWith(expression.Value));
             appendType(expression);
+            return _result;
         }
 
-        public override void VisitFunctionCall(FunctionCallExpression expression)
+        public override StringBuilder VisitFunctionCall(FunctionCallExpression expression)
         {
             append("func {0}".FormatWith(expression.FunctionName));
             appendType(expression);
@@ -35,9 +31,11 @@ namespace HL7.Fhir.FluentPath.FluentPath
             foreach (var arg in expression.Arguments)
                 arg.Accept(this);
             decr();
+
+            return _result;
         }
 
-        public override void VisitLambda(LambdaExpression expression)
+        public override StringBuilder VisitLambda(LambdaExpression expression)
         {
             append("lambda $this -> ");
             appendType(expression);
@@ -45,9 +43,11 @@ namespace HL7.Fhir.FluentPath.FluentPath
             incr();
             expression.Body.Accept(this);
             decr();
+
+            return _result;
         }
 
-        public override void VisitNewNodeListInit(NewNodeListInitExpression expression)
+        public override StringBuilder VisitNewNodeListInit(NewNodeListInitExpression expression)
         {
             append("new NodeSet");
             appendType(expression);
@@ -56,18 +56,24 @@ namespace HL7.Fhir.FluentPath.FluentPath
             foreach (var element in expression.Contents)
                 element.Accept(this);
             decr();
+
+            return _result;
         }
 
-        public override void VisitVariableRef(VariableRefExpression expression)
+        public override StringBuilder VisitVariableRef(VariableRefExpression expression)
         {
             append("var {0}".FormatWith(expression.Name));
             appendType(expression);
+
+            return _result;              
         }
 
-        public override void VisitTypeBinaryExpression(TypeBinaryExpression expression)
+        public override StringBuilder VisitTypeBinaryExpression(TypeBinaryExpression expression)
         {
             append("{0} {1}".FormatWith(expression.Op, expression.Type.Name));
             appendType(expression);
+
+            return _result;
         }
 
         private void appendType(Expression expr)
@@ -103,8 +109,7 @@ namespace HL7.Fhir.FluentPath.FluentPath
         public static string Dump(this Expression expr)
         {
             var dumper = new TreeVisualizerVisitor();
-            expr.Accept(dumper);
-            return dumper.Result;
+            return expr.Accept(dumper).ToString();
         }
     }
 

@@ -51,7 +51,7 @@
     <Compile Include="FluentPath\BaseEvaluationContext.cs" />
     <Compile Include="FluentPath\Evaluator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionVisitor.cs" />
-    <Compile Include="FluentPath\Expressions\FluentPathType.cs" />
+    <Compile Include="FluentPath\FluentPathType.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
     <Compile Include="FluentPath\Parser\Functions.cs" />
     <Compile Include="FluentPath\Parser\Operators.cs" />
@@ -61,12 +61,12 @@
     <Compile Include="FluentPath\IFluentPathValue.cs" />
     <Compile Include="FluentPath\IFluentPathValueExtensions.cs" />
     <Compile Include="FluentPath\IFluentPathValueListExtensions.cs" />
-    <Compile Include="FluentPath\IFluentPathValueTypeExtensions.cs" />
     <Compile Include="FluentPath\Operator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionNode.cs" />
     <Compile Include="FluentPath\PartialDateTime.cs" />
     <Compile Include="FluentPath\PathExpression.cs" />
     <Compile Include="FluentPath\Time.cs" />
+    <Compile Include="FluentPath\EvaluatorVisitor.cs" />
     <Compile Include="FluentPath\TreeVisualizerVisitor.cs" />
     <Compile Include="FluentPath\ConstantValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

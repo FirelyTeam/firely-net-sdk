@@ -32,14 +32,12 @@ namespace Hl7.Fhir.FluentPath
         void InvokeExternalFunction(string name, IList<IEnumerable<IFluentPathValue>> parameters);
 
         /// <summary>
-        /// Provide a value when a constant expression (%name) is encountered in an expression
+        /// Provide a value when a value reference (%name) is encountered in an expression
         /// </summary>
         /// <param name="name"></param>
         /// <returns>Return null when the constant is not known</returns>
-        IFluentPathValue ResolveConstant(string name);
+        IEnumerable<IFluentPathValue> ResolveValue(string name);
 
         IEnumerable<IFluentPathValue> OriginalContext { get; set; }
-
-        IFluentPathElement OriginalResource { get; }
     }
 }

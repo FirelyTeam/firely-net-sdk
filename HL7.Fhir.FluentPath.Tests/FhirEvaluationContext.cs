@@ -12,6 +12,8 @@ namespace Hl7.Fhir.FluentPath
 
     public class FhirEvaluationContext : BaseEvaluationContext
     {
+        IFluentPathElement OriginalResource { get; }
+
         public FhirEvaluationContext()
         {
         }
@@ -37,29 +39,22 @@ namespace Hl7.Fhir.FluentPath
         {
             if(name == "resolve")
             {
-                
+                throw new NotImplementedException();        
             }
             else
                 throw new NotSupportedException($"Function '{name}' is unknown");
         }
 
 
-        public override IFluentPathValue ResolveConstant(string name)
+        public override IEnumerable<IFluentPathValue> ResolveValue(string name)
         {
-            string value = null;
+            var baseValue = base.ResolveValue(name);
+            if (baseValue != null) return baseValue;
 
-            if (name.StartsWith("ext-"))
-                value = "http://hl7.org/fhir/StructureDefinition/" + name.Substring(4);
-            else if (name.StartsWith("vs-"))
-                value = "http://hl7.org/fhir/ValueSet/" + name.Substring(3);
-            else if (name == "sct")
-                value = "http://snomed.info/sct";
-            else if (name == "loinc")
-                value = "http://loinc.org";
-            else if (name == "ucum")
-                value = "http://unitsofmeasure.org";
+            if (name == "resource")
+                return FhirValueList.Create(OriginalResource);
 
-            return value != null ? new ConstantValue(value) : null;
+            return null;
         }
 
         public virtual IFluentPathElement ResolveResource(string url)

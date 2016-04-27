@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 {
-    public abstract class ExpressionVisitor
+    public abstract class ExpressionVisitor<T>
     {
         //public void Visit(Expression expression)
         //{
@@ -22,16 +22,16 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         //        VisitVariableRef((VariableRefExpression)expression);
         //}
 
-        public virtual void VisitConstant(ConstantExpression expression) { }
+        public abstract T VisitConstant(ConstantExpression expression);
 
-        public virtual void VisitFunctionCall(FunctionCallExpression expression) { }
+        public abstract T VisitFunctionCall(FunctionCallExpression expression);
 
-        public virtual void VisitLambda(LambdaExpression expression) { }
+        public abstract T VisitLambda(LambdaExpression expression);
 
-        public virtual void VisitNewNodeListInit(NewNodeListInitExpression expression) { }
+        public abstract T VisitNewNodeListInit(NewNodeListInitExpression expression);
 
-        public virtual void VisitVariableRef(VariableRefExpression expression) { }
+        public abstract T VisitVariableRef(VariableRefExpression expression);
 
-        public virtual void VisitTypeBinaryExpression(TypeBinaryExpression expression) { }
+        public abstract T VisitTypeBinaryExpression(TypeBinaryExpression expression);
     }
 }

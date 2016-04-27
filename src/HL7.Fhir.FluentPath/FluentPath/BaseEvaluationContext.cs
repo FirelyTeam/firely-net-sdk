@@ -22,8 +22,6 @@ namespace Hl7.Fhir.FluentPath
      
         public IEnumerable<IFluentPathValue> OriginalContext { get; set; }
 
-        public IFluentPathElement OriginalResource { get; set; }
-
         public virtual void InvokeExternalFunction(string name, IList<IEnumerable<IFluentPathValue>> parameters)
         {
             throw new NotSupportedException("Function '{0}' is unknown".FormatWith(name));
@@ -40,9 +38,24 @@ namespace Hl7.Fhir.FluentPath
             }
         }
 
-        public virtual IFluentPathValue ResolveConstant(string name)
+        public virtual IEnumerable<IFluentPathValue> ResolveValue(string name)
         {
-            return null;
+            if (name == "context")
+                return OriginalContext;
+
+            string value = null;
+            if (name.StartsWith("ext-"))
+                value = "http://hl7.org/fhir/StructureDefinition/" + name.Substring(4);
+            else if (name.StartsWith("vs-"))
+                value = "http://hl7.org/fhir/ValueSet/" + name.Substring(3);
+            else if (name == "sct")
+                value = "http://snomed.info/sct";
+            else if (name == "loinc")
+                value = "http://loinc.org";
+            else if (name == "ucum")
+                value = "http://unitsofmeasure.org";
+
+            return value != null ? FhirValueList.Create(value) : null;
         }
     }
 }

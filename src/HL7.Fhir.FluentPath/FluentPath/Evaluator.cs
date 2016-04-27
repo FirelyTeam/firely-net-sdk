@@ -82,9 +82,9 @@ namespace Hl7.Fhir.FluentPath
             };
         }
 
-        public static Evaluator ExternalConstant(string name)
+        public static Evaluator ResolveValue(string name)
         {
-            return (_, ctx) => new[] { ctx.ResolveConstant(name) };
+            return (_, ctx) => ctx.ResolveValue(name);
         }
 
 
@@ -94,31 +94,20 @@ namespace Hl7.Fhir.FluentPath
             {
                 switch (axis)
                 {
-                    case FluentPath.Axis.Descendants:
-                        return focus.JustElements().Descendants();
-
-                    // REFACTORED: IFluentPathElement.Parent is removed
-                    //case FluentPath.Axis.Parent:
-                    //    return focus.JustElements().Parents();
-
                     case FluentPath.Axis.Focus:
                         return focus;
-                    case FluentPath.Axis.Children:
-                        return focus.JustElements().Children();
-                    case FluentPath.Axis.Context:
-                        if (ctx.OriginalContext == null)
-                            throw new InvalidOperationException("Cannot resolve the $context, the Evaluator did not provide it at runtime");
-                        else
-                            return ctx.OriginalContext;
-                    case FluentPath.Axis.Resource:
-                        if (ctx.OriginalResource == null)
-                            throw new InvalidOperationException("Cannot resolve the $resource, the evaluation context has no information about it.");
-                        else
-                            return FhirValueList.Create(ctx.OriginalResource);
                     default:
                         throw new InvalidOperationException("Internal error: unknown axis '{0}'".FormatWith(axis));
                 }
             };
+        }
+
+        public static Evaluator Axis(string name)
+        {
+            if (name == "this")
+                return Axis(FluentPath.Axis.Focus);
+            else
+                throw new InvalidOperationException("Internal error: unknown axis '{0}'".FormatWith(name));
         }
 
         public static Evaluator Length()
@@ -385,11 +374,11 @@ namespace Hl7.Fhir.FluentPath
 
     public enum Axis
     {
-        Children,
-        Descendants,
-        Context,
-        Resource,
-        Parent,
+        //Children,
+        //Descendants,
+        //Context,
+        //Resource,
+        //Parent,
         Focus
     }
 

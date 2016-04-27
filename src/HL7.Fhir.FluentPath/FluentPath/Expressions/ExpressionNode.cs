@@ -19,7 +19,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         }
         public TypeInfo ExpressionType { get; protected set; }
 
-        public abstract void Accept(ExpressionVisitor visitor);
+        public abstract T Accept<T>(ExpressionVisitor<T> visitor);
 
         public override bool Equals(object obj)
         {
@@ -72,9 +72,9 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
         public object Value { get; private set; }
 
-        public override void Accept(ExpressionVisitor visitor)
+        public override T Accept<T>(ExpressionVisitor<T> visitor)
         {
-            visitor.VisitConstant(this);
+            return visitor.VisitConstant(this);
         }
 
         public override bool Equals(object obj)
@@ -116,9 +116,9 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
         public IEnumerable<Expression> Arguments { get; private set; }
 
-        public override void Accept(ExpressionVisitor visitor)
+        public override T Accept<T>(ExpressionVisitor<T> visitor)
         {
-            visitor.VisitFunctionCall(this);
+            return visitor.VisitFunctionCall(this);
         }
 
         public override bool Equals(object obj)
@@ -239,9 +239,9 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
         }
         public Expression Body { get; private set;  }
 
-        public override void Accept(ExpressionVisitor visitor)
+        public override T Accept<T>(ExpressionVisitor<T> visitor)
         {
-            visitor.VisitLambda(this);
+            return visitor.VisitLambda(this);
         }
         public override bool Equals(object obj)
         {
@@ -273,9 +273,9 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
         public IEnumerable<Expression> Contents { get; private set;  }
 
-        public override void Accept(ExpressionVisitor visitor)
+        public override T Accept<T>(ExpressionVisitor<T> visitor)
         {
-            visitor.VisitNewNodeListInit(this);
+            return visitor.VisitNewNodeListInit(this);
         }
         public override bool Equals(object obj)
         {
@@ -308,9 +308,9 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
         public string Name { get; private set; }
 
-        public override void Accept(ExpressionVisitor visitor)
+        public override T Accept<T>(ExpressionVisitor<T> visitor)
         {
-            visitor.VisitVariableRef(this);
+            return visitor.VisitVariableRef(this);
         }
         public override bool Equals(object obj)
         {
@@ -363,9 +363,9 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
         public TypeInfo Type { get; private set; }
 
-        public override void Accept(ExpressionVisitor visitor)
+        public override T Accept<T>(ExpressionVisitor<T> visitor)
         {
-            visitor.VisitTypeBinaryExpression(this);
+            return visitor.VisitTypeBinaryExpression(this);
         }
 
         public override bool Equals(object obj)
