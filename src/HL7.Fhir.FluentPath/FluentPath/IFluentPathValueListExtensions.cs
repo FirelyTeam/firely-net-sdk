@@ -279,12 +279,6 @@ namespace Hl7.Fhir.FluentPath
             return focus.SelectMany(node => node.Descendants());
         }
 
-        // REFACTORED: IFluentPathElement.Parent is removed
-        //public static IEnumerable<IFluentPathElement> Parents(this IEnumerable<IFluentPathElement> focus)
-        //{
-        //    return focus.Select(node => node.Parent);
-        //}
-
         public static IEnumerable<IFluentPathValue> IsEqualTo(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
         {
             if (!left.Any() && !right.Any()) return FhirValueList.Create(true);

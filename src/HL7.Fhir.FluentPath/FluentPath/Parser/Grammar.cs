@@ -49,9 +49,20 @@ namespace Hl7.Fhir.FluentPath.Parser
             Parse.Char('{').Token().Then(c => Parse.Char('}').Token())
                     .Select(v => NewNodeListInitExpression.Empty);
 
-        public static Parser<Expression> Invocation(Expression focus)
+         public static Parser<Expression> Function(Expression context)
+         {
+              return 
+                  from n in Lexer.Identifier.Select(name => name)
+                  from lparen in Parse.Char('(')
+                  from paramList in Parse.Ref(() => Grammar.Expression.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
+                  from rparen in Parse.Char(')')
+                  select new FunctionCallExpression(context, n, TypeInfo.Any, paramList.GetOrElse(Enumerable.Empty<Expression>()));
+          }
+
+
+    public static Parser<Expression> Invocation(Expression focus)
         {
-            return Functions.Function(focus)
+            return Function(focus)
                 .Or(Lexer.Identifier.Select(i => new ChildExpression(focus, i)))
                 .XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
                 .Token();
