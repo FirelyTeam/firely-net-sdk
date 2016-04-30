@@ -97,13 +97,13 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.AreEqual(2, result.Count());
             Assert.AreEqual("usual", result.First().AsStringRepresentation());
 
-            var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
-            Patient p = Fhir.Serialization.FhirParser.ParseResourceFromXml(tpXml) as Patient;
+            // var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
+            // Patient p = Fhir.Serialization.FhirParser.ParseResourceFromXml(tpXml) as Patient;
 
-            IFhirPathElement model = p;
-            result = model.Children("Patient").Children("identifier").Children("use");
-            Assert.AreEqual(2, result.Count());
-            Assert.AreEqual("usual", result.First().AsStringRepresentation());
+            //IFhirPathElement model = p;
+            //result = model.Children("Patient").Children("identifier").Children("use");
+            //Assert.AreEqual(2, result.Count());
+            //Assert.AreEqual("usual", result.First().AsStringRepresentation());
         }
 
         [TestMethod, TestCategory("FhirPath")]
