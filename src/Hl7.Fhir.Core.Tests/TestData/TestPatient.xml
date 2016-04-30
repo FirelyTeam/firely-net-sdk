@@ -21,6 +21,10 @@
         <system value="http://hl7.org/fhir/sid/us-ssn" />
         <value value="444222222"/>
       </identifier>
+      <identifier>
+        <system value="http://hl7.org/fhir/sid/misc-id" />
+        <value value="3412341"/>
+      </identifier>
       <active value ="true"/>
       <name id="firstname">
         <!-- See if this is roundtripped -->        

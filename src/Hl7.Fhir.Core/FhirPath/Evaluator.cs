@@ -299,9 +299,56 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
+        /// <summary>
+        /// This value is here primarily for unit testing to make the value predictable
+        /// </summary>
+        public static DateTime? FixedNowValue;
+        public static Evaluator Now()
+        {
+            return (f, c) =>
+            {
+                System.Diagnostics.Trace.WriteLine("Evaluating the now() expression");
+                if (FixedNowValue.HasValue)
+                {
+                    return new[] { new TypedValue(PartialDateTime.Parse(FixedNowValue.Value.ToFhirDateTime())) };
+                }
+                return new[] { new TypedValue(PartialDateTime.Parse(DateTime.Now.ToFhirDateTime())) };
+            };
+        }
+
+        /// <summary>
+        /// This value is here primarily for unit testing to make the value predictable
+        /// </summary>
+        public static DateTime? FixedTodayValue;
         public static Evaluator Today()
         {
-            return Eval.TypedValue(PartialDateTime.Parse(DateTime.Today.ToFhirDate()));
+            return (f, c) =>
+            {
+                System.Diagnostics.Trace.WriteLine("Evaluating the today() expression");
+                if (FixedTodayValue.HasValue)
+                {
+                    return new[] { new TypedValue(new PartialDateTime(FixedTodayValue.Value.Date, PartialDateTime.Precision.Day)) };
+                }
+                return new[] { new TypedValue(new PartialDateTime(DateTimeOffset.Now.Date, PartialDateTime.Precision.Day)) };
+            };
+        }
+
+        /// <summary>
+        /// Add values to a component of a date
+        /// </summary>
+        /// <param name="datepart">the part of the date to modify, yy | mm | dd | hh | mi | ss</param>
+        /// <param name="value">The value to increment in the date</param>
+        /// <returns></returns>
+        public static Evaluator DateAdd(Evaluator datepart, Evaluator value)
+        {
+            return (f, c) =>
+            {
+                string part = datepart != null ? datepart(f, c).Single().ToString() : null;
+                int valueToAdd = (int)value(f, c).AsInteger();
+
+                return f.DateAdd(part, valueToAdd);
+                // return new[] { new TypedValue(PartialDateTime.Parse(DateTime.Today.AddDays(2).ToFhirDate())) };
+            };
         }
 
         public static Evaluator Resolve()

@@ -45,7 +45,9 @@ namespace Hl7.Fhir.FhirPath
 
         public override string ToString()
         {
-            return Value.ToString();
+            if (Value != null)
+                return Value.ToString();
+            return null;
         }
     }
 }

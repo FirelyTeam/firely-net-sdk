@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.FhirPath;
 using Sprache;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.FhirPath.InstanceTree;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -93,7 +95,15 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             var result = values.Children("Patient").Children("identifier").Children("use");
             Assert.AreEqual(2, result.Count());
-            Assert.AreEqual("usual", result.First().AsString());
+            Assert.AreEqual("usual", result.First().AsStringRepresentation());
+
+            var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
+            Patient p = Fhir.Serialization.FhirParser.ParseResourceFromXml(tpXml) as Patient;
+
+            IFhirPathElement model = p;
+            result = model.Children("Patient").Children("identifier").Children("use");
+            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual("usual", result.First().AsStringRepresentation());
         }
 
         [TestMethod, TestCategory("FhirPath")]
@@ -105,6 +115,31 @@ namespace Hl7.Fhir.Tests.FhirPath
                 .Where(ctx => ctx.Children("use").IsEqualTo(FhirValueList.Create("official"))).IsEmpty().Not();
 
             Assert.AreEqual(true, result.AsBoolean());
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void FhirPathDateValidationWithTodayAndTimezones()
+        {
+            Eval.FixedTodayValue = new DateTime(2016, 4, 27);
+            string expression = "answer.empty() or answer.valueDate < today() or answer.valueDate = today()";
+
+            var tree = TreeConstructor.FromXml("<QuestionnaireResponse xmlns=\"http://hl7.org/fhir\">"
+                + "<answer><valueDate value=\"2016-04-28\" /></answer>"
+                + "</QuestionnaireResponse>");
+            Assert.IsTrue(PathExpression.Predicate(expression, tree));
+
+            Eval.FixedTodayValue = new DateTime(2016, 4, 29);
+            Assert.IsTrue(PathExpression.Predicate(expression, tree));
+
+            tree = TreeConstructor.FromXml("<QuestionnaireResponse xmlns=\"http://hl7.org/fhir\">"
+                + "<answer><valueDate value=\"2016-04-29\" /></answer>"
+                + "</QuestionnaireResponse>");
+            Assert.IsTrue(PathExpression.Predicate(expression, tree));
+
+            tree = TreeConstructor.FromXml("<QuestionnaireResponse xmlns=\"http://hl7.org/fhir\">"
+                + "<answer><valueDate value=\"2016-04-30\" /></answer>"
+                + "</QuestionnaireResponse>");
+            Assert.IsFalse(PathExpression.Predicate(expression, tree));
         }
     }
 }

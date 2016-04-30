@@ -177,6 +177,35 @@ namespace Hl7.Fhir.FhirPath
             return FhirValueList.Empty();
         }
 
+        public static IEnumerable<IFhirPathValue> DateAdd(this IEnumerable<IFhirPathValue> focus, string part, int value)
+        {
+            if (focus.Count() > 0)
+            {
+                List<IFhirPathValue> results = new List<IFhirPathValue>();
+                if (focus.First().Value != null)
+                {
+                    foreach (var item in focus.JustValues())
+                    {
+                        var dt = item.AsDateTime();
+                        DateTimeOffset dto = dt.Value;
+                        switch (part)
+                        {
+                            case "yy": dto = dto.AddYears(value); break;
+                            case "mm": dto = dto.AddMonths(value); break;
+                            case "dd": dto = dto.AddDays(value); break;
+                            case "hh": dto = dto.AddHours(value); break;
+                            case "mi": dto = dto.AddMinutes(value); break;
+                            case "ss": dto = dto.AddSeconds(value); break;
+                        }
+                        results.Add(new TypedValue(new PartialDateTime(dto)));
+                    }
+                }
+                return results;
+            }
+
+            return FhirValueList.Empty();
+        }
+
         public static IEnumerable<IFhirPathValue> Substring(this IEnumerable<IFhirPathValue> focus, long start, long? length)
         {
             if(focus.Count() == 1)

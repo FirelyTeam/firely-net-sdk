@@ -107,6 +107,27 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
         [TestMethod, TestCategory("FhirPath")]
+        public void TestExpressionNowFunction()
+        {
+            var first = PathExpression.Scalar("now()", null);
+            System.Threading.Thread.Sleep(500);
+            var second = PathExpression.Scalar("now()", null);
+            Assert.AreNotEqual(second, first, "Expect that now should have produced different times");
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestExpressionDateAddFunction()
+        {
+            var first = PathExpression.Scalar("now()", null);
+            System.Threading.Thread.Sleep(500);
+            var second = PathExpression.Scalar("now().dateadd('mm',2)", null);
+            var third = PathExpression.Scalar("now().dateadd('yy',2)", null);
+//            third = PathExpression.Scalar("now().dateadd('yy',-2)", null);
+            Debug.WriteLine("Now: {0}\r\n2 Months time {1}\r\n2Years ago:{2}", first, second, third);
+            Assert.AreNotEqual(second, first, "Expect that now should have produced different times");
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
         public void TestExpressionSubstringFunction()
         {
             // Check that date comes in

@@ -22,6 +22,17 @@ namespace Hl7.Fhir.FhirPath
         {
 
         }
+        internal PartialDateTime(DateTimeOffset value, Precision prec)
+        {
+            Value = value;
+            Prec = prec;
+        }
+
+        internal PartialDateTime(DateTimeOffset dto)
+        {
+            Value = dto;
+            Prec = Precision.Time;
+        }
         public enum Precision
         {
             Year = 0,
@@ -70,6 +81,30 @@ namespace Hl7.Fhir.FhirPath
         public static bool operator >(PartialDateTime a, PartialDateTime b)
         {
             return a.Value > b.Value;
+        }
+
+        // overload operator <=
+        public static bool operator <=(PartialDateTime a, PartialDateTime b)
+        {
+            return a.Value <= b.Value;
+        }
+
+        // overload operator >=
+        public static bool operator >=(PartialDateTime a, PartialDateTime b)
+        {
+            return a.Value >= b.Value;
+        }
+
+        // overload operator ==
+        public static bool operator ==(PartialDateTime a, PartialDateTime b)
+        {
+            return a.Value == b.Value;
+        }
+
+        // overload operator !=
+        public static bool operator !=(PartialDateTime a, PartialDateTime b)
+        {
+            return a.Value != b.Value;
         }
 
         public override bool Equals(object obj)
