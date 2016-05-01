@@ -87,21 +87,6 @@ namespace Hl7.Fhir.Tests.Rest
 
         }
 
-        [TestMethod]
-        public void InvokeExpandUsingInstanceOp()
-        {
-            var client = new FhirClient(testEndpoint);
-
-            //    var vs = client.Read<ValueSet>("ValueSet/administrative-gender");
-
-            //   var vsX = client.ExpandValueSet(ExpandValueSet(vs);
-
-            // Assert.IsTrue(vsX.Expansion.Contains.Any());
-            var result = client.InstanceOperation(ResourceIdentity.Build("ValueSet", "extensional-case-1"),
-                FhirClientOperations.Operation.EXPAND_VALUESET);
-
-        }
-
         /// <summary>
         /// http://hl7.org/fhir/valueset-operations.html#lookup
         /// </summary>
