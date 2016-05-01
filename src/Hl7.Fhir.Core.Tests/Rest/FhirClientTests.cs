@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
             catch
             {
-                Assert.IsTrue(client.LastResult.Status == "410");
+                Assert.AreEqual("410",client.LastResult.Status);
             }
         }
 

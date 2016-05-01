@@ -86,8 +86,13 @@ namespace Hl7.Fhir.Tests.Rest
                 FhirClientOperations.Operation.EXPAND_VALUESET);
 
         }
+    
 
+        /// <summary>
+        /// http://hl7.org/fhir/valueset-operations.html#lookup
+        /// </summary>
         [TestMethod]
+        [TestCategory("IntegrationTest")]
         public void InvokeLookupCoding()
         {
             var client = new FhirClient(testEndpoint);
