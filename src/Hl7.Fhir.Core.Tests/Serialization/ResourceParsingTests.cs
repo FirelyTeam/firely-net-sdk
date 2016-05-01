@@ -86,6 +86,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(outp.Contains("&#xA;"));
         }
 
+#if !PORTABLE45
         [TestMethod]
         public void EdgecaseRoundtrip()
         {
@@ -106,7 +107,7 @@ namespace Hl7.Fhir.Tests.Serialization
            
             JsonAssert.AreSame(json, json2);
         }
-
+#endif
 
         [TestMethod]
         public void ContainedBaseIsNotAddedToId()
