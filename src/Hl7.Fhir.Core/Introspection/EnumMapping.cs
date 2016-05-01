@@ -28,18 +28,26 @@ namespace Hl7.Fhir.Introspection
 
         public string GetLiteral(Enum value)
         {
-            if (_enumToLiteral.ContainsKey(value))
-                return _enumToLiteral[value];
-            else
-                return null;
+            // [WMR 20160421] Optimization
+            //if (_enumToLiteral.ContainsKey(value))
+            //    return _enumToLiteral[value];
+            //else
+            //    return null;
+            string result;
+            _enumToLiteral.TryGetValue(value, out result);
+            return result;
         }
 
         public Enum ParseLiteral(string literal)
         {
-            if (_literalToEnum.ContainsKey(literal))
-                return _literalToEnum[literal];
-            else
-                return null;
+            // [WMR 20160421] Optimization
+            //if (_literalToEnum.ContainsKey(literal))
+            //    return _literalToEnum[literal];
+            //else
+            //    return null;
+            Enum result;
+            _literalToEnum.TryGetValue(literal, out result);
+            return result;
         }
 
         public bool ContainsLiteral(string literal)

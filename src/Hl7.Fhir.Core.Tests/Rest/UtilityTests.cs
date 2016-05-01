@@ -27,13 +27,15 @@ namespace Hl7.Fhir.Tests.Rest
 	public class PortableUtilityTests
 #else
     public class UtilityTests
+#endif
     {
+#if !PORTABLE45
         [TestMethod]
         public void GetResourceFormatSupportsCharset()
         {
             Assert.AreEqual(ContentType.GetResourceFormatFromContentType("text/xml;charset=ISO-8859-1"), ResourceFormat.Xml);
             Assert.AreEqual(ContentType.GetResourceFormatFromContentType("text/xml"), ResourceFormat.Xml);
         }
-    }
 #endif
+    }
 }

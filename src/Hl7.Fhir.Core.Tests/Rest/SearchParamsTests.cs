@@ -207,5 +207,167 @@ namespace Hl7.Fhir.Test.Rest
             CollectionAssert.AreEquivalent(q.Parameters.ToList(), q2.Parameters.ToList());
             CollectionAssert.AreEquivalent(q.Elements.ToList(), q2.Elements.ToList());
         }
+
+        [TestMethod]
+        public void AcceptEmptyGenericParam()
+        {
+            var q = new SearchParams();
+            q.Add("parameter", String.Empty);
+            CollectionAssert.AreEquivalent(
+                new[] { Tuple.Create("parameter", String.Empty) }, 
+                q.Parameters.ToList()
+            );
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnDuplicateOrEmptyQueryParam()
+        {
+            FormatExceptionOnDuplicateOrEmptyParam("_query");
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnDuplicateOrEmptyTextParam()
+        {
+            FormatExceptionOnDuplicateOrEmptyParam("_text");
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnDuplicateOrEmptyContentParam()
+        {
+            FormatExceptionOnDuplicateOrEmptyParam("_content");
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnInvalidCountParam()
+        {
+            var q = new SearchParams();
+            var formatException = AssertThrows<FormatException>(() => q.Add("_count", String.Empty));
+            Assert.AreEqual("Invalid _count: '' is not a positive integer", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_count", "0"));
+            Assert.AreEqual("Invalid _count: '0' is not a positive integer", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_count", "-100"));
+            Assert.AreEqual("Invalid _count: '-100' is not a positive integer", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_count", "3.14"));
+            Assert.AreEqual("Invalid _count: '3.14' is not a positive integer", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_count", "12zz"));
+            Assert.AreEqual("Invalid _count: '12zz' is not a positive integer", formatException.Message);
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnEmptyIncludeParam()
+        {
+            var q = new SearchParams();
+            var formatException = AssertThrows<FormatException>(() => q.Add("_include", String.Empty));
+            Assert.AreEqual("Invalid _include value: it cannot be empty", formatException.Message);
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnEmptyRevIncludeParam()
+        {
+            var q = new SearchParams();
+            var formatException = AssertThrows<FormatException>(() => q.Add("_revinclude", String.Empty));
+            Assert.AreEqual("Invalid _revinclude value: it cannot be empty", formatException.Message);
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnInvalidSortParam()
+        {
+            var q = new SearchParams();
+            var formatException = AssertThrows<FormatException>(() => q.Add("_sort:", "x"));
+            Assert.AreEqual("Invalid _sort: '' is not a recognized sort order", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_sort:ascz", "x"));
+            Assert.AreEqual("Invalid _sort: 'ascz' is not a recognized sort order", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_sort", String.Empty));
+            Assert.AreEqual("Invalid _sort value: it cannot be empty", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_sort:asc", String.Empty));
+            Assert.AreEqual("Invalid _sort value: it cannot be empty", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_sort:desc", String.Empty));
+            Assert.AreEqual("Invalid _sort value: it cannot be empty", formatException.Message);
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnInvalidSummaryParam()
+        {
+            var q = new SearchParams();
+            var formatException = AssertThrows<FormatException>(() => q.Add("_summary", "x"));
+            Assert.AreEqual("Invalid _summary: 'x' is not a recognized summary value", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_summary", String.Empty));
+            Assert.AreEqual("Invalid _summary: '' is not a recognized summary value", formatException.Message);
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnDuplicateOrEmptyFilterParam()
+        {
+            FormatExceptionOnDuplicateOrEmptyParam("_filter");
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnInvalidContainedParam()
+        {
+            var q = new SearchParams();
+            var formatException = AssertThrows<FormatException>(() => q.Add("_contained", "x"));
+            Assert.AreEqual("Invalid _contained: 'x' is not a recognized contained value", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_contained", String.Empty));
+            Assert.AreEqual("Invalid _contained: '' is not a recognized contained value", formatException.Message);
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnInvalidContainedTypeParam()
+        {
+            var q = new SearchParams();
+            var formatException = AssertThrows<FormatException>(() => q.Add("_containedType", "x"));
+            Assert.AreEqual("Invalid _containedType: 'x' is not a recognized containedType value", formatException.Message);
+
+            formatException = AssertThrows<FormatException>(() => q.Add("_containedType", String.Empty));
+            Assert.AreEqual("Invalid _containedType: '' is not a recognized containedType value", formatException.Message);
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnEmptyElementsParam()
+        {
+            var q = new SearchParams();
+            var formatException = AssertThrows<FormatException>(() => q.Add("_elements", String.Empty));
+            Assert.AreEqual("Invalid _elements value: it cannot be empty", formatException.Message);
+        }
+
+        private void FormatExceptionOnDuplicateOrEmptyParam(string paramName)
+        {
+            var q = new SearchParams();
+            var formatException = AssertThrows<FormatException>(() => q.Add(paramName, String.Empty));
+            Assert.AreEqual(String.Format("Invalid {0} value: it cannot be empty", paramName), formatException.Message);
+
+            q.Add(paramName, "value1");
+            formatException = AssertThrows<FormatException>(() => q.Add(paramName, "value2"));
+            Assert.AreEqual(String.Format("{0} cannot be specified more than once", paramName), formatException.Message);
+        }
+
+        private TException AssertThrows<TException>(Action action) where TException : Exception
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception exception)
+            {
+                var result = exception as TException;
+                if (result == null)
+                {
+                    Assert.Fail("Expected {0}, actual {1}", typeof(TException), exception.GetType());
+                }
+                return result;
+            }
+            Assert.Fail("Should have failed");
+            return null;
+        }
     }
 }

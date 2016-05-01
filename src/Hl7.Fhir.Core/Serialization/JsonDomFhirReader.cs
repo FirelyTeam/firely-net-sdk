@@ -30,6 +30,7 @@ namespace Hl7.Fhir.Serialization
             _current = root;
         }
 
+        // [WMR 20160421] Caller can safely dispose reader after calling this ctor
         public JsonDomFhirReader(JsonReader reader)
         {
             reader.DateParseHandling = DateParseHandling.None;
@@ -254,5 +255,6 @@ namespace Hl7.Fhir.Serialization
                 return li.LinePosition;
             }
         }
+
     }
 }

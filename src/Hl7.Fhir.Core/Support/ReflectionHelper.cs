@@ -284,7 +284,9 @@ namespace Hl7.Fhir.Support
 		{
 			return t.GetTypeInfo().IsDefined(attributeType, inherit);
 		}
+#endif
 
+#if PORTABLE45 && !DOTNET
 		internal static bool IsAssignableFrom(this Type t, Type otherType)
 		{
 			return t.GetTypeInfo().IsAssignableFrom(otherType.GetTypeInfo());
@@ -350,11 +352,11 @@ namespace Hl7.Fhir.Support
 
         public static string PrettyTypeName(Type t)
         {
-            // http://stackoverflow.com/questions/1533115/get-generictype-name-in-good-format-using-reflection-on-c-sharp#answer-25287378
+            // http://stackoverflow.com/questions/1533115/get-generictype-name-in-good-format-using-reflection-on-c-sharp#answer-25287378 
 #if PORTABLE45
-            return t.GetTypeInfo().IsGenericType ? string.Format(
-                "{0}<{1}>", t.Name.Substring(0, t.Name.LastIndexOf("`", StringComparison.CurrentCulture)),
-                string.Join(", ", t.GetTypeInfo().GenericTypeParameters.ToList().Select(PrettyTypeName)))
+            return t.GetTypeInfo().IsGenericType ? string.Format( 
+                "{0}<{1}>", t.Name.Substring(0, t.Name.LastIndexOf("`", StringComparison.CurrentCulture)), 
+                string.Join(", ", t.GetTypeInfo().GenericTypeParameters.ToList().Select(PrettyTypeName))) 
 #else
             return t.IsGenericType ? string.Format(
                 "{0}<{1}>", t.Name.Substring(0, t.Name.LastIndexOf("`", StringComparison.InvariantCulture)),

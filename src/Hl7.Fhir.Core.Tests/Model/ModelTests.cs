@@ -222,6 +222,21 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsFalse(ModelInfo.IsReference("Patient"));
         }
 
+        [TestMethod]
+        public void TestFhirTypeToFhirTypeName()
+        {
+            var enumValues = Enum.GetValues(typeof(FHIRDefinedType));
+            for (int i = 0; i < enumValues.Length; i++)
+            {
+                var type = (FHIRDefinedType)i;
+                var typeName = ModelInfo.FhirTypeToFhirTypeName(type);
+                var type2 = ModelInfo.FhirTypeNameToFhirType(typeName);
+                Assert.IsTrue(type2.HasValue);
+                Assert.AreEqual(type, type2, $"Failed: '{type}' != '{type2}' ?!");
+                var typeName2 = ModelInfo.FhirTypeToFhirTypeName(type2.Value);
+                Assert.AreEqual(typeName, typeName2, $"Failed: '{typeName}' != '{typeName2}' ?!");
+		    }
+		}
 
         //[TestMethod]
         //public void TestVSToUrl()

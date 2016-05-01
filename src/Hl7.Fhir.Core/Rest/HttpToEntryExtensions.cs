@@ -172,7 +172,13 @@ namespace Hl7.Fhir.Rest
             if (body == null) return null;
             if (enc == null) enc = Encoding.UTF8;
 
-            return (new StreamReader(new MemoryStream(body), enc, true)).ReadToEnd();
+            // [WMR 20160421] Explicit disposal
+            // return (new StreamReader(new MemoryStream(body), enc, true)).ReadToEnd();
+            using (var stream = new MemoryStream(body))
+            using (var reader = new StreamReader(stream, enc, true))
+            {
+                return reader.ReadToEnd();
+            }
         }
 
         private static Binary makeBinaryResource(byte[] data, string contentType)
@@ -198,10 +204,15 @@ namespace Hl7.Fhir.Rest
 
         public static byte[] GetBody(this Bundle.ResponseComponent interaction)
         {
-            if (interaction.UserData.ContainsKey(USERDATA_BODY))
-                return (byte[])interaction.UserData[USERDATA_BODY];
-            else
-                return null;
+            // [WMR 20160421] Optimization
+            //if (interaction.UserData.ContainsKey(USERDATA_BODY))
+            //    return (byte[])interaction.UserData[USERDATA_BODY];
+            //else
+            //    return null;
+            object result;
+            interaction.UserData.TryGetValue(USERDATA_BODY, out result);
+            return (byte[])result;
+
         }
 
         internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)

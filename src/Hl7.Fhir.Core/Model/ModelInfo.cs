@@ -76,15 +76,22 @@ namespace Hl7.Fhir.Model
             public ResourceType[] Target { get; set; }
         }
 
-
+#if false
+        // [WMR 20160421] Slow, based on reflection...
         public static string FhirTypeToFhirTypeName(FHIRDefinedType type)
         {
             return type.GetLiteral();
         }
 
+        // [WMR 20160421] Wrong!
+        // FhirTypeToFhirTypeName parses the typename from EnumLiteral attribute on individual FHIRDefinedType member
+        // FhirTypeNameToFhirType converts enum member name to FHIRDefinedType enum value
+        // Currently, the EnumLiteral attribute value is always equal to the Enum member name and the C# type name
+        // However, this is not guaranteed! e.g. a FHIR type name could be a reserved word in C#
+
         public static FHIRDefinedType? FhirTypeNameToFhirType(string name)
         {
-            FHIRDefinedType result = FHIRDefinedType.Patient;
+            FHIRDefinedType result; // = FHIRDefinedType.Patient;
 
             if (Enum.TryParse<FHIRDefinedType>(name, ignoreCase: true, result: out result))
                 return result;
@@ -92,21 +99,74 @@ namespace Hl7.Fhir.Model
                 return null;
         }
 
-        public static Type GetTypeForFhirType(string name)
+#else
+        // [WMR 20160421] NEW - Improved & optimized
+        // 1. Convert from/to FHIR type names as defined by EnumLiteral attributes on FHIRDefinedType enum members
+        // 2. Cache lookup tables, to optimize runtime reflection
+
+        /// <summary>Returns the <see cref="FHIRDefinedType"/> enum value that represents the specified FHIR type name, or <c>null</c>.</summary>
+        public static string FhirTypeToFhirTypeName(FHIRDefinedType type)
         {
-            if (!FhirTypeToCsType.ContainsKey(name))
-                return null;
-            else
-                return FhirTypeToCsType[name];
+            string result;
+            _fhirTypeToFhirTypeName.Value.TryGetValue(type, out result);
+            return result;
         }
 
+        private static Lazy<IDictionary<FHIRDefinedType, string>> _fhirTypeToFhirTypeName
+            = new Lazy<IDictionary<FHIRDefinedType, string>>(InitFhirTypeToFhirTypeName, System.Threading.LazyThreadSafetyMode.PublicationOnly);
 
+        private static IDictionary<FHIRDefinedType, string> InitFhirTypeToFhirTypeName()
+        {
+            // Build reverse lookup table
+            return _fhirTypeNameToFhirType.Value.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+        }
+
+        /// <summary>Returns the FHIR type name represented by the specified <see cref="FHIRDefinedType"/> enum value, or <c>null</c>.</summary>
+        public static FHIRDefinedType? FhirTypeNameToFhirType(string typeName)
+        {
+            FHIRDefinedType result;
+            if (_fhirTypeNameToFhirType.Value.TryGetValue(typeName, out result))
+            {
+                return result;
+            }
+            return null;
+        }
+
+        private static Lazy<IDictionary<string, FHIRDefinedType>> _fhirTypeNameToFhirType
+            = new Lazy<IDictionary<string, FHIRDefinedType>>(InitFhirTypeNameToFhirType, System.Threading.LazyThreadSafetyMode.PublicationOnly);
+
+        private static IDictionary<string, FHIRDefinedType> InitFhirTypeNameToFhirType()
+        {
+            var values = Enum.GetValues(typeof(FHIRDefinedType)).OfType<FHIRDefinedType>();
+            return values.ToDictionary(type => type.GetLiteral());
+        }
+
+#endif
+
+        /// <summary>Returns the C# <see cref="Type"/> that represents the FHIR type with the specified name, or <c>null</c>.</summary>
+        public static Type GetTypeForFhirType(string name)
+        {
+            // [WMR 20160421] Optimization
+            //if (!FhirTypeToCsType.ContainsKey(name))
+            //    return null;
+            //else
+            //    return FhirTypeToCsType[name];
+            Type result;
+            FhirTypeToCsType.TryGetValue(name, out result);
+            return result;
+        }
+
+        /// <summary>Returns the FHIR type name represented by the specified C# <see cref="Type"/>, or <c>null</c>.</summary>
         public static string GetFhirTypeNameForType(Type type)
         {
-            if (!FhirCsTypeToString.ContainsKey(type))
-                return null;
-            else
-                return FhirCsTypeToString[type];
+            // [WMR 20160421] Optimization
+            //if (!FhirCsTypeToString.ContainsKey(type))
+            //    return null;
+            //else
+            //    return FhirCsTypeToString[type];
+            string result;
+            FhirCsTypeToString.TryGetValue(type, out result);
+            return result;
         }
 
         [Obsolete("Use GetFhirTypeNameForType() instead")]
@@ -115,11 +175,13 @@ namespace Hl7.Fhir.Model
             return GetFhirTypeNameForType(type);
         }
 
+        /// <summary>Determines if the specified value represents the name of a known FHIR resource.</summary>
         public static bool IsKnownResource(string name)
         {
             return SupportedResources.Contains(name);
         }
 
+        /// <summary>Determines if the specified <see cref="Type"/> instance represents a known FHIR resource.</summary>
         public static bool IsKnownResource(Type type)
         {
             var name = GetFhirTypeNameForType(type);
@@ -127,6 +189,7 @@ namespace Hl7.Fhir.Model
             return name != null && IsKnownResource(name);
         }
 
+        /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a known FHIR resource.</summary>
         public static bool IsKnownResource(FHIRDefinedType type)
         {
             var name = FhirTypeToFhirTypeName(type);
@@ -152,6 +215,7 @@ namespace Hl7.Fhir.Model
                 return null;
         }
 
+        /// <summary>Determines if the specified value represents the name of a FHIR primitive data type.</summary>
         public static bool IsPrimitive(string name)
         {
             if (String.IsNullOrEmpty(name)) return false;
@@ -159,17 +223,19 @@ namespace Hl7.Fhir.Model
             return FhirTypeToCsType.ContainsKey(name) && Char.IsLower(name[0]);
         }
 
+        /// <summary>Determines if the specified <see cref="Type"/> instance represents a FHIR primitive data type.</summary>
         public static bool IsPrimitive(Type type)
         {
             return IsPrimitive(type.Name);
         }
 
+        /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR primitive data type.</summary>
         public static bool IsPrimitive(FHIRDefinedType type)
         {
             return IsPrimitive(FhirTypeToFhirTypeName(type));
         }
 
-
+        /// <summary>Determines if the specified value represents the name of a FHIR complex data type (NOT including resources and primitives).</summary>
         public static bool IsDataType(string name)
         {
             if (String.IsNullOrEmpty(name)) return false;
@@ -177,38 +243,76 @@ namespace Hl7.Fhir.Model
             return FhirTypeToCsType.ContainsKey(name) && !IsKnownResource(name) && !IsPrimitive(name);
         }
 
-
+        /// <summary>Determines if the specified <see cref="Type"/> instance represents a FHIR complex data type (NOT including resources and primitives).</summary>
         public static bool IsDataType(Type type)
         {
             return IsDataType(type.Name);
         }
 
+        /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR complex data type (NOT including resources and primitives).</summary>
         public static bool IsDataType(FHIRDefinedType type)
         {
             return IsDataType(FhirTypeToFhirTypeName(type));
         }
 
+        // [WMR 20160421] Dynamically resolve FHIR type name 'Reference'
+        private static readonly string _referenceTypeName = FHIRDefinedType.Reference.GetLiteral();
+
+        /// <summary>Determines if the specified value represents the type name of a FHIR Reference, i.e. equals "Reference".</summary>
         public static bool IsReference(string name)
         {
-            return name == "Reference";
+            return name == _referenceTypeName; // "Reference";
         }
 
+        /// <summary>Determines if the specified <see cref="Type"/> instance represents a FHIR Reference type.</summary>
         public static bool IsReference(Type type)
         {
             return IsReference(type.Name);
         }
 
+        /// <summary>Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR Reference type.</summary>
         public static bool IsReference(FHIRDefinedType type)
         {
             return type == FHIRDefinedType.Reference;
         }
 
-
+        /// <summary>
+        /// Determines if the specified <see cref="Type"/> instance represents a FHIR conformance resource type,
+        /// i.e. if it equals one of the following types:
+        /// <list type="bullet">
+        /// <item>Conformance</item>
+        /// <item>StructureDefinition</item>
+        /// <item>ValueSet</item>
+        /// <item>ConceptMap</item>
+        /// <item>DataElement</item>
+        /// <item>OperationDefinition</item>
+        /// <item>SearchParameter</item>
+        /// <item>NamingSystem</item>
+        /// <item>ImplementationGuide</item>
+        /// <item>TestScript</item>
+        /// </list>
+        /// </summary>
         public static bool IsConformanceResource(Type type)
         {
             return IsConformanceResource(type.Name);
         }
 
+        /// <summary>
+        /// Determines if the specified value represents a the type name of a FHIR conformance resource,
+        /// i.e. if the value equals one of the following strings:
+        /// <list type="bullet">
+        /// <item>Conformance</item>
+        /// <item>StructureDefinition</item>
+        /// <item>ValueSet</item>
+        /// <item>ConceptMap</item>
+        /// <item>DataElement</item>
+        /// <item>OperationDefinition</item>
+        /// <item>SearchParameter</item>
+        /// <item>NamingSystem</item>
+        /// <item>ImplementationGuide</item>
+        /// <item>TestScript</item>
+        /// </list>
+        /// </summary>
         public static bool IsConformanceResource(string name)
         {
             if (string.IsNullOrEmpty(name)) return false;
@@ -221,6 +325,22 @@ namespace Hl7.Fhir.Model
                 return false;
         }
 
+        /// <summary>
+        /// Determines if the specified <see cref="FHIRDefinedType"/> value represents a FHIR conformance resource type,
+        /// i.e. if it equals one of the following values:
+        /// <list type="bullet">
+        /// <item>FHIRDefinedType.Conformance</item>
+        /// <item>FHIRDefinedType.StructureDefinition</item>
+        /// <item>FHIRDefinedType.ValueSet</item>
+        /// <item>FHIRDefinedType.ConceptMap</item>
+        /// <item>FHIRDefinedType.DataElement</item>
+        /// <item>FHIRDefinedType.OperationDefinition</item>
+        /// <item>FHIRDefinedType.SearchParameter</item>
+        /// <item>FHIRDefinedType.NamingSystem</item>
+        /// <item>FHIRDefinedType.ImplementationGuide</item>
+        /// <item>FHIRDefinedType.TestScript</item>
+        /// </list>
+        /// </summary>
         public static bool IsConformanceResource(FHIRDefinedType type)
         {
             return ConformanceResources.Contains(type);
@@ -228,9 +348,19 @@ namespace Hl7.Fhir.Model
 
 
 
-        public static readonly FHIRDefinedType[] ConformanceResources = { FHIRDefinedType.Conformance, FHIRDefinedType.StructureDefinition, FHIRDefinedType.ValueSet,
-            FHIRDefinedType.ConceptMap, FHIRDefinedType.DataElement, FHIRDefinedType.OperationDefinition, FHIRDefinedType.SearchParameter, FHIRDefinedType.NamingSystem,
-             FHIRDefinedType.ImplementationGuide, FHIRDefinedType.TestScript };
+        public static readonly FHIRDefinedType[] ConformanceResources = 
+        {
+            FHIRDefinedType.Conformance,
+            FHIRDefinedType.StructureDefinition,
+            FHIRDefinedType.ValueSet,
+            FHIRDefinedType.ConceptMap,
+            FHIRDefinedType.DataElement,
+            FHIRDefinedType.OperationDefinition,
+            FHIRDefinedType.SearchParameter,
+            FHIRDefinedType.NamingSystem,
+            FHIRDefinedType.ImplementationGuide,
+            FHIRDefinedType.TestScript
+        };
 
         /// <summary>
         /// Is the given type a core Resource, Datatype or primitive

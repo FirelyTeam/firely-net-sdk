@@ -23,6 +23,14 @@ namespace Hl7.Fhir.Serialization
 {
     public static class SerializationUtil
     {     
+        // [WMR 20160421] Note: StringReader, XmlReader and JsonReader don't require explicit disposal
+        // JsonTextReader overrides Close method => explicitly dispose
+
+        public static XmlReader XmlReaderFromXmlText(string xml)
+        {
+            return WrapXmlReader(XmlReader.Create(new StringReader(SerializationUtil.SanitizeXml(xml))));
+        }
+
         public static XmlReader XmlReaderFromXmlText(string xml)
         {
             return WrapXmlReader(XmlReader.Create(new StringReader(SerializationUtil.SanitizeXml(xml))));
@@ -48,11 +56,7 @@ namespace Hl7.Fhir.Serialization
             settings.IgnoreComments = true;
             settings.IgnoreProcessingInstructions = true;
             settings.IgnoreWhitespace = true;
-#if PORTABLE45
-            settings.DtdProcessing = DtdProcessing.Ignore;
-#else
-            settings.DtdProcessing = DtdProcessing.Parse;
-#endif
+            settings.DtdProcessing = DtdProcessing.Prohibit;
 
             return XmlReader.Create(xmlReader, settings);
         }
@@ -74,7 +78,7 @@ namespace Hl7.Fhir.Serialization
             return doc;
         }
 
-
+        // [WMR 20160421] Caller is responsible for disposing the returned Json(Text)Reader
         public static JsonReader JsonReaderFromJsonText(string json)
         {
             JsonReader reader = new JsonTextReader(new StringReader(json));

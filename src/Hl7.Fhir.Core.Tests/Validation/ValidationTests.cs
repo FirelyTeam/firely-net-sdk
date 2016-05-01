@@ -196,8 +196,11 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(enc, true, membername: "Value");
         }
 
-
+#if PORTABLE45
+        [TestMethod, Ignore]    // XHtml validation not available in portable library
+#else
         [TestMethod]
+#endif
         public void TestXhtmlValidation()
         {
             var p = new Patient();

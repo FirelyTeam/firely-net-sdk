@@ -117,6 +117,11 @@ namespace Hl7.Fhir.Specification.Source
             return GetStructureDefinition(url);
         }
 
+        public StructureDefinition GetStructureDefinitionForCoreType(FHIRDefinedType type)
+        {
+            return GetStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
+        }
+
         /// <summary>
         /// Return canonical urls of all the core Resource/datatype/primitive StructureDefinitions available in the IArtifactSource
         /// </summary>

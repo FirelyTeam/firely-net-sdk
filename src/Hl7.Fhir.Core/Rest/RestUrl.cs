@@ -6,13 +6,9 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
@@ -62,10 +58,6 @@ namespace Hl7.Fhir.Rest
         private static string delimit(string path)
         {
             return path.EndsWith(@"/") ? path : path + @"/";
-        }
-        private static string prefix(string path)
-        {
-            return path.StartsWith(@"/") ? path : @"/"+path;
         }
               
 
