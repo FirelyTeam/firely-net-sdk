@@ -120,26 +120,37 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void FhirPathDateValidationWithTodayAndTimezones()
         {
-            Eval.FixedTodayValue = new DateTime(2016, 4, 27);
-            string expression = "answer.empty() or answer.valueDate < today() or answer.valueDate = today()";
-
             var tree = TreeConstructor.FromXml("<QuestionnaireResponse xmlns=\"http://hl7.org/fhir\">"
                 + "<answer><valueDate value=\"2016-04-28\" /></answer>"
                 + "</QuestionnaireResponse>");
-            Assert.IsTrue(PathExpression.Predicate(expression, tree));
+            string expression = "answer.empty() or answer.valueDate < today() or answer.valueDate = today()";
 
-            Eval.FixedTodayValue = new DateTime(2016, 4, 29);
-            Assert.IsTrue(PathExpression.Predicate(expression, tree));
-
-            tree = TreeConstructor.FromXml("<QuestionnaireResponse xmlns=\"http://hl7.org/fhir\">"
-                + "<answer><valueDate value=\"2016-04-29\" /></answer>"
-                + "</QuestionnaireResponse>");
-            Assert.IsTrue(PathExpression.Predicate(expression, tree));
-
-            tree = TreeConstructor.FromXml("<QuestionnaireResponse xmlns=\"http://hl7.org/fhir\">"
-                + "<answer><valueDate value=\"2016-04-30\" /></answer>"
-                + "</QuestionnaireResponse>");
+            // verify outside case
+            Eval.FixedNowValue = new DateTime(2016, 4, 27);
             Assert.IsFalse(PathExpression.Predicate(expression, tree));
+
+            // Verify equals clause
+            Eval.FixedNowValue = new DateTime(2016, 4, 28);
+            Assert.IsTrue(PathExpression.Predicate(expression, tree));
+
+            // verify less than clause
+            Eval.FixedNowValue = new DateTime(2016, 4, 29);
+            Assert.IsTrue(PathExpression.Predicate(expression, tree));
+
+            // Simplify same expression
+            expression = "answer.empty() or answer.valueDate <= today()";
+
+            // verify outside case
+            Eval.FixedNowValue = new DateTime(2016, 4, 27);
+            Assert.IsFalse(PathExpression.Predicate(expression, tree));
+
+            // Verify equals clause
+            Eval.FixedNowValue = new DateTime(2016, 4, 28);
+            Assert.IsTrue(PathExpression.Predicate(expression, tree));
+
+            // verify less than clause
+            Eval.FixedNowValue = new DateTime(2016, 4, 29);
+            Assert.IsTrue(PathExpression.Predicate(expression, tree));
         }
     }
 }
