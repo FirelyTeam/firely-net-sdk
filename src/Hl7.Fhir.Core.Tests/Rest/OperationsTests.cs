@@ -102,6 +102,9 @@ namespace Hl7.Fhir.Tests.Rest
 
         }
 
+        /// <summary>
+        /// http://hl7.org/fhir/valueset-operations.html#lookup
+        /// </summary>
         [TestMethod]
         public void InvokeLookupCoding()
         {
