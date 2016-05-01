@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             entry = client.Conformance(SummaryType.True);
 
-            Assert.IsNull(entry.Text);
+            Assert.IsNotNull(entry.Text);
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
             Assert.AreEqual(Conformance.RestfulConformanceMode.Server, entry.Rest[0].Mode.Value);
@@ -724,13 +724,12 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(bodyText.Contains("<Patient"));
 
             calledBefore = false;
-            client.Create(pat);
+            client.Update(pat); // create cannot be called with an ID (which was retrieved)
             Assert.IsTrue(calledBefore);
             Assert.IsNotNull(bodyOut);
 
             bodyText = HttpToEntryExtensions.DecodeBody(body, Encoding.UTF8);
             Assert.IsTrue(bodyText.Contains("<Patient"));
-
         }
 
         [TestMethod]

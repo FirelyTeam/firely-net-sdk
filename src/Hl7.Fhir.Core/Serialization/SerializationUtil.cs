@@ -31,11 +31,6 @@ namespace Hl7.Fhir.Serialization
             return WrapXmlReader(XmlReader.Create(new StringReader(SerializationUtil.SanitizeXml(xml))));
         }
 
-        public static XmlReader XmlReaderFromXmlText(string xml)
-        {
-            return WrapXmlReader(XmlReader.Create(new StringReader(SerializationUtil.SanitizeXml(xml))));
-        }
-
         public static XmlReader XmlReaderFromStream(Stream input)
         {
             if (input.Position != 0)

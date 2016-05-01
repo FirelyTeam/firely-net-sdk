@@ -316,18 +316,14 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
-        /// <summary>
-        /// This value is here primarily for unit testing to make the value predictable
-        /// </summary>
-        public static DateTime? FixedTodayValue;
         public static Evaluator Today()
         {
             return (f, c) =>
             {
                 System.Diagnostics.Trace.WriteLine("Evaluating the today() expression");
-                if (FixedTodayValue.HasValue)
+                if (FixedNowValue.HasValue)
                 {
-                    return new[] { new TypedValue(new PartialDateTime(FixedTodayValue.Value.Date, PartialDateTime.Precision.Day)) };
+                    return new[] { new TypedValue(new PartialDateTime(FixedNowValue.Value.Date, PartialDateTime.Precision.Day)) };
                 }
                 return new[] { new TypedValue(new PartialDateTime(DateTimeOffset.Now.Date, PartialDateTime.Precision.Day)) };
             };

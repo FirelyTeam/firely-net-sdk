@@ -86,6 +86,9 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(outp.Contains("&#xA;"));
         }
 
+#if !PORTABLE45
+        // This test doesn't work on the portable framework due to the 
+        // JSON parser on mobile doesn't handle the large decimal values
         [TestMethod]
         public void EdgecaseRoundtrip()
         {
@@ -106,7 +109,7 @@ namespace Hl7.Fhir.Tests.Serialization
            
             JsonAssert.AreSame(json, json2);
         }
-
+#endif
 
         [TestMethod]
         public void ContainedBaseIsNotAddedToId()

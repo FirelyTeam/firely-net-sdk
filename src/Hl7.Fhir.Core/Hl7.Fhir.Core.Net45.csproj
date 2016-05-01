@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\Net45\</OutputPath>
-	<BaseIntermediateOutputPath>obj\Debug\Net45\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Net45\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;PORTABLE45, NET45</DefineConstants>
     <DefineConstants>TRACE;DEBUG;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -37,7 +37,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Net45\</OutputPath>
-	<BaseIntermediateOutputPath>obj\Release\Net45\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\Release\Net45\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -713,7 +713,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Model\Generated\TemplateFileManagerV2.1.ttinclude" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -20,8 +20,8 @@ namespace Hl7.Fhir.FhirPath
     {
         private PartialDateTime()
         {
-
         }
+
         internal PartialDateTime(DateTimeOffset value, Precision prec)
         {
             Value = value;
@@ -112,6 +112,11 @@ namespace Hl7.Fhir.FhirPath
             if (obj is PartialDateTime)
                 return (obj as PartialDateTime).Value == Value;
             return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
         }
 
         public override string ToString()

@@ -93,6 +93,8 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpressionTodayFunction()
         {
+            Eval.FixedNowValue = null;
+
             // Check that date comes in
             Assert.AreEqual(PartialDateTime.Parse(DateTime.Today.ToFhirDate()).ToString(), PathExpression.Evaluate("today()", tree).AsDateTime().ToString());
 
@@ -109,6 +111,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpressionNowFunction()
         {
+            Eval.FixedNowValue = null;
             var first = PathExpression.Scalar("now()", null);
             System.Threading.Thread.Sleep(500);
             var second = PathExpression.Scalar("now()", null);
