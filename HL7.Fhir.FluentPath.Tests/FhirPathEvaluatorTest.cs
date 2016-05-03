@@ -44,6 +44,12 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
         [TestMethod, TestCategory("FhirPath")]
+        public void TestForMe()
+        {
+            Assert.IsTrue(PathExpression.IsTrue(@"1.empty().not()", tree));
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
         public void TestExpression()
         {
 

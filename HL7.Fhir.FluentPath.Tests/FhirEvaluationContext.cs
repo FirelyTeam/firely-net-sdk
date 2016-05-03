@@ -35,7 +35,7 @@ namespace Hl7.Fhir.FluentPath
 
         FhirClient FhirClient { get; set; }
 
-        public override void InvokeExternalFunction(string name, IList<IEnumerable<IFluentPathValue>> parameters)
+        public override IEnumerable<IFluentPathValue> InvokeExternalFunction(string name, IEnumerable<IEnumerable<IFluentPathValue>> parameters)
         {
             if(name == "resolve")
             {

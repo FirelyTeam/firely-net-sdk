@@ -79,7 +79,10 @@ namespace Hl7.Fhir.FluentPath
 
         public static IEnumerable<IFluentPathValue> BooleanEval(this IEnumerable<IFluentPathValue> focus)
         {
-            return FhirValueList.Create(focus.booleanEval());
+            if (focus.Any())
+                return FhirValueList.Create(focus.booleanEval());
+            else
+                return FhirValueList.Empty();               
         }
         public static IEnumerable<IFluentPathValue> IsEmpty(this IEnumerable<IFluentPathValue> focus)
         {
@@ -88,8 +91,17 @@ namespace Hl7.Fhir.FluentPath
 
         public static IEnumerable<IFluentPathValue> Not(this IEnumerable<IFluentPathValue> focus)
         {
-            return FhirValueList.Create(!focus.booleanEval());
+            if (focus.Any())
+                return FhirValueList.Create(!focus.booleanEval());
+            else
+                return FhirValueList.Empty();
         }
+
+        public static IEnumerable<IFluentPathValue> Exists(this IEnumerable<IFluentPathValue> focus)
+        {
+            return FhirValueList.Create(focus.Any());
+        }
+
 
         public static IEnumerable<IFluentPathValue> Or(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
         {

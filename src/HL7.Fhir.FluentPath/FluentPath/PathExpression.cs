@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.FluentPath.Parser;
+using HL7.Fhir.FluentPath.FluentPath;
 using HL7.Fhir.FluentPath.FluentPath.Expressions;
 using Sprache;
 using System;
@@ -25,22 +26,39 @@ namespace Hl7.Fhir.FluentPath
         public static Expression Parse(string expression)
         {
             // TODO: Move caching to evaluation
-            //var cacheName = expression.Replace(" ", "");
+          
+            var parse = Grammar.Expression.End().TryParse(expression);
 
-            //if (_cache.ContainsKey(cacheName))
-            //    return _cache[cacheName]; 
-
-            var compilation = Grammar.Expression.End().TryParse(expression);
-
-            if (compilation.WasSuccessful)
+            if (parse.WasSuccessful)
             {
             //    _cache.TryAdd(cacheName, compilation.Value);
-                return compilation.Value;
+                return parse.Value;
             }
             else
             {
-               throw new FormatException("Compilation failed: " + compilation.ToString());
+               throw new FormatException("Compilation failed: " + parse.ToString());
             }
+        }
+
+
+        public static Evaluator Compile(string expression)
+        {
+            var cacheName = expression.Replace(" ", "");
+
+            if (_cache.ContainsKey(cacheName))
+                return _cache[cacheName];
+
+
+
+            return Compile(Parse(expression));
+        }
+
+        public static Evaluator Compile(this Expression expression)
+        {
+          
+
+
+            return expression.ToEvaluator();
         }
 
         public static IEnumerable<T> Select<T>(string expression, T instance, IEvaluationContext context) where T : IFluentPathValue

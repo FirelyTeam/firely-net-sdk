@@ -19,10 +19,20 @@ namespace Hl7.Fhir.FluentPath
         public BaseEvaluationContext()
         {
         }
-     
+
+        private Stack<IEnumerable<IFluentPathValue>> _focusStack = new Stack<IEnumerable<IFluentPathValue>>();
+
+        public Stack<IEnumerable<IFluentPathValue>> FocusStack
+        {
+            get
+            {
+                return _focusStack;
+            }
+        }
+
         public IEnumerable<IFluentPathValue> OriginalContext { get; set; }
 
-        public virtual void InvokeExternalFunction(string name, IList<IEnumerable<IFluentPathValue>> parameters)
+        public virtual IEnumerable<IFluentPathValue> InvokeExternalFunction(string name, IEnumerable<IEnumerable<IFluentPathValue>> parameters)
         {
             throw new NotSupportedException("Function '{0}' is unknown".FormatWith(name));
         }

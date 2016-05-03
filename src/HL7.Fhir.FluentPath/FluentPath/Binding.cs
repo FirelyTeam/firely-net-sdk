@@ -11,88 +11,160 @@ namespace Hl7.Fhir.FluentPath
 {
     internal class Binding
     {
-        private Func<object> _noParams;
-        private Func<object, object> _oneParam;
-        private Func<object, object, object> _twoParams;
+        //public delegate IEnumerable<IFluentPathValue> NoParams(IEnumerable<IFluentPathValue> focus);
+        //public delegate IEnumerable<IFluentPathValue> OneParam(IEnumerable<IFluentPathValue> focus, object param1);
+        //public delegate IEnumerable<IFluentPathValue> TwoParams(IEnumerable<IFluentPathValue> focus, object param1, object param2);
 
-        public string Name { get; private set;  }
+        //public delegate IEnumerable<IFluentPathValue> FpFunction(IEnumerable<IFluentPathValue> focus, IEvaluationContext context);
 
-        public int NumOptional { get; private set; }
 
-        public string[] ParamNames { get; private set; }
+        //// Function with "no" parameters: just the focus (input) and the result
+        //// private Func<IEnumerable<IFluentPathValue>, IEnumerable<IFluentPathValue>> _noParams;
+        //private NoParams _noParams;
 
-        public Binding(string name, Func<object> func)
+        //// Function with one parameter: the focus (input), the single parameter and the result
+        ////private Func<IEnumerable<IFluentPathValue>, object, IEnumerable<IFluentPathValue>> _oneParam;
+        //private OneParam _oneParam;
+
+        //// Function with two parameters: the focus (input), the two parameters and the result
+        ////private Func<IEnumerable<IFluentPathValue>, object, object, IEnumerable<IFluentPathValue>> _twoParams;
+        //private TwoParams _twoParams;
+
+        //public string Name { get; private set;  }
+
+        //public int NumOptional { get; private set; }
+
+        //public string[] ParamNames { get; private set; }
+
+        //public Binding(string name, NoParams func)
+        //{
+        //    _noParams = func;
+        //    Name = name;
+        //    ParamNames = new string[] { };
+        //    NumOptional = 0;
+        //}
+
+        //public Binding(string name, OneParam func, string paramName1, bool isOptional)
+        //{
+        //    _oneParam = func;
+        //    Name = name;
+        //    ParamNames = new[] { paramName1 };
+        //    NumOptional = isOptional ? 1 : 0;
+
+        //}
+
+        //public Binding(string name, TwoParams func, string paramName1, string paramName2, int numOptional)
+        //{
+        //    _twoParams = func;
+        //    Name = name;
+        //    ParamNames = new[] { paramName1, paramName2 };
+        //    NumOptional = numOptional;
+        //}
+
+        //public IEnumerable<IFluentPathValue> Invoke(IEnumerable<IFluentPathValue> focus, IEnumerable<object> paramList)
+        //{
+        //    if (_noParams != null)
+        //        return invoke(focus, _noParams, paramList);
+        //    if (_oneParam != null)
+        //        return invoke(focus, _oneParam, paramList);
+        //    if (_twoParams != null)
+        //        return invoke(focus, _twoParams, paramList);
+        //    return null;
+        //}
+
+        //private IEnumerable<IFluentPathValue> invoke(IEnumerable<IFluentPathValue> focus, NoParams func, IEnumerable<object> paramList)
+        //{
+        //    if (!paramList.Any())
+        //        return func(focus);
+        //    else
+        //        throw Error.Argument("Function '{0}' takes no parameters".FormatWith(Name));
+        //}
+
+        //private IEnumerable<IFluentPathValue> invoke(IEnumerable<IFluentPathValue> focus, OneParam func, IEnumerable<object> paramList)
+        //{
+        //    if (paramList.Count() == 1)
+        //        return func(focus, paramList.Single());
+        //    else if (paramList.Count() == 0 && NumOptional == 1)
+        //        return func(focus, null);
+        //    else
+        //        throw Error.Argument("Function '{0}' takes {1} parameter '{2}'".
+        //            FormatWith(Name, (NumOptional == 1 ? "one optional" : "exactly one"), ParamNames[0]));
+        //}
+
+        //private IEnumerable<IFluentPathValue> invoke(IEnumerable<IFluentPathValue> focus, TwoParams func, IEnumerable<object> paramList)
+        //{
+        //    if (paramList.Count() == 2)
+        //        return func(focus, paramList.First(), paramList.Skip(1).First());
+        //    else if (paramList.Count() == 1 && NumOptional == 1)
+        //        return func(focus, paramList.First(), null);
+        //    else if (paramList.Count() == 0 && NumOptional == 2)
+        //        return func(focus, null, null);
+        //    else
+        //        throw Error.Argument("Function '{0}' takes {1} parameter '{2}' and {3} parameter '{4}'".
+        //            FormatWith(Name, (NumOptional == 0) ? "one" : "one optional", ParamNames[0],
+        //                    (NumOptional == 0) ? "one" : (NumOptional == 1) ? "one optional" : "one", ParamNames[1]));
+        //}
+
+        ////public static readonly Binding Not = new Binding("not", IFluentPathValueListExtensions.Not);
+        ////public static readonly Binding Empty = new Binding("empty", IFluentPathValueListExtensions.IsEmpty);
+
+
+        public static Evaluator Not(Evaluator focus, IEnumerable<Evaluator> arguments)
         {
-            _noParams = func;
-            Name = name;
-            ParamNames = new string[] { };
-            NumOptional = 0;
+            arguments.None();
+
+            return Invoke(focus, f => f.Not());                       
         }
 
-        public Binding(string name, Func<object, object> func, string paramName1, bool isOptional)
+        public static Evaluator Empty(Evaluator focus, IEnumerable<Evaluator> arguments)
         {
-            _oneParam = func;
-            Name = name;
-            ParamNames = new[] { paramName1 };
-            NumOptional = isOptional ? 1 : 0;
+            arguments.None();
 
+            return Invoke(focus, f => f.IsEmpty());
         }
 
-        public Binding(string name, Func<object, object, object> func, string paramName1, string paramName2, int numOptional)
+        private static Evaluator Invoke(Evaluator focus,  Func<IEnumerable<IFluentPathValue>, IEnumerable<IFluentPathValue>> func )
         {
-            _twoParams = func;
-            Name = name;
-            ParamNames = new[] { paramName1, paramName2 };
-            NumOptional = numOptional;
+            return ctx =>
+                {
+                    var focusNodes = focus(ctx);
+
+                    try
+                    {
+                        ctx.FocusStack.Push(focusNodes);
+                        return func(focusNodes);
+                    }
+                    finally
+                    {
+                        ctx.FocusStack.Pop();
+                    }
+                };
         }
 
-        public object Invoke(IEnumerable<object> paramList)
+        public static Evaluator Exists(Evaluator focus, IEnumerable<Evaluator> arguments)
         {
-            if (_noParams != null)
-                return invoke(_noParams, paramList);
-            if (_oneParam != null)
-                return invoke(_oneParam, paramList);
-            if (_twoParams != null)
-                return invoke(_twoParams, paramList);
-            return null;
+            arguments.None();
+
+            return Invoke(focus, f => f.Exists());
         }
 
-        private object invoke(Func<object> func, IEnumerable<object> paramList)
+        public static Evaluator Dispatch(string name, Evaluator focus, IEnumerable<Evaluator> arguments)
         {
-            if (!paramList.Any())
-                return func();
-            else
-                throw Error.Argument("Function '{0}' takes no parameters".FormatWith(Name));
+            try
+            {
+                if (name == "not") return Not(focus, arguments);
+                if (name == "empty") return Empty(focus, arguments);
+                if (name == "exists") return Exists(focus, arguments);
+            }
+            catch(ArgumentException e)
+            {
+                throw Error.Argument("Cannot bind to function " + name + ": " + e.Message);
+            }
+
+            return ctx => ctx.InvokeExternalFunction(name, arguments.Select(arg => arg(ctx)));
         }
 
-        private object invoke(Func<object, object> func, IEnumerable<object> paramList)
-        {
-            if (paramList.Count() == 1)
-                return func(paramList.Single());
-            else if (paramList.Count() == 0 && NumOptional == 1)
-                return func(null);
-            else
-                throw Error.Argument("Function '{0}' takes {1} parameter '{2}'".
-                    FormatWith(Name, (NumOptional == 1 ? "one optional" : "exactly one"), ParamNames[0]));
-        }
-
-        private object invoke(Func<object, object, object> func, IEnumerable<object> paramList)
-        {
-            if (paramList.Count() == 2)
-                return func(paramList.First(), paramList.Skip(1).First());
-            else if (paramList.Count() == 1 && NumOptional == 1)
-                return func(paramList.First(), null);
-            else if (paramList.Count() == 0 && NumOptional == 2)
-                return func(null, null);
-            else
-                throw Error.Argument("Function '{0}' takes {1} parameter '{2}' and {3} parameter '{4}'".
-                    FormatWith(Name, (NumOptional == 0) ? "one" : "one optional", ParamNames[0],
-                            (NumOptional == 0) ? "one" : (NumOptional == 1) ? "one optional" : "one", ParamNames[1]));
-        }
-
-        public static readonly Binding Not = new Binding("not", Eval.Not);
-        //public static readonly Binding Empty = new Binding("empty", Eval.Empty);
-        //public static readonly Parser<Evaluator> Where = CreateFunctionParser("where", "criterium", Eval.Where);
+            //public static readonly Parser<Evaluator> Where = CreateFunctionParser("where", "criterium", Eval.Where);
         //public static readonly Parser<Evaluator> All = CreateFunctionParser("all", "criterium", Eval.All);
         //public static readonly Parser<Evaluator> Any = CreateFunctionParser("any", "criterium", Eval.Any, optional:true);
         //public static readonly Parser<Evaluator> Item = CreateFunctionParser("item", "index", Eval.Item);
@@ -114,5 +186,16 @@ namespace Hl7.Fhir.FluentPath
         //public static readonly Parser<Evaluator> Extension = CreateFunctionParser("extension", "url", Eval.Extension);
         //public static readonly Parser<Evaluator> Substring = CreateFunctionParser("substring", "start", "length", Eval.Substring, numOptional:1);
         //public static readonly Parser<Evaluator> Select = CreateFunctionParser("select", "mapper", Eval.Select);
+    }
+
+    internal static class ArgumentAssertionExtensions
+    {
+        internal static void None(this IEnumerable<Evaluator> arguments)
+        {
+            if(arguments != null && arguments.Any())
+            {
+                throw Error.Argument("Function does not take any parameters");
+            }
+        }
     }
 }

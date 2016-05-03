@@ -14,12 +14,15 @@ namespace HL7.Fhir.FluentPath.FluentPath
     {
         public override Evaluator VisitConstant(FP.ConstantExpression expression)
         {
-            return Eval.Return(expression.Value);
+            return Return(expression.Value);
         }
 
         public override Evaluator VisitFunctionCall(FP.FunctionCallExpression expression)
         {
-            throw new NotImplementedException();
+            var focus = expression.Focus.ToEvaluator();
+            var arguments = expression.Arguments.Select(arg => arg.ToEvaluator());
+            
+            return Bind(expression.FunctionName, focus, arguments);
         }
 
         public override Evaluator VisitLambda(FP.LambdaExpression expression)
@@ -29,19 +32,54 @@ namespace HL7.Fhir.FluentPath.FluentPath
 
         public override Evaluator VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
         {
-            return Eval.Return(FhirValueList.Empty());
+            return Return(FhirValueList.Empty());
         }
 
         public override Evaluator VisitVariableRef(FP.VariableRefExpression expression)
         {
+            // Special case: $this
             if (expression is FP.AxisExpression)
-                return Eval.Axis(expression.Name);
-            return Eval.ResolveValue(expression.Name);
+            {
+                var axis = (FP.AxisExpression)expression;
+                if (axis.AxisName == "this")
+                    return Focus();
+                else
+                    throw new NotSupportedException("Cannot resolve axis reference " + axis.AxisName);
+            }
+            else
+                return ResolveValue(expression.Name);
         }
 
         public override Evaluator VisitTypeBinaryExpression(FP.TypeBinaryExpression expression)
         {
             throw new NotImplementedException();
+        }
+
+        public static Evaluator Return(object value)
+        {
+            return _ =>
+            {
+                if (value is IFluentPathValue)
+                    return new[] { (IFluentPathValue)value };
+                else
+                    return new[] { new ConstantValue(value) };
+            };
+        }
+
+        public static Evaluator ResolveValue(string name)
+        {
+            return ctx => ctx.ResolveValue(name);
+        }
+
+
+        public static Evaluator Focus()
+        {
+            return ctx => ctx.FocusStack.Peek();
+        }
+     
+        public static Evaluator Bind(string name, Evaluator focus, IEnumerable<Evaluator> arguments)
+        {
+            return Binding.Dispatch(name, focus, arguments);
         }
 
     }
