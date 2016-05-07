@@ -14,15 +14,15 @@ namespace HL7.Fhir.FluentPath.FluentPath
     {
         public override Evaluator VisitConstant(FP.ConstantExpression expression)
         {
-            return Return(expression.Value);
+            return Return(new ConstantValue(expression.Value));
         }
 
         public override Evaluator VisitFunctionCall(FP.FunctionCallExpression expression)
         {
-            var focus = expression.Focus.ToEvaluator();
-            var arguments = expression.Arguments.Select(arg => arg.ToEvaluator());
-            
-            return Bind(expression.FunctionName, focus, arguments);
+            var focusEval = expression.Focus.ToEvaluator();
+            var argsEval = expression.Arguments.Select(arg => arg.ToEvaluator());
+
+            return Bind(expression.FunctionName, focusEval, argsEval);   
         }
 
         public override Evaluator VisitLambda(FP.LambdaExpression expression)
@@ -55,15 +55,14 @@ namespace HL7.Fhir.FluentPath.FluentPath
             throw new NotImplementedException();
         }
 
-        public static Evaluator Return(object value)
+        public static Evaluator Return(IFluentPathValue value)
         {
-            return _ =>
-            {
-                if (value is IFluentPathValue)
-                    return new[] { (IFluentPathValue)value };
-                else
-                    return new[] { new ConstantValue(value) };
-            };
+            return _ => new[] { (IFluentPathValue)value };
+        }
+
+        public static Evaluator Return(IEnumerable<IFluentPathValue> value)
+        {
+            return _ => value;
         }
 
         public static Evaluator ResolveValue(string name)
@@ -79,9 +78,8 @@ namespace HL7.Fhir.FluentPath.FluentPath
      
         public static Evaluator Bind(string name, Evaluator focus, IEnumerable<Evaluator> arguments)
         {
-            return Binding.Dispatch(name, focus, arguments);
+            return Binding.Bind(name, focus, arguments);
         }
-
     }
 
     public static class EvaluatorExpressionExtensions

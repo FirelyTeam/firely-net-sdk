@@ -56,12 +56,21 @@ namespace Hl7.Fhir.FluentPath
             return evaluator.Select(instance, context).BooleanEval().AsBoolean();
         }
 
+        public static bool Predicate(this Evaluator evaluator, IFluentPathValue instance)
+        {
+            return evaluator.Select(instance, new BaseEvaluationContext()).BooleanEval().AsBoolean();
+        }
+
         public static bool IsTrue(this Evaluator evaluator, IFluentPathValue instance)
         {
             return evaluator.Select(instance, new BaseEvaluationContext()).BooleanEval().AsBoolean();
         }
 
-    
+        public static bool IsTrue(this Evaluator evaluator, IFluentPathValue instance, IEvaluationContext context)
+        {
+            return evaluator.Select(instance, context).BooleanEval().AsBoolean();
+        }
+
         //public static Evaluator Length()
         //{
         //    return (f, _) => f.MaxLength();

@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Support;
+using HL7.Fhir.FluentPath.FluentPath;
 using HL7.Fhir.FluentPath.FluentPath.Expressions;
 using Sprache;
 using System;
@@ -113,26 +114,45 @@ namespace Hl7.Fhir.FluentPath
         {
             arguments.None();
 
-            return Invoke(focus, f => f.Not());                       
+            return invoke(focus, arguments, (f,_) => f.Not());                       
         }
 
         public static Evaluator Empty(Evaluator focus, IEnumerable<Evaluator> arguments)
         {
             arguments.None();
 
-            return Invoke(focus, f => f.IsEmpty());
+            return invoke(focus, arguments, (f,_) => f.IsEmpty());
         }
 
-        private static Evaluator Invoke(Evaluator focus,  Func<IEnumerable<IFluentPathValue>, IEnumerable<IFluentPathValue>> func )
+        public static Evaluator Exists(Evaluator focus, IEnumerable<Evaluator> arguments)
+        {
+            arguments.None();
+
+            return invoke(focus, arguments, (f,_) => f.Exists());
+        }
+
+        public static Evaluator Builtin_Children(Evaluator focus, IEnumerable<Evaluator> arguments)
+        {
+            arguments.Exactly(1);
+
+            return invoke(focus, arguments, (f,a) => f.Children(a[0].AsString()));
+        }
+
+
+        delegate IEnumerable<IFluentPathValue> Invokee(IEnumerable<IFluentPathValue> focus, IList<IEnumerable<IFluentPathValue>> arguments);
+
+
+        private static Evaluator invoke(Evaluator focus, IEnumerable<Evaluator> arguments, Invokee func)
         {
             return ctx =>
                 {
                     var focusNodes = focus(ctx);
+                    var argNodes = arguments.Select(arg => arg(ctx)).ToList();
 
                     try
                     {
                         ctx.FocusStack.Push(focusNodes);
-                        return func(focusNodes);
+                        return func(focusNodes, argNodes);
                     }
                     finally
                     {
@@ -141,20 +161,15 @@ namespace Hl7.Fhir.FluentPath
                 };
         }
 
-        public static Evaluator Exists(Evaluator focus, IEnumerable<Evaluator> arguments)
-        {
-            arguments.None();
 
-            return Invoke(focus, f => f.Exists());
-        }
-
-        public static Evaluator Dispatch(string name, Evaluator focus, IEnumerable<Evaluator> arguments)
+        public static Evaluator Bind(string name, Evaluator focus, IEnumerable<Evaluator> arguments)
         {
             try
             {
                 if (name == "not") return Not(focus, arguments);
                 if (name == "empty") return Empty(focus, arguments);
                 if (name == "exists") return Exists(focus, arguments);
+                if (name == Expression.OP_PREFIX + "children") return Builtin_Children(focus, arguments);
             }
             catch(ArgumentException e)
             {
@@ -190,12 +205,41 @@ namespace Hl7.Fhir.FluentPath
 
     internal static class ArgumentAssertionExtensions
     {
-        internal static void None(this IEnumerable<Evaluator> arguments)
+        internal static void None(this IEnumerable<Evaluator> args)
         {
-            if(arguments != null && arguments.Any())
+            if(args != null && args.Any())
             {
                 throw Error.Argument("Function does not take any parameters");
             }
         }
+
+        internal static void Exactly(this IEnumerable<Evaluator> args, int count)
+        {
+            if (args == null || args.Count() != count)
+            {
+                throw Error.Argument("Function takes exactly {0} parameter{1}."
+                            .FormatWith(count, count == 1 ? "" : "s"));
+            }
+
+        }
+
+        internal static void Min(this IEnumerable<Evaluator> args, int count)
+        {
+            if (args == null || args.Count() < count)
+            {
+                throw Error.Argument("Function takes at least {0} parameters".FormatWith(count));
+            }
+        }
+
+
+        internal static void Max(this IEnumerable<Evaluator> args, int count)
+        {
+            if (args == null || args.Count() > count)
+            {
+                throw Error.Argument("Function takes at most {0} parameters".FormatWith(count));
+            }
+        }
     }
+
+
 }

@@ -21,12 +21,10 @@ namespace Hl7.Fhir.FluentPath
 {
     public static class PathExpression
     {
-        private static ConcurrentDictionary<string, Evaluator> _cache = new ConcurrentDictionary<string, Evaluator>();
+       // private static ConcurrentDictionary<string, Evaluator> _cache = new ConcurrentDictionary<string, Evaluator>();
 
         public static Expression Parse(string expression)
-        {
-            // TODO: Move caching to evaluation
-          
+        {         
             var parse = Grammar.Expression.End().TryParse(expression);
 
             if (parse.WasSuccessful)
@@ -43,81 +41,67 @@ namespace Hl7.Fhir.FluentPath
 
         public static Evaluator Compile(string expression)
         {
-            var cacheName = expression.Replace(" ", "");
+            //var cacheName = expression.Replace(" ", "");
 
-            if (_cache.ContainsKey(cacheName))
-                return _cache[cacheName];
-
-
-
+            //if (_cache.ContainsKey(cacheName))
+            //    return _cache[cacheName];  
+            
             return Compile(Parse(expression));
         }
 
         public static Evaluator Compile(this Expression expression)
         {
-          
-
-
             return expression.ToEvaluator();
         }
 
-        public static IEnumerable<T> Select<T>(string expression, T instance, IEvaluationContext context) where T : IFluentPathValue
+    
+        public static IEnumerable<IFluentPathValue> Select(string expression, IFluentPathValue instance)
         {
-            var evaluator = Parse(expression);
-            throw new NotImplementedException();
-            //return evaluator(FhirValueList.Create(instance), context).Select(v => (T)v);
+            var evaluator = Compile(expression);
+            return evaluator.Select(instance);
         }
 
-        public static IEnumerable<T> Select<T>(string expression, T instance) where T: IFluentPathValue
+        public static IEnumerable<IFluentPathValue> Select(string expression, IFluentPathValue instance, IEvaluationContext context)
         {
-            var evaluator = Parse(expression);
-            throw new NotImplementedException();
-            //return evaluator(FhirValueList.Create(instance), new BaseEvaluationContext()).Select(v => (T)v);
-        }
-
-        public static object Scalar(string expression, IFluentPathValue instance, IEvaluationContext context)
-        {
-            var evaluator = Parse(expression);
-            throw new NotImplementedException();
-            //return evaluator.Scalar(instance, context);
+            var evaluator = Compile(expression);
+            return evaluator.Select(instance, context);
         }
 
         public static object Scalar(string expression, IFluentPathValue instance)
         {
-            var evaluator = Parse(expression);
-            throw new NotImplementedException();
-            //return evaluator.Scalar(instance, new BaseEvaluationContext());
+            var evaluator = Compile(expression);
+            return evaluator.Scalar(instance);
         }
 
-        public static bool IsTrue(string expression, IFluentPathValue instance, IEvaluationContext context)
+        public static object Scalar(string expression, IFluentPathValue instance, IEvaluationContext context)
         {
-            var evaluator = Parse(expression);
-            throw new NotImplementedException();
-            //return evaluator.Predicate(instance, context);
+            var evaluator = Compile(expression);
+            return evaluator.Scalar(instance, context);
         }
 
         public static bool IsTrue(string expression, IFluentPathValue instance)
         {
-            var evaluator = Parse(expression);
-            throw new NotImplementedException();
-            //return evaluator.Predicate(instance, new BaseEvaluationContext());
+            var evaluator = Compile(expression);
+            return evaluator.Predicate(instance);
         }
 
+        public static bool IsTrue(string expression, IFluentPathValue instance, IEvaluationContext context)
+        {
+            var evaluator = Compile(expression);
+            return evaluator.Predicate(instance, context);
+        }
     }
 
     public static class PathExpressionLinq
     {
-        public static IEnumerable<T> FluentPathSelect<T>(this T instance, string expression) where T : IFluentPathValue
+        public static IEnumerable<IFluentPathValue> FluentPathSelect<T>(this IFluentPathValue instance, string expression) 
         {
             return PathExpression.Select(expression, instance);
         }
 
-        public static IEnumerable<T> FluentPathIsTrue<T>(this T instance, string expression) where T : IFluentPathValue
+        public static IEnumerable<IFluentPathValue> FluentPathIsTrue<T>(this IFluentPathValue instance, string expression)
         {
             return PathExpression.Select(expression, instance);
         }
-
     }
-
-
 }

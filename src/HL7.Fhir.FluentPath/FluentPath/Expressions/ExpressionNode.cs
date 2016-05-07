@@ -10,8 +10,8 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 {
     public abstract class Expression
     {
-        protected const string OP_PREFIX = "builtin.";
-        protected static readonly int OP_PREFIX_LEN = OP_PREFIX.Length;
+        internal const string OP_PREFIX = "builtin.";
+        internal static readonly int OP_PREFIX_LEN = OP_PREFIX.Length;
 
         protected Expression(TypeInfo type)
         {

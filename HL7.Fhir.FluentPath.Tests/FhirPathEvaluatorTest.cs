@@ -46,7 +46,10 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestForMe()
         {
+            Assert.IsTrue(PathExpression.IsTrue(@"{}.empty()", tree));
             Assert.IsTrue(PathExpression.IsTrue(@"1.empty().not()", tree));
+
+            Assert.AreEqual(2,PathExpression.Select(@"Patient.identifier", tree).Count());
         }
 
         [TestMethod, TestCategory("FhirPath")]
