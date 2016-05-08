@@ -29,7 +29,7 @@ namespace Hl7.Fhir.FluentPath
         /// <param name="name"></param>
         /// <param name="parameters">An ordered set parameters, each a collection of IFhirPathValues representing the value of that parameter</param>
         /// <remarks>Should throw NotSupportedException if the external function is not supported.</remarks>
-        IEnumerable<IFluentPathValue> InvokeExternalFunction(string name, IEnumerable<IEnumerable<IFluentPathValue>> parameters);
+        IEnumerable<IFluentPathValue> InvokeExternalFunction(string name, IEnumerable<IFluentPathValue> focus, IEnumerable<IEnumerable<IFluentPathValue>> parameters);
 
         /// <summary>
         /// Provide a value when a value reference (%name) is encountered in an expression

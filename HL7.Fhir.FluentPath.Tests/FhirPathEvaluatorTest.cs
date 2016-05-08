@@ -49,7 +49,8 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.IsTrue(PathExpression.IsTrue(@"{}.empty()", tree));
             Assert.IsTrue(PathExpression.IsTrue(@"1.empty().not()", tree));
 
-            Assert.AreEqual(2,PathExpression.Select(@"Patient.identifier", tree).Count());
+            Assert.AreEqual(2L,PathExpression.Scalar(@"Patient.identifier.count()", tree));
+            Assert.IsTrue(PathExpression.IsTrue(@"Patient.identifier.count() = 2", tree));
         }
 
         [TestMethod, TestCategory("FhirPath")]

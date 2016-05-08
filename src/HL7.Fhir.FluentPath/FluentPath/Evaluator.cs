@@ -96,54 +96,7 @@ namespace Hl7.Fhir.FluentPath
         //    };
         //}
 
-        //public static Evaluator Infix(this Evaluator left, Operator op, Evaluator right)
-        //{
-        //    return (f,c) =>
-        //    {
-        //        var leftNodes = left(f,c);
-        //        var rightNodes = right(f,c);
-
-        //        IEnumerable<IFluentPathValue> result = null;
-
-        //        switch (op)
-        //        {
-        //            case Operator.Equal:
-        //                result = leftNodes.IsEqualTo(rightNodes); break;
-        //            case Operator.Equivalent:
-        //                result = leftNodes.IsEquivalentTo(rightNodes); break;
-        //            case Operator.GreaterThan:
-        //                result = leftNodes.GreaterThan(rightNodes); break;
-        //            case Operator.GreaterOrEqual:
-        //                result = leftNodes.GreaterOrEqual(rightNodes); break;
-        //            case Operator.LessThan:
-        //                result = leftNodes.LessThan(rightNodes); break;
-        //            case Operator.LessOrEqual:
-        //                result = leftNodes.LessOrEqual(rightNodes); break;
-        //            case Operator.Add:
-        //                result = leftNodes.Add(rightNodes); break;
-        //            case Operator.Sub:
-        //                result = leftNodes.Sub(rightNodes); break;
-        //            case Operator.Mul:
-        //                result = leftNodes.Mul(rightNodes); break;
-        //            case Operator.Div:
-        //                result = leftNodes.Div(rightNodes); break;
-        //            case Operator.And:
-        //                result = leftNodes.And(rightNodes); break;
-        //            case Operator.Or:
-        //                result = leftNodes.Or(rightNodes); break;
-        //            case Operator.Xor:
-        //                result = leftNodes.Xor(rightNodes); break;
-        //            case Operator.Implies:
-        //                result = leftNodes.Implies(rightNodes); break;
-        //            case Operator.Union:
-        //                result = leftNodes.Union(rightNodes); break;
-        //            case Operator.Concat:
-        //                result = leftNodes.Add(rightNodes); break;  // should only work for strings ;-)                        
-        //            case Operator.In:
-        //                result = leftNodes.SubsetOf(rightNodes); break;
-        //            default:
-        //                throw Error.NotImplemented("Infix operator '{0}' is not yet implemented".FormatWith(op));
-        //        }
+     
 
         //        return result;
         //    };
@@ -175,16 +128,7 @@ namespace Hl7.Fhir.FluentPath
         //    return (f, c) => f.Select(elements => mapper(elements, c));
         //}
 
-        //public static Evaluator Empty()
-        //{
-        //    return (f,_)=> f.IsEmpty();
-        //}
-
-        //public static Evaluator Not()
-        //{
-        //    return (f, _) => f.Not();
-        //}
-
+      
         //public static Evaluator Item(Evaluator index)
         //{
         //    return (f,c) =>
@@ -285,62 +229,6 @@ namespace Hl7.Fhir.FluentPath
         //    };
         //}
 
-        //public static Evaluator Children(Evaluator nameParam)
-        //{
-        //    return (f,c) =>
-        //    {
-        //        var name = nameParam(f,c).Single().AsString();
-        //        return f.Children(name);
-        //    };
-        //}
-
-        //public static Evaluator Children(string name)
-        //{
-        //    return Children(Eval.Return(name));
-        //}
-
-
-        //public static Evaluator Function(string name, IEnumerable<Evaluator> paramList)
-        //{
-        //    // Later: provide a hook for custom functions
-        //    throw Error.NotSupported("An unknown function '{0}' is invoked".FormatWith(name));
-        //}
-
-        //public static Evaluator<decimal> Add(this Evaluator<decimal> left, Evaluator<decimal> right)
-        //{
-        //    return c => Result.ForValue(left(c).Value + right(c).Value);
-        //}
-
-        //public static Evaluator<decimal> Sub(this Evaluator<decimal> left, Evaluator<decimal> right)
-        //{
-        //    return c => Result.ForValue(left(c).Value - right(c).Value);
-        //}
-
-        //public static Evaluator<decimal> Mul(this Evaluator<decimal> left, Evaluator<decimal> right)
-        //{
-        //    return c => Result.ForValue(left(c).Value * right(c).Value);
-        //}
-
-        //public static Evaluator<decimal> Div(this Evaluator<decimal> left, Evaluator<decimal> right)
-        //{
-        //    return c => Result.ForValue(left(c).Value / right(c).Value);
-        //}
-
-        //public static Evaluator<string> Add(this Evaluator<string> left, Evaluator<string> right)
-        //{
-        //    return c => Result.ForValue(left(c).Value + right(c).Value);
-        //}
+        
     }
-
-
-    public enum Axis
-    {
-        //Children,
-        //Descendants,
-        //Context,
-        //Resource,
-        //Parent,
-        Focus
-    }
-
   }

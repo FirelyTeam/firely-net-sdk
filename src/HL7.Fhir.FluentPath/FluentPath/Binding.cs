@@ -106,80 +106,170 @@ namespace Hl7.Fhir.FluentPath
         //                    (NumOptional == 0) ? "one" : (NumOptional == 1) ? "one optional" : "one", ParamNames[1]));
         //}
 
-        ////public static readonly Binding Not = new Binding("not", IFluentPathValueListExtensions.Not);
-        ////public static readonly Binding Empty = new Binding("empty", IFluentPathValueListExtensions.IsEmpty);
+        private static Dictionary<string, Binding> _functions = new Dictionary<string, Binding>();
 
-
-        public static Evaluator Not(Evaluator focus, IEnumerable<Evaluator> arguments)
+        public static IReadOnlyDictionary<string, Binding> Functions
         {
-            arguments.None();
-
-            return invoke(focus, arguments, (f,_) => f.Not());                       
-        }
-
-        public static Evaluator Empty(Evaluator focus, IEnumerable<Evaluator> arguments)
-        {
-            arguments.None();
-
-            return invoke(focus, arguments, (f,_) => f.IsEmpty());
-        }
-
-        public static Evaluator Exists(Evaluator focus, IEnumerable<Evaluator> arguments)
-        {
-            arguments.None();
-
-            return invoke(focus, arguments, (f,_) => f.Exists());
-        }
-
-        public static Evaluator Builtin_Children(Evaluator focus, IEnumerable<Evaluator> arguments)
-        {
-            arguments.Exactly(1);
-
-            return invoke(focus, arguments, (f,a) => f.Children(a[0].AsString()));
+            get { return _functions; }
         }
 
 
-        delegate IEnumerable<IFluentPathValue> Invokee(IEnumerable<IFluentPathValue> focus, IList<IEnumerable<IFluentPathValue>> arguments);
+        public string Name { get; private set; }
+        public Invokee Function { get; private set; }
 
+        public ArgCountChecker ArgCountCheckers { get; private set; }
 
-        private static Evaluator invoke(Evaluator focus, IEnumerable<Evaluator> arguments, Invokee func)
+        public IEnumerable<ArgumentChecker> ArgumentCheckers { get; private set; }
+       
+        public delegate void ArgCountChecker(FunctionCallExpression func);
+        public delegate void ArgumentChecker(Expression argument);
+
+        static Binding()
         {
-            return ctx =>
+            add("not", (f, _) => f.Not(), None());
+            add("empty", (f, _) => f.IsEmpty(), None());
+            add("exists", (f, _) => f.Exists(), None());
+            add("builtin.children", (f, a) => f.Children(a[0].AsString()), Exactly(1), OfType("name", TypeInfo.String));
+            add("count", (f, _) => f.CountItems(), None());
+            add("builtin.=", (f, a) => f.IsEqualTo(a[0]), Exactly(1));
+            add("builtin.+", (f, a) => f.Add(a[0]), Exactly(1));
+        }
+
+
+        private static void add(string name, Invokee func, ArgCountChecker countChecker, params ArgumentChecker[] checkers)
+        {
+            _functions.Add(name, new Binding(name, func, countChecker, checkers));
+        }
+
+
+        private Binding(string name, Invokee function, ArgCountChecker countChecker, params ArgumentChecker[] checkers)
+        {
+            Name = name;
+            Function = function;
+            ArgCountCheckers = countChecker; 
+            ArgumentCheckers = checkers;
+        }
+        
+      
+        public delegate IEnumerable<IFluentPathValue> Invokee(IEnumerable<IFluentPathValue> focus, IList<IEnumerable<IFluentPathValue>> arguments);
+
+
+        public void Validate(FunctionCallExpression expression)
+        {
+            ArgCountCheckers(expression);
+
+            expression.Arguments.Zip((IEnumerable<ArgumentChecker>)ArgumentCheckers, (a, c) => { c(a); return true; });
+        }
+
+    
+        internal static ArgumentChecker OfType(string name, TypeInfo type)
+        {
+            return arg =>
+            {
+                if (arg.ExpressionType != type && arg.ExpressionType != TypeInfo.Any)
                 {
-                    var focusNodes = focus(ctx);
-                    var argNodes = arguments.Select(arg => arg(ctx)).ToList();
-
-                    try
-                    {
-                        ctx.FocusStack.Push(focusNodes);
-                        return func(focusNodes, argNodes);
-                    }
-                    finally
-                    {
-                        ctx.FocusStack.Pop();
-                    }
-                };
+                    throw Error.Argument("Argument {0} must be of type {1}".FormatWith(name, type.Name));
+                }
+            };
         }
 
-
-        public static Evaluator Bind(string name, Evaluator focus, IEnumerable<Evaluator> arguments)
+        internal static ArgCountChecker None()
         {
-            try
+            return func =>
             {
-                if (name == "not") return Not(focus, arguments);
-                if (name == "empty") return Empty(focus, arguments);
-                if (name == "exists") return Exists(focus, arguments);
-                if (name == Expression.OP_PREFIX + "children") return Builtin_Children(focus, arguments);
-            }
-            catch(ArgumentException e)
-            {
-                throw Error.Argument("Cannot bind to function " + name + ": " + e.Message);
-            }
-
-            return ctx => ctx.InvokeExternalFunction(name, arguments.Select(arg => arg(ctx)));
+                if (func.Arguments.Any())
+                {
+                    throw Error.Argument("Function '{0}' does not take any parameters".FormatWith(func.FunctionName));
+                }
+            };
         }
 
-            //public static readonly Parser<Evaluator> Where = CreateFunctionParser("where", "criterium", Eval.Where);
+        internal static ArgCountChecker Exactly(int count)
+        {
+            return func =>
+            {
+                if (func.Arguments.Count() != count)
+                {
+                    throw Error.Argument("Function '{0}' takes exactly {1} parameter{2}."
+                                .FormatWith(func.FunctionName, count, count == 1 ? "" : "s"));
+                }               
+            };
+        }
+
+        internal static ArgCountChecker Min(int count)
+        {
+            return func =>
+            {
+                if (func.Arguments.Count() < count)
+                {
+                    throw Error.Argument("Function '{0}' takes at least {1} parameters".FormatWith(func.FunctionName, count));
+                }
+            };
+        }
+
+
+        internal static ArgCountChecker Max(int count)
+        {
+            return func =>
+            {
+                if (func.Arguments.Count() > count)
+                {
+                    throw Error.Argument("Function '{0}' takes at most {1} parameters".FormatWith(func.FunctionName, count));
+                }
+            };
+        }
+
+
+        //public static Evaluator Infix(this Evaluator left, Operator op, Evaluator right)
+        //{
+        //    return (f,c) =>
+        //    {
+        //        var leftNodes = left(f,c);
+        //        var rightNodes = right(f,c);
+
+        //        IEnumerable<IFluentPathValue> result = null;
+
+        //        switch (op)
+        //        {
+        //            case Operator.Equal:
+        //                result = leftNodes.IsEqualTo(rightNodes); break;
+        //            case Operator.Equivalent:
+        //                result = leftNodes.IsEquivalentTo(rightNodes); break;
+        //            case Operator.GreaterThan:
+        //                result = leftNodes.GreaterThan(rightNodes); break;
+        //            case Operator.GreaterOrEqual:
+        //                result = leftNodes.GreaterOrEqual(rightNodes); break;
+        //            case Operator.LessThan:
+        //                result = leftNodes.LessThan(rightNodes); break;
+        //            case Operator.LessOrEqual:
+        //                result = leftNodes.LessOrEqual(rightNodes); break;
+        //            case Operator.Add:
+        //                result = leftNodes.Add(rightNodes); break;
+        //            case Operator.Sub:
+        //                result = leftNodes.Sub(rightNodes); break;
+        //            case Operator.Mul:
+        //                result = leftNodes.Mul(rightNodes); break;
+        //            case Operator.Div:
+        //                result = leftNodes.Div(rightNodes); break;
+        //            case Operator.And:
+        //                result = leftNodes.And(rightNodes); break;
+        //            case Operator.Or:
+        //                result = leftNodes.Or(rightNodes); break;
+        //            case Operator.Xor:
+        //                result = leftNodes.Xor(rightNodes); break;
+        //            case Operator.Implies:
+        //                result = leftNodes.Implies(rightNodes); break;
+        //            case Operator.Union:
+        //                result = leftNodes.Union(rightNodes); break;
+        //            case Operator.Concat:
+        //                result = leftNodes.Add(rightNodes); break;  // should only work for strings ;-)                        
+        //            case Operator.In:
+        //                result = leftNodes.SubsetOf(rightNodes); break;
+        //            default:
+        //                throw Error.NotImplemented("Infix operator '{0}' is not yet implemented".FormatWith(op));
+        //        }
+
+        //public static readonly Parser<Evaluator> Where = CreateFunctionParser("where", "criterium", Eval.Where);
         //public static readonly Parser<Evaluator> All = CreateFunctionParser("all", "criterium", Eval.All);
         //public static readonly Parser<Evaluator> Any = CreateFunctionParser("any", "criterium", Eval.Any, optional:true);
         //public static readonly Parser<Evaluator> Item = CreateFunctionParser("item", "index", Eval.Item);
@@ -202,44 +292,4 @@ namespace Hl7.Fhir.FluentPath
         //public static readonly Parser<Evaluator> Substring = CreateFunctionParser("substring", "start", "length", Eval.Substring, numOptional:1);
         //public static readonly Parser<Evaluator> Select = CreateFunctionParser("select", "mapper", Eval.Select);
     }
-
-    internal static class ArgumentAssertionExtensions
-    {
-        internal static void None(this IEnumerable<Evaluator> args)
-        {
-            if(args != null && args.Any())
-            {
-                throw Error.Argument("Function does not take any parameters");
-            }
-        }
-
-        internal static void Exactly(this IEnumerable<Evaluator> args, int count)
-        {
-            if (args == null || args.Count() != count)
-            {
-                throw Error.Argument("Function takes exactly {0} parameter{1}."
-                            .FormatWith(count, count == 1 ? "" : "s"));
-            }
-
-        }
-
-        internal static void Min(this IEnumerable<Evaluator> args, int count)
-        {
-            if (args == null || args.Count() < count)
-            {
-                throw Error.Argument("Function takes at least {0} parameters".FormatWith(count));
-            }
-        }
-
-
-        internal static void Max(this IEnumerable<Evaluator> args, int count)
-        {
-            if (args == null || args.Count() > count)
-            {
-                throw Error.Argument("Function takes at most {0} parameters".FormatWith(count));
-            }
-        }
-    }
-
-
 }

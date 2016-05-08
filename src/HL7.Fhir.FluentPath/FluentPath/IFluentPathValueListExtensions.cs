@@ -293,7 +293,8 @@ namespace Hl7.Fhir.FluentPath
 
         public static IEnumerable<IFluentPathValue> IsEqualTo(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
         {
-            if (!left.Any() && !right.Any()) return FhirValueList.Create(true);
+            if (!left.Any() || !right.Any()) return FhirValueList.Empty();
+
             if (left.Count() != right.Count()) return FhirValueList.Create(false);
 
             return FhirValueList.Create(left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x));
@@ -340,6 +341,8 @@ namespace Hl7.Fhir.FluentPath
 
         public static IEnumerable<IFluentPathValue> Add(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
         {
+            if (!left.Any() || !right.Any()) yield break;
+                    .
             if (left.Count() == 1 && right.Count() == 1)
                 yield return left.Single().Add(right.Single());
         }

@@ -19,10 +19,20 @@ namespace HL7.Fhir.FluentPath.FluentPath
 
         public override Evaluator VisitFunctionCall(FP.FunctionCallExpression expression)
         {
+            Binding binding = null;
+            var isKnown = Binding.Functions.TryGetValue(expression.FunctionName, out binding);
+
+            if (isKnown) binding.Validate(expression);
+
             var focusEval = expression.Focus.ToEvaluator();
             var argsEval = expression.Arguments.Select(arg => arg.ToEvaluator());
 
-            return Bind(expression.FunctionName, focusEval, argsEval);   
+            if(isKnown)
+                return Call(focusEval, argsEval, binding);
+            else
+                return ExternalCall(expression.FunctionName, focusEval, argsEval);
+
+
         }
 
         public override Evaluator VisitLambda(FP.LambdaExpression expression)
@@ -75,11 +85,47 @@ namespace HL7.Fhir.FluentPath.FluentPath
         {
             return ctx => ctx.FocusStack.Peek();
         }
-     
-        public static Evaluator Bind(string name, Evaluator focus, IEnumerable<Evaluator> arguments)
+
+        public static Evaluator Call(Evaluator focus, IEnumerable<Evaluator> arguments, Binding binding)
         {
-            return Binding.Bind(name, focus, arguments);
+            return ctx =>
+            {
+                try
+                {
+                    var focusNodes = focus(ctx);
+                    var argumentNodes = arguments.Select(arg => arg(ctx)).ToList();
+
+                    ctx.FocusStack.Push(focusNodes);
+
+                    return binding.Function(focusNodes, argumentNodes);
+                }
+                finally
+                {
+                    ctx.FocusStack.Pop();
+                }
+            };
         }
+
+        public static Evaluator ExternalCall(string name, Evaluator focus, IEnumerable<Evaluator> arguments)
+        {
+            return ctx =>
+            {
+                try
+                {
+                    var focusNodes = focus(ctx);
+                    var argumentNodes = arguments.Select(arg => arg(ctx)).ToList();
+
+                    ctx.FocusStack.Push(focusNodes);
+
+                    return ctx.InvokeExternalFunction(name, focusNodes, argumentNodes);
+                }
+                finally
+                {
+                    ctx.FocusStack.Pop();
+                }
+            };
+        }
+
     }
 
     public static class EvaluatorExpressionExtensions

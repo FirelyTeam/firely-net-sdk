@@ -32,7 +32,7 @@ namespace Hl7.Fhir.FluentPath
 
         public IEnumerable<IFluentPathValue> OriginalContext { get; set; }
 
-        public virtual IEnumerable<IFluentPathValue> InvokeExternalFunction(string name, IEnumerable<IEnumerable<IFluentPathValue>> parameters)
+        public virtual IEnumerable<IFluentPathValue> InvokeExternalFunction(string name, IEnumerable<IFluentPathValue> focus, IEnumerable<IEnumerable<IFluentPathValue>> parameters)
         {
             throw new NotSupportedException("Function '{0}' is unknown".FormatWith(name));
         }
