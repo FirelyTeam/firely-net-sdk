@@ -19,6 +19,7 @@ using System.Xml;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using Hl7.Fhir.Rest;
+using System.Reflection;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -60,7 +61,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             get
             {
-                var codebase = AppDomain.CurrentDomain.BaseDirectory;
+                var codebase = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
                 if (Directory.Exists(codebase))
                     return codebase;
