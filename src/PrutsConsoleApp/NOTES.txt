@@ -1,4 +1,17 @@
 ﻿
+20-may-2016
+- AssemblyInfo: Removed [assembly: AllowPartialTrustedCallers]
+- renamed predicate fhir:reference -> fhir:link
+- renamed predicate a sct:xxxxxx -> fhir:concept 
+- prefix for snomed codes is "http://snomed.info/id/"
+- fhir:index is xs:integer, can only do this in dotnetrdf by adding the datatype
+- predicate is now without "Reference" for non polymorph reference props e.g. used to be "subjectReference" is now "subject"
+- added DateTime handling based on Grahames code
+- workaround datatype uri issue by using full uri -> also shows fhir:index without quotes now
+-- ?? fhir:value also without quotes when datatype is integer/decimal is that a problem?
+
+------------
+up-to may-2016 WGM
 PropertyMapping.cs
 - added getting of DefiningType e.g. for Resource.id
 

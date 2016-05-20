@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\Net40\</OutputPath>
-	<BaseIntermediateOutputPath>obj\Debug\Net40\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Net40\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;PORTABLE45, Net40</DefineConstants>
     <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -35,7 +35,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Net40\</OutputPath>
-	<BaseIntermediateOutputPath>obj\Release\Net40\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\Release\Net40\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;RELEASE;Net40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -50,8 +50,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="dotNetRDF, Version=1.0.9.3683, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
-      <HintPath>..\packages\dotNetRDF.1.0.9.3683\lib\net40\dotNetRDF.dll</HintPath>
+    <Reference Include="dotNetRDF, Version=1.0.8.3533, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
+      <HintPath>..\packages\dotNetRDF.1.0.8.3533\lib\net40\dotNetRDF.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -67,6 +67,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="VDS.Common, Version=1.5.0.0, Culture=neutral, PublicKeyToken=ab5f4eb908061bf0, processorArchitecture=MSIL">
+      <HintPath>..\packages\VDS.Common.1.5.0\lib\net40-client\VDS.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
@@ -665,6 +669,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Model\Generated\TemplateFileManagerV2.1.ttinclude" />
     <None Include="packages.config" />
   </ItemGroup>

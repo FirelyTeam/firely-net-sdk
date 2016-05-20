@@ -114,19 +114,10 @@ namespace Hl7.Fhir.Serialization
                         // Ignore turtle specific members
                         case "index":
                         case "nodeRole":
-                        case "reference":
+                        case "link": // this is reference
                             continue;
                     }
                     string memberName = typePlusMemberName.Substring(typePlusMemberName.LastIndexOf('.') + 1);
-                    /* 
-                        Special handling of References; in Turtle Reference is added to the memberName.
-                        Remove it here and handle in DispatchingReader.determineElementPropertyType.
-                        There "Reference" is used as type for polymorph members with a Reference.
-                    */
-                    if (memberName.EndsWith("Reference"))
-                    {
-                        memberName = memberName.Substring(0, memberName.Length - 9);
-                    }
                     members.Add(new Tuple<string, IFhirReader>(memberName, new TurtleFhirReader(_g, t.Predicate, t.Object)));
                 }
             }
