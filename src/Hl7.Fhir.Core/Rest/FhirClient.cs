@@ -6,21 +6,13 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Hl7.Fhir;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using System.Net;
-using System.IO;
-using Newtonsoft.Json;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Rest;
-using System.Threading;
-using Hl7.Fhir.Introspection;
-using System.Threading.Tasks;
 
 
 namespace Hl7.Fhir.Rest
@@ -767,12 +759,12 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Called just before the Http call is done
         /// </summary>
-        public event BeforeRequestEventHandler OnBeforeRequest;
+        public event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
 
         /// <summary>
         /// Called just after the response was received
         /// </summary>
-        public event AfterResponseEventHandler OnAfterResponse;
+        public event EventHandler<AfterResponseEventArgs> OnAfterResponse;
 
         /// <summary>
         /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
@@ -1378,7 +1370,7 @@ namespace Hl7.Fhir.Rest
     }
 
 
-    public delegate void BeforeRequestEventHandler(object sender, BeforeRequestEventArgs e);
+
 
     public class BeforeRequestEventArgs : EventArgs
     {
@@ -1391,8 +1383,6 @@ namespace Hl7.Fhir.Rest
         public HttpWebRequest RawRequest { get; internal set; }
         public byte[] Body { get; internal set; }
     }
-
-    public delegate void AfterResponseEventHandler(object sender, AfterResponseEventArgs e);
 
     public class AfterResponseEventArgs : EventArgs
     {
