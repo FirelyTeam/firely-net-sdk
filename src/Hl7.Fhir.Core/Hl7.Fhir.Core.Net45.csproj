@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\Net45\</OutputPath>
-	<BaseIntermediateOutputPath>obj\Debug\Net45\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Net45\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;PORTABLE45, NET45</DefineConstants>
     <DefineConstants>TRACE;DEBUG;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -36,7 +36,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Net45\</OutputPath>
-	<BaseIntermediateOutputPath>obj\Release\Net45\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\Release\Net45\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -609,7 +609,7 @@
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
-    <Compile Include="Support\EnumExtensions.cs" />
+    <Compile Include="Support\EnumUtility.cs" />
     <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\Logging.cs" />

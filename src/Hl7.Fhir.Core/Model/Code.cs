@@ -38,6 +38,7 @@ using System.Text.RegularExpressions;
 
 using Hl7.Fhir.Introspection;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model
 {
@@ -55,22 +56,46 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public class Code<T> : Element where T : struct
     {
+        static Code()
+        {
+#if PORTABLE45
+            if (!typeof(T).GetTypeInfo().IsEnum) 
+                throw new ArgumentException("T must be an enumerated type");
+#else
+            if (!typeof(T).IsEnum)
+                throw new ArgumentException("T must be an enumerated type");
+#endif
+        }
+
+
+        private T? _value;
+
         // Primitive value of element
         [FhirElement("value", InSummary=true, IsPrimitiveValue=true)]
         [DataMember]
-        public T? Value { get; set; }
+        public T? Value
+        {
+            get
+            {
+                return _value;
+            }
+
+            set
+            {
+                _value = value;
+
+                if (value != null)
+                {
+                    object valueAsObj = (Object)value.Value;
+                    RawValue = ((Enum)valueAsObj).GetLiteral();
+                }
+            }
+        }
 
         public Code() : this(null) {}
 
         public Code(T? value)
         {
-#if PORTABLE45
-			if (!typeof(T).GetTypeInfo().IsEnum) 
-                throw new ArgumentException("T must be an enumerated type");
-#else
-            if (!typeof(T).IsEnum) 
-                throw new ArgumentException("T must be an enumerated type");
-#endif
             Value = value;
         }
 
@@ -91,6 +116,24 @@ namespace Hl7.Fhir.Model
         public override IDeepCopyable DeepCopy()
         {
             return CopyTo(new Code<T>());
+        }
+
+
+        private string _rawValue;
+
+        [NotMapped]
+        public string RawValue
+        {
+            get
+            {
+                return _rawValue;
+            }
+
+            set
+            {
+                _rawValue = value;
+                _value = EnumUtility.ParseLiteral<T>(value);
+            }               
         }
     }
 }

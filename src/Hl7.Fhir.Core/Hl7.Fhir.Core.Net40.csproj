@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\Net40\</OutputPath>
-	<BaseIntermediateOutputPath>obj\Debug\Net40\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Net40\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;PORTABLE45, Net40</DefineConstants>
     <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -35,7 +35,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Net40\</OutputPath>
-	<BaseIntermediateOutputPath>obj\Release\Net40\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\Release\Net40\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;RELEASE;Net40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -606,7 +606,7 @@
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Support\DateExtensions.cs" />
-    <Compile Include="Support\EnumExtensions.cs" />
+    <Compile Include="Support\EnumUtility.cs" />
     <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\Logging.cs" />
