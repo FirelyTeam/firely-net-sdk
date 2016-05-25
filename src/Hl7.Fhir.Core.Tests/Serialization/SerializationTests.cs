@@ -367,5 +367,22 @@ namespace Hl7.Fhir.Tests.Serialization
                 Assert.IsTrue(e.Message.Contains("DTD is prohibited"));
             }
         }
+
+        [TestMethod]
+        public void SerializeUnknownEnums()
+        {
+            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            var pser = new FhirXmlParser();
+            var p = pser.Parse<Patient>(xml);
+            string outp = FhirSerializer.SerializeResourceToXml(p);
+            Assert.IsTrue(outp.Contains("\"male\""));
+
+            // Pollute the data with an incorrect administrative gender
+            p.GenderElement.RawValue = "superman";
+
+            outp = FhirSerializer.SerializeResourceToXml(p);
+            Assert.IsFalse(outp.Contains("\"male\""));
+            Assert.IsTrue(outp.Contains("\"superman\""));
+        }
     }
 }

@@ -49,19 +49,19 @@ namespace Hl7.Fhir.Serialization
             // Emit members that need xml /attributes/ first (to facilitate stream writer API)
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint == XmlSerializationHint.Attribute))
             {
-                WriteProperties(mapping, instance, summary, mode, prop);
+                writeProperty(mapping, instance, summary, mode, prop);
             }
 
             // Then emit the rest
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint != XmlSerializationHint.Attribute))
             {
-                WriteProperties(mapping, instance, summary, mode, prop);
+                writeProperty(mapping, instance, summary, mode, prop);
             }
 
             _writer.WriteEndComplexContent();
         }
 
-        private void WriteProperties(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode, PropertyMapping prop)
+        private void writeProperty(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode, PropertyMapping prop)
         {
             if (instance is Bundle && !(summary == Rest.SummaryType.Count && prop.Name.ToLower() == "entry")
                 || prop.Name == "id"
@@ -87,6 +87,16 @@ namespace Hl7.Fhir.Serialization
             var isEmptyArray = (value as IList) != null && ((IList)value).Count == 0;
 
          //   Message.Info("Handling member {0}.{1}", mapping.Name, prop.Name);
+
+            // Special case for Code<T>.Value. Depending on whether there is a value (=a correct enum value)
+            // we need value to be set to that enum OR to Code<T>.RawValue
+            if(prop.RepresentsValueElement && prop.ElementType.IsEnum() && value == null)
+            {
+                var rawValueProp = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
+                var rawValue = rawValueProp.GetValue(instance);
+                if (rawValue != null)
+                    value = rawValue;
+            }
 
             if (value != null && !isEmptyArray)
             {
