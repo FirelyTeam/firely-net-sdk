@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if (Value != null) dest.Value = Value;
+                if (RawValue != null) dest.RawValue = RawValue;
                 return dest;
             }
             else
@@ -118,6 +118,16 @@ namespace Hl7.Fhir.Model
             return CopyTo(new Code<T>());
         }
 
+
+        public override bool Matches(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IsExactly(IDeepComparable other)
+        {
+            throw new NotImplementedException();
+        }
 
         private string _rawValue;
 

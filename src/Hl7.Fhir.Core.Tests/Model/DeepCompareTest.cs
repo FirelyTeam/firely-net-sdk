@@ -70,5 +70,18 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsFalse(p2.IsExactly(p));
         }
 
+        [TestMethod]
+        public void CheckCompareCodeOfT()
+        {
+            var a = new Code<AdministrativeGender>(AdministrativeGender.Male);
+            var b = new Code<AdministrativeGender>(AdministrativeGender.Female);
+            var c = (Code<AdministrativeGender>)a.DeepCopy();
+
+            Assert.IsFalse(a.IsExactly(b));
+            Assert.IsFalse(a.Matches(b));
+            Assert.IsTrue(a.IsExactly(c));
+            Assert.IsTrue(a.Matches(c));
+        }
+        
     }
 }

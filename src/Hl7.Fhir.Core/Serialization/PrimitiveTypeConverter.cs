@@ -11,6 +11,7 @@ using System.Xml;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 using System.Reflection;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Serialization
 {

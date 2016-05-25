@@ -68,6 +68,7 @@
     <Compile Include="DSTU1compatibility.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
+    <Compile Include="Introspection\EnumUtility.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />
     <Compile Include="Introspection\FhirEnumerationAttribute.cs" />
     <Compile Include="Introspection\FhirTypeAttribute.cs" />
@@ -591,7 +592,6 @@
     <Compile Include="Serialization\DefaultModelFactory.cs" />
     <Compile Include="Serialization\DispatchingWriter.cs" />
     <Compile Include="Serialization\DispatchingReader.cs" />
-    <Compile Include="Introspection\EnumMapping.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Serialization\FhirParser.cs" />
     <Compile Include="Serialization\FhirSerializer.cs" />
@@ -607,7 +607,6 @@
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Support\DateExtensions.cs" />
-    <Compile Include="Support\EnumUtility.cs" />
     <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\Logging.cs" />

@@ -41,21 +41,11 @@ namespace Hl7.Fhir.Serialization
             
             if (nativeType.IsEnum() && primitiveValue.GetType() == typeof(string))
             {
-                var enumMapping = _inspector.FindEnumMappingByType(nativeType);
-
-                if (enumMapping != null)
-                {
-                    // Note that Deserialize will return an enumeration if the raw string value was found
-                    // as a literal member of the enumeration, otherwise it will return a string that *is*
-                    // the raw value as found in the data.
-                    var enumLiteral = (string)primitiveValue;
-                    if (enumMapping.ContainsLiteral(enumLiteral))
-                        return enumMapping.ParseLiteral((string)primitiveValue);
-                    else
-                        return primitiveValue;
-                }
-                else
-                    throw Error.Format("Cannot find an enumeration mapping for enum " + nativeType.Name, _current);
+                // Note that Deserialize will return an enumeration if the raw string value was found
+                // as a literal member of the enumeration, otherwise it will return a string that *is*
+                // the raw value as found in the data.
+                var enumLiteral = (string)primitiveValue;
+                return EnumUtility.ParseLiteral(enumLiteral, nativeType) ?? enumLiteral;
             }
 
             try

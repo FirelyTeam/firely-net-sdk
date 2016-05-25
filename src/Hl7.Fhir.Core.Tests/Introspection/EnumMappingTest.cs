@@ -11,6 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Tests.Introspection
 {
@@ -24,7 +25,7 @@ namespace Hl7.Fhir.Tests.Introspection
         [TestMethod]
         public void TestCreation()
         {
-            EnumMapping mapping = EnumMapping.Create(typeof(TestEnum));
+            EnumUtility.EnumMapping mapping = EnumUtility.EnumMapping.Create(typeof(TestEnum));
 
             Assert.AreEqual("Testee", mapping.Name);
             Assert.AreEqual(typeof(TestEnum), mapping.EnumType);
@@ -56,6 +57,38 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.AreEqual(FHIRDefinedType.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
             Assert.IsNull(ModelInfo.FhirTypeNameToFhirType("Markdown"));
             Assert.AreEqual(FHIRDefinedType.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
+        }
+
+
+        [TestMethod]
+        public void EnumParsingPerformance()
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+
+            for(var i=0; i < 10000; i++)
+                EnumUtility.ParseLiteral<AdministrativeGender>("male");
+
+            sw.Stop();
+
+            Debug.WriteLine(sw.ElapsedMilliseconds);
+            Assert.IsTrue(sw.ElapsedMilliseconds < 100);
+        }
+
+        [TestMethod]
+        public void TestEnumMapping()
+        {
+            Assert.AreEqual(AdministrativeGender.Male, EnumUtility.ParseLiteral<AdministrativeGender>("male"));
+            Assert.IsNull(EnumUtility.ParseLiteral<X>("a"));
+
+            Assert.AreEqual("Male",AdministrativeGender.Male.GetDocumentation());
+        }
+
+
+        enum X
+        {
+            a,
+            b
         }
 
         [FhirEnumeration("Testee")]

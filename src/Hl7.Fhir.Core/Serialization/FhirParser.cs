@@ -135,23 +135,23 @@ namespace Hl7.Fhir.Serialization
             Settings = new ParserSettings();
         }
 
-        public static void Clear()
-        {
-            _inspector = createDefaultModelInspector();
-        }
+        //public static void Clear()
+        //{
+        //    _inspector = createDefaultModelInspector();
+        //}
 
-        public static void AddModelAssembly(Assembly assembly)
-        {
-            Inspector.Import(assembly);
-        }
+        //public static void AddModelAssembly(Assembly assembly)
+        //{
+        //    Inspector.Import(assembly);
+        //}
 
-        public static void AddModelType(Type type)
-        {
-            if (type.IsEnum())
-                Inspector.ImportEnum(type);
-            else
-                Inspector.ImportType(type);
-        }
+        //public static void AddModelType(Type type)
+        //{
+        //    if (type.IsEnum())
+        //        Inspector.ImportEnum(type);
+        //    else
+        //        Inspector.ImportType(type);
+        //}
 
 
         private static Lazy<ModelInspector> _inspector = createDefaultModelInspector();
