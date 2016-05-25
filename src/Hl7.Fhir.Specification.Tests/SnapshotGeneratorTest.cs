@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
   
-        [TestMethod]
+        [TestMethod, Ignore]
         public void GenerateSnapshot()
         {           
             foreach (var original in findConstraintStrucDefs())

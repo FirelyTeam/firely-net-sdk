@@ -446,12 +446,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             var count = nav.Count;
             var pos = nav.OrdinalPosition;
+            var bm = nav.Bookmark();
             nav.Duplicate();
             
             Assert.AreEqual(count + 3, nav.Count);
-            Assert.AreEqual(pos, nav.OrdinalPosition);
+            Assert.AreEqual(pos, nav.OrdinalPosition-3);
 
             // Check original
+            nav.ReturnToBookmark(bm);
             Assert.AreEqual("A.B", nav.Path);
             Assert.IsTrue(nav.MoveToFirstChild());
             Assert.AreEqual("A.B.C1", nav.Path);

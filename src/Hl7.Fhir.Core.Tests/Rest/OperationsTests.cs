@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests.Rest
         string testEndpoint = FhirClientTests.testEndpoint.OriginalString;
 #endif
 
-        [TestMethod] //Server throws error: Access violation at address 000000000129D56C in module 'FHIRServer.exe'. Read of address 0000000000000000
+        [TestMethod] 
         [TestCategory("IntegrationTest")]
         public void InvokeTestPatientGetEverything()
         {
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("IntegrationTest")]
+        [TestCategory("IntegrationTest"), Ignore]
         public void InvokeExpandUsingInstanceOp()
         {
             var client = new FhirClient(testEndpoint);
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// http://hl7.org/fhir/valueset-operations.html#lookup
         /// </summary>
         [TestMethod]
-        [TestCategory("IntegrationTest")]
+        [TestCategory("IntegrationTest"), Ignore]
         public void InvokeLookupCoding()
         {
             var client = new FhirClient(testEndpoint);
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("IntegrationTest")]
+        [TestCategory("IntegrationTest"), Ignore]
         public void InvokeLookupCode()
         {
             var client = new FhirClient(testEndpoint);

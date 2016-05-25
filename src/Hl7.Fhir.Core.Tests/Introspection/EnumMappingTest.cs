@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Tests.Introspection
         public void ParseFhirTypeName()
         {
             Assert.AreEqual(FHIRDefinedType.Markdown, ModelInfo.FhirTypeNameToFhirType("markdown"));
-            Assert.AreEqual(FHIRDefinedType.Markdown, ModelInfo.FhirTypeNameToFhirType("Markdown"));
+            Assert.IsNull(ModelInfo.FhirTypeNameToFhirType("Markdown"));
             Assert.AreEqual(FHIRDefinedType.Organization, ModelInfo.FhirTypeNameToFhirType("Organization"));
         }
 
