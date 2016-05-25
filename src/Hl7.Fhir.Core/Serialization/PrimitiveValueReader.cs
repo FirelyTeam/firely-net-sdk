@@ -45,11 +45,14 @@ namespace Hl7.Fhir.Serialization
 
                 if (enumMapping != null)
                 {
+                    // Note that Deserialize will return an enumeration if the raw string value was found
+                    // as a literal member of the enumeration, otherwise it will return a string that *is*
+                    // the raw value as found in the data.
                     var enumLiteral = (string)primitiveValue;
                     if (enumMapping.ContainsLiteral(enumLiteral))
                         return enumMapping.ParseLiteral((string)primitiveValue);
                     else
-                        throw Error.Format("Literal {0} is not a valid value for enumeration {1}".FormatWith(enumLiteral, enumMapping.Name), _current);
+                        return primitiveValue;
                 }
                 else
                     throw Error.Format("Cannot find an enumeration mapping for enum " + nativeType.Name, _current);

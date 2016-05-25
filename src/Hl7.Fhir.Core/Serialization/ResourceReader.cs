@@ -24,13 +24,13 @@ namespace Hl7.Fhir.Serialization
         private IFhirReader _reader;
         private ModelInspector _inspector;
 
-        public bool AcceptUnknownMembers { get; private set; }
+        public ParserSettings Settings { get; private set; }
 
-        public ResourceReader(IFhirReader reader, bool acceptUnknownMembers)
+        public ResourceReader(IFhirReader reader, ParserSettings settings)
         {
             _reader = reader;
             _inspector = BaseFhirParser.Inspector;
-            AcceptUnknownMembers = acceptUnknownMembers;
+            Settings = settings;
         }
 
         public Resource Deserialize(Resource existing=null)
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Serialization
              
             // Delegate the actual work to the ComplexTypeReader, since
             // the serialization of Resources and ComplexTypes are virtually the same
-            var cplxReader = new ComplexTypeReader(_reader, AcceptUnknownMembers);
+            var cplxReader = new ComplexTypeReader(_reader, Settings);
             return (Resource)cplxReader.Deserialize(mapping, existing);
         }
     }

@@ -25,13 +25,13 @@ namespace Hl7.Fhir.Serialization
         private IFhirReader _current;
         private ModelInspector _inspector;
 
-        public bool AcceptUnknownMembers { get; private set; }
+        public ParserSettings Settings { get; private set; }
 
-        public ComplexTypeReader(IFhirReader reader, bool acceptUnknownMembers)
+        public ComplexTypeReader(IFhirReader reader, ParserSettings settings)
         {
             _current = reader;
             _inspector = BaseFhirParser.Inspector;
-            AcceptUnknownMembers = acceptUnknownMembers;
+            Settings = settings;
         }
 
         internal Base Deserialize(Type elementType, Base existing = null)
@@ -92,14 +92,27 @@ namespace Hl7.Fhir.Serialization
                     if (!mappedProperty.IsPrimitive)
                         value = mappedProperty.GetValue(existing);
 
-                    var reader = new DispatchingReader(memberData.Item2, AcceptUnknownMembers, arrayMode: false);
+                    var reader = new DispatchingReader(memberData.Item2, Settings, arrayMode: false);
                     value = reader.Deserialize(mappedProperty, memberName, value);
 
-                    mappedProperty.SetValue(existing, value);
+                    if(mappedProperty.RepresentsValueElement && mappedProperty.ElementType.IsEnum() && value is String)
+                    {
+                        //if (AllowUnrecognizedEnums)
+                        if (Settings.AllowUnrecognizedEnums)
+                        {
+                            var prop = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
+                            prop.SetValue(existing, value, null);
+                            mappedProperty.SetValue(existing, null);
+                        }
+                        else
+                            throw Error.Format("Literal '{0}' is not a valid value for enumeration '{1}'".FormatWith(value, mappedProperty.ElementType.Name), _current);
+                    }
+                    else
+                        mappedProperty.SetValue(existing, value);                       
                 }
                 else
                 {
-                    if (AcceptUnknownMembers == false)
+                    if (Settings.AcceptUnknownMembers == false)
                         throw Error.Format("Encountered unknown member '{0}' while de-serializing".FormatWith(memberName), _current);
                     else
                         Message.Info("Skipping unknown member " + memberName);

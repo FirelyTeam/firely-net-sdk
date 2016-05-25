@@ -22,6 +22,15 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirXmlParser : BaseFhirParser
     {
+        public FhirXmlParser() : base()
+        {
+
+        }
+
+        public FhirXmlParser(ParserSettings settings) : base(settings)
+        {
+        }
+
         public static IFhirReader CreateFhirReader(string xml, bool disallowXsiAttributesOnRoot)
         {
             // [WMR 20160421] Explicit disposal
@@ -48,7 +57,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (dataType == null) throw Error.ArgumentNull("dataType");
 
-            var reader = CreateFhirReader(xml, DisallowXsiAttributesOnRoot);
+            var reader = CreateFhirReader(xml, Settings.DisallowXsiAttributesOnRoot);
             return Parse(reader, dataType);
         }
 
@@ -57,7 +66,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (dataType == null) throw Error.ArgumentNull("dataType");
 
-            var xmlReader = new XmlDomFhirReader(reader, DisallowXsiAttributesOnRoot);
+            var xmlReader = new XmlDomFhirReader(reader, Settings.DisallowXsiAttributesOnRoot);
             return Parse(xmlReader, dataType);
         }
 
@@ -65,6 +74,15 @@ namespace Hl7.Fhir.Serialization
 
     public class FhirJsonParser : BaseFhirParser
     {
+        public FhirJsonParser() : base()
+        {
+
+        }
+
+        public FhirJsonParser(ParserSettings settings) : base(settings)
+        {
+        }
+
         public static IFhirReader CreateFhirReader(string json)
         {
             // [WMR 20160421] Explicit disposal
@@ -104,9 +122,18 @@ namespace Hl7.Fhir.Serialization
 
     public class BaseFhirParser
     {
-        public bool AcceptUnknownMembers { get; set; }
+        public ParserSettings Settings { get; private set; }
 
-        public bool DisallowXsiAttributesOnRoot { get; set; }
+        public BaseFhirParser(ParserSettings settings)
+        {
+            if (settings == null) throw Error.ArgumentNull("settings");
+            Settings = settings;
+        }
+
+        public BaseFhirParser()
+        {
+            Settings = new ParserSettings();
+        }
 
         public static void Clear()
         {
@@ -160,9 +187,9 @@ namespace Hl7.Fhir.Serialization
         public Base Parse(IFhirReader reader, Type dataType)
         {
             if(dataType.CanBeTreatedAsType(typeof(Resource)))
-                return new ResourceReader(reader, AcceptUnknownMembers).Deserialize();
+                return new ResourceReader(reader, Settings).Deserialize();
             else
-                return new ComplexTypeReader(reader, AcceptUnknownMembers).Deserialize(dataType);
+                return new ComplexTypeReader(reader, Settings).Deserialize(dataType);
         }
     }
 

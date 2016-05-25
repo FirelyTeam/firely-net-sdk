@@ -26,14 +26,14 @@ namespace Hl7.Fhir.Serialization
         private IFhirReader _current;
         private ModelInspector _inspector;
 
-        public bool AcceptUnknownMembers { get; private set; }
+        public ParserSettings Settings { get; private set; }
 
-        public RepeatingElementReader(IFhirReader reader, bool acceptUnknownMembers)
+        public RepeatingElementReader(IFhirReader reader, ParserSettings settings)
         {
             _current = reader;
             _inspector = BaseFhirParser.Inspector;
 
-            AcceptUnknownMembers = acceptUnknownMembers;
+            Settings = settings;
         }
 
         
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Serialization
 
             if (result == null) result = ReflectionHelper.CreateGenericList(prop.ElementType);
 
-            var reader = new DispatchingReader(_current, AcceptUnknownMembers, arrayMode: true);                 
+            var reader = new DispatchingReader(_current, Settings, arrayMode: true);                 
             result.Add(reader.Deserialize(prop, memberName));
 
             return result;

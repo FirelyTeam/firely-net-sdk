@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Tests.Serialization
             {
             }
 
-            parser.AcceptUnknownMembers = true;
+            parser.Settings.AcceptUnknownMembers = true;
             parser.Parse<Resource>(xml);
         }
 
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Tests.Serialization
             parser.Parse<Resource>(xml);
 
             // Now, enforce xsi: attributes are no longer accepted
-            parser.DisallowXsiAttributesOnRoot = true;
+            parser.Settings.DisallowXsiAttributesOnRoot = true;
 
             try
             {
@@ -93,6 +93,38 @@ namespace Hl7.Fhir.Tests.Serialization
         internal FhirXmlParser FhirXmlParser = new FhirXmlParser();
         internal FhirJsonParser FhirJsonParser = new FhirJsonParser();
 
+
+        [TestMethod]
+        public void AcceptUnknownEnums()
+        {
+            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            var pser = new FhirXmlParser();
+
+            var p = pser.Parse<Patient>(xml);
+
+            Assert.IsNotNull(p.Gender);
+            Assert.AreEqual("male", p.GenderElement.RawValue);
+
+
+            // Now, pollute the data with an incorrect administrative gender
+            var xml2 = xml.Replace("\"male\"", "\"superman\"");
+
+            try
+            {
+                p = pser.Parse<Patient>(xml2);
+                Assert.Fail();
+            }
+            catch(FormatException)
+            {
+                // By default, should *not* accept unknown enums
+            }
+
+            // Now, allow unknown enums and check support
+            pser.Settings.AllowUnrecognizedEnums = true;
+            p = pser.Parse<Patient>(xml2);
+            Assert.IsNull(p.Gender);
+            Assert.AreEqual("superman", p.GenderElement.RawValue);
+        }
 
 #if !PORTABLE45
         [TestMethod]
