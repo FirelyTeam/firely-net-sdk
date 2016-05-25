@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Serialization
             if(prop.RepresentsValueElement && prop.ElementType.IsEnum() && value == null)
             {
                 var rawValueProp = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
-                var rawValue = rawValueProp.GetValue(instance);
+                var rawValue = rawValueProp.GetValue(instance, null);
                 if (rawValue != null)
                     value = rawValue;
             }
