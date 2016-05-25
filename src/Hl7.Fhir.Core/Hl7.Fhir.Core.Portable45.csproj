@@ -632,7 +632,6 @@
     <Compile Include="Serialization\ResourceReader.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
     <Compile Include="Support\StringExtensions.cs" />
     <Compile Include="Validation\AllowedTypesAttribute.cs" />

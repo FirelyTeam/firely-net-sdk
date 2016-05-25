@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Tests
                     if (lMember.Value is JObject && ((JObject)lMember.Value).Count == 0) continue;
 
                     if (!ro.TryGetValue(lMember.Key, out rMember) || rMember == null)
-                        throw new AssertFailedException(String.Format("Expected member {0} not found in actual at " + left.Path, lMember.Key));
+                        throw new AssertFailedException(String.Format("Expected member '{0}' not found in actual at " + left.Path, lMember.Key));
 
                     areSame(lMember.Value, rMember);
                 }
@@ -103,8 +103,8 @@ namespace Hl7.Fhir.Tests
                     if (lValue.StartsWith("<div>"))
                         lValue = "<div xmlns='http://www.w3.org/1999/xhtml'>" + lValue.Substring(5);
 
-                    var leftDoc = FhirParser.XDocumentFromXml(lValue);
-                    var rightDoc = FhirParser.XDocumentFromXml(rValue);
+                    var leftDoc = SerializationUtil.XDocumentFromXmlText(lValue);
+                    var rightDoc = SerializationUtil.XDocumentFromXmlText(rValue);
 
                     XmlAssert.AreSame(leftDoc, rightDoc);
                 }

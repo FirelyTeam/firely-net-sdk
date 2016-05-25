@@ -25,11 +25,15 @@ namespace Hl7.Fhir.Serialization
         private readonly ModelInspector _inspector;
         private readonly bool _arrayMode;
 
-        public DispatchingReader(IFhirReader data, bool arrayMode = false)
+        public bool AcceptUnknownMembers { get; private set; }
+
+        public DispatchingReader(IFhirReader data, bool acceptUnknownMembers, bool arrayMode)
         {
             _current = data;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
             _arrayMode = arrayMode;
+
+            AcceptUnknownMembers = acceptUnknownMembers;
         }
 
         public object Deserialize(PropertyMapping prop, string memberName, object existing=null)
@@ -42,7 +46,7 @@ namespace Hl7.Fhir.Serialization
             if (!_arrayMode && prop.IsCollection)
             {
                 if (existing != null && !(existing is IList) ) throw Error.Argument("existing", "Can only read repeating elements into a type implementing IList");
-                var reader = new RepeatingElementReader(_current);
+                var reader = new RepeatingElementReader(_current, AcceptUnknownMembers);
                 return reader.Deserialize(prop, memberName, (IList)existing);
             }
 
@@ -59,7 +63,7 @@ namespace Hl7.Fhir.Serialization
             // (as used in Resource.contained)
             if(prop.Choice == ChoiceType.ResourceChoice)
             {
-                var reader = new ResourceReader(_current);
+                var reader = new ResourceReader(_current, AcceptUnknownMembers);
                 return reader.Deserialize(null);
             }
 
@@ -80,7 +84,7 @@ namespace Hl7.Fhir.Serialization
             }
 
             if (existing != null && !(existing is Resource) && !(existing is Element) ) throw Error.Argument("existing", "Can only read complex elements into types that are Element or Resource");
-            var cplxReader = new ComplexTypeReader(_current);
+            var cplxReader = new ComplexTypeReader(_current, AcceptUnknownMembers);
             return cplxReader.Deserialize(mapping, (Base)existing);
         }
 

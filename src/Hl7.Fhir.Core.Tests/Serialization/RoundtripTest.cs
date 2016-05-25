@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Tests.Serialization
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
-                var resource = FhirParser.ParseResourceFromXml(xml);
+                var resource = new FhirXmlParser().Parse<Resource>(xml);
 
                 var r2 = resource.DeepCopy();
                 Assert.IsTrue(resource.Matches(r2 as Resource), "Serialization of " + inputFile + " did not match output - Matches test");
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Tests.Serialization
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var resource = FhirParser.ParseResourceFromJson(json);
+                var resource = new FhirJsonParser().Parse<Resource>(json);
                 var xml = FhirSerializer.SerializeResourceToXml(resource);
                 File.WriteAllText(outputFile, xml);
             }
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Tests.Serialization
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
-                var resource = FhirParser.ParseResourceFromXml(xml);
+                var resource = new FhirXmlParser().Parse<Resource>(xml);
 
                 var json = FhirSerializer.SerializeResourceToJson(resource);
                 File.WriteAllText(outputFile, json);
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Tests.Serialization
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var resource = FhirParser.ParseResourceFromJson(json);
+                var resource = new FhirJsonParser().Parse<Resource>(json);
                 var xml = FhirSerializer.SerializeResourceToXml(resource);
                 File.WriteAllText(outputFile, xml);
             }

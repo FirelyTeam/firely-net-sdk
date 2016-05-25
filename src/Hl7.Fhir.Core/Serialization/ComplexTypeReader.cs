@@ -25,10 +25,13 @@ namespace Hl7.Fhir.Serialization
         private IFhirReader _current;
         private ModelInspector _inspector;
 
-        public ComplexTypeReader(IFhirReader reader)
+        public bool AcceptUnknownMembers { get; private set; }
+
+        public ComplexTypeReader(IFhirReader reader, bool acceptUnknownMembers)
         {
             _current = reader;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
+            AcceptUnknownMembers = acceptUnknownMembers;
         }
 
         internal Base Deserialize(Type elementType, Base existing = null)
@@ -89,14 +92,14 @@ namespace Hl7.Fhir.Serialization
                     if (!mappedProperty.IsPrimitive)
                         value = mappedProperty.GetValue(existing);
 
-                    var reader = new DispatchingReader(memberData.Item2);
+                    var reader = new DispatchingReader(memberData.Item2, AcceptUnknownMembers, arrayMode: false);
                     value = reader.Deserialize(mappedProperty, memberName, value);
 
                     mappedProperty.SetValue(existing, value);
                 }
                 else
                 {
-                    if (SerializationConfig.AcceptUnknownMembers == false)
+                    if (AcceptUnknownMembers == false)
                         throw Error.Format("Encountered unknown member '{0}' while de-serializing".FormatWith(memberName), _current);
                     else
                         Message.Info("Skipping unknown member " + memberName);

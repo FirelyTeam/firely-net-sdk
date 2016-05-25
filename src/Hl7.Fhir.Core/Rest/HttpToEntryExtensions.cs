@@ -136,13 +136,13 @@ namespace Hl7.Fhir.Rest
             if (fhirType == ResourceFormat.Unknown)
                 throw new FormatException("Endpoint returned a body with contentType '{0}', while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint? Body reads: {1}".FormatWith(contentType, bodyText));
 
-            if (!FhirParser.ProbeIsJson(bodyText) && !FhirParser.ProbeIsXml(bodyText))
+            if (!SerializationUtil.ProbeIsJson(bodyText) && !SerializationUtil.ProbeIsXml(bodyText))
                 throw new FormatException("Endpoint said it returned '{0}', but the body is not recognized as either xml or json: \"" + bodyText + "\"");
 
             if (fhirType == ResourceFormat.Json)
-                result = (Resource)FhirParser.ParseFromJson(bodyText);
+                result = new FhirJsonParser().Parse<Resource>(bodyText);
             else
-                result = (Resource)FhirParser.ParseFromXml(bodyText);
+                result = new FhirXmlParser().Parse<Resource>(bodyText);
 
             return result;
         }

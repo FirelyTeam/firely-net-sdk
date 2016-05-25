@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Serialization
         public ComplexTypeWriter(IFhirWriter writer)
         {
             _writer = writer;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
         }
 
         internal void Serialize(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode = SerializationMode.AllMembers)

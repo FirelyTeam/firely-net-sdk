@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
         public PrimitiveValueWriter(IFhirWriter data)
         {
             _writer = data;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
         }
 
 

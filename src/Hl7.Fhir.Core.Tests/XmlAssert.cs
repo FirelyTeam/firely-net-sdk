@@ -25,8 +25,8 @@ namespace Hl7.Fhir.Tests
 
         public static void AreSame(string expected, string actual)
         {
-            XDocument exp = FhirParser.XDocumentFromXml(expected);
-            XDocument act = FhirParser.XDocumentFromXml(actual);
+            XDocument exp = SerializationUtil.XDocumentFromXmlText(expected);
+            XDocument act = SerializationUtil.XDocumentFromXmlText(actual);
 
             AreSame(exp, act);
         }

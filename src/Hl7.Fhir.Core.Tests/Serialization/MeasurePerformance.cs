@@ -29,12 +29,11 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
             string json = File.ReadAllText(@"TestData\TestPatient.json");
-           
+
             //string xml = Hl7.Fhir.Core.Tests.Properties.TestResources.TestPatientXml;
             //string json = Hl7.Fhir.Core.Tests.Properties.TestResources.TestPatientJson;
 
- //            var once = FhirParser.ParseResourceFromJson(json);
-            var once = FhirParser.ParseResourceFromXml(xml);
+            var once = new FhirXmlParser().Parse<Resource>(xml);
 
             Stopwatch x = new Stopwatch();
 
@@ -42,8 +41,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             for (int i = 0; i < 1000; i++)
             {
-              //  var result = FhirParser.ParseResourceFromJson(json);
-                var result = FhirParser.ParseResourceFromXml(xml);
+                var result = new FhirXmlParser().Parse<Resource>(xml);
             }
             x.Stop();
 
