@@ -216,6 +216,21 @@ namespace Hl7.Fhir.Rest
 
 
         /// <summary>
+        /// Refreshes the data in the resource passed as an argument by re-reading it from the server
+        /// </summary>
+        /// <typeparam name="TResource"></typeparam>
+        /// <param name="current">The resource for which you want to get the most recent version.</param>
+        /// <returns>A new instance of the resource, containing the most up-to-date data</returns>
+        /// <remarks>This function will not overwrite the argument with new data, rather it will return a new instance
+        /// which will have the newest data, leaving the argument intact.</remarks>
+        public TResource Refresh<TResource>(TResource current) where TResource : Resource
+        {
+            if (current == null) throw Error.ArgumentNull("current");
+
+            return Read<TResource>(ResourceIdentity.Build(current.TypeName, current.Id));
+        }
+
+        /// <summary>
         /// Update (or create) a resource
         /// </summary>
         /// <param name="resource">The resource to update</param>

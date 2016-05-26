@@ -797,6 +797,21 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod]
+        public void TestRefresh()
+        {
+            var client = new FhirClient(testEndpoint);
+            var result = client.Read<Patient>("Patient/example");
+
+            var orig = result.Name[0].FamilyElement[0].Value;
+
+            result.Name[0].FamilyElement[0].Value = "overwritten name";
+
+            result = client.Refresh(result);
+
+            Assert.AreEqual(orig, result.Name[0].FamilyElement[0].Value);
+        }
+
+        [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestReceiveErrorStatusWithHtmlIsHandled()
         {
