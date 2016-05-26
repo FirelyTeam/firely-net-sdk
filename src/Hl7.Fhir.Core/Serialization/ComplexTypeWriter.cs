@@ -88,20 +88,19 @@ namespace Hl7.Fhir.Serialization
 
          //   Message.Info("Handling member {0}.{1}", mapping.Name, prop.Name);
 
-            // Special case for Code<T>.Value. Depending on whether there is a value (=a correct enum value)
-            // we need value to be set to that enum OR to Code<T>.RawValue
-            if(prop.RepresentsValueElement && prop.ElementType.IsEnum() && value == null)
-            {
-                value = ((Primitive)instance).ObjectValue;
-                //var rawValueProp = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
-                //var rawValue = rawValueProp.GetValue(instance, null);
-                //if (rawValue != null)
-                //    value = rawValue;
-            }
-
             if (value != null && !isEmptyArray)
             {
                 string memberName = prop.Name;
+
+                // Enumerated Primitive.Value of Code<T> will always serialize the ObjectValue, not the derived enumeration
+                if (prop.RepresentsValueElement && prop.ElementType.IsEnum())
+                {
+                    value = ((Primitive)instance).ObjectValue;
+                    //var rawValueProp = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
+                    //var rawValue = rawValueProp.GetValue(instance, null);
+                    //if (rawValue != null)
+                    //    value = rawValue;
+                }
 
                 // For Choice properties, determine the actual name of the element
                 // by appending its type to the base property name (i.e. deceasedBoolean, deceasedDate)

@@ -29,29 +29,73 @@ namespace Hl7.Fhir.Tests.Serialization
 #else
 	public class RoundtripTest
 #endif
-    {    
+    { 
+        [TestMethod]   
+        public void RoundTripOneExample()
+        {
+            string exampleXml = @"TestData\testscript-example(example).xml";
+            var original = File.ReadAllText(exampleXml);
+
+            var t = new FhirXmlParser().Parse<TestScript>(original);
+            var outputXml = FhirSerializer.SerializeResourceToXml(t);
+            XmlAssert.AreSame(original, outputXml);
+
+            var outputJson = FhirSerializer.SerializeResourceToJson(t);
+            var t2 = new FhirJsonParser().Parse<TestScript>(outputJson);
+//            Assert.IsTrue(t.IsExactly(t2));
+
+            var outputXml2 = FhirSerializer.SerializeResourceToXml(t2);
+            XmlAssert.AreSame(original, outputXml2);
+        }
         [TestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamples()
+        public void FullRoundtripOfAllExamplesXml()
         {
             string examplesXml = @"TestData\examples.zip";
+
+            // Create an empty temporary directory for us to dump the roundtripped intermediary files in
+            string baseTestPath = Path.Combine(Path.GetTempPath(), "FHIRRoundTripTestXml");
+            createEmptyDir(baseTestPath);
+
+            Debug.WriteLine("Roundtripping xml->json->xml");
+            createEmptyDir(baseTestPath);
+            doRoundTrip(examplesXml, baseTestPath);
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesJson()
+        {
             string examplesJson = @"TestData\examples-json.zip";
 
             // Create an empty temporary directory for us to dump the roundtripped intermediary files in
-            string baseTestPath = Path.Combine(Path.GetTempPath(), "FHIRRoundTripTest");
+            string baseTestPath = Path.Combine(Path.GetTempPath(), "FHIRRoundTripTestJson");
             createEmptyDir(baseTestPath);
 
-            Debug.WriteLine("First, roundtripping xml->json->xml");
-            var baseTestPathXml = Path.Combine(baseTestPath, "FromXml");
-            createEmptyDir(baseTestPathXml);
-            doRoundTrip(examplesXml, baseTestPathXml);
-
-            Debug.WriteLine("Then, roundtripping json->xml->json");
-            var baseTestPathJson = Path.Combine(baseTestPath, "FromJson");
-            createEmptyDir(baseTestPathJson);
-            doRoundTrip(examplesJson, baseTestPathJson);
-
+            Debug.WriteLine("Roundtripping json->xml->json");
+            createEmptyDir(baseTestPath);
+            doRoundTrip(examplesJson, baseTestPath);
         }
+
+
+        //[TestMethod]
+        //public void CompareIntermediate2Xml()
+        //{
+        //    // You can use this method to compare just the input against intermediate2, much faster than
+        //    // unpacking and converting first. This only works AFTER a previous test has already converted
+        //    // xml -> json -> xml
+        //    compareFiles(@"C:\Users\ewout\AppData\Local\Temp\FHIRRoundTripTestXml\input", @"C:\Users\ewout\AppData\Local\Temp\FHIRRoundTripTestXml\intermediate2");
+        //}
+
+        //[TestMethod]
+        //public void CompareIntermediate2Json()
+        //{
+        //    // You can use this method to compare just the input against intermediate2, much faster than
+        //    // unpacking and converting first. This only works AFTER a previous test has already converted
+        //    // json -> xml -> json
+        //    compareFiles(@"C:\Users\ewout\AppData\Local\Temp\FHIRRoundTripTestJson\input", @"C:\Users\ewout\AppData\Local\Temp\FHIRRoundTripTestJson\intermediate2");
+        //}
+
 
         private static void createEmptyDir(string baseTestPath)
         {
