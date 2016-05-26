@@ -1,0 +1,70 @@
+﻿
+20-may-2016
+- AssemblyInfo: Removed [assembly: AllowPartialTrustedCallers]
+- renamed predicate fhir:reference -> fhir:link
+- renamed predicate a sct:xxxxxx -> fhir:concept 
+- prefix for snomed codes is "http://snomed.info/id/"
+- fhir:index is xs:integer, can only do this in dotnetrdf by adding the datatype
+- predicate is now without "Reference" for non polymorph reference props e.g. used to be "subjectReference" is now "subject"
+- added DateTime handling based on Grahames code
+- workaround datatype uri issue by using full uri -> also shows fhir:index without quotes now
+-- ?? fhir:value also without quotes when datatype is integer/decimal is that a problem?
+
+------------
+up-to may-2016 WGM
+PropertyMapping.cs
+- added getting of DefiningType e.g. for Resource.id
+
+RoundtripTest.cs
+- Added xml->turtle->xml to 
+
+ISSUES:
+- fhir-net-api related
+-- ResourceReference is actually Reference
+-- *Component except DeviceComponent!
+--- composed attributes like AllergyIntolerance.reaction.subject
+-- when cardinality > 1
+- Are the "special" rules really nessasary?
+-- e.g. around Reference. Now Turtle is the only format that has "Reference" added to the property
+- Difference with Grahame's examples
+-- xs:date instead of xs:dateTime for Observation.effectiveDateTime?
+-- why is the Observation.component array handled differently from Observation.component.code?
+-- N.B. See pasted code from Grahame in TurtleFhirWriter!
+- rdfdotnet related
+-- datatype are surrounded by lt;gt? why? <xsd:dateTime>
+-- xsd namespace instead of xs namespace?
+
+TODO:
+- Move Program.cs to Hl7.Fhir.Core.Tests and use relative and Tempfolder paths!
+-----------------------------------
+1) 
+In example "bundle-response(bundle-response)", look at "fhir:Bundle.entry.response.location".
+The value is a URI, so I would like to handle this the same as with fhir:reference.
+
+[fhir:index "0" ; 
+ fhir:Bundle.entry.fullUrl [fhir:value <http://example.org/fhir/Patient/12423>] ; 
+ fhir:Bundle.entry.resource <http://localhost/fhir/Patient/12423> ; 
+ fhir:Bundle.entry.response [fhir:Bundle.entry.response.status [fhir:value "201 Created"] ; 
+	fhir:Bundle.entry.response.location [fhir:value <http://localhost/fhir/Patient/12423/_history/1>] ; 
+	fhir:Bundle.entry.response.etag [fhir:value """W/\"1\""""] ; 
+	fhir:Bundle.entry.response.lastModified [fhir:value "2014-08-18T01:43:33+00:00"^^<xsd:dateTime>]]]
+
+- or -
+
+[fhir:index "0" ; 
+ fhir:Bundle.entry.fullUrl [fhir:value <http://example.org/fhir/Patient/12423>] ; 
+ fhir:Bundle.entry.resource <http://localhost/fhir/Patient/12423> ; 
+ fhir:Bundle.entry.response [fhir:Bundle.entry.response.status [fhir:value "201 Created"] ; 
+	fhir:Bundle.entry.response.location [fhir:value "Patient/12423/_history/1"] ; 
+	fhir:Bundle.entry.response.etag [fhir:value """W/\"1\""""] ; 
+	fhir:Bundle.entry.response.lastModified [fhir:value "2014-08-18T01:43:33+00:00"^^<xsd:dateTime>]]]
+
+2)
+Look at "fhir:Bundle.entry.resource". I put the (non anonymous) uri there for the contained resource.
+In the current examples in STU3 a anonymous class is put there.
+
+<http://localhost/fhir/Bundle/bundle-example> fhir:Bundle.entry [fhir:index "0" ; 
+	fhir:Bundle.entry.fullUrl [fhir:value <https://example.com/base/MedicationOrder/3123>] ; 
+	fhir:Bundle.entry.resource <http://localhost/fhir/MedicationOrder/3123> ; 
+	fhir:Bundle.entry.search [fhir:Bundle.entry.search.mode [fhir:value "match"] ; 
+		fhir:Bundle.entry.search.score [fhir:value "1"^^<xsd:decimal>]]]

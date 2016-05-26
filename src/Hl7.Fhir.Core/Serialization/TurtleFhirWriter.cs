@@ -33,6 +33,10 @@ namespace Hl7.Fhir.Serialization
         private bool _coding_code = false;
         private bool _reference = false;
 
+        // private const xsd_prefix = "xsd:" <- this causes "<xsd:decimal>" instead of "xsd:decimal"
+        // workaround this by using the full uri
+        const string XS_PREFIX = "http://www.w3.org/2001/XMLSchema#";
+
         public TurtleFhirWriter()
         {
             _inspector = SerializationConfig.Inspector;
@@ -41,7 +45,7 @@ namespace Hl7.Fhir.Serialization
             //_g.NamespaceMap.AddNamespace("xs", UriFactory.Create("http://www.w3.org/2001/XMLSchema#"));
             _g.BaseUri = UriFactory.Create("http://localhost/fhir/");
             _g.NamespaceMap.AddNamespace("fhir", UriFactory.Create("http://hl7.org/fhir/"));
-            _g.NamespaceMap.AddNamespace("sct", UriFactory.Create("http://snomed.info/sct/"));
+            _g.NamespaceMap.AddNamespace("sct", UriFactory.Create("http://snomed.info/id/"));
             _g.NamespaceMap.AddNamespace("loinc", UriFactory.Create("http://loinc.org/owl#"));
         }
 
@@ -123,28 +127,23 @@ namespace Hl7.Fhir.Serialization
                     break;
                 case "Instant":
                 case "FhirDateTime":
-                    /* TODO:
-                    if (type.equals("date") || type.equals("dateTime") ) {
-                    String v = value;
-                    if (v.length() > 10) {
-                    int i = value.substring(10).indexOf("-");
-                    if (i == -1)
-                    i = value.substring(10).indexOf("+");
-                    v = i == -1 ? value : value.substring(0, 10+i);
+                    string dataType = "dateTime";
+                    string v = valueAsString;
+                    if (v.Length > 10)
+                    {
+                        int i = valueAsString.Substring(10).IndexOf('-');
+                        if (i == -1) i = valueAsString.Substring(10).IndexOf('+');
+                        v = i == -1 ? valueAsString : valueAsString.Substring(0, 10+i);
                     }
-                    if (v.length() > 10)
-                    xst = "^^xs:dateTime";
-                    else if (v.length() == 10)
-                    xst = "^^xs:date";
-                    else if (v.length() == 7)
-                    xst = "^^xs:gYearMonth";
-                    else if (v.length() == 4)
-                    xst = "^^xs:gYear";
-                    }*/
-                    obj = _g.CreateLiteralNode(valueAsString, UriFactory.Create("xsd:dateTime"));
+                    if (v.Length > 10) dataType = "dateTime";
+                    else if (v.Length == 10) dataType = "date";
+                    else if (v.Length == 7) dataType = "gYearMonth";
+                    else if (v.Length == 4) dataType = "gYear";
+
+                    obj = _g.CreateLiteralNode(valueAsString, UriFactory.Create(XS_PREFIX + dataType));
                     break;
                 case "FhirDecimal":
-                    obj = _g.CreateLiteralNode(valueAsString, UriFactory.Create("xsd:decimal"));
+                    obj = _g.CreateLiteralNode(valueAsString, UriFactory.Create(XS_PREFIX + "decimal"));
                     break;
                 // handle all others as xsd:string
                 default:
@@ -161,7 +160,7 @@ namespace Hl7.Fhir.Serialization
                     Uri valueAsUri;
                     if (Uri.TryCreate(_g.BaseUri, valueAsString, out valueAsUri))
                     {
-                        _g.Assert(_subjStack.Peek(), _g.CreateUriNode("fhir:reference"), _g.CreateUriNode(valueAsUri));
+                        _g.Assert(_subjStack.Peek(), _g.CreateUriNode("fhir:link"), _g.CreateUriNode(valueAsUri));
                     }
                 }
                 else // contained resource reference!
@@ -169,7 +168,7 @@ namespace Hl7.Fhir.Serialization
                     Uri valueAsUri;
                     if (Uri.TryCreate(_rootSubjectUri, valueAsString, out valueAsUri))
                     {
-                        _g.Assert(_subjStack.Peek(), _g.CreateUriNode("fhir:reference"), _g.CreateUriNode(valueAsUri));
+                        _g.Assert(_subjStack.Peek(), _g.CreateUriNode("fhir:link"), _g.CreateUriNode(valueAsUri));
                     }
                 }
             }
@@ -184,12 +183,12 @@ namespace Hl7.Fhir.Serialization
                     case "http://snomed.info/sct":
                         //Console.WriteLine("DEBUG: sct:{0}", valueAsString);
                         IUriNode code = _g.CreateUriNode(string.Format("sct:{0}", valueAsString));
-                        _g.Assert(_subjStack.Peek(), _g.CreateUriNode("rdf:type"), code);
+                        _g.Assert(_subjStack.Peek(), _g.CreateUriNode("fhir:concept"), code);
                         break;
                     case "http://loinc.org":
                         //Console.WriteLine("DEBUG: loinc:{0}", valueAsString);
                         code = _g.CreateUriNode(string.Format("loinc:{0}", valueAsString));
-                        _g.Assert(_subjStack.Peek(), _g.CreateUriNode("rdf:type"), code);
+                        _g.Assert(_subjStack.Peek(), _g.CreateUriNode("fhir:concept"), code);
                         break;
                 }
             }
@@ -209,7 +208,7 @@ namespace Hl7.Fhir.Serialization
                 _currentSubj = _g.CreateBlankNode();
                 if(_arrayIndex >= 0)
                 {
-                    _g.Assert(_currentSubj, _g.CreateUriNode("fhir:index"), _g.CreateLiteralNode(_arrayIndex.ToString()));
+                    _g.Assert(_currentSubj, _g.CreateUriNode("fhir:index"), _g.CreateLiteralNode(_arrayIndex.ToString(), UriFactory.Create(XS_PREFIX + "integer")));
                     _arrayIndex++;
                 }
             }
@@ -224,7 +223,7 @@ namespace Hl7.Fhir.Serialization
         public void WriteStartProperty(PropertyMapping propMap, string memberName)
         {
             _currentTypeName = propMap.DefiningType.Name;
-            // memberName = member with type <- thinking now 30-mrt-2016 is to use this
+            // memberName = member with type
             // propMap.Name = memberName without type
             _currentMemberName = memberName;
 
@@ -232,12 +231,6 @@ namespace Hl7.Fhir.Serialization
             if (_currentTypeName == "ResourceReference")
             {
                 _currentTypeName = "Reference";
-            }
-            // When the ElementType(also works for array/collection) is "ResourceReference" 
-            // postfix the pred with "Reference"
-            if (propMap.ElementType.Name == "ResourceReference")
-            {
-                _currentMemberName += "Reference";
             }
 
             // Special handling of component types
