@@ -69,47 +69,8 @@ namespace Hl7.Fhir.Model
             set { ObjectValue = value; OnPropertyChanged("Value"); }
         }
         
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as FhirString;
-            
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if(Value != null) dest.Value = Value;
-                return dest;
-            }
-            else
-            	throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
-        
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new FhirString());
-        }
-        
-        public override bool Matches(IDeepComparable other)
-        {
-            var otherT = other as FhirString;
-            if(otherT == null) return false;
-            
-            if(!base.Matches(otherT)) return false;
-            if( Value != otherT.Value ) return false;
-            
-            return true;
-        }
-        
-        public override bool IsExactly(IDeepComparable other)
-        {
-            var otherT = other as FhirString;
-            if(otherT == null) return false;
-            
-            if(!base.IsExactly(otherT)) return false;
-            if( Value != otherT.Value ) return false;
-            
-            return true;
-        }
-        
+
+    
     }
     
 }

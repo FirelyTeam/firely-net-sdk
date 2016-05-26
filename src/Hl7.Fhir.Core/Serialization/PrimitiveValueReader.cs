@@ -41,11 +41,8 @@ namespace Hl7.Fhir.Serialization
             
             if (nativeType.IsEnum() && primitiveValue.GetType() == typeof(string))
             {
-                // Note that Deserialize will return an enumeration if the raw string value was found
-                // as a literal member of the enumeration, otherwise it will return a string that *is*
-                // the raw value as found in the data.
-                var enumLiteral = (string)primitiveValue;
-                return EnumUtility.ParseLiteral(enumLiteral, nativeType) ?? enumLiteral;
+                // Don't try to parse enums in the parser -> it's been moved to the Code<T> type
+                return primitiveValue;
             }
 
             try

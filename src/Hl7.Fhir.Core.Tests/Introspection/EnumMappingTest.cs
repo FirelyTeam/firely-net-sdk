@@ -79,9 +79,11 @@ namespace Hl7.Fhir.Tests.Introspection
         public void TestEnumMapping()
         {
             Assert.AreEqual(AdministrativeGender.Male, EnumUtility.ParseLiteral<AdministrativeGender>("male"));
-            Assert.IsNull(EnumUtility.ParseLiteral<X>("a"));
+            Assert.IsNull(EnumUtility.ParseLiteral<AdministrativeGender>("maleX"));
+            Assert.AreEqual(X.a, EnumUtility.ParseLiteral<X>("a"));
 
             Assert.AreEqual("Male",AdministrativeGender.Male.GetDocumentation());
+            Assert.IsNull(X.a.GetDocumentation());
         }
 
 

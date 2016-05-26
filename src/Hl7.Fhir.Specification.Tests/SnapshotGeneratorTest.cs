@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void GenerateSingleSnapshot()
         {                                  
             var sd = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/genetics");

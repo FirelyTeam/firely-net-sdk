@@ -54,41 +54,34 @@ namespace Hl7.Fhir.Model
     [FhirType("codeOfT")]
     [DataContract]
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-    public class Code<T> : Element where T : struct
+    public class Code<T> : Primitive<T> where T : struct
     {
         static Code()
         {
-#if PORTABLE45
-            if (!typeof(T).GetTypeInfo().IsEnum) 
+            if (!typeof(T).IsEnum())
                 throw new ArgumentException("T must be an enumerated type");
-#else
-            if (!typeof(T).IsEnum)
-                throw new ArgumentException("T must be an enumerated type");
-#endif
         }
 
 
-        private T? _value;
-
         // Primitive value of element
-        [FhirElement("value", InSummary=true, IsPrimitiveValue=true)]
+        [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 30)]
         [DataMember]
         public T? Value
         {
             get
             {
-                return _value;
+                if (ObjectValue != null)
+                    return EnumUtility.ParseLiteral<T>((string)ObjectValue);
+                else
+                    return null;
             }
 
             set
             {
-                _value = value;
-
                 if (value != null)
-                {
-                    object valueAsObj = (Object)value.Value;
-                    RawValue = ((Enum)valueAsObj).GetLiteral();
-                }
+                    ObjectValue = ((Enum)(object)value).GetLiteral();
+                else
+                    ObjectValue = null;
             }
         }
 
@@ -99,51 +92,34 @@ namespace Hl7.Fhir.Model
             Value = value;
         }
 
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as Code<T>;
+        //public override IDeepCopyable CopyTo(IDeepCopyable other)
+        //{
+        //    var dest = other as Code<T>;
 
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if (RawValue != null) dest.RawValue = RawValue;
-                return dest;
-            }
-            else
-                throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
+        //    if (dest != null)
+        //    {
+        //        base.CopyTo(dest);
+        //        if (RawValue != null) dest.RawValue = RawValue;
+        //        return dest;
+        //    }
+        //    else
+        //        throw new ArgumentException("Can only copy to an object of the same type", "other");
+        //}
 
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new Code<T>());
-        }
+        //public override IDeepCopyable DeepCopy()
+        //{
+        //    return CopyTo(new Code<T>());
+        //}
 
 
-        public override bool Matches(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
+        //public override bool Matches(IDeepComparable other)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public override bool IsExactly(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
-
-        private string _rawValue;
-
-        [NotMapped]
-        public string RawValue
-        {
-            get
-            {
-                return _rawValue;
-            }
-
-            set
-            {
-                _rawValue = value;
-                _value = EnumUtility.ParseLiteral<T>(value);
-            }               
-        }
+        //public override bool IsExactly(IDeepComparable other)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

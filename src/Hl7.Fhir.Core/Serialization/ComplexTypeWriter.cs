@@ -92,10 +92,11 @@ namespace Hl7.Fhir.Serialization
             // we need value to be set to that enum OR to Code<T>.RawValue
             if(prop.RepresentsValueElement && prop.ElementType.IsEnum() && value == null)
             {
-                var rawValueProp = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
-                var rawValue = rawValueProp.GetValue(instance, null);
-                if (rawValue != null)
-                    value = rawValue;
+                value = ((Primitive)instance).ObjectValue;
+                //var rawValueProp = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
+                //var rawValue = rawValueProp.GetValue(instance, null);
+                //if (rawValue != null)
+                //    value = rawValue;
             }
 
             if (value != null && !isEmptyArray)

@@ -316,7 +316,8 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [TestMethod, Ignore]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CreateAndFullRepresentation()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -358,7 +359,8 @@ namespace Hl7.Fhir.Tests.Rest
         /// This test is also used as a "setup" test for the History test.
         /// If you change the number of operations in here, this will make the History test fail.
         /// </summary>
-        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [TestMethod, Ignore]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CreateEditDelete()
         {
             FhirClient client = new FhirClient(testEndpoint);
@@ -400,7 +402,8 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [TestMethod,Ignore]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         //Test for github issue https://github.com/ewoutkramer/fhir-net-api/issues/145
         public void Create_ObservationWithValueAsSimpleQuantity_ReadReturnsValueAsQuantity()
         {
@@ -663,7 +666,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        [TestMethod]
+        [TestMethod, Ignore]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CreateDynamic()
         {
@@ -683,7 +686,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(fe);
         }
 
-        [TestMethod]
+        [TestMethod, Ignore]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CallsCallbacks()
         {

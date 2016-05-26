@@ -97,15 +97,16 @@ namespace Hl7.Fhir.Serialization
 
                     if(mappedProperty.RepresentsValueElement && mappedProperty.ElementType.IsEnum() && value is String)
                     {
-                        //if (AllowUnrecognizedEnums)
-                        if (Settings.AllowUnrecognizedEnums)
+                        if (!Settings.AllowUnrecognizedEnums)
                         {
-                            var prop = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
-                            prop.SetValue(existing, value, null);
-                            mappedProperty.SetValue(existing, null);
+                            if (EnumUtility.ParseLiteral((string)value, mappedProperty.ElementType) == null)
+                                throw Error.Format("Literal '{0}' is not a valid value for enumeration '{1}'".FormatWith(value, mappedProperty.ElementType.Name), _current);
                         }
-                        else
-                            throw Error.Format("Literal '{0}' is not a valid value for enumeration '{1}'".FormatWith(value, mappedProperty.ElementType.Name), _current);
+
+                        ((Primitive)existing).ObjectValue = value;
+                            //var prop = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
+                            //prop.SetValue(existing, value, null);
+                            //mappedProperty.SetValue(existing, null);                           
                     }
                     else
                         mappedProperty.SetValue(existing, value);                       

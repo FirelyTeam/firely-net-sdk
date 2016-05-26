@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var p = pser.Parse<Patient>(xml);
 
             Assert.IsNotNull(p.Gender);
-            Assert.AreEqual("male", p.GenderElement.RawValue);
+            Assert.AreEqual("male", p.GenderElement.ObjectValue);
 
 
             // Now, pollute the data with an incorrect administrative gender
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Tests.Serialization
             pser.Settings.AllowUnrecognizedEnums = true;
             p = pser.Parse<Patient>(xml2);
             Assert.IsNull(p.Gender);
-            Assert.AreEqual("superman", p.GenderElement.RawValue);
+            Assert.AreEqual("superman", p.GenderElement.ObjectValue);
         }
 
 #if !PORTABLE45

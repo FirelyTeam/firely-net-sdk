@@ -29,15 +29,15 @@ namespace Hl7.Fhir.Tests.Model
         public void SetValueUpdatesRawValue()
         {
             var c = new Code<AdministrativeGender>();
-            Assert.IsNull(c.RawValue);
+            Assert.IsNull(c.ObjectValue);
             Assert.IsNull(c.Value);
 
             c = new Code<AdministrativeGender>(AdministrativeGender.Female);
-            Assert.AreEqual("female", c.RawValue);
+            Assert.AreEqual("female", c.ObjectValue);
             Assert.AreEqual(AdministrativeGender.Female, c.Value);
 
             c.Value = AdministrativeGender.Unknown;
-            Assert.AreEqual("unknown", c.RawValue);
+            Assert.AreEqual("unknown", c.ObjectValue);
             Assert.AreEqual(AdministrativeGender.Unknown, c.Value);
         }
 
@@ -46,16 +46,16 @@ namespace Hl7.Fhir.Tests.Model
         public void SetRawValueUpdatesValue()
         {
             var c = new Code<AdministrativeGender>(AdministrativeGender.Female);
-            c.RawValue = "male";
+            c.ObjectValue = "male";
             Assert.AreEqual(AdministrativeGender.Male, c.Value);
 
-            c.RawValue = "maleX";
+            c.ObjectValue = "maleX";
             Assert.IsNull(c.Value);
 
             c.Value = AdministrativeGender.Other;
-            Assert.AreEqual("other", c.RawValue);
+            Assert.AreEqual("other", c.ObjectValue);
 
-            c.RawValue = null;
+            c.ObjectValue = null;
             Assert.IsNull(c.Value);
         }
 
