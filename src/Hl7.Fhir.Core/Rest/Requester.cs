@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Rest
                         else
                             throw httpNonSuccessStatusToException(webResponse.StatusCode, LastResult.Resource);
                     }
-                    catch(FormatException fe)
+                    catch(UnsupportedBodyTypeException bte)
                     {
                         // The server responded with HTML code. Still build a FhirOperationException and set a LastResult.
                         // Build a very minimal LastResult
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Rest
                         errorResult.Response = new Bundle.ResponseComponent();
                         errorResult.Response.Status = ((int)webResponse.StatusCode).ToString();
 
-                        OperationOutcome operationOutcome = OperationOutcome.ForException(fe, OperationOutcome.IssueType.Invalid);
+                        OperationOutcome operationOutcome = OperationOutcome.ForException(bte, OperationOutcome.IssueType.Invalid);
 
                         errorResult.Resource = operationOutcome;
                         LastResult = errorResult;

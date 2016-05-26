@@ -134,10 +134,13 @@ namespace Hl7.Fhir.Rest
             var fhirType = ContentType.GetResourceFormatFromContentType(contentType);
 
             if (fhirType == ResourceFormat.Unknown)
-                throw new FormatException("Endpoint returned a body with contentType '{0}', while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint? Body reads: {1}".FormatWith(contentType, bodyText));
+                throw new UnsupportedBodyTypeException(
+                    "Endpoint returned a body with contentType '{0}', while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint?"
+                        .FormatWith(contentType), contentType, bodyText);
 
             if (!SerializationUtil.ProbeIsJson(bodyText) && !SerializationUtil.ProbeIsXml(bodyText))
-                throw new FormatException("Endpoint said it returned '{0}', but the body is not recognized as either xml or json: \"" + bodyText + "\"");
+                throw new UnsupportedBodyTypeException(
+                        "Endpoint said it returned '{0}', but the body is not recognized as either xml or json.".FormatWith(contentType), contentType, bodyText);
 
             if (fhirType == ResourceFormat.Json)
                 result = new FhirJsonParser().Parse<Resource>(bodyText);
@@ -248,6 +251,20 @@ namespace Hl7.Fhir.Rest
         public static IEnumerable<string> GetHeader(this Bundle.ResponseComponent interaction, string header)
         {
             return interaction.GetHeaders().Where(h => h.Item1 == header).Select(h => h.Item2);
+        }
+    }
+
+
+    [Serializable]
+    public class UnsupportedBodyTypeException : Exception
+    {
+        public string BodyType { get; set; }
+
+        public string Body { get; set; }
+        public UnsupportedBodyTypeException(string message, string mimeType, string body) : base(message)
+        {
+            BodyType = mimeType;
+            Body = body;
         }
     }
 }

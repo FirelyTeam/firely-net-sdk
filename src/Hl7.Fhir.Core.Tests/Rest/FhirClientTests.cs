@@ -787,17 +787,12 @@ namespace Hl7.Fhir.Tests.Rest
             try
             {
                 var pat = client.Read<Patient>("Patient/1");
-                Assert.Fail("Failed to throw an Exception on illegal body");
             }
-            catch (FormatException fe)
+            catch (FhirOperationException fe)
             {
                 if (!fe.Message.Contains("a valid FHIR xml/json body type was expected") && !fe.Message.Contains("not recognized as either xml or json"))
                     Assert.Fail("Failed to recognize invalid body contents");
             }
-            //catch (Exception)
-            //{
-            //    Assert.Fail("Failed to throw FormatException on illegal body");
-            //}
         }
 
 
