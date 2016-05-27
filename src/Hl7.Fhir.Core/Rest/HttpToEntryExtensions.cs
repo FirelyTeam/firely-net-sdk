@@ -255,7 +255,6 @@ namespace Hl7.Fhir.Rest
     }
 
 
-    [Serializable]
     public class UnsupportedBodyTypeException : Exception
     {
         public string BodyType { get; set; }
