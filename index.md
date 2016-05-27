@@ -45,7 +45,7 @@ If you want to participate in this project, we're using [Git Flow][4] for our br
 
 [1]: http://www.hl7.org/fhir
 [dstu1]: http://www.nuget.org/packages/Hl7.Fhir
-[3]: http://ewoutkramer.github.io/fhir-net-api
+[3]: http://ewoutkramer.github.io/fhir-net-api/docu-index.html
 [4]: http://nvie.com/posts/a-successful-git-branching-model/
 [dstu2]: http://www.nuget.org/packages/Hl7.
 
