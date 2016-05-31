@@ -80,7 +80,9 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> Skip = CreateFunctionParser("skip", "num", Eval.Skip);
         public static readonly Parser<Evaluator> Take = CreateFunctionParser("take", "num", Eval.Take);
         public static readonly Parser<Evaluator> Count = CreateFunctionParser("count", Eval.Count);
-        public static readonly Parser<Evaluator> AsInteger = CreateFunctionParser("asInteger", Eval.AsInteger);
+        public static readonly Parser<Evaluator> AsInteger = CreateFunctionParser("asInteger", Eval.ToInteger);
+        public static readonly Parser<Evaluator> ToInteger = CreateFunctionParser("toInteger", Eval.ToInteger);
+        public static readonly Parser<Evaluator> ToDecimal = CreateFunctionParser("toDecimal", Eval.ToDecimal);
         public static readonly Parser<Evaluator> StartsWith = CreateFunctionParser("startsWith", "prefix", Eval.StartsWith);
         public static readonly Parser<Evaluator> Log = CreateFunctionParser("log", "argument", Eval.Log);
         public static readonly Parser<Evaluator> Today = CreateFunctionParser("today", Eval.Today);
@@ -106,7 +108,8 @@ namespace Hl7.Fhir.FhirPath.Grammar
 
 
         public static readonly Parser<Evaluator> Function = Not.Or(Empty).Or(Where).Or(All).Or(Any).Or(Item)
-                        .Or(First).Or(Last).Or(Tail).Or(Skip).Or(Take).Or(Count).Or(AsInteger).Or(StartsWith)
+                        .Or(First).Or(Last).Or(Tail).Or(Skip).Or(Take).Or(Count)
+                        .Or(AsInteger).Or(ToInteger).Or(ToDecimal).Or(StartsWith)
                         .Or(Log).Or(Resolve).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension)
                         .Or(Substring).Or(Select).Or(Today).Or(Now).Or(DateAdd)
                         .Or(OtherFunction);

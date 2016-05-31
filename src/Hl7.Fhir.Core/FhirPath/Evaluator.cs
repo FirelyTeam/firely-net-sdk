@@ -275,9 +275,14 @@ namespace Hl7.Fhir.FhirPath
             return (f, _) => f.CountItems();
         }
 
-        public static Evaluator AsInteger()
+        public static Evaluator ToInteger()
         {
             return (f,_) => f.IntegerEval();
+        }
+
+        public static Evaluator ToDecimal()
+        {
+            return (f, _) => f.DecimalEval();
         }
 
         public static Evaluator StartsWith(Evaluator prefix)

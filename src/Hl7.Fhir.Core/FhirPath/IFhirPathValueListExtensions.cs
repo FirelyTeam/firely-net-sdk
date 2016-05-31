@@ -171,6 +171,39 @@ namespace Hl7.Fhir.FhirPath
                             return FhirValueList.Create(result);
                     }
 
+                    if (val is bool)
+                    {
+                        if ((bool)val == true)
+                            return FhirValueList.Create(1.0);
+                        return FhirValueList.Create(0.0);
+                    }
+                }
+            }
+
+            return FhirValueList.Empty();
+        }
+
+        public static IEnumerable<IFhirPathValue> DecimalEval(this IEnumerable<IFhirPathValue> focus)
+        {
+            if (focus.JustValues().Count() == 1)
+            {
+                var val = focus.Single().Value;
+                if (val != null)
+                {
+                    if (val is long) return FhirValueList.Create(Convert.ToDecimal(val));
+                    if (val is decimal) return FhirValueList.Create((decimal)val);
+                    if (val is string)
+                    {
+                        Decimal result;
+                        if (Decimal.TryParse((string)val, out result))
+                            return FhirValueList.Create(result);
+                    }
+                    if (val is bool)
+                    {
+                        if ((bool)val == true)
+                            return FhirValueList.Create(1.0);
+                        return FhirValueList.Create(0.0);
+                    }
                 }
             }
 
