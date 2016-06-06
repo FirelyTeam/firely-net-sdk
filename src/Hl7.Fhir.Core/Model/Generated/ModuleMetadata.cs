@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.3.0
+// Generated for FHIR v1.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -317,13 +317,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("contact", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.ModuleMetadata.ContactComponent> Contact
+            public List<Hl7.Fhir.Model.ModuleMetadata.ContributorContactComponent> Contact
             {
-                get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ModuleMetadata.ContactComponent>(); return _Contact; }
+                get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ModuleMetadata.ContributorContactComponent>(); return _Contact; }
                 set { _Contact = value; OnPropertyChanged("Contact"); }
             }
             
-            private List<Hl7.Fhir.Model.ModuleMetadata.ContactComponent> _Contact;
+            private List<Hl7.Fhir.Model.ModuleMetadata.ContributorContactComponent> _Contact;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataContributorType>)TypeElement.DeepCopy();
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ModuleMetadata.ContactComponent>(Contact.DeepCopy());
+                    if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ModuleMetadata.ContributorContactComponent>(Contact.DeepCopy());
                     return dest;
                 }
                 else
@@ -375,12 +375,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContactComponent")]
+        [FhirType("ContributorContactComponent")]
         [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContributorContactComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ContactComponent"; } }
+            public override string TypeName { get { return "ContributorContactComponent"; } }
             
             /// <summary>
             /// Name of an individual to contact
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ContactComponent;
+                var dest = other as ContributorContactComponent;
                 
                 if (dest != null)
                 {
@@ -445,12 +445,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ContactComponent());
+                return CopyTo(new ContributorContactComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ContactComponent;
+                var otherT = other as ContributorContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ContactComponent;
+                var otherT = other as ContributorContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -475,12 +475,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContributorContactComponent")]
+        [FhirType("ContactComponent")]
         [DataContract]
-        public partial class ContributorContactComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+        public partial class ContactComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ContributorContactComponent"; } }
+            public override string TypeName { get { return "ContactComponent"; } }
             
             /// <summary>
             /// Name of an individual to contact
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ContributorContactComponent;
+                var dest = other as ContactComponent;
                 
                 if (dest != null)
                 {
@@ -545,12 +545,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ContributorContactComponent());
+                return CopyTo(new ContactComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ContributorContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ContributorContactComponent;
+                var otherT = other as ContactComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
@@ -1185,13 +1185,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contact", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ModuleMetadata.ContributorContactComponent> Contact
+        public List<Hl7.Fhir.Model.ModuleMetadata.ContactComponent> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ModuleMetadata.ContributorContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ModuleMetadata.ContactComponent>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.ModuleMetadata.ContributorContactComponent> _Contact;
+        private List<Hl7.Fhir.Model.ModuleMetadata.ContactComponent> _Contact;
         
         /// <summary>
         /// Use and/or publishing restrictions
@@ -1264,7 +1264,7 @@ namespace Hl7.Fhir.Model
                 if(Topic != null) dest.Topic = new List<Hl7.Fhir.Model.CodeableConcept>(Topic.DeepCopy());
                 if(Contributor != null) dest.Contributor = new List<Hl7.Fhir.Model.ModuleMetadata.ContributorComponent>(Contributor.DeepCopy());
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ModuleMetadata.ContributorContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ModuleMetadata.ContactComponent>(Contact.DeepCopy());
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
                 if(RelatedResource != null) dest.RelatedResource = new List<Hl7.Fhir.Model.ModuleMetadata.RelatedResourceComponent>(RelatedResource.DeepCopy());
                 return dest;

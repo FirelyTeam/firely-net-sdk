@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.3.0
+// Generated for FHIR v1.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -109,6 +109,7 @@ namespace Hl7.Fhir.Model
             /// Reference identifier
             /// </summary>
             [FhirElement("referenceSeqId", InSummary=true, Order=60)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept ReferenceSeqId
             {
