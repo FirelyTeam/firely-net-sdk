@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(a);
             }
 
-            var artifact = resolver.LoadConformanceResourceByUrl("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/flag");
+            var artifact = resolver.LoadConformanceResourceByUrl("http://fhir3.healthintersections.com.au/open/StructureDefinition/flag");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
