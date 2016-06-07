@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Hl7.Fhir.DSTU2</id>
-    <version>0.90.5-alpha2</version>
+    <version>0.90.5-alpha3</version>
     <title>HL7 FHIR Core support API for DSTU2</title>
     <authors>Ewout Kramer (e.kramer@furore.com) and contributors</authors>
     <owners>Furore (http://fhir.furore.com). Contains materials (C) Hl7 International</owners>
