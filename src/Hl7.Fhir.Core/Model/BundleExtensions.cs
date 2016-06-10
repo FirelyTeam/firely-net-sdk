@@ -26,6 +26,32 @@ namespace Hl7.Fhir.Model
             return newEntry;
         }
 
+        public static Bundle.EntryComponent AddSearchEntry(this Bundle b, Resource r, string fullUrl, Bundle.SearchEntryMode searchEntryMode)
+        {
+            var newEntry = new Bundle.EntryComponent
+            {
+                Resource = r,
+                FullUrl = fullUrl,
+                Search = new Bundle.SearchComponent { Mode = searchEntryMode }
+            };
+            b.Entry.Add(newEntry);
+
+            return newEntry;
+        }
+
+        public static Bundle.EntryComponent AddSearchEntry(this Bundle b, Resource r, string fullUrl, Bundle.SearchEntryMode searchEntryMode, decimal searchScore)
+        {
+            var newEntry = new Bundle.EntryComponent
+            {
+                Resource = r,
+                FullUrl = fullUrl,
+                Search = new Bundle.SearchComponent { Mode = searchEntryMode, Score = searchScore }
+            };
+            b.Entry.Add(newEntry);
+
+            return newEntry;
+        }
+
 
         /// <summary>
         /// Identifies if this entry is a deleted transaction (entry.Transaction.Method == DELETE)
