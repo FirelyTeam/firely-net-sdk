@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);
         }
 
-        [TestMethod, Ignore]//returns 500: validation of slices is not done yet.
+        [TestMethod]//returns 500: validation of slices is not done yet.
         [TestCategory("IntegrationTest")]
         public void InvokeResourceValidation()
         {
