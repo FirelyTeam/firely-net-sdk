@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Rest
             PreferredFormat = ResourceFormat.Xml;
             Timeout = 100 * 1000;       // Default timeout is 100 seconds            
             Prefer = Rest.Prefer.ReturnRepresentation;
-            ParserSettings = ParserSettings.Default;
+            ParserSettings = Hl7.Fhir.Serialization.ParserSettings.Default;
         }
 
 
