@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Net;
@@ -22,6 +23,8 @@ namespace Hl7.Fhir.Rest
         public int Timeout { get; set; }           // In miliseconds
         public Prefer Prefer { get; set; }
 
+        public ParserSettings ParserSettings { get; set; }
+
         public Requester(Uri baseUrl)
         {
             BaseUrl = baseUrl;
@@ -29,6 +32,7 @@ namespace Hl7.Fhir.Rest
             PreferredFormat = ResourceFormat.Xml;
             Timeout = 100 * 1000;       // Default timeout is 100 seconds            
             Prefer = Rest.Prefer.ReturnRepresentation;
+            ParserSettings = ParserSettings.Default;
         }
 
 
@@ -69,7 +73,7 @@ namespace Hl7.Fhir.Rest
                     // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
                     try
                     {
-                        LastResult = webResponse.ToBundleEntry(inBody);
+                        LastResult = webResponse.ToBundleEntry(inBody, ParserSettings);
 
                         if (webResponse.StatusCode.IsSuccessful())
                             return LastResult;

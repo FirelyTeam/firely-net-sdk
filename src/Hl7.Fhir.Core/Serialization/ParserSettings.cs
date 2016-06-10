@@ -9,9 +9,11 @@
 using System;
 
 namespace Hl7.Fhir.Serialization
-{
+{ 
     public class ParserSettings
     {
+        public readonly ParserSettings Default = new ParserSettings() { AcceptUnknownMembers = false, AllowUnrecognizedEnums = false, DisallowXsiAttributesOnRoot = true };
+
         public bool AcceptUnknownMembers { get; set; }
 
         public bool DisallowXsiAttributesOnRoot { get; set; }

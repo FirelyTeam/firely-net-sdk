@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Rest
         private const string USERDATA_BODY = "$body";
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
 
-        internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body)
+        internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body, ParserSettings parserSettings)
         {
             var result = new Bundle.EntryComponent();
 
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Rest
                 else
                 {
                     var bodyText = DecodeBody(body, charEncoding);
-                    var resource = parseResource(bodyText, contentType);
+                    var resource = parseResource(bodyText, contentType, parserSettings);
                     result.Resource = resource;
 
                     if (result.Response.Location != null)
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }      
 
-        private static Resource parseResource(string bodyText, string contentType)
+        private static Resource parseResource(string bodyText, string contentType, ParserSettings settings)
         {           
             Resource result= null;
 
@@ -143,9 +143,9 @@ namespace Hl7.Fhir.Rest
                         "Endpoint said it returned '{0}', but the body is not recognized as either xml or json.".FormatWith(contentType), contentType, bodyText);
 
             if (fhirType == ResourceFormat.Json)
-                result = new FhirJsonParser().Parse<Resource>(bodyText);
+                result = new FhirJsonParser(settings).Parse<Resource>(bodyText);
             else
-                result = new FhirXmlParser().Parse<Resource>(bodyText);
+                result = new FhirXmlParser(settings).Parse<Resource>(bodyText);
 
             return result;
         }

@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -131,6 +132,13 @@ namespace Hl7.Fhir.Rest
         {
             get { return _requester.LastResult != null ? _requester.LastResult.Response : null; }
         }
+
+        public ParserSettings ParserSettings
+        {
+            get { return _requester.ParserSettings;  }
+            set { _requester.ParserSettings = value;  }
+        }
+
 
         public byte[] LastBody { get { return LastResult != null ? LastResult.GetBody() : null; } }
         public string LastBodyAsText { get { return LastResult != null ? LastResult.GetBodyAsText() : null; } }
