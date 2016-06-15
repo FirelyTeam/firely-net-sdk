@@ -38,7 +38,7 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Base64Binary
+    public partial class Base64Binary : IValue<byte[]>
     {
         public static bool IsValidValue(string value)
         {

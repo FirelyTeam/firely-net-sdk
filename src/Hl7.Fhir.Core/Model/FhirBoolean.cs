@@ -38,7 +38,7 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class FhirBoolean
+    public partial class FhirBoolean : INullableValue<bool>
     {
         public static bool IsValidValue(string value)
         {

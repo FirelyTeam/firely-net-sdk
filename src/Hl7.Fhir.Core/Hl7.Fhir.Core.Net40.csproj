@@ -536,6 +536,7 @@
     <Compile Include="Model\IExtendable.cs" />
     <Compile Include="Model\Initializers.cs" />
     <Compile Include="Model\Instant.cs" />
+    <Compile Include="Model\IValue.cs" />
     <Compile Include="Model\Markdown.cs" />
     <Compile Include="Model\ModelInfo.cs" />
     <Compile Include="Model\Oid.cs" />
@@ -548,6 +549,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Template-Bindings.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Time.cs" />
     <Compile Include="Model\UnsignedInt.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />

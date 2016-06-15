@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Tests.Model
 #if PORTABLE45
 	public class PortableModelTests
 #else
-	public class ModelTests
+    public class ModelTests
 #endif
     {
         [TestMethod]
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual("123", identifier.Value);
             Assert.AreEqual("http://nhi.health.nz", identifier.System);
         }
-       
+
 
         [TestMethod]
         public void SimpleValueSupport()
@@ -127,14 +127,14 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(2, ew.Count());
 
             Assert.AreEqual(0, p.ModifierExtension.Count());
-            var me = p.AddExtension("http://fhir.org/ext/ext-test3", new FhirString("bla"), isModifier:true);
+            var me = p.AddExtension("http://fhir.org/ext/ext-test3", new FhirString("bla"), isModifier: true);
             Assert.AreEqual(1, p.ModifierExtension.Count());
             Assert.AreEqual(me, p.GetExtension("http://fhir.org/ext/ext-test3"));
             Assert.AreEqual(me, p.GetExtensions("http://fhir.org/ext/ext-test3").Single());
             Assert.AreEqual(3, p.AllExtensions().Count());
 
             var code = new Code("test");
-            p.AddExtension("http://fhir.org/ext/code", code);            
+            p.AddExtension("http://fhir.org/ext/code", code);
             Assert.AreEqual(code, p.GetExtensionValue<Code>("http://fhir.org/ext/code"));
 
             var text = new FhirString("test");
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Tests.Model
             var fhirbool = new FhirBoolean(true);
             p.AddExtension("http://fhir.org/ext/bool", fhirbool);
             Assert.AreEqual(fhirbool, p.GetExtensionValue<FhirBoolean>("http://fhir.org/ext/bool"));
-            
+
         }
 
 
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Tests.Model
 
         //    Assert.IsNotNull(pat.FindContainedResource(rref));
         //    Assert.IsNotNull(pat.FindContainedResource(rref.Url));
-            
+
         //    rref.Reference = "#pat3";
         //    Assert.IsNull(pat.FindContainedResource(rref));
         //}
@@ -200,8 +200,8 @@ namespace Hl7.Fhir.Tests.Model
         {
             var p = new Patient();
             p.Name.Add(new HumanName());
-        }  
-    
+        }
+
 
         [TestMethod]
         public void TestModelInfoTypeSelectors()
@@ -237,5 +237,71 @@ namespace Hl7.Fhir.Tests.Model
                 Assert.AreEqual(typeName, typeName2, $"Failed: '{typeName}' != '{typeName2}' ?!");
             }
         }
+
+        [TestMethod]
+        public void TestStringValueInterface()
+        {
+            IStringValue sv = new FhirString("test");
+            Assert.IsNotNull(sv);
+            sv.Value = "string";
+            Assert.AreEqual(sv.Value, "string");
+
+            sv = new FhirUri("test");
+            Assert.IsNotNull(sv);
+            sv.Value = "http://example.org";
+            Assert.AreEqual(sv.Value, "http://example.org");
+
+            sv = new Uuid("test");
+            Assert.IsNotNull(sv);
+            sv.Value = "550e8400-e29b-41d4-a716-446655440000";
+            Assert.AreEqual(sv.Value, "550e8400-e29b-41d4-a716-446655440000");
+
+            sv = new Oid("test");
+            Assert.IsNotNull(sv);
+            sv.Value = "2.16.840.1.113883";
+            Assert.AreEqual(sv.Value, "2.16.840.1.113883");
+
+            sv = new Markdown("test");
+            Assert.IsNotNull(sv);
+            sv.Value = "Hello World!";
+            Assert.AreEqual(sv.Value, "Hello World!");
+
+            sv = new Date();
+            Assert.IsNotNull(sv);
+            sv.Value = "20161201";
+            Assert.AreEqual(sv.Value, "20161201");
+
+            sv = new Time();
+            Assert.IsNotNull(sv);
+            sv.Value = "23:59:00";
+            Assert.AreEqual(sv.Value, "23:59:00");
+
+            sv = new FhirDateTime(DateTime.Now);
+            Assert.IsNotNull(sv);
+            sv.Value = "20161201 23:59:00";
+            Assert.AreEqual(sv.Value, "20161201 23:59:00");
+
+        }
+
+        [TestMethod]
+        public void TestIntegerValueInterface()
+        {
+            INullableIntegerValue iv = new Integer(null);
+            Assert.IsNotNull(iv);
+            iv.Value = 12345;
+            Assert.AreEqual(iv.Value, 12345);
+
+            iv = new UnsignedInt(0);
+            Assert.IsNotNull(iv);
+            iv.Value = 12345;
+            Assert.AreEqual(iv.Value, 12345);
+
+            iv = new PositiveInt(1);
+            Assert.IsNotNull(iv);
+            iv.Value = 12345;
+            Assert.AreEqual(iv.Value, 12345);
+        }
+
+
     }
 }
