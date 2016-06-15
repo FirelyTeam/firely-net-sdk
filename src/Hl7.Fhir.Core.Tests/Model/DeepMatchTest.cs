@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
-            var p = (Patient)FhirParser.ParseResourceFromXml(xml);
+            var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
 
             Assert.IsTrue(p2.Matches(p));
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
-            var p = (Patient)FhirParser.ParseResourceFromXml(xml);
+            var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
 
             // If you set an element to null in the pattern, it need not be set in the source
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
-            var p = (Patient)FhirParser.ParseResourceFromXml(xml);
+            var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
 
             var rel = (CodeableConcept)p.Contact[0].Relationship[0].DeepCopy();

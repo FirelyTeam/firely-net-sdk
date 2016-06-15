@@ -14,7 +14,7 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Serialization
 {
-    public interface IFhirReader : IPostitionInfo
+    public interface IFhirReader : IPositionInfo
     {
         string GetResourceTypeName();
 

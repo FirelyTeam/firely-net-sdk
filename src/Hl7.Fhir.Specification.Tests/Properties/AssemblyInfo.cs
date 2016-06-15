@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -10,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Hl7.Fhir.Specification.Tests")]
-[assembly: AssemblyCopyright("Copyright © Ewout Kramer and collaborators 2015")]
+[assembly: AssemblyCopyright("Copyright � Ewout Kramer and collaborators 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -19,17 +18,9 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a490367f-31a0-4148-8127-36305f4c1646")]
+[assembly: AssemblyVersion("1.0.*")]    // Stick test version to always 1.0, i.e. "pseudo-strong naming"
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.90.3.*")]
+// Sign this for trusted friendship to tested Assembly. See: https://msdn.microsoft.com/en-us/library/bb385180.aspx
+#if SIGNED
+[assembly: AssemblyKeyFileAttribute("..\\FhirNetApi.snk")]
+#endif

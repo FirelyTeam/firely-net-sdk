@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void GenerateSingleSnapshot()
         {                                  
             var sd = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/genetics");
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
   
-        [TestMethod]
+        [TestMethod, Ignore]
         public void GenerateSnapshot()
         {           
             foreach (var original in findConstraintStrucDefs())
@@ -74,8 +74,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             if (!areEqual)
             {
-                File.WriteAllText("c:\\temp\\snapshotgen-source.xml", FhirSerializer.SerializeResourceToXml(original));
-                File.WriteAllText("c:\\temp\\snapshotgen-dest.xml", FhirSerializer.SerializeResourceToXml(expanded));
+                var tempPath = Path.GetTempPath();
+                File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), FhirSerializer.SerializeResourceToXml(original));
+                File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
             }
 
             Assert.IsTrue(areEqual);

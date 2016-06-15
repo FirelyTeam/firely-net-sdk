@@ -30,6 +30,7 @@ namespace Hl7.Fhir.Serialization
             _current = root;
         }
 
+        // [WMR 20160421] Caller can safely dispose reader after calling this ctor
         public JsonDomFhirReader(JsonReader reader)
         {
             reader.DateParseHandling = DateParseHandling.None;
@@ -193,8 +194,7 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("resourceType should be a primitive string json value", this);
             }
 
-            throw Error.Format("Cannot determine type of resource to create from json input data: no member {0} was found", this, 
-                            JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME);
+            throw Error.Format("Cannot determine type of resource to create from json input data: no member {0} was found".FormatWith(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME), this);
         }
 
 
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static IPostitionInfo GetLineInfo(JToken obj)
+        public static IPositionInfo GetLineInfo(JToken obj)
         {
             return new JsonDomFhirReader(obj);
         }
@@ -255,5 +255,6 @@ namespace Hl7.Fhir.Serialization
                 return li.LinePosition;
             }
         }
+
     }
 }

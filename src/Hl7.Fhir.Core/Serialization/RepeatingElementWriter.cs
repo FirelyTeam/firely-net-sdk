@@ -28,10 +28,10 @@ namespace Hl7.Fhir.Serialization
         public RepeatingElementWriter(IFhirWriter writer)
         {
             _writer = writer;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
         }
 
-        public void Serialize(PropertyMapping prop, object instance, bool summary, ComplexTypeWriter.SerializationMode mode)
+        public void Serialize(PropertyMapping prop, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)
         {
             if (prop == null) throw Error.ArgumentNull("prop");
 

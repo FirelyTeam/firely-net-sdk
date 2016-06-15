@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class PositiveInt
+    public partial class PositiveInt : INullableIntegerValue
     {
             public static bool IsValidValue(string value)
             {

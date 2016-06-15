@@ -1,0 +1,14 @@
+version: 1.0.{build}
+build_script:
+- ps: >-
+    nuget install secure-file -ExcludeVersion
+
+    secure-file\tools\secure-file -decrypt src\FhirNetApi.snk.enc -secret $Env:snk_passphrase
+
+    build/runbuild.ps1 Package
+test_script:
+- ps: build/runbuild.ps1 Retest
+artifacts:
+- path: working\*.nupkg
+  name: NuGet packages
+deploy: off

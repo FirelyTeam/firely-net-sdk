@@ -19,6 +19,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Introspection
 {
+    [System.Diagnostics.DebuggerDisplay(@"\{Name={Name} ElementType={ElementType.Name}}")]
     public class PropertyMapping
     {
         public string Name { get; private set; }
@@ -28,6 +29,7 @@ namespace Hl7.Fhir.Introspection
         public bool IsPrimitive { get; private set; }
         public bool RepresentsValueElement { get; private set; }
         public bool InSummary { get; private set; }
+        public bool IsMandatoryElement { get; private set; }
 
         public Type ReturnType { get; private set; }
         public Type ElementType { get; private set; }
@@ -56,15 +58,18 @@ namespace Hl7.Fhir.Introspection
 
 #if PORTABLE45
 			var elementAttr = prop.GetCustomAttribute<FhirElementAttribute>();
+            var cardinalityAttr = prop.GetCustomAttribute<Validation.CardinalityAttribute>();
 #else
-			var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+            var elementAttr = (FhirElementAttribute)Attribute.GetCustomAttribute(prop, typeof(FhirElementAttribute));
+            var cardinalityAttr = (Validation.CardinalityAttribute)Attribute.GetCustomAttribute(prop, typeof(Validation.CardinalityAttribute));
 #endif
-       
+
             result.Name = determinePropertyName(prop);
             result.ReturnType = prop.PropertyType;
             result.ElementType = result.ReturnType;
 
-            result.InSummary = elementAttr != null ? elementAttr.InSummary : false;            
+            result.InSummary = elementAttr != null ? elementAttr.InSummary : false;
+            result.IsMandatoryElement = cardinalityAttr != null ? cardinalityAttr.Min > 0 : false;
             result.Choice = elementAttr != null ? elementAttr.Choice : ChoiceType.None;
 
             if (elementAttr != null)
@@ -137,7 +142,7 @@ namespace Hl7.Fhir.Introspection
             var isValueElement = valueElementAttr != null && valueElementAttr.IsPrimitiveValue;
 
             if(isValueElement && !isAllowedNativeTypeForDataTypeValue(prop.PropertyType))
-                throw Error.Argument("prop", "Property {0} is marked for use as a primitive element value, but its .NET type ({1}) is not supported by the serializer.", buildQualifiedPropName(prop), prop.PropertyType.Name);
+                throw Error.Argument("prop", "Property {0} is marked for use as a primitive element value, but its .NET type ({1}) is not supported by the serializer.".FormatWith(buildQualifiedPropName(prop), prop.PropertyType.Name));
 
             return isValueElement;
         }
@@ -171,8 +176,7 @@ namespace Hl7.Fhir.Introspection
             if (MatchesSuffixedName(suffixedName))
                 return suffixedName.Remove(0, Name.Length);
             else
-                throw Error.Argument("suffixedName", "The given suffixed name {0} does not match this property's name {1}",
-                                            suffixedName, Name);
+                throw Error.Argument("suffixedName", "The given suffixed name {0} does not match this property's name {1}".FormatWith(suffixedName, Name));
         }
      
         //public Type GetChoiceType(string choiceSuffix)

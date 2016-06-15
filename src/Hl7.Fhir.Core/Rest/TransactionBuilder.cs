@@ -173,28 +173,30 @@ namespace Hl7.Fhir.Rest
         }
 
         
-        public TransactionBuilder Conformance()
+        public TransactionBuilder Conformance(SummaryType? summary)
         {
             var entry =  newEntry(Bundle.HTTPVerb.GET);
             var path = newRestUrl().AddPath(METADATA);
+            if (summary.HasValue)
+                path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summary.Value.ToString().ToLower());
             addEntry(entry, path);
 
             return this;
         }
 
 
-        private void addHistoryEntry(RestUrl path, bool? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
+        private void addHistoryEntry(RestUrl path, SummaryType? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.GET);
 
-            if(summaryOnly.HasValue) path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, PrimitiveTypeConverter.ConvertTo<string>(summaryOnly.Value));
+            if(summaryOnly.HasValue) path.AddParam(SearchParams.SEARCH_PARAM_SUMMARY, summaryOnly.Value.ToString().ToLower());
             if(pageSize.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_COUNT, pageSize.Value.ToString());
             if(since.HasValue) path.AddParam(HttpUtil.HISTORY_PARAM_SINCE, PrimitiveTypeConverter.ConvertTo<string>(since.Value));
 
             addEntry(entry, path);
         }
 
-        public TransactionBuilder ResourceHistory(string resourceType, string id, bool? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
+        public TransactionBuilder ResourceHistory(string resourceType, string id, SummaryType? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
         {
             var path = newRestUrl().AddPath(resourceType, id, HISTORY);
             addHistoryEntry(path, summaryOnly, pageSize, since);
@@ -203,7 +205,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public TransactionBuilder CollectionHistory(string resourceType, bool? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
+        public TransactionBuilder CollectionHistory(string resourceType, SummaryType? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
         {            
             var path = newRestUrl().AddPath(resourceType, HISTORY);
             addHistoryEntry(path,summaryOnly, pageSize, since);
@@ -212,7 +214,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public TransactionBuilder ServerHistory(bool? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
+        public TransactionBuilder ServerHistory(SummaryType? summaryOnly = null, int? pageSize=null, DateTimeOffset? since = null)
         {
             var path = newRestUrl().AddPath(HISTORY);
             addHistoryEntry(path, summaryOnly, pageSize, since);
@@ -223,7 +225,13 @@ namespace Hl7.Fhir.Rest
         public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters, bool useGet = false)
         {
             var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST);
+
+            // Brian: Not sure why we would create this parameters object as empty.
+            //        I would imagine that a null parameters object is different to an empty one?
+            // if (parameters == null)
+            //    parameters = new Parameters();
             entry.Resource = parameters;
+
             var path = new RestUrl(endpoint);
             addEntry(entry, path);
 

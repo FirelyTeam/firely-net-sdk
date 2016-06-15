@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             if (artifactXml != null)
-                return FhirParser.ParseResourceFromXml(artifactXml);
+                return new FhirXmlParser().Parse<Resource>(artifactXml);
             else
                 return null;
         }

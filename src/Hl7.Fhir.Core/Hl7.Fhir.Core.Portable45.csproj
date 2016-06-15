@@ -23,25 +23,27 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugPCL45|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\Portable45\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Portable45\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;PORTABLE45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>3016, 3015, 1591</NoWarn>
+    <NoWarn>3016,1591</NoWarn>
     <DocumentationFile>bin\Debug\Portable45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleasePCL45|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Portable45\</OutputPath>
-    <DefineConstants>RELEASE;TRACE;PORTABLE45</DefineConstants>
+    <BaseIntermediateOutputPath>obj\Release\Portable45\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;PORTABLE45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>3016, 3015</NoWarn>
+    <NoWarn>3016,1591</NoWarn>
     <DocumentationFile>bin\Release\Portable45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
@@ -53,12 +55,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Portable.DataAnnotations, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6f21be3d5ccff8cd, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable-Strong.DataAnnotations.1.0.0\lib\portable-net45+netcore45+wp8+wpa81\Portable.DataAnnotations.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.ComponentModel.DataAnnotations.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.28\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
@@ -73,6 +76,7 @@
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
+    <Compile Include="Introspection\PortableDescriptionAttribute.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />
     <Compile Include="Introspection\FhirEnumerationAttribute.cs" />
@@ -165,7 +169,9 @@
     <Compile Include="Model\Generated\DeviceUseStatement.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\DomainResource.cs" />
+    <Compile Include="Model\Generated\DomainResource.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\ElementDefinition.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
@@ -546,6 +552,7 @@
     <Compile Include="Model\IExtendable.cs" />
     <Compile Include="Model\Initializers.cs" />
     <Compile Include="Model\Instant.cs" />
+    <Compile Include="Model\IValue.cs" />
     <Compile Include="Model\Markdown.cs" />
     <Compile Include="Model\ModelInfo.cs" />
     <Compile Include="Model\Oid.cs" />
@@ -553,7 +560,9 @@
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\PositiveInt.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
+    <Compile Include="Model\Time.cs" />
     <Compile Include="Model\UnsignedInt.cs" />
+    <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />
     <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\FhirClientSearch.cs" />
@@ -591,7 +600,6 @@
     <Compile Include="Serialization\DefaultModelFactory.cs" />
     <Compile Include="Serialization\DispatchingWriter.cs" />
     <Compile Include="Serialization\DispatchingReader.cs" />
-    <Compile Include="Introspection\EnumMapping.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Serialization\FhirParser.cs" />
     <Compile Include="Serialization\FhirSerializer.cs" />
@@ -599,6 +607,7 @@
     <Compile Include="Serialization\IFhirWriter.cs" />
     <Compile Include="Serialization\JsonTreeRewriter.cs" />
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
+    <Compile Include="Serialization\ParserSettings.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
@@ -606,6 +615,7 @@
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Support\DateExtensions.cs" />
+    <Compile Include="Introspection\EnumUtility.cs" />
     <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\Logging.cs" />
@@ -624,7 +634,6 @@
     <Compile Include="Serialization\ResourceReader.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
     <Compile Include="Support\StringExtensions.cs" />
     <Compile Include="Validation\AllowedTypesAttribute.cs" />
@@ -642,11 +651,12 @@
     <Compile Include="Validation\UriPatternAttribute.cs" />
     <Compile Include="Validation\UuidPatternAttribute.cs" />
     <Compile Include="Validation\ValidationContextExtensions.cs" />
-    <Compile Include="Validation\ValidationContextFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Model\Generated\TemplateFileManagerV2.1.ttinclude" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Validation\xhtml\fhir-xhtml.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -25,9 +25,14 @@ namespace Hl7.Fhir.Tests.Rest
 #endif
 
     {
-        public const string testEndpoint = "http://fhir-dev.healthintersections.com.au/open";
+#if PORTABLE45
+        string testEndpoint = PortableFhirClientTests.testEndpoint.OriginalString;
+#else
+        string testEndpoint = FhirClientTests.testEndpoint.OriginalString;
+#endif
 
-        [TestMethod] //Server throws error: Access violation at address 000000000129D56C in module 'FHIRServer.exe'. Read of address 0000000000000000
+        [TestMethod] 
+        [TestCategory("IntegrationTest")]
         public void InvokeTestPatientGetEverything()
         {
             var client = new FhirClient(testEndpoint);
@@ -42,6 +47,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
+        [TestCategory("IntegrationTest")]
         public void InvokeExpandExistingValueSet()
         {
             var client = new FhirClient(testEndpoint);
@@ -50,7 +56,10 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(vs.Expansion.Contains.Any());
         }
 
+
+
         [TestMethod]
+        [TestCategory("IntegrationTest")]
         public void InvokeExpandParameterValueSet()
         {
             var client = new FhirClient(testEndpoint);
@@ -63,6 +72,27 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
+        [TestCategory("IntegrationTest"), Ignore]
+        public void InvokeExpandUsingInstanceOp()
+        {
+            var client = new FhirClient(testEndpoint);
+
+            //    var vs = client.Read<ValueSet>("ValueSet/administrative-gender");
+
+            //   var vsX = client.ExpandValueSet(ExpandValueSet(vs);
+
+            // Assert.IsTrue(vsX.Expansion.Contains.Any());
+            var result = client.InstanceOperation(ResourceIdentity.Build("ValueSet", "extensional-case-1"),
+                FhirClientOperations.Operation.EXPAND_VALUESET);
+
+        }
+    
+
+        /// <summary>
+        /// http://hl7.org/fhir/valueset-operations.html#lookup
+        /// </summary>
+        [TestMethod]
+        [TestCategory("IntegrationTest"), Ignore]
         public void InvokeLookupCoding()
         {
             var client = new FhirClient(testEndpoint);
@@ -75,6 +105,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
+        [TestCategory("IntegrationTest"), Ignore]
         public void InvokeLookupCode()
         {
             var client = new FhirClient(testEndpoint);
@@ -85,6 +116,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]//returns 500: validation of slices is not done yet.
+        [TestCategory("IntegrationTest")]
         public void InvokeResourceValidation()
         {
             var client = new FhirClient(testEndpoint);

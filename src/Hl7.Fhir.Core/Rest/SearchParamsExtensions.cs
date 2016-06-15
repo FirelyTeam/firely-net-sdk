@@ -61,9 +61,9 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public static SearchParams SummaryOnly(this SearchParams qry, bool summaryOnly = true)
+        public static SearchParams SummaryOnly(this SearchParams qry, SummaryType summaryOnly = SummaryType.True)
         {            
-            qry.Summary = summaryOnly ? SummaryType.True : SummaryType.False;
+            qry.Summary = summaryOnly;
             return qry;
         }
 

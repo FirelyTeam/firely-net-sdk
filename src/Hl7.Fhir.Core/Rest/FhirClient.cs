@@ -6,21 +6,14 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Hl7.Fhir;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using System.Net;
-using System.IO;
-using Newtonsoft.Json;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Rest;
-using System.Threading;
-using Hl7.Fhir.Introspection;
-using System.Threading.Tasks;
 
 
 namespace Hl7.Fhir.Rest
@@ -140,6 +133,13 @@ namespace Hl7.Fhir.Rest
             get { return _requester.LastResult != null ? _requester.LastResult.Response : null; }
         }
 
+        public ParserSettings ParserSettings
+        {
+            get { return _requester.ParserSettings;  }
+            set { _requester.ParserSettings = value;  }
+        }
+
+
         public byte[] LastBody { get { return LastResult != null ? LastResult.GetBody() : null; } }
         public string LastBodyAsText { get { return LastResult != null ? LastResult.GetBodyAsText() : null; } }
         public Resource LastBodyAsResource { get { return _requester.LastResult != null ? _requester.LastResult.Resource : null; } }
@@ -222,6 +222,21 @@ namespace Hl7.Fhir.Rest
             return Read<TResource>(new Uri(location, UriKind.RelativeOrAbsolute), ifNoneMatch, ifModifiedSince);
         }
 
+
+        /// <summary>
+        /// Refreshes the data in the resource passed as an argument by re-reading it from the server
+        /// </summary>
+        /// <typeparam name="TResource"></typeparam>
+        /// <param name="current">The resource for which you want to get the most recent version.</param>
+        /// <returns>A new instance of the resource, containing the most up-to-date data</returns>
+        /// <remarks>This function will not overwrite the argument with new data, rather it will return a new instance
+        /// which will have the newest data, leaving the argument intact.</remarks>
+        public TResource Refresh<TResource>(TResource current) where TResource : Resource
+        {
+            if (current == null) throw Error.ArgumentNull("current");
+
+            return Read<TResource>(ResourceIdentity.Build(current.TypeName, current.Id));
+        }
 
         /// <summary>
         /// Update (or create) a resource
@@ -374,9 +389,9 @@ namespace Hl7.Fhir.Rest
         /// Get a conformance statement for the system
         /// </summary>
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
-        public Conformance Conformance()
+        public Conformance Conformance(SummaryType? summary = null)
         {
-            var tx = new TransactionBuilder(Endpoint).Conformance().ToBundle();          
+            var tx = new TransactionBuilder(Endpoint).Conformance(summary).ToBundle();
             return execute<Conformance>(tx, HttpStatusCode.OK);
         }
 
@@ -390,7 +405,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>        
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-	    public Bundle TypeHistory(string resourceType, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+	    public Bundle TypeHistory(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {          
             return internalHistory(resourceType, null, since, pageSize, summary);
         }
@@ -404,7 +419,7 @@ namespace Hl7.Fhir.Rest
         /// <typeparam name="TResource">The type of Resource to get the history for</typeparam>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null, bool summary = false) where TResource : Resource, new()
+        public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False) where TResource : Resource, new()
         {
             string collection = typeof(TResource).GetCollectionName();
             return internalHistory(collection, null, since, pageSize, summary);
@@ -419,7 +434,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+        public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             if (location == null) throw Error.ArgumentNull("location");
 
@@ -428,7 +443,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+        public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             return History(new Uri(location, UriKind.Relative), since, pageSize, summary);
         }
@@ -442,12 +457,12 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Indicates whether the returned resources should just contain the minimal set of elements</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             return internalHistory(null, null, since, pageSize, summary);
         }
 
-        private Bundle internalHistory(string resourceType = null, string id = null, DateTimeOffset? since = null, int? pageSize = null, bool summary = false)
+        private Bundle internalHistory(string resourceType = null, string id = null, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
         {
             TransactionBuilder history;
 
@@ -487,7 +502,10 @@ namespace Hl7.Fhir.Rest
         {
             if (operationName == null) throw Error.ArgumentNull("operationName");
 
-            var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
+            // [WMR 20160421] GetResourceNameForType is obsolete
+            // var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
+            var typeName = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+
             return TypeOperation(operationName, typeName, parameters, useGet: useGet);
         }
 
@@ -764,12 +782,12 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Called just before the Http call is done
         /// </summary>
-        public event BeforeRequestEventHandler OnBeforeRequest;
+        public event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
 
         /// <summary>
         /// Called just after the response was received
         /// </summary>
-        public event AfterResponseEventHandler OnAfterResponse;
+        public event EventHandler<AfterResponseEventArgs> OnAfterResponse;
 
         /// <summary>
         /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
@@ -818,7 +836,7 @@ namespace Hl7.Fhir.Rest
             // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
             // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
             // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
-            var noRealBody = response.Resource == null || response.Resource is OperationOutcome;
+            var noRealBody = response.Resource == null || (response.Resource is OperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
             if (noRealBody && isPostOrPut(request) 
                 && ReturnFullResource && response.Response.Location != null
                 && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity()) // Check that it isn't an operation too
@@ -1375,7 +1393,7 @@ namespace Hl7.Fhir.Rest
     }
 
 
-    public delegate void BeforeRequestEventHandler(object sender, BeforeRequestEventArgs e);
+
 
     public class BeforeRequestEventArgs : EventArgs
     {
@@ -1388,8 +1406,6 @@ namespace Hl7.Fhir.Rest
         public HttpWebRequest RawRequest { get; internal set; }
         public byte[] Body { get; internal set; }
     }
-
-    public delegate void AfterResponseEventHandler(object sender, AfterResponseEventArgs e);
 
     public class AfterResponseEventArgs : EventArgs
     {

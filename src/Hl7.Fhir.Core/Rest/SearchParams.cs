@@ -111,56 +111,80 @@ namespace Hl7.Fhir.Rest
         {
             if (name == null) throw Error.ArgumentNull("name");
             if (value == null) throw Error.ArgumentNull("value");
-            if (String.IsNullOrEmpty(value)) throw Error.Argument("value", "value cannot be empty");
 
-            if (name == SEARCH_PARAM_QUERY) Query = value;
-            else if (name == SEARCH_PARAM_TEXT) Text = value;
-            else if (name == SEARCH_PARAM_CONTENT) Content = value;
-            else if (name == SEARCH_PARAM_COUNT) Count = Int32.Parse(value);
-            else if (name == SEARCH_PARAM_INCLUDE) Include.Add(value);
-            else if (name == SEARCH_PARAM_REVINCLUDE) RevInclude.Add(value);
+            if (name == SEARCH_PARAM_QUERY) Query = nonEmptySingleValue(name, Query, value);
+            else if (name == SEARCH_PARAM_TEXT) Text = nonEmptySingleValue(name, Text, value);
+            else if (name == SEARCH_PARAM_CONTENT) Content = nonEmptySingleValue(name, Content, value);
+            else if (name == SEARCH_PARAM_COUNT)
+            {
+                int count;
+                if ( !Int32.TryParse(value, out count) || count <= 0) throw Error.Format("Invalid {0}: '{1}' is not a positive integer".FormatWith(name, value), null);
+                Count = count;
+            }
+            else if (name == SEARCH_PARAM_INCLUDE) addNonEmpty(name, Include, value);
+            else if (name == SEARCH_PARAM_REVINCLUDE) addNonEmpty(name, RevInclude, value);
             else if (name.StartsWith(SEARCH_PARAM_SORT + SEARCH_MODIFIERSEPARATOR))
             {
                 var order = name.Substring(SEARCH_PARAM_SORT.Length + 1).ToLower();
 
-                if (order.StartsWith("asc")) Sort.Add(Tuple.Create(value, SortOrder.Ascending));
-                else if (order.StartsWith("desc")) Sort.Add(Tuple.Create(value, SortOrder.Descending));
-                else throw Error.Format("Cannot parse sort order '{0}'", null, order);
+                if ( "ascending".StartsWith(order) && order.Length >= 3) addNonEmptySort(value, SortOrder.Ascending);
+                else if ( "descending".StartsWith(order) && order.Length >= 4) addNonEmptySort(value, SortOrder.Descending);
+                else throw Error.Format("Invalid {0}: '{1}' is not a recognized sort order".FormatWith(SEARCH_PARAM_SORT, order), null);
             }
             else if (name == SEARCH_PARAM_SORT)
             {
-                Sort.Add(Tuple.Create(value, SortOrder.Ascending));
+                addNonEmptySort(value, SortOrder.Ascending);
             }
             else if (name == SEARCH_PARAM_SUMMARY)
             {
                 SummaryType st = SummaryType.False;
-                if (Enum.TryParse<SummaryType>(value, ignoreCase: true, result: out st))
+                if (Enum.TryParse(value, ignoreCase: true, result: out st))
                     Summary = st;
                 else
-                    throw Error.Format("Cannot parse summary value '{0}'", null, value);
+                    throw Error.Format("Invalid {0}: '{1}' is not a recognized summary value".FormatWith(name, value), null);
             }
-            else if (name == SEARCH_PARAM_FILTER) Filter = value;
+            else if (name == SEARCH_PARAM_FILTER) Filter = nonEmptySingleValue(name, Filter, value);
             else if (name == SEARCH_PARAM_CONTAINED)
             {
                 if (SEARCH_CONTAINED_TRUE.Equals(value)) Contained = ContainedSearch.True;
                 else if (SEARCH_CONTAINED_FALSE.Equals(value)) Contained = ContainedSearch.False;
                 else if (SEARCH_CONTAINED_BOTH.Equals(value)) Contained = ContainedSearch.Both;
-                else throw Error.Format("Cannot parse contained value '{0}'", null, value);
+                else throw Error.Format("Invalid {0}: '{1}' is not a recognized contained value".FormatWith(name, value), null);
             }
             else if (name == SEARCH_PARAM_CONTAINEDTYPE)
             {
                 if (SEARCH_CONTAINED_TYPE_CONTAINED.Equals(value)) ContainedType = ContainedResult.Contained;
                 else if (SEARCH_CONTAINED_TYPE_CONTAINER.Equals(value)) ContainedType = ContainedResult.Container;
-                else throw Error.Format("Cannot parse containedType value '{0}'", null, value);
+                else throw Error.Format("Invalid {0}: '{1}' is not a recognized containedType value".FormatWith(name, value), null);
             }
-            else if (name== SEARCH_PARAM_ELEMENTS)
+            else if (name == SEARCH_PARAM_ELEMENTS)
             {
+                if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(name), null);
                 Elements.AddRange(value.Split(','));
             }
             else
                 Parameters.Add(Tuple.Create(name, value));
 
             return this;
+        }
+
+        private static string nonEmptySingleValue(string paramName, string currentValue, string newValue)
+        {
+            if (String.IsNullOrEmpty(newValue)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName), null);
+            if (!String.IsNullOrEmpty(currentValue)) throw Error.Format("{0} cannot be specified more than once".FormatWith(paramName), null);
+            return newValue;
+        }
+
+        private static void addNonEmpty(string paramName, IList<string> values, string value)
+        {
+            if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName), null);
+            values.Add(value);
+        }
+
+        private void addNonEmptySort(string value, SortOrder sortOrder)
+        {
+            if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(SEARCH_PARAM_SORT), null);
+            Sort.Add(Tuple.Create(value, sortOrder));
         }
 
         /// <summary>

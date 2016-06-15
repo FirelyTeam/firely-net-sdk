@@ -25,11 +25,15 @@ namespace Hl7.Fhir.Serialization
         private readonly ModelInspector _inspector;
         private readonly bool _arrayMode;
 
-        public DispatchingReader(IFhirReader data, bool arrayMode = false)
+        public ParserSettings Settings { get; private set; }
+
+        public DispatchingReader(IFhirReader data, ParserSettings settings, bool arrayMode)
         {
             _current = data;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
             _arrayMode = arrayMode;
+
+            Settings = settings;
         }
 
         public object Deserialize(PropertyMapping prop, string memberName, object existing=null)
@@ -42,7 +46,7 @@ namespace Hl7.Fhir.Serialization
             if (!_arrayMode && prop.IsCollection)
             {
                 if (existing != null && !(existing is IList) ) throw Error.Argument("existing", "Can only read repeating elements into a type implementing IList");
-                var reader = new RepeatingElementReader(_current);
+                var reader = new RepeatingElementReader(_current, Settings);
                 return reader.Deserialize(prop, memberName, (IList)existing);
             }
 
@@ -59,7 +63,7 @@ namespace Hl7.Fhir.Serialization
             // (as used in Resource.contained)
             if(prop.Choice == ChoiceType.ResourceChoice)
             {
-                var reader = new ResourceReader(_current);
+                var reader = new ResourceReader(_current, Settings);
                 return reader.Deserialize(null);
             }
 
@@ -80,7 +84,7 @@ namespace Hl7.Fhir.Serialization
             }
 
             if (existing != null && !(existing is Resource) && !(existing is Element) ) throw Error.Argument("existing", "Can only read complex elements into types that are Element or Resource");
-            var cplxReader = new ComplexTypeReader(_current);
+            var cplxReader = new ComplexTypeReader(_current, Settings);
             return cplxReader.Deserialize(mapping, (Base)existing);
         }
 
@@ -91,7 +95,7 @@ namespace Hl7.Fhir.Serialization
             var typeName = mappedProperty.GetChoiceSuffixFromName(memberName);
 
             if (String.IsNullOrEmpty(typeName))
-                throw Error.Format("Encountered polymorph member {0}, but is does not specify the type used", _current, memberName);
+                throw Error.Format("Encountered polymorph member {0}, but is does not specify the type used".FormatWith(memberName), _current);
 
             // Exception: valueResource actually means the element is of type ResourceReference
             if (typeName == "Resource") typeName = "Reference";
@@ -102,7 +106,7 @@ namespace Hl7.Fhir.Serialization
             result = _inspector.FindClassMappingForFhirDataType(typeName);
 
             if (result == null)
-                throw Error.Format("Encountered polymorph member {0}, which uses unknown datatype {1}", _current, memberName, typeName);
+                throw Error.Format("Encountered polymorph member {0}, which uses unknown datatype {1}".FormatWith(memberName, typeName), _current);
 
             return result;
         }

@@ -30,9 +30,6 @@ namespace Hl7.Fhir.Introspection
         // Index for easy lookup of classmappings, key is Type
         private Dictionary<Type, ClassMapping> _classMappingsByType = new Dictionary<Type, ClassMapping>();
 
-        // Index for easy lookup of enummappings, key is Type
-        private Dictionary<Type, EnumMapping> _enumMappingsByType = new Dictionary<Type, EnumMapping>();
-
         public void Import(Assembly assembly)
         {
             if (assembly == null) throw Error.ArgumentNull("assembly");
@@ -57,56 +54,23 @@ namespace Hl7.Fhir.Introspection
                 if (Attribute.GetCustomAttribute(type, typeof(NotMappedAttribute)) != null) continue;
 #endif
 
-				if (type.IsEnum())
-                {
-                    // Map an enumeration
-                    if (EnumMapping.IsMappableEnum(type))
-                        ImportEnum(type);
-                    else
-                        Message.Info("Skipped enum {0} while doing inspection: not recognized as representing a FHIR enumeration", type.Name);
-                }
+                // Map a Fhir Datatype
+                if (ClassMapping.IsMappableType(type))
+                    ImportType(type);
                 else
-                {
-                    // Map a Fhir Datatype
-                    if (ClassMapping.IsMappableType(type))
-                        ImportType(type);
-                    else
-                        Message.Info("Skipped type {0} while doing inspection: not recognized as representing a FHIR type", type.Name);
-                }
+                    Message.Info("Skipped type {0} while doing inspection: not recognized as representing a FHIR type", type.Name);
             }
         }
 
 
         private object lockObject = new object();
 
-        internal EnumMapping ImportEnum(Type type)
-        {
-            EnumMapping mapping = null;
-
-            if (!EnumMapping.IsMappableEnum(type))
-                throw Error.Argument("type", "Type {0} is not a mappable enumeration", type.Name);
-
-            lock (lockObject)
-            {
-                mapping = FindEnumMappingByType(type);
-                if (mapping != null) return mapping;
-
-                mapping = EnumMapping.Create(type);
-                _enumMappingsByType[type] = mapping;
-
-                Message.Info("Created Enum mapping for newly encountered type {0}", type.Name);
-            }
-
-            return mapping;
-        }
-
-
         internal ClassMapping ImportType(Type type)
         {
             ClassMapping mapping = null;
 
             if(!ClassMapping.IsMappableType(type))
-                throw Error.Argument("type", "Type {0} is not a mappable Fhir datatype or resource", type.Name);
+                throw Error.Argument("type", "Type {0} is not a mappable Fhir datatype or resource".FormatWith(type.Name));
 
             lock (lockObject)
             {
@@ -139,22 +103,6 @@ namespace Hl7.Fhir.Introspection
             var normalizedProfile = profile != null ? profile.ToUpperInvariant() : null;
 
             return Tuple.Create(normalizedName, normalizedProfile);
-        }
-
-        public EnumMapping FindEnumMappingByType(Type type)
-        {
-            if (type == null) throw Error.ArgumentNull("type");
-            if (!type.IsEnum()) throw Error.Argument("type", "Type {0} is not an enumeration", type.Name);
-
-            EnumMapping entry = null;
-
-            // Try finding a resource with the specified profile first
-            var success = _enumMappingsByType.TryGetValue(type, out entry);
-
-            if (success)
-                return entry;
-            else
-                return null;
         }
 
         public ClassMapping FindClassMappingForResource(string name, string profile = null)

@@ -15,11 +15,12 @@
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugNet40|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\Net40\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Net40\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,15 +29,17 @@
     <Prefer32Bit>false</Prefer32Bit>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNet40|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Net40\</OutputPath>
-    <DefineConstants>TRACE;RELEASE NET40</DefineConstants>
+    <BaseIntermediateOutputPath>obj\Release\Net40\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Net40\Hl7.Fhir.DSTU2.Specification.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -49,9 +52,9 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\Net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -75,6 +78,7 @@
     <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs">
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorModificationExtensions.cs" />

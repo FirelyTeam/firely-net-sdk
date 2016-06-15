@@ -20,21 +20,18 @@ namespace Hl7.Fhir.Serialization
 {
     public class XmlDomFhirReader : IFhirReader
     {
+        public const string BINARY_CONTENT_MEMBER_NAME = "content";
+
+        public bool DisallowXsiAttributesOnRoot { get; set; }
+
         XObject _current;
 
-        public XmlDomFhirReader(XmlReader reader)
+        // [WMR 20160421] Caller can safely dispose reader after calling this ctor
+        public XmlDomFhirReader(XmlReader reader, bool disallowXsiAttributesOnRoot = false)
         {
-            var settings = new XmlReaderSettings();
-            settings.IgnoreComments = true;
-            settings.IgnoreProcessingInstructions = true;
-            settings.IgnoreWhitespace = true;
-#if PORTABLE45
-            settings.DtdProcessing = DtdProcessing.Ignore;
-#else
-            settings.DtdProcessing = DtdProcessing.Parse; 
-#endif
+            DisallowXsiAttributesOnRoot = disallowXsiAttributesOnRoot;
 
-            var internalReader = XmlReader.Create(reader, settings);
+            var internalReader = SerializationUtil.WrapXmlReader(reader);
             XDocument doc;
 
             try
@@ -85,13 +82,13 @@ namespace Hl7.Fhir.Serialization
             foreach(var attr in rootElem.Attributes()) //.Where(xattr => xattr.Name.LocalName != "xmlns"))
             {
                 if (attr.IsNamespaceDeclaration) continue;      // skip xmlns declarations
-                if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !SerializationConfig.EnforceNoXsiAttributesOnRoot ) continue;   // skip xmlns:xsi declaration
-                if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !SerializationConfig.EnforceNoXsiAttributesOnRoot) continue;     // skip schemaLocation
+                if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !DisallowXsiAttributesOnRoot ) continue;   // skip xmlns:xsi declaration
+                if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !DisallowXsiAttributesOnRoot) continue;     // skip schemaLocation
 
                 if (attr.Name.NamespaceName == "")
                     result.Add(Tuple.Create(attr.Name.LocalName, (IFhirReader)new XmlDomFhirReader(attr)));
                 else
-                    throw Error.Format("Encountered unsupported attribute {0}", this, attr.Name);
+                    throw Error.Format("Encountered unsupported attribute {0}".FormatWith(attr.Name), this);
             }
                 
             foreach(var node in rootElem.Nodes())
@@ -99,7 +96,7 @@ namespace Hl7.Fhir.Serialization
                 if(node is XText)
                 {
                     // A nested text node (the content attribute of a Binary)
-                    result.Add(Tuple.Create(SerializationConfig.BINARY_CONTENT_MEMBER_NAME, (IFhirReader)new XmlDomFhirReader(node)));
+                    result.Add(Tuple.Create(BINARY_CONTENT_MEMBER_NAME, (IFhirReader)new XmlDomFhirReader(node)));
                 }
                 else if(node is XElement)
                 {
@@ -124,14 +121,15 @@ namespace Hl7.Fhir.Serialization
                             (IFhirReader)new XmlDomFhirReader(buildDivXText(elem))));
 
                     else
-                        throw Error.Format("Encountered element '{0}' from unsupported namespace '{1}'", this, elem.Name.LocalName, elem.Name.NamespaceName);
+                        throw Error.Format("Encountered element '{0}' from unsupported namespace '{1}'"
+                            .FormatWith(elem.Name.LocalName, elem.Name.NamespaceName), this);
                 }
                 else if(node is XComment)
                 {
                     result.Add(Tuple.Create("fhir_comments", (IFhirReader)new XmlDomFhirReader(node)));
                 }
                 else
-                    throw Error.Format("Encountered unexpected element member of type {0}", this, node.GetType().Name);
+                    throw Error.Format("Encountered unexpected element member of type {0}".FormatWith(node.GetType().Name), this);
             }
 
             return result;           
@@ -165,7 +163,7 @@ namespace Hl7.Fhir.Serialization
         }
 
 
-        public static IPostitionInfo GetLineInfo(XObject obj)
+        public static IPositionInfo GetLineInfo(XObject obj)
         {
             return new XmlDomFhirReader(obj);
         }

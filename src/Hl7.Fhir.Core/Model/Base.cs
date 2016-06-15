@@ -85,11 +85,8 @@ namespace Hl7.Fhir.Model
         }
 
 
-        public const string COMMENT_USERDATA_KEY = "$FHIR_COMMENTS";
-
-
         /// <summary>
-        /// Given names (not always 'first'). Includes middle names
+        /// A Comment recorded against this element in the FHIR Resource
         /// </summary>
         [FhirElement("fhir_comments", InSummary = false, Order = 5)]
         [Cardinality(Min = 0, Max = -1)]
@@ -102,7 +99,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.FhirString> _FhirCommentsElement;
 
         /// <summary>
-        /// Given names (not always 'first'). Includes middle names
+        /// A Comment recorded against this element in the FHIR Resource
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

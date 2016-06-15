@@ -16,6 +16,12 @@ namespace Hl7.Fhir.Support
 {
     internal static class StringExtensions
     {
+        public static string Shorten(this string me, int maxLength)
+        {
+            if (me.Length < maxLength) return me;
+            return me.Substring(0, maxLength - 3) + "...";
+        }
+
         public static string RemovePrefix(this string instance, string prefix)
         {
             if (instance == null) return null;
@@ -56,7 +62,7 @@ namespace Hl7.Fhir.Support
         {
             var parts = Regex.Split(value, separator + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")
                                 .Select(s => s.Trim());
-                               
+
             return parts.ToArray<string>();
         }
 
@@ -73,7 +79,7 @@ namespace Hl7.Fhir.Support
                     seenEscape = true;
                     continue;
                 }
-               
+
                 if (value[i] == separator && !seenEscape)
                 {
                     result.Add(word);
@@ -95,7 +101,7 @@ namespace Hl7.Fhir.Support
             return result.ToArray<string>();
         }
 
-        internal static Tuple<string,string> SplitLeft(this string text, char separator)
+        internal static Tuple<string, string> SplitLeft(this string text, char separator)
         {
             var pos = text.IndexOf(separator);
 

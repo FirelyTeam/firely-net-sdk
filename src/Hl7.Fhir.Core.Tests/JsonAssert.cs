@@ -27,44 +27,44 @@ namespace Hl7.Fhir.Tests
 
         public static void AreSame(string expected, string actual)
         {
-            JObject exp = FhirParser.JObjectFromJson(expected);
-            JObject act = FhirParser.JObjectFromJson(actual);
+            JObject exp = SerializationUtil.JObjectFromReader(SerializationUtil.JsonReaderFromJsonText(expected));
+            JObject act = SerializationUtil.JObjectFromReader(SerializationUtil.JsonReaderFromJsonText(actual));
 
             AreSame(exp, act);
         }
 
-        private static void areSame(JToken left, JToken right)
+        private static void areSame(JToken expected, JToken actual)
         {
-            if ((left.Type == JTokenType.Integer && right.Type == JTokenType.Float) ||
-                (left.Type == JTokenType.Float && right.Type == JTokenType.Integer))
+            if ((expected.Type == JTokenType.Integer && actual.Type == JTokenType.Float) ||
+                (expected.Type == JTokenType.Float && actual.Type == JTokenType.Integer))
             {
-                JValue leftVal = (JValue)left;
-                JValue rightVal = (JValue)right;
+                JValue leftVal = (JValue)expected;
+                JValue rightVal = (JValue)actual;
 
                 Assert.AreEqual(leftVal.ToString(), rightVal.ToString());
                 // Bug in json.net, will sometimes convert to integer instead of float
                 return;
             }
 
-            if (left.Type != right.Type)
-                throw new AssertFailedException("Token type is not the same at " + right.Path);
+            if (expected.Type != actual.Type)
+                throw new AssertFailedException("Token type is not the same at " + actual.Path);
 
-            if (left.Type == JTokenType.Array)
+            if (expected.Type == JTokenType.Array)
             {
-                var la = (JArray)left;
-                var ra = (JArray)right;
+                var la = (JArray)expected;
+                var ra = (JArray)actual;
 
                 if(la.Count != ra.Count)
-                    throw new AssertFailedException("Array size is not the same at " + right.Path);
+                    throw new AssertFailedException("Array size is not the same at " + actual.Path);
 
                 for(var i=0; i<la.Count; i++)
                     areSame(la[i],ra[i]);
             }
 
-            else if (left.Type == JTokenType.Object)
+            else if (expected.Type == JTokenType.Object)
             {
-                var lo = (JObject)left;
-                var ro = (JObject)right;
+                var lo = (JObject)expected;
+                var ro = (JObject)actual;
 
                 foreach (var lMember in lo)
                 {
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Tests
                     if (lMember.Value is JObject && ((JObject)lMember.Value).Count == 0) continue;
 
                     if (!ro.TryGetValue(lMember.Key, out rMember) || rMember == null)
-                        throw new AssertFailedException(String.Format("Expected member {0} not found in actual at " + left.Path, lMember.Key));
+                        throw new AssertFailedException(String.Format("Expected member '{0}' not found in actual at " + expected.Path, lMember.Key));
 
                     areSame(lMember.Value, rMember);
                 }
@@ -85,48 +85,38 @@ namespace Hl7.Fhir.Tests
                     JToken lMember;
 
                     if (!lo.TryGetValue(rMember.Key, out lMember))
-                        throw new AssertFailedException(String.Format("Actual has unexpected extra member {0} at " + right.Path, rMember.Key));
+                        throw new AssertFailedException(String.Format("Actual has unexpected extra member {0} at " + actual.Path, rMember.Key));
                 }
 
             }
 
-            else if (left.Type == JTokenType.String)
+            else if (expected.Type == JTokenType.String)
             {
-                var lValue = left.ToString();
-                var rValue = right.ToString();
+                var lValue = expected.ToString();
+                var rValue = actual.ToString();
 
                 if (lValue.TrimStart().StartsWith("<div"))
                 {
-                    // Correct incorrect examples
-                    lValue.Trim();
+                    // Don't check the narrative, namespaces are not correctly generated in DSTU2
 
-                    if (lValue.StartsWith("<div>"))
-                        lValue = "<div xmlns='http://www.w3.org/1999/xhtml'>" + lValue.Substring(5);
+                    //var leftDoc = SerializationUtil.XDocumentFromXmlText(lValue);
+                    //var rightDoc = SerializationUtil.XDocumentFromXmlText(rValue);
 
-                    var leftDoc = FhirParser.XDocumentFromXml(lValue);
-                    var rightDoc = FhirParser.XDocumentFromXml(rValue);
-
-                    XmlAssert.AreSame(leftDoc, rightDoc);
+                    //XmlAssert.AreSame(leftDoc, rightDoc);
                 }
                 else
                 {
-                    // Hack for timestamps
-                    if (lValue.EndsWith("+00:00")) lValue = lValue.Replace("+00:00", "Z");
-                    if (rValue.EndsWith("+00:00")) rValue = rValue.Replace("+00:00", "Z");
-                    if (lValue.Contains(".000+")) lValue = lValue.Replace(".000+", "+");
-                    if (rValue.Contains(".000+")) rValue = rValue.Replace(".000+", "+");
-
-                    Assert.AreEqual(lValue, rValue);
+                    XmlAssert.AssertAreTheSame(expected.Path, lValue, rValue);
                 }
             }
 
             else
             {
-                if (!JToken.DeepEquals(left, right))
-                    throw new AssertFailedException(String.Format("Values not the same at " + left.Path));
+                if (!JToken.DeepEquals(expected, actual))
+                    throw new AssertFailedException(String.Format("Values not the same at " + expected.Path));
             }
         }
 
-      
+  
     }
 }

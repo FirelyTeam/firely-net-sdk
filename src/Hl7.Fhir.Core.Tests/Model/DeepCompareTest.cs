@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
-            var p = (Patient)FhirParser.ParseResourceFromXml(xml);
+            var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
 
             Assert.IsTrue(p2.IsExactly(p));
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
-            var p = (Patient)FhirParser.ParseResourceFromXml(xml);
+            var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
 
             p2.ActiveElement.Value = !p2.ActiveElement.Value;
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Tests.Model
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
-            var p = (Patient)FhirParser.ParseResourceFromXml(xml);
+            var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
 
             var rel = (CodeableConcept)p.Contact[0].Relationship[0].DeepCopy();
@@ -70,5 +70,18 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsFalse(p2.IsExactly(p));
         }
 
+        [TestMethod]
+        public void CheckCompareCodeOfT()
+        {
+            var a = new Code<AdministrativeGender>(AdministrativeGender.Male);
+            var b = new Code<AdministrativeGender>(AdministrativeGender.Female);
+            var c = (Code<AdministrativeGender>)a.DeepCopy();
+
+            Assert.IsFalse(a.IsExactly(b));
+            Assert.IsFalse(a.Matches(b));
+            Assert.IsTrue(a.IsExactly(c));
+            Assert.IsTrue(a.Matches(c));
+        }
+        
     }
 }

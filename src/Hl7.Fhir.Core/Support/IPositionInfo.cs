@@ -14,7 +14,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Support
 {
-    public interface IPostitionInfo
+    public interface IPositionInfo
     {
         int LineNumber { get; }
         int LinePosition { get; }

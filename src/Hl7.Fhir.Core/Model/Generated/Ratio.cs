@@ -77,6 +77,7 @@ namespace Hl7.Fhir.Model
         
         private Quantity _Denominator;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Ratio;
@@ -120,7 +121,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }

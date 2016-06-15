@@ -7,14 +7,11 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using System.Reflection;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -35,10 +32,7 @@ namespace Hl7.Fhir.Serialization
 
             // Convert TO string (mostly Xml serialization, some additional schemes used)
             if (to == typeof(string))
-            {
                 return convertToXmlString(value);
-                // Include enum serialization here
-            }
 
             // Convert FROM string
             else if (value is string)
@@ -98,10 +92,7 @@ namespace Hl7.Fhir.Serialization
             if (value is Uri)
                 return ((Uri)value).ToString();
             if (value is Enum)
-            {
-                var attr = ((Enum)value).GetAttributeOnEnum<EnumLiteralAttribute>();
-                if (attr != null) return attr.Literal;
-            }
+                return ((Enum)value).GetLiteral();
 
             throw Error.NotSupported("Cannot convert {0} value '{1}' to string", value.GetType().Name, value);
         }
@@ -142,6 +133,14 @@ namespace Hl7.Fhir.Serialization
                 return XmlConvert.ToDateTimeOffset(value);
             if(typeof(System.Uri).IsAssignableFrom(to))
                 return new Uri(value, UriKind.RelativeOrAbsolute);
+            if (to.IsEnum())
+            {
+                var result = EnumUtility.ParseLiteral(value, to);
+                if(result == null)
+                    throw Error.NotSupported("String value '{0}' is not a known literal in enum '{1}'", value, to.Name);
+
+                return result;
+            }
 
             throw Error.NotSupported("Cannot convert string value '{0}' to a {1}", value, to.Name);
         }

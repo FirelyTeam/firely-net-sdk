@@ -38,7 +38,7 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Uuid
+    public partial class Uuid : IStringValue
     {
         public static bool IsValidValue(string value)
         {

@@ -18,28 +18,30 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>f6a6eb53</NuGetPackageImportStamp>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugNet40|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\Net40\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\Net40\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;PORTABLE45, Net40</DefineConstants>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>3016, 3015, 1591</NoWarn>
+    <NoWarn>3016,1591</NoWarn>
     <DocumentationFile>bin\Debug\Net40\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNet40|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\Net40\</OutputPath>
+    <BaseIntermediateOutputPath>obj\Release\Net40\</BaseIntermediateOutputPath>
     <DefineConstants>TRACE;RELEASE;Net40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>3016, 3015</NoWarn>
+    <NoWarn>3016,1591</NoWarn>
     <DocumentationFile>bin\Release\Net40\Hl7.Fhir.Core.xml</DocumentationFile>
-    <DefineConstants>RELEASE;TRACE</DefineConstants>
+    <DefineConstants>TRACE;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Net40\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
@@ -48,9 +50,9 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\Net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -66,6 +68,7 @@
     <Compile Include="DSTU1compatibility.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
+    <Compile Include="Introspection\EnumUtility.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />
     <Compile Include="Introspection\FhirEnumerationAttribute.cs" />
     <Compile Include="Introspection\FhirTypeAttribute.cs" />
@@ -533,6 +536,7 @@
     <Compile Include="Model\IExtendable.cs" />
     <Compile Include="Model\Initializers.cs" />
     <Compile Include="Model\Instant.cs" />
+    <Compile Include="Model\IValue.cs" />
     <Compile Include="Model\Markdown.cs" />
     <Compile Include="Model\ModelInfo.cs" />
     <Compile Include="Model\Oid.cs" />
@@ -545,7 +549,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Template-Bindings.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Time.cs" />
     <Compile Include="Model\UnsignedInt.cs" />
+    <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />
     <Compile Include="Rest\FhirClientOperations.cs" />
     <Compile Include="Rest\FhirClientSearch.cs" />
@@ -588,7 +594,6 @@
     <Compile Include="Serialization\DefaultModelFactory.cs" />
     <Compile Include="Serialization\DispatchingWriter.cs" />
     <Compile Include="Serialization\DispatchingReader.cs" />
-    <Compile Include="Introspection\EnumMapping.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Serialization\FhirParser.cs" />
     <Compile Include="Serialization\FhirSerializer.cs" />
@@ -596,6 +601,7 @@
     <Compile Include="Serialization\IFhirWriter.cs" />
     <Compile Include="Serialization\JsonTreeRewriter.cs" />
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
+    <Compile Include="Serialization\ParserSettings.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
@@ -621,9 +627,9 @@
     <Compile Include="Serialization\ResourceReader.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
     <Compile Include="Support\StringExtensions.cs" />
+    <Compile Include="Support\XObjectExtensions.cs" />
     <Compile Include="Validation\AllowedTypesAttribute.cs" />
     <Compile Include="Validation\CardinalityAttribute.cs" />
     <Compile Include="Validation\CodePatternAttribute.cs" />
@@ -639,7 +645,6 @@
     <Compile Include="Validation\UriPatternAttribute.cs" />
     <Compile Include="Validation\UuidPatternAttribute.cs" />
     <Compile Include="Validation\ValidationContextExtensions.cs" />
-    <Compile Include="Validation\ValidationContextFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

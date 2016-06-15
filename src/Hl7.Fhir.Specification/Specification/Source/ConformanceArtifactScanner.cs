@@ -70,13 +70,6 @@ namespace Hl7.Fhir.Specification.Source
             return valueAttr != null ? valueAttr.Value : null;
         }
 
-        private Lazy<EnumMapping> _resourceTypeMapping = new Lazy<EnumMapping>(() => EnumMapping.Create(typeof(ResourceType)));
-
-        private ResourceType stringNameToEnum(string name)
-        {
-            return (ResourceType)_resourceTypeMapping.Value.ParseLiteral(name);
-        }
-
         public IEnumerable<ConformanceInformation> ListConformanceResourceInformation()
         {
             var resources = StreamResources();
@@ -89,7 +82,7 @@ namespace Hl7.Fhir.Specification.Source
                             Name = getPrimitiveValueElement(res, "name"),
                             ValueSetSystem = getValueSetSystem(res),
                             Origin = _origin,
-                            Type = stringNameToEnum(res.Name.LocalName)
+                            Type = EnumUtility.ParseLiteral<ResourceType>(res.Name.LocalName).Value
                         });                       
         }
 
@@ -108,7 +101,7 @@ namespace Hl7.Fhir.Specification.Source
         // and yield the feed entries, so only one entry is in memory at a time
         internal IEnumerable<XElement> StreamResources()
         {
-            var reader = FhirParser.XmlReaderFromStream(_input);
+            var reader = SerializationUtil.XmlReaderFromStream(_input);
 
             var root = getRootName(reader);
 

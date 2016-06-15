@@ -18,6 +18,7 @@ using System.Reflection;
 
 namespace Hl7.Fhir.Validation
 {
+    [CLSCompliant(false)]
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     public class AllowedTypesAttribute : ValidationAttribute
     {

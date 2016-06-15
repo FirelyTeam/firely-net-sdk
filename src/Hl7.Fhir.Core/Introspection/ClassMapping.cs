@@ -41,6 +41,8 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         public bool IsResource { get; private set; }
 
+        public bool IsCodeOfT { get; private set; }
+
         /// <summary>
         /// PropertyMappings indexed by uppercase name for access speed
         /// </summary>
@@ -109,15 +111,18 @@ namespace Hl7.Fhir.Introspection
                 result.Profile = getProfile(type);
                 result.IsResource = IsFhirResource(type);
 
+                result.IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
+                                    ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>));
+
                 if (!result.IsResource && !String.IsNullOrEmpty(result.Profile))
-                    throw Error.Argument("type", "Type {0} is not a resource, so its FhirType attribute may not specify a profile", type.Name);
+                    throw Error.Argument("type", "Type {0} is not a resource, so its FhirType attribute may not specify a profile".FormatWith(type.Name));
 
                 inspectProperties(result);
 
                 return result;
             }
             else
-                throw Error.Argument("type", "Type {0} is not marked as a Fhir Resource or datatype using [FhirType]", type.Name);
+                throw Error.Argument("type", "Type {0} is not marked as a Fhir Resource or datatype using [FhirType]".FormatWith(type.Name));
         }
 
 
@@ -218,11 +223,11 @@ namespace Hl7.Fhir.Introspection
 
 #if PORTABLE45
 			if (type.GetTypeInfo().IsAbstract)
-				throw Error.Argument("type", "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype", type.Name);
 #else
 			if (type.IsAbstract)
-                throw Error.Argument("type", "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype", type.Name);
 #endif
+                throw Error.Argument("type", "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype".FormatWith(type.Name));
+
 
             // Open generic type definitions can never appear as roots of objects
             // to parse. In instances, they will either have been used in closed type definitions

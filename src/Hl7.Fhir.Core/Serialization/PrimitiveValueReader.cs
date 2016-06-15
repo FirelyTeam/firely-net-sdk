@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
         public PrimitiveValueReader(IFhirReader data)
         {
             _current = data;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
         }
 
 
@@ -41,18 +41,8 @@ namespace Hl7.Fhir.Serialization
             
             if (nativeType.IsEnum() && primitiveValue.GetType() == typeof(string))
             {
-                var enumMapping = _inspector.FindEnumMappingByType(nativeType);
-
-                if (enumMapping != null)
-                {
-                    var enumLiteral = (string)primitiveValue;
-                    if (enumMapping.ContainsLiteral(enumLiteral))
-                        return enumMapping.ParseLiteral((string)primitiveValue);
-                    else
-                        throw Error.Format("Literal {0} is not a valid value for enumeration {1}", _current, enumLiteral, enumMapping.Name);
-                }
-                else
-                    throw Error.Format("Cannot find an enumeration mapping for enum " + nativeType.Name, _current);
+                // Don't try to parse enums in the parser -> it's been moved to the Code<T> type
+                return primitiveValue;
             }
 
             try
