@@ -39,7 +39,7 @@ using System.Text.RegularExpressions;
 namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")]
-    public partial class Date
+    public partial class Date : IStringValue
     {
         public static Date Today()
         {

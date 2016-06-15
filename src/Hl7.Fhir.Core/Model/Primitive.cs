@@ -57,6 +57,10 @@ namespace Hl7.Fhir.Model
 
     public abstract class Primitive<T> : Primitive
     {
+        // [WMR 20160615] Cannot provide common generic Value property, as subclasses differ in their implementation
+        // e.g. Code<T> exposes T? Value where T : struct
+        // T Value { get; set; }
+        // => Instead, define and implement a generic interface IValue<T>
     }
 
 }

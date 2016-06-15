@@ -37,7 +37,7 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Instant
+    public partial class Instant : INullableValue<DateTimeOffset>
     {
         public static Instant FromLocalDateTime(int year, int month, int day,
                             int hour, int min, int sec, int milis = 0)
