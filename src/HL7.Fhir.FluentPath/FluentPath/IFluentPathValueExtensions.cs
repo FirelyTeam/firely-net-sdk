@@ -18,60 +18,134 @@ namespace Hl7.Fhir.FluentPath
 {
     public static class IFluentPathValueExtensions
     {
-        public static Int64 AsInteger(this IFluentPathValue me)
+        internal static T GetValue<T>(this IFluentPathValue val, string name)
         {
-            if (me.Value == null) throw Error.ArgumentNull("me");
-            return (Int64)me.Value;
-        }
+            if (val == null) throw Error.ArgumentNull(name);
+            if (val.Value == null) throw Error.ArgumentNull(name + ".Value");
+            if (!(val is T)) throw Error.Argument(name + " must be of type " + typeof(T).Name);
 
-        public static decimal AsDecimal(this IFluentPathValue me)
-        {
-            if (me.Value == null) throw Error.ArgumentNull("me");
-            return (decimal)me.Value;
-        }
-
-        public static bool AsBoolean(this IFluentPathValue me)
-        {
-            if (me.Value == null) throw Error.ArgumentNull("me");
-            return (bool)me.Value;
-        }
-
-        /// <summary>
-        /// Cast this value to a string (not ToString, consider AsStringRepresentation if you want that)
-        /// </summary>
-        /// <param name="me"></param>
-        /// <returns></returns>
-        public static string AsString(this IFluentPathValue me)
-        {
-            return (string)me.Value;
-        }
-
-        public static PartialDateTime AsDateTime(this IFluentPathValue me)
-        {
-            return (PartialDateTime)me.Value;
+            return (T)val.Value;
         }
 
 
-        public static Time AsTime(this IFluentPathValue me)
+        // FluentPath toInteger() function
+        public static IFluentPathValue ToInteger(this IFluentPathValue focus)
         {
-            return (Time)me.Value;
+            var val = focus.GetValue<object>("focus");
+
+            if (val is long)
+                return new ConstantValue(val);
+            else if (val is string)
+            {
+                long result;
+                if (Int64.TryParse((string)val, out result))
+                    return new ConstantValue(result);
+            }
+            else if(val is bool)
+            {
+                return new ConstantValue((bool)val ? 1 : 0);
+            }
+
+            return null;
         }
 
-        /// <summary>
-        /// A String representation of the entity that will convert whatever type it is into a string
-        /// (unlike the AsString, which just cases to a string)
-        /// </summary>
-        /// <param name="me"></param>
-        /// <returns></returns>
-        public static string AsStringRepresentation(this IFluentPathValue me)
-        {
-            if (me.Value == null) return null;
 
-            if (me.Value is PartialDateTime || me.Value is Time)
-                return me.Value.ToString();
+        // FluentPath toDecimal() function
+        public static IFluentPathValue ToDecimal(this IFluentPathValue focus)
+        {
+            var val = focus.GetValue<object>("focus");
+
+            if (val is decimal)
+                return new ConstantValue(val);
+            else if (val is string)
+            {
+                decimal result;
+                if (Decimal.TryParse((string)val, out result))
+                    return new ConstantValue(result);
+            }
+            else if (val is bool)
+            {
+                return new ConstantValue((bool)val ? 1m : 0m);
+            }
+
+            return null;
+        }
+
+
+        // FluentPath toString() function
+        public static IFluentPathValue ToString(this IFluentPathValue focus)
+        {
+            var val = focus.GetValue<object>("focus");
+
+            if (val is string)
+                return new ConstantValue(val);
+            else if (val is long)
+                return new ConstantValue(XmlConvert.ToString((long)val));
+            else if (val is decimal)
+                return new ConstantValue(XmlConvert.ToString((decimal)val));
+            else if (val is bool)
+                return new ConstantValue((bool)val ? "true" : "false");
+
+            return null;
+        }
+
+
+        //TODO: Implement latest STU3 decisions around empty strings, start > length etc
+        public static IFluentPathValue Substring(this IFluentPathValue focus, long start, long? length)
+        {
+            var str = focus.GetValue<string>("focus");
+
+            if (length.HasValue)
+                return new ConstantValue(str.Substring((int)start, (int)length.Value));
             else
-                return XmlConvert.ToString((dynamic)me.Value);
+                return new ConstantValue(str.Substring((int)start));
         }
+
+
+        public static IFluentPathValue StartsWith(this IFluentPathValue focus, string prefix)
+        {
+            var str = focus.GetValue<string>("focus");
+
+            return new ConstantValue(str.StartsWith(prefix));
+        }
+
+
+        public static IFluentPathValue Or(this IFluentPathValue left, IFluentPathValue right)
+        {
+            var lVal = left.GetValue<bool>("left");
+            var rVal = right.GetValue<bool>("right");
+
+            return new ConstantValue(lVal || rVal);
+        }
+
+        public static IFluentPathValue And(this IFluentPathValue left, IFluentPathValue right)
+        {
+            var lVal = left.GetValue<bool>("left");
+            var rVal = right.GetValue<bool>("right");
+
+            return new ConstantValue(lVal && rVal);
+
+        }
+
+
+        public static IFluentPathValue Xor(this IFluentPathValue left, IFluentPathValue right)
+        {
+            var lVal = left.GetValue<bool>("left");
+            var rVal = right.GetValue<bool>("right");
+
+            return new ConstantValue(lVal ^ rVal);
+        }
+
+
+        public static IFluentPathValue Implies(this IFluentPathValue left, IFluentPathValue right)
+        {
+            var lVal = left.GetValue<bool>("left");
+            var rVal = right.GetValue<bool>("right");
+
+            return new ConstantValue(!lVal || rVal);
+        }
+
+
 
         public static IFluentPathValue Add(this IFluentPathValue left, IFluentPathValue right)
         {
@@ -103,49 +177,40 @@ namespace Hl7.Fhir.FluentPath
             return new ConstantValue(f(left.Value, right.Value));
         }
 
-        public static bool IsEqualTo(this IFluentPathValue left, IFluentPathValue right)
+        public static IFluentPathValue IsEqualTo(this IFluentPathValue left, IFluentPathValue right)
         {
-            if (!Object.Equals(left.Value, right.Value)) return false;
+            if (!Object.Equals(left.Value, right.Value)) return new ConstantValue(false);
 
-            return left.Children().IsEqualTo(right.Children()).AsBoolean();
+            return left.Children().IsEqualTo(right.Children());
         }
 
         public static bool IsEquivalentTo(this IFluentPathValue left, IFluentPathValue right)
         {
             // Exception: In equality comparisons, the "id" elements do not need to be equal
-            if (left is IFluentPathElement && right is IFluentPathElement)
-            {
-                var lElem = (IFluentPathElement)left;
-                var rElem = (IFluentPathElement)right;
-
-              //  if (lElem.Name == "id" && rElem.Name == "id")
-                    return true;
-            }
-
             throw new NotImplementedException();
         }
 
         public static IFluentPathValue GreaterOrEqual(this IFluentPathValue left, IFluentPathValue right)
         {
-            return new ConstantValue(left.IsEqualTo(right) || left.compare(Operator.GreaterThan, right));
+            return left.IsEqualTo(right).Or(left.compare(Operator.GreaterThan, right));
         }
 
         public static IFluentPathValue LessOrEqual(this IFluentPathValue left, IFluentPathValue right)
         {
-            return new ConstantValue(left.IsEqualTo(right) || left.compare(Operator.LessThan, right));
+            return left.IsEqualTo(right).Or(left.compare(Operator.LessThan, right));
         }
 
         public static IFluentPathValue LessThan(this IFluentPathValue left, IFluentPathValue right)
         {
-            return new ConstantValue(left.compare(Operator.LessThan, right));
+            return left.compare(Operator.LessThan, right);
         }
 
         public static IFluentPathValue GreaterThan(this IFluentPathValue left, IFluentPathValue right)
         {
-            return new ConstantValue(left.compare(Operator.GreaterThan, right));
+            return left.compare(Operator.GreaterThan, right);
         }
 
-        private static bool compare(this IFluentPathValue left, Operator comp, IFluentPathValue right)
+        private static IFluentPathValue compare(this IFluentPathValue left, Operator comp, IFluentPathValue right)
         {
             if (left.Value == null || right.Value == null)
                 throw Error.InvalidOperation("'{0)' requires both operands to be values".FormatWith(comp));
@@ -154,9 +219,9 @@ namespace Hl7.Fhir.FluentPath
 
             if (left.Value is string)
             {
-                var result = String.Compare(left.AsString(), right.AsString());
-                if (comp == Operator.LessThan) return result == -1;
-                if (comp == Operator.GreaterThan) return result == 1;
+                var result = String.Compare((string)left.Value, (string)right.Value);
+                if (comp == Operator.LessThan) return new ConstantValue(result == -1);
+                if (comp == Operator.GreaterThan) return new ConstantValue(result == 1);
             }
             else
             {

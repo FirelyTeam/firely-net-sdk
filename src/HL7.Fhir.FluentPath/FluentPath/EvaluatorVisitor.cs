@@ -95,6 +95,15 @@ namespace HL7.Fhir.FluentPath.FluentPath
                     var focusNodes = focus(ctx);
                     var argumentNodes = arguments.Select(arg => arg(ctx)).ToList();
 
+                    // Most operations use null propagation (if the input or arguments are empty, return empty
+                    // so by default, we handle this for the 
+                    //if (binding.AutoNullPropagation)
+                    //{
+                    //    if (!focusNodes.Any()) return FhirValueList.Empty();
+                    //    if (arguments.Any(arg => !arg.Any())) return FhirValueList.Empty();
+                    //}
+
+
                     ctx.FocusStack.Push(focusNodes);
 
                     return binding.Function(focusNodes, argumentNodes);

@@ -31,30 +31,6 @@ namespace Hl7.Fhir.FluentPath
             return focus.JustValues().Single().Value;
         }
 
-        public static long AsInteger(this IEnumerable<IFluentPathValue> focus)
-        {
-            return focus.Single().AsInteger();
-        }
-
-        public static decimal AsDecimal(this IEnumerable<IFluentPathValue> focus)
-        {
-            return focus.Single().AsDecimal();
-        }
-
-        public static bool AsBoolean(this IEnumerable<IFluentPathValue> focus)
-        {
-            return focus.Single().AsBoolean();
-        }
-
-        public static string AsString(this IEnumerable<IFluentPathValue> focus)
-        {
-            return focus.Single().AsString();
-        }
-
-        public static PartialDateTime AsDateTime(this IEnumerable<IFluentPathValue> focus)
-        {
-            return focus.Single().AsDateTime();
-        }
 
         private static bool booleanEval(this IEnumerable<IFluentPathValue> focus)
         {
@@ -65,9 +41,9 @@ namespace Hl7.Fhir.FluentPath
                 result = false;
 
             // A single result that's a boolean should be interpreted as a boolean
-            else if (focus.JustValues().Count() == 1 && focus.JustValues().Single().Value is Boolean)
+            else if (focus.Count() == 1 && focus.Single().Value is bool)
             {
-                return focus.Single().AsBoolean();
+                return (bool)focus.Single().Value;
             }
 
             // Otherwise, we have "some" content, which we'll consider "true"
@@ -77,13 +53,11 @@ namespace Hl7.Fhir.FluentPath
             return result;
         }
 
-        public static IEnumerable<IFluentPathValue> BooleanEval(this IEnumerable<IFluentPathValue> focus)
+        public static IFluentPathValue BooleanEval(this IEnumerable<IFluentPathValue> focus)
         {
-            if (focus.Any())
-                return FhirValueList.Create(focus.booleanEval());
-            else
-                return FhirValueList.Empty();               
+            return new ConstantValue(focus.booleanEval());
         }
+
         public static IEnumerable<IFluentPathValue> IsEmpty(this IEnumerable<IFluentPathValue> focus)
         {
             return FhirValueList.Create(!focus.Any());
@@ -102,26 +76,6 @@ namespace Hl7.Fhir.FluentPath
             return FhirValueList.Create(focus.Any());
         }
 
-
-        public static IEnumerable<IFluentPathValue> Or(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
-        {
-            return FhirValueList.Create(left.booleanEval() || right.booleanEval());
-        }
-
-        public static IEnumerable<IFluentPathValue> And(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
-        {
-            return FhirValueList.Create(left.booleanEval() && right.booleanEval());
-        }
-
-        public static IEnumerable<IFluentPathValue> Xor(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
-        {
-            return FhirValueList.Create(left.booleanEval() ^ right.booleanEval());
-        }
-
-        public static IEnumerable<IFluentPathValue> Implies(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
-        {
-            return FhirValueList.Create(!left.booleanEval() || right.booleanEval());
-        }
 
         public static IEnumerable<IFluentPathValue> Item(this IEnumerable<IFluentPathValue> focus, int index)
         {
@@ -164,50 +118,8 @@ namespace Hl7.Fhir.FluentPath
             return FhirValueList.Create(focus.Count());
         }
 
-        public static IEnumerable<IFluentPathValue> IntegerEval(this IEnumerable<IFluentPathValue> focus)
-        {
-            if (focus.JustValues().Count() == 1)
-            {
-                var val = focus.Single().Value;
-                if(val != null)
-                {
-                    if (val is long) return FhirValueList.Create((long)val);
-                    //if (val is decimal) return (Int64)Math.Round((decimal)val);
-                    if (val is string)
-                    {
-                        long result;
-                        if (Int64.TryParse((string)val, out result))
-                            return FhirValueList.Create(result);
-                    }
 
-                }
-            }
-
-            return FhirValueList.Empty();
-        }
-
-        public static IEnumerable<IFluentPathValue> Substring(this IEnumerable<IFluentPathValue> focus, long start, long? length)
-        {
-            if(focus.Count() == 1)
-            {
-                if (focus.First().Value != null)
-                {
-                    var str = focus.First().AsStringRepresentation();
-
-                    if (length.HasValue)
-                        return FhirValueList.Create(str.Substring((int)start, (int)length.Value));
-                    else
-                        return FhirValueList.Create(str.Substring((int)start));
-                }
-            }
-
-            return FhirValueList.Empty();
-        }
-
-        public static IEnumerable<IFluentPathValue> StartingWith(this IEnumerable<IFluentPathValue> focus, string prefix)
-        {
-            return focus.JustValues().Where(value => value.AsStringRepresentation().StartsWith(prefix));
-        }
+      
 
         //public static IEnumerable<IFluentPathElement> Resolve(this IEnumerable<IFluentPathValue> focus, FhirClient client)
         //{
@@ -238,16 +150,11 @@ namespace Hl7.Fhir.FluentPath
         //    }
         //}
 
-        public static IEnumerable<IFluentPathValue> MaxLength(this IEnumerable<IFluentPathValue> focus)
-        {
-            return FhirValueList.Create( focus.JustValues()
-                .Aggregate(0, (val, item) => Math.Max(item.AsStringRepresentation().Length, val)) );
-        }
 
-        public static IEnumerable<IFluentPathValue> SubsetOf(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
-        {
-            return left.All(l => right.Any(r => l.IsEqualTo(r)));
-        }
+        //public static IEnumerable<IFluentPathValue> SubsetOf(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
+        //{
+        //    return left.All(l => right.Any(r => l.IsEqualTo(r)));
+        //}
 
 
         public static IEnumerable<IFluentPathValue> Extension(this IEnumerable<IFluentPathValue> focus, string url)
@@ -291,13 +198,13 @@ namespace Hl7.Fhir.FluentPath
             return focus.SelectMany(node => node.Descendants());
         }
 
-        public static IEnumerable<IFluentPathValue> IsEqualTo(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
+        public static IFluentPathValue IsEqualTo(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
         {
-            if (!left.Any() || !right.Any()) return FhirValueList.Empty();
+            if (!left.Any() || !right.Any()) return null;
 
-            if (left.Count() != right.Count()) return FhirValueList.Create(false);
+            if (left.Count() != right.Count()) return new ConstantValue(false);
 
-            return FhirValueList.Create(left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x));
+            return new ConstantValue(left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x));
         }
 
         public static IEnumerable<IFluentPathValue> IsEqualTo(this IEnumerable<IFluentPathValue> left, object value)
@@ -342,7 +249,7 @@ namespace Hl7.Fhir.FluentPath
         public static IEnumerable<IFluentPathValue> Add(this IEnumerable<IFluentPathValue> left, IEnumerable<IFluentPathValue> right)
         {
             if (!left.Any() || !right.Any()) yield break;
-                    .
+                    
             if (left.Count() == 1 && right.Count() == 1)
                 yield return left.Single().Add(right.Single());
         }
@@ -427,7 +334,8 @@ namespace Hl7.Fhir.FluentPath
         {
             public bool Equals(IFluentPathValue x, IFluentPathValue y)
             {
-                return x.IsEqualTo(y);
+                var res = x.IsEqualTo(y);
+                return res != null && res.Value is bool &&  ((bool)res.Value) == true;
             }
 
             public int GetHashCode(IFluentPathValue value)

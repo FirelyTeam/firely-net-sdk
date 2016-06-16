@@ -120,34 +120,37 @@ namespace Hl7.Fhir.FluentPath
         public ArgCountChecker ArgCountCheckers { get; private set; }
 
         public IEnumerable<ArgumentChecker> ArgumentCheckers { get; private set; }
+
+        public bool AutoNullPropagation { get; private set; }
        
         public delegate void ArgCountChecker(FunctionCallExpression func);
         public delegate void ArgumentChecker(Expression argument);
 
         static Binding()
         {
-            add("not", (f, _) => f.Not(), None());
-            add("empty", (f, _) => f.IsEmpty(), None());
-            add("exists", (f, _) => f.Exists(), None());
-            add("builtin.children", (f, a) => f.Children(a[0].AsString()), Exactly(1), OfType("name", TypeInfo.String));
-            add("count", (f, _) => f.CountItems(), None());
-            add("builtin.=", (f, a) => f.IsEqualTo(a[0]), Exactly(1));
-            add("builtin.+", (f, a) => f.Add(a[0]), Exactly(1));
+            //add("not", (f, _) => f.Not(), None());
+            //add("empty", (f, _) => f.IsEmpty(), None());
+            //add("exists", (f, _) => f.Exists(), None());
+            //add("builtin.children", (f, a) => f.Children(a[0].AsString()), Exactly(1), OfType("name", TypeInfo.String));
+            //add("count", (f, _) => f.CountItems(), None());
+            ////add("=", Exactly(1) && Args(TypeInfo.Decimal, TypeInfo.Decimal), (f, a) => Operators.IsEqualTo(a[0]), Exactly(1));
+            //add("+", (f, a) => f.Add(a[0]), Exactly(1));
         }
 
 
         private static void add(string name, Invokee func, ArgCountChecker countChecker, params ArgumentChecker[] checkers)
         {
-            _functions.Add(name, new Binding(name, func, countChecker, checkers));
+            _functions.Add(name, new Binding(name, func, countChecker, checkers, autoNullPropagation: true));
         }
 
 
-        private Binding(string name, Invokee function, ArgCountChecker countChecker, params ArgumentChecker[] checkers)
+        private Binding(string name, Invokee function, ArgCountChecker countChecker, ArgumentChecker[] checkers, bool autoNullPropagation)
         {
             Name = name;
             Function = function;
             ArgCountCheckers = countChecker; 
             ArgumentCheckers = checkers;
+            AutoNullPropagation = autoNullPropagation;
         }
         
       
