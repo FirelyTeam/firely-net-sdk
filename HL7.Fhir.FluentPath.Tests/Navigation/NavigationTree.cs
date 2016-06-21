@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Navigation
         /// <summary>Indexer property. Returns a sequence of child nodes by name.</summary>
         /// <param name="name">An node name.</param>
         /// <returns>An <see cref="IEnumerable{T}"/> sequence.</returns>
-        public IEnumerable<T> this[string name] { get { return Self.Children(name); } }
+        public IEnumerable<T> this[string name] { get { return Self.LinkedChildren(name); } }
 
         /// <summary>Indexer property. Returns a sequence of descendant nodes by path.</summary>
         /// <param name="names">A sequence of node names describing a node path relative to the current node.</param>

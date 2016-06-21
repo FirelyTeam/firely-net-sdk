@@ -18,19 +18,19 @@ namespace Hl7.Fhir.FluentPath
 {
     public static class IFluentPathValueExtensions
     {
-        public static Int64 AsInteger(this IFluentPathValue me)
+        public static Int64 AsInteger(this IValueProvider me)
         {
             if (me.Value == null) throw Error.ArgumentNull("me");
             return (Int64)me.Value;
         }
 
-        public static decimal AsDecimal(this IFluentPathValue me)
+        public static decimal AsDecimal(this IValueProvider me)
         {
             if (me.Value == null) throw Error.ArgumentNull("me");
             return (decimal)me.Value;
         }
 
-        public static bool AsBoolean(this IFluentPathValue me)
+        public static bool AsBoolean(this IValueProvider me)
         {
             if (me.Value == null) throw Error.ArgumentNull("me");
             return (bool)me.Value;
@@ -41,18 +41,18 @@ namespace Hl7.Fhir.FluentPath
         /// </summary>
         /// <param name="me"></param>
         /// <returns></returns>
-        public static string AsString(this IFluentPathValue me)
+        public static string AsString(this IValueProvider me)
         {
             return (string)me.Value;
         }
 
-        public static PartialDateTime AsDateTime(this IFluentPathValue me)
+        public static PartialDateTime AsDateTime(this IValueProvider me)
         {
             return (PartialDateTime)me.Value;
         }
 
 
-        public static Time AsTime(this IFluentPathValue me)
+        public static Time AsTime(this IValueProvider me)
         {
             return (Time)me.Value;
         }
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.FluentPath
         /// </summary>
         /// <param name="me"></param>
         /// <returns></returns>
-        public static string AsStringRepresentation(this IFluentPathValue me)
+        public static string AsStringRepresentation(this IValueProvider me)
         {
             if (me.Value == null) return null;
 
@@ -73,27 +73,27 @@ namespace Hl7.Fhir.FluentPath
                 return XmlConvert.ToString((dynamic)me.Value);
         }
 
-        public static IFluentPathValue Add(this IFluentPathValue left, IFluentPathValue right)
+        public static IValueProvider Add(this IValueProvider left, IValueProvider right)
         {
             return left.math((a,b) => a+b, right);
         }
 
-        public static IFluentPathValue Sub(this IFluentPathValue left, IFluentPathValue right)
+        public static IValueProvider Sub(this IValueProvider left, IValueProvider right)
         {
             return left.math((a,b) => a-b, right);
         }
 
-        public static IFluentPathValue Mul(this IFluentPathValue left, IFluentPathValue right)
+        public static IValueProvider Mul(this IValueProvider left, IValueProvider right)
         {
             return left.math((a,b) => a*b, right);
         }
 
-        public static IFluentPathValue Div(this IFluentPathValue left, IFluentPathValue right)
+        public static IValueProvider Div(this IValueProvider left, IValueProvider right)
         {
             return left.math((a,b) => a/b, right);
         }
 
-        private static IFluentPathValue math(this IFluentPathValue left, Func<dynamic,dynamic,object> f, IFluentPathValue right)
+        private static IValueProvider math(this IValueProvider left, Func<dynamic,dynamic,object> f, IValueProvider right)
         {
             if (left.Value == null || right.Value == null)
                 throw Error.InvalidOperation("Operands must both be values");
@@ -103,20 +103,20 @@ namespace Hl7.Fhir.FluentPath
             return new ConstantValue(f(left.Value, right.Value));
         }
 
-        public static bool IsEqualTo(this IFluentPathValue left, IFluentPathValue right)
+        public static bool IsEqualTo(this IValueProvider left, IValueProvider right)
         {
             if (!Object.Equals(left.Value, right.Value)) return false;
 
             return left.Children().IsEqualTo(right.Children()).AsBoolean();
         }
 
-        public static bool IsEquivalentTo(this IFluentPathValue left, IFluentPathValue right)
+        public static bool IsEquivalentTo(this IValueProvider left, IValueProvider right)
         {
             // Exception: In equality comparisons, the "id" elements do not need to be equal
-            if (left is IFluentPathElement && right is IFluentPathElement)
+            if (left is IElementNavigator && right is IElementNavigator)
             {
-                var lElem = (IFluentPathElement)left;
-                var rElem = (IFluentPathElement)right;
+                var lElem = (IElementNavigator)left;
+                var rElem = (IElementNavigator)right;
 
               //  if (lElem.Name == "id" && rElem.Name == "id")
                     return true;
@@ -125,27 +125,27 @@ namespace Hl7.Fhir.FluentPath
             throw new NotImplementedException();
         }
 
-        public static IFluentPathValue GreaterOrEqual(this IFluentPathValue left, IFluentPathValue right)
+        public static IValueProvider GreaterOrEqual(this IValueProvider left, IValueProvider right)
         {
             return new ConstantValue(left.IsEqualTo(right) || left.compare(Operator.GreaterThan, right));
         }
 
-        public static IFluentPathValue LessOrEqual(this IFluentPathValue left, IFluentPathValue right)
+        public static IValueProvider LessOrEqual(this IValueProvider left, IValueProvider right)
         {
             return new ConstantValue(left.IsEqualTo(right) || left.compare(Operator.LessThan, right));
         }
 
-        public static IFluentPathValue LessThan(this IFluentPathValue left, IFluentPathValue right)
+        public static IValueProvider LessThan(this IValueProvider left, IValueProvider right)
         {
             return new ConstantValue(left.compare(Operator.LessThan, right));
         }
 
-        public static IFluentPathValue GreaterThan(this IFluentPathValue left, IFluentPathValue right)
+        public static IValueProvider GreaterThan(this IValueProvider left, IValueProvider right)
         {
             return new ConstantValue(left.compare(Operator.GreaterThan, right));
         }
 
-        private static bool compare(this IFluentPathValue left, Operator comp, IFluentPathValue right)
+        private static bool compare(this IValueProvider left, Operator comp, IValueProvider right)
         {
             if (left.Value == null || right.Value == null)
                 throw Error.InvalidOperation("'{0)' requires both operands to be values".FormatWith(comp));

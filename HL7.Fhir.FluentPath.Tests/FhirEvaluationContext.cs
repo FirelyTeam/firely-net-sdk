@@ -5,14 +5,14 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Hl7.Fhir.Navigation;
 
 namespace Hl7.Fhir.FluentPath
 {
 
     public class FhirEvaluationContext : BaseEvaluationContext
     {
-        IFluentPathElement OriginalResource { get; }
+        IElementNavigator OriginalResource { get; }
 
         public FhirEvaluationContext()
         {
@@ -22,11 +22,11 @@ namespace Hl7.Fhir.FluentPath
         {
         }
 
-        public FhirEvaluationContext(IFluentPathElement originalResource) : this(null, originalResource)
+        public FhirEvaluationContext(IElementNavigator originalResource) : this(null, originalResource)
         {
         }
 
-        public FhirEvaluationContext(FhirClient client, IFluentPathElement originalResource)
+        public FhirEvaluationContext(FhirClient client, IElementNavigator originalResource)
         {
             FhirClient = client;
             OriginalResource = originalResource;
@@ -35,7 +35,7 @@ namespace Hl7.Fhir.FluentPath
 
         FhirClient FhirClient { get; set; }
 
-        public override IEnumerable<IFluentPathValue> InvokeExternalFunction(string name, IEnumerable<IFluentPathValue> focus, IEnumerable<IEnumerable<IFluentPathValue>> parameters)
+        public override IEnumerable<IValueProvider> InvokeExternalFunction(string name, IEnumerable<IValueProvider> focus, IEnumerable<IEnumerable<IValueProvider>> parameters)
         {
             if(name == "resolve")
             {
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.FluentPath
         }
 
 
-        public override IEnumerable<IFluentPathValue> ResolveValue(string name)
+        public override IEnumerable<IValueProvider> ResolveValue(string name)
         {
             var baseValue = base.ResolveValue(name);
             if (baseValue != null) return baseValue;
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.FluentPath
             return null;
         }
 
-        public virtual IFluentPathElement ResolveResource(string url)
+        public virtual IElementNavigator ResolveResource(string url)
         {
             if (FhirClient == null)
                 throw Error.InvalidOperation($"The EvaluationContext does not have a FhirClient to use to resolve url '{url}'");
@@ -68,7 +68,8 @@ namespace Hl7.Fhir.FluentPath
                 if (resource == null) return null;
 
                 var xml = FhirSerializer.SerializeResourceToXml(resource);
-                return TreeConstructor.FromXml(xml);
+                var tree = TreeConstructor.FromXml(xml);
+                return new TreeNavigator(tree);
             }
             catch (Exception e)
             {

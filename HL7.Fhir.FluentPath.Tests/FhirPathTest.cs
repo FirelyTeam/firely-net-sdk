@@ -13,6 +13,8 @@ using System.Linq;
 using Sprache;
 using Hl7.Fhir.FluentPath;
 using HL7.Fhir.FluentPath.FluentPath.Expressions;
+using Hl7.Fhir.FluentPath.InstanceTree;
+using Hl7.Fhir.Navigation;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -23,13 +25,15 @@ namespace Hl7.Fhir.Tests.FhirPath
     public class FhirPathTest
 #endif
     {
-        IFluentPathElement tree;
+        FhirInstanceTree tree;
+        IElementNavigator navigator;
 
         [TestInitialize]
         public void Setup()
         {
             var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
-            tree = Fhir.FluentPath.InstanceTree.TreeConstructor.FromXml(tpXml);
+            tree = TreeConstructor.FromXml(tpXml);
+            navigator = new TreeNavigator(tree);
         }
 
         [TestMethod, TestCategory("FhirPath")]
@@ -90,19 +94,19 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestNavigation()
         {
-            var values = tree;
-
-            var result = values.Children("Patient").Children("identifier").Children("use");
-            Assert.AreEqual(2, result.Count());
+            var values = navigator;
+            
+            var result = values.EnumerateChildrenByName("Patient").EnumerateChildrenByName("identifier").EnumerateChildrenByName("use");
+            Assert.AreEqual(2, result.Count()); 
             Assert.AreEqual("usual", result.First().AsString());
         }
 
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpression()
         {
-            var values = tree;
+            var values = navigator;
 
-            var result = values.Children("Patient").Children("identifier")
+            var result = values.EnumerateChildrenByName("Patient").EnumerateChildrenByName("identifier")
                 .Where(ctx => ctx.Children("use").IsEqualTo(FhirValueList.Create("official"))).IsEmpty().Not();
 
             Assert.AreEqual(true, result.AsBoolean());

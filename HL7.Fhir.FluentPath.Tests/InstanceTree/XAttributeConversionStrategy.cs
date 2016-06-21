@@ -16,7 +16,7 @@ namespace Hl7.Fhir.FluentPath.InstanceTree
             var attr = (XAttribute)docNode;
 
             var newNodeName = attr.Name.LocalName;
-            var result = parent.AddLastChild(newNodeName, (IFluentPathValue)new UntypedValue(attr.Value));
+            var result = parent.AddLastChild(newNodeName, (IValueProvider)new UntypedValue(attr.Value));
             result.AddAnnotation(new XmlRenderHints() { IsXmlAttribute = true });
             result.AddAnnotation(docNode);
             return result;

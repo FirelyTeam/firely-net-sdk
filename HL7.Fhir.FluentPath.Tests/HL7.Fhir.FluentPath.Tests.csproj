@@ -99,6 +99,7 @@
     <Compile Include="Navigation\TreeBuilderExtensions.cs" />
     <Compile Include="Navigation\TreeBuilderFactoryExtensions.cs" />
     <Compile Include="Navigation\TreeIterators.cs" />
+    <Compile Include="Navigation\TreeNavigator.cs" />
     <Compile Include="Navigation\ValueNavigationTree.cs" />
     <Compile Include="Navigation\VariantNavigationTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

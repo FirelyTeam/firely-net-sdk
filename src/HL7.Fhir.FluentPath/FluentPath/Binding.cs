@@ -151,7 +151,7 @@ namespace Hl7.Fhir.FluentPath
         }
         
       
-        public delegate IEnumerable<IFluentPathValue> Invokee(IEnumerable<IFluentPathValue> focus, IList<IEnumerable<IFluentPathValue>> arguments);
+        public delegate IEnumerable<IValueProvider> Invokee(IEnumerable<IValueProvider> focus, IList<IEnumerable<IValueProvider>> arguments);
 
 
         public void Validate(FunctionCallExpression expression)

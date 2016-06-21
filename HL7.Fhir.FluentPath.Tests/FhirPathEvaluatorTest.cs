@@ -15,6 +15,7 @@ using System.Diagnostics;
 using Hl7.Fhir.FluentPath.InstanceTree;
 using Hl7.Fhir.Rest;
 using HL7.Fhir.FluentPath.FluentPath;
+using Hl7.Fhir.Navigation;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -25,13 +26,15 @@ namespace Hl7.Fhir.Tests.FhirPath
     public class FhirPathEvaluatorTest
 #endif
     {
-        IFluentPathElement tree;
+        FhirInstanceTree tree;
+        IElementNavigator navigator;
 
         [TestInitialize]
         public void Setup()
         {
             var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
             tree = TreeConstructor.FromXml(tpXml);
+            navigator = new TreeNavigator(tree);
         }
 
 
@@ -46,11 +49,11 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestForMe()
         {
-            Assert.IsTrue(PathExpression.IsTrue(@"{}.empty()", tree));
-            Assert.IsTrue(PathExpression.IsTrue(@"1.empty().not()", tree));
+            Assert.IsTrue(PathExpression.IsTrue(@"{}.empty()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"1.empty().not()", navigator));
 
-            Assert.AreEqual(2L,PathExpression.Scalar(@"Patient.identifier.count()", tree));
-            Assert.IsTrue(PathExpression.IsTrue(@"Patient.identifier.count() = 2", tree));
+            Assert.AreEqual(2L,PathExpression.Scalar(@"Patient.identifier.count()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"Patient.identifier.count() = 2", navigator));
         }
 
         [TestMethod, TestCategory("FhirPath")]
@@ -59,49 +62,49 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             Assert.IsTrue(PathExpression.IsTrue(@"(Patient.identifier.where ( use = ( 'offic' + 'ial')) = 
                        Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = 
-                        Patient.identifier.first())", tree));
+                        Patient.identifier.first())", navigator));
 
             //// xpath gebruikt $current for $focus....waarom dat niet gebruiken?
             Assert.IsTrue(PathExpression.IsTrue(
                   @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and 
                         $focus.code = 'owner').log('after owner').$parent.$parent.organization.log('org')
-                        .where(display.startsWith('Walt')).resolve().identifier.first().value = 'Gastro'", tree,
+                        .where(display.startsWith('Walt')).resolve().identifier.first().value = 'Gastro'", navigator,
                                 new FhirEvaluationContext(new FhirClient("http://spark.furore.com/fhir"))));
 
             //// why is in an operator and not a function?
             Assert.IsTrue(PathExpression.IsTrue(
                  @"(Patient.identifier.where(use='official') in Patient.identifier) and
-                       (Patient.identifier.first() in Patient.identifier.tail()).not()", tree));
+                       (Patient.identifier.first() in Patient.identifier.tail()).not()", navigator));
 
             Assert.IsTrue(PathExpression.IsTrue(
                 @"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
-                        3 + Patient.identifier.count()", tree));
+                        3 + Patient.identifier.count()", navigator));
 
             Assert.IsTrue(PathExpression.IsTrue(
-                        @"(1|2|3|4|5).where($focus > 2 and $focus <= 4) = (3|4)", tree));
+                        @"(1|2|3|4|5).where($focus > 2 and $focus <= 4) = (3|4)", navigator));
 
             Assert.IsTrue(PathExpression.IsTrue(
-                        @"Patient.name.select(given|family).count() = 2", tree));
+                        @"Patient.name.select(given|family).count() = 2", navigator));
 
             Assert.IsTrue(PathExpression.IsTrue(
                     @"Patient.**.contains('wne') = contact.relationship.coding.code and
-                    Patient.**.matches('i.*/gif') in Patient.photo.*", tree));
+                    Patient.**.matches('i.*/gif') in Patient.photo.*", navigator));
 
             Assert.IsTrue(PathExpression.IsTrue(
                 @"'m' + gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
                     .substring(1,4) + 
                     gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
-                    .substring(5) = 'metrosexual'", tree));
+                    .substring(5) = 'metrosexual'", navigator));
 
             Assert.IsTrue(PathExpression.IsTrue(
-                    @"Patient.identifier.any(use='official') and identifier.where(use='usual').any()", tree));
+                    @"Patient.identifier.any(use='official') and identifier.where(use='usual').any()", navigator));
 
             Assert.IsTrue(PathExpression.IsTrue(
                     @"gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
-                    .select('m' + $focus.substring(1,4) + $focus.substring(5)) = 'metrosexual'", tree));
+                    .select('m' + $focus.substring(1,4) + $focus.substring(5)) = 'metrosexual'", navigator));
 
             Assert.IsTrue(PathExpression.IsTrue(
-                    @"Patient.**.where($focus.contains('222')).item(1) = $context.contained.address.line", tree));
+                    @"Patient.**.where($focus.contains('222')).item(1) = $context.contained.address.line", navigator));
         }
 
         //[TestMethod, TestCategory("FhirPath")]
@@ -124,9 +127,9 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void TestExpressionSubstringFunction()
         {
             // Check that date comes in
-            Assert.IsTrue(PathExpression.IsTrue("QuestionnaireResponse.group.group.where(linkId=\"Section - C\").question.where(linkId=\"C1\").answer.group.where(linkId = \"C1fields\").question.where(linkId = \"DateReturnToNormalDuties\").answer.valueDate.empty()", tree));
+            Assert.IsTrue(PathExpression.IsTrue("QuestionnaireResponse.group.group.where(linkId=\"Section - C\").question.where(linkId=\"C1\").answer.group.where(linkId = \"C1fields\").question.where(linkId = \"DateReturnToNormalDuties\").answer.valueDate.empty()", navigator));
 
-            Assert.IsFalse(PathExpression.IsTrue("QuestionnaireResponse.group.group.where(linkId=\"Section - C\").question.where(linkId=\"C1\").answer.group.where(linkId = \"C1fields\").question.where(linkId = \"DateReturnToNormalDuties\").answer.valueDate.empty().not()", tree));
+            Assert.IsFalse(PathExpression.IsTrue("QuestionnaireResponse.group.group.where(linkId=\"Section - C\").question.where(linkId=\"C1\").answer.group.where(linkId = \"C1fields\").question.where(linkId = \"DateReturnToNormalDuties\").answer.valueDate.empty().not()", navigator));
 
             // Assert.AreEqual("1973-05-31", PathExpression.Evaluate("Patient.contained.Patient.birthDate.substring(0,10)", tree).ToString());
 
@@ -139,9 +142,9 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void TestExpressionRegexFunction()
         {
             // Check that date comes in
-            Assert.IsTrue(PathExpression.IsTrue("Patient.identifier.where(system=\"urn:oid:0.1.2.3.4.5.6.7\").value.matches(\"^[1-6]+$\")", tree));
+            Assert.IsTrue(PathExpression.IsTrue("Patient.identifier.where(system=\"urn:oid:0.1.2.3.4.5.6.7\").value.matches(\"^[1-6]+$\")", navigator));
 
-            Assert.IsFalse(PathExpression.IsTrue("Patient.identifier.where(system=\"urn:oid:0.1.2.3.4.5.6.7\").value.matches(\"^[1-3]+$\")", tree));
+            Assert.IsFalse(PathExpression.IsTrue("Patient.identifier.where(system=\"urn:oid:0.1.2.3.4.5.6.7\").value.matches(\"^[1-3]+$\")", navigator));
 
             // Assert.AreEqual("1973-05-31", PathExpression.Evaluate("Patient.contained.Patient.birthDate.substring(0,10)", tree).ToString());
 

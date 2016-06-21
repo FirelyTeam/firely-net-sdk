@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public delegate IEnumerable<IFluentPathValue> Evaluator(IEvaluationContext ctx);
+    public delegate IEnumerable<IValueProvider> Evaluator(IEvaluationContext ctx);
    // public delegate object ScalarEvaluator(IEnumerable<IFhirPathValue> focus, IEvaluationContext ctx);
 
     // There is a special case around the entry point, where the type of the entry point can be represented, but is optional.
@@ -27,7 +27,7 @@ namespace Hl7.Fhir.FluentPath
 
     public static class Eval
     {
-        public static IEnumerable<IFluentPathValue> Select(this Evaluator evaluator, IFluentPathValue instance, IEvaluationContext context)
+        public static IEnumerable<IValueProvider> Select(this Evaluator evaluator, IValueProvider instance, IEvaluationContext context)
         {
             var original = FhirValueList.Create(instance);
             context.OriginalContext = original;
@@ -35,38 +35,38 @@ namespace Hl7.Fhir.FluentPath
             return evaluator(context);
         }
 
-        public static IEnumerable<IFluentPathValue> Select(this Evaluator evaluator, IFluentPathValue instance)
+        public static IEnumerable<IValueProvider> Select(this Evaluator evaluator, IValueProvider instance)
         {
             var original = FhirValueList.Create(instance);
             return evaluator.Select(instance, new BaseEvaluationContext());
         }
 
-        public static object Scalar(this Evaluator evaluator, IFluentPathValue instance, IEvaluationContext context)
+        public static object Scalar(this Evaluator evaluator, IValueProvider instance, IEvaluationContext context)
         {
             return evaluator.Select(instance, context).SingleValue();
         }
 
-        public static object Scalar(this Evaluator evaluator, IFluentPathValue instance)
+        public static object Scalar(this Evaluator evaluator, IValueProvider instance)
         {
             return evaluator.Select(instance, new BaseEvaluationContext()).SingleValue();
         }
 
-        public static bool Predicate(this Evaluator evaluator, IFluentPathValue instance, IEvaluationContext context)
+        public static bool Predicate(this Evaluator evaluator, IValueProvider instance, IEvaluationContext context)
         {
             return evaluator.Select(instance, context).BooleanEval().AsBoolean();
         }
 
-        public static bool Predicate(this Evaluator evaluator, IFluentPathValue instance)
+        public static bool Predicate(this Evaluator evaluator, IValueProvider instance)
         {
             return evaluator.Select(instance, new BaseEvaluationContext()).BooleanEval().AsBoolean();
         }
 
-        public static bool IsTrue(this Evaluator evaluator, IFluentPathValue instance)
+        public static bool IsTrue(this Evaluator evaluator, IValueProvider instance)
         {
             return evaluator.Select(instance, new BaseEvaluationContext()).BooleanEval().AsBoolean();
         }
 
-        public static bool IsTrue(this Evaluator evaluator, IFluentPathValue instance, IEvaluationContext context)
+        public static bool IsTrue(this Evaluator evaluator, IValueProvider instance, IEvaluationContext context)
         {
             return evaluator.Select(instance, context).BooleanEval().AsBoolean();
         }

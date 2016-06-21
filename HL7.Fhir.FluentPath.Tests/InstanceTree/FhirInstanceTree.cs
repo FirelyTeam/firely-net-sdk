@@ -13,8 +13,8 @@ using System.Linq;
 
 namespace Hl7.Fhir.FluentPath.InstanceTree
 {
-    /// <summary>Represents a FHIR navigation tree with node values of type <see cref="IFluentPathElement"/>.</summary>
-    public class FhirInstanceTree : ValueNavigationTree<FhirInstanceTree, IFluentPathValue>, IFluentPathElement
+    /// <summary>Represents a FHIR navigation tree with node values of type <see cref="IElementNavigator"/>.</summary>
+    public class FhirInstanceTree : ValueNavigationTree<FhirInstanceTree, IValueProvider>
     {
         #region Public Factory Methods
 
@@ -27,11 +27,11 @@ namespace Hl7.Fhir.FluentPath.InstanceTree
         /// <param name="name">The name of the new node.</param>
         /// <param name="value">The node value.</param>
         /// <returns>A new <see cref="FhirInstanceTree"/> node.</returns>
-        public static FhirInstanceTree Create(string name, IFluentPathValue value) { return new FhirInstanceTree(null, null, name, value); }
+        public static FhirInstanceTree Create(string name, IValueProvider value) { return new FhirInstanceTree(null, null, name, value); }
 
         #endregion
 
-        protected FhirInstanceTree(FhirInstanceTree parent, FhirInstanceTree previousSibling, string name, IFluentPathValue value) : base(parent, previousSibling, name, value) { }
+        protected FhirInstanceTree(FhirInstanceTree parent, FhirInstanceTree previousSibling, string name, IValueProvider value) : base(parent, previousSibling, name, value) { }
 
         protected override FhirInstanceTree Self { get { return this; } }
 
@@ -40,37 +40,37 @@ namespace Hl7.Fhir.FluentPath.InstanceTree
             return new FhirInstanceTree(parent, previousSibling, name, null);
         }
 
-        protected override FhirInstanceTree CreateNode(FhirInstanceTree parent, FhirInstanceTree previousSibling, string name, IFluentPathValue value)
+        protected override FhirInstanceTree CreateNode(FhirInstanceTree parent, FhirInstanceTree previousSibling, string name, IValueProvider value)
         {
             return new FhirInstanceTree(parent, previousSibling, name, value);
         }
 
-        object IFluentPathValue.Value
-        {
-            get
-            {
-                if (Self.Value != null)
-                    return Self.Value.Value;
-                else
-                    return null;
-            }
-        }
+        //object IValueProvider.Value
+        //{
+        //    get
+        //    {
+        //        if (Self.Value != null)
+        //            return Self.Value.Value;
+        //        else
+        //            return null;
+        //    }
+        //}
 
-        [Obsolete("This method will be removed from the interface of IFluentPathElement")]
+        //[Obsolete("This method will be removed from the interface of IFluentPathElement")]
         //IEnumerable<ChildNode> IFluentPathElement.Children()
         //{
         //    return LinkedTreeExtensions.Children(this).Select(c => new ChildNode(c.Name, c));
         //}
 
-        IEnumerable<string> IFluentPathElement.GetChildNames()
-        {
-            return LinkedTreeExtensions.Children(this).Select(c => c.Name);
-        }
+        //IEnumerable<string> IElementNavigator.GetChildNames()
+        //{
+        //    return LinkedTreeExtensions.Children(this).Select(c => c.Name);
+        //}
 
-        IEnumerable<IFluentPathElement> IFluentPathElement.GetChildrenByName(string name)
-        {
-            return LinkedTreeExtensions.Children(this).Where(c => c.Name == name);
-        }
+        //IEnumerable<IElementNavigator> IElementNavigator.GetChildrenByName(string name)
+        //{
+        //    return LinkedTreeExtensions.Children(this).Where(c => c.Name == name);
+        //}
 
         // REFACTORED: Parent is removed.
         //IFluentPathElement IFluentPathElement.Parent

@@ -65,12 +65,12 @@ namespace HL7.Fhir.FluentPath.FluentPath
             throw new NotImplementedException();
         }
 
-        public static Evaluator Return(IFluentPathValue value)
+        public static Evaluator Return(Hl7.Fhir.FluentPath.IValueProvider value)
         {
-            return _ => new[] { (IFluentPathValue)value };
+            return _ => (new[] { (Hl7.Fhir.FluentPath.IValueProvider)value });
         }
 
-        public static Evaluator Return(IEnumerable<IFluentPathValue> value)
+        public static Evaluator Return(IEnumerable<Hl7.Fhir.FluentPath.IValueProvider> value)
         {
             return _ => value;
         }

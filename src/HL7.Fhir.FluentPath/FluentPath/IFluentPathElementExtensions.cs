@@ -14,13 +14,13 @@ namespace Hl7.Fhir.FluentPath
 {
     public static class IFluentPathElementExtensions
     {
-        public static IEnumerable<IFluentPathElement> Children(this IFluentPathElement element)
-        {
-            return element.GetChildNames().SelectMany(name => element.GetChildrenByName(name));
-        }
+        //public static IEnumerable<IElementNavigator> AllChildren(this IElementNavigator element)
+        //{
+        //    return element.GetChildNames().SelectMany(name => element.GetChildrenByName(name));
+        //}
 
 
-        public static IEnumerable<IFluentPathElement> Children(this IFluentPathElement element, string name)
+        public static IEnumerable<IElementNavigator> EnumerateChildrenByName(this IElementNavigator element, string name)
         {
 
             // REFACTOR
@@ -44,15 +44,10 @@ namespace Hl7.Fhir.FluentPath
             return result;
         }
 
-        public static IEnumerable<IFluentPathElement> Descendants(this IFluentPathElement element)
+        public static IEnumerable<IElementNavigator> EnumerateChildrenByName(this IEnumerable<IElementNavigator> elements, string name)
         {
-            //TODO: Don't think this is performant with these nested yields
-            foreach (var child in element.Children())
-            {
-                yield return child;
-                foreach (var grandchild in child.Descendants()) yield return grandchild;
-            }
+            return elements.SelectMany(e => e.EnumerateChildrenByName(name));
         }
-
+        
     }
 }

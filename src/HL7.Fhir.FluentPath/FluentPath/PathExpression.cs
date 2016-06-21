@@ -55,37 +55,37 @@ namespace Hl7.Fhir.FluentPath
         }
 
     
-        public static IEnumerable<IFluentPathValue> Select(string expression, IFluentPathValue instance)
+        public static IEnumerable<IValueProvider> Select(string expression, IValueProvider instance)
         {
             var evaluator = Compile(expression);
             return evaluator.Select(instance);
         }
 
-        public static IEnumerable<IFluentPathValue> Select(string expression, IFluentPathValue instance, IEvaluationContext context)
+        public static IEnumerable<IValueProvider> Select(string expression, IValueProvider instance, IEvaluationContext context)
         {
             var evaluator = Compile(expression);
             return evaluator.Select(instance, context);
         }
 
-        public static object Scalar(string expression, IFluentPathValue instance)
+        public static object Scalar(string expression, IValueProvider instance)
         {
             var evaluator = Compile(expression);
             return evaluator.Scalar(instance);
         }
 
-        public static object Scalar(string expression, IFluentPathValue instance, IEvaluationContext context)
+        public static object Scalar(string expression, IValueProvider instance, IEvaluationContext context)
         {
             var evaluator = Compile(expression);
             return evaluator.Scalar(instance, context);
         }
 
-        public static bool IsTrue(string expression, IFluentPathValue instance)
+        public static bool IsTrue(string expression, IValueProvider instance)
         {
             var evaluator = Compile(expression);
             return evaluator.Predicate(instance);
         }
 
-        public static bool IsTrue(string expression, IFluentPathValue instance, IEvaluationContext context)
+        public static bool IsTrue(string expression, IValueProvider instance, IEvaluationContext context)
         {
             var evaluator = Compile(expression);
             return evaluator.Predicate(instance, context);
@@ -94,12 +94,12 @@ namespace Hl7.Fhir.FluentPath
 
     public static class PathExpressionLinq
     {
-        public static IEnumerable<IFluentPathValue> FluentPathSelect<T>(this IFluentPathValue instance, string expression) 
+        public static IEnumerable<IValueProvider> FluentPathSelect<T>(this IValueProvider instance, string expression) 
         {
             return PathExpression.Select(expression, instance);
         }
 
-        public static IEnumerable<IFluentPathValue> FluentPathIsTrue<T>(this IFluentPathValue instance, string expression)
+        public static IEnumerable<IValueProvider> FluentPathIsTrue<T>(this IValueProvider instance, string expression)
         {
             return PathExpression.Select(expression, instance);
         }

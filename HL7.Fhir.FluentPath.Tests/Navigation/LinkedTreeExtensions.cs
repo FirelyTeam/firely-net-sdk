@@ -114,7 +114,8 @@ namespace Hl7.Fhir.Navigation
         /// <param name="tree">A tree node.</param>
         /// <param name="name">The name of the target node.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> sequence of tree nodes.</returns>
-        public static IEnumerable<T> Children<T>(this T tree, string name) where T : ILinkedTree<T>, INamedTree
+
+        public static IEnumerable<T> LinkedChildren<T>(this T tree, string name) where T : ILinkedTree<T>, INamedTree
         {
             return tree.Children().Where(n => nameComparer.Compare(n.Name, name) == 0);
         }
@@ -136,7 +137,7 @@ namespace Hl7.Fhir.Navigation
         /// <returns>An tree node of type <typeparamref name="T"/>, or <c>null</c>.</returns>
         public static T FirstChild<T>(this T tree, string name) where T : ILinkedTree<T>, INamedTree
         {
-            return tree.Children(name).FirstOrDefault();
+            return tree.LinkedChildren(name).FirstOrDefault();
         }
 
         /// <summary>Enumerate the descendants of the current tree node.</summary>

@@ -52,13 +52,18 @@
     <Compile Include="FluentPath\Evaluator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionVisitor.cs" />
     <Compile Include="FluentPath\FluentPathType.cs" />
+    <Compile Include="ElementsModel\NavigatorExtensions.cs" />
+    <Compile Include="ElementsModel\INavigator.cs" />
+    <Compile Include="ElementsModel\IValueProvider.cs" />
+    <Compile Include="ElementsModel\INameProvider.cs" />
+    <Compile Include="ElementsModel\IElementNavigator.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
     <Compile Include="FluentPath\Binding.cs" />
     <Compile Include="FluentPath\Parser\Operators.cs" />
     <Compile Include="FluentPath\Parser\Lexer.cs" />
     <Compile Include="FluentPath\IEvaluationContext.cs" />
     <Compile Include="FluentPath\IFluentPathElementExtensions.cs" />
-    <Compile Include="FluentPath\IFluentPathValue.cs" />
+    <Compile Include="FluentPath\FhirValueList.cs" />
     <Compile Include="FluentPath\IFluentPathValueExtensions.cs" />
     <Compile Include="FluentPath\IFluentPathValueListExtensions.cs" />
     <Compile Include="FluentPath\Operator.cs" />
@@ -78,6 +83,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

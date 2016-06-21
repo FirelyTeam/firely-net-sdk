@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public class ConstantValue : IFluentPathValue
+    public class ConstantValue : IValueProvider
     {
         public static object ToFluentPathValue(object value)
         {
@@ -68,8 +68,8 @@ namespace Hl7.Fhir.FluentPath
 
         public override bool Equals(object obj)
         {
-            if (obj is IFluentPathValue)
-                return Object.Equals((obj as IFluentPathValue).Value,Value);
+            if (obj is IValueProvider)
+                return Object.Equals((obj as IValueProvider).Value,Value);
             else
                 return false;
         }

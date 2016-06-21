@@ -17,7 +17,7 @@ namespace Hl7.Fhir.FluentPath.InstanceTree
         {
             var comment = (XComment)docNode;
 
-            var result = parent.AddLastChild(COMMENT_ELEMENT_NAME, (IFluentPathValue)new ConstantValue(comment.Value));
+            var result = parent.AddLastChild(COMMENT_ELEMENT_NAME, (IValueProvider)new ConstantValue(comment.Value));
             result.AddAnnotation(new StructuralHints() { IsComment = true });
             result.AddAnnotation(docNode);
             return result;
