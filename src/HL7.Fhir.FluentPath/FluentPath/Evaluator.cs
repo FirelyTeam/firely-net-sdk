@@ -31,7 +31,7 @@ namespace Hl7.Fhir.FluentPath
         {
             var original = FhirValueList.Create(instance);
             context.OriginalContext = original;
-            context.FocusStack.Push(original);
+            context.Push(original);
             return evaluator(context);
         }
 
@@ -48,27 +48,29 @@ namespace Hl7.Fhir.FluentPath
 
         public static object Scalar(this Evaluator evaluator, IValueProvider instance)
         {
-            return evaluator.Select(instance, new BaseEvaluationContext()).SingleValue();
+            return evaluator.Scalar(instance, new BaseEvaluationContext());
         }
 
+        // For predicates, Empty is considered false (?)
         public static bool Predicate(this Evaluator evaluator, IValueProvider instance, IEvaluationContext context)
         {
-            return evaluator.Select(instance, context).BooleanEval().AsBoolean();
+            var res = evaluator.Select(instance, context).BooleanEval();
+            return res != null && (bool)res.Value == true;
         }
 
         public static bool Predicate(this Evaluator evaluator, IValueProvider instance)
         {
-            return evaluator.Select(instance, new BaseEvaluationContext()).BooleanEval().AsBoolean();
+            return evaluator.Predicate(instance, new BaseEvaluationContext());
         }
 
         public static bool IsTrue(this Evaluator evaluator, IValueProvider instance)
         {
-            return evaluator.Select(instance, new BaseEvaluationContext()).BooleanEval().AsBoolean();
+            return evaluator.IsTrue(instance, new BaseEvaluationContext());
         }
 
         public static bool IsTrue(this Evaluator evaluator, IValueProvider instance, IEvaluationContext context)
         {
-            return evaluator.Select(instance, context).BooleanEval().AsBoolean();
+            return Object.Equals(evaluator.Select(instance, context).BooleanEval().Value, true);
         }
 
         //public static Evaluator Length()

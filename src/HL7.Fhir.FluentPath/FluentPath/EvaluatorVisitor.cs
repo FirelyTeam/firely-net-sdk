@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FluentPath.Binding;
+using HL7.Fhir.FluentPath.FluentPath.Binding;
 
 namespace HL7.Fhir.FluentPath.FluentPath
 {
@@ -19,20 +21,12 @@ namespace HL7.Fhir.FluentPath.FluentPath
 
         public override Evaluator VisitFunctionCall(FP.FunctionCallExpression expression)
         {
-            Binding binding = null;
-            var isKnown = Binding.Functions.TryGetValue(expression.FunctionName, out binding);
-
-            if (isKnown) binding.Validate(expression);
-
             var focusEval = expression.Focus.ToEvaluator();
             var argsEval = expression.Arguments.Select(arg => arg.ToEvaluator());
 
-            if(isKnown)
-                return Call(focusEval, argsEval, binding);
-            else
-                return ExternalCall(expression.FunctionName, focusEval, argsEval);
+            Invokee boundFunction = Functions.Resolve(expression);
 
-
+            return buildBindingInvoke(focusEval, argsEval, boundFunction);
         }
 
         public override Evaluator VisitLambda(FP.LambdaExpression expression)
@@ -83,49 +77,26 @@ namespace HL7.Fhir.FluentPath.FluentPath
 
         public static Evaluator Focus()
         {
-            return ctx => ctx.FocusStack.Peek();
+            return ctx => ctx.CurrentFocus;
         }
 
-        public static Evaluator Call(Evaluator focus, IEnumerable<Evaluator> arguments, Binding binding)
+        private static Evaluator buildBindingInvoke(Evaluator focus, IEnumerable<Evaluator> arguments, Invokee invokee)
         {
             return ctx =>
             {
                 try
                 {
                     var focusNodes = focus(ctx);
-                    var argumentNodes = arguments.Select(arg => arg(ctx)).ToList();
+                    ctx.Push(focusNodes);
 
-                    ctx.FocusStack.Push(focusNodes);
-
-                    return binding.Function(focusNodes, argumentNodes);
+                    return invokee(ctx, arguments);
                 }
                 finally
                 {
-                    ctx.FocusStack.Pop();
+                    ctx.Pop();
                 }
             };
         }
-
-        public static Evaluator ExternalCall(string name, Evaluator focus, IEnumerable<Evaluator> arguments)
-        {
-            return ctx =>
-            {
-                try
-                {
-                    var focusNodes = focus(ctx);
-                    var argumentNodes = arguments.Select(arg => arg(ctx)).ToList();
-
-                    ctx.FocusStack.Push(focusNodes);
-
-                    return ctx.InvokeExternalFunction(name, focusNodes, argumentNodes);
-                }
-                finally
-                {
-                    ctx.FocusStack.Pop();
-                }
-            };
-        }
-
     }
 
     public static class EvaluatorExpressionExtensions

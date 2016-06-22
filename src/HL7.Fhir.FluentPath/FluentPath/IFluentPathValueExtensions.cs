@@ -16,62 +16,131 @@ using System.Xml;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public static class IFluentPathValueExtensions
+    public static class IValueProviderExtensions
     {
-        public static Int64 AsInteger(this IValueProvider me)
+        internal static T GetValue<T>(this IValueProvider val, string name)
         {
-            if (me.Value == null) throw Error.ArgumentNull("me");
-            return (Int64)me.Value;
+            if (val == null) throw Error.ArgumentNull(name);
+            if (val.Value == null) throw Error.ArgumentNull(name + ".Value");
+            if (!(val is T)) throw Error.Argument(name + " must be of type " + typeof(T).Name);
+
+            return (T)val.Value;
         }
 
-        public static decimal AsDecimal(this IValueProvider me)
+        // FluentPath toInteger() function
+        public static IValueProvider ToInteger(this IValueProvider focus)
         {
-            if (me.Value == null) throw Error.ArgumentNull("me");
-            return (decimal)me.Value;
+            var val = focus.GetValue<object>("focus");
+
+            if (val is long)
+                return new ConstantValue(val);
+            else if (val is string)
+            {
+                long result;
+                if (Int64.TryParse((string)val, out result))
+                    return new ConstantValue(result);
+            }
+            else if(val is bool)
+            {
+                return new ConstantValue((bool)val ? 1 : 0);
+            }
+
+            return null;
         }
 
-        public static bool AsBoolean(this IValueProvider me)
+        // FluentPath toDecimal() function
+        public static IValueProvider ToDecimal(this IValueProvider focus)
         {
-            if (me.Value == null) throw Error.ArgumentNull("me");
-            return (bool)me.Value;
+            var val = focus.GetValue<object>("focus");
+
+            if (val is decimal)
+                return new ConstantValue(val);
+            else if (val is string)
+            {
+                decimal result;
+                if (Decimal.TryParse((string)val, out result))
+                    return new ConstantValue(result);
+            }
+            else if (val is bool)
+            {
+                return new ConstantValue((bool)val ? 1m : 0m);
+            }
+
+            return null;
         }
 
-        /// <summary>
-        /// Cast this value to a string (not ToString, consider AsStringRepresentation if you want that)
-        /// </summary>
-        /// <param name="me"></param>
-        /// <returns></returns>
-        public static string AsString(this IValueProvider me)
+
+        // FluentPath toString() function
+        public static IValueProvider ToString(this IValueProvider focus)
         {
-            return (string)me.Value;
+            var val = focus.GetValue<object>("focus");
+
+            if (val is string)
+                return new ConstantValue(val);
+            else if (val is long)
+                return new ConstantValue(XmlConvert.ToString((long)val));
+            else if (val is decimal)
+                return new ConstantValue(XmlConvert.ToString((decimal)val));
+            else if (val is bool)
+                return new ConstantValue((bool)val ? "true" : "false");
+
+            return null;
         }
 
-        public static PartialDateTime AsDateTime(this IValueProvider me)
+        //TODO: Implement latest STU3 decisions around empty strings, start > length etc
+        public static IValueProvider Substring(this IValueProvider focus, long start, long? length)
         {
-            return (PartialDateTime)me.Value;
-        }
+            var str = focus.GetValue<string>("focus");
 
-
-        public static Time AsTime(this IValueProvider me)
-        {
-            return (Time)me.Value;
-        }
-
-        /// <summary>
-        /// A String representation of the entity that will convert whatever type it is into a string
-        /// (unlike the AsString, which just cases to a string)
-        /// </summary>
-        /// <param name="me"></param>
-        /// <returns></returns>
-        public static string AsStringRepresentation(this IValueProvider me)
-        {
-            if (me.Value == null) return null;
-
-            if (me.Value is PartialDateTime || me.Value is Time)
-                return me.Value.ToString();
+            if (length.HasValue)
+                return new ConstantValue(str.Substring((int)start, (int)length.Value));
             else
-                return XmlConvert.ToString((dynamic)me.Value);
+                return new ConstantValue(str.Substring((int)start));
         }
+
+
+        public static IValueProvider StartsWith(this IValueProvider focus, string prefix)
+        {
+            var str = focus.GetValue<string>("focus");
+
+            return new ConstantValue(str.StartsWith(prefix));
+        }
+
+        public static IValueProvider Or(this IValueProvider left, IValueProvider right)
+        {
+            var lVal = left.GetValue<bool>("left");
+            var rVal = right.GetValue<bool>("right");
+
+            return new ConstantValue(lVal || rVal);
+        }
+
+        public static IValueProvider And(this IValueProvider left, IValueProvider right)
+        {
+            var lVal = left.GetValue<bool>("left");
+            var rVal = right.GetValue<bool>("right");
+
+            return new ConstantValue(lVal && rVal);
+
+        }
+
+
+        public static IValueProvider Xor(this IValueProvider left, IValueProvider right)
+        {
+            var lVal = left.GetValue<bool>("left");
+            var rVal = right.GetValue<bool>("right");
+
+            return new ConstantValue(lVal ^ rVal);
+        }
+
+        public static IValueProvider Implies(this IValueProvider left, IValueProvider right)
+        {
+            var lVal = left.GetValue<bool>("left");
+            var rVal = right.GetValue<bool>("right");
+
+            return new ConstantValue(!lVal || rVal);
+        }
+
+
 
         public static IValueProvider Add(this IValueProvider left, IValueProvider right)
         {
@@ -103,49 +172,40 @@ namespace Hl7.Fhir.FluentPath
             return new ConstantValue(f(left.Value, right.Value));
         }
 
-        public static bool IsEqualTo(this IValueProvider left, IValueProvider right)
+        public static IValueProvider IsEqualTo(this IValueProvider left, IValueProvider right)
         {
-            if (!Object.Equals(left.Value, right.Value)) return false;
+            if (!Object.Equals(left.Value, right.Value)) return new ConstantValue(false);
 
-            return left.Children().IsEqualTo(right.Children()).AsBoolean();
+            return left.Children().IsEqualTo(right.Children());
         }
 
         public static bool IsEquivalentTo(this IValueProvider left, IValueProvider right)
         {
             // Exception: In equality comparisons, the "id" elements do not need to be equal
-            if (left is IElementNavigator && right is IElementNavigator)
-            {
-                var lElem = (IElementNavigator)left;
-                var rElem = (IElementNavigator)right;
-
-              //  if (lElem.Name == "id" && rElem.Name == "id")
-                    return true;
-            }
-
             throw new NotImplementedException();
         }
 
         public static IValueProvider GreaterOrEqual(this IValueProvider left, IValueProvider right)
         {
-            return new ConstantValue(left.IsEqualTo(right) || left.compare(Operator.GreaterThan, right));
+            return left.IsEqualTo(right).Or(left.compare(Operator.GreaterThan, right));
         }
 
         public static IValueProvider LessOrEqual(this IValueProvider left, IValueProvider right)
         {
-            return new ConstantValue(left.IsEqualTo(right) || left.compare(Operator.LessThan, right));
+            return left.IsEqualTo(right).Or(left.compare(Operator.LessThan, right));
         }
 
         public static IValueProvider LessThan(this IValueProvider left, IValueProvider right)
         {
-            return new ConstantValue(left.compare(Operator.LessThan, right));
+            return left.compare(Operator.LessThan, right);
         }
 
         public static IValueProvider GreaterThan(this IValueProvider left, IValueProvider right)
         {
-            return new ConstantValue(left.compare(Operator.GreaterThan, right));
+            return left.compare(Operator.GreaterThan, right);
         }
 
-        private static bool compare(this IValueProvider left, Operator comp, IValueProvider right)
+        private static IValueProvider compare(this IValueProvider left, Operator comp, IValueProvider right)
         {
             if (left.Value == null || right.Value == null)
                 throw Error.InvalidOperation("'{0)' requires both operands to be values".FormatWith(comp));
@@ -154,9 +214,9 @@ namespace Hl7.Fhir.FluentPath
 
             if (left.Value is string)
             {
-                var result = String.Compare(left.AsString(), right.AsString());
-                if (comp == Operator.LessThan) return result == -1;
-                if (comp == Operator.GreaterThan) return result == 1;
+                var result = String.Compare((string)left.Value, (string)right.Value);
+                if (comp == Operator.LessThan) return new ConstantValue(result == -1);
+                if (comp == Operator.GreaterThan) return new ConstantValue(result == 1);
             }
             else
             {

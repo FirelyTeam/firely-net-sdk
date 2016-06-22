@@ -49,16 +49,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FluentPath\BaseEvaluationContext.cs" />
+    <Compile Include="FluentPath\Binding\Functions.cs" />
+    <Compile Include="FluentPath\Binding\Invokee.cs" />
+    <Compile Include="FluentPath\Binding\ParamBinding.cs" />
     <Compile Include="FluentPath\Evaluator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionVisitor.cs" />
-    <Compile Include="FluentPath\FluentPathType.cs" />
     <Compile Include="ElementsModel\NavigatorExtensions.cs" />
     <Compile Include="ElementsModel\INavigator.cs" />
     <Compile Include="ElementsModel\IValueProvider.cs" />
     <Compile Include="ElementsModel\INameProvider.cs" />
     <Compile Include="ElementsModel\IElementNavigator.cs" />
+    <Compile Include="FluentPath\TypeInfo.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
-    <Compile Include="FluentPath\Binding.cs" />
+    <Compile Include="FluentPath\Binding\CallBinding.cs" />
     <Compile Include="FluentPath\Parser\Operators.cs" />
     <Compile Include="FluentPath\Parser\Lexer.cs" />
     <Compile Include="FluentPath\IEvaluationContext.cs" />
@@ -76,7 +79,6 @@
     <Compile Include="FluentPath\ConstantValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
-    <Compile Include="Support\IValueProvider.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Support\StringExtensions.cs" />
   </ItemGroup>

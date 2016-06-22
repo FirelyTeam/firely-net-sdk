@@ -22,12 +22,19 @@ namespace Hl7.Fhir.FluentPath
 
         private Stack<IEnumerable<IValueProvider>> _focusStack = new Stack<IEnumerable<IValueProvider>>();
 
-        public Stack<IEnumerable<IValueProvider>> FocusStack
+        public void Push(IEnumerable<IValueProvider> focus)
         {
-            get
-            {
-                return _focusStack;
-            }
+            _focusStack.Push(focus);
+        }
+
+        public void Pop()
+        {
+            _focusStack.Pop();
+        }
+
+        public IEnumerable<IValueProvider> CurrentFocus
+        {
+            get { return _focusStack.Peek(); }
         }
 
         public IEnumerable<IValueProvider> OriginalContext { get; set; }

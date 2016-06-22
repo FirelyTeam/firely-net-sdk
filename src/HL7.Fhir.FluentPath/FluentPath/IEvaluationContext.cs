@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,8 +39,13 @@ namespace Hl7.Fhir.FluentPath
         /// <returns>Return null when the constant is not known</returns>
         IEnumerable<IValueProvider> ResolveValue(string name);
 
-        Stack<IEnumerable<IValueProvider>> FocusStack { get; }
+        void Push(IEnumerable<IValueProvider> focus);
+        void Pop();
+        IEnumerable<IValueProvider> CurrentFocus { get; }
 
+        /// <summary>
+        /// Context that was in focus when evaluation started
+        /// </summary>
         IEnumerable<IValueProvider> OriginalContext { get; set; }
     }
 }

@@ -31,31 +31,6 @@ namespace Hl7.Fhir.FluentPath
             return focus.JustValues().Single().Value;
         }
 
-        public static long AsInteger(this IEnumerable<IValueProvider> focus)
-        {
-            return focus.Single().AsInteger();
-        }
-
-        public static decimal AsDecimal(this IEnumerable<IValueProvider> focus)
-        {
-            return focus.Single().AsDecimal();
-        }
-
-        public static bool AsBoolean(this IEnumerable<IValueProvider> focus)
-        {
-            return focus.Single().AsBoolean();
-        }
-
-        public static string AsString(this IEnumerable<IValueProvider> focus)
-        {
-            return focus.Single().AsString();
-        }
-
-        public static PartialDateTime AsDateTime(this IEnumerable<IValueProvider> focus)
-        {
-            return focus.Single().AsDateTime();
-        }
-
         private static bool booleanEval(this IEnumerable<IValueProvider> focus)
         {
             var result = false;
@@ -65,9 +40,9 @@ namespace Hl7.Fhir.FluentPath
                 result = false;
 
             // A single result that's a boolean should be interpreted as a boolean
-            else if (focus.JustValues().Count() == 1 && focus.JustValues().Single().Value is Boolean)
+            else if (focus.Count() == 1 && focus.Single().Value is bool)
             {
-                return focus.Single().AsBoolean();
+                return (bool)focus.Single().Value;
             }
 
             // Otherwise, we have "some" content, which we'll consider "true"
@@ -77,24 +52,22 @@ namespace Hl7.Fhir.FluentPath
             return result;
         }
 
-        public static IEnumerable<IValueProvider> BooleanEval(this IEnumerable<IValueProvider> focus)
+        public static IValueProvider BooleanEval(this IEnumerable<IValueProvider> focus)
         {
-            if (focus.Any())
-                return FhirValueList.Create(focus.booleanEval());
-            else
-                return FhirValueList.Empty();               
+            return new ConstantValue(focus.booleanEval());
         }
+
         public static IEnumerable<IValueProvider> IsEmpty(this IEnumerable<IValueProvider> focus)
         {
             return FhirValueList.Create(!focus.Any());
         }
 
-        public static IEnumerable<IValueProvider> Not(this IEnumerable<IValueProvider> focus)
+        public static IValueProvider Not(this IEnumerable<IValueProvider> focus)
         {
             if (focus.Any())
-                return FhirValueList.Create(!focus.booleanEval());
+                return new ConstantValue(!focus.booleanEval());
             else
-                return FhirValueList.Empty();
+                return null;
         }
 
         public static IEnumerable<IValueProvider> Exists(this IEnumerable<IValueProvider> focus)
@@ -102,26 +75,6 @@ namespace Hl7.Fhir.FluentPath
             return FhirValueList.Create(focus.Any());
         }
 
-
-        public static IEnumerable<IValueProvider> Or(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            return FhirValueList.Create(left.booleanEval() || right.booleanEval());
-        }
-
-        public static IEnumerable<IValueProvider> And(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            return FhirValueList.Create(left.booleanEval() && right.booleanEval());
-        }
-
-        public static IEnumerable<IValueProvider> Xor(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            return FhirValueList.Create(left.booleanEval() ^ right.booleanEval());
-        }
-
-        public static IEnumerable<IValueProvider> Implies(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            return FhirValueList.Create(!left.booleanEval() || right.booleanEval());
-        }
 
         public static IEnumerable<IValueProvider> Item(this IEnumerable<IValueProvider> focus, int index)
         {
@@ -164,51 +117,6 @@ namespace Hl7.Fhir.FluentPath
             return FhirValueList.Create(focus.Count());
         }
 
-        public static IEnumerable<IValueProvider> IntegerEval(this IEnumerable<IValueProvider> focus)
-        {
-            if (focus.JustValues().Count() == 1)
-            {
-                var val = focus.Single().Value;
-                if(val != null)
-                {
-                    if (val is long) return FhirValueList.Create((long)val);
-                    //if (val is decimal) return (Int64)Math.Round((decimal)val);
-                    if (val is string)
-                    {
-                        long result;
-                        if (Int64.TryParse((string)val, out result))
-                            return FhirValueList.Create(result);
-                    }
-
-                }
-            }
-
-            return FhirValueList.Empty();
-        }
-
-        public static IEnumerable<IValueProvider> Substring(this IEnumerable<IValueProvider> focus, long start, long? length)
-        {
-            if(focus.Count() == 1)
-            {
-                if (focus.First().Value != null)
-                {
-                    var str = focus.First().AsStringRepresentation();
-
-                    if (length.HasValue)
-                        return FhirValueList.Create(str.Substring((int)start, (int)length.Value));
-                    else
-                        return FhirValueList.Create(str.Substring((int)start));
-                }
-            }
-
-            return FhirValueList.Empty();
-        }
-
-        public static IEnumerable<IValueProvider> StartingWith(this IEnumerable<IValueProvider> focus, string prefix)
-        {
-            return focus.JustValues().Where(value => value.AsStringRepresentation().StartsWith(prefix));
-        }
-
         //public static IEnumerable<IFluentPathElement> Resolve(this IEnumerable<IFluentPathValue> focus, FhirClient client)
         //{
         //    return focus.Resolve(new BaseEvaluationContext(client));
@@ -238,16 +146,6 @@ namespace Hl7.Fhir.FluentPath
         //    }
         //}
 
-        public static IEnumerable<IValueProvider> MaxLength(this IEnumerable<IValueProvider> focus)
-        {
-            return FhirValueList.Create( focus.JustValues()
-                .Aggregate(0, (val, item) => Math.Max(item.AsStringRepresentation().Length, val)) );
-        }
-
-        public static IEnumerable<IValueProvider> SubsetOf(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            return left.All(l => right.Any(r => l.IsEqualTo(r)));
-        }
 
 
         public static IEnumerable<IValueProvider> Extension(this IEnumerable<IValueProvider> focus, string url)
@@ -291,13 +189,13 @@ namespace Hl7.Fhir.FluentPath
             return focus.SelectMany(node => node.Descendants());
         }
 
-        public static IEnumerable<IValueProvider> IsEqualTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
+        public static IValueProvider IsEqualTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
         {
-            if (!left.Any() || !right.Any()) return FhirValueList.Empty();
+            if (!left.Any() || !right.Any()) return null;
 
-            if (left.Count() != right.Count()) return FhirValueList.Create(false);
+            if (left.Count() != right.Count()) return new ConstantValue(false);
 
-            return FhirValueList.Create(left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x));
+            return new ConstantValue(left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x));
         }
 
         public static IEnumerable<IValueProvider> IsEqualTo(this IEnumerable<IValueProvider> left, object value)
@@ -427,7 +325,8 @@ namespace Hl7.Fhir.FluentPath
         {
             public bool Equals(IValueProvider x, IValueProvider y)
             {
-                return x.IsEqualTo(y);
+                var res = x.IsEqualTo(y);
+                return res != null && res.Value is bool &&  ((bool)res.Value) == true;
             }
 
             public int GetHashCode(IValueProvider value)

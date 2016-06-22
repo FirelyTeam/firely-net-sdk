@@ -14,13 +14,8 @@ using System.Xml;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public class Time
+    public struct Time
     {
-        private Time()
-        {
-
-        }
-
         private string _value;
 
         public static Time Parse(string value)
@@ -46,7 +41,7 @@ namespace Hl7.Fhir.FluentPath
             }
             catch
             {
-                value = null;
+                value = default(Time);
                 return false;
             }
         }
@@ -67,7 +62,7 @@ namespace Hl7.Fhir.FluentPath
         public override bool Equals(object obj)
         {
             if (obj is Time)
-                return (obj as Time)._value == _value;
+                return ((Time)obj)._value == _value;
             else
                 return false;
         }
