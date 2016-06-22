@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FluentPath.Binding
 {
-    public delegate IEnumerable<IFluentPathValue> Invokee(IEvaluationContext context, IEnumerable<Evaluator> arguments);
-
     internal class CallBinding
     {
         public string Name { get; private set; }

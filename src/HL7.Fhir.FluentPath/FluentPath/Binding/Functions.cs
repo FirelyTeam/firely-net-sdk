@@ -51,7 +51,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
                 return binding.Function;
             }
             else
-                return buildExternalFunctionCall(expression.FunctionName);
+                return buildExternalCall(expression.FunctionName);
         }
 
 
@@ -72,7 +72,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             _functions.Add(name, new CallBinding(name, buildInternalCall(func, param1, param2), param1, param2));
         }
 
-        private static Invokee buildExternalFunctionCall(string name)
+        private static Invokee buildExternalCall(string name)
         {
             return (ctx, args) =>
             {
@@ -112,6 +112,8 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
 
         private static IEnumerable<IFluentPathValue> castResult(object result)
         {
+            // TODO: Object may be a constant native value....
+
             if (result is IEnumerable<IFluentPathValue>)
                 return (IEnumerable<IFluentPathValue>)result;
             else if (result is IFluentPathValue)
@@ -124,10 +126,5 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             else
                 throw new InvalidOperationException("Bound functions should either return IFluentPathValue or IEnumerable<IFluentPathValue>");
         }
-
-     
-
-    
-
     }
 }
