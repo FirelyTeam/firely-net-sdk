@@ -49,11 +49,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FluentPath\BaseEvaluationContext.cs" />
+    <Compile Include="FluentPath\Binding\Functions.cs" />
+    <Compile Include="FluentPath\Binding\ParamBinding.cs" />
     <Compile Include="FluentPath\Evaluator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionVisitor.cs" />
-    <Compile Include="FluentPath\FluentPathType.cs" />
+    <Compile Include="FluentPath\TypeInfo.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
-    <Compile Include="FluentPath\Binding.cs" />
+    <Compile Include="FluentPath\Binding\CallBinding.cs" />
     <Compile Include="FluentPath\Parser\Operators.cs" />
     <Compile Include="FluentPath\Parser\Lexer.cs" />
     <Compile Include="FluentPath\IEvaluationContext.cs" />

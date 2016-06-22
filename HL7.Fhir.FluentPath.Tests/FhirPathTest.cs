@@ -13,6 +13,7 @@ using System.Linq;
 using Sprache;
 using Hl7.Fhir.FluentPath;
 using HL7.Fhir.FluentPath.FluentPath.Expressions;
+using HL7.Fhir.FluentPath;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {

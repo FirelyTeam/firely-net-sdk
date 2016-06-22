@@ -63,12 +63,12 @@ namespace Hl7.Fhir.FluentPath
             return FhirValueList.Create(!focus.Any());
         }
 
-        public static IEnumerable<IFluentPathValue> Not(this IEnumerable<IFluentPathValue> focus)
+        public static IFluentPathValue Not(this IEnumerable<IFluentPathValue> focus)
         {
             if (focus.Any())
-                return FhirValueList.Create(!focus.booleanEval());
+                return new ConstantValue(!focus.booleanEval());
             else
-                return FhirValueList.Empty();
+                return null;
         }
 
         public static IEnumerable<IFluentPathValue> Exists(this IEnumerable<IFluentPathValue> focus)

@@ -31,7 +31,7 @@ namespace Hl7.Fhir.FluentPath
         {
             var original = FhirValueList.Create(instance);
             context.OriginalContext = original;
-            context.FocusStack.Push(original);
+            context.Push(original);
             return evaluator(context);
         }
 

@@ -16,13 +16,8 @@ namespace Hl7.Fhir.FluentPath
 {
 
     //TODO: Merge with FhirDateTime from Model namespace?s
-    public class PartialDateTime
+    public struct PartialDateTime
     {
-        private PartialDateTime()
-        {
-
-        }
-
         private string _value;
 
         public static PartialDateTime Parse(string value)
@@ -52,7 +47,7 @@ namespace Hl7.Fhir.FluentPath
             }
             catch
             {
-                value = null;
+                value = default(PartialDateTime);
                 return false;
             }
         }
@@ -72,7 +67,7 @@ namespace Hl7.Fhir.FluentPath
         public override bool Equals(object obj)
         {
             if (obj is PartialDateTime)
-                return (obj as PartialDateTime)._value == _value;
+                return ((PartialDateTime)obj)._value == _value;
             else
                 return false;
         }
