@@ -42,3 +42,23 @@ PowerCurl "$srcdir\Hl7.Fhir.Specification\validation.xml.zip" "$server/definitio
 PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\profiles-others.xml" "$server/profiles-others.xml"
 copy "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-resources.xml" "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test"
 copy "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-types.xml" "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test"
+
+# Apply this transform to remove all the Meta sections from the profiles (to remove the LastUpdated tags) 
+# this makes it easier to see the actual changes between versions
+$xslt = New-Object System.Xml.Xsl.XslCompiledTransform;
+$xslt.Load("$baseDir\Build\StripLastModified.xslt");
+
+Write-Host -ForegroundColor White "transforming profiles-resources.xml ..."
+$xslt.Transform("$srcdir\Hl7.Fhir.Core\Model\Source\profiles-resources.xml", "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-resources2.xml");
+del "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-resources.xml"
+move "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-resources2.xml" "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-resources.xml"
+
+Write-Host -ForegroundColor White "transforming profiles-types.xml ..."
+$xslt.Transform("$srcdir\Hl7.Fhir.Core\Model\Source\profiles-types.xml", "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-types2.xml");
+del "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-types.xml"
+move "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-types2.xml" "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-types.xml"
+
+Write-Host -ForegroundColor White "transforming search-parameters.xml ..."
+$xslt.Transform("$srcdir\Hl7.Fhir.Core\Model\Source\search-parameters.xml", "$srcdir\Hl7.Fhir.Core\Model\Source\search-parameters2.xml");
+del "$srcdir\Hl7.Fhir.Core\Model\Source\search-parameters.xml"
+move "$srcdir\Hl7.Fhir.Core\Model\Source\search-parameters2.xml" "$srcdir\Hl7.Fhir.Core\Model\Source\search-parameters.xml"
