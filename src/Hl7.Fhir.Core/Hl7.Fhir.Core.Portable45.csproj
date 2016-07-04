@@ -106,6 +106,9 @@
     <Compile Include="Model\Generated\ActionDefinition.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\ActivityDefinition.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Annotation.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
@@ -154,11 +157,20 @@
     <Compile Include="Model\Generated\CompartmentDefinition.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\Consent.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ContactDetail.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\ContactPoint.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Contract.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Contributor.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Coverage.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
@@ -202,6 +214,9 @@
     <Compile Include="Model\Generated\EligibilityResponse.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\Endpoint.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\EnrollmentRequest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -232,10 +247,7 @@
     <Compile Include="Model\Generated\HealthcareService.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\ImagingExcerpt.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\ImagingObjectSelection.cs">
+    <Compile Include="Model\Generated\ImagingManifest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\ImplementationGuide.cs">
@@ -295,6 +307,9 @@
     <Compile Include="Model\Generated\Person.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\PlanDefinition.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\PositiveInt.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
@@ -318,6 +333,9 @@
     </Compile>
     <Compile Include="Model\Generated\ReferralRequest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\RelatedResource.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\RiskAssessment.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
@@ -398,8 +416,14 @@
     <Compile Include="Model\Generated\UnsignedInt.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\UsageContext.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\VisionPrescription.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Xhtml.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\HumanName.cs" />
     <Compile Include="Model\IConformanceResource.cs" />
