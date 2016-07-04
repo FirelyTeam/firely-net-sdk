@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     throw new NotSupportedException("Element at path {0} has a choice of types, cannot expand".FormatWith(nav.Path));
                 else
                 {
-                    var coreType = resolver.GetStructureDefinitionForCoreType(defn.Type[0].Code.Value);
+                    var coreType = resolver.GetStructureDefinitionForCoreType(defn.Type[0].Code);
 
                     if (coreType == null) throw Error.NotSupported("Trying to navigate down a node that has a declared base type of '{0}', which is unknown".FormatWith(defn.Type[0].Code));
                     if (coreType.Snapshot == null) throw Error.NotSupported("Found definition of base type '{0}', but is does not contain a snapshot representation".FormatWith(defn.Type[0].Code));

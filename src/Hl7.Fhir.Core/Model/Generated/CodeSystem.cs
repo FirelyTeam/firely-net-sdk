@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "PropertyComponent"; } }
             
             /// <summary>
-            /// Identifies the property, both internally and externally
+            /// Identifies the property on the concepts, and when referred to in operations
             /// </summary>
             [FhirElement("code", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Code _CodeElement;
             
             /// <summary>
-            /// Identifies the property, both internally and externally
+            /// Identifies the property on the concepts, and when referred to in operations
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -463,9 +463,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Formal identifier for the property
+            /// </summary>
+            [FhirElement("uri", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri UriElement
+            {
+                get { return _UriElement; }
+                set { _UriElement = value; OnPropertyChanged("UriElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _UriElement;
+            
+            /// <summary>
+            /// Formal identifier for the property
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Uri
+            {
+                get { return UriElement != null ? UriElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      UriElement = null; 
+                    else
+                      UriElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("Uri");
+                }
+            }
+            
+            /// <summary>
             /// Why the property is defined, and/or what it conveys
             /// </summary>
-            [FhirElement("description", InSummary=true, Order=50)]
+            [FhirElement("description", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -497,7 +529,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// code | Coding | string | integer | boolean | dateTime
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=60)]
+            [FhirElement("type", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.CodeSystem.PropertyType> TypeElement
@@ -535,6 +567,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
+                    if(UriElement != null) dest.UriElement = (Hl7.Fhir.Model.FhirUri)UriElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.CodeSystem.PropertyType>)TypeElement.DeepCopy();
                     return dest;
@@ -555,6 +588,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.Matches(UriElement, otherT.UriElement)) return false;
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
                 
@@ -568,6 +602,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+                if( !DeepComparable.IsExactly(UriElement, otherT.UriElement)) return false;
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 
@@ -687,13 +722,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("designation", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.CodeSystem.ConceptDesignationComponent> Designation
+            public List<Hl7.Fhir.Model.CodeSystem.DesignationComponent> Designation
             {
-                get { if(_Designation==null) _Designation = new List<Hl7.Fhir.Model.CodeSystem.ConceptDesignationComponent>(); return _Designation; }
+                get { if(_Designation==null) _Designation = new List<Hl7.Fhir.Model.CodeSystem.DesignationComponent>(); return _Designation; }
                 set { _Designation = value; OnPropertyChanged("Designation"); }
             }
             
-            private List<Hl7.Fhir.Model.CodeSystem.ConceptDesignationComponent> _Designation;
+            private List<Hl7.Fhir.Model.CodeSystem.DesignationComponent> _Designation;
             
             /// <summary>
             /// Property value for the concept
@@ -733,7 +768,7 @@ namespace Hl7.Fhir.Model
                     if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
                     if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
                     if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.FhirString)DefinitionElement.DeepCopy();
-                    if(Designation != null) dest.Designation = new List<Hl7.Fhir.Model.CodeSystem.ConceptDesignationComponent>(Designation.DeepCopy());
+                    if(Designation != null) dest.Designation = new List<Hl7.Fhir.Model.CodeSystem.DesignationComponent>(Designation.DeepCopy());
                     if(Property != null) dest.Property = new List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent>(Property.DeepCopy());
                     if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent>(Concept.DeepCopy());
                     return dest;
@@ -782,12 +817,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptDesignationComponent")]
+        [FhirType("DesignationComponent")]
         [DataContract]
-        public partial class ConceptDesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "ConceptDesignationComponent"; } }
+            public override string TypeName { get { return "DesignationComponent"; } }
             
             /// <summary>
             /// Human language of the designation
@@ -869,7 +904,7 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as ConceptDesignationComponent;
+                var dest = other as DesignationComponent;
                 
                 if (dest != null)
                 {
@@ -885,12 +920,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new ConceptDesignationComponent());
+                return CopyTo(new DesignationComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as ConceptDesignationComponent;
+                var otherT = other as DesignationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
@@ -903,7 +938,7 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as ConceptDesignationComponent;
+                var otherT = other as DesignationComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;

@@ -183,17 +183,18 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.SimpleQuantity _High;
             
             /// <summary>
-            /// Indicates the meaning/use of this range of this range
+            /// Reference range qualifier
             /// </summary>
             [FhirElement("meaning", Order=60)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Meaning
+            public List<Hl7.Fhir.Model.CodeableConcept> Meaning
             {
-                get { return _Meaning; }
+                get { if(_Meaning==null) _Meaning = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Meaning; }
                 set { _Meaning = value; OnPropertyChanged("Meaning"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Meaning;
+            private List<Hl7.Fhir.Model.CodeableConcept> _Meaning;
             
             /// <summary>
             /// Applicable age range, if relevant
@@ -249,7 +250,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Low != null) dest.Low = (Hl7.Fhir.Model.SimpleQuantity)Low.DeepCopy();
                     if(High != null) dest.High = (Hl7.Fhir.Model.SimpleQuantity)High.DeepCopy();
-                    if(Meaning != null) dest.Meaning = (Hl7.Fhir.Model.CodeableConcept)Meaning.DeepCopy();
+                    if(Meaning != null) dest.Meaning = new List<Hl7.Fhir.Model.CodeableConcept>(Meaning.DeepCopy());
                     if(Age != null) dest.Age = (Hl7.Fhir.Model.Range)Age.DeepCopy();
                     if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
                     return dest;
@@ -446,9 +447,22 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _DataAbsentReason;
             
             /// <summary>
+            /// High, low, normal, etc.
+            /// </summary>
+            [FhirElement("interpretation", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Interpretation
+            {
+                get { return _Interpretation; }
+                set { _Interpretation = value; OnPropertyChanged("Interpretation"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Interpretation;
+            
+            /// <summary>
             /// Provides guide for interpretation of component result
             /// </summary>
-            [FhirElement("referenceRange", Order=70)]
+            [FhirElement("referenceRange", Order=80)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent> ReferenceRange
@@ -469,6 +483,7 @@ namespace Hl7.Fhir.Model
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     if(DataAbsentReason != null) dest.DataAbsentReason = (Hl7.Fhir.Model.CodeableConcept)DataAbsentReason.DeepCopy();
+                    if(Interpretation != null) dest.Interpretation = (Hl7.Fhir.Model.CodeableConcept)Interpretation.DeepCopy();
                     if(ReferenceRange != null) dest.ReferenceRange = new List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent>(ReferenceRange.DeepCopy());
                     return dest;
                 }
@@ -490,6 +505,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(Value, otherT.Value)) return false;
                 if( !DeepComparable.Matches(DataAbsentReason, otherT.DataAbsentReason)) return false;
+                if( !DeepComparable.Matches(Interpretation, otherT.Interpretation)) return false;
                 if( !DeepComparable.Matches(ReferenceRange, otherT.ReferenceRange)) return false;
                 
                 return true;
@@ -504,6 +520,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 if( !DeepComparable.IsExactly(DataAbsentReason, otherT.DataAbsentReason)) return false;
+                if( !DeepComparable.IsExactly(Interpretation, otherT.Interpretation)) return false;
                 if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
                 
                 return true;
@@ -563,14 +580,15 @@ namespace Hl7.Fhir.Model
         /// Classification of  type of observation
         /// </summary>
         [FhirElement("category", Order=110)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Category
+        public List<Hl7.Fhir.Model.CodeableConcept> Category
         {
-            get { return _Category; }
+            get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
             set { _Category = value; OnPropertyChanged("Category"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Category;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Category;
         
         /// <summary>
         /// Type of observation (code / type)
@@ -852,7 +870,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Observation.ObservationStatus>)StatusElement.DeepCopy();
-                if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
+                if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();

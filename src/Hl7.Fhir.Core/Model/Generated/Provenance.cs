@@ -431,14 +431,15 @@ namespace Hl7.Fhir.Model
             /// Entity is attributed to this agent
             /// </summary>
             [FhirElement("agent", InSummary=true, Order=80)]
+            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public Hl7.Fhir.Model.Provenance.AgentComponent Agent
+            public List<Hl7.Fhir.Model.Provenance.AgentComponent> Agent
             {
-                get { return _Agent; }
+                get { if(_Agent==null) _Agent = new List<Hl7.Fhir.Model.Provenance.AgentComponent>(); return _Agent; }
                 set { _Agent = value; OnPropertyChanged("Agent"); }
             }
             
-            private Hl7.Fhir.Model.Provenance.AgentComponent _Agent;
+            private List<Hl7.Fhir.Model.Provenance.AgentComponent> _Agent;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -451,7 +452,7 @@ namespace Hl7.Fhir.Model
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
                     if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirUri)ReferenceElement.DeepCopy();
                     if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-                    if(Agent != null) dest.Agent = (Hl7.Fhir.Model.Provenance.AgentComponent)Agent.DeepCopy();
+                    if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Provenance.AgentComponent>(Agent.DeepCopy());
                     return dest;
                 }
                 else

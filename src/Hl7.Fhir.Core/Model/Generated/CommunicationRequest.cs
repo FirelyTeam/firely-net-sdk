@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
         /// Message recipient
         /// </summary>
         [FhirElement("recipient", InSummary=true, Order=120)]
-        [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
+        [References("Device","Organization","Patient","Practitioner","RelatedPerson","Group","CareTeam")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Recipient

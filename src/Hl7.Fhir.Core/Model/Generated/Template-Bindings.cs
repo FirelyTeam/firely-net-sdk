@@ -109,6 +109,33 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
+    /// The status of the knowledge module
+    /// (url: http://hl7.org/fhir/ValueSet/module-metadata-status)
+    /// </summary>
+    [FhirEnumeration("ModuleMetadataStatus")]
+    public enum ModuleMetadataStatus
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/module-metadata-status)
+        /// </summary>
+        [EnumLiteral("draft"), Description("Draft")]
+        Draft,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/module-metadata-status)
+        /// </summary>
+        [EnumLiteral("active"), Description("Active")]
+        Active,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/module-metadata-status)
+        /// </summary>
+        [EnumLiteral("inactive"), Description("Inactive")]
+        Inactive,
+    }
+
+    /// <summary>
     /// The Participation status of an appointment.
     /// (url: http://hl7.org/fhir/ValueSet/participationstatus)
     /// </summary>
@@ -142,27 +169,6 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The outcome of the processing.
-    /// (url: http://hl7.org/fhir/ValueSet/remittance-outcome)
-    /// </summary>
-    [FhirEnumeration("RemittanceOutcome")]
-    public enum RemittanceOutcome
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/remittance-outcome)
-        /// </summary>
-        [EnumLiteral("complete"), Description("Complete")]
-        Complete,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/remittance-outcome)
-        /// </summary>
-        [EnumLiteral("error"), Description("Error")]
-        Error,
-    }
-
-    /// <summary>
     /// One of the resource types defined as part of FHIR.
     /// (url: http://hl7.org/fhir/ValueSet/resource-types)
     /// </summary>
@@ -175,6 +181,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Account"), Description("Account")]
         Account,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("ActivityDefinition"), Description("ActivityDefinition")]
+        ActivityDefinition,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -305,6 +317,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("Consent"), Description("Consent")]
+        Consent,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("Contract"), Description("Contract")]
         Contract,
         /// <summary>
@@ -419,6 +437,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("Endpoint"), Description("Endpoint")]
+        Endpoint,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("EnrollmentRequest"), Description("EnrollmentRequest")]
         EnrollmentRequest,
         /// <summary>
@@ -485,14 +509,8 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
-        [EnumLiteral("ImagingExcerpt"), Description("ImagingExcerpt")]
-        ImagingExcerpt,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
-        [EnumLiteral("ImagingObjectSelection"), Description("ImagingObjectSelection")]
-        ImagingObjectSelection,
+        [EnumLiteral("ImagingManifest"), Description("ImagingManifest")]
+        ImagingManifest,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -685,6 +703,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Person"), Description("Person")]
         Person,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("PlanDefinition"), Description("PlanDefinition")]
+        PlanDefinition,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -973,6 +997,33 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
+    /// This value set includes a Claim Processing Outcome codes.
+    /// (url: http://hl7.org/fhir/ValueSet/remittance-outcome)
+    /// </summary>
+    [FhirEnumeration("ClaimProcessingCodes")]
+    public enum ClaimProcessingCodes
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/remittance-outcome)
+        /// </summary>
+        [EnumLiteral("complete"), Description("Processing Complete")]
+        Complete,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/remittance-outcome)
+        /// </summary>
+        [EnumLiteral("error"), Description("Error")]
+        Error,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/remittance-outcome)
+        /// </summary>
+        [EnumLiteral("partial"), Description("Partial Processing")]
+        Partial,
+    }
+
+    /// <summary>
     /// The gender of a person used for administrative purposes.
     /// (url: http://hl7.org/fhir/ValueSet/administrative-gender)
     /// </summary>
@@ -1217,8 +1268,20 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
         /// </summary>
+        [EnumLiteral("ContactDetail"), Description("ContactDetail")]
+        ContactDetail,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/data-types)
+        /// </summary>
         [EnumLiteral("ContactPoint"), Description("ContactPoint")]
         ContactPoint,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/data-types)
+        /// </summary>
+        [EnumLiteral("Contributor"), Description("Contributor")]
+        Contributor,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
@@ -1337,6 +1400,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
         /// </summary>
+        [EnumLiteral("RelatedResource"), Description("RelatedResource")]
+        RelatedResource,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/data-types)
+        /// </summary>
         [EnumLiteral("SampledData"), Description("SampledData")]
         SampledData,
         /// <summary>
@@ -1363,6 +1432,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("TriggerDefinition"), Description("TriggerDefinition")]
         TriggerDefinition,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/data-types)
+        /// </summary>
+        [EnumLiteral("UsageContext"), Description("UsageContext")]
+        UsageContext,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
@@ -1477,6 +1552,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Account"), Description("Account")]
         Account,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("ActivityDefinition"), Description("ActivityDefinition")]
+        ActivityDefinition,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -1607,6 +1688,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("Consent"), Description("Consent")]
+        Consent,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("Contract"), Description("Contract")]
         Contract,
         /// <summary>
@@ -1721,6 +1808,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("Endpoint"), Description("Endpoint")]
+        Endpoint,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("EnrollmentRequest"), Description("EnrollmentRequest")]
         EnrollmentRequest,
         /// <summary>
@@ -1787,14 +1880,8 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
-        [EnumLiteral("ImagingExcerpt"), Description("ImagingExcerpt")]
-        ImagingExcerpt,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
-        [EnumLiteral("ImagingObjectSelection"), Description("ImagingObjectSelection")]
-        ImagingObjectSelection,
+        [EnumLiteral("ImagingManifest"), Description("ImagingManifest")]
+        ImagingManifest,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -1987,6 +2074,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Person"), Description("Person")]
         Person,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("PlanDefinition"), Description("PlanDefinition")]
+        PlanDefinition,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -2222,8 +2315,20 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
         /// </summary>
+        [EnumLiteral("ContactDetail"), Description("ContactDetail")]
+        ContactDetail,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/data-types)
+        /// </summary>
         [EnumLiteral("ContactPoint"), Description("ContactPoint")]
         ContactPoint,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/data-types)
+        /// </summary>
+        [EnumLiteral("Contributor"), Description("Contributor")]
+        Contributor,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
@@ -2342,6 +2447,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
         /// </summary>
+        [EnumLiteral("RelatedResource"), Description("RelatedResource")]
+        RelatedResource,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/data-types)
+        /// </summary>
         [EnumLiteral("SampledData"), Description("SampledData")]
         SampledData,
         /// <summary>
@@ -2368,6 +2479,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("TriggerDefinition"), Description("TriggerDefinition")]
         TriggerDefinition,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/data-types)
+        /// </summary>
+        [EnumLiteral("UsageContext"), Description("UsageContext")]
+        UsageContext,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
@@ -2482,6 +2599,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Account"), Description("Account")]
         Account,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("ActivityDefinition"), Description("ActivityDefinition")]
+        ActivityDefinition,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -2612,6 +2735,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("Consent"), Description("Consent")]
+        Consent,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("Contract"), Description("Contract")]
         Contract,
         /// <summary>
@@ -2726,6 +2855,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("Endpoint"), Description("Endpoint")]
+        Endpoint,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("EnrollmentRequest"), Description("EnrollmentRequest")]
         EnrollmentRequest,
         /// <summary>
@@ -2792,14 +2927,8 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
-        [EnumLiteral("ImagingExcerpt"), Description("ImagingExcerpt")]
-        ImagingExcerpt,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
-        [EnumLiteral("ImagingObjectSelection"), Description("ImagingObjectSelection")]
-        ImagingObjectSelection,
+        [EnumLiteral("ImagingManifest"), Description("ImagingManifest")]
+        ImagingManifest,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -2992,6 +3121,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Person"), Description("Person")]
         Person,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("PlanDefinition"), Description("PlanDefinition")]
+        PlanDefinition,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)

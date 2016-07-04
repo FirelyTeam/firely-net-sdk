@@ -361,15 +361,15 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("performer", InSummary=true, Order=170)]
         [References("Practitioner","Organization")]
-        [Cardinality(Min=1,Max=1)]
+        [Cardinality(Min=1,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Performer
+        public List<Hl7.Fhir.Model.ResourceReference> Performer
         {
-            get { return _Performer; }
+            get { if(_Performer==null) _Performer = new List<Hl7.Fhir.Model.ResourceReference>(); return _Performer; }
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Performer;
+        private List<Hl7.Fhir.Model.ResourceReference> _Performer;
         
         /// <summary>
         /// What was requested
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
         /// Reference to full details of imaging associated with the diagnostic report
         /// </summary>
         [FhirElement("imagingStudy", Order=210)]
-        [References("ImagingStudy","ImagingObjectSelection")]
+        [References("ImagingStudy","ImagingManifest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> ImagingStudy
@@ -520,7 +520,7 @@ namespace Hl7.Fhir.Model
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
-                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
+                if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                 if(Request != null) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
                 if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
                 if(Result != null) dest.Result = new List<Hl7.Fhir.Model.ResourceReference>(Result.DeepCopy());

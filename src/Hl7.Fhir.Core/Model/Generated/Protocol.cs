@@ -133,50 +133,62 @@ namespace Hl7.Fhir.Model
 
         /// <summary>
         /// High-level categorization of the type of activity in a protocol.
-        /// (url: http://hl7.org/fhir/ValueSet/activity-definition-category)
+        /// (url: http://hl7.org/fhir/ValueSet/protocol-activity-category)
         /// </summary>
-        [FhirEnumeration("ActivityDefinitionCategory")]
-        public enum ActivityDefinitionCategory
+        [FhirEnumeration("ProtocolActivityDefinitionCategory")]
+        public enum ProtocolActivityDefinitionCategory
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// (system: http://hl7.org/fhir/protocol-activity-category)
+            /// </summary>
+            [EnumLiteral("communication"), Description("Communication")]
+            Communication,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/protocol-activity-category)
             /// </summary>
             [EnumLiteral("diet"), Description("Diet")]
             Diet,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// (system: http://hl7.org/fhir/protocol-activity-category)
             /// </summary>
             [EnumLiteral("drug"), Description("Drug")]
             Drug,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// (system: http://hl7.org/fhir/protocol-activity-category)
             /// </summary>
             [EnumLiteral("encounter"), Description("Encounter")]
             Encounter,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// (system: http://hl7.org/fhir/protocol-activity-category)
             /// </summary>
             [EnumLiteral("observation"), Description("Observation")]
             Observation,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// (system: http://hl7.org/fhir/protocol-activity-category)
             /// </summary>
             [EnumLiteral("procedure"), Description("Procedure")]
             Procedure,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// (system: http://hl7.org/fhir/protocol-activity-category)
+            /// </summary>
+            [EnumLiteral("referral"), Description("Referral")]
+            Referral,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/protocol-activity-category)
             /// </summary>
             [EnumLiteral("supply"), Description("Supply")]
             Supply,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// (system: http://hl7.org/fhir/protocol-activity-category)
             /// </summary>
             [EnumLiteral("other"), Description("Other")]
             Other,
@@ -258,13 +270,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("duration", InSummary=true, Order=60)]
             [DataMember]
-            public Hl7.Fhir.Model.Duration Duration
+            public Duration Duration
             {
                 get { return _Duration; }
                 set { _Duration = value; OnPropertyChanged("Duration"); }
             }
             
-            private Hl7.Fhir.Model.Duration _Duration;
+            private Duration _Duration;
             
             /// <summary>
             /// Rules prior to execution
@@ -361,7 +373,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Duration != null) dest.Duration = (Hl7.Fhir.Model.Duration)Duration.DeepCopy();
+                    if(Duration != null) dest.Duration = (Duration)Duration.DeepCopy();
                     if(Precondition != null) dest.Precondition = (Hl7.Fhir.Model.Protocol.PreconditionComponent)Precondition.DeepCopy();
                     if(Exit != null) dest.Exit = (Hl7.Fhir.Model.Protocol.PreconditionComponent)Exit.DeepCopy();
                     if(FirstActivityElement != null) dest.FirstActivityElement = (Hl7.Fhir.Model.FhirUri)FirstActivityElement.DeepCopy();
@@ -742,13 +754,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("wait", InSummary=true, Order=70)]
             [DataMember]
-            public Hl7.Fhir.Model.Duration Wait
+            public Duration Wait
             {
                 get { return _Wait; }
                 set { _Wait = value; OnPropertyChanged("Wait"); }
             }
             
-            private Hl7.Fhir.Model.Duration _Wait;
+            private Duration _Wait;
             
             /// <summary>
             /// Details of activity
@@ -774,7 +786,7 @@ namespace Hl7.Fhir.Model
                     if(AlternativeElement != null) dest.AlternativeElement = new List<Hl7.Fhir.Model.FhirUri>(AlternativeElement.DeepCopy());
                     if(Component != null) dest.Component = new List<Hl7.Fhir.Model.Protocol.ComponentComponent>(Component.DeepCopy());
                     if(FollowingElement != null) dest.FollowingElement = new List<Hl7.Fhir.Model.FhirUri>(FollowingElement.DeepCopy());
-                    if(Wait != null) dest.Wait = (Hl7.Fhir.Model.Duration)Wait.DeepCopy();
+                    if(Wait != null) dest.Wait = (Duration)Wait.DeepCopy();
                     if(Detail != null) dest.Detail = (Hl7.Fhir.Model.Protocol.DetailComponent)Detail.DeepCopy();
                     return dest;
                 }
@@ -947,25 +959,25 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "DetailComponent"; } }
             
             /// <summary>
-            /// diet | drug | encounter | observation +
+            /// communication | diet | drug | encounter | observation | procedure | referral | supply | other
             /// </summary>
             [FhirElement("category", InSummary=true, Order=40)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Protocol.ActivityDefinitionCategory> CategoryElement
+            public Code<Hl7.Fhir.Model.Protocol.ProtocolActivityDefinitionCategory> CategoryElement
             {
                 get { return _CategoryElement; }
                 set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.Protocol.ActivityDefinitionCategory> _CategoryElement;
+            private Code<Hl7.Fhir.Model.Protocol.ProtocolActivityDefinitionCategory> _CategoryElement;
             
             /// <summary>
-            /// diet | drug | encounter | observation +
+            /// communication | diet | drug | encounter | observation | procedure | referral | supply | other
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Protocol.ActivityDefinitionCategory? Category
+            public Hl7.Fhir.Model.Protocol.ProtocolActivityDefinitionCategory? Category
             {
                 get { return CategoryElement != null ? CategoryElement.Value : null; }
                 set
@@ -973,7 +985,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       CategoryElement = null; 
                     else
-                      CategoryElement = new Code<Hl7.Fhir.Model.Protocol.ActivityDefinitionCategory>(value);
+                      CategoryElement = new Code<Hl7.Fhir.Model.Protocol.ProtocolActivityDefinitionCategory>(value);
                     OnPropertyChanged("Category");
                 }
             }
@@ -1037,16 +1049,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What's administered/supplied
             /// </summary>
-            [FhirElement("product", InSummary=true, Order=90)]
-            [References("Medication","Substance")]
+            [FhirElement("product", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Product
+            public Hl7.Fhir.Model.Element Product
             {
                 get { return _Product; }
                 set { _Product = value; OnPropertyChanged("Product"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Product;
+            private Hl7.Fhir.Model.Element _Product;
             
             /// <summary>
             /// How much is administered/consumed/supplied
@@ -1100,12 +1112,12 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.Protocol.ActivityDefinitionCategory>)CategoryElement.DeepCopy();
+                    if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.Protocol.ProtocolActivityDefinitionCategory>)CategoryElement.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                     if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                     if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
-                    if(Product != null) dest.Product = (Hl7.Fhir.Model.ResourceReference)Product.DeepCopy();
+                    if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     return dest;

@@ -210,6 +210,30 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("reference"), Description("reference")]
             Reference,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-transform)
+            /// </summary>
+            [EnumLiteral("dateOp"), Description("dateOp")]
+            DateOp,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-transform)
+            /// </summary>
+            [EnumLiteral("uuid"), Description("uuid")]
+            Uuid,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-transform)
+            /// </summary>
+            [EnumLiteral("pointer"), Description("pointer")]
+            Pointer,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/map-transform)
+            /// </summary>
+            [EnumLiteral("evaluate"), Description("evaluate")]
+            Evaluate,
         }
 
         [FhirType("ContactComponent")]

@@ -41,7 +41,10 @@ using System.ComponentModel;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("Quantity")]
+    /// <summary>
+    /// A length - a value with a unit that is a physical distance
+    /// </summary>
+    [FhirType("Distance")]
     public partial class Distance : Quantity
     {
         [NotMapped]
@@ -53,6 +56,6 @@ namespace Hl7.Fhir.Model
         }
         
         // TODO: Add code to enforce these constraints:
-        // * There SHALL be a code if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.
+        // * A length - a value with a unit that is a physical distance.
     }
 }

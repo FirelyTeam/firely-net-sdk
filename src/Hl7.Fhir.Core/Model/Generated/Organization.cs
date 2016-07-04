@@ -313,6 +313,21 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Organization.ContactComponent> _Contact;
         
+        /// <summary>
+        /// Technical endpoints providing access to services operated for the organization
+        /// </summary>
+        [FhirElement("endpoint", Order=170)]
+        [References("Endpoint")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Endpoint
+        {
+            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
+            set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Organization;
@@ -328,6 +343,7 @@ namespace Hl7.Fhir.Model
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Organization.ContactComponent>(Contact.DeepCopy());
+                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                 return dest;
             }
             else
@@ -353,6 +369,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Address, otherT.Address)) return false;
             if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
             
             return true;
         }
@@ -371,6 +388,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
             if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
+            if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
             
             return true;
         }

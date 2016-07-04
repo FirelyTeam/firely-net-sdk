@@ -108,41 +108,9 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Collector;
             
             /// <summary>
-            /// Collector comments
-            /// </summary>
-            [FhirElement("comment", Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString CommentElement
-            {
-                get { return _CommentElement; }
-                set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _CommentElement;
-            
-            /// <summary>
-            /// Collector comments
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Comment
-            {
-                get { return CommentElement != null ? CommentElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      CommentElement = null; 
-                    else
-                      CommentElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Comment");
-                }
-            }
-            
-            /// <summary>
             /// Collection time
             /// </summary>
-            [FhirElement("collected", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("collected", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Collected
@@ -156,7 +124,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The quantity of specimen collected
             /// </summary>
-            [FhirElement("quantity", Order=70)]
+            [FhirElement("quantity", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
@@ -169,7 +137,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Technique used to perform collection
             /// </summary>
-            [FhirElement("method", Order=80)]
+            [FhirElement("method", Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Method
             {
@@ -182,7 +150,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Anatomical collection site
             /// </summary>
-            [FhirElement("bodySite", Order=90)]
+            [FhirElement("bodySite", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept BodySite
             {
@@ -200,7 +168,6 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Collector != null) dest.Collector = (Hl7.Fhir.Model.ResourceReference)Collector.DeepCopy();
-                    if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                     if(Collected != null) dest.Collected = (Hl7.Fhir.Model.Element)Collected.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
@@ -223,7 +190,6 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Collector, otherT.Collector)) return false;
-                if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
                 if( !DeepComparable.Matches(Collected, otherT.Collected)) return false;
                 if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
                 if( !DeepComparable.Matches(Method, otherT.Method)) return false;
@@ -239,7 +205,6 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Collector, otherT.Collector)) return false;
-                if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
                 if( !DeepComparable.IsExactly(Collected, otherT.Collected)) return false;
                 if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
                 if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
@@ -318,6 +283,20 @@ namespace Hl7.Fhir.Model
             
             private List<Hl7.Fhir.Model.ResourceReference> _Additive;
             
+            /// <summary>
+            /// Date and time of specimen treatment
+            /// </summary>
+            [FhirElement("time", Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Time
+            {
+                get { return _Time; }
+                set { _Time = value; OnPropertyChanged("Time"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Time;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as TreatmentComponent;
@@ -328,6 +307,7 @@ namespace Hl7.Fhir.Model
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Procedure != null) dest.Procedure = (Hl7.Fhir.Model.CodeableConcept)Procedure.DeepCopy();
                     if(Additive != null) dest.Additive = new List<Hl7.Fhir.Model.ResourceReference>(Additive.DeepCopy());
+                    if(Time != null) dest.Time = (Hl7.Fhir.Model.Element)Time.DeepCopy();
                     return dest;
                 }
                 else
@@ -348,6 +328,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(Procedure, otherT.Procedure)) return false;
                 if( !DeepComparable.Matches(Additive, otherT.Additive)) return false;
+                if( !DeepComparable.Matches(Time, otherT.Time)) return false;
                 
                 return true;
             }
@@ -361,6 +342,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(Procedure, otherT.Procedure)) return false;
                 if( !DeepComparable.IsExactly(Additive, otherT.Additive)) return false;
+                if( !DeepComparable.IsExactly(Time, otherT.Time)) return false;
                 
                 return true;
             }
@@ -668,9 +650,24 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Parent;
         
         /// <summary>
+        /// Why the specimen was collected
+        /// </summary>
+        [FhirElement("request", Order=160)]
+        [References("DiagnosticOrder","ProcedureRequest")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Request
+        {
+            get { if(_Request==null) _Request = new List<Hl7.Fhir.Model.ResourceReference>(); return _Request; }
+            set { _Request = value; OnPropertyChanged("Request"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Request;
+        
+        /// <summary>
         /// Collection details
         /// </summary>
-        [FhirElement("collection", Order=160)]
+        [FhirElement("collection", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Specimen.CollectionComponent Collection
         {
@@ -683,7 +680,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Treatment and processing step details
         /// </summary>
-        [FhirElement("treatment", Order=170)]
+        [FhirElement("treatment", Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Specimen.TreatmentComponent> Treatment
@@ -697,7 +694,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Direct container of specimen (tube/slide, etc.)
         /// </summary>
-        [FhirElement("container", Order=180)]
+        [FhirElement("container", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Specimen.ContainerComponent> Container
@@ -707,6 +704,20 @@ namespace Hl7.Fhir.Model
         }
         
         private List<Hl7.Fhir.Model.Specimen.ContainerComponent> _Container;
+        
+        /// <summary>
+        /// Comments
+        /// </summary>
+        [FhirElement("note", Order=200)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Annotation> Note
+        {
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Annotation> _Note;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -722,9 +733,11 @@ namespace Hl7.Fhir.Model
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(ReceivedTimeElement != null) dest.ReceivedTimeElement = (Hl7.Fhir.Model.FhirDateTime)ReceivedTimeElement.DeepCopy();
                 if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
+                if(Request != null) dest.Request = new List<Hl7.Fhir.Model.ResourceReference>(Request.DeepCopy());
                 if(Collection != null) dest.Collection = (Hl7.Fhir.Model.Specimen.CollectionComponent)Collection.DeepCopy();
                 if(Treatment != null) dest.Treatment = new List<Hl7.Fhir.Model.Specimen.TreatmentComponent>(Treatment.DeepCopy());
                 if(Container != null) dest.Container = new List<Hl7.Fhir.Model.Specimen.ContainerComponent>(Container.DeepCopy());
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
             else
@@ -749,9 +762,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(ReceivedTimeElement, otherT.ReceivedTimeElement)) return false;
             if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
+            if( !DeepComparable.Matches(Request, otherT.Request)) return false;
             if( !DeepComparable.Matches(Collection, otherT.Collection)) return false;
             if( !DeepComparable.Matches(Treatment, otherT.Treatment)) return false;
             if( !DeepComparable.Matches(Container, otherT.Container)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -769,9 +784,11 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(ReceivedTimeElement, otherT.ReceivedTimeElement)) return false;
             if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
+            if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
             if( !DeepComparable.IsExactly(Collection, otherT.Collection)) return false;
             if( !DeepComparable.IsExactly(Treatment, otherT.Treatment)) return false;
             if( !DeepComparable.IsExactly(Container, otherT.Container)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
         }

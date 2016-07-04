@@ -168,16 +168,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication, Substance, or Device supplied
         /// </summary>
-        [FhirElement("suppliedItem", InSummary=true, Order=140)]
-        [References("Medication","Substance","Device")]
+        [FhirElement("suppliedItem", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference SuppliedItem
+        public Hl7.Fhir.Model.Element SuppliedItem
         {
             get { return _SuppliedItem; }
             set { _SuppliedItem = value; OnPropertyChanged("SuppliedItem"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _SuppliedItem;
+        private Hl7.Fhir.Model.Element _SuppliedItem;
         
         /// <summary>
         /// Dispenser
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
-                if(SuppliedItem != null) dest.SuppliedItem = (Hl7.Fhir.Model.ResourceReference)SuppliedItem.DeepCopy();
+                if(SuppliedItem != null) dest.SuppliedItem = (Hl7.Fhir.Model.Element)SuppliedItem.DeepCopy();
                 if(Supplier != null) dest.Supplier = (Hl7.Fhir.Model.ResourceReference)Supplier.DeepCopy();
                 if(WhenPrepared != null) dest.WhenPrepared = (Hl7.Fhir.Model.Period)WhenPrepared.DeepCopy();
                 if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)TimeElement.DeepCopy();

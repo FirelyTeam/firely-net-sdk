@@ -99,14 +99,15 @@ namespace Hl7.Fhir.Model
         /// A name associated with the person
         /// </summary>
         [FhirElement("name", InSummary=true, Order=120)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.HumanName Name
+        public List<Hl7.Fhir.Model.HumanName> Name
         {
-            get { return _Name; }
+            get { if(_Name==null) _Name = new List<Hl7.Fhir.Model.HumanName>(); return _Name; }
             set { _Name = value; OnPropertyChanged("Name"); }
         }
         
-        private Hl7.Fhir.Model.HumanName _Name;
+        private List<Hl7.Fhir.Model.HumanName> _Name;
         
         /// <summary>
         /// A contact detail for the person
@@ -237,7 +238,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
-                if(Name != null) dest.Name = (Hl7.Fhir.Model.HumanName)Name.DeepCopy();
+                if(Name != null) dest.Name = new List<Hl7.Fhir.Model.HumanName>(Name.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                 if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopy();

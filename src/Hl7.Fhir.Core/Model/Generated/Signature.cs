@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Who signed the signature
+        /// Who signed
         /// </summary>
         [FhirElement("who", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -114,9 +114,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Who;
         
         /// <summary>
+        /// The party represented
+        /// </summary>
+        [FhirElement("onBehalfOf", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element OnBehalfOf
+        {
+            get { return _OnBehalfOf; }
+            set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _OnBehalfOf;
+        
+        /// <summary>
         /// The technical format of the signature
         /// </summary>
-        [FhirElement("contentType", InSummary=true, Order=60)]
+        [FhirElement("contentType", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Code ContentTypeElement
         {
@@ -148,7 +162,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual signature content (XML DigSig. JWT, picture, etc.)
         /// </summary>
-        [FhirElement("blob", Order=70)]
+        [FhirElement("blob", Order=80)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary BlobElement
         {
@@ -187,6 +201,7 @@ namespace Hl7.Fhir.Model
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.Coding>(Type.DeepCopy());
                 if(WhenElement != null) dest.WhenElement = (Hl7.Fhir.Model.Instant)WhenElement.DeepCopy();
                 if(Who != null) dest.Who = (Hl7.Fhir.Model.Element)Who.DeepCopy();
+                if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.Element)OnBehalfOf.DeepCopy();
                 if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
                 if(BlobElement != null) dest.BlobElement = (Hl7.Fhir.Model.Base64Binary)BlobElement.DeepCopy();
                 return dest;
@@ -209,6 +224,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(WhenElement, otherT.WhenElement)) return false;
             if( !DeepComparable.Matches(Who, otherT.Who)) return false;
+            if( !DeepComparable.Matches(OnBehalfOf, otherT.OnBehalfOf)) return false;
             if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
             if( !DeepComparable.Matches(BlobElement, otherT.BlobElement)) return false;
             
@@ -224,6 +240,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(WhenElement, otherT.WhenElement)) return false;
             if( !DeepComparable.IsExactly(Who, otherT.Who)) return false;
+            if( !DeepComparable.IsExactly(OnBehalfOf, otherT.OnBehalfOf)) return false;
             if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
             if( !DeepComparable.IsExactly(BlobElement, otherT.BlobElement)) return false;
             

@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
         /// Reach goal on or before
         /// </summary>
         [FhirElement("target", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Duration))]
         [DataMember]
         public Hl7.Fhir.Model.Element Target
         {
@@ -365,16 +365,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who's responsible for creating Goal?
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=180)]
+        [FhirElement("expressedBy", InSummary=true, Order=180)]
         [References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Author
+        public Hl7.Fhir.Model.ResourceReference ExpressedBy
         {
-            get { return _Author; }
-            set { _Author = value; OnPropertyChanged("Author"); }
+            get { return _ExpressedBy; }
+            set { _ExpressedBy = value; OnPropertyChanged("ExpressedBy"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Author;
+        private Hl7.Fhir.Model.ResourceReference _ExpressedBy;
         
         /// <summary>
         /// high | medium |low
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Goal.GoalStatus>)StatusElement.DeepCopy();
                 if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.Date)StatusDateElement.DeepCopy();
                 if(StatusReason != null) dest.StatusReason = (Hl7.Fhir.Model.CodeableConcept)StatusReason.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
+                if(ExpressedBy != null) dest.ExpressedBy = (Hl7.Fhir.Model.ResourceReference)ExpressedBy.DeepCopy();
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 if(Addresses != null) dest.Addresses = new List<Hl7.Fhir.Model.ResourceReference>(Addresses.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
             if( !DeepComparable.Matches(StatusReason, otherT.StatusReason)) return false;
-            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
+            if( !DeepComparable.Matches(ExpressedBy, otherT.ExpressedBy)) return false;
             if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
             if( !DeepComparable.Matches(Addresses, otherT.Addresses)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
@@ -503,7 +503,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
             if( !DeepComparable.IsExactly(StatusReason, otherT.StatusReason)) return false;
-            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+            if( !DeepComparable.IsExactly(ExpressedBy, otherT.ExpressedBy)) return false;
             if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
             if( !DeepComparable.IsExactly(Addresses, otherT.Addresses)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;

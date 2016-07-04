@@ -126,11 +126,11 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// The type of network access point of this participant in the audit event
+        /// The type of network access point of this agent in the audit event
         /// (url: http://hl7.org/fhir/ValueSet/network-type)
         /// </summary>
-        [FhirEnumeration("AuditEventParticipantNetworkType")]
-        public enum AuditEventParticipantNetworkType
+        [FhirEnumeration("AuditEventAgentNetworkType")]
+        public enum AuditEventAgentNetworkType
         {
             /// <summary>
             /// MISSING DESCRIPTION
@@ -514,13 +514,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("type", Order=50)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.AuditEvent.AuditEventParticipantNetworkType> TypeElement
+            public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType> TypeElement
             {
                 get { return _TypeElement; }
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.AuditEvent.AuditEventParticipantNetworkType> _TypeElement;
+            private Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType> _TypeElement;
             
             /// <summary>
             /// The type of network access point
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.AuditEvent.AuditEventParticipantNetworkType? Type
+            public Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType? Type
             {
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
@@ -536,7 +536,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventParticipantNetworkType>(value);
+                      TypeElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(AddressElement != null) dest.AddressElement = (Hl7.Fhir.Model.FhirString)AddressElement.DeepCopy();
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventParticipantNetworkType>)TypeElement.DeepCopy();
+                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType>)TypeElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "EntityComponent"; } }
             
             /// <summary>
-            /// Specific instance of object (e.g. versioned)
+            /// Specific instance of object
             /// </summary>
             [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
@@ -726,7 +726,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
-            /// Specific instance of resource (e.g. versioned)
+            /// Specific instance of resource
             /// </summary>
             [FhirElement("reference", InSummary=true, Order=50)]
             [References()]
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Reference;
             
             /// <summary>
-            /// Type of object involved
+            /// Type of entity involved
             /// </summary>
             [FhirElement("type", Order=60)]
             [DataMember]
@@ -766,7 +766,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Role;
             
             /// <summary>
-            /// Life-cycle stage for the object
+            /// Life-cycle stage for the entity
             /// </summary>
             [FhirElement("lifecycle", Order=80)]
             [DataMember]
@@ -779,7 +779,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Coding _Lifecycle;
             
             /// <summary>
-            /// Security labels applied to the object
+            /// Security labels on the entity
             /// </summary>
             [FhirElement("securityLabel", Order=90)]
             [Cardinality(Min=0,Max=-1)]
@@ -1279,7 +1279,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.AuditEvent.AgentComponent> _Agent;
         
         /// <summary>
-        /// Application systems and processes
+        /// Audit Event Reporter
         /// </summary>
         [FhirElement("source", Order=170)]
         [Cardinality(Min=1,Max=1)]
@@ -1293,7 +1293,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.AuditEvent.SourceComponent _Source;
         
         /// <summary>
-        /// Specific instances of data or objects that have been accessed
+        /// Data or objects used
         /// </summary>
         [FhirElement("entity", Order=180)]
         [Cardinality(Min=0,Max=-1)]

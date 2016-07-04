@@ -1,42 +1,7 @@
 ﻿
 //
-// Model Generated on Mon, 06 Jun 2016 16:30:47 GMT for FHIR v1.4.0
+// Model Generated on Mon, 04 Jul 2016 12:26:00 GMT for FHIR v1.4.0
 //
-// Generated Shared Enumeration: BindingStrength
-	// Used in model class (resource): OperationDefinition.parameter.binding.strength
-	// Used in model class (type): ElementDefinition.binding.strength
-
-// Generated Shared Enumeration: FHIRDefinedType
-	// Used in model class (resource): ModuleDefinition.parameter.type
-	// Used in model class (resource): ModuleDefinition.data.type
-	// Used in model class (resource): StructureDefinition.baseType
-	// Used in model class (resource): TestScript.setup.action.operation.resource
-	// Used in model class (resource): TestScript.setup.action.assert.resource
-	// Used in model class (type): ElementDefinition.type.code
-
-// Generated Shared Enumeration: ParticipationStatus
-	// Used in model class (resource): Appointment.participant.status
-	// Used in model class (resource): AppointmentResponse.participantStatus
-
-// Generated Shared Enumeration: DocumentReferenceStatus
-	// Used in model class (resource): DocumentManifest.status
-	// Used in model class (resource): DocumentReference.status
-
-// Generated Shared Enumeration: ActionRelationshipType
-	// Used in model class (resource): GuidanceResponse.action.relatedAction.relationship
-	// Used in model class (type): ActionDefinition.relatedAction.relationship
-
-// Generated Shared Enumeration: RemittanceOutcome
-	// Used in model class (resource): ClaimResponse.outcome
-	// Used in model class (resource): EligibilityResponse.outcome
-	// Used in model class (resource): EnrollmentResponse.outcome
-	// Used in model class (resource): PaymentReconciliation.outcome
-
-// Generated Shared Enumeration: OperationParameterUse
-	// Used in model class (resource): ModuleDefinition.parameter.use
-	// Used in model class (resource): OperationDefinition.parameter.use
-	// Used in model class (type): ParameterDefinition.use
-
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): CompartmentDefinition.resource.code
 	// Used in model class (resource): Conformance.rest.resource.type
@@ -48,6 +13,51 @@
 	// Used in model class (resource): Questionnaire.subjectType
 	// Used in model class (resource): SearchParameter.base
 	// Used in model class (resource): SearchParameter.target
+
+// Generated Shared Enumeration: OperationParameterUse
+	// Used in model class (resource): ModuleDefinition.parameter.use
+	// Used in model class (resource): OperationDefinition.parameter.use
+	// Used in model class (type): ParameterDefinition.use
+
+// Generated Shared Enumeration: FilterOperator
+	// Used in model class (resource): CodeSystem.filter.operator
+	// Used in model class (resource): ValueSet.compose.include.filter.op
+
+// Generated Shared Enumeration: AdministrativeGender
+	// Used in model class (resource): FamilyMemberHistory.gender
+	// Used in model class (resource): Patient.gender
+	// Used in model class (resource): Patient.contact.gender
+	// Used in model class (resource): Person.gender
+	// Used in model class (resource): Practitioner.gender
+	// Used in model class (resource): RelatedPerson.gender
+
+// Generated Shared Enumeration: FHIRDefinedType
+	// Used in model class (resource): ModuleDefinition.parameter.type
+	// Used in model class (resource): ModuleDefinition.data.type
+	// Used in model class (resource): TestScript.setup.action.operation.resource
+	// Used in model class (resource): TestScript.setup.action.assert.resource
+
+// Generated Shared Enumeration: BindingStrength
+	// Used in model class (resource): OperationDefinition.parameter.binding.strength
+	// Used in model class (type): ElementDefinition.binding.strength
+
+// Generated Shared Enumeration: ParticipationStatus
+	// Used in model class (resource): Appointment.participant.status
+	// Used in model class (resource): AppointmentResponse.participantStatus
+
+// Generated Shared Enumeration: ClaimProcessingCodes
+	// Used in model class (resource): EligibilityResponse.outcome
+	// Used in model class (resource): EnrollmentResponse.outcome
+	// Used in model class (resource): PaymentReconciliation.outcome
+
+// Generated Shared Enumeration: ListMode
+	// Used in model class (resource): Composition.section.mode
+	// Used in model class (resource): List.mode
+
+// Generated Shared Enumeration: SearchParamType
+	// Used in model class (resource): Conformance.rest.resource.searchParam.type
+	// Used in model class (resource): OperationDefinition.parameter.searchType
+	// Used in model class (resource): SearchParameter.type
 
 // Generated Shared Enumeration: ConformanceResourceStatus
 	// Used in model class (resource): CodeSystem.status
@@ -65,43 +75,36 @@
 	// Used in model class (resource): StructureMap.status
 	// Used in model class (resource): TestScript.status
 
-// Generated Shared Enumeration: SearchParamType
-	// Used in model class (resource): Conformance.rest.resource.searchParam.type
-	// Used in model class (resource): OperationDefinition.parameter.searchType
-	// Used in model class (resource): SearchParameter.type
+// Generated Shared Enumeration: DaysOfWeek
+	// Used in model class (resource): HealthcareService.availableTime.daysOfWeek
+	// Used in model class (resource): PractitionerRole.availableTime.daysOfWeek
+
+// Generated Shared Enumeration: ModuleMetadataStatus
+	// Used in model class (resource): ActivityDefinition.status
+	// Used in model class (resource): PlanDefinition.status
+	// Used in model class (type): ModuleMetadata.status
+
+// Generated Shared Enumeration: ActionRelationshipType
+	// Used in model class (resource): GuidanceResponse.action.relatedAction.relationship
+	// Used in model class (type): ActionDefinition.relatedAction.relationship
+
+// Generated Shared Enumeration: DocumentReferenceStatus
+	// Used in model class (resource): DocumentManifest.status
+	// Used in model class (resource): DocumentReference.status
+
+// Generated Shared Enumeration: MedicationAdministrationStatus
+	// Used in model class (resource): Immunization.status
+	// Used in model class (resource): MedicationAdministration.status
+	// Used in model class (resource): MedicationAdministration.eventHistory.status
 
 // Generated Shared Enumeration: ActionRelationshipAnchor
 	// Used in model class (resource): GuidanceResponse.action.relatedAction.anchor
 	// Used in model class (type): ActionDefinition.relatedAction.anchor
 
-// Generated Shared Enumeration: AdministrativeGender
-	// Used in model class (resource): FamilyMemberHistory.gender
-	// Used in model class (resource): Patient.gender
-	// Used in model class (resource): Patient.contact.gender
-	// Used in model class (resource): Person.gender
-	// Used in model class (resource): Practitioner.gender
-	// Used in model class (resource): RelatedPerson.gender
-
 // Generated Shared Enumeration: FHIRAllTypes
 	// Used in model class (resource): OperationDefinition.parameter.type
 	// Used in model class (type): DataRequirement.type
 	// Used in model class (type): ParameterDefinition.type
-
-// Generated Shared Enumeration: DaysOfWeek
-	// Used in model class (resource): HealthcareService.availableTime.daysOfWeek
-	// Used in model class (resource): PractitionerRole.availableTime.daysOfWeek
-
-// Generated Shared Enumeration: MedicationAdministrationStatus
-	// Used in model class (resource): Immunization.status
-	// Used in model class (resource): MedicationAdministration.status
-
-// Generated Shared Enumeration: ListMode
-	// Used in model class (resource): Composition.section.mode
-	// Used in model class (resource): List.mode
-
-// Generated Shared Enumeration: FilterOperator
-	// Used in model class (resource): CodeSystem.filter.operator
-	// Used in model class (resource): ValueSet.compose.include.filter.op
 
 // Generated helper templates
 // Generated items
@@ -132,6 +135,7 @@
 // Hl7.Fhir.Core\Model\Generated\Procedure.cs
 // Hl7.Fhir.Core\Model\Generated\PractitionerRole.cs
 // Hl7.Fhir.Core\Model\Generated\Practitioner.cs
+// Hl7.Fhir.Core\Model\Generated\PlanDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Person.cs
 // Hl7.Fhir.Core\Model\Generated\PaymentReconciliation.cs
 // Hl7.Fhir.Core\Model\Generated\PaymentNotice.cs
@@ -163,8 +167,7 @@
 // Hl7.Fhir.Core\Model\Generated\ImmunizationRecommendation.cs
 // Hl7.Fhir.Core\Model\Generated\Immunization.cs
 // Hl7.Fhir.Core\Model\Generated\ImagingStudy.cs
-// Hl7.Fhir.Core\Model\Generated\ImagingObjectSelection.cs
-// Hl7.Fhir.Core\Model\Generated\ImagingExcerpt.cs
+// Hl7.Fhir.Core\Model\Generated\ImagingManifest.cs
 // Hl7.Fhir.Core\Model\Generated\HealthcareService.cs
 // Hl7.Fhir.Core\Model\Generated\GuidanceResponse.cs
 // Hl7.Fhir.Core\Model\Generated\Group.cs
@@ -176,6 +179,7 @@
 // Hl7.Fhir.Core\Model\Generated\EpisodeOfCare.cs
 // Hl7.Fhir.Core\Model\Generated\EnrollmentResponse.cs
 // Hl7.Fhir.Core\Model\Generated\EnrollmentRequest.cs
+// Hl7.Fhir.Core\Model\Generated\Endpoint.cs
 // Hl7.Fhir.Core\Model\Generated\Encounter.cs
 // Hl7.Fhir.Core\Model\Generated\EligibilityResponse.cs
 // Hl7.Fhir.Core\Model\Generated\EligibilityRequest.cs
@@ -194,6 +198,7 @@
 // Hl7.Fhir.Core\Model\Generated\DataElement.cs
 // Hl7.Fhir.Core\Model\Generated\Coverage.cs
 // Hl7.Fhir.Core\Model\Generated\Contract.cs
+// Hl7.Fhir.Core\Model\Generated\Consent.cs
 // Hl7.Fhir.Core\Model\Generated\Conformance.cs
 // Hl7.Fhir.Core\Model\Generated\Condition.cs
 // Hl7.Fhir.Core\Model\Generated\ConceptMap.cs
@@ -214,8 +219,9 @@
 // Hl7.Fhir.Core\Model\Generated\AppointmentResponse.cs
 // Hl7.Fhir.Core\Model\Generated\Appointment.cs
 // Hl7.Fhir.Core\Model\Generated\AllergyIntolerance.cs
+// Hl7.Fhir.Core\Model\Generated\ActivityDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Account.cs
-// Hl7.Fhir.Core\Model\Generated\DomainResource.cs
 // Hl7.Fhir.Core\Model\Generated\Parameters.cs
+// Hl7.Fhir.Core\Model\Generated\DomainResource.cs
 // Hl7.Fhir.Core\Model\Generated\ValueSet.cs
 // Hl7.Fhir.Core\Model\Generated\CodeSystem.cs

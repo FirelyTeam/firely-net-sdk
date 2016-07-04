@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
             /// Length/Range of lengths, or (Start and/or end) limits
             /// </summary>
             [FhirElement("bounds", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period))]
+            [AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
             public Hl7.Fhir.Model.Element Bounds
             {
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Timing.RepeatComponent _Repeat;
         
         /// <summary>
-        /// QD | QOD | Q4H | Q6H | BID | TID | QID | AM | PM +
+        /// BID | TID | QID | AM | PM | QD | QOD | Q4H | Q6H +
         /// </summary>
         [FhirElement("code", InSummary=true, Order=50)]
         [DataMember]

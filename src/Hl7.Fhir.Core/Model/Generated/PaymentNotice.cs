@@ -54,9 +54,42 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "PaymentNotice"; } }
         
         /// <summary>
+        /// A code specifying the state of the resource instance.
+        /// (url: http://hl7.org/fhir/ValueSet/paymentnotice-status)
+        /// </summary>
+        [FhirEnumeration("PaymentNoticeStatus")]
+        public enum PaymentNoticeStatus
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/paymentnotice-status)
+            /// </summary>
+            [EnumLiteral("active"), Description("Active")]
+            Active,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/paymentnotice-status)
+            /// </summary>
+            [EnumLiteral("cancelled"), Description("Cancelled")]
+            Cancelled,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/paymentnotice-status)
+            /// </summary>
+            [EnumLiteral("draft"), Description("Draft")]
+            Draft,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/paymentnotice-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            EnteredInError,
+        }
+
+        /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -68,9 +101,42 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// active | cancelled | draft | entered-in-error
+        /// </summary>
+        [FhirElement("status", InSummary=true, Order=100)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.PaymentNotice.PaymentNoticeStatus> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.PaymentNotice.PaymentNoticeStatus> _StatusElement;
+        
+        /// <summary>
+        /// active | cancelled | draft | entered-in-error
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.PaymentNotice.PaymentNoticeStatus? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.PaymentNotice.PaymentNoticeStatus>(value);
+                OnPropertyChanged("Status");
+            }
+        }
+        
+        /// <summary>
         /// Resource version
         /// </summary>
-        [FhirElement("ruleset", InSummary=true, Order=100)]
+        [FhirElement("ruleset", Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
         {
@@ -83,7 +149,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Original version
         /// </summary>
-        [FhirElement("originalRuleset", InSummary=true, Order=110)]
+        [FhirElement("originalRuleset", Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
         {
@@ -96,7 +162,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", InSummary=true, Order=120)]
+        [FhirElement("created", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -128,7 +194,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer or Regulatory body
         /// </summary>
-        [FhirElement("target", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("target", Order=140, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Target
@@ -142,7 +208,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("provider", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("provider", Order=150, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Provider
@@ -156,7 +222,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("organization", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("organization", Order=160, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Organization
@@ -170,7 +236,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Request reference
         /// </summary>
-        [FhirElement("request", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("request", Order=170, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Request
@@ -184,7 +250,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Response reference
         /// </summary>
-        [FhirElement("response", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("response", Order=180, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
         public Hl7.Fhir.Model.Element Response
@@ -198,7 +264,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Status of the payment
         /// </summary>
-        [FhirElement("paymentStatus", InSummary=true, Order=180)]
+        [FhirElement("paymentStatus", Order=190)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Coding PaymentStatus
@@ -212,7 +278,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Payment or clearing date
         /// </summary>
-        [FhirElement("statusDate", InSummary=true, Order=190)]
+        [FhirElement("statusDate", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.Date StatusDateElement
         {
@@ -249,6 +315,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PaymentNotice.PaymentNoticeStatus>)StatusElement.DeepCopy();
                 if(Ruleset != null) dest.Ruleset = (Hl7.Fhir.Model.Coding)Ruleset.DeepCopy();
                 if(OriginalRuleset != null) dest.OriginalRuleset = (Hl7.Fhir.Model.Coding)OriginalRuleset.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
@@ -277,6 +344,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Ruleset, otherT.Ruleset)) return false;
             if( !DeepComparable.Matches(OriginalRuleset, otherT.OriginalRuleset)) return false;
             if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
@@ -298,6 +366,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Ruleset, otherT.Ruleset)) return false;
             if( !DeepComparable.IsExactly(OriginalRuleset, otherT.OriginalRuleset)) return false;
             if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;

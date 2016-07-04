@@ -54,9 +54,42 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "EnrollmentResponse"; } }
         
         /// <summary>
+        /// A code specifying the state of the resource instance.
+        /// (url: http://hl7.org/fhir/ValueSet/enrollmentresponse-status)
+        /// </summary>
+        [FhirEnumeration("EnrollmentResponseStatus")]
+        public enum EnrollmentResponseStatus
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/enrollmentresponse-status)
+            /// </summary>
+            [EnumLiteral("active"), Description("Active")]
+            Active,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/enrollmentresponse-status)
+            /// </summary>
+            [EnumLiteral("cancelled"), Description("Cancelled")]
+            Cancelled,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/enrollmentresponse-status)
+            /// </summary>
+            [EnumLiteral("draft"), Description("Draft")]
+            Draft,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/enrollmentresponse-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered In Error")]
+            EnteredInError,
+        }
+
+        /// <summary>
         /// Business Identifier
         /// </summary>
-        [FhirElement("identifier", InSummary=true, Order=90)]
+        [FhirElement("identifier", Order=90)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -68,39 +101,72 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// active | cancelled | draft | entered-in-error
+        /// </summary>
+        [FhirElement("status", InSummary=true, Order=100)]
+        [Cardinality(Min=1,Max=1)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.EnrollmentResponse.EnrollmentResponseStatus> StatusElement
+        {
+            get { return _StatusElement; }
+            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.EnrollmentResponse.EnrollmentResponseStatus> _StatusElement;
+        
+        /// <summary>
+        /// active | cancelled | draft | entered-in-error
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.EnrollmentResponse.EnrollmentResponseStatus? Status
+        {
+            get { return StatusElement != null ? StatusElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  StatusElement = null; 
+                else
+                  StatusElement = new Code<Hl7.Fhir.Model.EnrollmentResponse.EnrollmentResponseStatus>(value);
+                OnPropertyChanged("Status");
+            }
+        }
+        
+        /// <summary>
         /// Claim reference
         /// </summary>
-        [FhirElement("request", InSummary=true, Order=100)]
-        [References("EnrollmentRequest")]
+        [FhirElement("request", Order=110, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Request
+        public Hl7.Fhir.Model.Element Request
         {
             get { return _Request; }
             set { _Request = value; OnPropertyChanged("Request"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Request;
+        private Hl7.Fhir.Model.Element _Request;
         
         /// <summary>
-        /// complete | error
+        /// complete | error | partial
         /// </summary>
-        [FhirElement("outcome", InSummary=true, Order=110)]
+        [FhirElement("outcome", Order=120)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.RemittanceOutcome> OutcomeElement
+        public Code<Hl7.Fhir.Model.ClaimProcessingCodes> OutcomeElement
         {
             get { return _OutcomeElement; }
             set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.RemittanceOutcome> _OutcomeElement;
+        private Code<Hl7.Fhir.Model.ClaimProcessingCodes> _OutcomeElement;
         
         /// <summary>
-        /// complete | error
+        /// complete | error | partial
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.RemittanceOutcome? Outcome
+        public Hl7.Fhir.Model.ClaimProcessingCodes? Outcome
         {
             get { return OutcomeElement != null ? OutcomeElement.Value : null; }
             set
@@ -108,7 +174,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   OutcomeElement = null; 
                 else
-                  OutcomeElement = new Code<Hl7.Fhir.Model.RemittanceOutcome>(value);
+                  OutcomeElement = new Code<Hl7.Fhir.Model.ClaimProcessingCodes>(value);
                 OnPropertyChanged("Outcome");
             }
         }
@@ -116,7 +182,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Disposition Message
         /// </summary>
-        [FhirElement("disposition", InSummary=true, Order=120)]
+        [FhirElement("disposition", Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DispositionElement
         {
@@ -148,7 +214,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Resource version
         /// </summary>
-        [FhirElement("ruleset", InSummary=true, Order=130)]
+        [FhirElement("ruleset", Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Coding Ruleset
         {
@@ -161,7 +227,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Original version
         /// </summary>
-        [FhirElement("originalRuleset", InSummary=true, Order=140)]
+        [FhirElement("originalRuleset", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Coding OriginalRuleset
         {
@@ -174,7 +240,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Creation date
         /// </summary>
-        [FhirElement("created", InSummary=true, Order=150)]
+        [FhirElement("created", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime CreatedElement
         {
@@ -206,44 +272,44 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Insurer
         /// </summary>
-        [FhirElement("organization", InSummary=true, Order=160)]
-        [References("Organization")]
+        [FhirElement("organization", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Organization
+        public Hl7.Fhir.Model.Element Organization
         {
             get { return _Organization; }
             set { _Organization = value; OnPropertyChanged("Organization"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Organization;
+        private Hl7.Fhir.Model.Element _Organization;
         
         /// <summary>
         /// Responsible practitioner
         /// </summary>
-        [FhirElement("requestProvider", InSummary=true, Order=170)]
-        [References("Practitioner")]
+        [FhirElement("requestProvider", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference RequestProvider
+        public Hl7.Fhir.Model.Element RequestProvider
         {
             get { return _RequestProvider; }
             set { _RequestProvider = value; OnPropertyChanged("RequestProvider"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _RequestProvider;
+        private Hl7.Fhir.Model.Element _RequestProvider;
         
         /// <summary>
         /// Responsible organization
         /// </summary>
-        [FhirElement("requestOrganization", InSummary=true, Order=180)]
-        [References("Organization")]
+        [FhirElement("requestOrganization", Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference RequestOrganization
+        public Hl7.Fhir.Model.Element RequestOrganization
         {
             get { return _RequestOrganization; }
             set { _RequestOrganization = value; OnPropertyChanged("RequestOrganization"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _RequestOrganization;
+        private Hl7.Fhir.Model.Element _RequestOrganization;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -253,15 +319,16 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
-                if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.RemittanceOutcome>)OutcomeElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.EnrollmentResponse.EnrollmentResponseStatus>)StatusElement.DeepCopy();
+                if(Request != null) dest.Request = (Hl7.Fhir.Model.Element)Request.DeepCopy();
+                if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.ClaimProcessingCodes>)OutcomeElement.DeepCopy();
                 if(DispositionElement != null) dest.DispositionElement = (Hl7.Fhir.Model.FhirString)DispositionElement.DeepCopy();
                 if(Ruleset != null) dest.Ruleset = (Hl7.Fhir.Model.Coding)Ruleset.DeepCopy();
                 if(OriginalRuleset != null) dest.OriginalRuleset = (Hl7.Fhir.Model.Coding)OriginalRuleset.DeepCopy();
                 if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
-                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
-                if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.ResourceReference)RequestProvider.DeepCopy();
-                if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.ResourceReference)RequestOrganization.DeepCopy();
+                if(Organization != null) dest.Organization = (Hl7.Fhir.Model.Element)Organization.DeepCopy();
+                if(RequestProvider != null) dest.RequestProvider = (Hl7.Fhir.Model.Element)RequestProvider.DeepCopy();
+                if(RequestOrganization != null) dest.RequestOrganization = (Hl7.Fhir.Model.Element)RequestOrganization.DeepCopy();
                 return dest;
             }
             else
@@ -280,6 +347,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Request, otherT.Request)) return false;
             if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.Matches(DispositionElement, otherT.DispositionElement)) return false;
@@ -300,6 +368,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
             if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
             if( !DeepComparable.IsExactly(DispositionElement, otherT.DispositionElement)) return false;

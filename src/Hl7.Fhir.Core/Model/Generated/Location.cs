@@ -492,6 +492,21 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _PartOf;
         
+        /// <summary>
+        /// Technical endpoints providing access to services operated for the location
+        /// </summary>
+        [FhirElement("endpoint", Order=210)]
+        [References("Endpoint")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Endpoint
+        {
+            get { if(_Endpoint==null) _Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(); return _Endpoint; }
+            set { _Endpoint = value; OnPropertyChanged("Endpoint"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Location;
@@ -511,6 +526,7 @@ namespace Hl7.Fhir.Model
                 if(Position != null) dest.Position = (Hl7.Fhir.Model.Location.PositionComponent)Position.DeepCopy();
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
+                if(Endpoint != null) dest.Endpoint = new List<Hl7.Fhir.Model.ResourceReference>(Endpoint.DeepCopy());
                 return dest;
             }
             else
@@ -540,6 +556,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Position, otherT.Position)) return false;
             if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
+            if( !DeepComparable.Matches(Endpoint, otherT.Endpoint)) return false;
             
             return true;
         }
@@ -562,6 +579,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Position, otherT.Position)) return false;
             if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;
+            if( !DeepComparable.IsExactly(Endpoint, otherT.Endpoint)) return false;
             
             return true;
         }

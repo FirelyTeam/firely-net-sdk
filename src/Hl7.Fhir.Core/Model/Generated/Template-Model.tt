@@ -663,6 +663,7 @@ if(!abstractType) {
 				case "Meta" : return "Hl7.Fhir.Model.Meta";
 				case "decimal" : return "Hl7.Fhir.Model.FhirDecimal"; 
 				case "markdown" : return "Hl7.Fhir.Model.Markdown";
+				case "xhtml" : return "Hl7.Fhir.Model.Xhtml";
 				case "instant" : return "Hl7.Fhir.Model.Instant";
 				case "integer" : return "Hl7.Fhir.Model.Integer";
 				case "unsignedInt" : return "Hl7.Fhir.Model.UnsignedInt";

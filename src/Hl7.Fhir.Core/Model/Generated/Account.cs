@@ -172,13 +172,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("balance", InSummary=true, Order=150)]
         [DataMember]
-        public Hl7.Fhir.Model.Money Balance
+        public Money Balance
         {
             get { return _Balance; }
             set { _Balance = value; OnPropertyChanged("Balance"); }
         }
         
-        private Hl7.Fhir.Model.Money _Balance;
+        private Money _Balance;
         
         /// <summary>
         /// Transaction window
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.Code)StatusElement.DeepCopy();
                 if(ActivePeriod != null) dest.ActivePeriod = (Hl7.Fhir.Model.Period)ActivePeriod.DeepCopy();
                 if(Currency != null) dest.Currency = (Hl7.Fhir.Model.Coding)Currency.DeepCopy();
-                if(Balance != null) dest.Balance = (Hl7.Fhir.Model.Money)Balance.DeepCopy();
+                if(Balance != null) dest.Balance = (Money)Balance.DeepCopy();
                 if(CoveragePeriod != null) dest.CoveragePeriod = (Hl7.Fhir.Model.Period)CoveragePeriod.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();

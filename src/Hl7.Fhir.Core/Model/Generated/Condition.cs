@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
         /// Estimated or actual date,  date-time, or age
         /// </summary>
         [FhirElement("onset", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Onset
         {
@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Model
         /// If/when in resolution/remission
         /// </summary>
         [FhirElement("abatement", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Abatement
         {
@@ -528,34 +528,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional information about the Condition
         /// </summary>
-        [FhirElement("notes", InSummary=true, Order=240)]
+        [FhirElement("note", InSummary=true, Order=240)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString NotesElement
+        public List<Hl7.Fhir.Model.Annotation> Note
         {
-            get { return _NotesElement; }
-            set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _NotesElement;
-        
-        /// <summary>
-        /// Additional information about the Condition
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Notes
-        {
-            get { return NotesElement != null ? NotesElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  NotesElement = null; 
-                else
-                  NotesElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Notes");
-            }
-        }
+        private List<Hl7.Fhir.Model.Annotation> _Note;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -579,7 +561,7 @@ namespace Hl7.Fhir.Model
                 if(Stage != null) dest.Stage = (Hl7.Fhir.Model.Condition.StageComponent)Stage.DeepCopy();
                 if(Evidence != null) dest.Evidence = new List<Hl7.Fhir.Model.Condition.EvidenceComponent>(Evidence.DeepCopy());
                 if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
-                if(NotesElement != null) dest.NotesElement = (Hl7.Fhir.Model.FhirString)NotesElement.DeepCopy();
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 return dest;
             }
             else
@@ -612,7 +594,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Stage, otherT.Stage)) return false;
             if( !DeepComparable.Matches(Evidence, otherT.Evidence)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
-            if( !DeepComparable.Matches(NotesElement, otherT.NotesElement)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             
             return true;
         }
@@ -638,7 +620,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Stage, otherT.Stage)) return false;
             if( !DeepComparable.IsExactly(Evidence, otherT.Evidence)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
-            if( !DeepComparable.IsExactly(NotesElement, otherT.NotesElement)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             
             return true;
         }

@@ -103,6 +103,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/item-type)
             /// </summary>
+            [EnumLiteral("question"), Description("Question")]
+            Question,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/item-type)
+            /// </summary>
             [EnumLiteral("boolean"), Description("Boolean")]
             Boolean,
             /// <summary>
@@ -309,7 +315,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// group | display | boolean | decimal | integer | date | dateTime +
+            /// group | display | question | boolean | decimal | integer | date | dateTime +
             /// </summary>
             [FhirElement("type", Order=80)]
             [Cardinality(Min=1,Max=1)]
@@ -323,7 +329,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemType> _TypeElement;
             
             /// <summary>
-            /// group | display | boolean | decimal | integer | date | dateTime +
+            /// group | display | question | boolean | decimal | integer | date | dateTime +
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -665,15 +671,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Enable when answered or not
             /// </summary>
-            [FhirElement("answered", Order=50)]
+            [FhirElement("hasAnswer", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirBoolean AnsweredElement
+            public Hl7.Fhir.Model.FhirBoolean HasAnswerElement
             {
-                get { return _AnsweredElement; }
-                set { _AnsweredElement = value; OnPropertyChanged("AnsweredElement"); }
+                get { return _HasAnswerElement; }
+                set { _HasAnswerElement = value; OnPropertyChanged("HasAnswerElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirBoolean _AnsweredElement;
+            private Hl7.Fhir.Model.FhirBoolean _HasAnswerElement;
             
             /// <summary>
             /// Enable when answered or not
@@ -681,16 +687,16 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public bool? Answered
+            public bool? HasAnswer
             {
-                get { return AnsweredElement != null ? AnsweredElement.Value : null; }
+                get { return HasAnswerElement != null ? HasAnswerElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      AnsweredElement = null; 
+                      HasAnswerElement = null; 
                     else
-                      AnsweredElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                    OnPropertyChanged("Answered");
+                      HasAnswerElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                    OnPropertyChanged("HasAnswer");
                 }
             }
             
@@ -716,7 +722,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(QuestionElement != null) dest.QuestionElement = (Hl7.Fhir.Model.FhirString)QuestionElement.DeepCopy();
-                    if(AnsweredElement != null) dest.AnsweredElement = (Hl7.Fhir.Model.FhirBoolean)AnsweredElement.DeepCopy();
+                    if(HasAnswerElement != null) dest.HasAnswerElement = (Hl7.Fhir.Model.FhirBoolean)HasAnswerElement.DeepCopy();
                     if(Answer != null) dest.Answer = (Hl7.Fhir.Model.Element)Answer.DeepCopy();
                     return dest;
                 }
@@ -736,7 +742,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(QuestionElement, otherT.QuestionElement)) return false;
-                if( !DeepComparable.Matches(AnsweredElement, otherT.AnsweredElement)) return false;
+                if( !DeepComparable.Matches(HasAnswerElement, otherT.HasAnswerElement)) return false;
                 if( !DeepComparable.Matches(Answer, otherT.Answer)) return false;
                 
                 return true;
@@ -749,7 +755,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(QuestionElement, otherT.QuestionElement)) return false;
-                if( !DeepComparable.IsExactly(AnsweredElement, otherT.AnsweredElement)) return false;
+                if( !DeepComparable.IsExactly(HasAnswerElement, otherT.HasAnswerElement)) return false;
                 if( !DeepComparable.IsExactly(Answer, otherT.Answer)) return false;
                 
                 return true;

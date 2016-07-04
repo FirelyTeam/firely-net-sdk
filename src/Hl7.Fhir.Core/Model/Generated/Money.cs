@@ -41,7 +41,10 @@ using System.ComponentModel;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("Quantity")]
+    /// <summary>
+    /// An amount of economic utility in some recognised currency
+    /// </summary>
+    [FhirType("Money")]
     public partial class Money : Quantity
     {
         [NotMapped]
@@ -53,6 +56,6 @@ namespace Hl7.Fhir.Model
         }
         
         // TODO: Add code to enforce these constraints:
-        // * There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = "urn:iso:std:iso:4217" - currency).
+        // * An amount of economic utility in some recognised currency.
     }
 }

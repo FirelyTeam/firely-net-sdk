@@ -64,8 +64,14 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/structure-definition-kind)
             /// </summary>
-            [EnumLiteral("datatype"), Description("Data Type")]
-            Datatype,
+            [EnumLiteral("primitive-type"), Description("Primitive Data Type")]
+            PrimitiveType,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/structure-definition-kind)
+            /// </summary>
+            [EnumLiteral("complex-type"), Description("Complex Data Type")]
+            ComplexType,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/structure-definition-kind)
@@ -1005,7 +1011,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.StructureDefinition.MappingComponent> _Mapping;
         
         /// <summary>
-        /// datatype | resource | logical
+        /// primitive-type | complex-type | resource | logical
         /// </summary>
         [FhirElement("kind", InSummary=true, Order=260)]
         [Cardinality(Min=1,Max=1)]
@@ -1019,7 +1025,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind> _KindElement;
         
         /// <summary>
-        /// datatype | resource | logical
+        /// primitive-type | complex-type | resource | logical
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1140,13 +1146,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("baseType", InSummary=true, Order=300)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.FHIRDefinedType> BaseTypeElement
+        public Hl7.Fhir.Model.Code BaseTypeElement
         {
             get { return _BaseTypeElement; }
             set { _BaseTypeElement = value; OnPropertyChanged("BaseTypeElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.FHIRDefinedType> _BaseTypeElement;
+        private Hl7.Fhir.Model.Code _BaseTypeElement;
         
         /// <summary>
         /// Any datatype or resource, including abstract ones
@@ -1154,7 +1160,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.FHIRDefinedType? BaseType
+        public string BaseType
         {
             get { return BaseTypeElement != null ? BaseTypeElement.Value : null; }
             set
@@ -1162,7 +1168,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   BaseTypeElement = null; 
                 else
-                  BaseTypeElement = new Code<Hl7.Fhir.Model.FHIRDefinedType>(value);
+                  BaseTypeElement = new Hl7.Fhir.Model.Code(value);
                 OnPropertyChanged("BaseType");
             }
         }
@@ -1285,7 +1291,7 @@ namespace Hl7.Fhir.Model
                 if(AbstractElement != null) dest.AbstractElement = (Hl7.Fhir.Model.FhirBoolean)AbstractElement.DeepCopy();
                 if(ContextTypeElement != null) dest.ContextTypeElement = (Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContext>)ContextTypeElement.DeepCopy();
                 if(ContextElement != null) dest.ContextElement = new List<Hl7.Fhir.Model.FhirString>(ContextElement.DeepCopy());
-                if(BaseTypeElement != null) dest.BaseTypeElement = (Code<Hl7.Fhir.Model.FHIRDefinedType>)BaseTypeElement.DeepCopy();
+                if(BaseTypeElement != null) dest.BaseTypeElement = (Hl7.Fhir.Model.Code)BaseTypeElement.DeepCopy();
                 if(BaseDefinitionElement != null) dest.BaseDefinitionElement = (Hl7.Fhir.Model.FhirUri)BaseDefinitionElement.DeepCopy();
                 if(DerivationElement != null) dest.DerivationElement = (Code<Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule>)DerivationElement.DeepCopy();
                 if(Snapshot != null) dest.Snapshot = (Hl7.Fhir.Model.StructureDefinition.SnapshotComponent)Snapshot.DeepCopy();

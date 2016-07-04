@@ -99,69 +99,6 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Classification of the encounter
-        /// (url: http://hl7.org/fhir/ValueSet/encounter-class)
-        /// </summary>
-        [FhirEnumeration("EncounterClass")]
-        public enum EncounterClass
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-class)
-            /// </summary>
-            [EnumLiteral("inpatient"), Description("Inpatient")]
-            Inpatient,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-class)
-            /// </summary>
-            [EnumLiteral("outpatient"), Description("Outpatient")]
-            Outpatient,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-class)
-            /// </summary>
-            [EnumLiteral("ambulatory"), Description("Ambulatory")]
-            Ambulatory,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-class)
-            /// </summary>
-            [EnumLiteral("emergency"), Description("Emergency")]
-            Emergency,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-class)
-            /// </summary>
-            [EnumLiteral("home"), Description("Home")]
-            Home,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-class)
-            /// </summary>
-            [EnumLiteral("field"), Description("Field")]
-            Field,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-class)
-            /// </summary>
-            [EnumLiteral("daytime"), Description("Daytime")]
-            Daytime,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-class)
-            /// </summary>
-            [EnumLiteral("virtual"), Description("Virtual")]
-            Virtual,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-class)
-            /// </summary>
-            [EnumLiteral("other"), Description("Other")]
-            Other,
-        }
-
-        /// <summary>
         /// The status of the location.
         /// (url: http://hl7.org/fhir/ValueSet/encounter-location-status)
         /// </summary>
@@ -809,32 +746,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("class", InSummary=true, Order=120)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Encounter.EncounterClass> ClassElement
+        public Hl7.Fhir.Model.Coding Class
         {
-            get { return _ClassElement; }
-            set { _ClassElement = value; OnPropertyChanged("ClassElement"); }
+            get { return _Class; }
+            set { _Class = value; OnPropertyChanged("Class"); }
         }
         
-        private Code<Hl7.Fhir.Model.Encounter.EncounterClass> _ClassElement;
-        
-        /// <summary>
-        /// inpatient | outpatient | ambulatory | emergency +
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Encounter.EncounterClass? Class
-        {
-            get { return ClassElement != null ? ClassElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ClassElement = null; 
-                else
-                  ClassElement = new Code<Hl7.Fhir.Model.Encounter.EncounterClass>(value);
-                OnPropertyChanged("Class");
-            }
-        }
+        private Hl7.Fhir.Model.Coding _Class;
         
         /// <summary>
         /// Specific type of encounter
@@ -953,13 +871,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("length", Order=210)]
         [DataMember]
-        public Hl7.Fhir.Model.Duration Length
+        public Duration Length
         {
             get { return _Length; }
             set { _Length = value; OnPropertyChanged("Length"); }
         }
         
-        private Hl7.Fhir.Model.Duration _Length;
+        private Duration _Length;
         
         /// <summary>
         /// Reason the encounter takes place (code)
@@ -1055,7 +973,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterState>)StatusElement.DeepCopy();
                 if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.Encounter.StatusHistoryComponent>(StatusHistory.DeepCopy());
-                if(ClassElement != null) dest.ClassElement = (Code<Hl7.Fhir.Model.Encounter.EncounterClass>)ClassElement.DeepCopy();
+                if(Class != null) dest.Class = (Hl7.Fhir.Model.Coding)Class.DeepCopy();
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
@@ -1064,7 +982,7 @@ namespace Hl7.Fhir.Model
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.Encounter.ParticipantComponent>(Participant.DeepCopy());
                 if(Appointment != null) dest.Appointment = (Hl7.Fhir.Model.ResourceReference)Appointment.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
-                if(Length != null) dest.Length = (Hl7.Fhir.Model.Duration)Length.DeepCopy();
+                if(Length != null) dest.Length = (Duration)Length.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.ResourceReference>(Indication.DeepCopy());
                 if(Hospitalization != null) dest.Hospitalization = (Hl7.Fhir.Model.Encounter.HospitalizationComponent)Hospitalization.DeepCopy();
@@ -1091,7 +1009,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(StatusHistory, otherT.StatusHistory)) return false;
-            if( !DeepComparable.Matches(ClassElement, otherT.ClassElement)) return false;
+            if( !DeepComparable.Matches(Class, otherT.Class)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Priority, otherT.Priority)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
@@ -1120,7 +1038,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(StatusHistory, otherT.StatusHistory)) return false;
-            if( !DeepComparable.IsExactly(ClassElement, otherT.ClassElement)) return false;
+            if( !DeepComparable.IsExactly(Class, otherT.Class)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Priority, otherT.Priority)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;

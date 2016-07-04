@@ -265,87 +265,6 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParticipantComponent")]
-        [DataContract]
-        public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ParticipantComponent"; } }
-            
-            /// <summary>
-            /// Type of involvement
-            /// </summary>
-            [FhirElement("role", Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Role
-            {
-                get { return _Role; }
-                set { _Role = value; OnPropertyChanged("Role"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Role;
-            
-            /// <summary>
-            /// Who is involved
-            /// </summary>
-            [FhirElement("member", Order=50)]
-            [References("Practitioner","RelatedPerson","Patient","Organization")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Member
-            {
-                get { return _Member; }
-                set { _Member = value; OnPropertyChanged("Member"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Member;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ParticipantComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
-                    if(Member != null) dest.Member = (Hl7.Fhir.Model.ResourceReference)Member.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ParticipantComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ParticipantComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Role, otherT.Role)) return false;
-                if( !DeepComparable.Matches(Member, otherT.Member)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ParticipantComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
-                if( !DeepComparable.IsExactly(Member, otherT.Member)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
         [FhirType("ActivityComponent")]
         [DataContract]
         public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
@@ -1046,16 +965,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who's involved in plan?
         /// </summary>
-        [FhirElement("participant", Order=210)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("careTeam", Order=210)]
+        [References("CareTeam")]
         [DataMember]
-        public List<Hl7.Fhir.Model.CarePlan.ParticipantComponent> Participant
+        public Hl7.Fhir.Model.ResourceReference CareTeam
         {
-            get { if(_Participant==null) _Participant = new List<Hl7.Fhir.Model.CarePlan.ParticipantComponent>(); return _Participant; }
-            set { _Participant = value; OnPropertyChanged("Participant"); }
+            get { return _CareTeam; }
+            set { _CareTeam = value; OnPropertyChanged("CareTeam"); }
         }
         
-        private List<Hl7.Fhir.Model.CarePlan.ParticipantComponent> _Participant;
+        private Hl7.Fhir.Model.ResourceReference _CareTeam;
         
         /// <summary>
         /// Desired outcome of plan
@@ -1118,7 +1037,7 @@ namespace Hl7.Fhir.Model
                 if(Addresses != null) dest.Addresses = new List<Hl7.Fhir.Model.ResourceReference>(Addresses.DeepCopy());
                 if(Support != null) dest.Support = new List<Hl7.Fhir.Model.ResourceReference>(Support.DeepCopy());
                 if(RelatedPlan != null) dest.RelatedPlan = new List<Hl7.Fhir.Model.CarePlan.RelatedPlanComponent>(RelatedPlan.DeepCopy());
-                if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.CarePlan.ParticipantComponent>(Participant.DeepCopy());
+                if(CareTeam != null) dest.CareTeam = (Hl7.Fhir.Model.ResourceReference)CareTeam.DeepCopy();
                 if(Goal != null) dest.Goal = new List<Hl7.Fhir.Model.ResourceReference>(Goal.DeepCopy());
                 if(Activity != null) dest.Activity = new List<Hl7.Fhir.Model.CarePlan.ActivityComponent>(Activity.DeepCopy());
                 if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
@@ -1151,7 +1070,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Addresses, otherT.Addresses)) return false;
             if( !DeepComparable.Matches(Support, otherT.Support)) return false;
             if( !DeepComparable.Matches(RelatedPlan, otherT.RelatedPlan)) return false;
-            if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.Matches(CareTeam, otherT.CareTeam)) return false;
             if( !DeepComparable.Matches(Goal, otherT.Goal)) return false;
             if( !DeepComparable.Matches(Activity, otherT.Activity)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
@@ -1177,7 +1096,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Addresses, otherT.Addresses)) return false;
             if( !DeepComparable.IsExactly(Support, otherT.Support)) return false;
             if( !DeepComparable.IsExactly(RelatedPlan, otherT.RelatedPlan)) return false;
-            if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
+            if( !DeepComparable.IsExactly(CareTeam, otherT.CareTeam)) return false;
             if( !DeepComparable.IsExactly(Goal, otherT.Goal)) return false;
             if( !DeepComparable.IsExactly(Activity, otherT.Activity)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;

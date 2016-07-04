@@ -52,647 +52,6 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "ModuleMetadata"; } }
         
         /// <summary>
-        /// The status of the knowledge module
-        /// (url: http://hl7.org/fhir/ValueSet/module-metadata-status)
-        /// </summary>
-        [FhirEnumeration("ModuleMetadataStatus")]
-        public enum ModuleMetadataStatus
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-status)
-            /// </summary>
-            [EnumLiteral("draft"), Description("Draft")]
-            Draft,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-status)
-            /// </summary>
-            [EnumLiteral("active"), Description("Active")]
-            Active,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-status)
-            /// </summary>
-            [EnumLiteral("inactive"), Description("Inactive")]
-            Inactive,
-        }
-
-        /// <summary>
-        /// The type of contributor
-        /// (url: http://hl7.org/fhir/ValueSet/module-metadata-contributor)
-        /// </summary>
-        [FhirEnumeration("ModuleMetadataContributorType")]
-        public enum ModuleMetadataContributorType
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-contributor)
-            /// </summary>
-            [EnumLiteral("author"), Description("Author")]
-            Author,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-contributor)
-            /// </summary>
-            [EnumLiteral("editor"), Description("Editor")]
-            Editor,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-contributor)
-            /// </summary>
-            [EnumLiteral("reviewer"), Description("Reviewer")]
-            Reviewer,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-contributor)
-            /// </summary>
-            [EnumLiteral("endorser"), Description("Endorser")]
-            Endorser,
-        }
-
-        /// <summary>
-        /// The type of related resource for the module
-        /// (url: http://hl7.org/fhir/ValueSet/module-metadata-resource-type)
-        /// </summary>
-        [FhirEnumeration("ModuleMetadataResourceType")]
-        public enum ModuleMetadataResourceType
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-resource-type)
-            /// </summary>
-            [EnumLiteral("documentation"), Description("Documentation")]
-            Documentation,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-resource-type)
-            /// </summary>
-            [EnumLiteral("justification"), Description("Justification")]
-            Justification,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-resource-type)
-            /// </summary>
-            [EnumLiteral("citation"), Description("Citation")]
-            Citation,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-resource-type)
-            /// </summary>
-            [EnumLiteral("predecessor"), Description("Predecessor")]
-            Predecessor,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-resource-type)
-            /// </summary>
-            [EnumLiteral("successor"), Description("Successor")]
-            Successor,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/module-metadata-resource-type)
-            /// </summary>
-            [EnumLiteral("derived-from"), Description("Derived From")]
-            DerivedFrom,
-        }
-
-        [FhirType("CoverageComponent")]
-        [DataContract]
-        public partial class CoverageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "CoverageComponent"; } }
-            
-            /// <summary>
-            /// patient-gender | patient-age-group | clinical-focus | target-user | workflow-setting | workflow-task | clinical-venue | jurisdiction
-            /// </summary>
-            [FhirElement("focus", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Coding Focus
-            {
-                get { return _Focus; }
-                set { _Focus = value; OnPropertyChanged("Focus"); }
-            }
-            
-            private Hl7.Fhir.Model.Coding _Focus;
-            
-            /// <summary>
-            /// Value of the coverage attribute
-            /// </summary>
-            [FhirElement("value", Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Value
-            {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Value;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as CoverageComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Focus != null) dest.Focus = (Hl7.Fhir.Model.Coding)Focus.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new CoverageComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as CoverageComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as CoverageComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ContributorComponent")]
-        [DataContract]
-        public partial class ContributorComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ContributorComponent"; } }
-            
-            /// <summary>
-            /// author | editor | reviewer | endorser
-            /// </summary>
-            [FhirElement("type", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataContributorType> TypeElement
-            {
-                get { return _TypeElement; }
-                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataContributorType> _TypeElement;
-            
-            /// <summary>
-            /// author | editor | reviewer | endorser
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataContributorType? Type
-            {
-                get { return TypeElement != null ? TypeElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TypeElement = null; 
-                    else
-                      TypeElement = new Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataContributorType>(value);
-                    OnPropertyChanged("Type");
-                }
-            }
-            
-            /// <summary>
-            /// Name of the contributor
-            /// </summary>
-            [FhirElement("name", Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Name of the contributor
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      NameElement = null; 
-                    else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Contact details of the contributor
-            /// </summary>
-            [FhirElement("contact", Order=60)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ModuleMetadata.ContributorContactComponent> Contact
-            {
-                get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ModuleMetadata.ContributorContactComponent>(); return _Contact; }
-                set { _Contact = value; OnPropertyChanged("Contact"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ModuleMetadata.ContributorContactComponent> _Contact;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ContributorComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataContributorType>)TypeElement.DeepCopy();
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ModuleMetadata.ContributorContactComponent>(Contact.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ContributorComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ContributorComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ContributorComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ContributorContactComponent")]
-        [DataContract]
-        public partial class ContributorContactComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ContributorContactComponent"; } }
-            
-            /// <summary>
-            /// Name of an individual to contact
-            /// </summary>
-            [FhirElement("name", Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Name of an individual to contact
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      NameElement = null; 
-                    else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Contact details for an individual or contributor
-            /// </summary>
-            [FhirElement("telecom", Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ContactPoint> Telecom
-            {
-                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
-                set { _Telecom = value; OnPropertyChanged("Telecom"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ContributorContactComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ContributorContactComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ContributorContactComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ContributorContactComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("ContactComponent")]
-        [DataContract]
-        public partial class ContactComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ContactComponent"; } }
-            
-            /// <summary>
-            /// Name of an individual to contact
-            /// </summary>
-            [FhirElement("name", Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
-            {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _NameElement;
-            
-            /// <summary>
-            /// Name of an individual to contact
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Name
-            {
-                get { return NameElement != null ? NameElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      NameElement = null; 
-                    else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
-                }
-            }
-            
-            /// <summary>
-            /// Contact details for an individual or publisher
-            /// </summary>
-            [FhirElement("telecom", Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.ContactPoint> Telecom
-            {
-                get { if(_Telecom==null) _Telecom = new List<Hl7.Fhir.Model.ContactPoint>(); return _Telecom; }
-                set { _Telecom = value; OnPropertyChanged("Telecom"); }
-            }
-            
-            private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ContactComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ContactComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ContactComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ContactComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("RelatedResourceComponent")]
-        [DataContract]
-        public partial class RelatedResourceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "RelatedResourceComponent"; } }
-            
-            /// <summary>
-            /// documentation | justification | citation | predecessor | successor | derived-from
-            /// </summary>
-            [FhirElement("type", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataResourceType> TypeElement
-            {
-                get { return _TypeElement; }
-                set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataResourceType> _TypeElement;
-            
-            /// <summary>
-            /// documentation | justification | citation | predecessor | successor | derived-from
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataResourceType? Type
-            {
-                get { return TypeElement != null ? TypeElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TypeElement = null; 
-                    else
-                      TypeElement = new Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataResourceType>(value);
-                    OnPropertyChanged("Type");
-                }
-            }
-            
-            /// <summary>
-            /// The related document
-            /// </summary>
-            [FhirElement("document", Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.Attachment Document
-            {
-                get { return _Document; }
-                set { _Document = value; OnPropertyChanged("Document"); }
-            }
-            
-            private Hl7.Fhir.Model.Attachment _Document;
-            
-            /// <summary>
-            /// The related resource
-            /// </summary>
-            [FhirElement("resource", Order=60)]
-            [References()]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Resource
-            {
-                get { return _Resource; }
-                set { _Resource = value; OnPropertyChanged("Resource"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _Resource;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as RelatedResourceComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataResourceType>)TypeElement.DeepCopy();
-                    if(Document != null) dest.Document = (Hl7.Fhir.Model.Attachment)Document.DeepCopy();
-                    if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new RelatedResourceComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as RelatedResourceComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.Matches(Document, otherT.Document)) return false;
-                if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as RelatedResourceComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.IsExactly(Document, otherT.Document)) return false;
-                if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        /// <summary>
         /// Logical URL to reference this module
         /// </summary>
         [FhirElement("url", InSummary=true, Order=30)]
@@ -873,13 +232,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=90)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataStatus> StatusElement
+        public Code<Hl7.Fhir.Model.ModuleMetadataStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.ModuleMetadataStatus> _StatusElement;
         
         /// <summary>
         /// draft | active | inactive
@@ -887,7 +246,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataStatus? Status
+        public Hl7.Fhir.Model.ModuleMetadataStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -895,7 +254,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.ModuleMetadataStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1111,13 +470,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("coverage", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ModuleMetadata.CoverageComponent> Coverage
+        public List<UsageContext> Coverage
         {
-            get { if(_Coverage==null) _Coverage = new List<Hl7.Fhir.Model.ModuleMetadata.CoverageComponent>(); return _Coverage; }
+            get { if(_Coverage==null) _Coverage = new List<UsageContext>(); return _Coverage; }
             set { _Coverage = value; OnPropertyChanged("Coverage"); }
         }
         
-        private List<Hl7.Fhir.Model.ModuleMetadata.CoverageComponent> _Coverage;
+        private List<UsageContext> _Coverage;
         
         /// <summary>
         /// Descriptional topics for the module
@@ -1139,13 +498,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contributor", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ModuleMetadata.ContributorComponent> Contributor
+        public List<Contributor> Contributor
         {
-            get { if(_Contributor==null) _Contributor = new List<Hl7.Fhir.Model.ModuleMetadata.ContributorComponent>(); return _Contributor; }
+            get { if(_Contributor==null) _Contributor = new List<Contributor>(); return _Contributor; }
             set { _Contributor = value; OnPropertyChanged("Contributor"); }
         }
         
-        private List<Hl7.Fhir.Model.ModuleMetadata.ContributorComponent> _Contributor;
+        private List<Contributor> _Contributor;
         
         /// <summary>
         /// Name of the publisher (Organization or individual)
@@ -1185,13 +544,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("contact", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ModuleMetadata.ContactComponent> Contact
+        public List<ContactDetail> Contact
         {
-            get { if(_Contact==null) _Contact = new List<Hl7.Fhir.Model.ModuleMetadata.ContactComponent>(); return _Contact; }
+            get { if(_Contact==null) _Contact = new List<ContactDetail>(); return _Contact; }
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
-        private List<Hl7.Fhir.Model.ModuleMetadata.ContactComponent> _Contact;
+        private List<ContactDetail> _Contact;
         
         /// <summary>
         /// Use and/or publishing restrictions
@@ -1231,13 +590,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("relatedResource", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ModuleMetadata.RelatedResourceComponent> RelatedResource
+        public List<RelatedResource> RelatedResource
         {
-            get { if(_RelatedResource==null) _RelatedResource = new List<Hl7.Fhir.Model.ModuleMetadata.RelatedResourceComponent>(); return _RelatedResource; }
+            get { if(_RelatedResource==null) _RelatedResource = new List<RelatedResource>(); return _RelatedResource; }
             set { _RelatedResource = value; OnPropertyChanged("RelatedResource"); }
         }
         
-        private List<Hl7.Fhir.Model.ModuleMetadata.RelatedResourceComponent> _RelatedResource;
+        private List<RelatedResource> _RelatedResource;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -1252,7 +611,7 @@ namespace Hl7.Fhir.Model
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ModuleMetadata.ModuleMetadataStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ModuleMetadataStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.FhirString)PurposeElement.DeepCopy();
@@ -1260,13 +619,13 @@ namespace Hl7.Fhir.Model
                 if(PublicationDateElement != null) dest.PublicationDateElement = (Hl7.Fhir.Model.Date)PublicationDateElement.DeepCopy();
                 if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopy();
                 if(EffectivePeriod != null) dest.EffectivePeriod = (Hl7.Fhir.Model.Period)EffectivePeriod.DeepCopy();
-                if(Coverage != null) dest.Coverage = new List<Hl7.Fhir.Model.ModuleMetadata.CoverageComponent>(Coverage.DeepCopy());
+                if(Coverage != null) dest.Coverage = new List<UsageContext>(Coverage.DeepCopy());
                 if(Topic != null) dest.Topic = new List<Hl7.Fhir.Model.CodeableConcept>(Topic.DeepCopy());
-                if(Contributor != null) dest.Contributor = new List<Hl7.Fhir.Model.ModuleMetadata.ContributorComponent>(Contributor.DeepCopy());
+                if(Contributor != null) dest.Contributor = new List<Contributor>(Contributor.DeepCopy());
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-                if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ModuleMetadata.ContactComponent>(Contact.DeepCopy());
+                if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());
                 if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.FhirString)CopyrightElement.DeepCopy();
-                if(RelatedResource != null) dest.RelatedResource = new List<Hl7.Fhir.Model.ModuleMetadata.RelatedResourceComponent>(RelatedResource.DeepCopy());
+                if(RelatedResource != null) dest.RelatedResource = new List<RelatedResource>(RelatedResource.DeepCopy());
                 return dest;
             }
             else

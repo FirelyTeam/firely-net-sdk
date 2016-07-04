@@ -191,17 +191,17 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A component of the substance
             /// </summary>
-            [FhirElement("substance", InSummary=true, Order=50)]
-            [References("Substance")]
+            [FhirElement("substance", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Substance
+            public Hl7.Fhir.Model.Element Substance
             {
                 get { return _Substance; }
                 set { _Substance = value; OnPropertyChanged("Substance"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Substance;
+            private Hl7.Fhir.Model.Element _Substance;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Ratio)Quantity.DeepCopy();
-                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.ResourceReference)Substance.DeepCopy();
+                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.Element)Substance.DeepCopy();
                     return dest;
                 }
                 else

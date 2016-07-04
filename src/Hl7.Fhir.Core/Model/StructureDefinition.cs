@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Is this the Derivation Property? (do we still need to check the base?)
-                return Derivation.HasValue && Derivation == TypeDerivationRule.Specialization;
+                return BaseType == "Extension";
             }
         }
     }

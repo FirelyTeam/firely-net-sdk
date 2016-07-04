@@ -287,16 +287,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication, Substance, or Device requested to be supplied
         /// </summary>
-        [FhirElement("orderedItem", InSummary=true, Order=150)]
-        [References("Medication","Substance","Device")]
+        [FhirElement("orderedItem", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference OrderedItem
+        public Hl7.Fhir.Model.Element OrderedItem
         {
             get { return _OrderedItem; }
             set { _OrderedItem = value; OnPropertyChanged("OrderedItem"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _OrderedItem;
+        private Hl7.Fhir.Model.Element _OrderedItem;
         
         /// <summary>
         /// Who is intended to fulfill the request
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>)StatusElement.DeepCopy();
                 if(Kind != null) dest.Kind = (Hl7.Fhir.Model.CodeableConcept)Kind.DeepCopy();
-                if(OrderedItem != null) dest.OrderedItem = (Hl7.Fhir.Model.ResourceReference)OrderedItem.DeepCopy();
+                if(OrderedItem != null) dest.OrderedItem = (Hl7.Fhir.Model.Element)OrderedItem.DeepCopy();
                 if(Supplier != null) dest.Supplier = new List<Hl7.Fhir.Model.ResourceReference>(Supplier.DeepCopy());
                 if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
                 if(When != null) dest.When = (Hl7.Fhir.Model.SupplyRequest.WhenComponent)When.DeepCopy();

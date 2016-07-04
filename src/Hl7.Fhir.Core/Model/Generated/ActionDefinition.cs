@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
             /// Time offset for the relationship
             /// </summary>
             [FhirElement("offset", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range))]
+            [AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
             public Hl7.Fhir.Model.Element Offset
             {

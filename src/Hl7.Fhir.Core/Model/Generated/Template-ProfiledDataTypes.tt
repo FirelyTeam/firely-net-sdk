@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
     /// <#= resourceDescription.Replace("&", "&amp;") #>
     /// </summary>
 <# } 
-#>    [FhirType("Quantity"<#= resourceBaseType != "Hl7.Fhir.Model.Element" ? "" : "" #>)]
+#>    [FhirType("<#= rawResourceName #>")]
     public partial class <#= resourceName #> : Quantity
     {
         [NotMapped]
