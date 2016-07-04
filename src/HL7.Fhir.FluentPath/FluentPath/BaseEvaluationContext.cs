@@ -46,12 +46,13 @@ namespace Hl7.Fhir.FluentPath
 
         public virtual void Log(string argument, IEnumerable<IValueProvider> focus)
         {
-            System.Diagnostics.Trace.WriteLine(argument);
+
+            //System.Diagnostics.Trace.WriteLine(argument);
 
             foreach (var element in focus)
             {
-                System.Diagnostics.Trace.WriteLine("=========");
-                System.Diagnostics.Trace.WriteLine(element.ToString());
+                //System.Diagnostics.Trace.WriteLine("=========");
+                //System.Diagnostics.Trace.WriteLine(element.ToString());
             }
         }
 
