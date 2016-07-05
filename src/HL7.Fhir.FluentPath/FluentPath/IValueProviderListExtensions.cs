@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public static class IFluentPathValueListExtensions
+    public static class IValueProviderListExtensions
     {
 
         public static IEnumerable<IElementNavigator> JustElements(this IEnumerable<IValueProvider> focus)

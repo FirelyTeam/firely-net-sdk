@@ -34,6 +34,8 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             add("empty", f => f.IsEmpty());
             add("exists", f => f.Exists());
             add("builtin.children", par<string>("name"), (f, a) => f.Children(a));
+          //  add("substring", par<int>("start"), par<int>("length", optional: true), (f, a, b) => f.Substring(a, b));
+
             //add("count", (f, _) => f.CountItems(), None());
             ////add("=", Exactly(1) && Args(TypeInfo.Decimal, TypeInfo.Decimal), (f, a) => Operators.IsEqualTo(a[0]), Exactly(1));
             //add("+", (f, a) => f.Add(a[0]), Exactly(1));
@@ -112,17 +114,14 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
 
         private static IEnumerable<IValueProvider> castResult(object result)
         {
+            if (result == null) return FhirValueList.Empty();
+
             // TODO: Object may be a constant native value....
 
             if (result is IEnumerable<IValueProvider>)
                 return (IEnumerable<IValueProvider>)result;
             else if (result is IValueProvider)
-            {
-                if (result == null)
-                    return FhirValueList.Empty();
-                else
-                    return FhirValueList.Create((IValueProvider)result);
-            }
+                return FhirValueList.Create((IValueProvider)result);
             else
                 throw new InvalidOperationException("Bound functions should either return IValueProvider or IEnumerable<IValueProvider>");
         }
