@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -65,6 +66,7 @@ namespace Hl7.Fhir.Model
             set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Code _ContentTypeElement;
         
         /// <summary>
@@ -98,6 +100,7 @@ namespace Hl7.Fhir.Model
             set { _ContentElement = value; OnPropertyChanged("ContentElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Base64Binary _ContentElement;
         
         /// <summary>
@@ -119,6 +122,14 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Binary;

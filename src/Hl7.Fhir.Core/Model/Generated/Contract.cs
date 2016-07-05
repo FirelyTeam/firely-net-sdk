@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -73,6 +74,7 @@ namespace Hl7.Fhir.Model
                 set { _Entity = value; OnPropertyChanged("Entity"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Entity;
             
             /// <summary>
@@ -87,6 +89,7 @@ namespace Hl7.Fhir.Model
                 set { _Role = value; OnPropertyChanged("Role"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.CodeableConcept> _Role;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -155,6 +158,7 @@ namespace Hl7.Fhir.Model
                 set { _Entity = value; OnPropertyChanged("Entity"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Entity;
             
             /// <summary>
@@ -168,6 +172,7 @@ namespace Hl7.Fhir.Model
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
@@ -181,6 +186,7 @@ namespace Hl7.Fhir.Model
                 set { _EffectiveTimeElement = value; OnPropertyChanged("EffectiveTimeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDateTime _EffectiveTimeElement;
             
             /// <summary>
@@ -194,10 +200,10 @@ namespace Hl7.Fhir.Model
                 get { return EffectiveTimeElement != null ? EffectiveTimeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      EffectiveTimeElement = null; 
+                    if (value != null)
+                        EffectiveTimeElement = null; 
                     else
-                      EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("EffectiveTime");
                 }
             }
@@ -213,6 +219,7 @@ namespace Hl7.Fhir.Model
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
             /// <summary>
@@ -226,6 +233,7 @@ namespace Hl7.Fhir.Model
                 set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Money _UnitPrice;
             
             /// <summary>
@@ -239,6 +247,7 @@ namespace Hl7.Fhir.Model
                 set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDecimal _FactorElement;
             
             /// <summary>
@@ -252,10 +261,10 @@ namespace Hl7.Fhir.Model
                 get { return FactorElement != null ? FactorElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      FactorElement = null; 
+                    if (!value.HasValue)
+                        FactorElement = null; 
                     else
-                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Factor");
                 }
             }
@@ -271,6 +280,7 @@ namespace Hl7.Fhir.Model
                 set { _PointsElement = value; OnPropertyChanged("PointsElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDecimal _PointsElement;
             
             /// <summary>
@@ -284,10 +294,10 @@ namespace Hl7.Fhir.Model
                 get { return PointsElement != null ? PointsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      PointsElement = null; 
+                    if (!value.HasValue)
+                        PointsElement = null; 
                     else
-                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Points");
                 }
             }
@@ -303,6 +313,7 @@ namespace Hl7.Fhir.Model
                 set { _Net = value; OnPropertyChanged("Net"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Money _Net;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -389,6 +400,7 @@ namespace Hl7.Fhir.Model
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Coding _Type;
             
             /// <summary>
@@ -404,6 +416,7 @@ namespace Hl7.Fhir.Model
                 set { _Party = value; OnPropertyChanged("Party"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Party;
             
             /// <summary>
@@ -418,6 +431,7 @@ namespace Hl7.Fhir.Model
                 set { _SignatureElement = value; OnPropertyChanged("SignatureElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _SignatureElement;
             
             /// <summary>
@@ -431,10 +445,10 @@ namespace Hl7.Fhir.Model
                 get { return SignatureElement != null ? SignatureElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SignatureElement = null; 
+                    if (value != null)
+                        SignatureElement = null; 
                     else
-                      SignatureElement = new Hl7.Fhir.Model.FhirString(value);
+                        SignatureElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Signature");
                 }
             }
@@ -507,6 +521,7 @@ namespace Hl7.Fhir.Model
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
@@ -520,6 +535,7 @@ namespace Hl7.Fhir.Model
                 set { _IssuedElement = value; OnPropertyChanged("IssuedElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDateTime _IssuedElement;
             
             /// <summary>
@@ -533,10 +549,10 @@ namespace Hl7.Fhir.Model
                 get { return IssuedElement != null ? IssuedElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      IssuedElement = null; 
+                    if (value != null)
+                        IssuedElement = null; 
                     else
-                      IssuedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        IssuedElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Issued");
                 }
             }
@@ -552,6 +568,7 @@ namespace Hl7.Fhir.Model
                 set { _Applies = value; OnPropertyChanged("Applies"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Period _Applies;
             
             /// <summary>
@@ -565,6 +582,7 @@ namespace Hl7.Fhir.Model
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
@@ -578,6 +596,7 @@ namespace Hl7.Fhir.Model
                 set { _SubType = value; OnPropertyChanged("SubType"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _SubType;
             
             /// <summary>
@@ -592,6 +611,7 @@ namespace Hl7.Fhir.Model
                 set { _Subject = value; OnPropertyChanged("Subject"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Subject;
             
             /// <summary>
@@ -606,6 +626,7 @@ namespace Hl7.Fhir.Model
                 set { _Action = value; OnPropertyChanged("Action"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.CodeableConcept> _Action;
             
             /// <summary>
@@ -620,6 +641,7 @@ namespace Hl7.Fhir.Model
                 set { _ActionReason = value; OnPropertyChanged("ActionReason"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.CodeableConcept> _ActionReason;
             
             /// <summary>
@@ -634,6 +656,7 @@ namespace Hl7.Fhir.Model
                 set { _Actor = value; OnPropertyChanged("Actor"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.Contract.TermActorComponent> _Actor;
             
             /// <summary>
@@ -647,6 +670,7 @@ namespace Hl7.Fhir.Model
                 set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
@@ -660,10 +684,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value != null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -680,6 +704,7 @@ namespace Hl7.Fhir.Model
                 set { _ValuedItem = value; OnPropertyChanged("ValuedItem"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.Contract.TermValuedItemComponent> _ValuedItem;
             
             /// <summary>
@@ -694,6 +719,7 @@ namespace Hl7.Fhir.Model
                 set { _Group = value; OnPropertyChanged("Group"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.Contract.TermComponent> _Group;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -793,6 +819,7 @@ namespace Hl7.Fhir.Model
                 set { _Entity = value; OnPropertyChanged("Entity"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Entity;
             
             /// <summary>
@@ -807,6 +834,7 @@ namespace Hl7.Fhir.Model
                 set { _Role = value; OnPropertyChanged("Role"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.CodeableConcept> _Role;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -875,6 +903,7 @@ namespace Hl7.Fhir.Model
                 set { _Entity = value; OnPropertyChanged("Entity"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Entity;
             
             /// <summary>
@@ -888,6 +917,7 @@ namespace Hl7.Fhir.Model
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
@@ -901,6 +931,7 @@ namespace Hl7.Fhir.Model
                 set { _EffectiveTimeElement = value; OnPropertyChanged("EffectiveTimeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDateTime _EffectiveTimeElement;
             
             /// <summary>
@@ -914,10 +945,10 @@ namespace Hl7.Fhir.Model
                 get { return EffectiveTimeElement != null ? EffectiveTimeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      EffectiveTimeElement = null; 
+                    if (value != null)
+                        EffectiveTimeElement = null; 
                     else
-                      EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("EffectiveTime");
                 }
             }
@@ -933,6 +964,7 @@ namespace Hl7.Fhir.Model
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
             /// <summary>
@@ -946,6 +978,7 @@ namespace Hl7.Fhir.Model
                 set { _UnitPrice = value; OnPropertyChanged("UnitPrice"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Money _UnitPrice;
             
             /// <summary>
@@ -959,6 +992,7 @@ namespace Hl7.Fhir.Model
                 set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDecimal _FactorElement;
             
             /// <summary>
@@ -972,10 +1006,10 @@ namespace Hl7.Fhir.Model
                 get { return FactorElement != null ? FactorElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      FactorElement = null; 
+                    if (!value.HasValue)
+                        FactorElement = null; 
                     else
-                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Factor");
                 }
             }
@@ -991,6 +1025,7 @@ namespace Hl7.Fhir.Model
                 set { _PointsElement = value; OnPropertyChanged("PointsElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDecimal _PointsElement;
             
             /// <summary>
@@ -1004,10 +1039,10 @@ namespace Hl7.Fhir.Model
                 get { return PointsElement != null ? PointsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      PointsElement = null; 
+                    if (!value.HasValue)
+                        PointsElement = null; 
                     else
-                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Points");
                 }
             }
@@ -1023,6 +1058,7 @@ namespace Hl7.Fhir.Model
                 set { _Net = value; OnPropertyChanged("Net"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Money _Net;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1110,6 +1146,7 @@ namespace Hl7.Fhir.Model
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1176,6 +1213,7 @@ namespace Hl7.Fhir.Model
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1242,6 +1280,7 @@ namespace Hl7.Fhir.Model
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1299,6 +1338,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -1312,6 +1352,7 @@ namespace Hl7.Fhir.Model
             set { _IssuedElement = value; OnPropertyChanged("IssuedElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _IssuedElement;
         
         /// <summary>
@@ -1344,6 +1385,7 @@ namespace Hl7.Fhir.Model
             set { _Applies = value; OnPropertyChanged("Applies"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Period _Applies;
         
         /// <summary>
@@ -1359,6 +1401,7 @@ namespace Hl7.Fhir.Model
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Subject;
         
         /// <summary>
@@ -1374,6 +1417,7 @@ namespace Hl7.Fhir.Model
             set { _Authority = value; OnPropertyChanged("Authority"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Authority;
         
         /// <summary>
@@ -1389,6 +1433,7 @@ namespace Hl7.Fhir.Model
             set { _Domain = value; OnPropertyChanged("Domain"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Domain;
         
         /// <summary>
@@ -1402,6 +1447,7 @@ namespace Hl7.Fhir.Model
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -1416,6 +1462,7 @@ namespace Hl7.Fhir.Model
             set { _SubType = value; OnPropertyChanged("SubType"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _SubType;
         
         /// <summary>
@@ -1430,6 +1477,7 @@ namespace Hl7.Fhir.Model
             set { _Action = value; OnPropertyChanged("Action"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _Action;
         
         /// <summary>
@@ -1444,6 +1492,7 @@ namespace Hl7.Fhir.Model
             set { _ActionReason = value; OnPropertyChanged("ActionReason"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _ActionReason;
         
         /// <summary>
@@ -1458,6 +1507,7 @@ namespace Hl7.Fhir.Model
             set { _Actor = value; OnPropertyChanged("Actor"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Contract.ActorComponent> _Actor;
         
         /// <summary>
@@ -1472,6 +1522,7 @@ namespace Hl7.Fhir.Model
             set { _ValuedItem = value; OnPropertyChanged("ValuedItem"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Contract.ValuedItemComponent> _ValuedItem;
         
         /// <summary>
@@ -1486,6 +1537,7 @@ namespace Hl7.Fhir.Model
             set { _Signer = value; OnPropertyChanged("Signer"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Contract.SignatoryComponent> _Signer;
         
         /// <summary>
@@ -1500,6 +1552,7 @@ namespace Hl7.Fhir.Model
             set { _Term = value; OnPropertyChanged("Term"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Contract.TermComponent> _Term;
         
         /// <summary>
@@ -1514,6 +1567,7 @@ namespace Hl7.Fhir.Model
             set { _Binding = value; OnPropertyChanged("Binding"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Binding;
         
         /// <summary>
@@ -1528,6 +1582,7 @@ namespace Hl7.Fhir.Model
             set { _Friendly = value; OnPropertyChanged("Friendly"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Contract.FriendlyLanguageComponent> _Friendly;
         
         /// <summary>
@@ -1542,6 +1597,7 @@ namespace Hl7.Fhir.Model
             set { _Legal = value; OnPropertyChanged("Legal"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Contract.LegalLanguageComponent> _Legal;
         
         /// <summary>
@@ -1556,8 +1612,17 @@ namespace Hl7.Fhir.Model
             set { _Rule = value; OnPropertyChanged("Rule"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Contract.ComputableLanguageComponent> _Rule;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Contract;

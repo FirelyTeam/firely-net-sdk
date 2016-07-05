@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -98,6 +99,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -111,6 +113,7 @@ namespace Hl7.Fhir.Model
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -126,6 +129,7 @@ namespace Hl7.Fhir.Model
             set { _Schedule = value; OnPropertyChanged("Schedule"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Schedule;
         
         /// <summary>
@@ -140,6 +144,7 @@ namespace Hl7.Fhir.Model
             set { _FreeBusyTypeElement = value; OnPropertyChanged("FreeBusyTypeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.Slot.SlotStatus> _FreeBusyTypeElement;
         
         /// <summary>
@@ -173,6 +178,7 @@ namespace Hl7.Fhir.Model
             set { _StartElement = value; OnPropertyChanged("StartElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Instant _StartElement;
         
         /// <summary>
@@ -206,6 +212,7 @@ namespace Hl7.Fhir.Model
             set { _EndElement = value; OnPropertyChanged("EndElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Instant _EndElement;
         
         /// <summary>
@@ -238,6 +245,7 @@ namespace Hl7.Fhir.Model
             set { _OverbookedElement = value; OnPropertyChanged("OverbookedElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirBoolean _OverbookedElement;
         
         /// <summary>
@@ -270,6 +278,7 @@ namespace Hl7.Fhir.Model
             set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
@@ -291,6 +300,14 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Slot;

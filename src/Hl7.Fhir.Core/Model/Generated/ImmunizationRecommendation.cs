@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
                 set { _DateElement = value; OnPropertyChanged("DateElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDateTime _DateElement;
             
             /// <summary>
@@ -85,10 +87,10 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DateElement = null; 
+                    if (value != null)
+                        DateElement = null; 
                     else
-                      DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Date");
                 }
             }
@@ -105,6 +107,7 @@ namespace Hl7.Fhir.Model
                 set { _VaccineCode = value; OnPropertyChanged("VaccineCode"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _VaccineCode;
             
             /// <summary>
@@ -118,6 +121,7 @@ namespace Hl7.Fhir.Model
                 set { _DoseNumberElement = value; OnPropertyChanged("DoseNumberElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.PositiveInt _DoseNumberElement;
             
             /// <summary>
@@ -131,10 +135,10 @@ namespace Hl7.Fhir.Model
                 get { return DoseNumberElement != null ? DoseNumberElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DoseNumberElement = null; 
+                    if (!value.HasValue)
+                        DoseNumberElement = null; 
                     else
-                      DoseNumberElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        DoseNumberElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("DoseNumber");
                 }
             }
@@ -151,6 +155,7 @@ namespace Hl7.Fhir.Model
                 set { _ForecastStatus = value; OnPropertyChanged("ForecastStatus"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _ForecastStatus;
             
             /// <summary>
@@ -165,6 +170,7 @@ namespace Hl7.Fhir.Model
                 set { _DateCriterion = value; OnPropertyChanged("DateCriterion"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent> _DateCriterion;
             
             /// <summary>
@@ -178,6 +184,7 @@ namespace Hl7.Fhir.Model
                 set { _Protocol = value; OnPropertyChanged("Protocol"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ImmunizationRecommendation.ProtocolComponent _Protocol;
             
             /// <summary>
@@ -193,6 +200,7 @@ namespace Hl7.Fhir.Model
                 set { _SupportingImmunization = value; OnPropertyChanged("SupportingImmunization"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ResourceReference> _SupportingImmunization;
             
             /// <summary>
@@ -208,6 +216,7 @@ namespace Hl7.Fhir.Model
                 set { _SupportingPatientInformation = value; OnPropertyChanged("SupportingPatientInformation"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ResourceReference> _SupportingPatientInformation;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -294,6 +303,7 @@ namespace Hl7.Fhir.Model
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
@@ -308,6 +318,7 @@ namespace Hl7.Fhir.Model
                 set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDateTime _ValueElement;
             
             /// <summary>
@@ -321,10 +332,10 @@ namespace Hl7.Fhir.Model
                 get { return ValueElement != null ? ValueElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ValueElement = null; 
+                    if (value != null)
+                        ValueElement = null; 
                     else
-                      ValueElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        ValueElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Value");
                 }
             }
@@ -394,6 +405,7 @@ namespace Hl7.Fhir.Model
                 set { _DoseSequenceElement = value; OnPropertyChanged("DoseSequenceElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Integer _DoseSequenceElement;
             
             /// <summary>
@@ -407,10 +419,10 @@ namespace Hl7.Fhir.Model
                 get { return DoseSequenceElement != null ? DoseSequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DoseSequenceElement = null; 
+                    if (!value.HasValue)
+                        DoseSequenceElement = null; 
                     else
-                      DoseSequenceElement = new Hl7.Fhir.Model.Integer(value);
+                        DoseSequenceElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("DoseSequence");
                 }
             }
@@ -426,6 +438,7 @@ namespace Hl7.Fhir.Model
                 set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
@@ -439,10 +452,10 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DescriptionElement = null; 
+                    if (value != null)
+                        DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -459,6 +472,7 @@ namespace Hl7.Fhir.Model
                 set { _Authority = value; OnPropertyChanged("Authority"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Authority;
             
             /// <summary>
@@ -472,6 +486,7 @@ namespace Hl7.Fhir.Model
                 set { _SeriesElement = value; OnPropertyChanged("SeriesElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _SeriesElement;
             
             /// <summary>
@@ -485,10 +500,10 @@ namespace Hl7.Fhir.Model
                 get { return SeriesElement != null ? SeriesElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SeriesElement = null; 
+                    if (value != null)
+                        SeriesElement = null; 
                     else
-                      SeriesElement = new Hl7.Fhir.Model.FhirString(value);
+                        SeriesElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Series");
                 }
             }
@@ -558,6 +573,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -573,6 +589,7 @@ namespace Hl7.Fhir.Model
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
@@ -587,8 +604,17 @@ namespace Hl7.Fhir.Model
             set { _Recommendation = value; OnPropertyChanged("Recommendation"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> _Recommendation;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ImmunizationRecommendation;

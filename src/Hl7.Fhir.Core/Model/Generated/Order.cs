@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -71,6 +72,7 @@ namespace Hl7.Fhir.Model
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
@@ -84,6 +86,7 @@ namespace Hl7.Fhir.Model
                 set { _Schedule = value; OnPropertyChanged("Schedule"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Timing _Schedule;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -145,6 +148,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -158,6 +162,7 @@ namespace Hl7.Fhir.Model
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -191,6 +196,7 @@ namespace Hl7.Fhir.Model
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -205,6 +211,7 @@ namespace Hl7.Fhir.Model
             set { _Source = value; OnPropertyChanged("Source"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
@@ -219,6 +226,7 @@ namespace Hl7.Fhir.Model
             set { _Target = value; OnPropertyChanged("Target"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Target;
         
         /// <summary>
@@ -233,6 +241,7 @@ namespace Hl7.Fhir.Model
             set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Reason;
         
         /// <summary>
@@ -246,6 +255,7 @@ namespace Hl7.Fhir.Model
             set { _When = value; OnPropertyChanged("When"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Order.WhenComponent _When;
         
         /// <summary>
@@ -261,8 +271,27 @@ namespace Hl7.Fhir.Model
             set { _Detail = value; OnPropertyChanged("Detail"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Detail;
         
+
+
+        public static ElementDefinition.ConstraintComponent Order_ORD_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("code.empty() or schedule.empty()"))},
+            Key = "ord-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Provide a code or a schedule, but not both",
+            Xpath = "exists(f:code) != exists(f:schedule)"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Order_ORD_1);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Order;

@@ -176,8 +176,7 @@ private Appointment appointment() {
 
     // @SuppressWarnings("deprecation")
     private void test(Resource resource, String expression, int count, String[] types)  {
-        var tpXml = Hl7.Fhir.Serialization.FhirSerializer.SerializeToXml(resource);
-        var tree = TreeConstructor.FromXml(tpXml);
+        IFhirPathElement tree = GetFhirTree(resource);
         var outcome = PathExpression.Evaluate(expression, tree);
         Assert.AreEqual(count, outcome.Count());
 
@@ -192,29 +191,40 @@ private Appointment appointment() {
     }
 
     // @SuppressWarnings("deprecation")
-    private void testBoolean(Resource resource, String expression, boolean value)  {
-    var tpXml = Hl7.Fhir.Serialization.FhirSerializer.SerializeToXml(resource);
-    var tree = TreeConstructor.FromXml(tpXml);
-    Assert.AreEqual(value, PathExpression.Predicate(expression, tree));
+    private void testBoolean(Resource resource, String expression, boolean value)
+    {
+        IFhirPathElement tree = GetFhirTree(resource);
+        Assert.AreEqual(value, PathExpression.Predicate(expression, tree));
 
-//        if (TestingUtilities.context == null)
-//    	TestingUtilities.context = SimpleWorkerContext.fromPack("C:\\work\\org.hl7.fhir\\build\\publish\\validation-min.xml.zip");
-//    FHIRPathEngine fp = new FHIRPathEngine(TestingUtilities.context);
+        //        if (TestingUtilities.context == null)
+        //    	TestingUtilities.context = SimpleWorkerContext.fromPack("C:\\work\\org.hl7.fhir\\build\\publish\\validation-min.xml.zip");
+        //    FHIRPathEngine fp = new FHIRPathEngine(TestingUtilities.context);
 
-//ExpressionNode node = fp.parse(expression);
-//fp.check(null, null, resource.getResourceType().toString(), node);
-//    List<Base> outcome = fp.evaluate(null, null, resource, node);
-//    if (fp.hasLog())
-//      System.out.println(fp.takeLog());
+        //ExpressionNode node = fp.parse(expression);
+        //fp.check(null, null, resource.getResourceType().toString(), node);
+        //    List<Base> outcome = fp.evaluate(null, null, resource, node);
+        //    if (fp.hasLog())
+        //      System.out.println(fp.takeLog());
 
-//    Assert.assertTrue("Wrong answer", fp.convertToBoolean(outcome) == value);
-  }
+        //    Assert.assertTrue("Wrong answer", fp.convertToBoolean(outcome) == value);
+    }
 
-  // @SuppressWarnings("deprecation")
-  private void testBoolean(Resource resource, Base focus, String focusType, String expression, boolean value)  {
-    var tpXml = Hl7.Fhir.Serialization.FhirSerializer.SerializeToXml(resource);
-    var tree = TreeConstructor.FromXml(tpXml);
-    Assert.AreEqual(value, PathExpression.Predicate(expression, tree));
+    private static IFhirPathElement GetFhirTree(Resource resource)
+    {
+        if (false)
+        {
+            var tpXml = Hl7.Fhir.Serialization.FhirSerializer.SerializeToXml(resource);
+            var tree = TreeConstructor.FromXml(tpXml);
+            return tree;
+        }
+        IFhirPathElement treeModel = new ModelTree(resource);
+        return treeModel;
+    }
+
+    // @SuppressWarnings("deprecation")
+    private void testBoolean(Resource resource, Base focus, String focusType, String expression, boolean value)  {
+        IFhirPathElement tree = GetFhirTree(resource);
+        Assert.AreEqual(value, PathExpression.Predicate(expression, tree));
  //       Need the focus type to be handled here in the test
 //        if (TestingUtilities.context == null)
 //    	TestingUtilities.context = SimpleWorkerContext.fromPack("C:\\work\\org.hl7.fhir\\build\\publish\\validation-min.xml.zip");
@@ -230,9 +240,8 @@ private Appointment appointment() {
   }
 
   private void testWrong(Resource resource, String expression)  {
-    var tpXml = Hl7.Fhir.Serialization.FhirSerializer.SerializeToXml(resource);
-    var tree = TreeConstructor.FromXml(tpXml);
-    Assert.IsFalse(PathExpression.Predicate(expression, tree));
+        IFhirPathElement tree = GetFhirTree(resource);
+        Assert.IsFalse(PathExpression.Predicate(expression, tree));
 
 //    if (TestingUtilities.context == null)
 //    	TestingUtilities.context = SimpleWorkerContext.fromPack("C:\\work\\org.hl7.fhir\\build\\publish\\validation-min.xml.zip");
@@ -523,6 +532,7 @@ internal class TestingUtilities
     testBoolean(patient(), "Patient.name.take(1).given = 'Peter' | 'James'", true);
     testBoolean(patient(), "Patient.name.take(2).given = 'Peter' | 'James' | 'Jim'", true);
     testBoolean(patient(), "Patient.name.take(3).given = 'Peter' | 'James' | 'Jim'", true);
+    testBoolean(patient(), "Patient.name.take(0).given.empty().not() = false", true);
     testBoolean(patient(), "Patient.name.take(0).given.exists() = false", true);
   }
 

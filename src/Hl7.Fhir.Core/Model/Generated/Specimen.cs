@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -105,6 +106,7 @@ namespace Hl7.Fhir.Model
                 set { _Collector = value; OnPropertyChanged("Collector"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Collector;
             
             /// <summary>
@@ -119,6 +121,7 @@ namespace Hl7.Fhir.Model
                 set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.FhirString> _CommentElement;
             
             /// <summary>
@@ -132,10 +135,10 @@ namespace Hl7.Fhir.Model
                 get { return CommentElement != null ? CommentElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
-                      CommentElement = null; 
+                    if (value != null)
+                        CommentElement = null; 
                     else
-                      CommentElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                        CommentElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
                     OnPropertyChanged("Comment");
                 }
             }
@@ -152,6 +155,7 @@ namespace Hl7.Fhir.Model
                 set { _Collected = value; OnPropertyChanged("Collected"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Collected;
             
             /// <summary>
@@ -165,6 +169,7 @@ namespace Hl7.Fhir.Model
                 set { _Quantity = value; OnPropertyChanged("Quantity"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.SimpleQuantity _Quantity;
             
             /// <summary>
@@ -178,6 +183,7 @@ namespace Hl7.Fhir.Model
                 set { _Method = value; OnPropertyChanged("Method"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Method;
             
             /// <summary>
@@ -191,6 +197,7 @@ namespace Hl7.Fhir.Model
                 set { _BodySite = value; OnPropertyChanged("BodySite"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _BodySite;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -270,6 +277,7 @@ namespace Hl7.Fhir.Model
                 set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
@@ -283,10 +291,10 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DescriptionElement = null; 
+                    if (value != null)
+                        DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -302,6 +310,7 @@ namespace Hl7.Fhir.Model
                 set { _Procedure = value; OnPropertyChanged("Procedure"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Procedure;
             
             /// <summary>
@@ -317,6 +326,7 @@ namespace Hl7.Fhir.Model
                 set { _Additive = value; OnPropertyChanged("Additive"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ResourceReference> _Additive;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -388,6 +398,7 @@ namespace Hl7.Fhir.Model
                 set { _Identifier = value; OnPropertyChanged("Identifier"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.Identifier> _Identifier;
             
             /// <summary>
@@ -401,6 +412,7 @@ namespace Hl7.Fhir.Model
                 set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
@@ -414,10 +426,10 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DescriptionElement = null; 
+                    if (value != null)
+                        DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -433,6 +445,7 @@ namespace Hl7.Fhir.Model
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
@@ -446,6 +459,7 @@ namespace Hl7.Fhir.Model
                 set { _Capacity = value; OnPropertyChanged("Capacity"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.SimpleQuantity _Capacity;
             
             /// <summary>
@@ -459,6 +473,7 @@ namespace Hl7.Fhir.Model
                 set { _SpecimenQuantity = value; OnPropertyChanged("SpecimenQuantity"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.SimpleQuantity _SpecimenQuantity;
             
             /// <summary>
@@ -473,6 +488,7 @@ namespace Hl7.Fhir.Model
                 set { _Additive = value; OnPropertyChanged("Additive"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Additive;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -546,6 +562,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -559,6 +576,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.Specimen.SpecimenStatus> _StatusElement;
         
         /// <summary>
@@ -591,6 +609,7 @@ namespace Hl7.Fhir.Model
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -606,6 +625,7 @@ namespace Hl7.Fhir.Model
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Parent;
         
         /// <summary>
@@ -621,6 +641,7 @@ namespace Hl7.Fhir.Model
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -634,6 +655,7 @@ namespace Hl7.Fhir.Model
             set { _AccessionIdentifier = value; OnPropertyChanged("AccessionIdentifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Identifier _AccessionIdentifier;
         
         /// <summary>
@@ -647,6 +669,7 @@ namespace Hl7.Fhir.Model
             set { _ReceivedTimeElement = value; OnPropertyChanged("ReceivedTimeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _ReceivedTimeElement;
         
         /// <summary>
@@ -679,6 +702,7 @@ namespace Hl7.Fhir.Model
             set { _Collection = value; OnPropertyChanged("Collection"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Specimen.CollectionComponent _Collection;
         
         /// <summary>
@@ -693,6 +717,7 @@ namespace Hl7.Fhir.Model
             set { _Treatment = value; OnPropertyChanged("Treatment"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Specimen.TreatmentComponent> _Treatment;
         
         /// <summary>
@@ -707,8 +732,17 @@ namespace Hl7.Fhir.Model
             set { _Container = value; OnPropertyChanged("Container"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Specimen.ContainerComponent> _Container;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Specimen;

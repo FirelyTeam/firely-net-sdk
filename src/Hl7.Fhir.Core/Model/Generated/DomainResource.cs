@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -63,6 +64,7 @@ namespace Hl7.Fhir.Model
             set { _Text = value; OnPropertyChanged("Text"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Narrative _Text;
         
         /// <summary>
@@ -78,6 +80,7 @@ namespace Hl7.Fhir.Model
             set { _Contained = value; OnPropertyChanged("Contained"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Resource> _Contained;
         
         /// <summary>
@@ -92,6 +95,7 @@ namespace Hl7.Fhir.Model
             set { _Extension = value; OnPropertyChanged("Extension"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Extension> _Extension;
         
         /// <summary>
@@ -106,8 +110,10 @@ namespace Hl7.Fhir.Model
             set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Extension> _ModifierExtension;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DomainResource;

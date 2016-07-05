@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -98,6 +99,7 @@ namespace Hl7.Fhir.Model
                 set { _LinkIdElement = value; OnPropertyChanged("LinkIdElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _LinkIdElement;
             
             /// <summary>
@@ -111,10 +113,10 @@ namespace Hl7.Fhir.Model
                 get { return LinkIdElement != null ? LinkIdElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      LinkIdElement = null; 
+                    if (value != null)
+                        LinkIdElement = null; 
                     else
-                      LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
+                        LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("LinkId");
                 }
             }
@@ -130,6 +132,7 @@ namespace Hl7.Fhir.Model
                 set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _TitleElement;
             
             /// <summary>
@@ -143,10 +146,10 @@ namespace Hl7.Fhir.Model
                 get { return TitleElement != null ? TitleElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TitleElement = null; 
+                    if (value != null)
+                        TitleElement = null; 
                     else
-                      TitleElement = new Hl7.Fhir.Model.FhirString(value);
+                        TitleElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Title");
                 }
             }
@@ -162,6 +165,7 @@ namespace Hl7.Fhir.Model
                 set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
@@ -175,10 +179,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value != null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -195,6 +199,7 @@ namespace Hl7.Fhir.Model
                 set { _Subject = value; OnPropertyChanged("Subject"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Subject;
             
             /// <summary>
@@ -209,6 +214,7 @@ namespace Hl7.Fhir.Model
                 set { _Group = value; OnPropertyChanged("Group"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent> _Group;
             
             /// <summary>
@@ -223,6 +229,7 @@ namespace Hl7.Fhir.Model
                 set { _Question = value; OnPropertyChanged("Question"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.QuestionnaireResponse.QuestionComponent> _Question;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -302,6 +309,7 @@ namespace Hl7.Fhir.Model
                 set { _LinkIdElement = value; OnPropertyChanged("LinkIdElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _LinkIdElement;
             
             /// <summary>
@@ -315,10 +323,10 @@ namespace Hl7.Fhir.Model
                 get { return LinkIdElement != null ? LinkIdElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      LinkIdElement = null; 
+                    if (value != null)
+                        LinkIdElement = null; 
                     else
-                      LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
+                        LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("LinkId");
                 }
             }
@@ -334,6 +342,7 @@ namespace Hl7.Fhir.Model
                 set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
@@ -347,10 +356,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value != null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -367,6 +376,7 @@ namespace Hl7.Fhir.Model
                 set { _Answer = value; OnPropertyChanged("Answer"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> _Answer;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -438,6 +448,7 @@ namespace Hl7.Fhir.Model
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Value;
             
             /// <summary>
@@ -452,6 +463,7 @@ namespace Hl7.Fhir.Model
                 set { _Group = value; OnPropertyChanged("Group"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent> _Group;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -512,6 +524,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -526,6 +539,7 @@ namespace Hl7.Fhir.Model
             set { _Questionnaire = value; OnPropertyChanged("Questionnaire"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Questionnaire;
         
         /// <summary>
@@ -540,6 +554,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> _StatusElement;
         
         /// <summary>
@@ -573,6 +588,7 @@ namespace Hl7.Fhir.Model
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -587,6 +603,7 @@ namespace Hl7.Fhir.Model
             set { _Author = value; OnPropertyChanged("Author"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Author;
         
         /// <summary>
@@ -600,6 +617,7 @@ namespace Hl7.Fhir.Model
             set { _AuthoredElement = value; OnPropertyChanged("AuthoredElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _AuthoredElement;
         
         /// <summary>
@@ -633,6 +651,7 @@ namespace Hl7.Fhir.Model
             set { _Source = value; OnPropertyChanged("Source"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
@@ -647,6 +666,7 @@ namespace Hl7.Fhir.Model
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
@@ -660,8 +680,27 @@ namespace Hl7.Fhir.Model
             set { _Group = value; OnPropertyChanged("Group"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent _Group;
         
+
+
+        public static ElementDefinition.ConstraintComponent QuestionnaireResponse_QRS_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("group.empty() or question.empty()"))},
+            Key = "qrs-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Groups may either contain questions or groups but not both",
+            Xpath = "not(exists(f:group) and exists(f:question))"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(QuestionnaireResponse_QRS_1);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as QuestionnaireResponse;

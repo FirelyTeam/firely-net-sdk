@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -183,6 +184,7 @@ namespace Hl7.Fhir.Model
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.CodeableConcept> _Type;
             
             /// <summary>
@@ -197,6 +199,7 @@ namespace Hl7.Fhir.Model
                 set { _Actor = value; OnPropertyChanged("Actor"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Actor;
             
             /// <summary>
@@ -210,6 +213,7 @@ namespace Hl7.Fhir.Model
                 set { _RequiredElement = value; OnPropertyChanged("RequiredElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Code<Hl7.Fhir.Model.Appointment.ParticipantRequired> _RequiredElement;
             
             /// <summary>
@@ -223,10 +227,10 @@ namespace Hl7.Fhir.Model
                 get { return RequiredElement != null ? RequiredElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      RequiredElement = null; 
+                    if (!value.HasValue)
+                        RequiredElement = null; 
                     else
-                      RequiredElement = new Code<Hl7.Fhir.Model.Appointment.ParticipantRequired>(value);
+                        RequiredElement = new Code<Hl7.Fhir.Model.Appointment.ParticipantRequired>(value);
                     OnPropertyChanged("Required");
                 }
             }
@@ -243,6 +247,7 @@ namespace Hl7.Fhir.Model
                 set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Code<Hl7.Fhir.Model.Appointment.ParticipationStatus> _StatusElement;
             
             /// <summary>
@@ -256,10 +261,10 @@ namespace Hl7.Fhir.Model
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      StatusElement = null; 
+                    if (!value.HasValue)
+                        StatusElement = null; 
                     else
-                      StatusElement = new Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>(value);
+                        StatusElement = new Code<Hl7.Fhir.Model.Appointment.ParticipationStatus>(value);
                     OnPropertyChanged("Status");
                 }
             }
@@ -329,6 +334,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -343,6 +349,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> _StatusElement;
         
         /// <summary>
@@ -375,6 +382,7 @@ namespace Hl7.Fhir.Model
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -388,6 +396,7 @@ namespace Hl7.Fhir.Model
             set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Reason;
         
         /// <summary>
@@ -401,6 +410,7 @@ namespace Hl7.Fhir.Model
             set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.UnsignedInt _PriorityElement;
         
         /// <summary>
@@ -433,6 +443,7 @@ namespace Hl7.Fhir.Model
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -465,6 +476,7 @@ namespace Hl7.Fhir.Model
             set { _StartElement = value; OnPropertyChanged("StartElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Instant _StartElement;
         
         /// <summary>
@@ -497,6 +509,7 @@ namespace Hl7.Fhir.Model
             set { _EndElement = value; OnPropertyChanged("EndElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Instant _EndElement;
         
         /// <summary>
@@ -529,6 +542,7 @@ namespace Hl7.Fhir.Model
             set { _MinutesDurationElement = value; OnPropertyChanged("MinutesDurationElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.PositiveInt _MinutesDurationElement;
         
         /// <summary>
@@ -563,6 +577,7 @@ namespace Hl7.Fhir.Model
             set { _Slot = value; OnPropertyChanged("Slot"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Slot;
         
         /// <summary>
@@ -576,6 +591,7 @@ namespace Hl7.Fhir.Model
             set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _CommentElement;
         
         /// <summary>
@@ -609,8 +625,47 @@ namespace Hl7.Fhir.Model
             set { _Participant = value; OnPropertyChanged("Participant"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Appointment.ParticipantComponent> _Participant;
         
+
+
+        public static ElementDefinition.ConstraintComponent Appointment_APP_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(start and end) or status = 'proposed' or status = 'cancelled'"))},
+            Key = "app-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Only proposed or cancelled appointments can be missing start/end dates",
+            Xpath = "((exists(f:start) and exists(f:end)) or (f:status/@value='proposed') or (f:status/@value='cancelled'))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Appointment_APP_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("start.empty() xor end"))},
+            Key = "app-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Either start and end are specified, or neither",
+            Xpath = "((exists(f:start) and exists(f:end)) or (not(exists(f:start)) and not(exists(f:end))))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Appointment_APP_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("type or actor"))},
+            Key = "app-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Either the type or actor on the participant MUST be specified",
+            Xpath = "(exists(f:type) or exists(f:actor))"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Appointment_APP_3);
+            InvariantConstraints.Add(Appointment_APP_2);
+            InvariantConstraints.Add(Appointment_APP_1);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Appointment;

@@ -31,8 +31,9 @@ namespace Hl7.Fhir.Tests.Rest
     {
         //public static Uri testEndpoint = new Uri("http://spark-dstu2.furore.com/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
+        public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        public static Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
+        //public static Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu2");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");

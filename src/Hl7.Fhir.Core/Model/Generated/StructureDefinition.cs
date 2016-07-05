@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -131,6 +132,7 @@ namespace Hl7.Fhir.Model
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -144,10 +146,10 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      NameElement = null; 
+                    if (value != null)
+                        NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -164,6 +166,7 @@ namespace Hl7.Fhir.Model
                 set { _Telecom = value; OnPropertyChanged("Telecom"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -232,6 +235,7 @@ namespace Hl7.Fhir.Model
                 set { _IdentityElement = value; OnPropertyChanged("IdentityElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Id _IdentityElement;
             
             /// <summary>
@@ -245,10 +249,10 @@ namespace Hl7.Fhir.Model
                 get { return IdentityElement != null ? IdentityElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      IdentityElement = null; 
+                    if (value != null)
+                        IdentityElement = null; 
                     else
-                      IdentityElement = new Hl7.Fhir.Model.Id(value);
+                        IdentityElement = new Hl7.Fhir.Model.Id(value);
                     OnPropertyChanged("Identity");
                 }
             }
@@ -264,6 +268,7 @@ namespace Hl7.Fhir.Model
                 set { _UriElement = value; OnPropertyChanged("UriElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirUri _UriElement;
             
             /// <summary>
@@ -277,10 +282,10 @@ namespace Hl7.Fhir.Model
                 get { return UriElement != null ? UriElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      UriElement = null; 
+                    if (value != null)
+                        UriElement = null; 
                     else
-                      UriElement = new Hl7.Fhir.Model.FhirUri(value);
+                        UriElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Uri");
                 }
             }
@@ -296,6 +301,7 @@ namespace Hl7.Fhir.Model
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -309,10 +315,10 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      NameElement = null; 
+                    if (value != null)
+                        NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -328,6 +334,7 @@ namespace Hl7.Fhir.Model
                 set { _CommentsElement = value; OnPropertyChanged("CommentsElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _CommentsElement;
             
             /// <summary>
@@ -341,10 +348,10 @@ namespace Hl7.Fhir.Model
                 get { return CommentsElement != null ? CommentsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CommentsElement = null; 
+                    if (value != null)
+                        CommentsElement = null; 
                     else
-                      CommentsElement = new Hl7.Fhir.Model.FhirString(value);
+                        CommentsElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Comments");
                 }
             }
@@ -421,6 +428,7 @@ namespace Hl7.Fhir.Model
                 set { _Element = value; OnPropertyChanged("Element"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ElementDefinition> _Element;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -486,6 +494,7 @@ namespace Hl7.Fhir.Model
                 set { _Element = value; OnPropertyChanged("Element"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ElementDefinition> _Element;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -544,6 +553,7 @@ namespace Hl7.Fhir.Model
             set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
@@ -577,6 +587,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -590,6 +601,7 @@ namespace Hl7.Fhir.Model
             set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
         /// <summary>
@@ -623,6 +635,7 @@ namespace Hl7.Fhir.Model
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -655,6 +668,7 @@ namespace Hl7.Fhir.Model
             set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _DisplayElement;
         
         /// <summary>
@@ -688,6 +702,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.ConformanceResourceStatus> _StatusElement;
         
         /// <summary>
@@ -720,6 +735,7 @@ namespace Hl7.Fhir.Model
             set { _ExperimentalElement = value; OnPropertyChanged("ExperimentalElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
         /// <summary>
@@ -752,6 +768,7 @@ namespace Hl7.Fhir.Model
             set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
@@ -785,6 +802,7 @@ namespace Hl7.Fhir.Model
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.StructureDefinition.ContactComponent> _Contact;
         
         /// <summary>
@@ -798,6 +816,7 @@ namespace Hl7.Fhir.Model
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -830,6 +849,7 @@ namespace Hl7.Fhir.Model
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -863,6 +883,7 @@ namespace Hl7.Fhir.Model
             set { _UseContext = value; OnPropertyChanged("UseContext"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
         
         /// <summary>
@@ -876,6 +897,7 @@ namespace Hl7.Fhir.Model
             set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _RequirementsElement;
         
         /// <summary>
@@ -908,6 +930,7 @@ namespace Hl7.Fhir.Model
             set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
         /// <summary>
@@ -941,6 +964,7 @@ namespace Hl7.Fhir.Model
             set { _Code = value; OnPropertyChanged("Code"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Coding> _Code;
         
         /// <summary>
@@ -954,6 +978,7 @@ namespace Hl7.Fhir.Model
             set { _FhirVersionElement = value; OnPropertyChanged("FhirVersionElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Id _FhirVersionElement;
         
         /// <summary>
@@ -987,6 +1012,7 @@ namespace Hl7.Fhir.Model
             set { _Mapping = value; OnPropertyChanged("Mapping"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.StructureDefinition.MappingComponent> _Mapping;
         
         /// <summary>
@@ -1001,6 +1027,7 @@ namespace Hl7.Fhir.Model
             set { _KindElement = value; OnPropertyChanged("KindElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind> _KindElement;
         
         /// <summary>
@@ -1033,6 +1060,7 @@ namespace Hl7.Fhir.Model
             set { _ConstrainedTypeElement = value; OnPropertyChanged("ConstrainedTypeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.FHIRDefinedType> _ConstrainedTypeElement;
         
         /// <summary>
@@ -1066,6 +1094,7 @@ namespace Hl7.Fhir.Model
             set { _AbstractElement = value; OnPropertyChanged("AbstractElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirBoolean _AbstractElement;
         
         /// <summary>
@@ -1098,6 +1127,7 @@ namespace Hl7.Fhir.Model
             set { _ContextTypeElement = value; OnPropertyChanged("ContextTypeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContext> _ContextTypeElement;
         
         /// <summary>
@@ -1131,6 +1161,7 @@ namespace Hl7.Fhir.Model
             set { _ContextElement = value; OnPropertyChanged("ContextElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.FhirString> _ContextElement;
         
         /// <summary>
@@ -1163,6 +1194,7 @@ namespace Hl7.Fhir.Model
             set { _BaseElement = value; OnPropertyChanged("BaseElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirUri _BaseElement;
         
         /// <summary>
@@ -1195,6 +1227,7 @@ namespace Hl7.Fhir.Model
             set { _Snapshot = value; OnPropertyChanged("Snapshot"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.StructureDefinition.SnapshotComponent _Snapshot;
         
         /// <summary>
@@ -1208,8 +1241,137 @@ namespace Hl7.Fhir.Model
             set { _Differential = value; OnPropertyChanged("Differential"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.StructureDefinition.DifferentialComponent _Differential;
         
+
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_11 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("constrainedType.empty() or snapshot.empty() or snapshot.element.first().path = constrainedType"))},
+            Key = "sdf-11",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If there's a constrained type, its content must match the path name in the first element of a snapshot",
+            Xpath = "not(exists(f:constrainedType)) or not(exists(f:snapshot)) or (f:constrainedType/@value = f:snapshot/f:element[1]/f:path/@value)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_5 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("constrainedType != 'Extension' or (context and contextType)"))},
+            Key = "sdf-5",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the structure defines an extension then the structure must have context information",
+            Xpath = "not(f:constrainedType/@value = 'extension') or (exists(f:context) and exists(f:contextType))"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_12 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("snapshot.element.base implies base"))},
+            Key = "sdf-12",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "element.base cannot appear if there is no base on the structure definition",
+            Xpath = "f:base or not(exists(f:snapshot/f:element/f:base) or exists(f:differential/f:element/f:base))"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("base or abstract = 'true'"))},
+            Key = "sdf-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A structure must have a base unless abstract = true",
+            Xpath = "(f:abstract/@value =true()) or exists(f:base)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_7 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("constrainedType or url = 'http://hl7.org/fhir/StructureDefinition/'+id"))},
+            Key = "sdf-7",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the structure describes a base Resource or Type, the URL has to start with \"http://hl7.org/fhir/StructureDefinition/\" and the tail must match the id",
+            Xpath = "exists(f:constrainedType) or f:url/@value=concat('http://hl7.org/fhir/StructureDefinition/', f:id/@value)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_6 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("snapshot or differential"))},
+            Key = "sdf-6",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A structure must have either a differential, or a snapshot (or both)",
+            Xpath = "exists(f:snapshot) or exists(f:differential)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("constrainedType or snapshot.element.select(path).distinct()"))},
+            Key = "sdf-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Element paths must be unique unless the structure is a constraint",
+            Xpath = "exists(f:constrainedType) or (count(f:snapshot/f:element) = count(distinct-values(f:snapshot/f:element/f:path/@value)))"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("snapshot.element.tail().all(path.startsWith($context.snapshot.element.first().path+\".\")) and differential.element.tail().all(path.startsWith($context.differential.element.first().path+\".\"))"))},
+            Key = "sdf-8",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "In any snapshot or differential, all the elements except the first have to have a path that starts with the path of the first + \".\"",
+            Xpath = "string-join(for $elementName in f:*[self::f:snapshot or self::f:differential]/f:element[position()>1]/f:path/@value return if (starts-with($elementName, concat($elementName/ancestor::f:element/parent::f:*/f:element[1]/f:path/@value, '.'))) then '' else $elementName,'')=''"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_9 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("*.element.first().label.empty() and *.element.first().code.empty() and *.element.first().requirements.empty()"))},
+            Key = "sdf-9",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "In any snapshot or differential, no label, code or requirements on the an element without a \".\" in the path (e.g. the first element)",
+            Xpath = "not(exists(f:snapshot/f:element[not(contains(f:path/@value, '.')) and (f:label or f:code or f:requirements)])) and not(exists(f:differential/f:element[not(contains(f:path/@value, '.')) and (f:label or f:code or f:requirements)]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_10 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("base or abstract = 'true' or constrainedType"))},
+            Key = "sdf-10",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the structure is not abstract, or there's a constrained type, then there SHALL be a base",
+            Xpath = "(f:abstract/@value=true()) or not(exists(f:constrainedType)) or exists(f:base)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("name or uri"))},
+            Key = "sdf-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Must have at a name or a uri (or both)",
+            Xpath = "exists(f:uri) or exists(f:name)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("element.all(definition and min and max)"))},
+            Key = "sdf-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Each element definition in a snapshot must have a formal definition and cardinalities",
+            Xpath = "count(f:element) = count(f:element[exists(f:definition) and exists(f:min) and exists(f:max)])"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(StructureDefinition_SDF_11);
+            InvariantConstraints.Add(StructureDefinition_SDF_5);
+            InvariantConstraints.Add(StructureDefinition_SDF_12);
+            InvariantConstraints.Add(StructureDefinition_SDF_4);
+            InvariantConstraints.Add(StructureDefinition_SDF_7);
+            InvariantConstraints.Add(StructureDefinition_SDF_6);
+            InvariantConstraints.Add(StructureDefinition_SDF_1);
+            InvariantConstraints.Add(StructureDefinition_SDF_8);
+            InvariantConstraints.Add(StructureDefinition_SDF_9);
+            InvariantConstraints.Add(StructureDefinition_SDF_10);
+            InvariantConstraints.Add(StructureDefinition_SDF_2);
+            InvariantConstraints.Add(StructureDefinition_SDF_3);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as StructureDefinition;

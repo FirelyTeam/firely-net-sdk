@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -142,6 +143,7 @@ namespace Hl7.Fhir.Model
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -200,6 +202,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -213,6 +216,7 @@ namespace Hl7.Fhir.Model
             set { _Category = value; OnPropertyChanged("Category"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
@@ -227,6 +231,7 @@ namespace Hl7.Fhir.Model
             set { _Sender = value; OnPropertyChanged("Sender"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Sender;
         
         /// <summary>
@@ -242,6 +247,7 @@ namespace Hl7.Fhir.Model
             set { _Recipient = value; OnPropertyChanged("Recipient"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
         
         /// <summary>
@@ -256,6 +262,7 @@ namespace Hl7.Fhir.Model
             set { _Payload = value; OnPropertyChanged("Payload"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent> _Payload;
         
         /// <summary>
@@ -270,6 +277,7 @@ namespace Hl7.Fhir.Model
             set { _Medium = value; OnPropertyChanged("Medium"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _Medium;
         
         /// <summary>
@@ -284,6 +292,7 @@ namespace Hl7.Fhir.Model
             set { _Requester = value; OnPropertyChanged("Requester"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Requester;
         
         /// <summary>
@@ -297,6 +306,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestStatus> _StatusElement;
         
         /// <summary>
@@ -330,6 +340,7 @@ namespace Hl7.Fhir.Model
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
@@ -344,6 +355,7 @@ namespace Hl7.Fhir.Model
             set { _Scheduled = value; OnPropertyChanged("Scheduled"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Scheduled;
         
         /// <summary>
@@ -358,6 +370,7 @@ namespace Hl7.Fhir.Model
             set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
         
         /// <summary>
@@ -371,6 +384,7 @@ namespace Hl7.Fhir.Model
             set { _RequestedOnElement = value; OnPropertyChanged("RequestedOnElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _RequestedOnElement;
         
         /// <summary>
@@ -404,6 +418,7 @@ namespace Hl7.Fhir.Model
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -417,8 +432,17 @@ namespace Hl7.Fhir.Model
             set { _Priority = value; OnPropertyChanged("Priority"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Priority;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CommunicationRequest;

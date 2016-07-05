@@ -15,6 +15,7 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.FhirPath
 {
+    [System.Diagnostics.DebuggerDisplay(@"\{Name = {Name} Child.Value = {Child.Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public class ChildNode
     {
         public ChildNode(string name, IFhirPathElement child)

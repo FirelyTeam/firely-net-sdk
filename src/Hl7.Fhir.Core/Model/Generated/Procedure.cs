@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -105,6 +106,7 @@ namespace Hl7.Fhir.Model
                 set { _Actor = value; OnPropertyChanged("Actor"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Actor;
             
             /// <summary>
@@ -118,6 +120,7 @@ namespace Hl7.Fhir.Model
                 set { _Role = value; OnPropertyChanged("Role"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Role;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -185,6 +188,7 @@ namespace Hl7.Fhir.Model
                 set { _Action = value; OnPropertyChanged("Action"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Action;
             
             /// <summary>
@@ -200,6 +204,7 @@ namespace Hl7.Fhir.Model
                 set { _Manipulated = value; OnPropertyChanged("Manipulated"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Manipulated;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -261,6 +266,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -276,6 +282,7 @@ namespace Hl7.Fhir.Model
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -290,6 +297,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.Procedure.ProcedureStatus> _StatusElement;
         
         /// <summary>
@@ -322,6 +330,7 @@ namespace Hl7.Fhir.Model
             set { _Category = value; OnPropertyChanged("Category"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
@@ -336,6 +345,7 @@ namespace Hl7.Fhir.Model
             set { _Code = value; OnPropertyChanged("Code"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
@@ -349,6 +359,7 @@ namespace Hl7.Fhir.Model
             set { _NotPerformedElement = value; OnPropertyChanged("NotPerformedElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirBoolean _NotPerformedElement;
         
         /// <summary>
@@ -382,6 +393,7 @@ namespace Hl7.Fhir.Model
             set { _ReasonNotPerformed = value; OnPropertyChanged("ReasonNotPerformed"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _ReasonNotPerformed;
         
         /// <summary>
@@ -396,6 +408,7 @@ namespace Hl7.Fhir.Model
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
         
         /// <summary>
@@ -410,6 +423,7 @@ namespace Hl7.Fhir.Model
             set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Reason;
         
         /// <summary>
@@ -424,6 +438,7 @@ namespace Hl7.Fhir.Model
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Procedure.PerformerComponent> _Performer;
         
         /// <summary>
@@ -438,6 +453,7 @@ namespace Hl7.Fhir.Model
             set { _Performed = value; OnPropertyChanged("Performed"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Performed;
         
         /// <summary>
@@ -452,6 +468,7 @@ namespace Hl7.Fhir.Model
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
@@ -466,6 +483,7 @@ namespace Hl7.Fhir.Model
             set { _Location = value; OnPropertyChanged("Location"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Location;
         
         /// <summary>
@@ -479,6 +497,7 @@ namespace Hl7.Fhir.Model
             set { _Outcome = value; OnPropertyChanged("Outcome"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Outcome;
         
         /// <summary>
@@ -494,6 +513,7 @@ namespace Hl7.Fhir.Model
             set { _Report = value; OnPropertyChanged("Report"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Report;
         
         /// <summary>
@@ -508,6 +528,7 @@ namespace Hl7.Fhir.Model
             set { _Complication = value; OnPropertyChanged("Complication"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _Complication;
         
         /// <summary>
@@ -522,6 +543,7 @@ namespace Hl7.Fhir.Model
             set { _FollowUp = value; OnPropertyChanged("FollowUp"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _FollowUp;
         
         /// <summary>
@@ -536,6 +558,7 @@ namespace Hl7.Fhir.Model
             set { _Request = value; OnPropertyChanged("Request"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
@@ -550,6 +573,7 @@ namespace Hl7.Fhir.Model
             set { _Notes = value; OnPropertyChanged("Notes"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Annotation> _Notes;
         
         /// <summary>
@@ -564,6 +588,7 @@ namespace Hl7.Fhir.Model
             set { _FocalDevice = value; OnPropertyChanged("FocalDevice"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent> _FocalDevice;
         
         /// <summary>
@@ -579,8 +604,27 @@ namespace Hl7.Fhir.Model
             set { _Used = value; OnPropertyChanged("Used"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Used;
         
+
+
+        public static ElementDefinition.ConstraintComponent Procedure_PRO_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("reasonNotPerformed.empty() or notPerformed = 'true'"))},
+            Key = "pro-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Reason not performed is only permitted if notPerformed indicator is true",
+            Xpath = "not(exists(f:reasonNotPerformed)) or f:notPerformed/@value=true()"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Procedure_PRO_1);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Procedure;

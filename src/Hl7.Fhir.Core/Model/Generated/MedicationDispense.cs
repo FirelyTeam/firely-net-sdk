@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -111,6 +112,7 @@ namespace Hl7.Fhir.Model
                 set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
@@ -124,10 +126,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value != null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -143,6 +145,7 @@ namespace Hl7.Fhir.Model
                 set { _AdditionalInstructions = value; OnPropertyChanged("AdditionalInstructions"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _AdditionalInstructions;
             
             /// <summary>
@@ -156,6 +159,7 @@ namespace Hl7.Fhir.Model
                 set { _Timing = value; OnPropertyChanged("Timing"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Timing _Timing;
             
             /// <summary>
@@ -170,6 +174,7 @@ namespace Hl7.Fhir.Model
                 set { _AsNeeded = value; OnPropertyChanged("AsNeeded"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _AsNeeded;
             
             /// <summary>
@@ -184,6 +189,7 @@ namespace Hl7.Fhir.Model
                 set { _Site = value; OnPropertyChanged("Site"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Site;
             
             /// <summary>
@@ -197,6 +203,7 @@ namespace Hl7.Fhir.Model
                 set { _Route = value; OnPropertyChanged("Route"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Route;
             
             /// <summary>
@@ -210,6 +217,7 @@ namespace Hl7.Fhir.Model
                 set { _Method = value; OnPropertyChanged("Method"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Method;
             
             /// <summary>
@@ -224,6 +232,7 @@ namespace Hl7.Fhir.Model
                 set { _Dose = value; OnPropertyChanged("Dose"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Dose;
             
             /// <summary>
@@ -238,6 +247,7 @@ namespace Hl7.Fhir.Model
                 set { _Rate = value; OnPropertyChanged("Rate"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Rate;
             
             /// <summary>
@@ -251,6 +261,7 @@ namespace Hl7.Fhir.Model
                 set { _MaxDosePerPeriod = value; OnPropertyChanged("MaxDosePerPeriod"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Ratio _MaxDosePerPeriod;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -343,6 +354,7 @@ namespace Hl7.Fhir.Model
                 set { _Type = value; OnPropertyChanged("Type"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
@@ -357,6 +369,7 @@ namespace Hl7.Fhir.Model
                 set { _Reason = value; OnPropertyChanged("Reason"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
             
             /// <summary>
@@ -372,6 +385,7 @@ namespace Hl7.Fhir.Model
                 set { _ResponsibleParty = value; OnPropertyChanged("ResponsibleParty"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ResourceReference> _ResponsibleParty;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -435,6 +449,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -448,6 +463,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> _StatusElement;
         
         /// <summary>
@@ -481,6 +497,7 @@ namespace Hl7.Fhir.Model
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
@@ -495,6 +512,7 @@ namespace Hl7.Fhir.Model
             set { _Dispenser = value; OnPropertyChanged("Dispenser"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Dispenser;
         
         /// <summary>
@@ -510,6 +528,7 @@ namespace Hl7.Fhir.Model
             set { _AuthorizingPrescription = value; OnPropertyChanged("AuthorizingPrescription"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _AuthorizingPrescription;
         
         /// <summary>
@@ -523,6 +542,7 @@ namespace Hl7.Fhir.Model
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -536,6 +556,7 @@ namespace Hl7.Fhir.Model
             set { _Quantity = value; OnPropertyChanged("Quantity"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.SimpleQuantity _Quantity;
         
         /// <summary>
@@ -549,6 +570,7 @@ namespace Hl7.Fhir.Model
             set { _DaysSupply = value; OnPropertyChanged("DaysSupply"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.SimpleQuantity _DaysSupply;
         
         /// <summary>
@@ -564,6 +586,7 @@ namespace Hl7.Fhir.Model
             set { _Medication = value; OnPropertyChanged("Medication"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Medication;
         
         /// <summary>
@@ -577,6 +600,7 @@ namespace Hl7.Fhir.Model
             set { _WhenPreparedElement = value; OnPropertyChanged("WhenPreparedElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _WhenPreparedElement;
         
         /// <summary>
@@ -609,6 +633,7 @@ namespace Hl7.Fhir.Model
             set { _WhenHandedOverElement = value; OnPropertyChanged("WhenHandedOverElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _WhenHandedOverElement;
         
         /// <summary>
@@ -642,6 +667,7 @@ namespace Hl7.Fhir.Model
             set { _Destination = value; OnPropertyChanged("Destination"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Destination;
         
         /// <summary>
@@ -657,6 +683,7 @@ namespace Hl7.Fhir.Model
             set { _Receiver = value; OnPropertyChanged("Receiver"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Receiver;
         
         /// <summary>
@@ -670,6 +697,7 @@ namespace Hl7.Fhir.Model
             set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _NoteElement;
         
         /// <summary>
@@ -703,6 +731,7 @@ namespace Hl7.Fhir.Model
             set { _DosageInstruction = value; OnPropertyChanged("DosageInstruction"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.MedicationDispense.DosageInstructionComponent> _DosageInstruction;
         
         /// <summary>
@@ -716,8 +745,27 @@ namespace Hl7.Fhir.Model
             set { _Substitution = value; OnPropertyChanged("Substitution"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.MedicationDispense.SubstitutionComponent _Substitution;
         
+
+
+        public static ElementDefinition.ConstraintComponent MedicationDispense_MDD_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("whenHandedOver.empty() or whenPrepared.empty() or whenHandedOver >= whenPrepared"))},
+            Key = "mdd-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "whenHandedOver cannot be before whenPrepared",
+            Xpath = "not(exists(f:whenHandedOver/@value)) or not(exists(f:whenPrepared/@value)) or ( f:whenHandedOver/@value >= f:whenPrepared/@value)"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(MedicationDispense_MDD_1);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MedicationDispense;

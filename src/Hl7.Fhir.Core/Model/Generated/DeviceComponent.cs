@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -146,6 +147,7 @@ namespace Hl7.Fhir.Model
                 set { _SpecType = value; OnPropertyChanged("SpecType"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _SpecType;
             
             /// <summary>
@@ -159,6 +161,7 @@ namespace Hl7.Fhir.Model
                 set { _ComponentId = value; OnPropertyChanged("ComponentId"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Identifier _ComponentId;
             
             /// <summary>
@@ -172,6 +175,7 @@ namespace Hl7.Fhir.Model
                 set { _ProductionSpecElement = value; OnPropertyChanged("ProductionSpecElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _ProductionSpecElement;
             
             /// <summary>
@@ -185,10 +189,10 @@ namespace Hl7.Fhir.Model
                 get { return ProductionSpecElement != null ? ProductionSpecElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ProductionSpecElement = null; 
+                    if (value != null)
+                        ProductionSpecElement = null; 
                     else
-                      ProductionSpecElement = new Hl7.Fhir.Model.FhirString(value);
+                        ProductionSpecElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("ProductionSpec");
                 }
             }
@@ -255,6 +259,7 @@ namespace Hl7.Fhir.Model
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -269,6 +274,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -283,6 +289,7 @@ namespace Hl7.Fhir.Model
             set { _LastSystemChangeElement = value; OnPropertyChanged("LastSystemChangeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Instant _LastSystemChangeElement;
         
         /// <summary>
@@ -316,6 +323,7 @@ namespace Hl7.Fhir.Model
             set { _Source = value; OnPropertyChanged("Source"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
@@ -330,6 +338,7 @@ namespace Hl7.Fhir.Model
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Parent;
         
         /// <summary>
@@ -344,6 +353,7 @@ namespace Hl7.Fhir.Model
             set { _OperationalStatus = value; OnPropertyChanged("OperationalStatus"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _OperationalStatus;
         
         /// <summary>
@@ -357,6 +367,7 @@ namespace Hl7.Fhir.Model
             set { _ParameterGroup = value; OnPropertyChanged("ParameterGroup"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _ParameterGroup;
         
         /// <summary>
@@ -370,6 +381,7 @@ namespace Hl7.Fhir.Model
             set { _MeasurementPrincipleElement = value; OnPropertyChanged("MeasurementPrincipleElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle> _MeasurementPrincipleElement;
         
         /// <summary>
@@ -403,6 +415,7 @@ namespace Hl7.Fhir.Model
             set { _ProductionSpecification = value; OnPropertyChanged("ProductionSpecification"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.DeviceComponent.ProductionSpecificationComponent> _ProductionSpecification;
         
         /// <summary>
@@ -416,8 +429,17 @@ namespace Hl7.Fhir.Model
             set { _LanguageCode = value; OnPropertyChanged("LanguageCode"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _LanguageCode;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DeviceComponent;

@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -134,6 +135,7 @@ namespace Hl7.Fhir.Model
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -147,10 +149,10 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      NameElement = null; 
+                    if (value != null)
+                        NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -167,6 +169,7 @@ namespace Hl7.Fhir.Model
                 set { _Telecom = value; OnPropertyChanged("Telecom"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -234,6 +237,7 @@ namespace Hl7.Fhir.Model
                 set { _CodeSystemElement = value; OnPropertyChanged("CodeSystemElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirUri _CodeSystemElement;
             
             /// <summary>
@@ -247,10 +251,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeSystemElement != null ? CodeSystemElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeSystemElement = null; 
+                    if (value != null)
+                        CodeSystemElement = null; 
                     else
-                      CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                        CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("CodeSystem");
                 }
             }
@@ -266,6 +270,7 @@ namespace Hl7.Fhir.Model
                 set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Code _CodeElement;
             
             /// <summary>
@@ -279,10 +284,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeElement = null; 
+                    if (value != null)
+                        CodeElement = null; 
                     else
-                      CodeElement = new Hl7.Fhir.Model.Code(value);
+                        CodeElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -299,6 +304,7 @@ namespace Hl7.Fhir.Model
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ConceptMap.TargetElementComponent> _Target;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -369,6 +375,7 @@ namespace Hl7.Fhir.Model
                 set { _CodeSystemElement = value; OnPropertyChanged("CodeSystemElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirUri _CodeSystemElement;
             
             /// <summary>
@@ -382,10 +389,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeSystemElement != null ? CodeSystemElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeSystemElement = null; 
+                    if (value != null)
+                        CodeSystemElement = null; 
                     else
-                      CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                        CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("CodeSystem");
                 }
             }
@@ -401,6 +408,7 @@ namespace Hl7.Fhir.Model
                 set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Code _CodeElement;
             
             /// <summary>
@@ -414,10 +422,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeElement = null; 
+                    if (value != null)
+                        CodeElement = null; 
                     else
-                      CodeElement = new Hl7.Fhir.Model.Code(value);
+                        CodeElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -434,6 +442,7 @@ namespace Hl7.Fhir.Model
                 set { _EquivalenceElement = value; OnPropertyChanged("EquivalenceElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> _EquivalenceElement;
             
             /// <summary>
@@ -447,10 +456,10 @@ namespace Hl7.Fhir.Model
                 get { return EquivalenceElement != null ? EquivalenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      EquivalenceElement = null; 
+                    if (!value.HasValue)
+                        EquivalenceElement = null; 
                     else
-                      EquivalenceElement = new Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence>(value);
+                        EquivalenceElement = new Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence>(value);
                     OnPropertyChanged("Equivalence");
                 }
             }
@@ -466,6 +475,7 @@ namespace Hl7.Fhir.Model
                 set { _CommentsElement = value; OnPropertyChanged("CommentsElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _CommentsElement;
             
             /// <summary>
@@ -479,10 +489,10 @@ namespace Hl7.Fhir.Model
                 get { return CommentsElement != null ? CommentsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CommentsElement = null; 
+                    if (value != null)
+                        CommentsElement = null; 
                     else
-                      CommentsElement = new Hl7.Fhir.Model.FhirString(value);
+                        CommentsElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Comments");
                 }
             }
@@ -499,6 +509,7 @@ namespace Hl7.Fhir.Model
                 set { _DependsOn = value; OnPropertyChanged("DependsOn"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> _DependsOn;
             
             /// <summary>
@@ -513,6 +524,7 @@ namespace Hl7.Fhir.Model
                 set { _Product = value; OnPropertyChanged("Product"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent> _Product;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -593,6 +605,7 @@ namespace Hl7.Fhir.Model
                 set { _ElementElement = value; OnPropertyChanged("ElementElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirUri _ElementElement;
             
             /// <summary>
@@ -606,10 +619,10 @@ namespace Hl7.Fhir.Model
                 get { return ElementElement != null ? ElementElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ElementElement = null; 
+                    if (value != null)
+                        ElementElement = null; 
                     else
-                      ElementElement = new Hl7.Fhir.Model.FhirUri(value);
+                        ElementElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Element");
                 }
             }
@@ -626,6 +639,7 @@ namespace Hl7.Fhir.Model
                 set { _CodeSystemElement = value; OnPropertyChanged("CodeSystemElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirUri _CodeSystemElement;
             
             /// <summary>
@@ -639,10 +653,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeSystemElement != null ? CodeSystemElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeSystemElement = null; 
+                    if (value != null)
+                        CodeSystemElement = null; 
                     else
-                      CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                        CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("CodeSystem");
                 }
             }
@@ -659,6 +673,7 @@ namespace Hl7.Fhir.Model
                 set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _CodeElement;
             
             /// <summary>
@@ -672,10 +687,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeElement = null; 
+                    if (value != null)
+                        CodeElement = null; 
                     else
-                      CodeElement = new Hl7.Fhir.Model.FhirString(value);
+                        CodeElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -741,6 +756,7 @@ namespace Hl7.Fhir.Model
             set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
@@ -773,6 +789,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -786,6 +803,7 @@ namespace Hl7.Fhir.Model
             set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
         /// <summary>
@@ -818,6 +836,7 @@ namespace Hl7.Fhir.Model
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -851,6 +870,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.ConformanceResourceStatus> _StatusElement;
         
         /// <summary>
@@ -883,6 +903,7 @@ namespace Hl7.Fhir.Model
             set { _ExperimentalElement = value; OnPropertyChanged("ExperimentalElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
         /// <summary>
@@ -915,6 +936,7 @@ namespace Hl7.Fhir.Model
             set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
@@ -948,6 +970,7 @@ namespace Hl7.Fhir.Model
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ConceptMap.ContactComponent> _Contact;
         
         /// <summary>
@@ -961,6 +984,7 @@ namespace Hl7.Fhir.Model
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -993,6 +1017,7 @@ namespace Hl7.Fhir.Model
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -1026,6 +1051,7 @@ namespace Hl7.Fhir.Model
             set { _UseContext = value; OnPropertyChanged("UseContext"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
         
         /// <summary>
@@ -1039,6 +1065,7 @@ namespace Hl7.Fhir.Model
             set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _RequirementsElement;
         
         /// <summary>
@@ -1071,6 +1098,7 @@ namespace Hl7.Fhir.Model
             set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
         /// <summary>
@@ -1105,6 +1133,7 @@ namespace Hl7.Fhir.Model
             set { _Source = value; OnPropertyChanged("Source"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Source;
         
         /// <summary>
@@ -1120,6 +1149,7 @@ namespace Hl7.Fhir.Model
             set { _Target = value; OnPropertyChanged("Target"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Target;
         
         /// <summary>
@@ -1134,8 +1164,27 @@ namespace Hl7.Fhir.Model
             set { _Element = value; OnPropertyChanged("Element"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ConceptMap.SourceElementComponent> _Element;
         
+
+
+        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("comments or ((equivalence != 'narrower') and (equivalence != 'inexact'))"))},
+            Key = "cmd-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the map is narrower or inexact, there SHALL be some comments",
+            Xpath = "exists(f:comments) or ((f:equivalence/@value != 'narrower') and (f:equivalence/@value != 'inexact'))"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(ConceptMap_CMD_1);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ConceptMap;

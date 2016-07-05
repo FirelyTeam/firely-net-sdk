@@ -44,6 +44,17 @@ namespace Hl7.Fhir.Model
     public abstract partial class Resource 
     {
         /// <summary>
+        /// The List of invariants to be validated for the resource
+        /// </summary>
+        [NotMapped]
+        public List<ElementDefinition.ConstraintComponent> InvariantConstraints;
+
+        public virtual void AddDefaultConstraints()
+        {
+
+        }
+
+        /// <summary>
         /// This is the base URL of the FHIR server that this resource is hosted on
         /// </summary>
         [NotMapped]

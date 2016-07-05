@@ -69,8 +69,5 @@ namespace Hl7.Fhir.FhirPath
             var evaluator = Compile(expression);
             return evaluator.Predicate(instance, new EvaluationContext());
         }
-
     }
-
-
 }

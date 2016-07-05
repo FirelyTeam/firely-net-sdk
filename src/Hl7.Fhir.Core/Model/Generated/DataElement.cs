@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -116,6 +117,7 @@ namespace Hl7.Fhir.Model
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -129,10 +131,10 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      NameElement = null; 
+                    if (value != null)
+                        NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -149,6 +151,7 @@ namespace Hl7.Fhir.Model
                 set { _Telecom = value; OnPropertyChanged("Telecom"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -217,6 +220,7 @@ namespace Hl7.Fhir.Model
                 set { _IdentityElement = value; OnPropertyChanged("IdentityElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Id _IdentityElement;
             
             /// <summary>
@@ -230,10 +234,10 @@ namespace Hl7.Fhir.Model
                 get { return IdentityElement != null ? IdentityElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      IdentityElement = null; 
+                    if (value != null)
+                        IdentityElement = null; 
                     else
-                      IdentityElement = new Hl7.Fhir.Model.Id(value);
+                        IdentityElement = new Hl7.Fhir.Model.Id(value);
                     OnPropertyChanged("Identity");
                 }
             }
@@ -249,6 +253,7 @@ namespace Hl7.Fhir.Model
                 set { _UriElement = value; OnPropertyChanged("UriElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirUri _UriElement;
             
             /// <summary>
@@ -262,10 +267,10 @@ namespace Hl7.Fhir.Model
                 get { return UriElement != null ? UriElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      UriElement = null; 
+                    if (value != null)
+                        UriElement = null; 
                     else
-                      UriElement = new Hl7.Fhir.Model.FhirUri(value);
+                        UriElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Uri");
                 }
             }
@@ -281,6 +286,7 @@ namespace Hl7.Fhir.Model
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -294,10 +300,10 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      NameElement = null; 
+                    if (value != null)
+                        NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -313,6 +319,7 @@ namespace Hl7.Fhir.Model
                 set { _CommentsElement = value; OnPropertyChanged("CommentsElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _CommentsElement;
             
             /// <summary>
@@ -326,10 +333,10 @@ namespace Hl7.Fhir.Model
                 get { return CommentsElement != null ? CommentsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CommentsElement = null; 
+                    if (value != null)
+                        CommentsElement = null; 
                     else
-                      CommentsElement = new Hl7.Fhir.Model.FhirString(value);
+                        CommentsElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Comments");
                 }
             }
@@ -398,6 +405,7 @@ namespace Hl7.Fhir.Model
             set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
@@ -431,6 +439,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -444,6 +453,7 @@ namespace Hl7.Fhir.Model
             set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
         /// <summary>
@@ -476,6 +486,7 @@ namespace Hl7.Fhir.Model
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -509,6 +520,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.ConformanceResourceStatus> _StatusElement;
         
         /// <summary>
@@ -541,6 +553,7 @@ namespace Hl7.Fhir.Model
             set { _ExperimentalElement = value; OnPropertyChanged("ExperimentalElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirBoolean _ExperimentalElement;
         
         /// <summary>
@@ -573,6 +586,7 @@ namespace Hl7.Fhir.Model
             set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
@@ -606,6 +620,7 @@ namespace Hl7.Fhir.Model
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.DataElement.ContactComponent> _Contact;
         
         /// <summary>
@@ -619,6 +634,7 @@ namespace Hl7.Fhir.Model
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -652,6 +668,7 @@ namespace Hl7.Fhir.Model
             set { _UseContext = value; OnPropertyChanged("UseContext"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
         
         /// <summary>
@@ -665,6 +682,7 @@ namespace Hl7.Fhir.Model
             set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _CopyrightElement;
         
         /// <summary>
@@ -697,6 +715,7 @@ namespace Hl7.Fhir.Model
             set { _StringencyElement = value; OnPropertyChanged("StringencyElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.DataElement.DataElementStringency> _StringencyElement;
         
         /// <summary>
@@ -730,6 +749,7 @@ namespace Hl7.Fhir.Model
             set { _Mapping = value; OnPropertyChanged("Mapping"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.DataElement.MappingComponent> _Mapping;
         
         /// <summary>
@@ -744,8 +764,37 @@ namespace Hl7.Fhir.Model
             set { _Element = value; OnPropertyChanged("Element"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ElementDefinition> _Element;
         
+
+
+        public static ElementDefinition.ConstraintComponent DataElement_DAE_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("base.empty()"))},
+            Key = "dae-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "No base allowed",
+            Xpath = "not(exists(f:base))"
+        };
+
+        public static ElementDefinition.ConstraintComponent DataElement_DAE_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("slicing.empty()"))},
+            Key = "dae-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "No slicing allowed",
+            Xpath = "not(exists(f:slicing))"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(DataElement_DAE_1);
+            InvariantConstraints.Add(DataElement_DAE_2);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DataElement;

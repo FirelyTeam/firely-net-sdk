@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -65,6 +66,7 @@ namespace Hl7.Fhir.Model
             set { _Issuer = value; OnPropertyChanged("Issuer"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Issuer;
         
         /// <summary>
@@ -78,6 +80,7 @@ namespace Hl7.Fhir.Model
             set { _Bin = value; OnPropertyChanged("Bin"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Identifier _Bin;
         
         /// <summary>
@@ -91,6 +94,7 @@ namespace Hl7.Fhir.Model
             set { _Period = value; OnPropertyChanged("Period"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Period _Period;
         
         /// <summary>
@@ -104,6 +108,7 @@ namespace Hl7.Fhir.Model
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Coding _Type;
         
         /// <summary>
@@ -117,6 +122,7 @@ namespace Hl7.Fhir.Model
             set { _SubscriberId = value; OnPropertyChanged("SubscriberId"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Identifier _SubscriberId;
         
         /// <summary>
@@ -131,6 +137,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -144,6 +151,7 @@ namespace Hl7.Fhir.Model
             set { _GroupElement = value; OnPropertyChanged("GroupElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _GroupElement;
         
         /// <summary>
@@ -176,6 +184,7 @@ namespace Hl7.Fhir.Model
             set { _PlanElement = value; OnPropertyChanged("PlanElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _PlanElement;
         
         /// <summary>
@@ -208,6 +217,7 @@ namespace Hl7.Fhir.Model
             set { _SubPlanElement = value; OnPropertyChanged("SubPlanElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _SubPlanElement;
         
         /// <summary>
@@ -240,6 +250,7 @@ namespace Hl7.Fhir.Model
             set { _DependentElement = value; OnPropertyChanged("DependentElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.PositiveInt _DependentElement;
         
         /// <summary>
@@ -272,6 +283,7 @@ namespace Hl7.Fhir.Model
             set { _SequenceElement = value; OnPropertyChanged("SequenceElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.PositiveInt _SequenceElement;
         
         /// <summary>
@@ -305,6 +317,7 @@ namespace Hl7.Fhir.Model
             set { _Subscriber = value; OnPropertyChanged("Subscriber"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Subscriber;
         
         /// <summary>
@@ -318,6 +331,7 @@ namespace Hl7.Fhir.Model
             set { _Network = value; OnPropertyChanged("Network"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Identifier _Network;
         
         /// <summary>
@@ -333,8 +347,17 @@ namespace Hl7.Fhir.Model
             set { _Contract = value; OnPropertyChanged("Contract"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Contract;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Coverage;

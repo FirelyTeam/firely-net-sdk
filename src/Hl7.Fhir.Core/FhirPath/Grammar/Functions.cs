@@ -70,6 +70,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
 
         public static readonly Parser<Evaluator> Not = CreateFunctionParser("not", Eval.Not);
         public static readonly Parser<Evaluator> Empty = CreateFunctionParser("empty", Eval.Empty);
+        public static readonly Parser<Evaluator> Exists = CreateFunctionParser("exists", Eval.Exists);
         public static readonly Parser<Evaluator> Where = CreateFunctionParser("where", "criterium", Eval.Where);
         public static readonly Parser<Evaluator> All = CreateFunctionParser("all", "criterium", Eval.All);
         public static readonly Parser<Evaluator> Any = CreateFunctionParser("any", "criterium", Eval.Any, optional:true);
@@ -83,6 +84,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> AsInteger = CreateFunctionParser("asInteger", Eval.ToInteger);
         public static readonly Parser<Evaluator> ToInteger = CreateFunctionParser("toInteger", Eval.ToInteger);
         public static readonly Parser<Evaluator> ToDecimal = CreateFunctionParser("toDecimal", Eval.ToDecimal);
+        public static readonly Parser<Evaluator> ToString = CreateFunctionParser("toString", Eval.ToString);
         public static readonly Parser<Evaluator> StartsWith = CreateFunctionParser("startsWith", "prefix", Eval.StartsWith);
         public static readonly Parser<Evaluator> Log = CreateFunctionParser("log", "argument", Eval.Log);
         public static readonly Parser<Evaluator> Today = CreateFunctionParser("today", Eval.Today);
@@ -107,9 +109,9 @@ namespace Hl7.Fhir.FhirPath.Grammar
             select Eval.Function(name, paramList.GetOrElse(Enumerable.Empty<Evaluator>()));
 
 
-        public static readonly Parser<Evaluator> Function = Not.Or(Empty).Or(Where).Or(All).Or(Any).Or(Item)
+        public static readonly Parser<Evaluator> Function = Not.Or(Empty).Or(Exists).Or(Where).Or(All).Or(Any).Or(Item)
                         .Or(First).Or(Last).Or(Tail).Or(Skip).Or(Take).Or(Count)
-                        .Or(AsInteger).Or(ToInteger).Or(ToDecimal).Or(StartsWith)
+                        .Or(AsInteger).Or(ToInteger).Or(ToDecimal).Or(StartsWith).Or(ToString)
                         .Or(Log).Or(Resolve).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension)
                         .Or(Substring).Or(Select).Or(Today).Or(Now).Or(DateAdd)
                         .Or(OtherFunction);

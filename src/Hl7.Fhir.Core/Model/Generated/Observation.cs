@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -167,6 +168,7 @@ namespace Hl7.Fhir.Model
                 set { _Low = value; OnPropertyChanged("Low"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.SimpleQuantity _Low;
             
             /// <summary>
@@ -180,6 +182,7 @@ namespace Hl7.Fhir.Model
                 set { _High = value; OnPropertyChanged("High"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.SimpleQuantity _High;
             
             /// <summary>
@@ -193,6 +196,7 @@ namespace Hl7.Fhir.Model
                 set { _Meaning = value; OnPropertyChanged("Meaning"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Meaning;
             
             /// <summary>
@@ -206,6 +210,7 @@ namespace Hl7.Fhir.Model
                 set { _Age = value; OnPropertyChanged("Age"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Range _Age;
             
             /// <summary>
@@ -219,6 +224,7 @@ namespace Hl7.Fhir.Model
                 set { _TextElement = value; OnPropertyChanged("TextElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _TextElement;
             
             /// <summary>
@@ -232,10 +238,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value != null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -314,6 +320,7 @@ namespace Hl7.Fhir.Model
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> _TypeElement;
             
             /// <summary>
@@ -327,10 +334,10 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TypeElement = null; 
+                    if (!value.HasValue)
+                        TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -348,6 +355,7 @@ namespace Hl7.Fhir.Model
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Target;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -416,6 +424,7 @@ namespace Hl7.Fhir.Model
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
@@ -430,6 +439,7 @@ namespace Hl7.Fhir.Model
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Value;
             
             /// <summary>
@@ -443,6 +453,7 @@ namespace Hl7.Fhir.Model
                 set { _DataAbsentReason = value; OnPropertyChanged("DataAbsentReason"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _DataAbsentReason;
             
             /// <summary>
@@ -457,6 +468,7 @@ namespace Hl7.Fhir.Model
                 set { _ReferenceRange = value; OnPropertyChanged("ReferenceRange"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent> _ReferenceRange;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -524,6 +536,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -538,6 +551,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.Observation.ObservationStatus> _StatusElement;
         
         /// <summary>
@@ -570,6 +584,7 @@ namespace Hl7.Fhir.Model
             set { _Category = value; OnPropertyChanged("Category"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
@@ -584,6 +599,7 @@ namespace Hl7.Fhir.Model
             set { _Code = value; OnPropertyChanged("Code"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
@@ -598,6 +614,7 @@ namespace Hl7.Fhir.Model
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -612,6 +629,7 @@ namespace Hl7.Fhir.Model
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
@@ -626,6 +644,7 @@ namespace Hl7.Fhir.Model
             set { _Effective = value; OnPropertyChanged("Effective"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Effective;
         
         /// <summary>
@@ -639,6 +658,7 @@ namespace Hl7.Fhir.Model
             set { _IssuedElement = value; OnPropertyChanged("IssuedElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Instant _IssuedElement;
         
         /// <summary>
@@ -673,6 +693,7 @@ namespace Hl7.Fhir.Model
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Performer;
         
         /// <summary>
@@ -687,6 +708,7 @@ namespace Hl7.Fhir.Model
             set { _Value = value; OnPropertyChanged("Value"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Value;
         
         /// <summary>
@@ -700,6 +722,7 @@ namespace Hl7.Fhir.Model
             set { _DataAbsentReason = value; OnPropertyChanged("DataAbsentReason"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _DataAbsentReason;
         
         /// <summary>
@@ -713,6 +736,7 @@ namespace Hl7.Fhir.Model
             set { _Interpretation = value; OnPropertyChanged("Interpretation"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Interpretation;
         
         /// <summary>
@@ -726,6 +750,7 @@ namespace Hl7.Fhir.Model
             set { _CommentsElement = value; OnPropertyChanged("CommentsElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _CommentsElement;
         
         /// <summary>
@@ -758,6 +783,7 @@ namespace Hl7.Fhir.Model
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _BodySite;
         
         /// <summary>
@@ -771,6 +797,7 @@ namespace Hl7.Fhir.Model
             set { _Method = value; OnPropertyChanged("Method"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Method;
         
         /// <summary>
@@ -785,6 +812,7 @@ namespace Hl7.Fhir.Model
             set { _Specimen = value; OnPropertyChanged("Specimen"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Specimen;
         
         /// <summary>
@@ -799,6 +827,7 @@ namespace Hl7.Fhir.Model
             set { _Device = value; OnPropertyChanged("Device"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Device;
         
         /// <summary>
@@ -813,6 +842,7 @@ namespace Hl7.Fhir.Model
             set { _ReferenceRange = value; OnPropertyChanged("ReferenceRange"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Observation.ReferenceRangeComponent> _ReferenceRange;
         
         /// <summary>
@@ -827,6 +857,7 @@ namespace Hl7.Fhir.Model
             set { _Related = value; OnPropertyChanged("Related"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Observation.RelatedComponent> _Related;
         
         /// <summary>
@@ -841,8 +872,47 @@ namespace Hl7.Fhir.Model
             set { _Component = value; OnPropertyChanged("Component"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Observation.ComponentComponent> _Component;
         
+
+
+        public static ElementDefinition.ConstraintComponent Observation_OBS_6 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("dataAbsentReason.empty() or value[x].empty()"))},
+            Key = "obs-6",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "dataAbsentReason SHALL only be present if Observation.value[x] is not present",
+            Xpath = "not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), 'value')])))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Observation_OBS_7 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("component.where(code = $context.code).empty()"))},
+            Key = "obs-7",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Component code SHALL not be same as observation code",
+            Xpath = "not(exists(f:component/f:code)) or count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0"
+        };
+
+        public static ElementDefinition.ConstraintComponent Observation_OBS_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("low or high or text"))},
+            Key = "obs-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Must have at least a low or a high or text",
+            Xpath = "(exists(f:low) or exists(f:high)or exists(f:text))"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Observation_OBS_6);
+            InvariantConstraints.Add(Observation_OBS_7);
+            InvariantConstraints.Add(Observation_OBS_3);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Observation;

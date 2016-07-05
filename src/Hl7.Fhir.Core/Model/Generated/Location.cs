@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -120,6 +121,7 @@ namespace Hl7.Fhir.Model
                 set { _LongitudeElement = value; OnPropertyChanged("LongitudeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDecimal _LongitudeElement;
             
             /// <summary>
@@ -133,10 +135,10 @@ namespace Hl7.Fhir.Model
                 get { return LongitudeElement != null ? LongitudeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      LongitudeElement = null; 
+                    if (!value.HasValue)
+                        LongitudeElement = null; 
                     else
-                      LongitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        LongitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Longitude");
                 }
             }
@@ -153,6 +155,7 @@ namespace Hl7.Fhir.Model
                 set { _LatitudeElement = value; OnPropertyChanged("LatitudeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDecimal _LatitudeElement;
             
             /// <summary>
@@ -166,10 +169,10 @@ namespace Hl7.Fhir.Model
                 get { return LatitudeElement != null ? LatitudeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      LatitudeElement = null; 
+                    if (!value.HasValue)
+                        LatitudeElement = null; 
                     else
-                      LatitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        LatitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Latitude");
                 }
             }
@@ -185,6 +188,7 @@ namespace Hl7.Fhir.Model
                 set { _AltitudeElement = value; OnPropertyChanged("AltitudeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDecimal _AltitudeElement;
             
             /// <summary>
@@ -198,10 +202,10 @@ namespace Hl7.Fhir.Model
                 get { return AltitudeElement != null ? AltitudeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      AltitudeElement = null; 
+                    if (!value.HasValue)
+                        AltitudeElement = null; 
                     else
-                      AltitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        AltitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Altitude");
                 }
             }
@@ -268,6 +272,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -281,6 +286,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.Location.LocationStatus> _StatusElement;
         
         /// <summary>
@@ -313,6 +319,7 @@ namespace Hl7.Fhir.Model
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -345,6 +352,7 @@ namespace Hl7.Fhir.Model
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -377,6 +385,7 @@ namespace Hl7.Fhir.Model
             set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.Location.LocationMode> _ModeElement;
         
         /// <summary>
@@ -409,6 +418,7 @@ namespace Hl7.Fhir.Model
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -423,6 +433,7 @@ namespace Hl7.Fhir.Model
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
@@ -436,6 +447,7 @@ namespace Hl7.Fhir.Model
             set { _Address = value; OnPropertyChanged("Address"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Address _Address;
         
         /// <summary>
@@ -449,6 +461,7 @@ namespace Hl7.Fhir.Model
             set { _PhysicalType = value; OnPropertyChanged("PhysicalType"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _PhysicalType;
         
         /// <summary>
@@ -462,6 +475,7 @@ namespace Hl7.Fhir.Model
             set { _Position = value; OnPropertyChanged("Position"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Location.PositionComponent _Position;
         
         /// <summary>
@@ -476,6 +490,7 @@ namespace Hl7.Fhir.Model
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
@@ -490,8 +505,17 @@ namespace Hl7.Fhir.Model
             set { _PartOf = value; OnPropertyChanged("PartOf"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _PartOf;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Location;

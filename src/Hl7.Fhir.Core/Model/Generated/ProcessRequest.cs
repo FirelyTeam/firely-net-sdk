@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -105,6 +106,7 @@ namespace Hl7.Fhir.Model
                 set { _SequenceLinkIdElement = value; OnPropertyChanged("SequenceLinkIdElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Integer _SequenceLinkIdElement;
             
             /// <summary>
@@ -118,10 +120,10 @@ namespace Hl7.Fhir.Model
                 get { return SequenceLinkIdElement != null ? SequenceLinkIdElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SequenceLinkIdElement = null; 
+                    if (!value.HasValue)
+                        SequenceLinkIdElement = null; 
                     else
-                      SequenceLinkIdElement = new Hl7.Fhir.Model.Integer(value);
+                        SequenceLinkIdElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("SequenceLinkId");
                 }
             }
@@ -182,6 +184,7 @@ namespace Hl7.Fhir.Model
             set { _ActionElement = value; OnPropertyChanged("ActionElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.ProcessRequest.ActionList> _ActionElement;
         
         /// <summary>
@@ -215,6 +218,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -228,6 +232,7 @@ namespace Hl7.Fhir.Model
             set { _Ruleset = value; OnPropertyChanged("Ruleset"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Coding _Ruleset;
         
         /// <summary>
@@ -241,6 +246,7 @@ namespace Hl7.Fhir.Model
             set { _OriginalRuleset = value; OnPropertyChanged("OriginalRuleset"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Coding _OriginalRuleset;
         
         /// <summary>
@@ -254,6 +260,7 @@ namespace Hl7.Fhir.Model
             set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
         
         /// <summary>
@@ -287,6 +294,7 @@ namespace Hl7.Fhir.Model
             set { _Target = value; OnPropertyChanged("Target"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Target;
         
         /// <summary>
@@ -301,6 +309,7 @@ namespace Hl7.Fhir.Model
             set { _Provider = value; OnPropertyChanged("Provider"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Provider;
         
         /// <summary>
@@ -315,6 +324,7 @@ namespace Hl7.Fhir.Model
             set { _Organization = value; OnPropertyChanged("Organization"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Organization;
         
         /// <summary>
@@ -329,6 +339,7 @@ namespace Hl7.Fhir.Model
             set { _Request = value; OnPropertyChanged("Request"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
@@ -343,6 +354,7 @@ namespace Hl7.Fhir.Model
             set { _Response = value; OnPropertyChanged("Response"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Response;
         
         /// <summary>
@@ -356,6 +368,7 @@ namespace Hl7.Fhir.Model
             set { _NullifyElement = value; OnPropertyChanged("NullifyElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirBoolean _NullifyElement;
         
         /// <summary>
@@ -388,6 +401,7 @@ namespace Hl7.Fhir.Model
             set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _ReferenceElement;
         
         /// <summary>
@@ -421,6 +435,7 @@ namespace Hl7.Fhir.Model
             set { _Item = value; OnPropertyChanged("Item"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ProcessRequest.ItemsComponent> _Item;
         
         /// <summary>
@@ -435,6 +450,7 @@ namespace Hl7.Fhir.Model
             set { _IncludeElement = value; OnPropertyChanged("IncludeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.FhirString> _IncludeElement;
         
         /// <summary>
@@ -468,6 +484,7 @@ namespace Hl7.Fhir.Model
             set { _ExcludeElement = value; OnPropertyChanged("ExcludeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.FhirString> _ExcludeElement;
         
         /// <summary>
@@ -500,8 +517,17 @@ namespace Hl7.Fhir.Model
             set { _Period = value; OnPropertyChanged("Period"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Period _Period;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ProcessRequest;

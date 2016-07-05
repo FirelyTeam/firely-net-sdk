@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -117,6 +118,7 @@ namespace Hl7.Fhir.Model
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
@@ -132,6 +134,7 @@ namespace Hl7.Fhir.Model
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Value;
             
             /// <summary>
@@ -146,6 +149,7 @@ namespace Hl7.Fhir.Model
                 set { _ExcludeElement = value; OnPropertyChanged("ExcludeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirBoolean _ExcludeElement;
             
             /// <summary>
@@ -159,10 +163,10 @@ namespace Hl7.Fhir.Model
                 get { return ExcludeElement != null ? ExcludeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ExcludeElement = null; 
+                    if (!value.HasValue)
+                        ExcludeElement = null; 
                     else
-                      ExcludeElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        ExcludeElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Exclude");
                 }
             }
@@ -178,6 +182,7 @@ namespace Hl7.Fhir.Model
                 set { _Period = value; OnPropertyChanged("Period"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Period _Period;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -253,6 +258,7 @@ namespace Hl7.Fhir.Model
                 set { _Entity = value; OnPropertyChanged("Entity"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Entity;
             
             /// <summary>
@@ -266,6 +272,7 @@ namespace Hl7.Fhir.Model
                 set { _Period = value; OnPropertyChanged("Period"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Period _Period;
             
             /// <summary>
@@ -279,6 +286,7 @@ namespace Hl7.Fhir.Model
                 set { _InactiveElement = value; OnPropertyChanged("InactiveElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirBoolean _InactiveElement;
             
             /// <summary>
@@ -292,10 +300,10 @@ namespace Hl7.Fhir.Model
                 get { return InactiveElement != null ? InactiveElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      InactiveElement = null; 
+                    if (!value.HasValue)
+                        InactiveElement = null; 
                     else
-                      InactiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        InactiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Inactive");
                 }
             }
@@ -362,6 +370,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -376,6 +385,7 @@ namespace Hl7.Fhir.Model
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.Group.GroupType> _TypeElement;
         
         /// <summary>
@@ -409,6 +419,7 @@ namespace Hl7.Fhir.Model
             set { _ActualElement = value; OnPropertyChanged("ActualElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirBoolean _ActualElement;
         
         /// <summary>
@@ -441,6 +452,7 @@ namespace Hl7.Fhir.Model
             set { _Code = value; OnPropertyChanged("Code"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
@@ -454,6 +466,7 @@ namespace Hl7.Fhir.Model
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -486,6 +499,7 @@ namespace Hl7.Fhir.Model
             set { _QuantityElement = value; OnPropertyChanged("QuantityElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.UnsignedInt _QuantityElement;
         
         /// <summary>
@@ -519,6 +533,7 @@ namespace Hl7.Fhir.Model
             set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Group.CharacteristicComponent> _Characteristic;
         
         /// <summary>
@@ -533,8 +548,27 @@ namespace Hl7.Fhir.Model
             set { _Member = value; OnPropertyChanged("Member"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Group.MemberComponent> _Member;
         
+
+
+        public static ElementDefinition.ConstraintComponent Group_GRP_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("member.empty() or actual"))},
+            Key = "grp-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Can only have members if group is \"actual\"",
+            Xpath = "f:actual/@value=true() or not(exists(f:member))"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Group_GRP_1);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Group;

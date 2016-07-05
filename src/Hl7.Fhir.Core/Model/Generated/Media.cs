@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -92,6 +93,7 @@ namespace Hl7.Fhir.Model
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.Media.DigitalMediaType> _TypeElement;
         
         /// <summary>
@@ -124,6 +126,7 @@ namespace Hl7.Fhir.Model
             set { _Subtype = value; OnPropertyChanged("Subtype"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Subtype;
         
         /// <summary>
@@ -138,6 +141,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -152,6 +156,7 @@ namespace Hl7.Fhir.Model
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -166,6 +171,7 @@ namespace Hl7.Fhir.Model
             set { _Operator = value; OnPropertyChanged("Operator"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Operator;
         
         /// <summary>
@@ -179,6 +185,7 @@ namespace Hl7.Fhir.Model
             set { _View = value; OnPropertyChanged("View"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _View;
         
         /// <summary>
@@ -192,6 +199,7 @@ namespace Hl7.Fhir.Model
             set { _DeviceNameElement = value; OnPropertyChanged("DeviceNameElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _DeviceNameElement;
         
         /// <summary>
@@ -224,6 +232,7 @@ namespace Hl7.Fhir.Model
             set { _HeightElement = value; OnPropertyChanged("HeightElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.PositiveInt _HeightElement;
         
         /// <summary>
@@ -256,6 +265,7 @@ namespace Hl7.Fhir.Model
             set { _WidthElement = value; OnPropertyChanged("WidthElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.PositiveInt _WidthElement;
         
         /// <summary>
@@ -288,6 +298,7 @@ namespace Hl7.Fhir.Model
             set { _FramesElement = value; OnPropertyChanged("FramesElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.PositiveInt _FramesElement;
         
         /// <summary>
@@ -320,6 +331,7 @@ namespace Hl7.Fhir.Model
             set { _DurationElement = value; OnPropertyChanged("DurationElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.UnsignedInt _DurationElement;
         
         /// <summary>
@@ -353,8 +365,57 @@ namespace Hl7.Fhir.Model
             set { _Content = value; OnPropertyChanged("Content"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Attachment _Content;
         
+
+
+        public static ElementDefinition.ConstraintComponent Media_MDA_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("height.empty() or type != 'audio'"))},
+            Key = "mda-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Height can only be used for a photo or video",
+            Xpath = "not(f:type/@value='audio') or not(f:height)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Media_MDA_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("width.empty() or type != 'audio'"))},
+            Key = "mda-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Width can only be used for a photo or video",
+            Xpath = "not(f:type/@value='audio') or not(f:width)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Media_MDA_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("duration.empty() or type != 'photo'"))},
+            Key = "mda-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Duration can only be used for an audio or a video",
+            Xpath = "not(f:type/@value='photo') or not(f:duration)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Media_MDA_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("frames.empty() or type = 'photo'"))},
+            Key = "mda-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Frames can only be used for a photo",
+            Xpath = "(f:type/@value='photo') or not(f:frames)"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Media_MDA_1);
+            InvariantConstraints.Add(Media_MDA_2);
+            InvariantConstraints.Add(Media_MDA_4);
+            InvariantConstraints.Add(Media_MDA_3);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Media;

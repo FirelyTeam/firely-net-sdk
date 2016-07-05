@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -65,6 +66,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -79,6 +81,7 @@ namespace Hl7.Fhir.Model
             set { _Request = value; OnPropertyChanged("Request"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Request;
         
         /// <summary>
@@ -92,6 +95,7 @@ namespace Hl7.Fhir.Model
             set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.RemittanceOutcome> _OutcomeElement;
         
         /// <summary>
@@ -124,6 +128,7 @@ namespace Hl7.Fhir.Model
             set { _DispositionElement = value; OnPropertyChanged("DispositionElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _DispositionElement;
         
         /// <summary>
@@ -156,6 +161,7 @@ namespace Hl7.Fhir.Model
             set { _Ruleset = value; OnPropertyChanged("Ruleset"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Coding _Ruleset;
         
         /// <summary>
@@ -169,6 +175,7 @@ namespace Hl7.Fhir.Model
             set { _OriginalRuleset = value; OnPropertyChanged("OriginalRuleset"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Coding _OriginalRuleset;
         
         /// <summary>
@@ -182,6 +189,7 @@ namespace Hl7.Fhir.Model
             set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _CreatedElement;
         
         /// <summary>
@@ -215,6 +223,7 @@ namespace Hl7.Fhir.Model
             set { _Organization = value; OnPropertyChanged("Organization"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Organization;
         
         /// <summary>
@@ -229,6 +238,7 @@ namespace Hl7.Fhir.Model
             set { _RequestProvider = value; OnPropertyChanged("RequestProvider"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _RequestProvider;
         
         /// <summary>
@@ -243,8 +253,17 @@ namespace Hl7.Fhir.Model
             set { _RequestOrganization = value; OnPropertyChanged("RequestOrganization"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _RequestOrganization;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as EnrollmentResponse;

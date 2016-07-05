@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -116,6 +117,7 @@ namespace Hl7.Fhir.Model
                 set { _Summary = value; OnPropertyChanged("Summary"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Summary;
             
             /// <summary>
@@ -131,6 +133,7 @@ namespace Hl7.Fhir.Model
                 set { _Assessment = value; OnPropertyChanged("Assessment"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ResourceReference> _Assessment;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -198,6 +201,7 @@ namespace Hl7.Fhir.Model
                 set { _Code = value; OnPropertyChanged("Code"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
@@ -213,6 +217,7 @@ namespace Hl7.Fhir.Model
                 set { _Detail = value; OnPropertyChanged("Detail"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ResourceReference> _Detail;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -274,6 +279,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -289,6 +295,7 @@ namespace Hl7.Fhir.Model
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
@@ -303,6 +310,7 @@ namespace Hl7.Fhir.Model
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
@@ -317,6 +325,7 @@ namespace Hl7.Fhir.Model
             set { _Asserter = value; OnPropertyChanged("Asserter"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Asserter;
         
         /// <summary>
@@ -330,6 +339,7 @@ namespace Hl7.Fhir.Model
             set { _DateRecordedElement = value; OnPropertyChanged("DateRecordedElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Date _DateRecordedElement;
         
         /// <summary>
@@ -363,6 +373,7 @@ namespace Hl7.Fhir.Model
             set { _Code = value; OnPropertyChanged("Code"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
@@ -376,6 +387,7 @@ namespace Hl7.Fhir.Model
             set { _Category = value; OnPropertyChanged("Category"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Category;
         
         /// <summary>
@@ -389,6 +401,7 @@ namespace Hl7.Fhir.Model
             set { _ClinicalStatusElement = value; OnPropertyChanged("ClinicalStatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Code _ClinicalStatusElement;
         
         /// <summary>
@@ -422,6 +435,7 @@ namespace Hl7.Fhir.Model
             set { _VerificationStatusElement = value; OnPropertyChanged("VerificationStatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus> _VerificationStatusElement;
         
         /// <summary>
@@ -454,6 +468,7 @@ namespace Hl7.Fhir.Model
             set { _Severity = value; OnPropertyChanged("Severity"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Severity;
         
         /// <summary>
@@ -468,6 +483,7 @@ namespace Hl7.Fhir.Model
             set { _Onset = value; OnPropertyChanged("Onset"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Onset;
         
         /// <summary>
@@ -482,6 +498,7 @@ namespace Hl7.Fhir.Model
             set { _Abatement = value; OnPropertyChanged("Abatement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Abatement;
         
         /// <summary>
@@ -495,6 +512,7 @@ namespace Hl7.Fhir.Model
             set { _Stage = value; OnPropertyChanged("Stage"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Condition.StageComponent _Stage;
         
         /// <summary>
@@ -509,6 +527,7 @@ namespace Hl7.Fhir.Model
             set { _Evidence = value; OnPropertyChanged("Evidence"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Condition.EvidenceComponent> _Evidence;
         
         /// <summary>
@@ -523,6 +542,7 @@ namespace Hl7.Fhir.Model
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
         
         /// <summary>
@@ -536,6 +556,7 @@ namespace Hl7.Fhir.Model
             set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _NotesElement;
         
         /// <summary>
@@ -557,6 +578,34 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
+
+        public static ElementDefinition.ConstraintComponent Condition_CON_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("summary or assessment"))},
+            Key = "con-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Stage SHALL have summary or assessment",
+            Xpath = "exists(f:summary) or exists(f:assessment)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Condition_CON_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("code or detail"))},
+            Key = "con-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "evidence SHALL have code or details",
+            Xpath = "exists(f:code) or exists(f:detail)"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Condition_CON_1);
+            InvariantConstraints.Add(Condition_CON_2);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Condition;

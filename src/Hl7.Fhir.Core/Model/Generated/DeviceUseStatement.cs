@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -62,6 +63,7 @@ namespace Hl7.Fhir.Model
             set { _BodySite = value; OnPropertyChanged("BodySite"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _BodySite;
         
         /// <summary>
@@ -75,6 +77,7 @@ namespace Hl7.Fhir.Model
             set { _WhenUsed = value; OnPropertyChanged("WhenUsed"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Period _WhenUsed;
         
         /// <summary>
@@ -90,6 +93,7 @@ namespace Hl7.Fhir.Model
             set { _Device = value; OnPropertyChanged("Device"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Device;
         
         /// <summary>
@@ -104,6 +108,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -118,6 +123,7 @@ namespace Hl7.Fhir.Model
             set { _Indication = value; OnPropertyChanged("Indication"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _Indication;
         
         /// <summary>
@@ -132,6 +138,7 @@ namespace Hl7.Fhir.Model
             set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.FhirString> _NotesElement;
         
         /// <summary>
@@ -164,6 +171,7 @@ namespace Hl7.Fhir.Model
             set { _RecordedOnElement = value; OnPropertyChanged("RecordedOnElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _RecordedOnElement;
         
         /// <summary>
@@ -198,6 +206,7 @@ namespace Hl7.Fhir.Model
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -212,8 +221,17 @@ namespace Hl7.Fhir.Model
             set { _Timing = value; OnPropertyChanged("Timing"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Element _Timing;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DeviceUseStatement;

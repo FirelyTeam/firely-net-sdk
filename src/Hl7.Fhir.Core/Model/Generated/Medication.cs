@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -71,6 +72,7 @@ namespace Hl7.Fhir.Model
                 set { _Form = value; OnPropertyChanged("Form"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Form;
             
             /// <summary>
@@ -85,6 +87,7 @@ namespace Hl7.Fhir.Model
                 set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.Medication.IngredientComponent> _Ingredient;
             
             /// <summary>
@@ -99,6 +102,7 @@ namespace Hl7.Fhir.Model
                 set { _Batch = value; OnPropertyChanged("Batch"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.Medication.BatchComponent> _Batch;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -171,6 +175,7 @@ namespace Hl7.Fhir.Model
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Item;
             
             /// <summary>
@@ -184,6 +189,7 @@ namespace Hl7.Fhir.Model
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Ratio _Amount;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -251,6 +257,7 @@ namespace Hl7.Fhir.Model
                 set { _LotNumberElement = value; OnPropertyChanged("LotNumberElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _LotNumberElement;
             
             /// <summary>
@@ -264,10 +271,10 @@ namespace Hl7.Fhir.Model
                 get { return LotNumberElement != null ? LotNumberElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      LotNumberElement = null; 
+                    if (value != null)
+                        LotNumberElement = null; 
                     else
-                      LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
+                        LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("LotNumber");
                 }
             }
@@ -283,6 +290,7 @@ namespace Hl7.Fhir.Model
                 set { _ExpirationDateElement = value; OnPropertyChanged("ExpirationDateElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDateTime _ExpirationDateElement;
             
             /// <summary>
@@ -296,10 +304,10 @@ namespace Hl7.Fhir.Model
                 get { return ExpirationDateElement != null ? ExpirationDateElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ExpirationDateElement = null; 
+                    if (value != null)
+                        ExpirationDateElement = null; 
                     else
-                      ExpirationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        ExpirationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("ExpirationDate");
                 }
             }
@@ -369,6 +377,7 @@ namespace Hl7.Fhir.Model
                 set { _Container = value; OnPropertyChanged("Container"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Container;
             
             /// <summary>
@@ -383,6 +392,7 @@ namespace Hl7.Fhir.Model
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.Medication.ContentComponent> _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -452,6 +462,7 @@ namespace Hl7.Fhir.Model
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Item;
             
             /// <summary>
@@ -465,6 +476,7 @@ namespace Hl7.Fhir.Model
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.SimpleQuantity _Amount;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -525,6 +537,7 @@ namespace Hl7.Fhir.Model
             set { _Code = value; OnPropertyChanged("Code"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
@@ -538,6 +551,7 @@ namespace Hl7.Fhir.Model
             set { _IsBrandElement = value; OnPropertyChanged("IsBrandElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirBoolean _IsBrandElement;
         
         /// <summary>
@@ -571,6 +585,7 @@ namespace Hl7.Fhir.Model
             set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Manufacturer;
         
         /// <summary>
@@ -584,6 +599,7 @@ namespace Hl7.Fhir.Model
             set { _Product = value; OnPropertyChanged("Product"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Medication.ProductComponent _Product;
         
         /// <summary>
@@ -597,8 +613,17 @@ namespace Hl7.Fhir.Model
             set { _Package = value; OnPropertyChanged("Package"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Medication.PackageComponent _Package;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Medication;

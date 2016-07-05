@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -72,6 +73,7 @@ namespace Hl7.Fhir.Model
                 set { _Outcome = value; OnPropertyChanged("Outcome"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Outcome;
             
             /// <summary>
@@ -86,6 +88,7 @@ namespace Hl7.Fhir.Model
                 set { _Probability = value; OnPropertyChanged("Probability"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _Probability;
             
             /// <summary>
@@ -99,6 +102,7 @@ namespace Hl7.Fhir.Model
                 set { _RelativeRiskElement = value; OnPropertyChanged("RelativeRiskElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDecimal _RelativeRiskElement;
             
             /// <summary>
@@ -112,10 +116,10 @@ namespace Hl7.Fhir.Model
                 get { return RelativeRiskElement != null ? RelativeRiskElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      RelativeRiskElement = null; 
+                    if (!value.HasValue)
+                        RelativeRiskElement = null; 
                     else
-                      RelativeRiskElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        RelativeRiskElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("RelativeRisk");
                 }
             }
@@ -132,6 +136,7 @@ namespace Hl7.Fhir.Model
                 set { _When = value; OnPropertyChanged("When"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Element _When;
             
             /// <summary>
@@ -145,6 +150,7 @@ namespace Hl7.Fhir.Model
                 set { _RationaleElement = value; OnPropertyChanged("RationaleElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _RationaleElement;
             
             /// <summary>
@@ -158,10 +164,10 @@ namespace Hl7.Fhir.Model
                 get { return RationaleElement != null ? RationaleElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      RationaleElement = null; 
+                    if (value != null)
+                        RationaleElement = null; 
                     else
-                      RationaleElement = new Hl7.Fhir.Model.FhirString(value);
+                        RationaleElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Rationale");
                 }
             }
@@ -234,6 +240,7 @@ namespace Hl7.Fhir.Model
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
@@ -247,6 +254,7 @@ namespace Hl7.Fhir.Model
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -280,6 +288,7 @@ namespace Hl7.Fhir.Model
             set { _Condition = value; OnPropertyChanged("Condition"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Condition;
         
         /// <summary>
@@ -294,6 +303,7 @@ namespace Hl7.Fhir.Model
             set { _Encounter = value; OnPropertyChanged("Encounter"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Encounter;
         
         /// <summary>
@@ -308,6 +318,7 @@ namespace Hl7.Fhir.Model
             set { _Performer = value; OnPropertyChanged("Performer"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Performer;
         
         /// <summary>
@@ -321,6 +332,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -334,6 +346,7 @@ namespace Hl7.Fhir.Model
             set { _Method = value; OnPropertyChanged("Method"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Method;
         
         /// <summary>
@@ -349,6 +362,7 @@ namespace Hl7.Fhir.Model
             set { _Basis = value; OnPropertyChanged("Basis"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ResourceReference> _Basis;
         
         /// <summary>
@@ -363,6 +377,7 @@ namespace Hl7.Fhir.Model
             set { _Prediction = value; OnPropertyChanged("Prediction"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent> _Prediction;
         
         /// <summary>
@@ -376,6 +391,7 @@ namespace Hl7.Fhir.Model
             set { _MitigationElement = value; OnPropertyChanged("MitigationElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _MitigationElement;
         
         /// <summary>
@@ -397,6 +413,34 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
+
+        public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(low.empty() or ((low.code = \"%\") and (low.system = %ucum))) and (high.empty() or ((high.code = \"%\") and (high.system = %ucum)))"))},
+            Key = "ras-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "low and high must be percentages, if present",
+            Xpath = "(not(f:low) or f:low[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org']) and (not(f:high) or f:high[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org'])"
+        };
+
+        public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("probabilityDecimal <= 100"))},
+            Key = "ras-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Must be <= 100",
+            Xpath = "@value <= 100"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(RiskAssessment_RAS_1);
+            InvariantConstraints.Add(RiskAssessment_RAS_2);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as RiskAssessment;

@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -71,6 +72,7 @@ namespace Hl7.Fhir.Model
                 set { _Purpose = value; OnPropertyChanged("Purpose"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Purpose;
             
             /// <summary>
@@ -84,6 +86,7 @@ namespace Hl7.Fhir.Model
                 set { _Name = value; OnPropertyChanged("Name"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.HumanName _Name;
             
             /// <summary>
@@ -98,6 +101,7 @@ namespace Hl7.Fhir.Model
                 set { _Telecom = value; OnPropertyChanged("Telecom"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
             
             /// <summary>
@@ -111,6 +115,7 @@ namespace Hl7.Fhir.Model
                 set { _Address = value; OnPropertyChanged("Address"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Address _Address;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -178,6 +183,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -191,6 +197,7 @@ namespace Hl7.Fhir.Model
             set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
         
         /// <summary>
@@ -223,6 +230,7 @@ namespace Hl7.Fhir.Model
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -236,6 +244,7 @@ namespace Hl7.Fhir.Model
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -269,6 +278,7 @@ namespace Hl7.Fhir.Model
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
@@ -283,6 +293,7 @@ namespace Hl7.Fhir.Model
             set { _Address = value; OnPropertyChanged("Address"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Address> _Address;
         
         /// <summary>
@@ -297,6 +308,7 @@ namespace Hl7.Fhir.Model
             set { _PartOf = value; OnPropertyChanged("PartOf"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _PartOf;
         
         /// <summary>
@@ -311,8 +323,47 @@ namespace Hl7.Fhir.Model
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Organization.ContactComponent> _Contact;
         
+
+
+        public static ElementDefinition.ConstraintComponent Organization_ORG_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("identifier or name"))},
+            Key = "org-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "The organization SHALL at least have a name or an id, and possibly more than one",
+            Xpath = "count(f:identifier | f:name) > 0"
+        };
+
+        public static ElementDefinition.ConstraintComponent Organization_ORG_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("telecom.where(use = 'home').empty()"))},
+            Key = "org-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "The telecom of an organization can never be of use 'home'",
+            Xpath = "count(f:use[@value='home']) = 0"
+        };
+
+        public static ElementDefinition.ConstraintComponent Organization_ORG_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("address.where(use = 'home').empty()"))},
+            Key = "org-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "An address of an organization can never be of use 'home'",
+            Xpath = "count(f:use[@value='home']) = 0"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Organization_ORG_1);
+            InvariantConstraints.Add(Organization_ORG_3);
+            InvariantConstraints.Add(Organization_ORG_2);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Organization;

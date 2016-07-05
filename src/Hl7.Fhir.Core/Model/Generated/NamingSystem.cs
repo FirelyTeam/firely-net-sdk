@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -131,6 +132,7 @@ namespace Hl7.Fhir.Model
                 set { _NameElement = value; OnPropertyChanged("NameElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
@@ -144,10 +146,10 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      NameElement = null; 
+                    if (value != null)
+                        NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -164,6 +166,7 @@ namespace Hl7.Fhir.Model
                 set { _Telecom = value; OnPropertyChanged("Telecom"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -232,6 +235,7 @@ namespace Hl7.Fhir.Model
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> _TypeElement;
             
             /// <summary>
@@ -245,10 +249,10 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TypeElement = null; 
+                    if (!value.HasValue)
+                        TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -265,6 +269,7 @@ namespace Hl7.Fhir.Model
                 set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _ValueElement;
             
             /// <summary>
@@ -278,10 +283,10 @@ namespace Hl7.Fhir.Model
                 get { return ValueElement != null ? ValueElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ValueElement = null; 
+                    if (value != null)
+                        ValueElement = null; 
                     else
-                      ValueElement = new Hl7.Fhir.Model.FhirString(value);
+                        ValueElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Value");
                 }
             }
@@ -297,6 +302,7 @@ namespace Hl7.Fhir.Model
                 set { _PreferredElement = value; OnPropertyChanged("PreferredElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirBoolean _PreferredElement;
             
             /// <summary>
@@ -310,10 +316,10 @@ namespace Hl7.Fhir.Model
                 get { return PreferredElement != null ? PreferredElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      PreferredElement = null; 
+                    if (!value.HasValue)
+                        PreferredElement = null; 
                     else
-                      PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Preferred");
                 }
             }
@@ -329,6 +335,7 @@ namespace Hl7.Fhir.Model
                 set { _Period = value; OnPropertyChanged("Period"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Period _Period;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -396,6 +403,7 @@ namespace Hl7.Fhir.Model
             set { _NameElement = value; OnPropertyChanged("NameElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
@@ -429,6 +437,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.ConformanceResourceStatus> _StatusElement;
         
         /// <summary>
@@ -462,6 +471,7 @@ namespace Hl7.Fhir.Model
             set { _KindElement = value; OnPropertyChanged("KindElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> _KindElement;
         
         /// <summary>
@@ -494,6 +504,7 @@ namespace Hl7.Fhir.Model
             set { _PublisherElement = value; OnPropertyChanged("PublisherElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _PublisherElement;
         
         /// <summary>
@@ -527,6 +538,7 @@ namespace Hl7.Fhir.Model
             set { _Contact = value; OnPropertyChanged("Contact"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.NamingSystem.ContactComponent> _Contact;
         
         /// <summary>
@@ -540,6 +552,7 @@ namespace Hl7.Fhir.Model
             set { _ResponsibleElement = value; OnPropertyChanged("ResponsibleElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _ResponsibleElement;
         
         /// <summary>
@@ -573,6 +586,7 @@ namespace Hl7.Fhir.Model
             set { _DateElement = value; OnPropertyChanged("DateElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _DateElement;
         
         /// <summary>
@@ -605,6 +619,7 @@ namespace Hl7.Fhir.Model
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -618,6 +633,7 @@ namespace Hl7.Fhir.Model
             set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
@@ -651,6 +667,7 @@ namespace Hl7.Fhir.Model
             set { _UseContext = value; OnPropertyChanged("UseContext"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.CodeableConcept> _UseContext;
         
         /// <summary>
@@ -664,6 +681,7 @@ namespace Hl7.Fhir.Model
             set { _UsageElement = value; OnPropertyChanged("UsageElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirString _UsageElement;
         
         /// <summary>
@@ -697,6 +715,7 @@ namespace Hl7.Fhir.Model
             set { _UniqueId = value; OnPropertyChanged("UniqueId"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> _UniqueId;
         
         /// <summary>
@@ -711,8 +730,47 @@ namespace Hl7.Fhir.Model
             set { _ReplacedBy = value; OnPropertyChanged("ReplacedBy"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _ReplacedBy;
         
+
+
+        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("uniqueId.where(preferred = true).select(type).distinct()"))},
+            Key = "nsd-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Can't have more than one preferred identifier for a type",
+            Xpath = "not(exists(for $type in distinct-values(f:uniqueId/f:type/@value) return if (count(f:uniqueId[f:type/@value=$type and f:preferred/@value=true()])>1) then $type else ()))"
+        };
+
+        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("replacedBy.empty() or status = 'retired'"))},
+            Key = "nsd-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Can only have replacedBy if naming system is retired",
+            Xpath = "not(f:replacedBy) or f:status/@value='retired'"
+        };
+
+        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("kind != 'root' or uniqueId in ('uuid' | 'ruid')"))},
+            Key = "nsd-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Root systems cannot have uuid or sid identifiers",
+            Xpath = "not(f:kind/@value='root' and f:uniqueId/f:type/@value=('uuid', 'ruid'))"
+        };
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(NamingSystem_NSD_2);
+            InvariantConstraints.Add(NamingSystem_NSD_3);
+            InvariantConstraints.Add(NamingSystem_NSD_1);
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as NamingSystem;

@@ -28,7 +28,7 @@ namespace Hl7.Fhir.FhirPath
         {
             return focus.Where(f => f.Value != null);
         }
-   
+
         public static object SingleValue(this IEnumerable<IFhirPathValue> focus)
         {
             return focus.JustValues().Single().Value;
@@ -82,7 +82,8 @@ namespace Hl7.Fhir.FhirPath
 
         public static IEnumerable<IFhirPathValue> BooleanEval(this IEnumerable<IFhirPathValue> focus)
         {
-            return FhirValueList.Create(focus.booleanEval());
+            var result = focus.booleanEval();
+            return FhirValueList.Create(result);
         }
         public static IEnumerable<IFhirPathValue> IsEmpty(this IEnumerable<IFhirPathValue> focus)
         {
@@ -119,7 +120,7 @@ namespace Hl7.Fhir.FhirPath
             return focus.Skip(index).Take(1);
         }
 
-        public static IEnumerable<IFhirPathValue> Where(this IEnumerable<IFhirPathValue> focus, 
+        public static IEnumerable<IFhirPathValue> Where(this IEnumerable<IFhirPathValue> focus,
                         Func<IEnumerable<IFhirPathValue>, IEnumerable<IFhirPathValue>> condition)
         {
             return focus.Where(v => condition(FhirValueList.Create(v)).booleanEval());
@@ -152,7 +153,9 @@ namespace Hl7.Fhir.FhirPath
 
         public static IEnumerable<IFhirPathValue> CountItems(this IEnumerable<IFhirPathValue> focus)
         {
-            return FhirValueList.Create(focus.Count());
+            var result = focus.Count();
+            System.Diagnostics.Trace.WriteLine(String.Format("Count() = '{0}'", result));
+            return FhirValueList.Create(result);
         }
 
         public static IEnumerable<IFhirPathValue> IntegerEval(this IEnumerable<IFhirPathValue> focus)
@@ -160,7 +163,7 @@ namespace Hl7.Fhir.FhirPath
             if (focus.JustValues().Count() == 1)
             {
                 var val = focus.Single().Value;
-                if(val != null)
+                if (val != null)
                 {
                     if (val is long) return FhirValueList.Create((long)val);
                     //if (val is decimal) return (Int64)Math.Round((decimal)val);
@@ -176,6 +179,33 @@ namespace Hl7.Fhir.FhirPath
                         if ((bool)val == true)
                             return FhirValueList.Create(1.0);
                         return FhirValueList.Create(0.0);
+                    }
+                }
+            }
+
+            return FhirValueList.Empty();
+        }
+
+        public static IEnumerable<IFhirPathValue> StringEval(this IEnumerable<IFhirPathValue> focus)
+        {
+            if (focus.JustValues().Count() == 1)
+            {
+                var val = focus.Single().Value;
+                if (val != null)
+                {
+                    if (val is long) return FhirValueList.Create(Convert.ToString(val));
+                    if (val is decimal) return FhirValueList.Create((decimal)val);
+                    if (val is string) return FhirValueList.Create((string)val);
+                    if (val is bool)
+                    {
+                        if ((bool)val == true)
+                            return FhirValueList.Create("true");
+                        return FhirValueList.Create("false");
+                    }
+                    // Spec has nothing to indicate what to do with a date field
+                    if (val is PartialDateTime)
+                    {
+                        return FhirValueList.Create(val.ToString());
                     }
                 }
             }
@@ -241,7 +271,7 @@ namespace Hl7.Fhir.FhirPath
 
         public static IEnumerable<IFhirPathValue> Substring(this IEnumerable<IFhirPathValue> focus, long start, long? length)
         {
-            if(focus.Count() == 1)
+            if (focus.Count() == 1)
             {
                 if (focus.First().Value != null)
                 {
@@ -259,7 +289,26 @@ namespace Hl7.Fhir.FhirPath
 
         public static IEnumerable<IFhirPathValue> StartingWith(this IEnumerable<IFhirPathValue> focus, string prefix)
         {
-            return focus.JustValues().Where(value => value.AsStringRepresentation().StartsWith(prefix));
+            if (focus.Count() == 1)
+            {
+                if (focus.First().Value != null)
+                {
+                    if (String.IsNullOrEmpty(prefix))
+                    {
+                        System.Diagnostics.Trace.WriteLine(String.Format("''.StartsWith('{0}') = false", prefix));
+                        return FhirValueList.Create(false);
+                    }
+                    var str = focus.First().AsStringRepresentation();
+                    if (str.StartsWith(prefix))
+                    {
+                        System.Diagnostics.Trace.WriteLine(String.Format("'{0}'.StartsWith('{1}') = true", str, prefix));
+                        return FhirValueList.Create(true);
+                    }
+                    System.Diagnostics.Trace.WriteLine(String.Format("'{0}'.StartsWith('{1}') = false", str, prefix));
+                    return FhirValueList.Create(false);
+                }
+            }
+            return FhirValueList.Empty();
         }
 
         public static IEnumerable<IFhirPathElement> Resolve(this IEnumerable<IFhirPathValue> focus, FhirClient client)
@@ -286,15 +335,15 @@ namespace Hl7.Fhir.FhirPath
                 if (item.Value != null && item.Value is string)
                     url = item.AsString();
 
-                if(url != null)
+                if (url != null)
                     yield return context.ResolveResource(url);
             }
         }
 
         public static IEnumerable<IFhirPathValue> MaxLength(this IEnumerable<IFhirPathValue> focus)
         {
-            return FhirValueList.Create( focus.JustValues()
-                .Aggregate(0, (val, item) => Math.Max(item.AsStringRepresentation().Length, val)) );
+            return FhirValueList.Create(focus.JustValues()
+                .Aggregate(0, (val, item) => Math.Max(item.AsStringRepresentation().Length, val)));
         }
 
         public static IEnumerable<IFhirPathValue> SubsetOf(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
@@ -304,7 +353,7 @@ namespace Hl7.Fhir.FhirPath
 
 
         public static IEnumerable<IFhirPathValue> Extension(this IEnumerable<IFhirPathValue> focus, string url)
-        {            
+        {
             return focus.Children("extension").Where(es => es.Children("url").IsEqualTo(url));
         }
 
@@ -328,7 +377,7 @@ namespace Hl7.Fhir.FhirPath
         {
             if (focus is IFhirPathElement)
             {
-                return ((IFhirPathElement)focus).Children().Select(c=>c.Child);
+                return ((IFhirPathElement)focus).Children().Select(c => c.Child);
             }
 
             return Enumerable.Empty<IFhirPathElement>();
@@ -336,7 +385,7 @@ namespace Hl7.Fhir.FhirPath
 
         public static IEnumerable<IFhirPathElement> Children(this IEnumerable<IFhirPathValue> focus)
         {
-            return focus.JustElements().SelectMany(node => node.Children().Select(c=>c.Child));
+            return focus.JustElements().SelectMany(node => node.Children().Select(c => c.Child));
         }
 
         public static IEnumerable<IFhirPathElement> Descendants(this IEnumerable<IFhirPathElement> focus)
@@ -357,9 +406,17 @@ namespace Hl7.Fhir.FhirPath
             return FhirValueList.Create(left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x));
         }
 
+        public static IEnumerable<IFhirPathValue> IsNotEqualTo(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
+        {
+            if (!left.Any() && !right.Any()) return FhirValueList.Create(false);
+            if (left.Count() != right.Count()) return FhirValueList.Create(true);
+
+            return FhirValueList.Create(left.Zip(right, (l, r) => !l.IsEqualTo(r)).All(x => x));
+        }
+
         public static IEnumerable<IFhirPathValue> IsEqualTo(this IEnumerable<IFhirPathValue> left, object value)
         {
-            var result = left.SingleOrDefault(v => Object.Equals(v.Value,value)) != null;
+            var result = left.SingleOrDefault(v => Object.Equals(v.Value, value)) != null;
             return FhirValueList.Create(result);
         }
 
@@ -478,7 +535,7 @@ namespace Hl7.Fhir.FhirPath
         //    return nodeSet.SelectMany(node => node.PrecedingSiblings());
         //}
 
-        class FhirPathValueEqualityComparer : IEqualityComparer<IFhirPathValue>
+        internal class FhirPathValueEqualityComparer : IEqualityComparer<IFhirPathValue>
         {
             public bool Equals(IFhirPathValue x, IFhirPathValue y)
             {
@@ -489,7 +546,7 @@ namespace Hl7.Fhir.FhirPath
             {
                 var result = value.Value != null ? value.Value.GetHashCode() : 0;
 
-                if(value is IFhirPathElement)
+                if (value is IFhirPathElement)
                 {
                     result ^= (((IFhirPathElement)value).Children().Take(1).Select(c => c.Name).SingleOrDefault() ?? "key").GetHashCode();
                 }

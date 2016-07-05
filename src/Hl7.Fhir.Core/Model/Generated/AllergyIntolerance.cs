@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -257,6 +258,7 @@ namespace Hl7.Fhir.Model
                 set { _Substance = value; OnPropertyChanged("Substance"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Substance;
             
             /// <summary>
@@ -270,6 +272,7 @@ namespace Hl7.Fhir.Model
                 set { _CertaintyElement = value; OnPropertyChanged("CertaintyElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCertainty> _CertaintyElement;
             
             /// <summary>
@@ -283,10 +286,10 @@ namespace Hl7.Fhir.Model
                 get { return CertaintyElement != null ? CertaintyElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CertaintyElement = null; 
+                    if (!value.HasValue)
+                        CertaintyElement = null; 
                     else
-                      CertaintyElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCertainty>(value);
+                        CertaintyElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCertainty>(value);
                     OnPropertyChanged("Certainty");
                 }
             }
@@ -303,6 +306,7 @@ namespace Hl7.Fhir.Model
                 set { _Manifestation = value; OnPropertyChanged("Manifestation"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.CodeableConcept> _Manifestation;
             
             /// <summary>
@@ -316,6 +320,7 @@ namespace Hl7.Fhir.Model
                 set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
@@ -329,10 +334,10 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DescriptionElement = null; 
+                    if (value != null)
+                        DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -348,6 +353,7 @@ namespace Hl7.Fhir.Model
                 set { _OnsetElement = value; OnPropertyChanged("OnsetElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirDateTime _OnsetElement;
             
             /// <summary>
@@ -361,10 +367,10 @@ namespace Hl7.Fhir.Model
                 get { return OnsetElement != null ? OnsetElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      OnsetElement = null; 
+                    if (value != null)
+                        OnsetElement = null; 
                     else
-                      OnsetElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        OnsetElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Onset");
                 }
             }
@@ -380,6 +386,7 @@ namespace Hl7.Fhir.Model
                 set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity> _SeverityElement;
             
             /// <summary>
@@ -393,10 +400,10 @@ namespace Hl7.Fhir.Model
                 get { return SeverityElement != null ? SeverityElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SeverityElement = null; 
+                    if (!value.HasValue)
+                        SeverityElement = null; 
                     else
-                      SeverityElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>(value);
+                        SeverityElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>(value);
                     OnPropertyChanged("Severity");
                 }
             }
@@ -412,6 +419,7 @@ namespace Hl7.Fhir.Model
                 set { _ExposureRoute = value; OnPropertyChanged("ExposureRoute"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _ExposureRoute;
             
             /// <summary>
@@ -425,6 +433,7 @@ namespace Hl7.Fhir.Model
                 set { _Note = value; OnPropertyChanged("Note"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Annotation _Note;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -504,6 +513,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -517,6 +527,7 @@ namespace Hl7.Fhir.Model
             set { _OnsetElement = value; OnPropertyChanged("OnsetElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _OnsetElement;
         
         /// <summary>
@@ -549,6 +560,7 @@ namespace Hl7.Fhir.Model
             set { _RecordedDateElement = value; OnPropertyChanged("RecordedDateElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _RecordedDateElement;
         
         /// <summary>
@@ -582,6 +594,7 @@ namespace Hl7.Fhir.Model
             set { _Recorder = value; OnPropertyChanged("Recorder"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Recorder;
         
         /// <summary>
@@ -597,6 +610,7 @@ namespace Hl7.Fhir.Model
             set { _Patient = value; OnPropertyChanged("Patient"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
@@ -611,6 +625,7 @@ namespace Hl7.Fhir.Model
             set { _Reporter = value; OnPropertyChanged("Reporter"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Reporter;
         
         /// <summary>
@@ -625,6 +640,7 @@ namespace Hl7.Fhir.Model
             set { _Substance = value; OnPropertyChanged("Substance"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Substance;
         
         /// <summary>
@@ -638,6 +654,7 @@ namespace Hl7.Fhir.Model
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceStatus> _StatusElement;
         
         /// <summary>
@@ -670,6 +687,7 @@ namespace Hl7.Fhir.Model
             set { _CriticalityElement = value; OnPropertyChanged("CriticalityElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality> _CriticalityElement;
         
         /// <summary>
@@ -702,6 +720,7 @@ namespace Hl7.Fhir.Model
             set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType> _TypeElement;
         
         /// <summary>
@@ -734,6 +753,7 @@ namespace Hl7.Fhir.Model
             set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory> _CategoryElement;
         
         /// <summary>
@@ -766,6 +786,7 @@ namespace Hl7.Fhir.Model
             set { _LastOccurenceElement = value; OnPropertyChanged("LastOccurenceElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirDateTime _LastOccurenceElement;
         
         /// <summary>
@@ -798,6 +819,7 @@ namespace Hl7.Fhir.Model
             set { _Note = value; OnPropertyChanged("Note"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Annotation _Note;
         
         /// <summary>
@@ -812,8 +834,17 @@ namespace Hl7.Fhir.Model
             set { _Reaction = value; OnPropertyChanged("Reaction"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> _Reaction;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AllergyIntolerance;

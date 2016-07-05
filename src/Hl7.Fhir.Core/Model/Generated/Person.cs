@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -106,6 +107,7 @@ namespace Hl7.Fhir.Model
                 set { _Target = value; OnPropertyChanged("Target"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.ResourceReference _Target;
             
             /// <summary>
@@ -119,6 +121,7 @@ namespace Hl7.Fhir.Model
                 set { _AssuranceElement = value; OnPropertyChanged("AssuranceElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel> _AssuranceElement;
             
             /// <summary>
@@ -132,10 +135,10 @@ namespace Hl7.Fhir.Model
                 get { return AssuranceElement != null ? AssuranceElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      AssuranceElement = null; 
+                    if (!value.HasValue)
+                        AssuranceElement = null; 
                     else
-                      AssuranceElement = new Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel>(value);
+                        AssuranceElement = new Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel>(value);
                     OnPropertyChanged("Assurance");
                 }
             }
@@ -199,6 +202,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
@@ -213,6 +217,7 @@ namespace Hl7.Fhir.Model
             set { _Name = value; OnPropertyChanged("Name"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.HumanName> _Name;
         
         /// <summary>
@@ -227,6 +232,7 @@ namespace Hl7.Fhir.Model
             set { _Telecom = value; OnPropertyChanged("Telecom"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.ContactPoint> _Telecom;
         
         /// <summary>
@@ -240,6 +246,7 @@ namespace Hl7.Fhir.Model
             set { _GenderElement = value; OnPropertyChanged("GenderElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.AdministrativeGender> _GenderElement;
         
         /// <summary>
@@ -272,6 +279,7 @@ namespace Hl7.Fhir.Model
             set { _BirthDateElement = value; OnPropertyChanged("BirthDateElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Date _BirthDateElement;
         
         /// <summary>
@@ -305,6 +313,7 @@ namespace Hl7.Fhir.Model
             set { _Address = value; OnPropertyChanged("Address"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Address> _Address;
         
         /// <summary>
@@ -318,6 +327,7 @@ namespace Hl7.Fhir.Model
             set { _Photo = value; OnPropertyChanged("Photo"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Attachment _Photo;
         
         /// <summary>
@@ -332,6 +342,7 @@ namespace Hl7.Fhir.Model
             set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
         
         /// <summary>
@@ -345,6 +356,7 @@ namespace Hl7.Fhir.Model
             set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
         
         /// <summary>
@@ -378,8 +390,17 @@ namespace Hl7.Fhir.Model
             set { _Link = value; OnPropertyChanged("Link"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.Person.LinkComponent> _Link;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Person;

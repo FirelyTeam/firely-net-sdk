@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -254,6 +255,7 @@ namespace Hl7.Fhir.Model
                 set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType> _TypeElement;
             
             /// <summary>
@@ -267,10 +269,10 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TypeElement = null; 
+                    if (!value.HasValue)
+                        TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -286,6 +288,7 @@ namespace Hl7.Fhir.Model
                 set { _StateElement = value; OnPropertyChanged("StateElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState> _StateElement;
             
             /// <summary>
@@ -299,10 +302,10 @@ namespace Hl7.Fhir.Model
                 get { return StateElement != null ? StateElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      StateElement = null; 
+                    if (!value.HasValue)
+                        StateElement = null; 
                     else
-                      StateElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>(value);
+                        StateElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>(value);
                     OnPropertyChanged("State");
                 }
             }
@@ -318,6 +321,7 @@ namespace Hl7.Fhir.Model
                 set { _TimeElement = value; OnPropertyChanged("TimeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.Instant _TimeElement;
             
             /// <summary>
@@ -331,10 +335,10 @@ namespace Hl7.Fhir.Model
                 get { return TimeElement != null ? TimeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TimeElement = null; 
+                    if (!value.HasValue)
+                        TimeElement = null; 
                     else
-                      TimeElement = new Hl7.Fhir.Model.Instant(value);
+                        TimeElement = new Hl7.Fhir.Model.Instant(value);
                     OnPropertyChanged("Time");
                 }
             }
@@ -401,6 +405,7 @@ namespace Hl7.Fhir.Model
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
@@ -415,6 +420,7 @@ namespace Hl7.Fhir.Model
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
@@ -428,6 +434,7 @@ namespace Hl7.Fhir.Model
             set { _Unit = value; OnPropertyChanged("Unit"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.CodeableConcept _Unit;
         
         /// <summary>
@@ -442,6 +449,7 @@ namespace Hl7.Fhir.Model
             set { _Source = value; OnPropertyChanged("Source"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
@@ -456,6 +464,7 @@ namespace Hl7.Fhir.Model
             set { _Parent = value; OnPropertyChanged("Parent"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.ResourceReference _Parent;
         
         /// <summary>
@@ -469,6 +478,7 @@ namespace Hl7.Fhir.Model
             set { _OperationalStatusElement = value; OnPropertyChanged("OperationalStatusElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus> _OperationalStatusElement;
         
         /// <summary>
@@ -501,6 +511,7 @@ namespace Hl7.Fhir.Model
             set { _ColorElement = value; OnPropertyChanged("ColorElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor> _ColorElement;
         
         /// <summary>
@@ -534,6 +545,7 @@ namespace Hl7.Fhir.Model
             set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory> _CategoryElement;
         
         /// <summary>
@@ -566,6 +578,7 @@ namespace Hl7.Fhir.Model
             set { _MeasurementPeriod = value; OnPropertyChanged("MeasurementPeriod"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Hl7.Fhir.Model.Timing _MeasurementPeriod;
         
         /// <summary>
@@ -580,8 +593,17 @@ namespace Hl7.Fhir.Model
             set { _Calibration = value; OnPropertyChanged("Calibration"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> _Calibration;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DeviceMetric;

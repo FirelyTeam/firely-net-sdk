@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ComponentModel;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -288,6 +289,7 @@ namespace Hl7.Fhir.Model
                 set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> _SeverityElement;
             
             /// <summary>
@@ -301,10 +303,10 @@ namespace Hl7.Fhir.Model
                 get { return SeverityElement != null ? SeverityElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SeverityElement = null; 
+                    if (!value.HasValue)
+                        SeverityElement = null; 
                     else
-                      SeverityElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>(value);
+                        SeverityElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>(value);
                     OnPropertyChanged("Severity");
                 }
             }
@@ -321,6 +323,7 @@ namespace Hl7.Fhir.Model
                 set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Code<Hl7.Fhir.Model.OperationOutcome.IssueType> _CodeElement;
             
             /// <summary>
@@ -334,10 +337,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeElement = null; 
+                    if (!value.HasValue)
+                        CodeElement = null; 
                     else
-                      CodeElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueType>(value);
+                        CodeElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueType>(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -353,6 +356,7 @@ namespace Hl7.Fhir.Model
                 set { _Details = value; OnPropertyChanged("Details"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.CodeableConcept _Details;
             
             /// <summary>
@@ -366,6 +370,7 @@ namespace Hl7.Fhir.Model
                 set { _DiagnosticsElement = value; OnPropertyChanged("DiagnosticsElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private Hl7.Fhir.Model.FhirString _DiagnosticsElement;
             
             /// <summary>
@@ -379,10 +384,10 @@ namespace Hl7.Fhir.Model
                 get { return DiagnosticsElement != null ? DiagnosticsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DiagnosticsElement = null; 
+                    if (value != null)
+                        DiagnosticsElement = null; 
                     else
-                      DiagnosticsElement = new Hl7.Fhir.Model.FhirString(value);
+                        DiagnosticsElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Diagnostics");
                 }
             }
@@ -399,6 +404,7 @@ namespace Hl7.Fhir.Model
                 set { _LocationElement = value; OnPropertyChanged("LocationElement"); }
             }
             
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private List<Hl7.Fhir.Model.FhirString> _LocationElement;
             
             /// <summary>
@@ -412,10 +418,10 @@ namespace Hl7.Fhir.Model
                 get { return LocationElement != null ? LocationElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
-                      LocationElement = null; 
+                    if (value != null)
+                        LocationElement = null; 
                     else
-                      LocationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                        LocationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
                     OnPropertyChanged("Location");
                 }
             }
@@ -488,8 +494,17 @@ namespace Hl7.Fhir.Model
             set { _Issue = value; OnPropertyChanged("Issue"); }
         }
         
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private List<Hl7.Fhir.Model.OperationOutcome.IssueComponent> _Issue;
         
+
+
+		public override void AddDefaultConstraints()
+		{
+			if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+				InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+		}
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as OperationOutcome;

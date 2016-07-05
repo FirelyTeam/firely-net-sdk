@@ -53,7 +53,8 @@ namespace Hl7.Fhir.FhirPath
 
         public static bool Predicate(this Evaluator evaluator, IFhirPathValue instance, IEvaluationContext context)
         {
-            return evaluator.Evaluate(instance, context).BooleanEval().AsBoolean();
+            var result = evaluator.Evaluate(instance, context);
+            return result.BooleanEval().AsBoolean();
         }
 
         public static bool IsTrue(this Evaluator evaluator, IFhirPathValue instance)
@@ -151,6 +152,8 @@ namespace Hl7.Fhir.FhirPath
                 {
                     case InfixOperator.Equals:
                         result = leftNodes.IsEqualTo(rightNodes); break;
+                    case InfixOperator.NotEqual:
+                        result = leftNodes.IsNotEqualTo(rightNodes); break;
                     case InfixOperator.Equivalent:
                         result = leftNodes.IsEquivalentTo(rightNodes); break;
                     case InfixOperator.GreaterThan:
@@ -178,7 +181,7 @@ namespace Hl7.Fhir.FhirPath
                     case InfixOperator.Implies:
                         result = leftNodes.Implies(rightNodes); break;
                     case InfixOperator.Union:
-                        result = leftNodes.Union(rightNodes); break;
+                        result = leftNodes.Union(rightNodes, new IFhirPathValueListExtensions.FhirPathValueEqualityComparer()); break;
                     case InfixOperator.Concat:
                         result = leftNodes.Add(rightNodes); break;  // should only work for strings ;-)                        
                     case InfixOperator.In:
@@ -217,9 +220,13 @@ namespace Hl7.Fhir.FhirPath
             return (f, c) => f.Select(elements => mapper(elements, c));
         }
 
+        public static Evaluator Exists()
+        {
+            return (f,_)=> f.IsEmpty().Not();
+        }
         public static Evaluator Empty()
         {
-            return (f,_)=> f.IsEmpty();
+            return (f, _) => f.IsEmpty();
         }
 
         public static Evaluator Not()
@@ -283,6 +290,11 @@ namespace Hl7.Fhir.FhirPath
         public static Evaluator ToDecimal()
         {
             return (f, _) => f.DecimalEval();
+        }
+
+        public static Evaluator ToString()
+        {
+            return (f, _) => f.StringEval();
         }
 
         public static Evaluator StartsWith(Evaluator prefix)

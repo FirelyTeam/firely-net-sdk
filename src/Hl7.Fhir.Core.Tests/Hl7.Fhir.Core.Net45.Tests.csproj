@@ -89,9 +89,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FhirPath\AssertParser.cs" />
+    <Compile Include="FhirPath\FhirPathEvaluatorTestFromSpec.cs" />
     <Compile Include="FhirPath\FhirPathLexerTest.cs" />
     <Compile Include="FhirPath\FhirPathTest.cs" />
     <Compile Include="FhirPath\FhirPathEvaluatorTest.cs" />
+    <Compile Include="FhirPath\AllResourceInvariantsTest.cs" />
     <Compile Include="Introspection\ClassMappingTest.cs" />
     <Compile Include="Introspection\EnumMappingTest.cs" />
     <Compile Include="Introspection\ModelInspectorTest.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="Serialization\ResourceParsingTests.cs" />
     <Compile Include="Serialization\RoundtripTest.cs" />
     <Compile Include="Serialization\SerializationTests.cs" />
+    <Compile Include="TrainingTests\Z-TrainingUnitTests.cs" />
     <Compile Include="Validation\ValidatePatient.cs" />
     <Compile Include="Validation\ValidationTests.cs" />
     <Compile Include="XmlAssert.cs" />
