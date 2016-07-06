@@ -25,9 +25,9 @@ namespace Hl7.Fhir.FluentPath.Binding
             Arguments = arguments;
         }
 
-        public bool StaticMatches(FunctionCallExpression expression)
+        public bool StaticMatches(string functionName, params TypeInfo[] argumentTypes)
         {
-            return expression.FunctionName == Name && expression.Arguments.Count() == Arguments.Count();
+            return functionName == Name && argumentTypes.Count() == Arguments.Count();
         }
 
         //public void Verify(FunctionCallExpression expression)

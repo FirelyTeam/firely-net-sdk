@@ -67,6 +67,11 @@ namespace Hl7.Fhir.FluentPath
                 return null;
         }
 
+        public static long CountItems(this IEnumerable<IValueProvider> focus)
+        {
+            return focus.Count();
+        }
+
 
         public static IEnumerable<IValueProvider> Item(this IEnumerable<IValueProvider> focus, int index)
         {
@@ -104,10 +109,6 @@ namespace Hl7.Fhir.FluentPath
         //    return focus.Distinct(new FhirPathValueEqualityComparer());
         //}
 
-        //public static IEnumerable<IValueProvider> CountItems(this IEnumerable<IValueProvider> focus)
-        //{
-        //    return FhirValueList.Create(focus.Count());
-        //}
 
         //public static IEnumerable<IFluentPathElement> Resolve(this IEnumerable<IFluentPathValue> focus, FhirClient client)
         //{
