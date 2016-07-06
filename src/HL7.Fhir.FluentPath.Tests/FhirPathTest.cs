@@ -161,5 +161,6 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.IsTrue(TypeInfo.ByName("something") == TypeInfo.ByName("something"));
             Assert.IsTrue(TypeInfo.ByName("something") != TypeInfo.ByName("somethingElse"));
         }
+   
     }
 }

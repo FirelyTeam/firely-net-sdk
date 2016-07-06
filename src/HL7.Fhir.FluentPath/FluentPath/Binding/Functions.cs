@@ -11,10 +11,6 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
 
     public class Functions
     {
-        public delegate object Builtin<F>(F focus);
-        public delegate object Builtin<F,A>(F focus, A argument1);
-        public delegate object Builtin<F,A, B>(F focus, A argument1, B argument2);
-
         private static ParamBinding<T> par<T>(string name)
         {
             return new ParamBinding<T>(name);
@@ -32,9 +28,9 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             }
         }
 
-        private class FocusBinding<T> : ParamBinding
+        private class FocusBinding<T> : ParamBinding<T>
         {
-            public FocusBinding() : base("focus", typeof(T))
+            public FocusBinding() : base("focus")
             {
             }
         }
@@ -45,19 +41,26 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             add("not", f => f.Not());
             add("empty", f => f.IsEmpty());
             add("exists", f => f.Exists());
+            add("count", f => f.CountItems());
+
             add("builtin.children", focus<IEnumerable<IValueProvider>>(), par<string>("name"), (f, a) => f.Children(a));
+            add("builtin.=", focus<object>(), par<IEnumerable<IValueProvider>>("left"), par<IEnumerable<IValueProvider>>("right"), (f, a, b) => a.IsEqualTo(b));
+
+            add("builtin.*", focus<object>(), par<IValueProvider>("left"), par<IValueProvider>("right"), (f, a, b) => a.Mul(b));
+            add("builtin./", focus<object>(), par<IValueProvider>("left"), par<IValueProvider>("right"), (f, a, b) => a.Div(b));
+            add("builtin.+", focus<object>(), par<IValueProvider>("left"), par<IValueProvider>("right"), (f, a, b) => a.Add(b));
+            add("builtin.-", focus<object>(), par<IValueProvider>("left"), par<IValueProvider>("right"), (f, a, b) => a.Sub(b));
+
             add("substring", focus<string>(), par<int>("start"), (f, a) => f.Substring(a));
             add("substring", focus<string>(), par<int>("start"), par<int>("length"), (f, a, b) => f.Substring(a, b));
-
-            //add("count", (f, _) => f.CountItems(), None());
-            ////add("=", Exactly(1) && Args(TypeInfo.Decimal, TypeInfo.Decimal), (f, a) => Operators.IsEqualTo(a[0]), Exactly(1));
-            //add("+", (f, a) => f.Add(a[0]), Exactly(1));
         }
 
 
         public static Invokee Resolve(FunctionCallExpression expression)
         {
-            CallBinding binding = _functions.SingleOrDefault(f=>f.StaticMatches(expression));
+            CallBinding binding = _functions.SingleOrDefault(
+                    f=>f.StaticMatches(expression.FunctionName, 
+                        expression.Arguments.Select(a=>a.ExpressionType).ToArray()));
 
             if (binding != null)
                 return binding.Function;
@@ -86,17 +89,17 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             _functions.Add(new CallBinding(name, buildFocusInputCall(focusFunc), new ParamBinding[] { }));
         }
 
-        private static void add<F>(string name, FocusBinding<F> focus, Builtin<F> func)
+        private static void add<F>(string name, FocusBinding<F> focus, Func<F,object> func)
         {
             _functions.Add(new CallBinding(name, buildNullPropCall(focus,func), new ParamBinding[] { }));
         }
 
-        private static void add<F,A>(string name, FocusBinding<F> focus, ParamBinding<A> param1, Builtin<F,A> func)
+        private static void add<F,A>(string name, FocusBinding<F> focus, ParamBinding<A> param1, Func<F,A,object> func)
         {
             _functions.Add(new CallBinding(name, buildNullPropCall(focus, func, param1), param1));
         }
 
-        private static void add<F,A, B>(string name, FocusBinding<F> focus, ParamBinding<A> param1, ParamBinding<B> param2, Builtin<F,A, B> func)
+        private static void add<F,A, B>(string name, FocusBinding<F> focus, ParamBinding<A> param1, ParamBinding<B> param2, Func<F,A,B,object> func)
         {
             _functions.Add(new CallBinding(name, buildNullPropCall(focus, func, param1, param2), param1, param2));
         }
@@ -111,7 +114,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
         }
 
 
-        private static Invokee buildNullPropCall<F>(FocusBinding<F> focus, Builtin<F> b)
+        private static Invokee buildNullPropCall<F>(FocusBinding<F> focus, Func<F,object> b)
         {
             return (ctx, args) =>
             {
@@ -122,7 +125,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             };
         }
 
-        private static Invokee buildNullPropCall<F,A>(FocusBinding<F> focus, Builtin<F,A> b, ParamBinding<A> binding1)
+        private static Invokee buildNullPropCall<F,A>(FocusBinding<F> focus, Func<F,A,object> b, ParamBinding<A> binding1)
         {
             return (ctx, args) =>
             {
@@ -138,7 +141,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             };
         }
 
-        private static Invokee buildNullPropCall<F,A, B>(FocusBinding<F> focus, Builtin<F, A, B> b, ParamBinding<A> binding1, ParamBinding<B> binding2)
+        private static Invokee buildNullPropCall<F,A, B>(FocusBinding<F> focus, Func<F,A,B,object> b, ParamBinding<A> binding1, ParamBinding<B> binding2)
         {
             return (ctx, args) =>
             {

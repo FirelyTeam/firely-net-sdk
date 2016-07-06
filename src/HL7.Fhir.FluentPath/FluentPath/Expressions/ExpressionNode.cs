@@ -171,11 +171,11 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class BinaryExpression : FunctionCallExpression
     {
-        public BinaryExpression(char op, Expression left, Expression right) : base(left, OP_PREFIX + op, TypeInfo.Any, right)
+        public BinaryExpression(char op, Expression left, Expression right) : this(new String(op,1), left, right)
         {
         }
 
-        public BinaryExpression(string op, Expression left, Expression right) : base(left, OP_PREFIX+op, TypeInfo.Any, right)
+        public BinaryExpression(string op, Expression left, Expression right) : base(AxisExpression.This, OP_PREFIX + op, TypeInfo.Any, left, right)
         {
         }
         public string Op
@@ -206,11 +206,11 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
     public class UnaryExpression : FunctionCallExpression
     {
-        public UnaryExpression(char op, Expression operand) : base(operand, OP_PREFIX + op, TypeInfo.Any)
+        public UnaryExpression(char op, Expression operand) : this(new String(op,1), operand)
         {
         }
 
-        public UnaryExpression(string op, Expression operand) : base(operand, OP_PREFIX + op, TypeInfo.Any)
+        public UnaryExpression(string op, Expression operand) : base(AxisExpression.This, OP_PREFIX + op, TypeInfo.Any, operand)
         {
         }
         public string Op

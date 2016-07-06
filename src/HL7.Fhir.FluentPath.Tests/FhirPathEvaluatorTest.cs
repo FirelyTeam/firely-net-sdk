@@ -46,13 +46,15 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
         [TestMethod, TestCategory("FhirPath")]
-        public void TestForMe()
+        public void TestBasics()
         {
             Assert.IsTrue(PathExpression.IsTrue(@"{}.empty()", navigator));
             Assert.IsTrue(PathExpression.IsTrue(@"1.empty().not()", navigator));
 
             Assert.AreEqual(2L,PathExpression.Scalar(@"Patient.identifier.count()", navigator));
             Assert.IsTrue(PathExpression.IsTrue(@"Patient.identifier.count() = 2", navigator));
+            Assert.AreEqual(1L,PathExpression.Scalar(@"8/2 - 3*2 + 3", navigator));
+            Assert.AreEqual("official", PathExpression.Scalar(@"'offic'+'ial'", navigator));
         }
 
         [TestMethod, TestCategory("FhirPath")]

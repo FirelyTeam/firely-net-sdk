@@ -66,7 +66,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AssertParser.cs" />
-    <Compile Include="ConstructFromXmlTest.cs" />
     <Compile Include="TestEvaluationContext.cs" />
     <Compile Include="FhirPathEvaluatorTest.cs" />
     <Compile Include="FhirPathGrammarTest.cs" />
