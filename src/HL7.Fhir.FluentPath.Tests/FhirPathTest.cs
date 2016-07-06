@@ -126,6 +126,16 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.AreEqual("usual", result.First().Value);
         }
 
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestNavigationALTERNATIVE()
+        {
+            var values = getTestData();
+
+            var result = values.EnumerateChildrenByName("Patient").EnumerateChildrenByName("identifier").ChildrenValues("use");
+            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual("usual", (string)result.First());
+        }
+
         [TestMethod, TestCategory("FhirPath"),Ignore]
         public void TestExpression()
         {
