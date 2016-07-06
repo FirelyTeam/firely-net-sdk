@@ -80,6 +80,7 @@
     <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Support\StringExtensions.cs" />
+    <Compile Include="Support\XmlNs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

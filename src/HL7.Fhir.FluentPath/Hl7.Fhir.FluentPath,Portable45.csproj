@@ -56,8 +56,8 @@
     <Compile Include="FluentPath\FhirValueList.cs" />
     <Compile Include="FluentPath\IEvaluationContext.cs" />
     <Compile Include="FluentPath\IFluentPathElementExtensions.cs" />
-    <Compile Include="FluentPath\IFluentPathValueExtensions.cs" />
-    <Compile Include="FluentPath\IFluentPathValueListExtensions.cs" />
+    <Compile Include="FluentPath\IValueProviderExtensions.cs" />
+    <Compile Include="FluentPath\IValueProviderListExtensions.cs" />
     <Compile Include="FluentPath\Operator.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
     <Compile Include="FluentPath\Parser\Lexer.cs" />

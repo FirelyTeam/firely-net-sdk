@@ -55,6 +55,8 @@
     <Compile Include="ElementsModel\IValueProvider.cs" />
     <Compile Include="ElementsModel\INameProvider.cs" />
     <Compile Include="ElementsModel\IElementNavigator.cs" />
+    <Compile Include="FluentPath\IValueProviderExtensions.cs" />
+    <Compile Include="FluentPath\IValueProviderListExtensions.cs" />
     <Compile Include="FluentPath\TypeInfo.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
     <Compile Include="FluentPath\Binding\CallBinding.cs" />
@@ -63,8 +65,6 @@
     <Compile Include="FluentPath\IEvaluationContext.cs" />
     <Compile Include="FluentPath\IFluentPathElementExtensions.cs" />
     <Compile Include="FluentPath\FhirValueList.cs" />
-    <Compile Include="FluentPath\IFluentPathValueExtensions.cs" />
-    <Compile Include="FluentPath\IFluentPathValueListExtensions.cs" />
     <Compile Include="FluentPath\Operator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionNode.cs" />
     <Compile Include="FluentPath\PartialDateTime.cs" />
@@ -77,6 +77,7 @@
     <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\Logging.cs" />
     <Compile Include="Support\StringExtensions.cs" />
+    <Compile Include="Support\XmlNs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

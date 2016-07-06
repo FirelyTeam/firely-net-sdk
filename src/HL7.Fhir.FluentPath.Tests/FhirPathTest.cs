@@ -33,8 +33,6 @@ namespace Hl7.Fhir.Tests.FhirPath
             var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
             tree = TreeConstructor.FromXml(tpXml);
             var navigator = new TreeNavigator(tree);
-            //if (!navigator.MoveToFirstChild())
-            //    throw new InvalidOperationException("File contains no data");
 
             return navigator;
         }

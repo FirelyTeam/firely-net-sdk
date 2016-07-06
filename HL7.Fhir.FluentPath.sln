@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HL7.Fhir.FluentPath,Net40",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HL7.Fhir.FluentPath.Tests", "src\HL7.Fhir.FluentPath.Tests\HL7.Fhir.FluentPath.Tests.csproj", "{7A5DEEEF-B84C-471B-AFED-8FA2DAAECC20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.FluentPath,Portable45", "src\HL7.Fhir.FluentPath\Hl7.Fhir.FluentPath,Portable45.csproj", "{94129142-F7A7-4D53-86D6-FC5C0ED363B1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{7A5DEEEF-B84C-471B-AFED-8FA2DAAECC20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A5DEEEF-B84C-471B-AFED-8FA2DAAECC20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A5DEEEF-B84C-471B-AFED-8FA2DAAECC20}.Release|Any CPU.Build.0 = Release|Any CPU
-		{94129142-F7A7-4D53-86D6-FC5C0ED363B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94129142-F7A7-4D53-86D6-FC5C0ED363B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94129142-F7A7-4D53-86D6-FC5C0ED363B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94129142-F7A7-4D53-86D6-FC5C0ED363B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

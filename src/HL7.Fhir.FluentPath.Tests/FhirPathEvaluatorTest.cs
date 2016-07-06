@@ -13,7 +13,6 @@ using System.Linq;
 using Hl7.Fhir.FluentPath;
 using System.Diagnostics;
 using Hl7.Fhir.FluentPath.InstanceTree;
-using Hl7.Fhir.Rest;
 using HL7.Fhir.FluentPath.FluentPath;
 using Hl7.Fhir.Navigation;
 
@@ -69,7 +68,7 @@ namespace Hl7.Fhir.Tests.FhirPath
                   @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and 
                         $focus.code = 'owner').log('after owner').$parent.$parent.organization.log('org')
                         .where(display.startsWith('Walt')).resolve().identifier.first().value = 'Gastro'", navigator,
-                                new FhirEvaluationContext(new FhirClient("http://spark.furore.com/fhir"))));
+                                new TestEvaluationContext()));
 
             //// why is in an operator and not a function?
             Assert.IsTrue(PathExpression.IsTrue(
