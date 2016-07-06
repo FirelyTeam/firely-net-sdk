@@ -12,7 +12,7 @@ namespace Hl7.Fhir.FluentPath
             {
                 do
                 {
-                    yield return nav;
+                    yield return nav.Clone();
                 }
                 while (nav.MoveToNext());
             }
