@@ -27,24 +27,26 @@ namespace Hl7.Fhir.Tests.FhirPath
 #endif
     {
         FhirInstanceTree tree;
-        IElementNavigator navigator;
 
-        [TestInitialize]
-        public void Setup()
+        public IElementNavigator getTestData()
         {
             var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
             tree = TreeConstructor.FromXml(tpXml);
-            navigator = new TreeNavigator(tree);
+            var navigator = new TreeNavigator(tree);
+            //if (!navigator.MoveToFirstChild())
+            //    throw new InvalidOperationException("File contains no data");
+
+            return navigator;
         }
 
         [TestMethod, TestCategory("FhirPath")]
         public void ConvertToInteger()
         {
-            Assert.AreEqual(1, new ConstantValue(1).ToInteger().Value);
-            Assert.AreEqual(2, new ConstantValue("2").ToInteger().Value);
+            Assert.AreEqual(1L, new ConstantValue(1).ToInteger());
+            Assert.AreEqual(2L, new ConstantValue("2").ToInteger());
             Assert.IsNull(new ConstantValue("2.4").ToInteger());
-            Assert.AreEqual(1, new ConstantValue(true).ToInteger().Value);
-            Assert.AreEqual(0, new ConstantValue(false).ToInteger().Value);
+            Assert.AreEqual(1L, new ConstantValue(true).ToInteger());
+            Assert.AreEqual(0L, new ConstantValue(false).ToInteger());
             Assert.IsNull(new ConstantValue(2.4m).ToInteger());
             Assert.IsNull(new ConstantValue(DateTimeOffset.Now).ToInteger());
         }
@@ -52,13 +54,24 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void ConvertToString()
         {
-            throw new NotImplementedException();
+            Assert.AreEqual("hoi", new ConstantValue("hoi").ToString());
+            Assert.AreEqual("3.4", new ConstantValue(3.4m).ToString());
+            Assert.AreEqual("4", new ConstantValue(4L).ToString());
+            Assert.AreEqual("true", new ConstantValue(true).ToString());
+            Assert.AreEqual("false", new ConstantValue(false).ToString());
+            Assert.IsNull(new ConstantValue(DateTimeOffset.Now).ToString());
         }
 
         [TestMethod, TestCategory("FhirPath")]
         public void ConvertToDecimal()
         {
-            throw new NotImplementedException();
+            Assert.AreEqual(1m, new ConstantValue(1m).ToDecimal());
+            Assert.AreEqual(2.01m, new ConstantValue("2.01").ToDecimal());
+            Assert.AreEqual(1L, new ConstantValue(true).ToDecimal());
+            Assert.AreEqual(0L, new ConstantValue(false).ToDecimal());
+            Assert.IsNull(new ConstantValue(2).ToDecimal());
+//            Assert.IsNull(new ConstantValue("2").ToDecimal());   Not clear according to spec
+            Assert.IsNull(new ConstantValue(DateTimeOffset.Now).ToDecimal());
         }
 
 
@@ -79,20 +92,19 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestValueOps()
         {
-            throw new NotImplementedException();
-            //var a = new ConstantValue(4);
-            //var b = new ConstantValue(5);
-            //var c = new ConstantValue(5);
+            var a = new ConstantValue(4);
+            var b = new ConstantValue(5);
+            var c = new ConstantValue(5);
 
-            //Assert.AreEqual(9L, a.Add(b).Value);
-            //Assert.AreEqual(-1L, a.Sub(b).Value);
-            //Assert.IsTrue(a.LessThan(b).Value);
-            //Assert.IsTrue(a.LessOrEqual(b).Value);
-            //Assert.IsFalse(a.GreaterThan(b).Value);
-            //Assert.IsFalse(a.GreaterOrEqual(b).Value);
-            //Assert.IsTrue(b.IsEqualTo(c));
-            //Assert.IsTrue(b.LessOrEqual(c).AsBoolean());
-            //Assert.IsTrue(b.GreaterOrEqual(c).AsBoolean());
+            Assert.AreEqual(9L, a.Add(b).Value);
+            Assert.AreEqual(-1L, a.Sub(b).Value);
+            Assert.IsTrue(a.LessThan(b));
+            Assert.IsTrue(a.LessOrEqual(b));
+            Assert.IsFalse(a.GreaterThan(b));
+            Assert.IsFalse(a.GreaterOrEqual(b));
+            Assert.IsTrue(b.IsEqualTo(c));
+            Assert.IsTrue(b.LessOrEqual(c));
+            Assert.IsTrue(b.GreaterOrEqual(c));
         }
 
         [TestMethod, TestCategory("FhirPath")]
@@ -109,18 +121,18 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestNavigation()
         {
-            var values = navigator;
+            var values = getTestData();
             
             var result = values.EnumerateChildrenByName("Patient").EnumerateChildrenByName("identifier").EnumerateChildrenByName("use");
             Assert.AreEqual(2, result.Count()); 
             Assert.AreEqual("usual", result.First().Value);
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [TestMethod, TestCategory("FhirPath"),Ignore]
         public void TestExpression()
         {
             throw new NotImplementedException();
-            
+
             //var values = navigator;
 
             //var result = values.EnumerateChildrenByName("Patient").EnumerateChildrenByName("identifier")

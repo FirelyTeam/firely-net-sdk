@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Navigation
         {
             get
             {
-                return tree.Name;
+                return current.Name;
             }
         }
 
@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Navigation
         {
             get
             {
-                return tree.ObjectValue;
+                return current.ObjectValue;
             }
         }
 

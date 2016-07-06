@@ -13,15 +13,13 @@ namespace Hl7.Fhir.FluentPath.Binding
 {
     public class ParamBinding
     {
-        public ParamBinding(string name, bool optional, Type nativeType)
+        public ParamBinding(string name, Type nativeType)
         {
             Name = name;
-            IsOptional = optional;
             NativeType = nativeType;
         }
 
         public string Name { get; private set; }
-        public bool IsOptional { get; private set; }
 
         public Type NativeType { get; private set; }
 

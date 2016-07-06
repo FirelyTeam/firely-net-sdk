@@ -11,18 +11,30 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
 
     public class Functions
     {
-        public delegate object Builtin(IEnumerable<IValueProvider> focus);
-        public delegate object Builtin<A>(IEnumerable<IValueProvider> focus, A argument1);
-        public delegate object Builtin<A, B>(IEnumerable<IValueProvider> focus, A argument1, B argument2);
+        public delegate object Builtin<F>(F focus);
+        public delegate object Builtin<F,A>(F focus, A argument1);
+        public delegate object Builtin<F,A, B>(F focus, A argument1, B argument2);
 
-        private static ParamBinding<T> par<T>(string name, bool optional = false)
+        private static ParamBinding<T> par<T>(string name)
         {
-            return new ParamBinding<T>(name, optional);
+            return new ParamBinding<T>(name);
+        }
+
+        private static FocusBinding<T> focus<T>()
+        {
+            return new FocusBinding<T>();
         }
 
         private class ParamBinding<T> : ParamBinding
         {
-            public ParamBinding(string name, bool optional = false) : base(name, optional, typeof(T))
+            public ParamBinding(string name) : base(name, typeof(T))
+            {
+            }
+        }
+
+        private class FocusBinding<T> : ParamBinding
+        {
+            public FocusBinding() : base("focus", typeof(T))
             {
             }
         }
@@ -33,8 +45,9 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             add("not", f => f.Not());
             add("empty", f => f.IsEmpty());
             add("exists", f => f.Exists());
-            add("builtin.children", par<string>("name"), (f, a) => f.Children(a));
-          //  add("substring", par<int>("start"), par<int>("length", optional: true), (f, a, b) => f.Substring(a, b));
+            add("builtin.children", focus<IEnumerable<IValueProvider>>(), par<string>("name"), (f, a) => f.Children(a));
+            add("substring", focus<string>(), par<int>("start"), (f, a) => f.Substring(a));
+            add("substring", focus<string>(), par<int>("start"), par<int>("length"), (f, a, b) => f.Substring(a, b));
 
             //add("count", (f, _) => f.CountItems(), None());
             ////add("=", Exactly(1) && Args(TypeInfo.Decimal, TypeInfo.Decimal), (f, a) => Operators.IsEqualTo(a[0]), Exactly(1));
@@ -44,34 +57,48 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
 
         public static Invokee Resolve(FunctionCallExpression expression)
         {
-            CallBinding binding = null;
-            var isKnown = _functions.TryGetValue(expression.FunctionName, out binding);
+            CallBinding binding = _functions.SingleOrDefault(f=>f.StaticMatches(expression));
 
-            if (isKnown)
-            {
-                binding.Verify(expression);
+            if (binding != null)
                 return binding.Function;
-            }
             else
-                return buildExternalCall(expression.FunctionName);
+            {
+                if (_functions.Any(f => f.Name == expression.FunctionName))
+                {
+                    // No function could be found, but there IS a function with the given name, 
+                    // report an error about the fact that the function is known, but could not be bound
+                    throw Error.Argument("Function '{0}' is not called with the right number or type of parameters".FormatWith(expression.FunctionName));
+                }
+                else
+                {
+                    // Not an internally known function, forward to context (so it can provide a hook to handle it)
+                    return buildExternalCall(expression.FunctionName);
+                }
+            }
         }
 
 
-        private static IDictionary<string,CallBinding> _functions = new Dictionary<string,CallBinding>();
+        private static List<CallBinding> _functions = new List<CallBinding>();
 
-        private static void add(string name, Builtin func)
+
+        private static void add(string name, Func<IEnumerable<IValueProvider>, object> focusFunc)
         {
-            _functions.Add(name,new CallBinding(name, buildInternalCall(func), new ParamBinding[] { }));
+            _functions.Add(new CallBinding(name, buildFocusInputCall(focusFunc), new ParamBinding[] { }));
         }
 
-        private static void add<A>(string name, ParamBinding<A> param1, Builtin<A> func)
+        private static void add<F>(string name, FocusBinding<F> focus, Builtin<F> func)
         {
-            _functions.Add(name, new CallBinding(name, buildInternalCall(func, param1), param1));
+            _functions.Add(new CallBinding(name, buildNullPropCall(focus,func), new ParamBinding[] { }));
         }
 
-        private static void add<A, B>(string name, ParamBinding<A> param1, ParamBinding<B> param2, Builtin<A, B> func)
+        private static void add<F,A>(string name, FocusBinding<F> focus, ParamBinding<A> param1, Builtin<F,A> func)
         {
-            _functions.Add(name, new CallBinding(name, buildInternalCall(func, param1, param2), param1, param2));
+            _functions.Add(new CallBinding(name, buildNullPropCall(focus, func, param1), param1));
+        }
+
+        private static void add<F,A, B>(string name, FocusBinding<F> focus, ParamBinding<A> param1, ParamBinding<B> param2, Builtin<F,A, B> func)
+        {
+            _functions.Add(new CallBinding(name, buildNullPropCall(focus, func, param1, param2), param1, param2));
         }
 
         private static Invokee buildExternalCall(string name)
@@ -80,50 +107,81 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             {
                 var evaluatedArguments = args.Select(a => a(ctx));
                 return ctx.InvokeExternalFunction(name, ctx.CurrentFocus, evaluatedArguments);
-            };            
-        }
-
-        private static Invokee buildInternalCall(Builtin b)
-        {
-            return (ctx, args) =>
-            {
-                return castResult(b(ctx.CurrentFocus));
             };
         }
 
-        private static Invokee buildInternalCall<A>(Builtin<A> b, ParamBinding<A> binding1)
+
+        private static Invokee buildNullPropCall<F>(FocusBinding<F> focus, Builtin<F> b)
         {
             return (ctx, args) =>
             {
-                var argValue = args.Single()(ctx);       // early bound argument, evaluate now. Not good for functions that have lambdas as parameters
-
-                return castResult(b(ctx.CurrentFocus, binding1.Bind<A>(argValue)));
+                if (!ctx.CurrentFocus.IsEmpty())
+                    return castResult(b(focus.Bind<F>(ctx.CurrentFocus)));
+                else
+                    return FhirValueList.Empty();
             };
         }
 
-        private static Invokee buildInternalCall<A,B>(Builtin<A,B> b, ParamBinding<A> binding1, ParamBinding<B> binding2)
+        private static Invokee buildNullPropCall<F,A>(FocusBinding<F> focus, Builtin<F,A> b, ParamBinding<A> binding1)
         {
             return (ctx, args) =>
             {
-                var arg1Value = args.First()(ctx);       // early bound argument, evaluate now. Not good for functions that have lambdas as parameters
-                var arg2Value = args.Skip(1).First()(ctx);       // early bound argument, evaluate now. Not good for functions that have lambdas as parameters
+                if (!ctx.CurrentFocus.IsEmpty())
+                {
+                    var argValue = args.Single()(ctx);       // early bound argument, evaluate now. Not good for functions that have lambdas as parameters
 
-                return castResult(b(ctx.CurrentFocus, binding1.Bind<A>(arg1Value), binding2.Bind<B>(arg2Value)));
+                    if (!argValue.IsEmpty())            // Implement the usual logic of null propagation for functions
+                        return castResult(b(focus.Bind<F>(ctx.CurrentFocus), binding1.Bind<A>(argValue)));
+                }
+
+                return FhirValueList.Empty();
             };
         }
 
+        private static Invokee buildNullPropCall<F,A, B>(FocusBinding<F> focus, Builtin<F, A, B> b, ParamBinding<A> binding1, ParamBinding<B> binding2)
+        {
+            return (ctx, args) =>
+            {
+                if (!ctx.CurrentFocus.IsEmpty())
+                {
+                    var arg1Value = args.First()(ctx);       // early bound argument, evaluate now. Not good for functions that have lambdas as parameters
+
+                    if (!arg1Value.IsEmpty())    // null propagation
+                    {
+                        var arg2Value = args.Skip(1).First()(ctx);       // early bound argument, evaluate now. Not good for functions that have lambdas as parameters
+
+                        if (!arg2Value.IsEmpty())
+                            return castResult(b(focus.Bind<F>(ctx.CurrentFocus), binding1.Bind<A>(arg1Value), binding2.Bind<B>(arg2Value)));
+                    }
+                }
+
+                return FhirValueList.Empty();
+            };
+        }
+
+
+        private static Invokee buildFocusInputCall(Func<IEnumerable<IValueProvider>,object> func)
+        {
+            return (ctx, args) =>
+            {
+                return FhirValueList.Create(func(ctx.CurrentFocus));
+            };
+        }
+       
         private static IEnumerable<IValueProvider> castResult(object result)
         {
-            if (result == null) return FhirValueList.Empty();
+            // Builtins may return
+            // * null -> this is turned into an empty list of IValueProvider
+            // * A list of IValueProvider -> this is returned as-is
+            // * A single IValueProvider -> returned as a list with that single IValueProvider
+            // * Any other value -> a list with an IValueProvider with that value
 
-            // TODO: Object may be a constant native value....
+            if (result == null) return FhirValueList.Empty();
 
             if (result is IEnumerable<IValueProvider>)
                 return (IEnumerable<IValueProvider>)result;
-            else if (result is IValueProvider)
-                return FhirValueList.Create((IValueProvider)result);
             else
-                throw new InvalidOperationException("Bound functions should either return IValueProvider or IEnumerable<IValueProvider>");
+                return FhirValueList.Create(result);
         }
     }
 }

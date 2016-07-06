@@ -63,7 +63,7 @@ namespace Hl7.Fhir.FluentPath
 
         public override string ToString()
         {
-            return Value.ToString();
+            return this.ToStringRepresentation();
         }
 
         public override bool Equals(object obj)

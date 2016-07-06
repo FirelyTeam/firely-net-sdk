@@ -31,15 +31,13 @@ namespace Hl7.Fhir.FluentPath
             return focus.JustValues().Single().Value;
         }
 
-        private static bool booleanEval(this IEnumerable<IValueProvider> focus)
+        // Evaluate a collection as a boolean as described in "4.1 Boolean evaluation of collections"
+        public static bool? BooleanEval(this IEnumerable<IValueProvider> focus)
         {
-            var result = false;
-
-            // An empty result is considered "false"
+            // An empty result is evaluated as "empty"
             if (!focus.Any())
-                result = false;
+                return null;
 
-            // A single result that's a boolean should be interpreted as a boolean
             else if (focus.Count() == 1 && focus.Single().Value is bool)
             {
                 return (bool)focus.Single().Value;
@@ -47,32 +45,26 @@ namespace Hl7.Fhir.FluentPath
 
             // Otherwise, we have "some" content, which we'll consider "true"
             else
-                result = true;
-
-            return result;
+                return true;
         }
 
-        public static IValueProvider BooleanEval(this IEnumerable<IValueProvider> focus)
+     
+        public static bool IsEmpty(this IEnumerable<IValueProvider> focus)
         {
-            return new ConstantValue(focus.booleanEval());
+            return !focus.Any();
         }
 
-        public static IEnumerable<IValueProvider> IsEmpty(this IEnumerable<IValueProvider> focus)
+        public static bool Exists(this IEnumerable<IValueProvider> focus)
         {
-            return FhirValueList.Create(!focus.Any());
+            return !focus.IsEmpty();
         }
 
-        public static IValueProvider Not(this IEnumerable<IValueProvider> focus)
+        public static bool? Not(this IEnumerable<IValueProvider> focus)
         {
             if (focus.Any())
-                return new ConstantValue(!focus.booleanEval());
+                return !focus.BooleanEval();
             else
                 return null;
-        }
-
-        public static IEnumerable<IValueProvider> Exists(this IEnumerable<IValueProvider> focus)
-        {
-            return FhirValueList.Create(focus.Any());
         }
 
 
@@ -81,41 +73,41 @@ namespace Hl7.Fhir.FluentPath
             return focus.Skip(index).Take(1);
         }
 
-        public static IEnumerable<IValueProvider> Where(this IEnumerable<IValueProvider> focus, 
-                        Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> condition)
-        {
-            return focus.Where(v => condition(FhirValueList.Create(v)).booleanEval());
-        }
+        //public static IEnumerable<IValueProvider> Where(this IEnumerable<IValueProvider> focus, 
+        //                Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> condition)
+        //{
+        //    return focus.Where(v => condition(FhirValueList.Create(v)).booleanEval());
+        //}
 
-        public static IEnumerable<IValueProvider> Any(this IEnumerable<IValueProvider> focus,
-        Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> condition)
-        {
-            return FhirValueList.Create(focus.Any(v => condition(FhirValueList.Create(v)).booleanEval()));
-        }
+        //public static IEnumerable<IValueProvider> Any(this IEnumerable<IValueProvider> focus,
+        //Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> condition)
+        //{
+        //    return FhirValueList.Create(focus.Any(v => condition(FhirValueList.Create(v)).booleanEval()));
+        //}
 
-        public static IEnumerable<IValueProvider> All(this IEnumerable<IValueProvider> focus,
-                Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> condition)
-        {
-            return FhirValueList.Create(focus.All(v => condition(FhirValueList.Create(v)).booleanEval()));
-        }
-
-
-        public static IEnumerable<IValueProvider> Select(this IEnumerable<IValueProvider> focus,
-                Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> mapper)
-        {
-            return focus.SelectMany(v => mapper(FhirValueList.Create(v)));
-        }
+        //public static IEnumerable<IValueProvider> All(this IEnumerable<IValueProvider> focus,
+        //        Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> condition)
+        //{
+        //    return FhirValueList.Create(focus.All(v => condition(FhirValueList.Create(v)).booleanEval()));
+        //}
 
 
-        public static IEnumerable<IValueProvider> Distinct(this IEnumerable<IValueProvider> focus)
-        {
-            return focus.Distinct(new FhirPathValueEqualityComparer());
-        }
+        //public static IEnumerable<IValueProvider> Select(this IEnumerable<IValueProvider> focus,
+        //        Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> mapper)
+        //{
+        //    return focus.SelectMany(v => mapper(FhirValueList.Create(v)));
+        //}
 
-        public static IEnumerable<IValueProvider> CountItems(this IEnumerable<IValueProvider> focus)
-        {
-            return FhirValueList.Create(focus.Count());
-        }
+
+        //public static IEnumerable<IValueProvider> Distinct(this IEnumerable<IValueProvider> focus)
+        //{
+        //    return focus.Distinct(new FhirPathValueEqualityComparer());
+        //}
+
+        //public static IEnumerable<IValueProvider> CountItems(this IEnumerable<IValueProvider> focus)
+        //{
+        //    return FhirValueList.Create(focus.Count());
+        //}
 
         //public static IEnumerable<IFluentPathElement> Resolve(this IEnumerable<IFluentPathValue> focus, FhirClient client)
         //{
@@ -148,10 +140,10 @@ namespace Hl7.Fhir.FluentPath
 
 
 
-        public static IEnumerable<IValueProvider> Extension(this IEnumerable<IValueProvider> focus, string url)
-        {            
-            return focus.Children("extension").Where(es => es.Children("url").IsEqualTo(url));
-        }
+        //public static IEnumerable<IValueProvider> Extension(this IEnumerable<IValueProvider> focus, string url)
+        //{            
+        //    return focus.Children("extension").Where(es => es.Children("url").IsEqualTo(url));
+        //}
 
         public static IEnumerable<IElementNavigator> Children(this IEnumerable<IValueProvider> focus, string name)
         {
@@ -189,79 +181,30 @@ namespace Hl7.Fhir.FluentPath
             return focus.SelectMany(node => node.Descendants());
         }
 
-        public static IValueProvider IsEqualTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
+        public static bool? IsEqualTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
         {
             if (!left.Any() || !right.Any()) return null;
 
-            if (left.Count() != right.Count()) return new ConstantValue(false);
+            if (left.Count() != right.Count()) return false;
 
-            return new ConstantValue(left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x));
+            return left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x);
         }
 
-        public static IEnumerable<IValueProvider> IsEqualTo(this IEnumerable<IValueProvider> left, object value)
-        {
-            var result = left.SingleOrDefault(v => Object.Equals(v.Value,value)) != null;
-            return FhirValueList.Create(result);
-        }
+        //public static IEnumerable<IValueProvider> IsEqualTo(this IEnumerable<IValueProvider> left, object value)
+        //{
+        //    var result = left.SingleOrDefault(v => Object.Equals(v.Value,value)) != null;
+        //    return FhirValueList.Create(result);
+        //}
 
-        public static IEnumerable<IValueProvider> IsEquivalentTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            if (!left.Any() && !right.Any()) return FhirValueList.Create(true);
-            if (left.Count() != right.Count()) return FhirValueList.Create(false);
+        //public static IEnumerable<IValueProvider> IsEquivalentTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
+        //{
+        //    if (!left.Any() && !right.Any()) return FhirValueList.Create(true);
+        //    if (left.Count() != right.Count()) return FhirValueList.Create(false);
 
-            return FhirValueList.Create(left.All((IValueProvider l) => right.Any(r => l.IsEquivalentTo(r))));
-        }
+        //    return FhirValueList.Create(left.All((IValueProvider l) => right.Any(r => l.IsEquivalentTo(r))));
+        //}
 
 
-        public static IEnumerable<IValueProvider> GreaterThan(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            if (left.Count() == 1 && right.Count() == 1)
-                yield return left.Single().GreaterThan(right.Single());
-        }
-
-        public static IEnumerable<IValueProvider> GreaterOrEqual(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            if (left.Count() == 1 && right.Count() == 1)
-                yield return left.Single().GreaterOrEqual(right.Single());
-        }
-
-        public static IEnumerable<IValueProvider> LessThan(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            if (left.Count() == 1 && right.Count() == 1)
-                yield return left.Single().LessThan(right.Single());
-        }
-
-        public static IEnumerable<IValueProvider> LessOrEqual(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            if (left.Count() == 1 && right.Count() == 1)
-                yield return left.Single().LessOrEqual(right.Single());
-        }
-
-        public static IEnumerable<IValueProvider> Add(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            if (!left.Any() || !right.Any()) yield break;
-                    
-            if (left.Count() == 1 && right.Count() == 1)
-                yield return left.Single().Add(right.Single());
-        }
-
-        public static IEnumerable<IValueProvider> Sub(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            if (left.Count() == 1 && right.Count() == 1)
-                yield return left.Single().Sub(right.Single());
-        }
-
-        public static IEnumerable<IValueProvider> Mul(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            if (left.Count() == 1 && right.Count() == 1)
-                yield return left.Single().Mul(right.Single());
-        }
-
-        public static IEnumerable<IValueProvider> Div(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            if (left.Count() == 1 && right.Count() == 1)
-                yield return left.Single().Div(right.Single());
-        }
 
         //public static IEnumerable<IFhirPathValue> Union(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
         //{
@@ -321,26 +264,26 @@ namespace Hl7.Fhir.FluentPath
         //    return nodeSet.SelectMany(node => node.PrecedingSiblings());
         //}
 
-        class FhirPathValueEqualityComparer : IEqualityComparer<IValueProvider>
-        {
-            public bool Equals(IValueProvider x, IValueProvider y)
-            {
-                var res = x.IsEqualTo(y);
-                return res != null && res.Value is bool &&  ((bool)res.Value) == true;
-            }
+        //class FhirPathValueEqualityComparer : IEqualityComparer<IValueProvider>
+        //{
+        //    public bool Equals(IValueProvider x, IValueProvider y)
+        //    {
+        //        var res = x.IsEqualTo(y);
+        //        return res != null && res.Value is bool &&  ((bool)res.Value) == true;
+        //    }
 
-            public int GetHashCode(IValueProvider value)
-            {
-                var result = value.Value != null ? value.Value.GetHashCode() : 0;
+        //    public int GetHashCode(IValueProvider value)
+        //    {
+        //        var result = value.Value != null ? value.Value.GetHashCode() : 0;
 
-                if (value is IElementNavigator)
-                {
-                    result ^= (((IElementNavigator)value).GetChildNames().SingleOrDefault() ?? "key").GetHashCode();
-                }
+        //        if (value is IElementNavigator)
+        //        {
+        //            result ^= (((IElementNavigator)value).GetChildNames().SingleOrDefault() ?? "key").GetHashCode();
+        //        }
 
-                return result;
-            }
-        }
+        //        return result;
+        //    }
+        //}
     }
 }
 

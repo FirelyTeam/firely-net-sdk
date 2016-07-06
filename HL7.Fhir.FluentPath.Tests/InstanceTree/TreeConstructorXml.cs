@@ -128,7 +128,7 @@ namespace Hl7.Fhir.FluentPath.InstanceTree
         {
             var settings = new XmlReaderSettings();
 
-            //settings.IgnoreComments = true;
+            settings.IgnoreComments = true;
             settings.IgnoreProcessingInstructions = true;
             //settings.IgnoreWhitespace = true;
 #if PORTABLE45

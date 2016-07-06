@@ -28,42 +28,52 @@ namespace Hl7.Fhir.FluentPath
         }
 
         // FluentPath toInteger() function
-        public static IValueProvider ToInteger(this IValueProvider focus)
+        public static long? ToInteger(this IValueProvider focus)
         {
             var val = focus.GetValue<object>("focus");
 
             if (val is long)
-                return new ConstantValue(val);
+                return (long)val;
             else if (val is string)
             {
-                long result;
-                if (Int64.TryParse((string)val, out result))
-                    return new ConstantValue(result);
+                try
+                {
+                    return XmlConvert.ToInt64((string)val);
+                }
+                catch
+                {
+                    return null;
+                }
             }
             else if(val is bool)
             {
-                return new ConstantValue((bool)val ? 1 : 0);
+                return (bool)val ? 1L : 0L;
             }
 
             return null;
         }
 
         // FluentPath toDecimal() function
-        public static IValueProvider ToDecimal(this IValueProvider focus)
+        public static decimal? ToDecimal(this IValueProvider focus)
         {
             var val = focus.GetValue<object>("focus");
 
             if (val is decimal)
-                return new ConstantValue(val);
+                return (decimal)val;
             else if (val is string)
             {
-                decimal result;
-                if (Decimal.TryParse((string)val, out result))
-                    return new ConstantValue(result);
+                try
+                {
+                    return XmlConvert.ToDecimal((string)val);
+                }
+                catch
+                {
+                    return null;
+                }
             }
             else if (val is bool)
             {
-                return new ConstantValue((bool)val ? 1m : 0m);
+                return (bool)val ? 1m : 0m;
             }
 
             return null;
@@ -71,18 +81,18 @@ namespace Hl7.Fhir.FluentPath
 
 
         // FluentPath toString() function
-        public static IValueProvider ToString(this IValueProvider focus)
+        public static string ToStringRepresentation(this IValueProvider focus)
         {
             var val = focus.GetValue<object>("focus");
 
             if (val is string)
-                return new ConstantValue(val);
+                return (string)val;
             else if (val is long)
-                return new ConstantValue(XmlConvert.ToString((long)val));
+                return XmlConvert.ToString((long)val);
             else if (val is decimal)
-                return new ConstantValue(XmlConvert.ToString((decimal)val));
+                return XmlConvert.ToString((decimal)val);
             else if (val is bool)
-                return new ConstantValue((bool)val ? "true" : "false");
+                return (bool)val ? "true" : "false";
 
             return null;
         }
@@ -172,11 +182,21 @@ namespace Hl7.Fhir.FluentPath
             return new ConstantValue(f(left.Value, right.Value));
         }
 
-        public static IValueProvider IsEqualTo(this IValueProvider left, IValueProvider right)
+        public static bool IsEqualTo(this IValueProvider left, IValueProvider right)
         {
-            if (!Object.Equals(left.Value, right.Value)) return new ConstantValue(false);
+            // Compare primitives
+            if (left.Value != null && right.Value != null)
+                return Object.Equals(left.Value, right.Value);
 
-            return left.Children().IsEqualTo(right.Children());
+            // Compare complex types
+            var childrenL = left.Children();
+            var childrenR = right.Children();
+
+            if (childrenL.Any() && childrenR.Any())
+                return childrenL.IsEqualTo(childrenR).Value;    // NOTE: Assumes null will never be returned when any() children exist
+
+            // Else, we're comparing a complex to a primitive which (probably) should return false
+            return false;
         }
 
         public static bool IsEquivalentTo(this IValueProvider left, IValueProvider right)
@@ -185,38 +205,38 @@ namespace Hl7.Fhir.FluentPath
             throw new NotImplementedException();
         }
 
-        public static IValueProvider GreaterOrEqual(this IValueProvider left, IValueProvider right)
+        public static bool GreaterOrEqual(this IValueProvider left, IValueProvider right)
         {
-            return left.IsEqualTo(right).Or(left.compare(Operator.GreaterThan, right));
+            return left.IsEqualTo(right) || left.compare(Operator.GreaterThan, right);
         }
 
-        public static IValueProvider LessOrEqual(this IValueProvider left, IValueProvider right)
+        public static bool LessOrEqual(this IValueProvider left, IValueProvider right)
         {
-            return left.IsEqualTo(right).Or(left.compare(Operator.LessThan, right));
+            return left.IsEqualTo(right) || left.compare(Operator.LessThan, right);
         }
 
-        public static IValueProvider LessThan(this IValueProvider left, IValueProvider right)
+        public static bool LessThan(this IValueProvider left, IValueProvider right)
         {
             return left.compare(Operator.LessThan, right);
         }
 
-        public static IValueProvider GreaterThan(this IValueProvider left, IValueProvider right)
+        public static bool GreaterThan(this IValueProvider left, IValueProvider right)
         {
             return left.compare(Operator.GreaterThan, right);
         }
 
-        private static IValueProvider compare(this IValueProvider left, Operator comp, IValueProvider right)
+        private static bool compare(this IValueProvider left, Operator comp, IValueProvider right)
         {
             if (left.Value == null || right.Value == null)
-                throw Error.InvalidOperation("'{0)' requires both operands to be values".FormatWith(comp));
+                throw Error.InvalidOperation("'{0)' requires both operands to be primitives".FormatWith(comp));
             if (left.Value.GetType() != right.Value.GetType())
                 throw Error.InvalidOperation("Operands to '{0}' must be of the same type".FormatWith(comp));
 
             if (left.Value is string)
             {
                 var result = String.Compare((string)left.Value, (string)right.Value);
-                if (comp == Operator.LessThan) return new ConstantValue(result == -1);
-                if (comp == Operator.GreaterThan) return new ConstantValue(result == 1);
+                if (comp == Operator.LessThan) return result == -1;
+                if (comp == Operator.GreaterThan) return result == 1;
             }
             else
             {
