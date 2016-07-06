@@ -1,29 +1,20 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("HL7.Fhir.FluentPath")]
+[assembly: AssemblyTitle("Hl7.Fhir.FluentPath,Portable45")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("HL7.Fhir.FluentPath")]
+[assembly: AssemblyProduct("Hl7.Fhir.FluentPath,Portable45")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-#if DEBUG
-[assembly: InternalsVisibleTo("Hl7.Fhir.FluentPath.Tests")]
-#endif
-
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(false)]
-
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-// [assembly: Guid("b9744c91-93a4-43e2-a7fd-beb4eee9a17e")]
+[assembly: NeutralResourcesLanguage("en")]
 
 // Version information for an assembly consists of the following four values:
 //

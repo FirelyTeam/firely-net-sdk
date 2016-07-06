@@ -109,9 +109,9 @@
     <Compile Include="Support\XObjectExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\HL7.Fhir.FluentPath\HL7.Fhir.FluentPath.csproj">
+    <ProjectReference Include="..\HL7.Fhir.FluentPath\HL7.Fhir.FluentPath,Net45.csproj">
       <Project>{b9744c91-93a4-43e2-a7fd-beb4eee9a17e}</Project>
-      <Name>HL7.Fhir.FluentPath</Name>
+      <Name>HL7.Fhir.FluentPath,Net45</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

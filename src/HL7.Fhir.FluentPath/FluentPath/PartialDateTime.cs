@@ -101,7 +101,13 @@ namespace Hl7.Fhir.FluentPath
 
         public static PartialDateTime FromDateTime(DateTime dt)
         {
-            return new PartialDateTime { _value = XmlConvert.ToString(dt,XmlDateTimeSerializationMode.RoundtripKind) };
+
+#if PORTABLE45
+            return new PartialDateTime { _value = XmlConvert.ToString(dt) };
+#else
+            return new PartialDateTime { _value = XmlConvert.ToString(dt, XmlDateTimeSerializationMode.RoundtripKind) };
+#endif
+
         }
 
     }
