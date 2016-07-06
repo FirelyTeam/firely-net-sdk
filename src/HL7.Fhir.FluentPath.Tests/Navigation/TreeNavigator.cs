@@ -33,7 +33,10 @@ namespace Hl7.Fhir.Navigation
         {
             get
             {
-                return current.ObjectValue;
+                if (current.Value != null)
+                    return current.Value.Value;
+                else
+                    return null;
             }
         }
 
