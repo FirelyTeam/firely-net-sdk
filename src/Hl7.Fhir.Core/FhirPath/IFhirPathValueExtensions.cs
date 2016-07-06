@@ -53,7 +53,10 @@ namespace Hl7.Fhir.FhirPath
         {
             if (me.Value == null) return null;
 
-            if (me.Value is PartialDateTime)
+            if (me.Value is PartialDateTime 
+                || me.Value is Model.HumanName 
+                || me.Value is Model.Code
+                || me.Value.GetType().FullName.StartsWith("Hl7.Fhir.Model.Code`1"))
                 return me.Value.ToString();
             else
                 return PrimitiveTypeConverter.ConvertTo<string>(me.Value);
