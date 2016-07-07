@@ -40,6 +40,16 @@ namespace Hl7.Fhir.Navigation
             }
         }
 
+        public string TypeName
+        {
+            get
+            {
+                return "Any"; 
+                // todo: a real type name will be returned here eventually.
+            }
+        }
+
+
         public IElementNavigator Clone()
         {
             return new TreeNavigator(tree, current);
