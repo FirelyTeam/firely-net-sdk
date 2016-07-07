@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ElementsModel\ITypeNameProvider.cs" />
     <Compile Include="FluentPath\BaseEvaluationContext.cs" />
     <Compile Include="FluentPath\Binding\Functions.cs" />
     <Compile Include="FluentPath\Binding\Invokee.cs" />
