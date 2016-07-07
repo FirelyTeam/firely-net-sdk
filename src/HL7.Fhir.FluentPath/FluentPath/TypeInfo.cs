@@ -10,7 +10,7 @@ namespace HL7.Fhir.FluentPath
 {
     public class TypeInfo
     {
-        public static readonly TypeInfo Bool = new TypeInfo("bool");
+        public static readonly TypeInfo Boolean = new TypeInfo("boolean");
         public static readonly TypeInfo String = new TypeInfo("string");
         public static readonly TypeInfo Integer = new TypeInfo("integer");
         public static readonly TypeInfo Decimal = new TypeInfo("decimal");
@@ -27,12 +27,13 @@ namespace HL7.Fhir.FluentPath
         {
             switch (typeName)
             {
-                case "bool": return TypeInfo.Bool;
+                case "boolean": return TypeInfo.Boolean;
                 case "string": return TypeInfo.String;
                 case "integer": return TypeInfo.Integer;
                 case "decimal": return TypeInfo.Decimal;
                 case "datetime": return TypeInfo.DateTime;
                 case "time": return TypeInfo.Time;
+                case "any": return TypeInfo.Any;
                 default:
                     var result = new TypeInfo(typeName);
                     result.IsBuiltin = true;
@@ -53,6 +54,46 @@ namespace HL7.Fhir.FluentPath
                 return false;
 
             return Name == ((TypeInfo)obj).Name;
+        }
+
+        public static TypeInfo ForNativeType(Type nativeType)
+        {
+            if (nativeType == typeof(bool))
+                return TypeInfo.Boolean;
+            else if (nativeType == typeof(string))
+                return TypeInfo.String;
+            else if (nativeType == typeof(long))
+                return TypeInfo.Integer;
+            else if (nativeType == typeof(decimal))
+                return TypeInfo.Decimal;
+            else if (nativeType == typeof(PartialDateTime))
+                return TypeInfo.DateTime;
+            else if (nativeType == typeof(Time))
+                return TypeInfo.Time;
+            else if (nativeType == typeof(IEnumerable<IValueProvider>))
+                return TypeInfo.Any;
+            else
+                throw Error.Argument("nativeType", "Native type '{0}' is not mappable to a FluentPath type".FormatWith(nativeType.Name));
+        }
+
+        public bool MapsToNative(Type t)
+        {
+            if (this == TypeInfo.Boolean && t == typeof(bool))
+                return true;
+            else if (this == TypeInfo.String && t == typeof(string))
+                return true;
+            else if (this == TypeInfo.Integer && t == typeof(long))
+                return true;
+            else if (this == TypeInfo.Decimal && t == typeof(decimal))
+                return true;
+            else if (this == TypeInfo.DateTime && t == typeof(PartialDateTime))
+                return true;
+            else if (this == TypeInfo.Time && t == typeof(Time))
+                return true;
+            else if (this == TypeInfo.Any && t == typeof(object))
+                return true;
+            else
+                return false;
         }
 
         public bool Equals(TypeInfo typeRef)

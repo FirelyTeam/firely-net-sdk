@@ -13,15 +13,16 @@ namespace Hl7.Fhir.FluentPath.Binding
 {
     public class ParamBinding
     {
-        public ParamBinding(string name, Type nativeType)
+        public ParamBinding(string name, TypeInfo type)
         {
             Name = name;
-            NativeType = nativeType;
+            FluentPathType = type;
         }
 
         public string Name { get; private set; }
 
         public Type NativeType { get; private set; }
+        public TypeInfo FluentPathType { get; private set; }
 
         public bool StaticMatches(Expression parameterExpression)
         {
@@ -48,6 +49,12 @@ namespace Hl7.Fhir.FluentPath.Binding
             if (source is IEnumerable<IValueProvider>)
             {
                 var ifp = (IEnumerable<IValueProvider>)source;
+
+                if(typeof(T) == typeof(bool))
+                {
+                    return (T)((object)ifp.BooleanEval());
+                }
+
                 if (ifp.Any())
                 {
                     if (ifp.Skip(1).Any())
@@ -73,7 +80,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             if (source is T)
                 return (T)source;
 
-            throw new ArgumentException("cannot cast argument of type '{0}' to a '{1}'".FormatWith(source.GetType().Name, typeof(T).Name));
+            throw new InvalidCastException("cannot cast argument of type '{0}' to a '{1}'".FormatWith(source.GetType().Name, typeof(T).Name));
         }
     }
 }

@@ -94,8 +94,8 @@ namespace Hl7.Fhir.Tests.FhirPath
             var b = new ConstantValue(5);
             var c = new ConstantValue(5);
 
-            Assert.AreEqual(9L, a.Add(b).Value);
-            Assert.AreEqual(-1L, a.Sub(b).Value);
+            Assert.AreEqual(9L, FhirValueList.Create(a).DynaAdd(FhirValueList.Create(b)));
+            Assert.AreEqual(-1L, FhirValueList.Create(a).DynaSub(FhirValueList.Create(b)));
             Assert.IsTrue(a.LessThan(b));
             Assert.IsTrue(a.LessOrEqual(b));
             Assert.IsFalse(a.GreaterThan(b));
@@ -152,15 +152,23 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TypeInfoEquality()
         {
-            Assert.AreEqual(TypeInfo.Bool, TypeInfo.Bool);
+            Assert.AreEqual(TypeInfo.Boolean, TypeInfo.Boolean);
             Assert.IsTrue(TypeInfo.Decimal == TypeInfo.ByName("decimal"));
-            Assert.AreNotEqual(TypeInfo.Bool, TypeInfo.String);
+            Assert.AreNotEqual(TypeInfo.Boolean, TypeInfo.String);
             Assert.IsTrue(TypeInfo.Decimal == TypeInfo.ByName("decimal"));
             Assert.AreEqual(TypeInfo.ByName("something"), TypeInfo.ByName("something"));
             Assert.AreNotEqual(TypeInfo.ByName("something"), TypeInfo.ByName("somethingElse"));
             Assert.IsTrue(TypeInfo.ByName("something") == TypeInfo.ByName("something"));
             Assert.IsTrue(TypeInfo.ByName("something") != TypeInfo.ByName("somethingElse"));
         }
-   
+
+        //[TestMethod, TestCategory("FhirPath")]
+        //public void TypeInfoAndNativeMatching()
+        //{
+        //    Assert.IsTrue(TypeInfo.Decimal.MapsToNative(typeof(decimal)));
+        //    Assert.IsFalse(TypeInfo.Decimal.MapsToNative(typeof(long)));
+        //    Assert.IsFalse(TypeInfo.Any.CanBeCastTo(typeof(long)));
+        //}
+
     }
 }

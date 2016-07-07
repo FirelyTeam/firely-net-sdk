@@ -27,7 +27,7 @@ namespace Hl7.Fhir.FluentPath.Parser
             Lexer.String.Select(v => new ConstantExpression(v, TypeInfo.String))
                 .XOr(Lexer.DateTime.Select(v => new ConstantExpression(v, TypeInfo.DateTime)))
                 .XOr(Lexer.Time.Select(v => new ConstantExpression(v, TypeInfo.Time)))
-                .XOr(Lexer.Bool.Select(v => new ConstantExpression(v, TypeInfo.Bool)))
+                .XOr(Lexer.Bool.Select(v => new ConstantExpression(v, TypeInfo.Boolean)))
                 .Or(Lexer.DecimalNumber.Select(v => new ConstantExpression(v, TypeInfo.Decimal)))
                 .Or(Lexer.IntegerNumber.Select(v => new ConstantExpression(v, TypeInfo.Integer)));
 

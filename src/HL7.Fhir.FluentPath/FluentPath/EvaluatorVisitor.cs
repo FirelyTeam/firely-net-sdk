@@ -24,7 +24,8 @@ namespace HL7.Fhir.FluentPath.FluentPath
             var focusEval = expression.Focus.ToEvaluator();
             var argsEval = expression.Arguments.Select(arg => arg.ToEvaluator());
 
-            Invokee boundFunction = Functions.Resolve(expression);
+            var types = expression.Arguments.Select(a => a.ExpressionType);
+            Invokee boundFunction = Functions.Resolve(expression.FunctionName, types);
 
             return buildBindingInvoke(focusEval, argsEval, boundFunction);
         }

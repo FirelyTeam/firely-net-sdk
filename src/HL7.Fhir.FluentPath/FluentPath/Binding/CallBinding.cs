@@ -25,25 +25,10 @@ namespace Hl7.Fhir.FluentPath.Binding
             Arguments = arguments;
         }
 
-        public bool StaticMatches(string functionName, params TypeInfo[] argumentTypes)
+        public bool StaticMatches(string functionName, IEnumerable<TypeInfo> argumentTypes)
         {
             //TODO: Match types
             return functionName == Name && argumentTypes.Count() == Arguments.Count();
         }
-
-        //public void Verify(FunctionCallExpression expression)
-        //{
-        //    var minPar = Arguments.Count(a => a.IsOptional == false);
-        //    var maxPar = Arguments.Count();
-        //    var numPar = expression.Arguments.Count();
-
-        //    if (expression.FunctionName != Name)
-        //        throw Error.InvalidOperation("Expression does not match the name of the function");
-
-        //    var correctParNum = numPar >= minPar && numPar <= maxPar;
-
-        //    if (!correctParNum)
-        //        throw Error.Argument("Incorrect number of arguments passed to function");
-        //}
     }
 }

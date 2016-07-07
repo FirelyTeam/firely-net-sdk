@@ -7,6 +7,9 @@
  */
 
 
+using Hl7.Fhir.FluentPath.Binding;
+using Hl7.Fhir.Support;
+using HL7.Fhir.FluentPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,13 +35,13 @@ namespace Hl7.Fhir.FluentPath
         }
 
         // Evaluate a collection as a boolean as described in "4.1 Boolean evaluation of collections"
-        public static bool? BooleanEval(this IEnumerable<IValueProvider> focus)
+        public static bool BooleanEval(this IEnumerable<IValueProvider> focus)
         {
-            // An empty result is evaluated as "empty"
+            //// An empty result is evaluated as "empty" -> should not occur because of null prop in operators and functions
             if (!focus.Any())
-                return null;
+                throw Error.Argument("focus", "focus cannot be empty");
 
-            else if (focus.Count() == 1 && focus.Single().Value is bool)
+            if (focus.Count() == 1 && focus.Single().Value is bool)
             {
                 return (bool)focus.Single().Value;
             }
@@ -49,22 +52,9 @@ namespace Hl7.Fhir.FluentPath
         }
 
      
-        public static bool IsEmpty(this IEnumerable<IValueProvider> focus)
+        public static bool Not(this IEnumerable<IValueProvider> focus)
         {
-            return !focus.Any();
-        }
-
-        public static bool Exists(this IEnumerable<IValueProvider> focus)
-        {
-            return !focus.IsEmpty();
-        }
-
-        public static bool? Not(this IEnumerable<IValueProvider> focus)
-        {
-            if (focus.Any())
-                return !focus.BooleanEval();
-            else
-                return null;
+            return !focus.BooleanEval();
         }
 
         public static long CountItems(this IEnumerable<IValueProvider> focus)
@@ -76,6 +66,99 @@ namespace Hl7.Fhir.FluentPath
         public static IEnumerable<IValueProvider> Item(this IEnumerable<IValueProvider> focus, int index)
         {
             return focus.Skip(index).Take(1);
+        }
+
+
+        public static object DynaMul(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
+        {
+            try
+            {
+                var l = ParamBinding.CastToSingleValue<long>(left);
+                var r = ParamBinding.CastToSingleValue<long>(right);
+                return l * r;
+            }
+            catch { }
+
+            try
+            {
+                var l = ParamBinding.CastToSingleValue<decimal>(left);
+                var r = ParamBinding.CastToSingleValue<decimal>(right);
+                return l * r;
+            }
+            catch { }
+
+            throw Error.Argument("Can only multiply values of type integer or decimal");
+        }
+
+        public static object DynaDiv(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
+        {
+            try
+            {
+                var l = ParamBinding.CastToSingleValue<long>(left);
+                var r = ParamBinding.CastToSingleValue<long>(right);
+                return l / r;
+            }
+            catch { }
+
+            try
+            {
+                var l = ParamBinding.CastToSingleValue<decimal>(left);
+                var r = ParamBinding.CastToSingleValue<decimal>(right);
+                return l / r;
+            }
+            catch { }
+
+            throw Error.Argument("Can only divide values of type integer or decimal");
+        }
+
+        public static object DynaAdd(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
+        {
+            try
+            {
+                var l = ParamBinding.CastToSingleValue<long>(left);
+                var r = ParamBinding.CastToSingleValue<long>(right);
+                return l + r;
+            }
+            catch { }
+
+            try
+            {
+                var l = ParamBinding.CastToSingleValue<decimal>(left);
+                var r = ParamBinding.CastToSingleValue<decimal>(right);
+                return l + r;
+            }
+            catch { }
+
+            try
+            {
+                var l = ParamBinding.CastToSingleValue<string>(left);
+                var r = ParamBinding.CastToSingleValue<string>(right);
+                return l + r;
+            }
+            catch { }
+
+            throw Error.Argument("Can only add values of type string, integer or decimal");
+        }
+
+        public static object DynaSub(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
+        {
+            try
+            {
+                var l = ParamBinding.CastToSingleValue<long>(left);
+                var r = ParamBinding.CastToSingleValue<long>(right);
+                return l - r;
+            }
+            catch { }
+
+            try
+            {
+                var l = ParamBinding.CastToSingleValue<decimal>(left);
+                var r = ParamBinding.CastToSingleValue<decimal>(right);
+                return l - r;
+            }
+            catch { }
+
+            throw Error.Argument("Can only subtract values of type integer or decimal");
         }
 
         //public static IEnumerable<IValueProvider> Where(this IEnumerable<IValueProvider> focus, 

@@ -22,7 +22,7 @@ namespace Hl7.Fhir.FluentPath
         {
             if (val == null) throw Error.ArgumentNull(name);
             if (val.Value == null) throw Error.ArgumentNull(name + ".Value");
-            if (!(val is T)) throw Error.Argument(name + " must be of type " + typeof(T).Name);
+            if (!(val.Value is T)) throw Error.Argument(name + " must be of type " + typeof(T).Name);
 
             return (T)val.Value;
         }
@@ -96,91 +96,7 @@ namespace Hl7.Fhir.FluentPath
 
             return null;
         }
-
-        //TODO: Implement latest STU3 decisions around empty strings, start > length etc
-        public static IValueProvider Substring(this IValueProvider focus, long start, long? length)
-        {
-            var str = focus.GetValue<string>("focus");
-
-            if (length.HasValue)
-                return new ConstantValue(str.Substring((int)start, (int)length.Value));
-            else
-                return new ConstantValue(str.Substring((int)start));
-        }
-
-
-        public static IValueProvider StartsWith(this IValueProvider focus, string prefix)
-        {
-            var str = focus.GetValue<string>("focus");
-
-            return new ConstantValue(str.StartsWith(prefix));
-        }
-
-        public static IValueProvider Or(this IValueProvider left, IValueProvider right)
-        {
-            var lVal = left.GetValue<bool>("left");
-            var rVal = right.GetValue<bool>("right");
-
-            return new ConstantValue(lVal || rVal);
-        }
-
-        public static IValueProvider And(this IValueProvider left, IValueProvider right)
-        {
-            var lVal = left.GetValue<bool>("left");
-            var rVal = right.GetValue<bool>("right");
-
-            return new ConstantValue(lVal && rVal);
-
-        }
-
-
-        public static IValueProvider Xor(this IValueProvider left, IValueProvider right)
-        {
-            var lVal = left.GetValue<bool>("left");
-            var rVal = right.GetValue<bool>("right");
-
-            return new ConstantValue(lVal ^ rVal);
-        }
-
-        public static IValueProvider Implies(this IValueProvider left, IValueProvider right)
-        {
-            var lVal = left.GetValue<bool>("left");
-            var rVal = right.GetValue<bool>("right");
-
-            return new ConstantValue(!lVal || rVal);
-        }
-
-
-
-        public static IValueProvider Add(this IValueProvider left, IValueProvider right)
-        {
-            return left.math((a,b) => a+b, right);
-        }
-
-        public static IValueProvider Sub(this IValueProvider left, IValueProvider right)
-        {
-            return left.math((a,b) => a-b, right);
-        }
-
-        public static IValueProvider Mul(this IValueProvider left, IValueProvider right)
-        {
-            return left.math((a,b) => a*b, right);
-        }
-
-        public static IValueProvider Div(this IValueProvider left, IValueProvider right)
-        {
-            return left.math((a,b) => a/b, right);
-        }
-
-        private static IValueProvider math(this IValueProvider left, Func<dynamic,dynamic,object> f, IValueProvider right)
-        {
-            if (left.Value == null || right.Value == null)
-                throw Error.InvalidOperation("Operands must both be values");
-            if (left.Value.GetType() != right.Value.GetType())
-                throw Error.InvalidOperation("Operands must be of the same type");
-
-            return new ConstantValue(f(left.Value, right.Value));
-        }
+            
 
         public static bool IsEqualTo(this IValueProvider left, IValueProvider right)
         {

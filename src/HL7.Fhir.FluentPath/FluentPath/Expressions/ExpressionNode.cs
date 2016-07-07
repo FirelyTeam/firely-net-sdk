@@ -56,7 +56,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
             Value = ConstantValue.ToFluentPathValue(value);
 
             if (Value is bool)
-                ExpressionType = TypeInfo.Bool;
+                ExpressionType = TypeInfo.Boolean;
             else if (Value is string)
                 ExpressionType = TypeInfo.String;
             else if (Value is Int64)
