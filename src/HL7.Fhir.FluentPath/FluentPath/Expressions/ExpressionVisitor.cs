@@ -26,7 +26,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
 
         public abstract T VisitFunctionCall(FunctionCallExpression expression);
 
-        public abstract T VisitLambda(LambdaExpression expression);
+        //public abstract T VisitLambda(LambdaExpression expression);
 
         public abstract T VisitNewNodeListInit(NewNodeListInitExpression expression);
 

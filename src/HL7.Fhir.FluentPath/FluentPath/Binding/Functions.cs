@@ -53,6 +53,8 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
 
             add("substring", focus<string>(), par<int>("start"), (f, a) => f.Substring(a));
             add("substring", focus<string>(), par<int>("start"), par<int>("length"), (f, a, b) => f.Substring(a, b));
+
+            _functions.Add(new CallBinding("where", buildWhereLambda(), new ParamBinding<Evaluator>("condition")));
         }
 
 
@@ -113,6 +115,35 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             };
         }
 
+
+        private static Invokee buildWhereLambda()
+        {
+            return (ctx, args) =>
+            {
+                Evaluator lambda = args.First();
+
+                return run(ctx, lambda);
+            };
+        }
+
+
+        private static IEnumerable<IValueProvider> run(IEvaluationContext ctx, Evaluator lambda)
+        {
+            foreach (IValueProvider element in ctx.CurrentFocus.ToList())  // ToList() since I am changing the stack
+            {
+                ctx.Push(FhirValueList.Create(element));
+
+                try
+                {
+                    if (lambda(ctx).BooleanEval() == true)
+                        yield return element;
+                }
+                finally
+                {
+                    ctx.Pop();
+                }
+            }
+        }
 
         private static Invokee buildNullPropCall<F>(FocusBinding<F> focus, Func<F,object> b)
         {

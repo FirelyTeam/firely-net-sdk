@@ -11,10 +11,9 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FluentPath.Binding
 {
+    //TODO: Can we even make the context lazy (IE the focus is evaluated as late as possible?)
     public delegate IEnumerable<IValueProvider> Invokee(IEvaluationContext context, IEnumerable<Evaluator> arguments);
-
-    //TODO: Add compositional functions here
-
+  
     public static class InvokeeExtensions
     {
         public static Evaluator CastToValueProviders(this Func<object> input)

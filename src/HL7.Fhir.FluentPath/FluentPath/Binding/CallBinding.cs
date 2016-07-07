@@ -27,6 +27,7 @@ namespace Hl7.Fhir.FluentPath.Binding
 
         public bool StaticMatches(string functionName, params TypeInfo[] argumentTypes)
         {
+            //TODO: Match types
             return functionName == Name && argumentTypes.Count() == Arguments.Count();
         }
 
