@@ -35,17 +35,17 @@ namespace HL7.Fhir.FluentPath.FluentPath
             return _result;
         }
 
-        public override StringBuilder VisitLambda(LambdaExpression expression)
-        {
-            append("lambda $this -> ");
-            appendType(expression);
+        //public override StringBuilder VisitLambda(LambdaExpression expression)
+        //{
+        //    append("lambda $this -> ");
+        //    appendType(expression);
 
-            incr();
-            expression.Body.Accept(this);
-            decr();
+        //    incr();
+        //    expression.Body.Accept(this);
+        //    decr();
 
-            return _result;
-        }
+        //    return _result;
+        //}
 
         public override StringBuilder VisitNewNodeListInit(NewNodeListInitExpression expression)
         {

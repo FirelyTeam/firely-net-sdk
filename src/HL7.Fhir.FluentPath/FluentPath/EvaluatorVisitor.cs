@@ -29,11 +29,6 @@ namespace HL7.Fhir.FluentPath.FluentPath
             return buildBindingInvoke(focusEval, argsEval, boundFunction);
         }
 
-        public override Evaluator VisitLambda(FP.LambdaExpression expression)
-        {
-            return expression.Accept(this);
-        }
-
         public override Evaluator VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
         {
             return Return(FhirValueList.Empty());
