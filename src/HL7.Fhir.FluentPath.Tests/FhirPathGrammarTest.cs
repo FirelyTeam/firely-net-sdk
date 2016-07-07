@@ -46,7 +46,12 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             AssertParser.SucceedsMatch(parser, "childname", new ChildExpression(AxisExpression.This, "childname"));
             AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);
+
             AssertParser.SucceedsMatch(parser, "doSomething()", new FunctionCallExpression(AxisExpression.This, "doSomething", TypeInfo.Any));
+            AssertParser.SucceedsMatch(parser, "doSomething ( ) ", new FunctionCallExpression(AxisExpression.This, "doSomething", TypeInfo.Any));
+            AssertParser.SucceedsMatch(parser, "doSomething ( 3.14 ) ", new FunctionCallExpression(AxisExpression.This, "doSomething", TypeInfo.Any,
+                                new ConstantExpression(3.14m)));
+
             AssertParser.SucceedsMatch(parser, "doSomething('hi', 3.14, 3, $this, somethingElse(true))", new FunctionCallExpression(AxisExpression.This,"doSomething", TypeInfo.Any,
                         new ConstantExpression("hi"), new ConstantExpression(3.14m), new ConstantExpression(3L),
                         AxisExpression.This,
@@ -96,7 +101,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             var parser = Grammar.IndexerExpression.End();
 
             AssertParser.SucceedsMatch(parser, "Patient.name", patientName);
-            AssertParser.SucceedsMatch(parser, "Patient.name[4 ]",
+            AssertParser.SucceedsMatch(parser, "Patient.name [4 ]",
                     new IndexerExpression(patientName, new ConstantExpression(4)));
 
             AssertParser.FailsMatch(parser, "Patient.name[");
@@ -113,8 +118,9 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             AssertParser.SucceedsMatch(parser, "4", new ConstantExpression(4));
             AssertParser.SucceedsMatch(parser, "-4", new UnaryExpression('-', new ConstantExpression(4)));
-            AssertParser.SucceedsMatch(parser, "-Patient.name[4]", new UnaryExpression('-', patientName));
-            AssertParser.SucceedsMatch(parser, "+Patient.name[4]", new UnaryExpression('+', patientName));
+
+            AssertParser.SucceedsMatch(parser, "-Patient.name", new UnaryExpression('-', patientName));
+            AssertParser.SucceedsMatch(parser, "+Patient.name", new UnaryExpression('+', patientName));
         }
 
 
@@ -149,7 +155,6 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var parser = Grammar.TypeExpression.End();
 
-            AssertParser.SucceedsMatch(parser, "-4 > 5", constOp(">", -4, 5));
             AssertParser.SucceedsMatch(parser, "4 is integer", new TypeBinaryExpression("is", new ConstantExpression(4), TypeInfo.Integer));
             AssertParser.SucceedsMatch(parser, "8 as notoddbuteven", new TypeBinaryExpression("as", new ConstantExpression(8), TypeInfo.ByName("notoddbuteven")));
 
@@ -167,10 +172,10 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var parser = Grammar.Expression.End();
 
-            AssertParser.SucceedsMatch(parser, "-4 < 5 and 5 > 4 or 4 <= 6 xor 6 >= 5",
+            AssertParser.SucceedsMatch(parser, "4 < 5 and 5 > 4 or 4 <= 6 xor 6 >= 5",
                 new BinaryExpression("xor",
                     new BinaryExpression("or",
-                        new BinaryExpression("and", constOp("<", -4, 5), constOp(">", 5, 4)),
+                        new BinaryExpression("and", constOp("<", 4, 5), constOp(">", 5, 4)),
                         constOp("<=", 4, 6)),
                     constOp(">=", 6, 5)));
                 
@@ -182,23 +187,13 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var parser = Grammar.Expression.End();
 
-            //AssertParser.SucceedsMatch(parser, "4 <> 6 and ('h' ~ 'H' or 'a' !~ 'b')",
-            //    new BinaryExpression("and", constOp("<>", 4, 6),
-            //        new BinaryExpression("or", constOp("~", 'h', 'H'), constOp("!~", 'a', 'b'))));
-
-            var tree = parser.Parse("4=4 implies 4 != 5 and 4 <> 6 and ('h' ~ 'H' or 'a' !~ 'b')");
-            Console.WriteLine(tree.Dump());
-
-            AssertParser.SucceedsMatch(parser, "4=4 implies 4 != 5 and 4 <> 6 and ('h' ~ 'H' or 'a' !~ 'b')",
+            AssertParser.SucceedsMatch(parser, "4=4 implies 4 != 5 and ('h' ~ 'H' or 'a' !~ 'b')",
                 new BinaryExpression("implies", constOp("=", 4, 4),
                   new BinaryExpression("and",
-                    new BinaryExpression("and", constOp("!=", 4, 5), constOp("<>", 4, 6)),
-                    new BinaryExpression("or", constOp("~", 'h', 'H'), constOp("!~", 'a', 'b')))));
+                    constOp("!=", 4, 5), new BinaryExpression("or", constOp("~", 'h', 'H'), constOp("!~", 'a', 'b')))));
 
-            AssertParser.FailsMatch(parser, "true implies false and 4 != 5 and 4 <> and ('h' ~ 'H' or 'a' !~ 'b')");
+            AssertParser.FailsMatch(parser, "true implies false and 4 != 5 and 4 <> 6 and ('h' ~ 'H' or 'a' !~ 'b')");
         }
-
-        //AssertParser.SucceedsMatch(parser, "4*5+6=26 implies 6+5*4=26 and (6+5)*4 (6+5)/4 <> 26 and ('h' ~ 'H' or 'a' !~ 'b')",
 
         private void SucceedsConstantValueMatch(Parser<ConstantExpression> parser, string expr, object value, TypeInfo expected)
         {

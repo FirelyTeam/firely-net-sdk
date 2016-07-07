@@ -31,7 +31,7 @@ namespace Hl7.Fhir.FluentPath.Parser
         internal static readonly Parser<string> TypeOperator = Lexer.Operator("is", "as");
 
         // NOTE: ORDER MATTERS, since otherwise shorter ops will be recognized before longer ones!
-        internal static readonly Parser<string> EqOperator = Lexer.Operator("=", "~", "!=", "!~", "<>");
+        internal static readonly Parser<string> EqOperator = Lexer.Operator("=", "~", "!=", "!~");
         internal static readonly Parser<string> MembershipOperator = Lexer.Operator("in", "contains");
         internal static readonly Parser<string> AndOperator = Lexer.Operator("and");
         internal static readonly Parser<string> OrOperator = Lexer.Operator("or", "xor");
