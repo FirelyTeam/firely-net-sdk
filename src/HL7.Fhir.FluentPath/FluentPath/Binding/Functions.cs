@@ -108,84 +108,76 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
 
         private static Invokee buildExternalCall(string name)
         {
-            return (ctx, args) =>
+            return (ctx, focus, args) =>
             {
-                var evaluatedArguments = args.Select(a => a(ctx));
-                return ctx.InvokeExternalFunction(name, ctx.CurrentFocus, evaluatedArguments);
+                var evaluatedArguments = args.Select(a => a(ctx, focus));
+                return ctx.InvokeExternalFunction(name, focus, evaluatedArguments);
             };
         }
 
 
         private static Invokee buildWhereLambda()
         {
-            return (ctx, args) =>
+            return (ctx, focus, args) =>
             {
                 Evaluator lambda = args.First();
 
-                return run(ctx, lambda);
+                return run(ctx, focus, lambda);
             };
         }
 
 
-        private static IEnumerable<IValueProvider> run(IEvaluationContext ctx, Evaluator lambda)
+        private static IEnumerable<IValueProvider> run(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
         {
-            foreach (IValueProvider element in ctx.CurrentFocus.ToList())  // ToList() since I am changing the stack
+            foreach (IValueProvider element in focus)
             {
-                ctx.Push(FhirValueList.Create(element));
-
-                try
-                {
-                    if (lambda(ctx).BooleanEval() == true)
-                        yield return element;
-                }
-                finally
-                {
-                    ctx.Pop();
-                }
+                var newFocus = FhirValueList.Create(element);
+                if (lambda(ctx, newFocus).BooleanEval() == true)
+                    yield return element; 
             }
         }
 
-        private static Invokee buildNullPropCall<F>(FocusBinding<F> focus, Func<F,object> b)
+        private static Invokee buildNullPropCall<F>(FocusBinding<F> focusBinding, Func<F,object> b)
         {
-            return (ctx, args) =>
+            return (ctx, focus, args) =>
             {
-                if (!ctx.CurrentFocus.IsEmpty())
-                    return castResult(b(focus.Bind<F>(ctx.CurrentFocus)));
+                if (!focus.IsEmpty())
+                    return castResult(b(focusBinding.Bind<F>(focus)));
                 else
                     return FhirValueList.Empty();
             };
         }
 
-        private static Invokee buildNullPropCall<F,A>(FocusBinding<F> focus, Func<F,A,object> b, ParamBinding<A> binding1)
+        private static Invokee buildNullPropCall<F,A>(FocusBinding<F> focusBinding, Func<F,A,object> b, ParamBinding<A> binding1)
         {
-            return (ctx, args) =>
+            return (ctx, focus, args) =>
             {
-                if (!ctx.CurrentFocus.IsEmpty())
+                if (!focus.IsEmpty())
                 {
-                    var argValue = args.Single()(ctx);       // early bound argument, evaluate now. Not good for functions that have lambdas as parameters
+                    var argValue = args.Single()(ctx, focus);       // early bound argument, evaluate now. Not good for functions that have lambdas as parameters
 
                     if (!argValue.IsEmpty())            // Implement the usual logic of null propagation for functions
-                        return castResult(b(focus.Bind<F>(ctx.CurrentFocus), binding1.Bind<A>(argValue)));
+                        return castResult(b(focusBinding.Bind<F>(focus), binding1.Bind<A>(argValue)));
                 }
 
                 return FhirValueList.Empty();
             };
         }
 
-        private static Invokee buildNullPropCall<F,A, B>(FocusBinding<F> focus, Func<F,A,B,object> b, ParamBinding<A> binding1, ParamBinding<B> binding2)
+        private static Invokee buildNullPropCall<F,A, B>(FocusBinding<F> focusBinding, Func<F,A,B,object> b, ParamBinding<A> binding1, ParamBinding<B> binding2)
         {
-            return (ctx, args) =>
+            return (ctx, focus, args) =>
             {
-                if (!ctx.CurrentFocus.IsEmpty())
+                if (!focus.IsEmpty())
                 {
-                    var arg1Value = args.First()(ctx);       // early bound argument, evaluate now. Not good for functions that have lambdas as parameters
+                    var arg1Value = args.First()(ctx, focus);       // early bound argument, evaluate now. Not good for functions that have lambdas as parameters
 
                     if (!arg1Value.IsEmpty())    // null propagation
                     {
-                        var arg2Value = args.Skip(1).First()(ctx);       // early bound argument, evaluate now. Not good for functions that have lambdas as parameters
+                        var arg2Value = args.Skip(1).First()(ctx, focus);       // early bound argument, evaluate now. Not good for functions that have lambdas as parameters
 
                         if (!arg2Value.IsEmpty())
-                            return castResult(b(focus.Bind<F>(ctx.CurrentFocus), binding1.Bind<A>(arg1Value), binding2.Bind<B>(arg2Value)));
+                            return castResult(b(focusBinding.Bind<F>(focus), binding1.Bind<A>(arg1Value), binding2.Bind<B>(arg2Value)));
                     }
                 }
 
@@ -196,9 +188,9 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
 
         private static Invokee buildFocusInputCall(Func<IEnumerable<IValueProvider>,object> func)
         {
-            return (ctx, args) =>
+            return (ctx, focus, args) =>
             {
-                return FhirValueList.Create(func(ctx.CurrentFocus));
+                return FhirValueList.Create(func(focus));
             };
         }
        

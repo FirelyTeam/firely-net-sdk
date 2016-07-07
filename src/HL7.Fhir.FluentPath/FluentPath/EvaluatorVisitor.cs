@@ -56,40 +56,31 @@ namespace HL7.Fhir.FluentPath.FluentPath
 
         public static Evaluator Return(Hl7.Fhir.FluentPath.IValueProvider value)
         {
-            return _ => (new[] { (Hl7.Fhir.FluentPath.IValueProvider)value });
+            return (_,__) => (new[] { (Hl7.Fhir.FluentPath.IValueProvider)value });
         }
 
         public static Evaluator Return(IEnumerable<Hl7.Fhir.FluentPath.IValueProvider> value)
         {
-            return _ => value;
+            return (_,__) => value;
         }
 
         public static Evaluator ResolveValue(string name)
         {
-            return ctx => ctx.ResolveValue(name);
+            return (ctx,f) => ctx.ResolveValue(name);
         }
 
 
         public static Evaluator Focus()
         {
-            return ctx => ctx.CurrentFocus;
+            return (ctx, f) => f;
         }
 
         private static Evaluator buildBindingInvoke(Evaluator focus, IEnumerable<Evaluator> arguments, Invokee invokee)
         {
-            return ctx =>
+            return (ctx,f) =>
             {
-                try
-                {
-                    var focusNodes = focus(ctx);
-                    ctx.Push(focusNodes);
-
-                    return invokee(ctx, arguments);
-                }
-                finally
-                {
-                    ctx.Pop();
-                }
+                var focusNodes = focus(ctx,f);
+                return invokee(ctx, focusNodes, arguments);
             };
         }
     }

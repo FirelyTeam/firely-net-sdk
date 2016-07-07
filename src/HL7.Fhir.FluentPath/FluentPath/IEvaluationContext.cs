@@ -39,10 +39,6 @@ namespace Hl7.Fhir.FluentPath
         /// <returns>Return null when the constant is not known</returns>
         IEnumerable<IValueProvider> ResolveValue(string name);
 
-        void Push(IEnumerable<IValueProvider> focus);
-        void Pop();
-        IEnumerable<IValueProvider> CurrentFocus { get; }
-
         /// <summary>
         /// Context that was in focus when evaluation started
         /// </summary>

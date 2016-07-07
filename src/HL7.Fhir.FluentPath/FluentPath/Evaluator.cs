@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public delegate IEnumerable<IValueProvider> Evaluator(IEvaluationContext ctx);
+    public delegate IEnumerable<IValueProvider> Evaluator(IEvaluationContext ctx, IEnumerable<IValueProvider> focus);
    // public delegate object ScalarEvaluator(IEnumerable<IFhirPathValue> focus, IEvaluationContext ctx);
 
     // There is a special case around the entry point, where the type of the entry point can be represented, but is optional.
@@ -31,8 +31,7 @@ namespace Hl7.Fhir.FluentPath
         {
             var original = FhirValueList.Create(instance);
             context.OriginalContext = original;
-            context.Push(original);
-            return evaluator(context);
+            return evaluator(context, original);
         }
 
         public static IEnumerable<IValueProvider> Select(this Evaluator evaluator, IValueProvider instance)
