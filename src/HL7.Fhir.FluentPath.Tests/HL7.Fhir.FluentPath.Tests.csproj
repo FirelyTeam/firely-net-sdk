@@ -6,8 +6,8 @@
     <ProjectGuid>{7A5DEEEF-B84C-471B-AFED-8FA2DAAECC20}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HL7.Fhir.FluentPath.Tests</RootNamespace>
-    <AssemblyName>HL7.Fhir.FluentPath.Tests</AssemblyName>
+    <RootNamespace>Hl7.Fhir.FluentPath.Tests</RootNamespace>
+    <AssemblyName>Hl7.Fhir.FluentPath.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,15 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.Fhir.DSTU2.Core, Version=0.90.4.20849, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.Fhir.DSTU2.0.90.4\lib\net45\Hl7.Fhir.DSTU2.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Sprache, Version=2.0.0.51, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sprache.2.0.0.51\lib\portable-net4+netcore45+win8+wp8+sl5+MonoAndroid+Xamarin.iOS10+MonoTouch\Sprache.dll</HintPath>
       <Private>True</Private>
@@ -108,9 +100,9 @@
     <Compile Include="Support\XObjectExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HL7.Fhir.FluentPath\HL7.Fhir.FluentPath,Net45.csproj">
+    <ProjectReference Include="..\HL7.Fhir.FluentPath\Hl7.Fhir.FluentPath,Net45.csproj">
       <Project>{b9744c91-93a4-43e2-a7fd-beb4eee9a17e}</Project>
-      <Name>HL7.Fhir.FluentPath,Net45</Name>
+      <Name>Hl7.Fhir.FluentPath,Net45</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

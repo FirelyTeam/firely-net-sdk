@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HL7.Fhir.FluentPath.FluentPath
+namespace HL7.Fhir.FluentPath.Functions
 {
     public static class MathOperators
     {
+
         public static object DynaMul(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
         {
             try
@@ -38,7 +39,7 @@ namespace HL7.Fhir.FluentPath.FluentPath
             {
                 var l = ParamBinding.CastToSingleValue<long>(left);
                 var r = ParamBinding.CastToSingleValue<long>(right);
-                return l / r;
+                return (decimal)l / (decimal)r;
             }
             catch { }
 
@@ -132,7 +133,7 @@ namespace HL7.Fhir.FluentPath.FluentPath
             {
                 var l = ParamBinding.CastToSingleValue<long>(left);
                 var r = ParamBinding.CastToSingleValue<long>(right);
-                return (long)Math.Truncate((decimal)l - r);
+                return (long)Math.Truncate((decimal)(l - r));
             }
             catch { }
 
@@ -140,7 +141,7 @@ namespace HL7.Fhir.FluentPath.FluentPath
             {
                 var l = ParamBinding.CastToSingleValue<decimal>(left);
                 var r = ParamBinding.CastToSingleValue<decimal>(right);
-                return Math.Truncate((decimal)l - r);
+                return Math.Truncate((decimal)(l - r));
             }
             catch { }
 

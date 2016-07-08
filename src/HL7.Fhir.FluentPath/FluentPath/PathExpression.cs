@@ -7,8 +7,8 @@
  */
 
 using Hl7.Fhir.FluentPath.Parser;
-using HL7.Fhir.FluentPath.FluentPath;
-using HL7.Fhir.FluentPath.FluentPath.Expressions;
+using HL7.Fhir.FluentPath;
+using HL7.Fhir.FluentPath.Expressions;
 using Sprache;
 using System;
 using System.Collections.Concurrent;

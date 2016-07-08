@@ -61,12 +61,6 @@ namespace Hl7.Fhir.FluentPath
 
 
      
-        //public static IEnumerable<IValueProvider> Where(this IEnumerable<IValueProvider> focus, 
-        //                Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> condition)
-        //{
-        //    return focus.Where(v => condition(FhirValueList.Create(v)).booleanEval());
-        //}
-
         //public static IEnumerable<IValueProvider> Any(this IEnumerable<IValueProvider> focus,
         //Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> condition)
         //{
@@ -165,15 +159,7 @@ namespace Hl7.Fhir.FluentPath
             return focus.SelectMany(node => node.Descendants());
         }
 
-        public static bool? IsEqualTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        {
-            if (!left.Any() || !right.Any()) return null;
-
-            if (left.Count() != right.Count()) return false;
-
-            return left.Zip(right, (l, r) => l.IsEqualTo(r)).All(x => x);
-        }
-
+    
         //public static IEnumerable<IValueProvider> IsEqualTo(this IEnumerable<IValueProvider> left, object value)
         //{
         //    var result = left.SingleOrDefault(v => Object.Equals(v.Value,value)) != null;

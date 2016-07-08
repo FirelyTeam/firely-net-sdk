@@ -12,11 +12,13 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Support;
+using HL7.Fhir.FluentPath.Functions;
+using HL7.Fhir.FluentPath;
 
-namespace HL7.Fhir.FluentPath.FluentPath.Binding
+namespace Hl7.Fhir.FluentPath.Binding
 {
 
-    public class Functions
+    public class BindingTable
     {
         private static ParamBinding<T> par<T>(string name)
         {
@@ -50,7 +52,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
         }
 
 
-        static Functions()
+        static BindingTable()
         {
             // Functions that operate on the focus, without null propagation
             add("empty", f => !f.Any());

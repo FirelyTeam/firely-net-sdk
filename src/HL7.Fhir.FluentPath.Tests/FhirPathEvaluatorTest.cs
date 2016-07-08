@@ -13,7 +13,6 @@ using System.Linq;
 using Hl7.Fhir.FluentPath;
 using System.Diagnostics;
 using Hl7.Fhir.FluentPath.InstanceTree;
-using HL7.Fhir.FluentPath.FluentPath;
 using Hl7.Fhir.Navigation;
 
 namespace Hl7.Fhir.Tests.FhirPath
@@ -61,8 +60,13 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             Assert.IsTrue(PathExpression.IsTrue(@"4/2 = 2", navigator));
             Assert.IsTrue(PathExpression.IsTrue(@"2/4 = 0.5", navigator));
-            Assert.IsTrue(PathExpression.IsTrue(@"4.0/2.0 = 2.0", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"4.0/2.0 = 2", navigator));
             Assert.IsTrue(PathExpression.IsTrue(@"2.0/4 = 0.5", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"2.0 * 4 = 8", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"2 - 4.5 = -2.5", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"9.5 - 4.5 = 5", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"9 + 4.5 = 9.5", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"9.5 + 0.5 = 10", navigator));
 
             Assert.IsTrue(PathExpression.IsTrue(@"103 mod 5 = 3", navigator));
             Assert.IsTrue(PathExpression.IsTrue(@"101.4 mod 5.2 = 2.6", navigator));
@@ -71,7 +75,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             Assert.IsTrue(PathExpression.IsTrue(@"'offic'+'ial' = 'official'", navigator));
 
-            //Assert.IsTrue(PathExpression.IsTrue(@"12/(2+2) - (3 div 2) = 2", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"12/(2+2) - (3 div 2) = 2", navigator));
         }
 
 

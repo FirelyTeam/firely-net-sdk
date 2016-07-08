@@ -11,10 +11,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.FluentPath;
 using Sprache;
 using System.Linq;
-using HL7.Fhir.FluentPath.FluentPath.Expressions;
 using Hl7.Fhir.FluentPath.Parser;
-using HL7.Fhir.FluentPath.FluentPath;
 using HL7.Fhir.FluentPath;
+using HL7.Fhir.FluentPath.Expressions;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {

@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Support;
+using HL7.Fhir.FluentPath.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,22 +99,7 @@ namespace Hl7.Fhir.FluentPath
         }
             
 
-        public static bool IsEqualTo(this IValueProvider left, IValueProvider right)
-        {
-            // Compare primitives
-            if (left.Value != null && right.Value != null)
-                return Object.Equals(left.Value, right.Value);
-
-            // Compare complex types
-            var childrenL = left.Children();
-            var childrenR = right.Children();
-
-            if (childrenL.Any() && childrenR.Any())
-                return childrenL.IsEqualTo(childrenR).Value;    // NOTE: Assumes null will never be returned when any() children exist
-
-            // Else, we're comparing a complex to a primitive which (probably) should return false
-            return false;
-        }
+     
 
         public static bool IsEquivalentTo(this IValueProvider left, IValueProvider right)
         {

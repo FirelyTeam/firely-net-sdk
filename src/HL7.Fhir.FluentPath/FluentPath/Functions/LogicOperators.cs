@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HL7.Fhir.FluentPath.FluentPath
+namespace HL7.Fhir.FluentPath.Functions
 {
     public static class ThreeValuedLogicExtensions
     {

@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HL7.Fhir.FluentPath.FluentPath.Expressions
+namespace HL7.Fhir.FluentPath.Expressions
 {
     public abstract class Expression
     {
@@ -37,6 +37,10 @@ namespace HL7.Fhir.FluentPath.FluentPath.Expressions
             return ExpressionType.GetHashCode();
         }
 
+        internal object Dump()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 

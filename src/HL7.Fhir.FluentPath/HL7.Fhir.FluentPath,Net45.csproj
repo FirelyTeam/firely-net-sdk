@@ -7,8 +7,8 @@
     <ProjectGuid>{B9744C91-93A4-43E2-A7FD-BEB4EEE9A17E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HL7.Fhir.FluentPath</RootNamespace>
-    <AssemblyName>HL7.Fhir.FluentPath</AssemblyName>
+    <RootNamespace>Hl7.Fhir.FluentPath</RootNamespace>
+    <AssemblyName>Hl7.Fhir.FluentPath</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -49,9 +49,10 @@
   <ItemGroup>
     <Compile Include="ElementsModel\ITypeNameProvider.cs" />
     <Compile Include="FluentPath\BaseEvaluationContext.cs" />
-    <Compile Include="FluentPath\Binding\Functions.cs" />
+    <Compile Include="FluentPath\Binding\BindingTable.cs" />
     <Compile Include="FluentPath\Binding\Invokee.cs" />
     <Compile Include="FluentPath\Binding\ParamBinding.cs" />
+    <Compile Include="FluentPath\Functions\EqualityOperators.cs" />
     <Compile Include="FluentPath\Evaluator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionVisitor.cs" />
     <Compile Include="ElementsModel\NavigatorExtensions.cs" />
@@ -59,8 +60,8 @@
     <Compile Include="ElementsModel\IValueProvider.cs" />
     <Compile Include="ElementsModel\INameProvider.cs" />
     <Compile Include="ElementsModel\IElementNavigator.cs" />
-    <Compile Include="FluentPath\LogicOperators.cs" />
-    <Compile Include="FluentPath\MathOperators.cs" />
+    <Compile Include="FluentPath\Functions\LogicOperators.cs" />
+    <Compile Include="FluentPath\Functions\MathOperators.cs" />
     <Compile Include="FluentPath\TypeInfo.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
     <Compile Include="FluentPath\Binding\CallBinding.cs" />

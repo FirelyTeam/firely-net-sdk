@@ -1,5 +1,5 @@
 ﻿using Hl7.Fhir.Support;
-using FP = HL7.Fhir.FluentPath.FluentPath.Expressions;
+using FP = HL7.Fhir.FluentPath.Expressions;
 using System.Linq.Expressions;
 using System;
 using System.Collections.Generic;
@@ -8,9 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.FluentPath.Binding;
-using HL7.Fhir.FluentPath.FluentPath.Binding;
 
-namespace HL7.Fhir.FluentPath.FluentPath
+namespace HL7.Fhir.FluentPath
 {
     internal class EvaluatorVisitor : FP.ExpressionVisitor<Evaluator>
     {
@@ -25,7 +24,7 @@ namespace HL7.Fhir.FluentPath.FluentPath
             var argsEval = expression.Arguments.Select(arg => arg.ToEvaluator());
 
             var types = expression.Arguments.Select(a => a.ExpressionType);
-            Invokee boundFunction = Functions.Resolve(expression.FunctionName, types);
+            Invokee boundFunction = BindingTable.Resolve(expression.FunctionName, types);
 
             return buildBindingInvoke(focusEval, argsEval, boundFunction);
         }
