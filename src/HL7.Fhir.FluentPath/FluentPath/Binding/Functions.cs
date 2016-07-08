@@ -66,6 +66,8 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             add("builtin./", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaDiv(b));
             add("builtin.+", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaAdd(b));
             add("builtin.-", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaSub(b));
+            add("builtin.div", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaTruncDiv(b));
+            add("builtin.mod", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaMod(b));
 
             add("substring", focus<string>(), par<long>("start"), (f, a) => f.Substring((int)a));
             add("substring", focus<string>(), par<long>("start"), par<long>("length"), (f, a, b) => f.Substring((int)a, (int)b));
@@ -142,8 +144,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             {
                 var left = args.First();
                 var right = args.Skip(1).First();
-                return castResult(func(() => ParamBinding.CastToSingleValue<bool?>(left(ctx, f)),
-                            () => ParamBinding.CastToSingleValue<bool?>(right(ctx, f))));
+                return castResult(func(()=>left(ctx, f).BooleanEval(), ()=>right(ctx, f).BooleanEval()));
             };
         }
 

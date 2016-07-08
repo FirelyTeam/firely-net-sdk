@@ -94,8 +94,6 @@ namespace Hl7.Fhir.Tests.FhirPath
             var b = new ConstantValue(5);
             var c = new ConstantValue(5);
 
-            Assert.AreEqual(9L, FhirValueList.Create(a).DynaAdd(FhirValueList.Create(b)));
-            Assert.AreEqual(-1L, FhirValueList.Create(a).DynaSub(FhirValueList.Create(b)));
             Assert.IsTrue(a.LessThan(b));
             Assert.IsTrue(a.LessOrEqual(b));
             Assert.IsFalse(a.GreaterThan(b));

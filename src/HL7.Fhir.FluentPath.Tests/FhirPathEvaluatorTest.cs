@@ -46,17 +46,32 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
         [TestMethod, TestCategory("FhirPath")]
-        public void TestBasics()
+        public void TestExistence()
         {
             Assert.IsTrue(PathExpression.IsTrue(@"{}.empty()", navigator));
             Assert.IsTrue(PathExpression.IsTrue(@"1.empty().not()", navigator));
-
+            Assert.IsTrue(PathExpression.IsTrue(@"1.exists()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"Patient.identifier.exists()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"Patient.dientifeir.exists().not()", navigator));
             Assert.AreEqual(2L, PathExpression.Scalar(@"Patient.identifier.count()", navigator));
-            Assert.IsTrue(PathExpression.IsTrue(@"Patient.identifier.count() = 2", navigator));
-            Assert.AreEqual(1L, PathExpression.Scalar(@"8/2 - 3*2 + 3", navigator));
-            Assert.AreEqual("official", PathExpression.Scalar(@"'offic'+'ial'", navigator));
+        }
 
-            Assert.AreEqual(1L,PathExpression.Scalar(@"Patient.identifier.where(use='official').count()", navigator));
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestMath()
+        {
+            Assert.IsTrue(PathExpression.IsTrue(@"4/2 = 2", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"2/4 = 0.5", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"4.0/2.0 = 2.0", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"2.0/4 = 0.5", navigator));
+
+            Assert.IsTrue(PathExpression.IsTrue(@"103 mod 5 = 3", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"101.4 mod 5.2 = 2.6", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"103 div 5 = 20", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"20.0 div 5.5 = 3.0", navigator));
+
+            Assert.IsTrue(PathExpression.IsTrue(@"'offic'+'ial' = 'official'", navigator));
+
+            //Assert.IsTrue(PathExpression.IsTrue(@"12/(2+2) - (3 div 2) = 2", navigator));
         }
 
 
@@ -113,8 +128,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpression()
-        {
-
+        {            
             Assert.IsTrue(PathExpression.IsTrue(@"(Patient.identifier.where( use = ( 'offic' + 'ial')) = 
                        Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = 
                         Patient.identifier.first())", navigator));
@@ -166,7 +180,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         //public void TestExpressionTodayFunction()
         //{
         //    // Check that date comes in
-        //    Assert.AreEqual(PartialDateTime.Parse(DateTime.Today.ToFhirDate()).ToString(), PathExpression.Evaluate("today()", tree).AsDateTime().ToString());
+        //    Assert.IsTrue(PartialDateTime.Parse(DateTime.Today.ToFhirDate()).ToString(), PathExpression.Evaluate("today()", tree).AsDateTime().ToString());
 
         //    // Check greater than
         //    Assert.IsTrue(PathExpression.Predicate("today() < " + DateTime.Today.AddDays(1).ToFhirDate(), tree));

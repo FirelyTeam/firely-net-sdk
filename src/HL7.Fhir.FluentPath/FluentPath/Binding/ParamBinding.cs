@@ -55,11 +55,6 @@ namespace Hl7.Fhir.FluentPath.Binding
             {
                 var ifp = (IEnumerable<IValueProvider>)source;
 
-                if(typeof(T) == typeof(bool))
-                {
-                    return (T)((object)ifp.BooleanEval());
-                }
-
                 if (ifp.Any())
                 {
                     if (ifp.Skip(1).Any())
@@ -84,6 +79,9 @@ namespace Hl7.Fhir.FluentPath.Binding
 
             if (source is T)
                 return (T)source;
+
+            if (source is long && typeof(T) == typeof(decimal))
+                return (T)System.Convert.ChangeType(source, typeof(decimal));
 
             throw new InvalidCastException("cannot cast argument of type '{0}' to a '{1}'".FormatWith(source.GetType().Name, typeof(T).Name));
         }
