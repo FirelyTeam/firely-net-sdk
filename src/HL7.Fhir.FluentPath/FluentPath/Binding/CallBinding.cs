@@ -1,13 +1,14 @@
-﻿using Hl7.Fhir.Support;
+﻿/* 
+ * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
 using HL7.Fhir.FluentPath;
-using HL7.Fhir.FluentPath.FluentPath;
-using HL7.Fhir.FluentPath.FluentPath.Expressions;
-using Sprache;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FluentPath.Binding
 {

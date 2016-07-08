@@ -59,6 +59,7 @@
     <Compile Include="ElementsModel\IValueProvider.cs" />
     <Compile Include="ElementsModel\INameProvider.cs" />
     <Compile Include="ElementsModel\IElementNavigator.cs" />
+    <Compile Include="FluentPath\LogicOperators.cs" />
     <Compile Include="FluentPath\TypeInfo.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
     <Compile Include="FluentPath\Binding\CallBinding.cs" />

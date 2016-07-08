@@ -1,6 +1,13 @@
-﻿using Hl7.Fhir.FluentPath;
+﻿/* 
+ * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.FluentPath.Binding;
-using HL7.Fhir.FluentPath.FluentPath.Expressions;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -45,11 +52,13 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
 
         static Functions()
         {
-            add("not", f => f.Not());
+            // Functions that operate on the focus, without null propagation
             add("empty", f => !f.Any());
             add("exists", f => f.Any());
             add("count", f => f.CountItems());
 
+            // Functions that use normal null propagation and work with the focus (buy may ignore it)
+            add("not", anyFocus, f => f.Not());
             add("builtin.children", anyFocus, par<string>("name"), (f, a) => f.Children(a));
             add("builtin.=", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.IsEqualTo(b));
 
@@ -63,11 +72,13 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             add("skip", anyFocus, par<long>("amount"), (f, a) => f.Skip((int)a));
             add("first", anyFocus, f => f.First());
 
-            add("builtin.and", anyFocus, par<bool>("left"), par<bool>("right"), (f, a, b) => a && b);
-            add("builtin.or", anyFocus, par<bool>("left"), par<bool>("right"), (f, a, b) => a || b);
-            add("builtin.xor", anyFocus, par<bool>("left"), par<bool>("right"), (f, a, b) => a ^ b);
-            add("builtin.implies", anyFocus, par<bool>("left"), par<bool>("right"), (f, a, b) => !a || b);
+            // Logic operators do not use null propagation and may do short-cut eval
+            logic("builtin.and", (a, b) => a.And(b));
+            logic("builtin.or", (a, b) => a.Or(b));
+            logic("builtin.xor", (a, b) => a.XOr(b));
+            logic("builtin.implies", (a, b) => a.Implies(b));
 
+            // Special late-bound functions
             _functions.Add(new CallBinding("where", buildWhereLambda(), new ParamBinding("condition", TypeInfo.Any)));
         }
 
@@ -118,6 +129,24 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             _functions.Add(new CallBinding(name, buildNullPropCall(focus, func, param1, param2), param1, param2));
         }
 
+
+        private static void logic(string name, Func<Func<bool?>,Func<bool?>,bool?> func)
+        {
+            _functions.Add(new CallBinding(name, buildLogicCall(func), new ParamBinding("left", TypeInfo.Boolean), new ParamBinding("right", TypeInfo.Boolean)));
+        }
+
+
+        private static Invokee buildLogicCall(Func<Func<bool?>, Func<bool?>, bool?> func)
+        {
+            return (ctx, f, args) =>
+            {
+                var left = args.First();
+                var right = args.Skip(1).First();
+                return castResult(func(() => ParamBinding.CastToSingleValue<bool?>(left(ctx, f)),
+                            () => ParamBinding.CastToSingleValue<bool?>(right(ctx, f))));
+            };
+        }
+
         private static Invokee buildExternalCall(string name)
         {
             return (ctx, focus, args) =>
@@ -138,6 +167,7 @@ namespace HL7.Fhir.FluentPath.FluentPath.Binding
             };
         }
 
+        
 
         private static IEnumerable<IValueProvider> run(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
         {

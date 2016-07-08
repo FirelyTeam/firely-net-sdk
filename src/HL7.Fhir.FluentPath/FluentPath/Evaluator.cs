@@ -42,7 +42,7 @@ namespace Hl7.Fhir.FluentPath
 
         public static object Scalar(this Evaluator evaluator, IValueProvider instance, IEvaluationContext context)
         {
-            return evaluator.Select(instance, context).SingleValue();
+            return evaluator.Select(instance, context).Single().Value;
         }
 
         public static object Scalar(this Evaluator evaluator, IValueProvider instance)
@@ -53,7 +53,11 @@ namespace Hl7.Fhir.FluentPath
         // For predicates, Empty is considered false (?)
         public static bool Predicate(this Evaluator evaluator, IValueProvider instance, IEvaluationContext context)
         {
-            return evaluator.Select(instance, context).BooleanEval() == true;
+            var result = evaluator.Select(instance, context);
+
+            if (!result.Any()) return false;
+
+            return result.BooleanEval();
         }
 
         public static bool Predicate(this Evaluator evaluator, IValueProvider instance)

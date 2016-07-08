@@ -59,6 +59,7 @@
     <Compile Include="FluentPath\IElementNavigatorExtensions.cs" />
     <Compile Include="FluentPath\IValueProviderExtensions.cs" />
     <Compile Include="FluentPath\IValueProviderListExtensions.cs" />
+    <Compile Include="FluentPath\LogicOperators.cs" />
     <Compile Include="FluentPath\TypeInfo.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
     <Compile Include="FluentPath\Binding\CallBinding.cs" />

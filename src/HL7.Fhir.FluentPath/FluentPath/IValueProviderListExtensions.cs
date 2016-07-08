@@ -24,16 +24,7 @@ namespace Hl7.Fhir.FluentPath
             return focus.OfType<IElementNavigator>();
         }
 
-        public static IEnumerable<IValueProvider> JustValues(this IEnumerable<IValueProvider> focus)
-        {
-            return focus.Where(f => f.Value != null);
-        }
-   
-        public static object SingleValue(this IEnumerable<IValueProvider> focus)
-        {
-            return focus.JustValues().Single().Value;
-        }
-
+    
         // Evaluate a collection as a boolean as described in "4.1 Boolean evaluation of collections"
         public static bool BooleanEval(this IEnumerable<IValueProvider> focus)
         {

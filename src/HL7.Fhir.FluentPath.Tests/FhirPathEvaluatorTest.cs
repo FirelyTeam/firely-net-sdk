@@ -59,6 +59,58 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.AreEqual(1L,PathExpression.Scalar(@"Patient.identifier.where(use='official').count()", navigator));
         }
 
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void Test3VLBoolean()
+        {
+            Assert.IsTrue(PathExpression.IsTrue(@"true and true", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(true and false) = false", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(true and {}).empty()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(false and true) = false", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(false and false) = false", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(false and {}) = false", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"({} and true).empty()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"({} and false) = false", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"({} and {}).empty()", navigator));
+
+            Assert.IsTrue(PathExpression.IsTrue(@"true or true", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"true or false", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"true or {}", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"false or true", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(false or false) = false", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(false or {}).empty()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"{} or true", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"({} or false).empty()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"({} or {}).empty()", navigator));
+
+            Assert.IsTrue(PathExpression.IsTrue(@"(true xor true)=false", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"true xor false", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(true xor {}).empty()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"false xor true", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(false xor false) = false", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(false xor {}).empty()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"({} xor true).empty()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"({} xor false).empty()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"({} xor {}).empty()", navigator));
+
+            Assert.IsTrue(PathExpression.IsTrue(@"true implies true", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(true implies false) = false", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(true implies {}).empty()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"false implies true", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"false implies false", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"false implies {}", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"{} implies true", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"({} implies false).empty()", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"({} implies {}).empty()", navigator));
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestLogicalShortcut()
+        {
+            Assert.IsTrue(PathExpression.IsTrue(@"true or (1/0 = 0)", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"(false and (1/0 = 0)) = false", navigator));
+        }
+
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpression()
         {

@@ -78,12 +78,12 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var values = FhirValueList.Create(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now());
 
-            Assert.IsInstanceOfType(values.Item(0).SingleValue(), typeof(Int64));
-            Assert.IsInstanceOfType(values.Item(1).SingleValue(), typeof(Boolean));
-            Assert.IsInstanceOfType(values.Item(2).SingleValue(), typeof(String));
-            Assert.IsInstanceOfType(values.Item(3).SingleValue(), typeof(Decimal));
-            Assert.IsInstanceOfType(values.Item(4).SingleValue(), typeof(Decimal));
-            Assert.IsInstanceOfType(values.Item(5).SingleValue(), typeof(PartialDateTime));
+            Assert.IsInstanceOfType(values.Item(0).Single().Value, typeof(Int64));
+            Assert.IsInstanceOfType(values.Item(1).Single().Value, typeof(Boolean));
+            Assert.IsInstanceOfType(values.Item(2).Single().Value, typeof(String));
+            Assert.IsInstanceOfType(values.Item(3).Single().Value, typeof(Decimal));
+            Assert.IsInstanceOfType(values.Item(4).Single().Value, typeof(Decimal));
+            Assert.IsInstanceOfType(values.Item(5).Single().Value, typeof(PartialDateTime));
         }
 
 

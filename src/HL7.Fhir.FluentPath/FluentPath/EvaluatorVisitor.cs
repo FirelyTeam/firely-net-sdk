@@ -67,13 +67,13 @@ namespace HL7.Fhir.FluentPath.FluentPath
 
         public static Evaluator ResolveValue(string name)
         {
-            return (ctx,f) => ctx.ResolveValue(name);
+            return (ctx,_) => ctx.ResolveValue(name);
         }
 
 
         public static Evaluator Focus()
         {
-            return (ctx, f) => f;
+            return (_, f) => f;
         }
 
         private static Evaluator buildBindingInvoke(Evaluator focus, IEnumerable<Evaluator> arguments, Invokee invokee)
