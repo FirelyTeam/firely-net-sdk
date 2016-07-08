@@ -135,8 +135,11 @@ namespace Hl7.Fhir.Model
     {
         public ModelTree(Resource resource)
         {
-            // _root = new ModelTreeRoot(resource);
-            _root = new ModelElement(null, resource.ResourceType.ToString(), resource.GetType(), resource);
+            if (resource != null)
+            {
+                // _root = new ModelTreeRoot(resource);
+                _root = new ModelElement(null, resource.ResourceType.ToString(), resource.GetType(), resource);
+            }
         }
 
         ModelElement _root;

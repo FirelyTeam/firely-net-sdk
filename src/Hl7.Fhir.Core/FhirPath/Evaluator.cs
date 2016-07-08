@@ -224,6 +224,15 @@ namespace Hl7.Fhir.FhirPath
         {
             return (f,_)=> f.IsEmpty().Not();
         }
+        public static Evaluator Single()
+        {
+            return (f, _) =>
+            {
+                var a = f.Single();
+                return FhirValueList.Create(a);
+            };
+        }
+
         public static Evaluator Empty()
         {
             return (f, _) => f.IsEmpty();

@@ -13,6 +13,7 @@ namespace Hl7.Fhir.FhirPath
         [TestMethod]
         public void TestAllResourceInvariants()
         {
+            string failedExpressions = null;
             foreach (var item in ModelInfo.SupportedResources)
             {
                 for (int n = 0; n < 10; n++)
@@ -28,12 +29,15 @@ namespace Hl7.Fhir.FhirPath
                     var results = dr.Validate(new System.ComponentModel.DataAnnotations.ValidationContext(dr));
                     foreach (var result in results)
                     {
+                        if (result.ErrorMessage.Contains("FATAL"))
+                            failedExpressions += result.ErrorMessage + "\r\n";
                         Trace.WriteLine(result.ErrorMessage);
                     }
                     //if (results.Count() > 0)
                     Trace.WriteLine("");
                 }
             }
+            Assert.IsNull(failedExpressions);
         }
     }
 }

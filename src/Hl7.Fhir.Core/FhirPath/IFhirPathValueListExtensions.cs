@@ -277,7 +277,10 @@ namespace Hl7.Fhir.FhirPath
                 {
                     var str = focus.First().AsStringRepresentation();
 
-                    if (length.HasValue)
+                    if (start >= str.Length)
+                        return FhirValueList.Empty();
+
+                    if (length.HasValue && (length.Value + start < str.Length))
                         return FhirValueList.Create(str.Substring((int)start, (int)length.Value));
                     else
                         return FhirValueList.Create(str.Substring((int)start));

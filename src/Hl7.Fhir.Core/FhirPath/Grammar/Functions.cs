@@ -75,6 +75,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
         public static readonly Parser<Evaluator> All = CreateFunctionParser("all", "criterium", Eval.All);
         public static readonly Parser<Evaluator> Any = CreateFunctionParser("any", "criterium", Eval.Any, optional:true);
         public static readonly Parser<Evaluator> Item = CreateFunctionParser("item", "index", Eval.Item);
+        public static readonly Parser<Evaluator> Single = CreateFunctionParser("single", Eval.Single);
         public static readonly Parser<Evaluator> First = CreateFunctionParser("first", Eval.First);
         public static readonly Parser<Evaluator> Last = CreateFunctionParser("last", Eval.Last);
         public static readonly Parser<Evaluator> Tail = CreateFunctionParser("tail", Eval.Tail);
@@ -110,7 +111,7 @@ namespace Hl7.Fhir.FhirPath.Grammar
 
 
         public static readonly Parser<Evaluator> Function = Not.Or(Empty).Or(Exists).Or(Where).Or(All).Or(Any).Or(Item)
-                        .Or(First).Or(Last).Or(Tail).Or(Skip).Or(Take).Or(Count)
+                        .Or(First).Or(Single).Or(Last).Or(Tail).Or(Skip).Or(Take).Or(Count)
                         .Or(AsInteger).Or(ToInteger).Or(ToDecimal).Or(StartsWith).Or(ToString)
                         .Or(Log).Or(Resolve).Or(Length).Or(Distinct).Or(Contains).Or(Matches).Or(Extension)
                         .Or(Substring).Or(Select).Or(Today).Or(Now).Or(DateAdd)

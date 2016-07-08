@@ -183,9 +183,10 @@ private Appointment appointment() {
         if (types != null && types.Count() > 0)
         {
             string msg = String.Join(", ", types);
-            foreach (Base b in outcome)
+            foreach (var oi in outcome)
             {
-                Assert.IsTrue(types.Contains(b.TypeName), String.Format("Object type {0} not ok from {1}", b.TypeName, msg));
+                object b = oi.Value;
+                Assert.IsTrue(types.Contains(b.GetType().Name.ToLower()), String.Format("Object type {0} not ok from {1}", b.GetType().Name, msg));
             }
         }
     }
@@ -241,23 +242,32 @@ private Appointment appointment() {
 
   private void testWrong(Resource resource, String expression)  {
         IFhirPathElement tree = GetFhirTree(resource);
-        Assert.IsFalse(PathExpression.Predicate(expression, tree));
+        try
+        {
+            Assert.IsFalse(PathExpression.Predicate(expression, tree));
+            Assert.Fail("Processing expression \"{0}\" on the resource was expected to throw an exception",
+                expression);
+        }
+        catch (InvalidOperationException)
+        {
+            // expected this to fail
+        }
 
-//    if (TestingUtilities.context == null)
-//    	TestingUtilities.context = SimpleWorkerContext.fromPack("C:\\work\\org.hl7.fhir\\build\\publish\\validation-min.xml.zip");
-//    FHIRPathEngine fp = new FHIRPathEngine(TestingUtilities.context);
+        //    if (TestingUtilities.context == null)
+        //    	TestingUtilities.context = SimpleWorkerContext.fromPack("C:\\work\\org.hl7.fhir\\build\\publish\\validation-min.xml.zip");
+        //    FHIRPathEngine fp = new FHIRPathEngine(TestingUtilities.context);
 
-//    try {
-//      ExpressionNode node = fp.parse(expression);
-//fp.check(null, null, resource.getResourceType().toString(), node);
-//      fp.evaluate(null, null, resource, node);
-//      if (fp.hasLog())
-//        System.out.println(fp.takeLog());
-//      Assert.assertTrue("Fail expected", false);
-//    } catch (PathEngineException e) {
-//      // ok  
-//    }
-  }
+        //    try {
+        //      ExpressionNode node = fp.parse(expression);
+        //fp.check(null, null, resource.getResourceType().toString(), node);
+        //      fp.evaluate(null, null, resource, node);
+        //      if (fp.hasLog())
+        //        System.out.println(fp.takeLog());
+        //      Assert.assertTrue("Fail expected", false);
+        //    } catch (PathEngineException e) {
+        //      // ok  
+        //    }
+    }
 
   [TestMethod, TestCategory("FhirPathFromSpec")]
   public void testSimple() {
@@ -1003,6 +1013,7 @@ internal class TestingUtilities
   [TestMethod, TestCategory("FhirPathFromSpec")]
   public void testTyping()  {
     ElementDefinition ed = new ElementDefinition();
+        ed.Binding = new ElementDefinition.BindingComponent();
 ed.Binding.setValueSet(new UriType("http://test.org"));
     testBoolean(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSetUri", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
   }
