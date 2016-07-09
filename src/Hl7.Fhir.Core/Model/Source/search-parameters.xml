@@ -2447,42 +2447,8 @@
         <target value="Practitioner" />
         <target value="Group" />
         <target value="Organization" />
+        <target value="CareTeam" />
         <target value="Device" />
-        <target value="Patient" />
-        <target value="RelatedPerson" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Consent-author" />
-    <resource>
-      <SearchParameter>
-        <id value="Consent-author" />
-        <url value="http://hl7.org/fhir/SearchParameter/Consent-author" />
-        <name value="author" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Community Based Collaborative Care)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/cbcc/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="author" />
-        <base value="Consent" />
-        <type value="reference" />
-        <description value="Who made the consent statement" />
-        <expression value="Consent.author" />
-        <xpath value="f:Consent/f:author" />
-        <xpathUsage value="normal" />
-        <target value="Practitioner" />
-        <target value="Organization" />
         <target value="Patient" />
         <target value="RelatedPerson" />
       </SearchParameter>
@@ -2516,6 +2482,41 @@
         <expression value="Consent.category" />
         <xpath value="f:Consent/f:category" />
         <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Consent-consentor" />
+    <resource>
+      <SearchParameter>
+        <id value="Consent-consentor" />
+        <url value="http://hl7.org/fhir/SearchParameter/Consent-consentor" />
+        <name value="consentor" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Community Based Collaborative Care)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/cbcc/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="consentor" />
+        <base value="Consent" />
+        <type value="reference" />
+        <description value="Who is agreeing to the policy and exceptions" />
+        <expression value="Consent.consentor" />
+        <xpath value="f:Consent/f:consentor" />
+        <xpathUsage value="normal" />
+        <target value="Practitioner" />
+        <target value="Organization" />
+        <target value="Patient" />
+        <target value="RelatedPerson" />
       </SearchParameter>
     </resource>
   </entry>
@@ -2884,6 +2885,7 @@
         <target value="Practitioner" />
         <target value="Group" />
         <target value="Organization" />
+        <target value="CareTeam" />
         <target value="Device" />
         <target value="Patient" />
         <target value="RelatedPerson" />
@@ -2949,9 +2951,9 @@
         <expression value="Consent.source" />
         <xpath value="f:Consent/f:sourceAttachment | f:Consent/f:sourceIdentifier | f:Consent/f:sourceReference" />
         <xpathUsage value="normal" />
-        <target value="Questionnaire" />
         <target value="Consent" />
         <target value="Contract" />
+        <target value="QuestionnaireResponse" />
         <target value="DocumentReference" />
       </SearchParameter>
     </resource>
@@ -25691,8 +25693,8 @@
         <base value="Library" />
         <type value="string" />
         <description value="Text search against the description" />
-        <expression value="Library.moduleMetadata.description" />
-        <xpath value="f:Library/f:moduleMetadata/f:description" />
+        <expression value="Library.description" />
+        <xpath value="f:Library/f:description" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -25722,8 +25724,8 @@
         <base value="Library" />
         <type value="token" />
         <description value="Logical identifier for the module (e.g. CMS-143)" />
-        <expression value="Library.moduleMetadata.identifier" />
-        <xpath value="f:Library/f:moduleMetadata/f:identifier" />
+        <expression value="Library.identifier" />
+        <xpath value="f:Library/f:identifier" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -25753,8 +25755,8 @@
         <base value="Library" />
         <type value="token" />
         <description value="Status of the module" />
-        <expression value="Library.moduleMetadata.status" />
-        <xpath value="f:Library/f:moduleMetadata/f:status" />
+        <expression value="Library.status" />
+        <xpath value="f:Library/f:status" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -25784,8 +25786,8 @@
         <base value="Library" />
         <type value="string" />
         <description value="Text search against the title" />
-        <expression value="Library.moduleMetadata.title" />
-        <xpath value="f:Library/f:moduleMetadata/f:title" />
+        <expression value="Library.title" />
+        <xpath value="f:Library/f:title" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -25815,8 +25817,8 @@
         <base value="Library" />
         <type value="token" />
         <description value="Topics associated with the module" />
-        <expression value="Library.moduleMetadata.topic" />
-        <xpath value="f:Library/f:moduleMetadata/f:topic" />
+        <expression value="Library.topic" />
+        <xpath value="f:Library/f:topic" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -25846,8 +25848,8 @@
         <base value="Library" />
         <type value="string" />
         <description value="Version of the module (e.g. 1.0.0)" />
-        <expression value="Library.moduleMetadata.version" />
-        <xpath value="f:Library/f:moduleMetadata/f:version" />
+        <expression value="Library.version" />
+        <xpath value="f:Library/f:version" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
