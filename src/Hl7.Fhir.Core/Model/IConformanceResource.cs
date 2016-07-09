@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
         string Publisher { get; set; }
         FhirString PublisherElement { get; set; }
 
-        string Description { get; set; }
-        FhirString DescriptionElement { get; set; }
+        Hl7.Fhir.Model.Markdown Description { get; set; }
+        // FhirString DescriptionElement { get; set; }
 
         ConformanceResourceStatus? Status { get; set; }
         Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement { get; set; }
@@ -117,17 +117,11 @@ namespace Hl7.Fhir.Model
     {
         // I think DataElement should have Description too
         [NotMapped]
-        public string Description
+        [Obsolete("This property is internal only, and doesn't actually exist in the FHIR object model")]
+        public Markdown Description
         {
             get { return null; }
             set { ; }
-        }
-
-        [NotMapped]
-        public FhirString DescriptionElement
-        {
-            get { return null; }
-            set {; }
         }
 
         public partial class ContactComponent : IConformanceResourceContact
