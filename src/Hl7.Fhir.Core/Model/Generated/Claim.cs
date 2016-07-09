@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.4.0
+// Generated for FHIR v1.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -950,9 +950,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "AccidentComponent"; } }
             
             /// <summary>
-            /// When the accident occurred
-            /// see information codes
-            /// see information codes
+            /// When the accident occurred see information codes see information codes
             /// </summary>
             [FhirElement("date", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -966,9 +964,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Date _DateElement;
             
             /// <summary>
-            /// When the accident occurred
-        /// see information codes
-        /// see information codes
+            /// When the accident occurred see information codes see information codes
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

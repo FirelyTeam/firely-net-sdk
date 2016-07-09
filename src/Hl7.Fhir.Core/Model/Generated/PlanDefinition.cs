@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.4.0
+// Generated for FHIR v1.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -344,9 +344,23 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.PlanDefinition.RelatedActionComponent _RelatedAction;
             
             /// <summary>
+            /// When the action should take place
+            /// </summary>
+            [FhirElement("timing", Order=150, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Timing
+            {
+                get { return _Timing; }
+                set { _Timing = value; OnPropertyChanged("Timing"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Timing;
+            
+            /// <summary>
             /// create | update | remove | fire-event
             /// </summary>
-            [FhirElement("type", Order=150)]
+            [FhirElement("type", Order=160)]
             [DataMember]
             public Hl7.Fhir.Model.Code TypeElement
             {
@@ -378,7 +392,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Defines behaviors such as selection and grouping
             /// </summary>
-            [FhirElement("behavior", Order=160)]
+            [FhirElement("behavior", Order=170)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PlanDefinition.BehaviorComponent> Behavior
@@ -392,7 +406,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Description of the activity to be performed
             /// </summary>
-            [FhirElement("activityDefinition", Order=170)]
+            [FhirElement("activityDefinition", Order=180)]
             [References("ActivityDefinition")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference ActivityDefinition
@@ -404,23 +418,37 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _ActivityDefinition;
             
             /// <summary>
-            /// Dynamic aspects of the definition
+            /// Transform to apply the template
             /// </summary>
-            [FhirElement("customization", Order=180)]
-            [Cardinality(Min=0,Max=-1)]
+            [FhirElement("transform", Order=190)]
+            [References("StructureMap")]
             [DataMember]
-            public List<Hl7.Fhir.Model.PlanDefinition.CustomizationComponent> Customization
+            public Hl7.Fhir.Model.ResourceReference Transform
             {
-                get { if(_Customization==null) _Customization = new List<Hl7.Fhir.Model.PlanDefinition.CustomizationComponent>(); return _Customization; }
-                set { _Customization = value; OnPropertyChanged("Customization"); }
+                get { return _Transform; }
+                set { _Transform = value; OnPropertyChanged("Transform"); }
             }
             
-            private List<Hl7.Fhir.Model.PlanDefinition.CustomizationComponent> _Customization;
+            private Hl7.Fhir.Model.ResourceReference _Transform;
+            
+            /// <summary>
+            /// Dynamic aspects of the definition
+            /// </summary>
+            [FhirElement("dynamicValue", Order=200)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent> DynamicValue
+            {
+                get { if(_DynamicValue==null) _DynamicValue = new List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent>(); return _DynamicValue; }
+                set { _DynamicValue = value; OnPropertyChanged("DynamicValue"); }
+            }
+            
+            private List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent> _DynamicValue;
             
             /// <summary>
             /// A sub-action
             /// </summary>
-            [FhirElement("actionDefinition", Order=190)]
+            [FhirElement("actionDefinition", Order=210)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.PlanDefinition.ActionDefinitionComponent> ActionDefinition
@@ -449,10 +477,12 @@ namespace Hl7.Fhir.Model
                     if(TriggerDefinition != null) dest.TriggerDefinition = (TriggerDefinition)TriggerDefinition.DeepCopy();
                     if(ConditionElement != null) dest.ConditionElement = (Hl7.Fhir.Model.FhirString)ConditionElement.DeepCopy();
                     if(RelatedAction != null) dest.RelatedAction = (Hl7.Fhir.Model.PlanDefinition.RelatedActionComponent)RelatedAction.DeepCopy();
+                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
                     if(Behavior != null) dest.Behavior = new List<Hl7.Fhir.Model.PlanDefinition.BehaviorComponent>(Behavior.DeepCopy());
                     if(ActivityDefinition != null) dest.ActivityDefinition = (Hl7.Fhir.Model.ResourceReference)ActivityDefinition.DeepCopy();
-                    if(Customization != null) dest.Customization = new List<Hl7.Fhir.Model.PlanDefinition.CustomizationComponent>(Customization.DeepCopy());
+                    if(Transform != null) dest.Transform = (Hl7.Fhir.Model.ResourceReference)Transform.DeepCopy();
+                    if(DynamicValue != null) dest.DynamicValue = new List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent>(DynamicValue.DeepCopy());
                     if(ActionDefinition != null) dest.ActionDefinition = new List<Hl7.Fhir.Model.PlanDefinition.ActionDefinitionComponent>(ActionDefinition.DeepCopy());
                     return dest;
                 }
@@ -482,10 +512,12 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(TriggerDefinition, otherT.TriggerDefinition)) return false;
                 if( !DeepComparable.Matches(ConditionElement, otherT.ConditionElement)) return false;
                 if( !DeepComparable.Matches(RelatedAction, otherT.RelatedAction)) return false;
+                if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
                 if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.Matches(Behavior, otherT.Behavior)) return false;
                 if( !DeepComparable.Matches(ActivityDefinition, otherT.ActivityDefinition)) return false;
-                if( !DeepComparable.Matches(Customization, otherT.Customization)) return false;
+                if( !DeepComparable.Matches(Transform, otherT.Transform)) return false;
+                if( !DeepComparable.Matches(DynamicValue, otherT.DynamicValue)) return false;
                 if( !DeepComparable.Matches(ActionDefinition, otherT.ActionDefinition)) return false;
                 
                 return true;
@@ -508,10 +540,12 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(TriggerDefinition, otherT.TriggerDefinition)) return false;
                 if( !DeepComparable.IsExactly(ConditionElement, otherT.ConditionElement)) return false;
                 if( !DeepComparable.IsExactly(RelatedAction, otherT.RelatedAction)) return false;
+                if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.IsExactly(Behavior, otherT.Behavior)) return false;
                 if( !DeepComparable.IsExactly(ActivityDefinition, otherT.ActivityDefinition)) return false;
-                if( !DeepComparable.IsExactly(Customization, otherT.Customization)) return false;
+                if( !DeepComparable.IsExactly(Transform, otherT.Transform)) return false;
+                if( !DeepComparable.IsExactly(DynamicValue, otherT.DynamicValue)) return false;
                 if( !DeepComparable.IsExactly(ActionDefinition, otherT.ActionDefinition)) return false;
                 
                 return true;
@@ -755,12 +789,12 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CustomizationComponent")]
+        [FhirType("DynamicValueComponent")]
         [DataContract]
-        public partial class CustomizationComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "CustomizationComponent"; } }
+            public override string TypeName { get { return "DynamicValueComponent"; } }
             
             /// <summary>
             /// The path to the element to be set dynamically
@@ -796,9 +830,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Language of the expression
+            /// </summary>
+            [FhirElement("language", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString LanguageElement
+            {
+                get { return _LanguageElement; }
+                set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _LanguageElement;
+            
+            /// <summary>
+            /// Language of the expression
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Language
+            {
+                get { return LanguageElement != null ? LanguageElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      LanguageElement = null; 
+                    else
+                      LanguageElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Language");
+                }
+            }
+            
+            /// <summary>
             /// An expression that provides the dynamic value for the customization
             /// </summary>
-            [FhirElement("expression", Order=50)]
+            [FhirElement("expression", Order=60)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString ExpressionElement
@@ -830,12 +896,13 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CustomizationComponent;
+                var dest = other as DynamicValueComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
                     if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
+                    if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.FhirString)LanguageElement.DeepCopy();
                     if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
                     return dest;
                 }
@@ -845,16 +912,17 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CustomizationComponent());
+                return CopyTo(new DynamicValueComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CustomizationComponent;
+                var otherT = other as DynamicValueComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
                 if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
                 
                 return true;
@@ -862,11 +930,12 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CustomizationComponent;
+                var otherT = other as DynamicValueComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
                 if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
                 
                 return true;

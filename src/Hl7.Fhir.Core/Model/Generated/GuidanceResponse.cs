@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.4.0
+// Generated for FHIR v1.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -600,6 +600,20 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// When the action should take place
+            /// </summary>
+            [FhirElement("timing", Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
+            [DataMember]
+            public Hl7.Fhir.Model.Element Timing
+            {
+                get { return _Timing; }
+                set { _Timing = value; OnPropertyChanged("Timing"); }
+            }
+            
+            private Hl7.Fhir.Model.Element _Timing;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as RelatedActionComponent;
@@ -611,6 +625,7 @@ namespace Hl7.Fhir.Model
                     if(RelationshipElement != null) dest.RelationshipElement = (Code<Hl7.Fhir.Model.ActionRelationshipType>)RelationshipElement.DeepCopy();
                     if(Offset != null) dest.Offset = (Hl7.Fhir.Model.Element)Offset.DeepCopy();
                     if(AnchorElement != null) dest.AnchorElement = (Code<Hl7.Fhir.Model.ActionRelationshipAnchor>)AnchorElement.DeepCopy();
+                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                     return dest;
                 }
                 else
@@ -632,6 +647,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(RelationshipElement, otherT.RelationshipElement)) return false;
                 if( !DeepComparable.Matches(Offset, otherT.Offset)) return false;
                 if( !DeepComparable.Matches(AnchorElement, otherT.AnchorElement)) return false;
+                if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
                 
                 return true;
             }
@@ -646,6 +662,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(RelationshipElement, otherT.RelationshipElement)) return false;
                 if( !DeepComparable.IsExactly(Offset, otherT.Offset)) return false;
                 if( !DeepComparable.IsExactly(AnchorElement, otherT.AnchorElement)) return false;
+                if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
                 
                 return true;
             }

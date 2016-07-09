@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.4.0
+// Generated for FHIR v1.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1283,7 +1283,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// The path of the element (see the Detailed Descriptions)
+        /// Path of the element in the heirarchy of elements
         /// </summary>
         [FhirElement("path", InSummary=true, Order=30)]
         [Cardinality(Min=1,Max=1)]
@@ -1297,7 +1297,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _PathElement;
         
         /// <summary>
-        /// The path of the element (see the Detailed Descriptions)
+        /// Path of the element in the heirarchy of elements
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.4.0
+// Generated for FHIR v1.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
             /// Resource for the actor (or group, by role)
             /// </summary>
             [FhirElement("reference", Order=50)]
-            [References("Device","Group","Organization","Patient","Practitioner","RelatedPerson")]
+            [References("Device","Group","CareTeam","Organization","Patient","Practitioner","RelatedPerson")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
@@ -660,6 +660,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("patient", InSummary=true, Order=140)]
         [References("Patient")]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Patient
         {
@@ -670,18 +671,19 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
-        /// Who made the consent statement
+        /// Who is agreeing to the policy and exceptions
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=150)]
+        [FhirElement("consentor", InSummary=true, Order=150)]
         [References("Organization","Patient","Practitioner","RelatedPerson")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Author
+        public List<Hl7.Fhir.Model.ResourceReference> Consentor
         {
-            get { return _Author; }
-            set { _Author = value; OnPropertyChanged("Author"); }
+            get { if(_Consentor==null) _Consentor = new List<Hl7.Fhir.Model.ResourceReference>(); return _Consentor; }
+            set { _Consentor = value; OnPropertyChanged("Consentor"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Author;
+        private List<Hl7.Fhir.Model.ResourceReference> _Consentor;
         
         /// <summary>
         /// Organization that manages the consent
@@ -748,7 +750,7 @@ namespace Hl7.Fhir.Model
         /// Who|what the consent is in regard to
         /// </summary>
         [FhirElement("recipient", InSummary=true, Order=190)]
-        [References("Device","Group","Organization","Patient","Practitioner","RelatedPerson")]
+        [References("Device","Group","Organization","Patient","Practitioner","RelatedPerson","CareTeam")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Recipient
@@ -786,7 +788,7 @@ namespace Hl7.Fhir.Model
                 if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
+                if(Consentor != null) dest.Consentor = new List<Hl7.Fhir.Model.ResourceReference>(Consentor.DeepCopy());
                 if(Organization != null) dest.Organization = (Hl7.Fhir.Model.ResourceReference)Organization.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.Element)Source.DeepCopy();
                 if(PolicyElement != null) dest.PolicyElement = (Hl7.Fhir.Model.FhirUri)PolicyElement.DeepCopy();
@@ -815,7 +817,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.Matches(Author, otherT.Author)) return false;
+            if( !DeepComparable.Matches(Consentor, otherT.Consentor)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(PolicyElement, otherT.PolicyElement)) return false;
@@ -837,7 +839,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
+            if( !DeepComparable.IsExactly(Consentor, otherT.Consentor)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(PolicyElement, otherT.PolicyElement)) return false;

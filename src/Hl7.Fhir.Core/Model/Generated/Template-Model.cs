@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Mon, 04 Jul 2016 12:26:00 GMT for FHIR v1.4.0
+// Model Generated on Sat, 09 Jul 2016 13:55:12 GMT for FHIR v1.5.0
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): CompartmentDefinition.resource.code
@@ -81,6 +81,7 @@
 
 // Generated Shared Enumeration: ModuleMetadataStatus
 	// Used in model class (resource): ActivityDefinition.status
+	// Used in model class (resource): Library.status
 	// Used in model class (resource): PlanDefinition.status
 	// Used in model class (type): ModuleMetadata.status
 

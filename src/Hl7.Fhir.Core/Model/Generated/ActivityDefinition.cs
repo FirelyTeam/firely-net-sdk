@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.4.0
+// Generated for FHIR v1.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -70,6 +70,18 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/activity-definition-category)
             /// </summary>
+            [EnumLiteral("device"), Description("Device")]
+            Device,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// </summary>
+            [EnumLiteral("diagnostic"), Description("Diagnostic")]
+            Diagnostic,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// </summary>
             [EnumLiteral("diet"), Description("Diet")]
             Diet,
             /// <summary>
@@ -84,6 +96,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("encounter"), Description("Encounter")]
             Encounter,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// </summary>
+            [EnumLiteral("immunization"), Description("Immunization")]
+            Immunization,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/activity-definition-category)
@@ -108,6 +126,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("supply"), Description("Supply")]
             Supply,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/activity-definition-category)
+            /// </summary>
+            [EnumLiteral("vision"), Description("Vision")]
+            Vision,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/activity-definition-category)
@@ -143,6 +167,161 @@ namespace Hl7.Fhir.Model
             RelatedPerson,
         }
 
+        [FhirType("DynamicValueComponent")]
+        [DataContract]
+        public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "DynamicValueComponent"; } }
+            
+            /// <summary>
+            /// The path to the element to be set dynamically
+            /// </summary>
+            [FhirElement("path", Order=40)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString PathElement
+            {
+                get { return _PathElement; }
+                set { _PathElement = value; OnPropertyChanged("PathElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _PathElement;
+            
+            /// <summary>
+            /// The path to the element to be set dynamically
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Path
+            {
+                get { return PathElement != null ? PathElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      PathElement = null; 
+                    else
+                      PathElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Path");
+                }
+            }
+            
+            /// <summary>
+            /// Language of the expression
+            /// </summary>
+            [FhirElement("language", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString LanguageElement
+            {
+                get { return _LanguageElement; }
+                set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _LanguageElement;
+            
+            /// <summary>
+            /// Language of the expression
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Language
+            {
+                get { return LanguageElement != null ? LanguageElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      LanguageElement = null; 
+                    else
+                      LanguageElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Language");
+                }
+            }
+            
+            /// <summary>
+            /// An expression that provides the dynamic value for the customization
+            /// </summary>
+            [FhirElement("expression", Order=60)]
+            [Cardinality(Min=1,Max=1)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString ExpressionElement
+            {
+                get { return _ExpressionElement; }
+                set { _ExpressionElement = value; OnPropertyChanged("ExpressionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _ExpressionElement;
+            
+            /// <summary>
+            /// An expression that provides the dynamic value for the customization
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Expression
+            {
+                get { return ExpressionElement != null ? ExpressionElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ExpressionElement = null; 
+                    else
+                      ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Expression");
+                }
+            }
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as DynamicValueComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
+                    if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.FhirString)LanguageElement.DeepCopy();
+                    if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new DynamicValueComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as DynamicValueComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
+                if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as DynamicValueComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
+                if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
+                if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
+                
+                return true;
+            }
+            
+        }
+        
+        
         /// <summary>
         /// Logical URL to reference this module
         /// </summary>
@@ -673,7 +852,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Library;
         
         /// <summary>
-        /// communication | diet | drug | encounter | observation | procedure | referral | supply | other
+        /// communication | device | diagnostic | diet | drug | encounter | immunization | observation | procedure | referral | supply | vision | other
         /// </summary>
         [FhirElement("category", Order=300)]
         [DataMember]
@@ -686,7 +865,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ActivityDefinition.ActivityDefinitionCategory> _CategoryElement;
         
         /// <summary>
-        /// communication | diet | drug | encounter | observation | procedure | referral | supply | other
+        /// communication | device | diagnostic | diet | drug | encounter | immunization | observation | procedure | referral | supply | vision | other
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -805,6 +984,34 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.SimpleQuantity _Quantity;
         
+        /// <summary>
+        /// Transform to apply the template
+        /// </summary>
+        [FhirElement("transform", Order=370)]
+        [References("StructureMap")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Transform
+        {
+            get { return _Transform; }
+            set { _Transform = value; OnPropertyChanged("Transform"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Transform;
+        
+        /// <summary>
+        /// Dynamic aspects of the definition
+        /// </summary>
+        [FhirElement("dynamicValue", Order=380)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent> DynamicValue
+        {
+            get { if(_DynamicValue==null) _DynamicValue = new List<Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent>(); return _DynamicValue; }
+            set { _DynamicValue = value; OnPropertyChanged("DynamicValue"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent> _DynamicValue;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ActivityDefinition;
@@ -840,6 +1047,8 @@ namespace Hl7.Fhir.Model
                 if(ParticipantTypeElement != null) dest.ParticipantTypeElement = new List<Code<Hl7.Fhir.Model.ActivityDefinition.ActivityParticipantType>>(ParticipantTypeElement.DeepCopy());
                 if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
+                if(Transform != null) dest.Transform = (Hl7.Fhir.Model.ResourceReference)Transform.DeepCopy();
+                if(DynamicValue != null) dest.DynamicValue = new List<Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent>(DynamicValue.DeepCopy());
                 return dest;
             }
             else
@@ -885,6 +1094,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ParticipantTypeElement, otherT.ParticipantTypeElement)) return false;
             if( !DeepComparable.Matches(Product, otherT.Product)) return false;
             if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+            if( !DeepComparable.Matches(Transform, otherT.Transform)) return false;
+            if( !DeepComparable.Matches(DynamicValue, otherT.DynamicValue)) return false;
             
             return true;
         }
@@ -923,6 +1134,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ParticipantTypeElement, otherT.ParticipantTypeElement)) return false;
             if( !DeepComparable.IsExactly(Product, otherT.Product)) return false;
             if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+            if( !DeepComparable.IsExactly(Transform, otherT.Transform)) return false;
+            if( !DeepComparable.IsExactly(DynamicValue, otherT.DynamicValue)) return false;
             
             return true;
         }

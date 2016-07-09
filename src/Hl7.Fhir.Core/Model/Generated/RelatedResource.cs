@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.4.0
+// Generated for FHIR v1.5.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -94,10 +94,22 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("derived-from"), Description("Derived From")]
             DerivedFrom,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/related-resource-type)
+            /// </summary>
+            [EnumLiteral("depends-on"), Description("Depends On")]
+            DependsOn,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/related-resource-type)
+            /// </summary>
+            [EnumLiteral("composed-of"), Description("Composed Of")]
+            ComposedOf,
         }
 
         /// <summary>
-        /// documentation | justification | citation | predecessor | successor | derived-from
+        /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
         /// </summary>
         [FhirElement("type", InSummary=true, Order=30)]
         [Cardinality(Min=1,Max=1)]
@@ -111,7 +123,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.RelatedResource.RelatedResourceType> _TypeElement;
         
         /// <summary>
-        /// documentation | justification | citation | predecessor | successor | derived-from
+        /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
