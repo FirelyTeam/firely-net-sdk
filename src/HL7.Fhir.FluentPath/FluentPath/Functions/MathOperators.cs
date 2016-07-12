@@ -11,6 +11,24 @@ namespace HL7.Fhir.FluentPath.Functions
 {
     public static class MathOperators
     {
+        public static object DynaNegate(this IEnumerable<IValueProvider> left)
+        {
+            try
+            {
+                var l = ParamBinding.CastToSingleValue<long>(left);
+                return -l;
+            }
+            catch { }
+
+            try
+            {
+                var l = ParamBinding.CastToSingleValue<decimal>(left);
+                return -l;
+            }
+            catch { }
+
+            throw Error.Argument("Can only negate values of type integer or decimal");
+        }
 
         public static object DynaMul(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
         {
@@ -39,7 +57,7 @@ namespace HL7.Fhir.FluentPath.Functions
             {
                 var l = ParamBinding.CastToSingleValue<long>(left);
                 var r = ParamBinding.CastToSingleValue<long>(right);
-                return (decimal)l / (decimal)r;
+                return l / r;
             }
             catch { }
 
@@ -133,7 +151,7 @@ namespace HL7.Fhir.FluentPath.Functions
             {
                 var l = ParamBinding.CastToSingleValue<long>(left);
                 var r = ParamBinding.CastToSingleValue<long>(right);
-                return (long)Math.Truncate((decimal)(l - r));
+                return l / r;
             }
             catch { }
 
@@ -141,7 +159,7 @@ namespace HL7.Fhir.FluentPath.Functions
             {
                 var l = ParamBinding.CastToSingleValue<decimal>(left);
                 var r = ParamBinding.CastToSingleValue<decimal>(right);
-                return Math.Truncate((decimal)(l - r));
+                return (long)Math.Truncate((decimal)(l / r));
             }
             catch { }
 

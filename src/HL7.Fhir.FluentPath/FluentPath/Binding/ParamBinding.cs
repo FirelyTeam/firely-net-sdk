@@ -75,6 +75,8 @@ namespace Hl7.Fhir.FluentPath.Binding
 
                 var val = (IValueProvider)source;
                 source = val.Value;
+
+                if (source == null) return default(T);
             }
 
             if (source is T)

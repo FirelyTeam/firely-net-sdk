@@ -127,6 +127,12 @@ namespace Hl7.Fhir.FluentPath.Parser
         public static Parser<Expression> BinaryExpression(Parser<string> oper, Parser<Expression> operands)
         {
             return Parse.ChainOperator(oper, operands, (op, left, right) => new BinaryExpression(op, left, right));
+            //return
+            //   from left in operands
+            //   from right in (from op in oper
+            //                  from right in operands
+            //                  select Tuple.Create(op, right)).Optional()
+            //   select right.IsEmpty ? left : new BinaryExpression(right.Get().Item1, left, right.Get().Item2);
         }
 
         // | expression('*' | '/' | 'div' | 'mod') expression         #multiplicativeExpression

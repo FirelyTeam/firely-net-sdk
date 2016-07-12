@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "@T12");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+            [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_Id()
         {
             var parser = Lexer.Id.End();

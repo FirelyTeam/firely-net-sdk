@@ -68,7 +68,8 @@ namespace HL7.Fhir.FluentPath.Functions
 
         public static bool IsEqualTo(this decimal left, decimal right)
         {
-            return left.ToString() == right.ToString();
+            // return left.ToString() == right.ToString();  -- this is what the spec says, but that's incorrect
+            return left == right;
         }
     }
 }

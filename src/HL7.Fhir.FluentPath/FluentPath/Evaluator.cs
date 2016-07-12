@@ -53,11 +53,12 @@ namespace Hl7.Fhir.FluentPath
         // For predicates, Empty is considered false (?)
         public static bool Predicate(this Evaluator evaluator, IValueProvider instance, IEvaluationContext context)
         {
-            var result = evaluator.Select(instance, context);
+            var result = evaluator.Select(instance, context).BooleanEval();
 
-            if (!result.Any()) return false;
-
-            return result.BooleanEval();
+            if (!result == null)
+                return false;
+            else
+                return result.Value;
         }
 
         public static bool Predicate(this Evaluator evaluator, IValueProvider instance)

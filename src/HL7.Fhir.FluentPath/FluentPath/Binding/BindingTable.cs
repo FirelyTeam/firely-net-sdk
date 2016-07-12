@@ -62,14 +62,18 @@ namespace Hl7.Fhir.FluentPath.Binding
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
             add("not", anyFocus, f => f.Not());
             add("builtin.children", anyFocus, par<string>("name"), (f, a) => f.Children(a));
-            add("builtin.=", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.IsEqualTo(b));
 
-            add("builtin.*", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaMul(b));
-            add("builtin./", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaDiv(b));
-            add("builtin.+", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaAdd(b));
-            add("builtin.-", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaSub(b));
-            add("builtin.div", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaTruncDiv(b));
-            add("builtin.mod", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaMod(b));
+            add("binary.=", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.IsEqualTo(b));
+
+            add("unary.-", anyFocus, parAny("operand"), (f, a) => a.DynaNegate());
+            add("unary.+", anyFocus, parAny("operand"), (f, a) => a);
+
+            add("binary.*", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaMul(b));
+            add("binary./", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaDiv(b));
+            add("binary.+", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaAdd(b));
+            add("binary.-", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaSub(b));
+            add("binary.div", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaTruncDiv(b));
+            add("binary.mod", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaMod(b));
 
             add("substring", focus<string>(), par<long>("start"), (f, a) => f.Substring((int)a));
             add("substring", focus<string>(), par<long>("start"), par<long>("length"), (f, a, b) => f.Substring((int)a, (int)b));
@@ -77,10 +81,10 @@ namespace Hl7.Fhir.FluentPath.Binding
             add("first", anyFocus, f => f.First());
 
             // Logic operators do not use null propagation and may do short-cut eval
-            logic("builtin.and", (a, b) => a.And(b));
-            logic("builtin.or", (a, b) => a.Or(b));
-            logic("builtin.xor", (a, b) => a.XOr(b));
-            logic("builtin.implies", (a, b) => a.Implies(b));
+            logic("binary.and", (a, b) => a.And(b));
+            logic("binary.or", (a, b) => a.Or(b));
+            logic("binary.xor", (a, b) => a.XOr(b));
+            logic("binary.implies", (a, b) => a.Implies(b));
 
             // Special late-bound functions
             _functions.Add(new CallBinding("where", buildWhereLambda(), new ParamBinding("condition", TypeInfo.Any)));

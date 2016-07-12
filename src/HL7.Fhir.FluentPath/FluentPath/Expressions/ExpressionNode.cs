@@ -36,11 +36,6 @@ namespace HL7.Fhir.FluentPath.Expressions
         {
             return ExpressionType.GetHashCode();
         }
-
-        internal object Dump()
-        {
-            throw new NotImplementedException();
-        }
     }
 
 
@@ -175,18 +170,22 @@ namespace HL7.Fhir.FluentPath.Expressions
 
     public class BinaryExpression : FunctionCallExpression
     {
+        internal const string BIN_PREFIX = "binary.";
+        internal static readonly int BIN_PREFIX_LEN = BIN_PREFIX.Length;
+
+
         public BinaryExpression(char op, Expression left, Expression right) : this(new String(op,1), left, right)
         {
         }
 
-        public BinaryExpression(string op, Expression left, Expression right) : base(AxisExpression.This, OP_PREFIX + op, TypeInfo.Any, left, right)
+        public BinaryExpression(string op, Expression left, Expression right) : base(AxisExpression.This, BIN_PREFIX + op, TypeInfo.Any, left, right)
         {
         }
         public string Op
         {
             get
             {
-                return FunctionName.Substring(OP_PREFIX_LEN);
+                return FunctionName.Substring(BIN_PREFIX_LEN);
             }
         }
 
@@ -210,18 +209,21 @@ namespace HL7.Fhir.FluentPath.Expressions
 
     public class UnaryExpression : FunctionCallExpression
     {
+        internal const string URY_PREFIX = "unary.";
+        internal static readonly int URY_PREFIX_LEN = URY_PREFIX.Length;
+
         public UnaryExpression(char op, Expression operand) : this(new String(op,1), operand)
         {
         }
 
-        public UnaryExpression(string op, Expression operand) : base(AxisExpression.This, OP_PREFIX + op, TypeInfo.Any, operand)
+        public UnaryExpression(string op, Expression operand) : base(AxisExpression.This, URY_PREFIX + op, TypeInfo.Any, operand)
         {
         }
         public string Op
         {
             get
             {
-                return FunctionName.Substring(OP_PREFIX_LEN);
+                return FunctionName.Substring(URY_PREFIX_LEN);
             }
         }
 

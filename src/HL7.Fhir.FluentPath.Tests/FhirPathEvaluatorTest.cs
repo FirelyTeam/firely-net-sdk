@@ -14,6 +14,7 @@ using Hl7.Fhir.FluentPath;
 using System.Diagnostics;
 using Hl7.Fhir.FluentPath.InstanceTree;
 using Hl7.Fhir.Navigation;
+using HL7.Fhir.FluentPath;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -58,14 +59,20 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestMath()
         {
+            //            Assert.AreEqual(-1.5, PathExpression.Scalar(@"3 * -0.5", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"-4.5 + 4.5 = 0", navigator));
             Assert.IsTrue(PathExpression.IsTrue(@"4/2 = 2", navigator));
-            Assert.IsTrue(PathExpression.IsTrue(@"2/4 = 0.5", navigator));
+            //            Assert.IsTrue(PathExpression.IsTrue(@"2/4 = 0.5", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"10/4 = 2", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"10.0/4 = 2.5", navigator));
             Assert.IsTrue(PathExpression.IsTrue(@"4.0/2.0 = 2", navigator));
             Assert.IsTrue(PathExpression.IsTrue(@"2.0/4 = 0.5", navigator));
             Assert.IsTrue(PathExpression.IsTrue(@"2.0 * 4 = 8", navigator));
-            Assert.IsTrue(PathExpression.IsTrue(@"2 - 4.5 = -2.5", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"2 * 4.1 = 8.2", navigator));
+//            Assert.IsTrue(PathExpression.IsTrue(@"-0.5 * -0.5 = -0.25", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"5 - 4.5 = 0.5", navigator));
             Assert.IsTrue(PathExpression.IsTrue(@"9.5 - 4.5 = 5", navigator));
-            Assert.IsTrue(PathExpression.IsTrue(@"9 + 4.5 = 9.5", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"5 + 4.5 = 9.5", navigator));
             Assert.IsTrue(PathExpression.IsTrue(@"9.5 + 0.5 = 10", navigator));
 
             Assert.IsTrue(PathExpression.IsTrue(@"103 mod 5 = 3", navigator));
@@ -76,6 +83,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.IsTrue(PathExpression.IsTrue(@"'offic'+'ial' = 'official'", navigator));
 
             Assert.IsTrue(PathExpression.IsTrue(@"12/(2+2) - (3 div 2) = 2", navigator));
+            Assert.IsTrue(PathExpression.IsTrue(@"-4.5 + 4.5 * 2 * 4 / 4 - 1.5 = 3", navigator));
         }
 
 

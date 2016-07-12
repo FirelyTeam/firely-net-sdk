@@ -26,11 +26,9 @@ namespace Hl7.Fhir.FluentPath
 
     
         // Evaluate a collection as a boolean as described in "4.1 Boolean evaluation of collections"
-        public static bool BooleanEval(this IEnumerable<IValueProvider> focus)
+        public static bool? BooleanEval(this IEnumerable<IValueProvider> focus)
         {
-            //// An empty result is evaluated as "empty" -> should not occur because of null prop in operators and functions
-            if (!focus.Any())
-                throw Error.Argument("focus", "focus cannot be empty");
+            if (!focus.Any()) return null;
 
             if (focus.Count() == 1 && focus.Single().Value is bool)
             {
@@ -45,7 +43,7 @@ namespace Hl7.Fhir.FluentPath
      
         public static bool Not(this IEnumerable<IValueProvider> focus)
         {
-            return !focus.BooleanEval();
+            return !(focus.BooleanEval().Value);
         }
 
         public static long CountItems(this IEnumerable<IValueProvider> focus)
