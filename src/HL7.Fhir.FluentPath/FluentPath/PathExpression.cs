@@ -55,53 +55,59 @@ namespace Hl7.Fhir.FluentPath
         }
 
     
-        public static IEnumerable<IValueProvider> Select(string expression, IValueProvider instance)
+        public static IEnumerable<IValueProvider> Select(string expression, IEnumerable<IValueProvider> input)
         {
             var evaluator = Compile(expression);
-            return evaluator.Select(instance);
+            return evaluator.Select(input);
         }
 
-        public static IEnumerable<IValueProvider> Select(string expression, IValueProvider instance, IEvaluationContext context)
+        public static IEnumerable<IValueProvider> Select(string expression, IEnumerable<IValueProvider> input, IEvaluationContext context)
         {
             var evaluator = Compile(expression);
-            return evaluator.Select(instance, context);
+            return evaluator.Select(input, context);
         }
 
-        public static object Scalar(string expression, IValueProvider instance)
+        public static object Scalar(string expression, IEnumerable<IValueProvider> input)
         {
             var evaluator = Compile(expression);
-            return evaluator.Scalar(instance);
+            return evaluator.Scalar(input);
         }
 
-        public static object Scalar(string expression, IValueProvider instance, IEvaluationContext context)
+        public static object Scalar(string expression, IEnumerable<IValueProvider> input, IEvaluationContext context)
         {
             var evaluator = Compile(expression);
-            return evaluator.Scalar(instance, context);
+            return evaluator.Scalar(input, context);
         }
 
-        public static bool IsTrue(string expression, IValueProvider instance)
+        public static bool IsTrue(string expression, IEnumerable<IValueProvider> input)
         {
             var evaluator = Compile(expression);
-            return evaluator.Predicate(instance);
+            return evaluator.Predicate(input);
         }
 
-        public static bool IsTrue(string expression, IValueProvider instance, IEvaluationContext context)
+        public static bool IsTrue(string expression, IEnumerable<IValueProvider> input, IEvaluationContext context)
         {
             var evaluator = Compile(expression);
-            return evaluator.Predicate(instance, context);
+            return evaluator.Predicate(input, context);
         }
     }
 
-    public static class PathExpressionLinq
-    {
-        public static IEnumerable<IValueProvider> FluentPathSelect<T>(this IValueProvider instance, string expression) 
-        {
-            return PathExpression.Select(expression, instance);
-        }
+    //public static class PathExpressionLinq
+    //{
+    //    public static IEnumerable<IValueProvider> FluentPathSelect<T>(this IValueProvider instance, string expression) 
+    //    {
+    //        return PathExpression.Select(expression, FhirValueList.Create(instance));
+    //    }
 
-        public static IEnumerable<IValueProvider> FluentPathIsTrue<T>(this IValueProvider instance, string expression)
-        {
-            return PathExpression.Select(expression, instance);
-        }
-    }
+    //    public static IEnumerable<IValueProvider> FluentPathSelect<T>(this IEnumerable<IValueProvider> input, string expression)
+    //    {
+    //        return PathExpression.Select(expression, input);
+    //    }
+
+
+    //    public static IEnumerable<IValueProvider> FluentPathIsTrue<T>(this IValueProvider instance, string expression)
+    //    {
+    //        return PathExpression.Select(expression, instance);
+    //    }
+    //}
 }

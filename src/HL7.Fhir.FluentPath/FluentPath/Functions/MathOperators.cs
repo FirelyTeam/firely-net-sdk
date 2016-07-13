@@ -159,7 +159,7 @@ namespace HL7.Fhir.FluentPath.Functions
             {
                 var l = ParamBinding.CastToSingleValue<decimal>(left);
                 var r = ParamBinding.CastToSingleValue<decimal>(right);
-                return (long)Math.Truncate((decimal)(l / r));
+                return (long)Math.Truncate(l / r);
             }
             catch { }
 

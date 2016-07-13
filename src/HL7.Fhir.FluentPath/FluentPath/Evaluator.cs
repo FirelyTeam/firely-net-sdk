@@ -27,33 +27,31 @@ namespace Hl7.Fhir.FluentPath
 
     public static class Eval
     {
-        public static IEnumerable<IValueProvider> Select(this Evaluator evaluator, IValueProvider instance, IEvaluationContext context)
+        public static IEnumerable<IValueProvider> Select(this Evaluator evaluator, IEnumerable<IValueProvider> input, IEvaluationContext context)
         {
-            var original = FhirValueList.Create(instance);
-            context.OriginalContext = original;
-            return evaluator(context, original);
+            context.OriginalContext = input;
+            return evaluator(context, input);
         }
 
-        public static IEnumerable<IValueProvider> Select(this Evaluator evaluator, IValueProvider instance)
+        public static IEnumerable<IValueProvider> Select(this Evaluator evaluator, IEnumerable<IValueProvider> input)
         {
-            var original = FhirValueList.Create(instance);
-            return evaluator.Select(instance, new BaseEvaluationContext());
+            return evaluator.Select(input, new BaseEvaluationContext());
         }
 
-        public static object Scalar(this Evaluator evaluator, IValueProvider instance, IEvaluationContext context)
+        public static object Scalar(this Evaluator evaluator, IEnumerable<IValueProvider> input, IEvaluationContext context)
         {
-            return evaluator.Select(instance, context).Single().Value;
+            return evaluator.Select(input, context).Single().Value;
         }
 
-        public static object Scalar(this Evaluator evaluator, IValueProvider instance)
+        public static object Scalar(this Evaluator evaluator, IEnumerable<IValueProvider> input)
         {
-            return evaluator.Scalar(instance, new BaseEvaluationContext());
+            return evaluator.Scalar(input, new BaseEvaluationContext());
         }
 
         // For predicates, Empty is considered false (?)
-        public static bool Predicate(this Evaluator evaluator, IValueProvider instance, IEvaluationContext context)
+        public static bool Predicate(this Evaluator evaluator, IEnumerable<IValueProvider> input, IEvaluationContext context)
         {
-            var result = evaluator.Select(instance, context).BooleanEval();
+            var result = evaluator.Select(input, context).BooleanEval();
 
             if (!result == null)
                 return false;
@@ -61,18 +59,13 @@ namespace Hl7.Fhir.FluentPath
                 return result.Value;
         }
 
-        public static bool Predicate(this Evaluator evaluator, IValueProvider instance)
+        public static bool Predicate(this Evaluator evaluator, IEnumerable<IValueProvider> input)
         {
-            return evaluator.Predicate(instance, new BaseEvaluationContext());
+            return evaluator.Predicate(input, new BaseEvaluationContext());
         }
 
 
-        //public static Evaluator Length()
-        //{
-        //    return (f, _) => f.MaxLength();
-        //}
-
-        //public static Evaluator Extension(Evaluator url)
+       //public static Evaluator Extension(Evaluator url)
         //{
         //    return (f, c) =>
         //    {
@@ -81,27 +74,6 @@ namespace Hl7.Fhir.FluentPath
         //    };
         //}
 
-        //public static Evaluator Substring(Evaluator start, Evaluator length)
-        //{
-        //    return (f, c) =>
-        //    {
-        //        long s = start(f, c).AsInteger();
-        //        long? l = length != null ? length(f, c).AsInteger() : (long?)null;
-
-        //        return f.Substring(s, l);
-        //    };
-        //}
-
-     
-
-        //        return result;
-        //    };
-        //}
-
-        //public static Evaluator Where(Evaluator condition)
-        //{
-        //    return (f,c)=> f.Where(elements => condition(elements,c));
-        //}
 
         //public static Evaluator All(Evaluator condition)
         //{
