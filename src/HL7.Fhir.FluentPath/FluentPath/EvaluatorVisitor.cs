@@ -26,7 +26,7 @@ namespace HL7.Fhir.FluentPath
             var types = expression.Arguments.Select(a => a.ExpressionType);
             Invokee boundFunction = BindingTable.Resolve(expression.FunctionName, types);
 
-            return buildBindingInvoke(focusEval, argsEval, boundFunction);
+            return buildBindingInvoke(expression.FunctionName, focusEval, argsEval, boundFunction);
         }
 
         public override Evaluator VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
@@ -75,12 +75,21 @@ namespace HL7.Fhir.FluentPath
             return (_, f) => f;
         }
 
-        private static Evaluator buildBindingInvoke(Evaluator focus, IEnumerable<Evaluator> arguments, Invokee invokee)
+        private static Evaluator buildBindingInvoke(string functionName, Evaluator focus, IEnumerable<Evaluator> arguments, Invokee invokee)
         {
             return (ctx,f) =>
             {
                 var focusNodes = focus(ctx,f);
-                return invokee(ctx, focusNodes, arguments);
+
+                try
+                {
+                    return invokee(ctx, focusNodes, arguments);
+                }
+                catch (Exception e)
+                {
+                    throw new InvalidOperationException("Invocation of '{0}' failed: {1}".FormatWith(functionName, e.Message));
+                }
+
             };
         }
     }

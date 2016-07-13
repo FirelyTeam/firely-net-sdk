@@ -53,11 +53,23 @@ namespace Hl7.Fhir.FluentPath
             return XmlConvert.ToDateTimeOffset("2016-01-01" + a._value).ToUniversalTime() < XmlConvert.ToDateTimeOffset("2016-01-01" + b._value).ToUniversalTime();
         }
 
+        public static bool operator <=(Time a, Time b)
+        {
+            return XmlConvert.ToDateTimeOffset("2016-01-01" + a._value).ToUniversalTime() <= XmlConvert.ToDateTimeOffset("2016-01-01" + b._value).ToUniversalTime();
+        }
+
+
         // overload operator >
         public static bool operator >(Time a, Time b)
         {
             return XmlConvert.ToDateTimeOffset("2016-01-01" + a._value).ToUniversalTime() > XmlConvert.ToDateTimeOffset("2016-01-01" + b._value).ToUniversalTime();
         }
+
+        public static bool operator >=(Time a, Time b)
+        {
+            return XmlConvert.ToDateTimeOffset("2016-01-01" + a._value).ToUniversalTime() >= XmlConvert.ToDateTimeOffset("2016-01-01" + b._value).ToUniversalTime();
+        }
+
 
         public override bool Equals(object obj)
         {

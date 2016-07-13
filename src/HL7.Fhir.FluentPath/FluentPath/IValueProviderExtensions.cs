@@ -97,56 +97,6 @@ namespace Hl7.Fhir.FluentPath
 
             return null;
         }
-            
-
-     
-
-        public static bool IsEquivalentTo(this IValueProvider left, IValueProvider right)
-        {
-            // Exception: In equality comparisons, the "id" elements do not need to be equal
-            throw new NotImplementedException();
-        }
-
-        public static bool GreaterOrEqual(this IValueProvider left, IValueProvider right)
-        {
-            return left.IsEqualTo(right) || left.compare(Operator.GreaterThan, right);
-        }
-
-        public static bool LessOrEqual(this IValueProvider left, IValueProvider right)
-        {
-            return left.IsEqualTo(right) || left.compare(Operator.LessThan, right);
-        }
-
-        public static bool LessThan(this IValueProvider left, IValueProvider right)
-        {
-            return left.compare(Operator.LessThan, right);
-        }
-
-        public static bool GreaterThan(this IValueProvider left, IValueProvider right)
-        {
-            return left.compare(Operator.GreaterThan, right);
-        }
-
-        private static bool compare(this IValueProvider left, Operator comp, IValueProvider right)
-        {
-            if (left.Value == null || right.Value == null)
-                throw Error.InvalidOperation("'{0)' requires both operands to be primitives".FormatWith(comp));
-            if (left.Value.GetType() != right.Value.GetType())
-                throw Error.InvalidOperation("Operands to '{0}' must be of the same type".FormatWith(comp));
-
-            if (left.Value is string)
-            {
-                var result = String.Compare((string)left.Value, (string)right.Value);
-                if (comp == Operator.LessThan) return result == -1;
-                if (comp == Operator.GreaterThan) return result == 1;
-            }
-            else
-            {
-                if (comp == Operator.LessThan) return (dynamic)left.Value < (dynamic)right.Value;
-                if (comp == Operator.GreaterThan) return (dynamic)left.Value > (dynamic)right.Value;
-            }
-
-            throw Error.InvalidOperation("Comparison failed on operator '{0}'".FormatWith(comp));
-        }
+           
     }
 }

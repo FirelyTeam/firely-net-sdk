@@ -63,7 +63,8 @@ namespace Hl7.Fhir.FluentPath.InstanceTree
         public UntypedValue(string representation)
         {
             Representation = representation;
-            Value = parseValue(Representation);
+            //Value = parseValue(Representation);
+            Value = representation;
         }
 
         public override string ToString()

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FluentPath.Binding
 {
-    internal class DynaBinder
+    internal class DynaDispatcher
     {
         class DynaEntry
         {
@@ -17,7 +17,22 @@ namespace Hl7.Fhir.FluentPath.Binding
 
         private List<DynaEntry> _candidates = new List<DynaEntry>();
 
-        public DynaBinder AddCandidate(Delegate f)
+        public DynaDispatcher Add<F, R>(Func<F, R> f)
+        {
+            return Add((Delegate)f);
+        }
+
+        public DynaDispatcher Add<F, A, R>(Func<F, A, R> f)
+        {
+            return Add((Delegate)f);
+        }
+
+        public DynaDispatcher Add<F, A, B, R>(Func<F, A, B, R> f)
+        {
+            return Add((Delegate)f);
+        }
+
+        private DynaDispatcher Add(Delegate f)
         {
             var entry = new DynaEntry();
 
@@ -28,11 +43,13 @@ namespace Hl7.Fhir.FluentPath.Binding
             return this;
         }
 
-        public DynaBinder AddCandidate<F,A,B,R>(Func<F,A,B,R> f)
+        private DynaDispatcher Add(IEnumerable<Delegate> f)
         {
-            return AddCandidate((Delegate)f);
-        }
+            foreach (var candidate in f)
+                Add(candidate);
 
+            return this;
+        }
 
         public IEnumerable<IValueProvider> Invoke(IEvaluationContext context, IEnumerable<IValueProvider> focus, IEnumerable<Evaluator> args)
         {
@@ -61,7 +78,36 @@ namespace Hl7.Fhir.FluentPath.Binding
             }
 
             //TODO: Make error reporting better
-            throw Error.Argument("Cannot find overload for call");
+            throw Error.Argument(noMatchError(actualArgs));
+        }
+
+
+        private string noMatchError(IEnumerable<object> arguments)
+        {
+            string result;
+
+            if (!arguments.Any())
+                return "(no signature)";
+
+            result = "on focus of type '{0}'".FormatWith(readableName(arguments.First().GetType()));
+            
+            if(arguments.Skip(1).Any())
+            {
+                result = "with parameters of type '{0}' on {1}"
+                        .FormatWith(String.Join(",", arguments.Skip(1).Select(a => readableName(a.GetType()))), result);
+            }
+
+            return "Function cannot be called " + result;
+        }
+
+        private string readableName(Type t)
+        {
+            if (typeof(IEnumerable<IValueProvider>).IsAssignableFrom(t))
+                return "collection";
+            else if (typeof(IValueProvider).IsAssignableFrom(t))
+                return "object";
+            else
+                return t.Name;
         }
 
         private static IEnumerable<IValueProvider> PropEmpty(IEnumerable<IValueProvider> source, Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> f)

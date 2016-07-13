@@ -20,22 +20,12 @@ namespace Hl7.Fhir.FluentPath.Binding
 
     public class BindingTable
     {
-        private static ParamBinding<T> par<T>(string name)
-        {
-            return new ParamBinding<T>(name);
-        }
-
         private static ParamBinding<IEnumerable<IValueProvider>> parAny(string name)
         {
             return new ParamBinding<IEnumerable<IValueProvider>>(name);
         }
 
         private static FocusBinding<IEnumerable<IValueProvider>> anyFocus = new FocusBinding<IEnumerable<IValueProvider>>();
-
-        private static FocusBinding<T> focus<T>()
-        {
-            return new FocusBinding<T>();
-        }
 
         private class ParamBinding<T> : ParamBinding
         {
@@ -55,36 +45,62 @@ namespace Hl7.Fhir.FluentPath.Binding
         static BindingTable()
         {
             // Functions that operate on the focus, without null propagation
-            add("empty", f => !f.Any());
-            add("exists", f => f.Any());
-            add("count", f => f.CountItems());
+            focus("empty", f => !f.Any());
+            focus("exists", f => f.Any());
+            focus("count", f => f.CountItems());
 
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
-            add("not", anyFocus, f => f.Not());
-            add("builtin.children", anyFocus, par<string>("name"), (f, a) => f.Children(a));
+            add("not", (IEnumerable<IValueProvider> f) => f.Not());
+            add("builtin.children", (IEnumerable<IValueProvider> f, string a) => f.Children(a));
 
-            add("binary.=", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.IsEqualTo(b));
+            add("binary.=", (object f, IEnumerable<IValueProvider>  a, IEnumerable<IValueProvider> b) => a.IsEqualTo(b));
 
-            add("unary.-", anyFocus, parAny("operand"), (f, a) => a.DynaNegate());
-            add("unary.+", anyFocus, parAny("operand"), (f, a) => a);
+            add("unary.-", (object f, long a) => -a)
+                .Add((object f, decimal a) => -a);
+            add("unary.+", (object f, long a) => a)
+                .Add((object f, decimal a) => a);
 
-            _functions.Add(new CallBinding("binary.*", new DynaBinder()
-                    .AddCandidate((object f, long a, long b) => a * b)
-                    .AddCandidate((object f, decimal a, decimal b) => a * b)
-                    .Invoke, parAny("left"), parAny("right")));
+            add("binary.*", (object f, long a, long b) => a * b)
+                .Add( (object f, decimal a, decimal b) => a * b);
+            add("binary./", (object f, decimal a, decimal b) => a / b);
+                //.Add((object f, decimal a, decimal b) => a / b);
+            add("binary.+", (object f, long a, long b) => a + b)
+                .Add((object f, decimal a, decimal b) => a + b)
+                .Add((object f, string a, string b) => a + b);
+            add("binary.-", (object f, long a, long b) => a - b)
+                .Add((object f, decimal a, decimal b) => a - b);
+            add("binary.div", (object f, long a, long b) => a / b)
+                .Add((object f, decimal a, decimal b) => (long)Math.Truncate(a / b));
+            add("binary.mod", (object f, long a, long b) => a % b)
+                .Add((object f, decimal a, decimal b) => a % b);
 
-          //  add("binary.*", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaMul(b));
-            add("binary./", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaDiv(b));
-            add("binary.+", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaAdd(b));
-            add("binary.-", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaSub(b));
-            add("binary.div", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaTruncDiv(b));
-            add("binary.mod", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaMod(b));
+            add("binary.>", (object f, long a, long b) => a > b)
+                .Add((object f, decimal a, decimal b) => a > b)
+                .Add((object f, string a, string b) => String.Compare(a, b) > 0)
+                .Add((object f, PartialDateTime a, PartialDateTime b) => a > b)
+                .Add((object f, Time a, Time b) => a > b);
+            add("binary.<", (object f, long a, long b) => a < b)
+                .Add((object f, decimal a, decimal b) => a < b)
+                .Add((object f, string a, string b) => String.Compare(a, b) < 0)
+                .Add((object f, PartialDateTime a, PartialDateTime b) => a < b)
+                .Add((object f, Time a, Time b) => a < b);
+            add("binary.<=", (object f, long a, long b) => a <= b)
+                .Add((object f, decimal a, decimal b) => a <= b)
+                .Add((object f, string a, string b) => String.Compare(a, b) <= 0)
+                .Add((object f, PartialDateTime a, PartialDateTime b) => a <= b)
+                .Add((object f, Time a, Time b) => a <= b);
+            add("binary.>=", (object f, long a, long b) => a >= b)
+                .Add((object f, decimal a, decimal b) => a >= b)
+                .Add((object f, string a, string b) => String.Compare(a, b) >= 0)
+                .Add((object f, PartialDateTime a, PartialDateTime b) => a >= b)
+                .Add((object f, Time a, Time b) => a >= b);
 
-            add("substring", focus<string>(), par<long>("start"), (f, a) => f.Substring((int)a));
-            //add("substring", focus<string>(), par<long>("start"), par<long>("length"), (f, a, b) => f.Substring((int)a, (int)b));
-            add("substring", focus<string>(), par<long>("start"), par<long>("length"), (f, a, b) => mySubstring(f, (int)a, (int)b));
-            add("skip", anyFocus, par<long>("amount"), (f, a) => mySkip(f,(int)a));
-            add("first", anyFocus, f => myFirst(f));
+
+            add("substring", (string f, long a) => f.Substring((int)a));
+            add("substring", (string f, long a, long b) => f.Substring((int)a, (int)b));
+
+            add("skip", (IEnumerable<IValueProvider> f, long a) =>  f.Skip((int)a));
+            add("first", (IEnumerable<IValueProvider> f) => f.First());
 
             // Logic operators do not use null propagation and may do short-cut eval
             logic("binary.and", (a, b) => a.And(b));
@@ -94,21 +110,6 @@ namespace Hl7.Fhir.FluentPath.Binding
 
             // Special late-bound functions
             _functions.Add(new CallBinding("where", buildWhereLambda(), new ParamBinding("condition", TypeInfo.Any)));
-        }
-
-        private static string mySubstring(string s, int start, int length)
-        {
-            return s.Substring(start, length);
-        }
-
-        private static IValueProvider myFirst(IEnumerable<IValueProvider> focus)
-        {
-            return focus.First();
-        }
-
-        private static IEnumerable<IValueProvider> mySkip(IEnumerable<IValueProvider> focus, int amount)
-        {
-            return focus.Skip(amount);
         }
 
         public static Invokee Resolve(string functionName, IEnumerable<TypeInfo> argumentTypes)
@@ -137,26 +138,37 @@ namespace Hl7.Fhir.FluentPath.Binding
         private static List<CallBinding> _functions = new List<CallBinding>();
 
 
-        private static void add(string name, Func<IEnumerable<IValueProvider>, object> focusFunc)
+        private static void focus(string name, Func<IEnumerable<IValueProvider>, object> focusFunc)
         {
             _functions.Add(new CallBinding(name, buildFocusInputCall(focusFunc), new ParamBinding[] { }));
         }
 
-        private static void add<F>(string name, FocusBinding<F> focus, Func<F,object> func)
+        private static DynaDispatcher add<F>(string name, Func<F,object> func)
         {
-            _functions.Add(new CallBinding(name, buildNullPropCall(focus,func), new ParamBinding[] { }));
+            var db = new DynaDispatcher();
+            _functions.Add(new CallBinding(name, db.Invoke, new ParamBinding[] { } ));
+            db.Add(func);
+
+            return db;
         }
 
-        private static void add<F,A>(string name, FocusBinding<F> focus, ParamBinding<A> param1, Func<F,A,object> func)
+        private static DynaDispatcher add<F,A>(string name, Func<F,A,object> func)
         {
-            _functions.Add(new CallBinding(name, buildNullPropCall(focus, func, param1), param1));
+            var db = new DynaDispatcher();
+            _functions.Add(new CallBinding(name, db.Invoke, parAny("param1")));
+            db.Add(func);
+
+            return db;
         }
 
-        private static void add<F,A, B>(string name, FocusBinding<F> focus, ParamBinding<A> param1, ParamBinding<B> param2, Func<F,A,B,object> func)
+        private static DynaDispatcher add<F,A, B>(string name, Func<F,A,B,object> func)
         {
-            _functions.Add(new CallBinding(name, buildNullPropCall(focus, func, param1, param2), param1, param2));
-        }
+            var db = new DynaDispatcher();
+            _functions.Add(new CallBinding(name, db.Invoke, parAny("param1"), parAny("param2")));
+            db.Add(func);
 
+            return db;
+        }
 
         private static void logic(string name, Func<Func<bool?>,Func<bool?>,bool?> func)
         {
@@ -193,7 +205,6 @@ namespace Hl7.Fhir.FluentPath.Binding
                 return run(ctx, focus, lambda);
             };
         }
-
         
 
         private static IEnumerable<IValueProvider> run(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
@@ -204,45 +215,6 @@ namespace Hl7.Fhir.FluentPath.Binding
                 if (lambda(ctx, newFocus).BooleanEval() == true)
                     yield return element; 
             }
-        }
-
-        private static Invokee buildNullPropCall<F>(FocusBinding<F> focusBinding, Func<F,object> b)
-        {
-            return (ctx, focus, args) =>
-            {
-                return PropEmpty(focus, f => Typecasts.WrapNative<F>(focusBinding, b, focus));
-            };
-        }
-
-        private static Invokee buildNullPropCall<F,A>(FocusBinding<F> focusBinding, Func<F,A,object> b, ParamBinding<A> binding1)
-        {
-            return (ctx, focus, args) =>
-            {
-                return
-                    PropEmpty(focus, f =>
-                        PropEmpty(args.First()(ctx, focus), a1 =>
-                            Typecasts.WrapNative<F, A>(focusBinding, binding1, b, focus, a1))); 
-            };
-        }
-
-        private static Invokee buildNullPropCall<F,A, B>(FocusBinding<F> focusBinding, Func<F,A,B,object> b, ParamBinding<A> binding1, ParamBinding<B> binding2)
-        {
-            return (ctx, focus, args) =>
-            {
-                return
-                    PropEmpty(focus, f =>
-                        PropEmpty(args.First()(ctx, focus), a1 =>
-                            PropEmpty(args.Skip(1).First()(ctx, focus), a2 =>
-                                Typecasts.WrapNative<F, A, B>(focusBinding, binding1, binding2, b, f, a1, a2))));
-            };
-        }
-
-        private static IEnumerable<U> PropEmpty<T,U>(IEnumerable<T> source, Func<IEnumerable<T>, IEnumerable<U>> f)
-        {
-            if (source.Any())
-                return f(source);
-            else
-                return Enumerable.Empty<U>();
         }
 
         private static Invokee buildFocusInputCall(Func<IEnumerable<IValueProvider>,object> func)

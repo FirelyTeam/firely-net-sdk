@@ -88,22 +88,6 @@ namespace Hl7.Fhir.Tests.FhirPath
 
 
         [TestMethod, TestCategory("FhirPath")]
-        public void TestValueOps()
-        {
-            var a = new ConstantValue(4);
-            var b = new ConstantValue(5);
-            var c = new ConstantValue(5);
-
-            Assert.IsTrue(a.LessThan(b));
-            Assert.IsTrue(a.LessOrEqual(b));
-            Assert.IsFalse(a.GreaterThan(b));
-            Assert.IsFalse(a.GreaterOrEqual(b));
-            Assert.IsTrue(b.IsEqualTo(c));
-            Assert.IsTrue(b.LessOrEqual(c));
-            Assert.IsTrue(b.GreaterOrEqual(c));
-        }
-
-        [TestMethod, TestCategory("FhirPath")]
         public void TestItemSelection()
         {
             var values = FhirValueList.Create(1, 2, 3, 4, 5, 6, 7);
@@ -132,19 +116,6 @@ namespace Hl7.Fhir.Tests.FhirPath
             var result = values.EnumerateChildrenByName("Patient").EnumerateChildrenByName("identifier").ChildrenValues("use");
             Assert.AreEqual(2, result.Count());
             Assert.AreEqual("usual", (string)result.First());
-        }
-
-        [TestMethod, TestCategory("FhirPath"),Ignore]
-        public void TestExpression()
-        {
-            throw new NotImplementedException();
-
-            //var values = navigator;
-
-            //var result = values.EnumerateChildrenByName("Patient").EnumerateChildrenByName("identifier")
-            //    .Where(ctx => ctx.Children("use").IsEqualTo(FhirValueList.Create("official"))).IsEmpty().Not();
-
-            //Assert.AreEqual(true, result.BooleanEval().Value);
         }
 
         [TestMethod, TestCategory("FhirPath")]

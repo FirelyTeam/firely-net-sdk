@@ -48,11 +48,11 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestExistence()
         {
-            Assert.IsTrue(PathExpression.IsTrue(@"{}.empty()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"1.empty().not()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"1.exists()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"Patient.identifier.exists()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"Patient.dientifeir.exists().not()", testInput));
+            isTrue(@"{}.empty()");
+            isTrue(@"1.empty().not()");
+            isTrue(@"1.exists()");
+            isTrue(@"Patient.identifier.exists()");
+            isTrue(@"Patient.dientifeir.exists().not()");
             Assert.AreEqual(2L, PathExpression.Scalar(@"Patient.identifier.count()", testInput));
         }
 
@@ -66,136 +66,150 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestGreaterThan()
+        {
+            isTrue(@"4.5 > 0");
+            isTrue(@"'ewout' > 'alfred'");
+            isTrue(@"2016-04-01 > 2015-04-01");
+            isTrue(@"5 > 6 = false");
+            isTrue(@"(5 > {}).empty()");
+        }
+
+        private void isTrue(string expr)
+        {
+            Assert.IsTrue(PathExpression.IsTrue(expr, testInput));
+        }
 
         [TestMethod, TestCategory("FhirPath")]
         public void TestMath()
         {
             //            Assert.AreEqual(-1.5, PathExpression.Scalar(@"3 * -0.5", navigator));
-            Assert.IsTrue(PathExpression.IsTrue(@"-4.5 + 4.5 = 0", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"4/2 = 2", testInput));
-            //            Assert.IsTrue(PathExpression.IsTrue(@"2/4 = 0.5", navigator));
-            Assert.IsTrue(PathExpression.IsTrue(@"10/4 = 2", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"10.0/4 = 2.5", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"4.0/2.0 = 2", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"2.0/4 = 0.5", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"2.0 * 4 = 8", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"2 * 4.1 = 8.2", testInput));
-//            Assert.IsTrue(PathExpression.IsTrue(@"-0.5 * -0.5 = -0.25", navigator));
-            Assert.IsTrue(PathExpression.IsTrue(@"5 - 4.5 = 0.5", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"9.5 - 4.5 = 5", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"5 + 4.5 = 9.5", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"9.5 + 0.5 = 10", testInput));
+            isTrue(@"-4.5 + 4.5 = 0");
+            isTrue(@"4/2 = 2");
+            isTrue(@"2/4 = 0.5");
+            isTrue(@"10/4 = 2.5");
+            isTrue(@"10.0/4 = 2.5");
+            isTrue(@"4.0/2.0 = 2");
+            isTrue(@"2.0/4 = 0.5");
+            isTrue(@"2.0 * 4 = 8");
+            isTrue(@"2 * 4.1 = 8.2");
+//            isTrue(@"-0.5 * -0.5 = -0.25", navigator));
+            isTrue(@"5 - 4.5 = 0.5");
+            isTrue(@"9.5 - 4.5 = 5");
+            isTrue(@"5 + 4.5 = 9.5");
+            isTrue(@"9.5 + 0.5 = 10");
 
-            Assert.IsTrue(PathExpression.IsTrue(@"103 mod 5 = 3", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"101.4 mod 5.2 = 2.6", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"103 div 5 = 20", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"20.0 div 5.5 = 3", testInput));
+            isTrue(@"103 mod 5 = 3");
+            isTrue(@"101.4 mod 5.2 = 2.6");
+            isTrue(@"103 div 5 = 20");
+            isTrue(@"20.0 div 5.5 = 3");
 
-            Assert.IsTrue(PathExpression.IsTrue(@"'offic'+'ial' = 'official'", testInput));
+            isTrue(@"'offic'+'ial' = 'official'");
 
-            Assert.IsTrue(PathExpression.IsTrue(@"12/(2+2) - (3 div 2) = 2", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"-4.5 + 4.5 * 2 * 4 / 4 - 1.5 = 3", testInput));
+            isTrue(@"12/(2+2) - (3 div 2) = 2");
+            isTrue(@"-4.5 + 4.5 * 2 * 4 / 4 - 1.5 = 3");
         }
 
 
         [TestMethod, TestCategory("FhirPath")]
         public void Test3VLBoolean()
         {
-            Assert.IsTrue(PathExpression.IsTrue(@"true and true", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(true and false) = false", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(true and {}).empty()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(false and true) = false", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(false and false) = false", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(false and {}) = false", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"({} and true).empty()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"({} and false) = false", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"({} and {}).empty()", testInput));
+            isTrue(@"true and true");
+            isTrue(@"(true and false) = false");
+            isTrue(@"(true and {}).empty()");
+            isTrue(@"(false and true) = false");
+            isTrue(@"(false and false) = false");
+            isTrue(@"(false and {}) = false");
+            isTrue(@"({} and true).empty()");
+            isTrue(@"({} and false) = false");
+            isTrue(@"({} and {}).empty()");
 
-            Assert.IsTrue(PathExpression.IsTrue(@"true or true", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"true or false", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"true or {}", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"false or true", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(false or false) = false", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(false or {}).empty()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"{} or true", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"({} or false).empty()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"({} or {}).empty()", testInput));
+            isTrue(@"true or true");
+            isTrue(@"true or false");
+            isTrue(@"true or {}");
+            isTrue(@"false or true");
+            isTrue(@"(false or false) = false");
+            isTrue(@"(false or {}).empty()");
+            isTrue(@"{} or true");
+            isTrue(@"({} or false).empty()");
+            isTrue(@"({} or {}).empty()");
 
-            Assert.IsTrue(PathExpression.IsTrue(@"(true xor true)=false", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"true xor false", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(true xor {}).empty()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"false xor true", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(false xor false) = false", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(false xor {}).empty()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"({} xor true).empty()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"({} xor false).empty()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"({} xor {}).empty()", testInput));
+            isTrue(@"(true xor true)=false");
+            isTrue(@"true xor false");
+            isTrue(@"(true xor {}).empty()");
+            isTrue(@"false xor true");
+            isTrue(@"(false xor false) = false");
+            isTrue(@"(false xor {}).empty()");
+            isTrue(@"({} xor true).empty()");
+            isTrue(@"({} xor false).empty()");
+            isTrue(@"({} xor {}).empty()");
 
-            Assert.IsTrue(PathExpression.IsTrue(@"true implies true", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(true implies false) = false", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(true implies {}).empty()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"false implies true", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"false implies false", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"false implies {}", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"{} implies true", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"({} implies false).empty()", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"({} implies {}).empty()", testInput));
+            isTrue(@"true implies true");
+            isTrue(@"(true implies false) = false");
+            isTrue(@"(true implies {}).empty()");
+            isTrue(@"false implies true");
+            isTrue(@"false implies false");
+            isTrue(@"false implies {}");
+            isTrue(@"{} implies true");
+            isTrue(@"({} implies false).empty()");
+            isTrue(@"({} implies {}).empty()");
         }
 
         [TestMethod, TestCategory("FhirPath")]
         public void TestLogicalShortcut()
         {
-            Assert.IsTrue(PathExpression.IsTrue(@"true or (1/0 = 0)", testInput));
-            Assert.IsTrue(PathExpression.IsTrue(@"(false and (1/0 = 0)) = false", testInput));
+            isTrue(@"true or (1/0 = 0)");
+            isTrue(@"(false and (1/0 = 0)) = false");
         }
 
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpression()
-        {            
-            Assert.IsTrue(PathExpression.IsTrue(@"(Patient.identifier.where( use = ( 'offic' + 'ial')) = 
-                       Patient.identifier.skip(8/2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = 
-                        Patient.identifier.first())", testInput));
+        {
+            isTrue(@"(Patient.identifier.where( use = ( 'offic' + 'ial')) = 
+                       Patient.identifier.skip(8 div 2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = 
+                        Patient.identifier.first())");
 
             //// xpath gebruikt $current for $focus....waarom dat niet gebruiken?
-            //Assert.IsTrue(PathExpression.IsTrue(
+            //isTrue(
             //      @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and 
             //            $focus.code = 'owner').log('after owner').$parent.$parent.organization.log('org')
             //            .where(display.startsWith('Walt')).resolve().identifier.first().value = 'Gastro'", navigator,
             //                    new TestEvaluationContext()));
 
             ////// why is in an operator and not a function?
-            //Assert.IsTrue(PathExpression.IsTrue(
+            //isTrue(
             //     @"(Patient.identifier.where(use='official') in Patient.identifier) and
             //           (Patient.identifier.first() in Patient.identifier.tail()).not()", navigator));
 
-            //Assert.IsTrue(PathExpression.IsTrue(
+            //isTrue(
             //    @"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
             //            3 + Patient.identifier.count()", navigator));
 
-            //Assert.IsTrue(PathExpression.IsTrue(
+            //isTrue(
             //            @"(1|2|3|4|5).where($focus > 2 and $focus <= 4) = (3|4)", navigator));
 
-            //Assert.IsTrue(PathExpression.IsTrue(
+            //isTrue(
             //            @"Patient.name.select(given|family).count() = 2", navigator));
 
-            //Assert.IsTrue(PathExpression.IsTrue(
+            //isTrue(
             //        @"Patient.**.contains('wne') = contact.relationship.coding.code and
             //        Patient.**.matches('i.*/gif') in Patient.photo.*", navigator));
 
-            //Assert.IsTrue(PathExpression.IsTrue(
+            //isTrue(
             //    @"'m' + gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
             //        .substring(1,4) + 
             //        gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
             //        .substring(5) = 'metrosexual'", navigator));
 
-            //Assert.IsTrue(PathExpression.IsTrue(
+            //isTrue(
             //        @"Patient.identifier.any(use='official') and identifier.where(use='usual').any()", navigator));
 
-            //Assert.IsTrue(PathExpression.IsTrue(
+            //isTrue(
             //        @"gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
             //        .select('m' + $focus.substring(1,4) + $focus.substring(5)) = 'metrosexual'", navigator));
 
-            //Assert.IsTrue(PathExpression.IsTrue(
+            //isTrue(
             //        @"Patient.**.where($focus.contains('222')).item(1) = $context.contained.address.line", navigator));
         }
 
@@ -219,7 +233,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void TestExpressionSubstringFunction()
         {
             // Check that date comes in
-            //Assert.IsTrue(PathExpression.IsTrue("QuestionnaireResponse.group.group.where(linkId=\"Section - C\").question.where(linkId=\"C1\").answer.group.where(linkId = \"C1fields\").question.where(linkId = \"DateReturnToNormalDuties\").answer.valueDate.empty()", navigator));
+            //isTrue("QuestionnaireResponse.group.group.where(linkId=\"Section - C\").question.where(linkId=\"C1\").answer.group.where(linkId = \"C1fields\").question.where(linkId = \"DateReturnToNormalDuties\").answer.valueDate.empty()", navigator));
 
             //Assert.IsFalse(PathExpression.IsTrue("QuestionnaireResponse.group.group.where(linkId=\"Section - C\").question.where(linkId=\"C1\").answer.group.where(linkId = \"C1fields\").question.where(linkId = \"DateReturnToNormalDuties\").answer.valueDate.empty().not()", navigator));
 
@@ -234,7 +248,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void TestExpressionRegexFunction()
         {
             // Check that date comes in
-            //Assert.IsTrue(PathExpression.IsTrue("Patient.identifier.where(system=\"urn:oid:0.1.2.3.4.5.6.7\").value.matches(\"^[1-6]+$\")", navigator));
+            //isTrue("Patient.identifier.where(system=\"urn:oid:0.1.2.3.4.5.6.7\").value.matches(\"^[1-6]+$\")", navigator));
 
             //Assert.IsFalse(PathExpression.IsTrue("Patient.identifier.where(system=\"urn:oid:0.1.2.3.4.5.6.7\").value.matches(\"^[1-3]+$\")", navigator));
 
@@ -244,24 +258,5 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             // Assert.AreEqual(null, PathExpression.Evaluate("Patient.birthDate2.substring(0,10)", tree).ToString());
         }
-
-        [TestMethod, TestCategory("FhirPath")]
-        public void TestExpression2()
-        {
-            //var result = Grammar.Expr.TryParse("Patient.deceased[x]");
-
-            //if (result.WasSuccessful)
-            //{
-            //    var evaluator = result.Value;
-            //    var resultNodes = evaluator.Select(tree);
-            //    Assert.AreEqual(1, resultNodes.Count());
-            //}
-            //else
-            //{
-            //    Debug.WriteLine("Expectations: " + String.Join(",", result.Expectations));
-            //    Assert.Fail(result.ToString());
-            //}
-        }
-
     }
 }

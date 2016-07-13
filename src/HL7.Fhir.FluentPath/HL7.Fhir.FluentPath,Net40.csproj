@@ -60,7 +60,6 @@
     <Compile Include="ElementsModel\IElementNavigator.cs" />
     <Compile Include="FluentPath\Functions\EqualityOperators.cs" />
     <Compile Include="FluentPath\Functions\LogicOperators.cs" />
-    <Compile Include="FluentPath\Functions\MathOperators.cs" />
     <Compile Include="FluentPath\IElementNavigatorExtensions.cs" />
     <Compile Include="FluentPath\IValueProviderExtensions.cs" />
     <Compile Include="FluentPath\IValueProviderListExtensions.cs" />
