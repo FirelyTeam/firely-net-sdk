@@ -31,7 +31,7 @@ namespace HL7.Fhir.FluentPath
 
         public override Evaluator VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
         {
-            return Return(FhirValueList.Empty());
+            return Return(FhirValueList.Empty);
         }
 
         public override Evaluator VisitVariableRef(FP.VariableRefExpression expression)

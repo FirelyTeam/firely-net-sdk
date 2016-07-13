@@ -38,7 +38,7 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             try
             {
-                return CastToSingleValue<T>(source);
+                return Typecasts.CastTo<T>(source);
             }
             catch (InvalidCastException ice)
             {
@@ -48,44 +48,8 @@ namespace Hl7.Fhir.FluentPath.Binding
 
         public static T CastToSingleValue<T>(object source)
         {
-            if (source is T)
-                return (T)source;
-
-            if (source is IEnumerable<IValueProvider>)
-            {
-                var ifp = (IEnumerable<IValueProvider>)source;
-
-                if (ifp.Any())
-                {
-                    if (ifp.Skip(1).Any())
-                        throw new InvalidCastException("expecting only a single value");
-                    source = ifp.Single();
-                }
-                else
-                    return default(T);
-            }
-
-            if (source is T)
-                return (T)source;
-
-            if (source is IValueProvider)
-            {
-                if (source == null)
-                    return default(T);
-
-                var val = (IValueProvider)source;
-                source = val.Value;
-
-                if (source == null) return default(T);
-            }
-
-            if (source is T)
-                return (T)source;
-
-            if (source is long && typeof(T) == typeof(decimal))
-                return (T)System.Convert.ChangeType(source, typeof(decimal));
-
-            throw new InvalidCastException("cannot cast argument of type '{0}' to a '{1}'".FormatWith(source.GetType().Name, typeof(T).Name));
+            return Typecasts.CastTo<T>(source);
         }
+    
     }
 }

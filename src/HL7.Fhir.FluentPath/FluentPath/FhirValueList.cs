@@ -26,12 +26,9 @@ namespace Hl7.Fhir.FluentPath
                 return values.Select(value => value == null ? null : value is IValueProvider ? (IValueProvider)value : new ConstantValue(value));
             }
             else
-                return FhirValueList.Empty();
+                return FhirValueList.Empty;
         }
 
-        public static IEnumerable<IValueProvider> Empty()
-        {
-            return Enumerable.Empty<IValueProvider>();
-        }
+        public static readonly IEnumerable<IValueProvider> Empty = Enumerable.Empty<IValueProvider>();
     }
 }

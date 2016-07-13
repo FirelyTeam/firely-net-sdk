@@ -76,9 +76,10 @@ namespace Hl7.Fhir.FluentPath.Binding
             add("binary.mod", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaMod(b));
 
             add("substring", focus<string>(), par<long>("start"), (f, a) => f.Substring((int)a));
-            add("substring", focus<string>(), par<long>("start"), par<long>("length"), (f, a, b) => f.Substring((int)a, (int)b));
-            add("skip", anyFocus, par<long>("amount"), (f, a) => f.Skip((int)a));
-            add("first", anyFocus, f => f.First());
+            //add("substring", focus<string>(), par<long>("start"), par<long>("length"), (f, a, b) => f.Substring((int)a, (int)b));
+            add("substring", focus<string>(), par<long>("start"), par<long>("length"), (f, a, b) => mySubstring(f, (int)a, (int)b));
+            add("skip", anyFocus, par<long>("amount"), (f, a) => mySkip(f,(int)a));
+            add("first", anyFocus, f => myFirst(f));
 
             // Logic operators do not use null propagation and may do short-cut eval
             logic("binary.and", (a, b) => a.And(b));
@@ -90,6 +91,20 @@ namespace Hl7.Fhir.FluentPath.Binding
             _functions.Add(new CallBinding("where", buildWhereLambda(), new ParamBinding("condition", TypeInfo.Any)));
         }
 
+        private static string mySubstring(string s, int start, int length)
+        {
+            return s.Substring(start, length);
+        }
+
+        private static IValueProvider myFirst(IEnumerable<IValueProvider> focus)
+        {
+            return focus.First();
+        }
+
+        private static IEnumerable<IValueProvider> mySkip(IEnumerable<IValueProvider> focus, int amount)
+        {
+            return focus.Skip(amount);
+        }
 
         public static Invokee Resolve(string functionName, IEnumerable<TypeInfo> argumentTypes)
         {
@@ -150,7 +165,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             {
                 var left = args.First();
                 var right = args.Skip(1).First();
-                return castResult(func(()=>left(ctx, f).BooleanEval(), ()=>right(ctx, f).BooleanEval()));
+                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(()=>left(ctx, f).BooleanEval(), ()=>right(ctx, f).BooleanEval()));
             };
         }
 
@@ -190,7 +205,7 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             return (ctx, focus, args) =>
             {
-                return PropEmpty(focus, f => castResult(b(focusBinding.Bind<F>(f))));
+                return PropEmpty(focus, f => Typecasts.WrapNative<F>(focusBinding, b, focus));
             };
         }
 
@@ -201,22 +216,21 @@ namespace Hl7.Fhir.FluentPath.Binding
                 return
                     PropEmpty(focus, f =>
                         PropEmpty(args.First()(ctx, focus), a1 =>
-                            castResult(b(focusBinding.Bind<F>(f), binding1.Bind<A>(a1)))));
+                            Typecasts.WrapNative<F, A>(focusBinding, binding1, b, focus, a1))); 
             };
         }
 
         private static Invokee buildNullPropCall<F,A, B>(FocusBinding<F> focusBinding, Func<F,A,B,object> b, ParamBinding<A> binding1, ParamBinding<B> binding2)
         {
             return (ctx, focus, args) =>
-            {              
+            {
                 return
                     PropEmpty(focus, f =>
                         PropEmpty(args.First()(ctx, focus), a1 =>
                             PropEmpty(args.Skip(1).First()(ctx, focus), a2 =>
-                                castResult(b(focusBinding.Bind<F>(f), binding1.Bind<A>(a1), binding2.Bind<B>(a2))))));
+                                Typecasts.WrapNative<F, A, B>(focusBinding, binding1, binding2, b, f, a1, a2))));
             };
         }
-
 
         private static IEnumerable<U> PropEmpty<T,U>(IEnumerable<T> source, Func<IEnumerable<T>, IEnumerable<U>> f)
         {
@@ -230,24 +244,8 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             return (ctx, focus, args) =>
             {
-                return castResult(func(focus));
+                return Typecasts.WrapNative<IEnumerable<IValueProvider>>(anyFocus, func, focus);
             };
-        }
-       
-        private static IEnumerable<IValueProvider> castResult(object result)
-        {
-            // Builtins may return
-            // * null -> this is turned into an empty list of IValueProvider
-            // * A list of IValueProvider -> this is returned as-is
-            // * A single IValueProvider -> returned as a list with that single IValueProvider
-            // * Any other value -> a list with an IValueProvider with that value
-
-            if (result == null) return FhirValueList.Empty();
-
-            if (result is IEnumerable<IValueProvider>)
-                return (IEnumerable<IValueProvider>)result;
-            else
-                return FhirValueList.Create(result);
-        }
+        }            
     }
 }

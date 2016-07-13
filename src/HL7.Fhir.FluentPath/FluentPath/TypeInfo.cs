@@ -72,6 +72,8 @@ namespace HL7.Fhir.FluentPath
                 return TypeInfo.Time;
             else if (nativeType == typeof(IEnumerable<IValueProvider>))
                 return TypeInfo.Any;
+            else if (nativeType == typeof(IValueProvider))
+                return TypeInfo.Any;
             else
                 throw Error.Argument("nativeType", "Native type '{0}' is not mappable to a FluentPath type".FormatWith(nativeType.Name));
         }
