@@ -30,6 +30,12 @@ namespace HL7.Fhir.FluentPath.Functions
             throw Error.Argument("Can only negate values of type integer or decimal");
         }
 
+
+        public static long Mul(this long left, long right)
+        {
+            return left * right;
+        }
+
         public static object DynaMul(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
         {
             try

@@ -68,7 +68,12 @@ namespace Hl7.Fhir.FluentPath.Binding
             add("unary.-", anyFocus, parAny("operand"), (f, a) => a.DynaNegate());
             add("unary.+", anyFocus, parAny("operand"), (f, a) => a);
 
-            add("binary.*", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaMul(b));
+            _functions.Add(new CallBinding("binary.*", new DynaBinder()
+                    .AddCandidate((object f, long a, long b) => a * b)
+                    .AddCandidate((object f, decimal a, decimal b) => a * b)
+                    .Invoke, parAny("left"), parAny("right")));
+
+          //  add("binary.*", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaMul(b));
             add("binary./", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaDiv(b));
             add("binary.+", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaAdd(b));
             add("binary.-", anyFocus, parAny("left"), parAny("right"), (f, a, b) => a.DynaSub(b));

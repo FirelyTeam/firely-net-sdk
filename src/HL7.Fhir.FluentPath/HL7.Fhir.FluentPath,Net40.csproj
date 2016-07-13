@@ -47,6 +47,7 @@
     <Compile Include="ElementsModel\ITypeNameProvider.cs" />
     <Compile Include="FluentPath\BaseEvaluationContext.cs" />
     <Compile Include="FluentPath\Binding\BindingTable.cs" />
+    <Compile Include="FluentPath\Binding\DynaDispatcher.cs" />
     <Compile Include="FluentPath\Binding\Invokee.cs" />
     <Compile Include="FluentPath\Binding\ParamBinding.cs" />
     <Compile Include="FluentPath\Binding\Typecasts.cs" />
