@@ -58,7 +58,18 @@ namespace Hl7.Fhir.FluentPath
         }
 
 
-     
+        public static IValueProvider Last(this IEnumerable<IValueProvider> focus)
+        {
+            return focus.Reverse().First();
+        }
+
+
+        public static IEnumerable<IValueProvider> Tail(this IEnumerable<IValueProvider> focus)
+        {
+            return focus.Skip(1);
+        }
+
+
         //public static IEnumerable<IValueProvider> Any(this IEnumerable<IValueProvider> focus,
         //Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> condition)
         //{

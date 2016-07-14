@@ -106,44 +106,6 @@ namespace Hl7.Fhir.FluentPath
         //    };
         //}
 
-        //public static Evaluator First()
-        //{
-        //    return (f,_) => f.Take(1);
-        //}
-
-
-        //public static Evaluator Last()
-        //{
-        //    return (f, _) => f.Reverse().Take(1);
-        //}
-
-        //public static Evaluator Tail()
-        //{
-        //    return (f,_) => f.Skip(1);
-        //}
-
-        //public static Evaluator Skip(Evaluator num)
-        //{
-        //    return (f,c) =>
-        //    {
-        //        var ix = num(f,c).Single().AsInteger();
-        //        return f.Skip((int)ix);
-        //    };
-        //}
-
-        //public static Evaluator Take(Evaluator num)
-        //{
-        //    return (f,c) =>
-        //    {
-        //        var ix = num(f,c).Single().AsInteger();
-        //        return f.Take((int)ix);
-        //    };
-        //}
-
-        //public static Evaluator Count()
-        //{
-        //    return (f, _) => f.CountItems();
-        //}
 
         //public static Evaluator AsInteger()
         //{

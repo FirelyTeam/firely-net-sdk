@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             var values = getTestData();
             
             var result = values.EnumerateChildrenByName("Patient").EnumerateChildrenByName("identifier").EnumerateChildrenByName("use");
-            Assert.AreEqual(2, result.Count()); 
+            Assert.AreEqual(3, result.Count()); 
             Assert.AreEqual("usual", result.First().Value);
         }
 
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             var values = getTestData();
 
             var result = values.EnumerateChildrenByName("Patient").EnumerateChildrenByName("identifier").ChildrenValues("use");
-            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual(3, result.Count());
             Assert.AreEqual("usual", (string)result.First());
         }
 

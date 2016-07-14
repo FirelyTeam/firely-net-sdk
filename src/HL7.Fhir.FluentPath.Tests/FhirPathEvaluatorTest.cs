@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"1.exists()");
             isTrue(@"Patient.identifier.exists()");
             isTrue(@"Patient.dientifeir.exists().not()");
-            Assert.AreEqual(2L, PathExpression.Scalar(@"Patient.identifier.count()", testInput));
+            Assert.AreEqual(3L, PathExpression.Scalar(@"Patient.identifier.count()", testInput));
         }
 
 
@@ -63,6 +63,28 @@ namespace Hl7.Fhir.Tests.FhirPath
             var input = FhirValueList.Create(new ConstantValue("Hello world!"), new ConstantValue(4));
             //Assert.AreEqual("ello", PathExpression.Scalar(@"$this[0].substring(1, $this[1])", input));
             Assert.AreEqual("ello", PathExpression.Scalar(@"first().substring(1, %context.skip(1))", input));
+        }
+
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestSubsetting()
+        {
+            isTrue(@"Patient.identifier.item(0) = Patient.identifier.first()");
+            isTrue(@"Patient.identifier.item(2) = Patient.identifier.last()");
+            isTrue(@"Patient.identifier.item(0) | Patient.identifier.item(1)  = Patient.identifier.take(2)");
+            isTrue(@"Patient.identifier.skip(1) = Patient.identifier.tail()");
+            isTrue(@"Patient.identifier.skip(2) = Patient.identifier.last()");
+            isTrue(@"Patient.identifier.first().single()");
+
+            try
+            {
+                isTrue(@"Patient.identifier.single()");
+                Assert.Fail();
+            }
+            catch(InvalidOperationException io)
+            {
+                Assert.IsTrue(io.Message.Contains("contains more than one element"));
+            }
         }
 
 

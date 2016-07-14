@@ -54,6 +54,11 @@
     <system value="urn:oid:9.0.1.2.3.4.5.6.7"/>
     <value value="7654321"/>
   </identifier>
+  <identifier>
+    <use value="official"/>
+    <system value="http://some.other/system"/>
+    <value value="11223344"/>
+  </identifier>
   <active value ="true"/>
   <name>
     <use value="official"/>
