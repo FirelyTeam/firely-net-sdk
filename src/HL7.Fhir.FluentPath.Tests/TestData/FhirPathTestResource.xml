@@ -83,6 +83,20 @@
       <display value="Walt Disney Corporation"/>
     </organization>
   </contact>
+  <communication>
+    <preferred value="true">
+      <extension url="http://example.org/StructureDefinition/language-preference">
+        <valueCode value="in-writing" />
+      </extension>
+    </preferred>
+  </communication>
+  <communication>
+    <preferred value="true">
+      <extension url="http://example.org/StructureDefinition/language-preference">
+        <valueCode value="oral" />
+      </extension>
+    </preferred>
+  </communication>
   <managingOrganization>
     <reference value="Organization/1"/>
     <display value="ACME Healthcare, Inc"/>

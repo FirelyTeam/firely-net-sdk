@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -72,7 +73,15 @@ namespace Hl7.Fhir.FluentPath.Binding
                     var casts = actualArgs.Zip(entry.ArgTypes, (aa, ea) => Typecasts.GetImplicitCast(aa.GetType(), ea));
                     if(casts.All(c => c != null))
                     {
-                        return Typecasts.CastTo<IEnumerable<IValueProvider>>(entry.Invokee.Method.Invoke(entry.Invokee.Target, actualArgs.Zip(casts, (a, c) => c(a)).ToArray()));
+                        try
+                        {
+                            return Typecasts.CastTo<IEnumerable<IValueProvider>>(entry.Invokee.Method.Invoke(entry.Invokee.Target, actualArgs.Zip(casts, (a, c) => c(a)).ToArray()));
+                        }
+                        catch(TargetInvocationException tie)
+                        {
+                            // Unrwarp the very non-informative T.I.E, and throw the nested exception instead
+                            throw tie.InnerException;
+                        }
                     }
                 }
             }

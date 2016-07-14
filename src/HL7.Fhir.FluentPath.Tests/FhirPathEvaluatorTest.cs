@@ -163,12 +163,45 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"(false and (1/0 = 0)) = false");
         }
 
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestEquality()
+        {
+            isTrue(@"4 = 4");
+            isTrue(@"4 = 4.0");
+            isTrue(@"true = true");
+            isTrue(@"true != false");
+
+            isTrue(@"Patient.identifier = Patient.identifier");
+            isTrue(@"Patient.identifier.first() != Patient.identifier.skip(1)");
+            isTrue(@"(1|2|3) = (1|2|3)");
+            isTrue(@"(1|2|3) = (1.0|2.0|3)");
+            isTrue(@"(1|Patient.identifier|3) = (1|Patient.identifier|3)");
+            isTrue(@"(3|Patient.identifier|1) != (1|Patient.identifier|3)");
+
+            isTrue(@"Patient.gender = 'male'"); // gender has an extension
+            isTrue(@"Patient.communication.first() = Patient.communication.skip(1)");       // different extensions, same values
+
+            isTrue(@"@2015-01-01 = @2015-01-01");
+            isTrue(@"@2015-01-01 != @2015-01");
+            isTrue(@"@2015-01-01T13:40:50+00:00 = @2015-01-01T13:40:50Z");
+            isTrue(@"@T13:45:02Z = @T13:45:02+00:00");
+            isTrue(@"@T13:45:02+00:00 != @T13:45:02+01:00");
+        }
+
+
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpression()
         {
             isTrue(@"(Patient.identifier.where( use = ( 'offic' + 'ial')) = 
                        Patient.identifier.skip(8 div 2 - 3*2 + 3)) and (Patient.identifier.where(use='usual') = 
                         Patient.identifier.first())");
+
+            isTrue(@"(1|2|3|4|5).where($this > 2 and $this <= 4) = (3|4)");
+
+            //isTrue(@"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
+            //            3 + Patient.identifier.count()");
+
 
             //// xpath gebruikt $current for $focus....waarom dat niet gebruiken?
             //isTrue(
@@ -182,12 +215,6 @@ namespace Hl7.Fhir.Tests.FhirPath
             //     @"(Patient.identifier.where(use='official') in Patient.identifier) and
             //           (Patient.identifier.first() in Patient.identifier.tail()).not()", navigator));
 
-            //isTrue(
-            //    @"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
-            //            3 + Patient.identifier.count()", navigator));
-
-            //isTrue(
-            //            @"(1|2|3|4|5).where($focus > 2 and $focus <= 4) = (3|4)", navigator));
 
             //isTrue(
             //            @"Patient.name.select(given|family).count() = 2", navigator));

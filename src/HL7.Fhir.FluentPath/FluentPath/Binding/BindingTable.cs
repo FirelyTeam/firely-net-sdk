@@ -54,6 +54,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             add("builtin.children", (IEnumerable<IValueProvider> f, string a) => f.Children(a));
 
             add("binary.=", (object f, IEnumerable<IValueProvider>  a, IEnumerable<IValueProvider> b) => a.IsEqualTo(b));
+            add("binary.!=", (object f, IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b) => !a.IsEqualTo(b));
 
             add("unary.-", (object f, long a) => -a)
                 .Add((object f, decimal a) => -a);
@@ -95,6 +96,7 @@ namespace Hl7.Fhir.FluentPath.Binding
                 .Add((object f, PartialDateTime a, PartialDateTime b) => a >= b)
                 .Add((object f, Time a, Time b) => a >= b);
 
+            add("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.Union(r) );
 
             add("substring", (string f, long a) => f.Substring((int)a));
             add("substring", (string f, long a, long b) => f.Substring((int)a, (int)b));

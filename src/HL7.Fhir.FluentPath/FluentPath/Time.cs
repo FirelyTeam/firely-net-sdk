@@ -46,35 +46,53 @@ namespace Hl7.Fhir.FluentPath
             }
         }
 
+        
+        private DateTimeOffset toDTO()
+        {
+            return XmlConvert.ToDateTimeOffset("2016-01-01" + _value);
+        }
+
      
         // overload operator <
         public static bool operator <(Time a, Time b)
         {
-            return XmlConvert.ToDateTimeOffset("2016-01-01" + a._value).ToUniversalTime() < XmlConvert.ToDateTimeOffset("2016-01-01" + b._value).ToUniversalTime();
+            return a.toDTO() < b.toDTO();
         }
 
         public static bool operator <=(Time a, Time b)
         {
-            return XmlConvert.ToDateTimeOffset("2016-01-01" + a._value).ToUniversalTime() <= XmlConvert.ToDateTimeOffset("2016-01-01" + b._value).ToUniversalTime();
+            return a.toDTO() <= b.toDTO();
         }
 
 
         // overload operator >
         public static bool operator >(Time a, Time b)
         {
-            return XmlConvert.ToDateTimeOffset("2016-01-01" + a._value).ToUniversalTime() > XmlConvert.ToDateTimeOffset("2016-01-01" + b._value).ToUniversalTime();
+            return a.toDTO() > b.toDTO();
         }
 
         public static bool operator >=(Time a, Time b)
         {
-            return XmlConvert.ToDateTimeOffset("2016-01-01" + a._value).ToUniversalTime() >= XmlConvert.ToDateTimeOffset("2016-01-01" + b._value).ToUniversalTime();
+            return a.toDTO() >= b.toDTO();
         }
 
 
+        public static bool operator ==(Time a, Time b)
+        {
+            return Object.Equals(a, b);
+        }
+
+        public static bool operator !=(Time a, Time b)
+        {
+            return !Object.Equals(a, b);
+        }
+
         public override bool Equals(object obj)
         {
+            if (obj == null) return false;
+
             if (obj is Time)
-                return ((Time)obj)._value == _value;
+                return ((Time)obj).toDTO() == toDTO();
             else
                 return false;
         }

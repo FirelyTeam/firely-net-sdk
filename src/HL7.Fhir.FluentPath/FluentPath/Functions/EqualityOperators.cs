@@ -21,26 +21,30 @@ namespace HL7.Fhir.FluentPath.Functions
             var l = left.Value;
             var r = right.Value;
 
-            // Compare primitives
+            // Compare primitives (or extended primitives)
             if (l != null && r != null)
             {
                 if (l.GetType() == typeof(string) && r.GetType() == typeof(string))
-                    return ((string)l).IsEqualTo((string)r);
+                    return (string)l == (string)r;
                 else if (l.GetType() == typeof(bool) && r.GetType() == typeof(bool))
-                    return ((bool)l).IsEqualTo((bool)r);
+                    return (bool)l == (bool)r;
                 else if (l.GetType() == typeof(long) && r.GetType() == typeof(long))
-                    return ((long)l).IsEqualTo((long)r);
+                    return (long)l == (long)r;
                 else if (l.GetType() == typeof(decimal) && r.GetType() == typeof(decimal))
-                    return ((decimal)l).IsEqualTo((decimal)r);
+                    return (decimal)l == (decimal)r;
                 else if (l.GetType() == typeof(long) && r.GetType() == typeof(decimal))
-                    return ((decimal)(long)l).IsEqualTo((decimal)r);
+                    return (decimal)(long)l == (decimal)r;
                 else if (l.GetType() == typeof(decimal) && r.GetType() == typeof(long))
-                    return ((decimal)l).IsEqualTo((decimal)(long)r);
+                    return (decimal)l == (decimal)(long)r;
+                else if (l.GetType() == typeof(Time) && r.GetType() == typeof(Time))
+                    return (Time)l == (Time)r;
+                else if (l.GetType() == typeof(PartialDateTime) && r.GetType() == typeof(PartialDateTime))
+                    return (PartialDateTime)l == (PartialDateTime)r;
                 else
                     return false;
             }
 
-            // Compare complex types
+            // Compare complex types (extensions on primitives are not compared, but handled (=ignored) above
             var childrenL = left.Children();
             var childrenR = right.Children();
 
@@ -71,5 +75,16 @@ namespace HL7.Fhir.FluentPath.Functions
             // return left.ToString() == right.ToString();  -- this is what the spec says, but that's incorrect
             return left == right;
         }
+
+
+        //public static IEnumerable<IValueProvider> IsEquivalentTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
+        //{
+        //    if (!left.Any() && !right.Any()) return FhirValueList.Create(true);
+        //    if (left.Count() != right.Count()) return FhirValueList.Create(false);
+
+        //    return FhirValueList.Create(left.All((IValueProvider l) => right.Any(r => l.IsEquivalentTo(r))));
+        //}
+
+
     }
 }

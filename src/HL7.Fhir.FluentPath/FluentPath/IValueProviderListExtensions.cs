@@ -158,26 +158,7 @@ namespace Hl7.Fhir.FluentPath
         }
 
     
-        //public static IEnumerable<IValueProvider> IsEqualTo(this IEnumerable<IValueProvider> left, object value)
-        //{
-        //    var result = left.SingleOrDefault(v => Object.Equals(v.Value,value)) != null;
-        //    return FhirValueList.Create(result);
-        //}
 
-        //public static IEnumerable<IValueProvider> IsEquivalentTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        //{
-        //    if (!left.Any() && !right.Any()) return FhirValueList.Create(true);
-        //    if (left.Count() != right.Count()) return FhirValueList.Create(false);
-
-        //    return FhirValueList.Create(left.All((IValueProvider l) => right.Any(r => l.IsEquivalentTo(r))));
-        //}
-
-
-
-        //public static IEnumerable<IFhirPathValue> Union(this IEnumerable<IFhirPathValue> left, IEnumerable<IFhirPathValue> right)
-        //{
-        //    return left.Union(right);
-        //}
 
         ///// <summary>Enumerate the descendants of the specified nodes.</summary>
         ///// <typeparam name="T">The type of a tree node.</typeparam>

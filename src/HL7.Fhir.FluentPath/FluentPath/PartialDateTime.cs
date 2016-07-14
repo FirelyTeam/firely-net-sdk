@@ -52,32 +52,60 @@ namespace Hl7.Fhir.FluentPath
             }
         }
 
+        public DateTimeOffset ToUniversalTime()
+        {
+            return XmlConvert.ToDateTimeOffset(_value).ToUniversalTime();
+        }
+
+
         // overload operator <
         public static bool operator < (PartialDateTime a, PartialDateTime b)
         {
-            return XmlConvert.ToDateTimeOffset(a._value).ToUniversalTime() < XmlConvert.ToDateTimeOffset(b._value).ToUniversalTime();
+            return a.ToUniversalTime() < b.ToUniversalTime();
         }
 
         public static bool operator <=(PartialDateTime a, PartialDateTime b)
         {
-            return XmlConvert.ToDateTimeOffset(a._value).ToUniversalTime() <= XmlConvert.ToDateTimeOffset(b._value).ToUniversalTime();
+            return a.ToUniversalTime() <= b.ToUniversalTime();
         }
 
         // overload operator >
         public static bool operator >(PartialDateTime a, PartialDateTime b)
         {
-            return XmlConvert.ToDateTimeOffset(a._value).ToUniversalTime() > XmlConvert.ToDateTimeOffset(b._value).ToUniversalTime();
+            return a.ToUniversalTime() > b.ToUniversalTime();
         }
 
         public static bool operator >=(PartialDateTime a, PartialDateTime b)
         {
-            return XmlConvert.ToDateTimeOffset(a._value).ToUniversalTime() >= XmlConvert.ToDateTimeOffset(b._value).ToUniversalTime();
+            return a.ToUniversalTime() >= b.ToUniversalTime();
+        }
+
+        public static bool operator ==(PartialDateTime a, PartialDateTime b)
+        {
+            return Object.Equals(a, b);
+        }
+
+        public static bool operator !=(PartialDateTime a, PartialDateTime b)
+        {
+            return !Object.Equals(a, b);
         }
 
         public override bool Equals(object obj)
         {
+            if (obj == null) return false;
+
             if (obj is PartialDateTime)
-                return ((PartialDateTime)obj)._value == _value;
+            {
+                var other = (PartialDateTime)obj;
+
+                // If we just have a date, do a straight compare
+                // otherwise, we have date + time, and DateTimeOffset will work as expected,
+                // correctly comparing timezones
+                if (_value.Length <= 10)
+                    return _value == other._value;
+                else
+                    return ((PartialDateTime)obj).ToUniversalTime() == this.ToUniversalTime();
+            }
             else
                 return false;
         }

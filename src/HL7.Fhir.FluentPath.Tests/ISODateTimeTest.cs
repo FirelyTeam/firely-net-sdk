@@ -43,8 +43,6 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.IsFalse(PartialDateTime.TryParse("12:04:45Z", out pd));
 
             Assert.IsTrue(PartialDateTime.Parse("2012-03-04") > PartialDateTime.Parse("2012-03-01"));
-            Assert.IsTrue(PartialDateTime.Parse("2012-03-04T13:00:00Z") > PartialDateTime.Parse("2012-03-04T12:00:00Z"));
-            Assert.IsTrue(PartialDateTime.Parse("2012-03-04T13:00:00Z") < PartialDateTime.Parse("2012-03-04T18:00:00+02:00"));
 
             Assert.AreEqual(PartialDateTime.Today().ToString(), PartialDateTime.FromDateTime(DateTime.Today).ToString().Substring(0,10));
             Assert.AreEqual(PartialDateTime.Now().ToString().Substring(0, 19), PartialDateTime.FromDateTime(DateTimeOffset.Now).ToString().Substring(0, 19));
@@ -63,11 +61,33 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.AreEqual("T12:34:44Z", pd.ToString());
 
             Assert.IsFalse(Time.TryParse("12:34:44Z", out pd));
-            Assert.IsFalse(Time.TryParse("T12:34", out pd));
-            
+            Assert.IsFalse(Time.TryParse("T12:34", out pd));           
+        }
+
+        [TestMethod]
+        public void TimeComparison()
+        {
+            Assert.IsTrue(PartialDateTime.Parse("2012-03-04T13:00:00Z") > PartialDateTime.Parse("2012-03-04T12:00:00Z"));
+            Assert.IsTrue(PartialDateTime.Parse("2012-03-04T13:00:00Z") < PartialDateTime.Parse("2012-03-04T18:00:00+02:00"));
+
             Assert.IsTrue(Time.Parse("T12:34:00+00:00") > Time.Parse("T12:33:55+00:00"));
             Assert.IsTrue(Time.Parse("T13:00:00+00:00") < Time.Parse("T15:01:00+02:00"));
             Assert.IsTrue(Time.Parse("T13:00:00+00:00") > Time.Parse("T14:59:00+02:00"));
+        }
+
+        [TestMethod]
+        public void TimeEquality()
+        {
+            Assert.IsTrue(PartialDateTime.Parse("2015-01-01") == PartialDateTime.Parse("2015-01-01"));
+            Assert.IsTrue(PartialDateTime.Parse("2015-01-01") != PartialDateTime.Parse("2015-01"));
+            Assert.IsTrue(PartialDateTime.Parse("2015-01-01T13:40:50+02:00") == PartialDateTime.Parse("2015-01-01T13:40:50+02:00"));
+            Assert.IsTrue(PartialDateTime.Parse("2015-01-01T13:40:50+00:00") == PartialDateTime.Parse("2015-01-01T13:40:50Z"));
+            Assert.IsTrue(PartialDateTime.Parse("2015-01-01T13:40:50+00:10") != PartialDateTime.Parse("2015-01-01T13:40:50Z"));
+            Assert.IsTrue(PartialDateTime.Parse("2015-01-01T13:40:50+00:10") != PartialDateTime.Parse("2015-01-01"));
+
+            Assert.IsTrue(Time.Parse("T13:45:02Z") == Time.Parse("T13:45:02+00:00"));
+            Assert.IsTrue(Time.Parse("T13:45:02+01:00") == Time.Parse("T13:45:02+01:00"));
+            Assert.IsTrue(Time.Parse("T13:45:02+00:00") != Time.Parse("T13:45:02+01:00"));
         }
     }
 }

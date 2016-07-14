@@ -58,7 +58,7 @@ namespace Hl7.Fhir.FluentPath.Parser
                                         (
                                             T
                                             ([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?   #Time
-                                            (Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?  #Timezone
+                                            (Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))  #Timezone
                                         )?
                                     )?
                                 )?", RegexOptions.IgnorePatternWhitespace);     
