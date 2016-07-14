@@ -6,7 +6,6 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using HL7.Fhir.FluentPath;
 using System.Collections.Generic;
 using System.Linq;
 

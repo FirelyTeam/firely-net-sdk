@@ -1,5 +1,5 @@
 ﻿using Hl7.Fhir.Support;
-using FP = HL7.Fhir.FluentPath.Expressions;
+using FP = Hl7.Fhir.FluentPath.Expressions;
 using System.Linq.Expressions;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.FluentPath.Binding;
 
-namespace HL7.Fhir.FluentPath
+namespace Hl7.Fhir.FluentPath
 {
     internal class EvaluatorVisitor : FP.ExpressionVisitor<Evaluator>
     {

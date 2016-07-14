@@ -7,13 +7,11 @@
  */
 
 using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.FluentPath.Binding;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Support;
-using HL7.Fhir.FluentPath.Functions;
-using HL7.Fhir.FluentPath;
+using Hl7.Fhir.FluentPath.Functions;
 
 namespace Hl7.Fhir.FluentPath.Binding
 {
@@ -98,9 +96,6 @@ namespace Hl7.Fhir.FluentPath.Binding
 
             add("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.Union(r) );
 
-            add("substring", (string f, long a) => f.Substring((int)a));
-            add("substring", (string f, long a, long b) => f.Substring((int)a, (int)b));
-
             add("single", (IEnumerable<IValueProvider> f) => f.Single());
             add("skip", (IEnumerable<IValueProvider> f, long a) =>  f.Skip((int)a));
             add("first", (IEnumerable<IValueProvider> f) => f.First());
@@ -108,6 +103,13 @@ namespace Hl7.Fhir.FluentPath.Binding
             add("tail", (IEnumerable<IValueProvider> f) => f.Tail());
             add("take", (IEnumerable<IValueProvider> f, long a) => f.Take((int)a));
             add("item", (IEnumerable<IValueProvider> f, long a) => f.Item((int)a));
+
+            add("toInteger", (IValueProvider f) => f.ToInteger());
+            add("toDecimal", (IValueProvider f) => f.ToDecimal());
+            add("toString", (IValueProvider f) => f.ToStringRepresentation());
+
+            add("substring", (string f, long a) => f.Substring((int)a));
+            add("substring", (string f, long a, long b) => f.Substring((int)a, (int)b));
 
             // Logic operators do not use null propagation and may do short-cut eval
             logic("binary.and", (a, b) => a.And(b));

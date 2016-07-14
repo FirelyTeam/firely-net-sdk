@@ -7,9 +7,6 @@
  */
 
 
-using Hl7.Fhir.FluentPath.Binding;
-using Hl7.Fhir.Support;
-using HL7.Fhir.FluentPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;

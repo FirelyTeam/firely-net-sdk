@@ -1,12 +1,12 @@
-﻿using Hl7.Fhir.Support;
-using HL7.Fhir.FluentPath.Expressions;
+﻿using Hl7.Fhir.FluentPath.Expressions;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HL7.Fhir.FluentPath
+namespace Hl7.Fhir.FluentPath
 {
     internal class TreeVisualizerVisitor : ExpressionVisitor<StringBuilder>
     {

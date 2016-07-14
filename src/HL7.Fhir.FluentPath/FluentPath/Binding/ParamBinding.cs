@@ -11,8 +11,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Support;
-using HL7.Fhir.FluentPath;
-using HL7.Fhir.FluentPath.Expressions;
+using Hl7.Fhir.FluentPath.Expressions;
 
 namespace Hl7.Fhir.FluentPath.Binding
 {

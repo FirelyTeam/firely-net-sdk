@@ -6,7 +6,7 @@ using Hl7.Fhir.Support;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HL7.Fhir.FluentPath
+namespace Hl7.Fhir.FluentPath
 {
     public class TypeInfo
     {

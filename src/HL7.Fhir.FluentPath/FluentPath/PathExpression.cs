@@ -7,11 +7,10 @@
  */
 
 using Hl7.Fhir.FluentPath.Parser;
-using HL7.Fhir.FluentPath;
-using HL7.Fhir.FluentPath.Expressions;
+using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FluentPath.Expressions;
 using Sprache;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

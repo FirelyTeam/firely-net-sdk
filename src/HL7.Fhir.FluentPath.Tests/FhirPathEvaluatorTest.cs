@@ -14,7 +14,6 @@ using Hl7.Fhir.FluentPath;
 using System.Diagnostics;
 using Hl7.Fhir.FluentPath.InstanceTree;
 using Hl7.Fhir.Navigation;
-using HL7.Fhir.FluentPath;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -54,6 +53,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"Patient.identifier.exists()");
             isTrue(@"Patient.dientifeir.exists().not()");
             Assert.AreEqual(3L, PathExpression.Scalar(@"Patient.identifier.count()", testInput));
+            Assert.AreEqual(3L, PathExpression.Scalar(@"Patient.identifier.value.count()", testInput));
         }
 
 
@@ -183,6 +183,16 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             isTrue(@"true or (1/0 = 0)");
             isTrue(@"(false and (1/0 = 0)) = false");
+        }
+
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestConversions()
+        {
+            isTrue(@"(4.1).toString() = '4.1'");
+            isTrue(@"true.toString() = 'true'");
+            isTrue(@"true.toDecimal() = 1");
+            isTrue(@"Patient.identifier.value.first().toDecimal() = 654321");
         }
 
 

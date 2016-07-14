@@ -9,8 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sprache;
-using HL7.Fhir.FluentPath;
-using HL7.Fhir.FluentPath.Expressions;
+using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FluentPath.Expressions;
 
 namespace Hl7.Fhir.FluentPath.Parser
 {

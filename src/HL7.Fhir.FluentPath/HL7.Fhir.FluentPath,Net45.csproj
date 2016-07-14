@@ -54,6 +54,7 @@
     <Compile Include="FluentPath\Binding\Invokee.cs" />
     <Compile Include="FluentPath\Binding\ParamBinding.cs" />
     <Compile Include="FluentPath\Binding\Typecasts.cs" />
+    <Compile Include="FluentPath\Functions\ConversionOperators.cs" />
     <Compile Include="FluentPath\Functions\EqualityOperators.cs" />
     <Compile Include="FluentPath\Evaluator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionVisitor.cs" />
