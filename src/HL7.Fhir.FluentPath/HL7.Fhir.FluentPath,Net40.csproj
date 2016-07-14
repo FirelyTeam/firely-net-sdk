@@ -58,11 +58,11 @@
     <Compile Include="ElementsModel\IValueProvider.cs" />
     <Compile Include="ElementsModel\INameProvider.cs" />
     <Compile Include="ElementsModel\IElementNavigator.cs" />
+    <Compile Include="FluentPath\Functions\CollectionOperators.cs" />
     <Compile Include="FluentPath\Functions\ConversionOperators.cs" />
     <Compile Include="FluentPath\Functions\EqualityOperators.cs" />
     <Compile Include="FluentPath\Functions\LogicOperators.cs" />
     <Compile Include="FluentPath\IElementNavigatorExtensions.cs" />
-    <Compile Include="FluentPath\IValueProviderExtensions.cs" />
     <Compile Include="FluentPath\IValueProviderListExtensions.cs" />
     <Compile Include="FluentPath\TypeInfo.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
@@ -71,7 +71,6 @@
     <Compile Include="FluentPath\Parser\Lexer.cs" />
     <Compile Include="FluentPath\IEvaluationContext.cs" />
     <Compile Include="FluentPath\FhirValueList.cs" />
-    <Compile Include="FluentPath\Operator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionNode.cs" />
     <Compile Include="FluentPath\PartialDateTime.cs" />
     <Compile Include="FluentPath\PathExpression.cs" />

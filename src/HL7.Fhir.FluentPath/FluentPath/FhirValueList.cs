@@ -11,12 +11,6 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.FluentPath
 {
-    //public interface IElementNavigator : IValueProvider
-    //{
-    //    IEnumerable<string> GetChildNames();
-    //    IEnumerable<IElementNavigator> GetChildrenByName(string name);
-    //}
-
     public static class FhirValueList
     {
         public static IEnumerable<IValueProvider> Create(params object[] values)

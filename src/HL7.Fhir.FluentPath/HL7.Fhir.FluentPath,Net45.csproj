@@ -54,6 +54,7 @@
     <Compile Include="FluentPath\Binding\Invokee.cs" />
     <Compile Include="FluentPath\Binding\ParamBinding.cs" />
     <Compile Include="FluentPath\Binding\Typecasts.cs" />
+    <Compile Include="FluentPath\Functions\CollectionOperators.cs" />
     <Compile Include="FluentPath\Functions\ConversionOperators.cs" />
     <Compile Include="FluentPath\Functions\EqualityOperators.cs" />
     <Compile Include="FluentPath\Evaluator.cs" />
@@ -72,9 +73,7 @@
     <Compile Include="FluentPath\IEvaluationContext.cs" />
     <Compile Include="FluentPath\IElementNavigatorExtensions.cs" />
     <Compile Include="FluentPath\FhirValueList.cs" />
-    <Compile Include="FluentPath\IValueProviderExtensions.cs" />
     <Compile Include="FluentPath\IValueProviderListExtensions.cs" />
-    <Compile Include="FluentPath\Operator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionNode.cs" />
     <Compile Include="FluentPath\PartialDateTime.cs" />
     <Compile Include="FluentPath\PathExpression.cs" />

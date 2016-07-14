@@ -65,16 +65,6 @@ namespace Hl7.Fhir.FluentPath
         }
 
 
-       //public static Evaluator Extension(Evaluator url)
-        //{
-        //    return (f, c) =>
-        //    {
-        //        var u = url(f, c).AsString();
-        //        return f.Extension(u);
-        //    };
-        //}
-
-
         //public static Evaluator All(Evaluator condition)
         //{
         //    return (f,c) => f.All(elements => condition(elements,c));
@@ -97,20 +87,6 @@ namespace Hl7.Fhir.FluentPath
         //}
 
       
-        //public static Evaluator Item(Evaluator index)
-        //{
-        //    return (f,c) =>
-        //    {
-        //        var ix = index(f,c).Single().AsInteger();
-        //        return f.Item((int)ix);
-        //    };
-        //}
-
-
-        //public static Evaluator AsInteger()
-        //{
-        //    return (f,_) => f.IntegerEval();
-        //}
 
         //public static Evaluator StartsWith(Evaluator prefix)
         //{

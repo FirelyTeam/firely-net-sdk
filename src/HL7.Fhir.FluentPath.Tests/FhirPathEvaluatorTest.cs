@@ -221,6 +221,31 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"@T13:45:02+00:00 != @T13:45:02+01:00");
         }
 
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestCollectionFunctions()
+        {
+            //isTrue(@"Patient.identifier.use.distinct() = ('usual', 'official')");
+            isTrue(@"Patient.identifier.use.distinct().count() = 2");
+            isTrue(@"Patient.identifier.use.isDistinct() = false");
+            isTrue(@"Patient.identifier.system.isDistinct()");
+            isTrue(@"(3|4).isDistinct()");
+            isTrue(@"{}.isDistinct().empty()");
+
+            isTrue(@"Patient.identifier.skip(1).subsetOf(%context.Patient.identifier)");
+            isTrue(@"Patient.identifier.supersetOf(%context.Patient.identifier)");
+            isTrue(@"Patient.identifier.supersetOf({}).empty()");
+            isTrue(@"{}.subsetOf(%context.Patient.identifier).empty()");
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestCollectionOperators()
+        {
+            isTrue(@"Patient.identifier.last() in Patient.identifier");
+            isTrue(@"4 in (3|4.0|5)");
+            isTrue(@"Patient.identifier contains Patient.identifier.last()");
+            isTrue(@"(3|4.0|5) contains 4");
+        }
+
 
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpression()

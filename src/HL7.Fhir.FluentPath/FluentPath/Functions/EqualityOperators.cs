@@ -86,5 +86,27 @@ namespace Hl7.Fhir.FluentPath.Functions
         //}
 
 
+        internal class ValueProviderEqualityComparer : IEqualityComparer<IValueProvider>
+        {
+            public bool Equals(IValueProvider x, IValueProvider y)
+            {
+                if (x == null && y == null) return true;
+                if (x == null || y == null) return false;
+
+                return x.IsEqualTo(y);
+            }
+
+            public int GetHashCode(IValueProvider value)
+            {
+                var result = value.Value != null ? value.Value.GetHashCode() : 0;
+
+                if (value is IElementNavigator)
+                {
+                    result ^= (((IElementNavigator)value).GetChildNames().SingleOrDefault() ?? "key").GetHashCode();
+                }
+
+                return result;
+            }
+        }
     }
 }

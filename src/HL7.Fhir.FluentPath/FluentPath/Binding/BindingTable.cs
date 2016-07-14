@@ -45,7 +45,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             // Functions that operate on the focus, without null propagation
             focus("empty", f => !f.Any());
             focus("exists", f => f.Any());
-            focus("count", f => f.CountItems());
+            focus("count", f => f.Count());
 
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
             add("not", (IEnumerable<IValueProvider> f) => f.Not());
@@ -95,6 +95,12 @@ namespace Hl7.Fhir.FluentPath.Binding
                 .Add((object f, Time a, Time b) => a >= b);
 
             add("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.Union(r) );
+            add("binary.contains", (object f, IEnumerable<IValueProvider> a, IValueProvider b) => a.Contains(b) );
+            add("binary.in", (object f, IValueProvider a, IEnumerable<IValueProvider> b) => b.Contains(a));
+            add("distinct", (IEnumerable<IValueProvider> f) => f.Distinct());
+            add("isDistinct", (IEnumerable<IValueProvider> f) => f.IsDistinct());
+            add("subsetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => f.SubsetOf(a));
+            add("supersetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => a.SubsetOf(f));
 
             add("single", (IEnumerable<IValueProvider> f) => f.Single());
             add("skip", (IEnumerable<IValueProvider> f, long a) =>  f.Skip((int)a));

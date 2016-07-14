@@ -7,6 +7,7 @@
  */
 
 
+using Hl7.Fhir.FluentPath.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,28 +44,6 @@ namespace Hl7.Fhir.FluentPath
             return !(focus.BooleanEval().Value);
         }
 
-        public static long CountItems(this IEnumerable<IValueProvider> focus)
-        {
-            return focus.Count();
-        }
-
-
-        public static IEnumerable<IValueProvider> Item(this IEnumerable<IValueProvider> focus, int index)
-        {
-            return focus.Skip(index).Take(1);
-        }
-
-
-        public static IValueProvider Last(this IEnumerable<IValueProvider> focus)
-        {
-            return focus.Reverse().First();
-        }
-
-
-        public static IEnumerable<IValueProvider> Tail(this IEnumerable<IValueProvider> focus)
-        {
-            return focus.Skip(1);
-        }
 
 
         //public static IEnumerable<IValueProvider> Any(this IEnumerable<IValueProvider> focus,
@@ -84,12 +63,6 @@ namespace Hl7.Fhir.FluentPath
         //        Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> mapper)
         //{
         //    return focus.SelectMany(v => mapper(FhirValueList.Create(v)));
-        //}
-
-
-        //public static IEnumerable<IValueProvider> Distinct(this IEnumerable<IValueProvider> focus)
-        //{
-        //    return focus.Distinct(new FhirPathValueEqualityComparer());
         //}
 
 
@@ -221,26 +194,7 @@ namespace Hl7.Fhir.FluentPath
         //    return nodeSet.SelectMany(node => node.PrecedingSiblings());
         //}
 
-        //class FhirPathValueEqualityComparer : IEqualityComparer<IValueProvider>
-        //{
-        //    public bool Equals(IValueProvider x, IValueProvider y)
-        //    {
-        //        var res = x.IsEqualTo(y);
-        //        return res != null && res.Value is bool &&  ((bool)res.Value) == true;
-        //    }
-
-        //    public int GetHashCode(IValueProvider value)
-        //    {
-        //        var result = value.Value != null ? value.Value.GetHashCode() : 0;
-
-        //        if (value is IElementNavigator)
-        //        {
-        //            result ^= (((IElementNavigator)value).GetChildNames().SingleOrDefault() ?? "key").GetHashCode();
-        //        }
-
-        //        return result;
-        //    }
-        //}
+   
     }
 }
 
