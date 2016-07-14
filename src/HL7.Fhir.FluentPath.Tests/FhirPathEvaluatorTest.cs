@@ -61,7 +61,14 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void TestDynaBinding()
         {
             var input = FhirValueList.Create(new ConstantValue("Hello world!"), new ConstantValue(4));
-            //Assert.AreEqual("ello", PathExpression.Scalar(@"$this[0].substring(1, $this[1])", input));
+            //TODO: Improve error on this:
+            // Assert.AreEqual("ello", PathExpression.Scalar(@"substring(1,%context[1])", input));
+            
+            Assert.AreEqual("ello", PathExpression.Scalar(@"($this[0]).substring(1,%context[1])", input));
+
+            //TODO: Shoul be able to parse this:
+            //Assert.AreEqual("ello", PathExpression.Scalar(@"$this[0].substring(1,%context[1])", input));
+
             Assert.AreEqual("ello", PathExpression.Scalar(@"first().substring(1, %context.skip(1))", input));
         }
 
@@ -69,9 +76,9 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestSubsetting()
         {
-            isTrue(@"Patient.identifier.item(0) = Patient.identifier.first()");
-            isTrue(@"Patient.identifier.item(2) = Patient.identifier.last()");
-            isTrue(@"Patient.identifier.item(0) | Patient.identifier.item(1)  = Patient.identifier.take(2)");
+            isTrue(@"Patient.identifier[0] = Patient.identifier.first()");
+            isTrue(@"Patient.identifier[2] = Patient.identifier.last()");
+            isTrue(@"Patient.identifier[0] | Patient.identifier[1]  = Patient.identifier.take(2)");
             isTrue(@"Patient.identifier.skip(1) = Patient.identifier.tail()");
             isTrue(@"Patient.identifier.skip(2) = Patient.identifier.last()");
             isTrue(@"Patient.identifier.first().single()");
@@ -106,7 +113,6 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestMath()
         {
-            //            Assert.AreEqual(-1.5, PathExpression.Scalar(@"3 * -0.5", navigator));
             isTrue(@"-4.5 + 4.5 = 0");
             isTrue(@"4/2 = 2");
             isTrue(@"2/4 = 0.5");
@@ -116,7 +122,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"2.0/4 = 0.5");
             isTrue(@"2.0 * 4 = 8");
             isTrue(@"2 * 4.1 = 8.2");
-//            isTrue(@"-0.5 * -0.5 = -0.25", navigator));
+            isTrue(@"-0.5 * 0.5 = -0.25");
             isTrue(@"5 - 4.5 = 0.5");
             isTrue(@"9.5 - 4.5 = 5");
             isTrue(@"5 + 4.5 = 9.5");
@@ -224,7 +230,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestCollectionFunctions()
         {
-            //isTrue(@"Patient.identifier.use.distinct() = ('usual', 'official')");
+            isTrue(@"Patient.identifier.use.distinct() = ('usual' | 'official')");
             isTrue(@"Patient.identifier.use.distinct().count() = 2");
             isTrue(@"Patient.identifier.use.isDistinct() = false");
             isTrue(@"Patient.identifier.system.isDistinct()");
@@ -244,6 +250,8 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"4 in (3|4.0|5)");
             isTrue(@"Patient.identifier contains Patient.identifier.last()");
             isTrue(@"(3|4.0|5) contains 4");
+            isTrue(@"({} contains 4).empty()");
+            isTrue(@"(4 in {}).empty()");
         }
 
 
@@ -259,6 +267,14 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
                         3 + Patient.identifier.count()");
 
+            isTrue(@"(Patient.identifier.where(use='official').last() in Patient.identifier) and
+                       (Patient.identifier.first() in Patient.identifier.tail()).not()");
+
+            // TODO: Better error reporting for this:
+            //isTrue(@"(Patient.identifier.where(use='official') in Patient.identifier) and
+            //           (Patient.identifier.first() in Patient.identifier.tail()).not()");
+
+
             //// xpath gebruikt $current for $focus....waarom dat niet gebruiken?
             //isTrue(
             //      @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and 
@@ -266,10 +282,6 @@ namespace Hl7.Fhir.Tests.FhirPath
             //            .where(display.startsWith('Walt')).resolve().identifier.first().value = 'Gastro'", navigator,
             //                    new TestEvaluationContext()));
 
-            ////// why is in an operator and not a function?
-            //isTrue(
-            //     @"(Patient.identifier.where(use='official') in Patient.identifier) and
-            //           (Patient.identifier.first() in Patient.identifier.tail()).not()", navigator));
 
 
             //isTrue(

@@ -108,7 +108,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             add("last", (IEnumerable<IValueProvider> f) => f.Last());
             add("tail", (IEnumerable<IValueProvider> f) => f.Tail());
             add("take", (IEnumerable<IValueProvider> f, long a) => f.Take((int)a));
-            add("item", (IEnumerable<IValueProvider> f, long a) => f.Item((int)a));
+            add("builtin.item", (IEnumerable<IValueProvider> f, long a) => f.Item((int)a));
 
             add("toInteger", (IValueProvider f) => f.ToInteger());
             add("toDecimal", (IValueProvider f) => f.ToDecimal());

@@ -65,7 +65,7 @@ namespace Hl7.Fhir.FluentPath.Parser
         {
             return Function(focus)
                 .Or(Lexer.Identifier.Select(i => new ChildExpression(focus, i)))
-                .XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
+                //.XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
                 .Token();
         }
 
@@ -75,6 +75,7 @@ namespace Hl7.Fhir.FluentPath.Parser
             .XOr(Lexer.ExternalConstant.Select(n => (Expression)new VariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
             .XOr(BracketExpr)
             .XOr(EmptyList)
+            .XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
             .Token()
             .Named("Term");
 
@@ -115,7 +116,7 @@ namespace Hl7.Fhir.FluentPath.Parser
         // | expression '[' expression ']'                             #indexerExpression
         public static readonly Parser<Expression> IndexerExpression =
             InvocationExpression.Then(
-                invoc => Parse.Contained(Expression, Parse.Char('['), Parse.Char(']')).Select(ix => new IndexerExpression(invoc, ix))
+                invoc => Parse.Contained(Expression, Parse.Char('[').Token(), Parse.Char(']').Token()).Select(ix => new IndexerExpression(invoc, ix))
                 .Or(Parse.Return(invoc)));
 
         // | ('+' | '-') expression                                    #polarityExpression
@@ -158,8 +159,11 @@ namespace Hl7.Fhir.FluentPath.Parser
         // | expression('=' | '~' | '!=' | '!~' | '<>') expression    #equalityExpression
         public static readonly Parser<Expression> EqExpression = BinaryExpression(Lexer.EqOperator, TypeExpression);
 
+        // | expression('in' | 'contains') expression                 #membershipExpression
+        public static readonly Parser<Expression> MembershipExpression = BinaryExpression(Lexer.MembershipOperator, EqExpression);
+
         // | expression 'and' expression                               #andExpression
-        public static readonly Parser<Expression> AndExpression = BinaryExpression(Lexer.AndOperator, EqExpression);
+        public static readonly Parser<Expression> AndExpression = BinaryExpression(Lexer.AndOperator, MembershipExpression);
 
         // | expression('or' | 'xor') expression                      #orExpression
         public static readonly Parser<Expression> OrExpression = BinaryExpression(Lexer.OrOperator, AndExpression);
