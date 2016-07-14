@@ -117,6 +117,9 @@ namespace Hl7.Fhir.FluentPath.Binding
             add("substring", (string f, long a) => f.Substring((int)a));
             add("substring", (string f, long a, long b) => f.Substring((int)a, (int)b));
 
+            add("today", (object f) => PartialDateTime.Today());
+            add("now", (object f) => PartialDateTime.Now());
+
             // Logic operators do not use null propagation and may do short-cut eval
             logic("binary.and", (a, b) => a.And(b));
             logic("binary.or", (a, b) => a.Or(b));

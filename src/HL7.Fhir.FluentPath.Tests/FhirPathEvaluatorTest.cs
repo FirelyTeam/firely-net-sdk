@@ -256,9 +256,8 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             isTrue(@"(1|2|3|4|5).where($this > 2 and $this <= 4) = (3|4)");
 
-            //isTrue(@"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
-            //            3 + Patient.identifier.count()");
-
+            isTrue(@"(1|2|2|3|Patient.identifier.first()|Patient.identifier).distinct().count() = 
+                        3 + Patient.identifier.count()");
 
             //// xpath gebruikt $current for $focus....waarom dat niet gebruiken?
             //isTrue(
@@ -297,21 +296,24 @@ namespace Hl7.Fhir.Tests.FhirPath
             //        @"Patient.**.where($focus.contains('222')).item(1) = $context.contained.address.line", navigator));
         }
 
-        //[TestMethod, TestCategory("FhirPath")]
-        //public void TestExpressionTodayFunction()
-        //{
-        //    // Check that date comes in
-        //    Assert.IsTrue(PartialDateTime.Parse(DateTime.Today.ToFhirDate()).ToString(), PathExpression.Evaluate("today()", tree).AsDateTime().ToString());
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestExpressionTodayFunction()
+        {
+            // Check that date comes in
+            Assert.AreEqual(PartialDateTime.Today(), PathExpression.Scalar("today()", testInput));
 
-        //    // Check greater than
-        //    Assert.IsTrue(PathExpression.Predicate("today() < " + DateTime.Today.AddDays(1).ToFhirDate(), tree));
+            // Check greater than
+            isTrue("today() < @" + PartialDateTime.FromDateTime(DateTime.Today.AddDays(1)));
 
-        //    // Check less than
-        //    Assert.IsTrue(PathExpression.Predicate("today() > " + DateTime.Today.AddDays(-1).ToFhirDate(), tree));
+            // Check less than
+            isTrue("today() > @" + PartialDateTime.FromDateTime(DateTime.Today.AddDays(-1)));
 
-        //    // Check ==
-        //    Assert.IsTrue(PathExpression.Predicate("today() = " + DateTime.Today.ToFhirDate(), tree));
-        //}
+            // Check ==
+            isTrue("today() = @" + PartialDateTime.Today());
+
+            isTrue("now() > @" + PartialDateTime.Today());
+            isTrue("now() >= @" + PartialDateTime.Now());
+        }
 
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpressionSubstringFunction()

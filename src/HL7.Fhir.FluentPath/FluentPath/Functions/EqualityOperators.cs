@@ -102,7 +102,9 @@ namespace Hl7.Fhir.FluentPath.Functions
 
                 if (value is IElementNavigator)
                 {
-                    result ^= (((IElementNavigator)value).GetChildNames().SingleOrDefault() ?? "key").GetHashCode();
+                    var childnames = String.Concat(((IElementNavigator)value).GetChildNames());
+                    if (!String.IsNullOrEmpty(childnames))
+                        result ^=  childnames.GetHashCode();
                 }
 
                 return result;
