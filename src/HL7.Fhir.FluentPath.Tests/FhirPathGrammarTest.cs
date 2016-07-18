@@ -96,17 +96,22 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Gramm_Expression_Indexer()
         {
-            var parser = Grammar.IndexerExpression.End();
+            var parser = Grammar.InvocationExpression.End();
 
             AssertParser.SucceedsMatch(parser, "Patient.name", patientName);
             AssertParser.SucceedsMatch(parser, "Patient.name [4 ]",
                     new IndexerExpression(patientName, new ConstantExpression(4)));
+            AssertParser.SucceedsMatch(parser, "$this[4].name",
+                new ChildExpression(
+                    new IndexerExpression(AxisExpression.This, new ConstantExpression(4)),
+                    "name"));
 
             AssertParser.FailsMatch(parser, "Patient.name[");
             AssertParser.FailsMatch(parser, "Patient.name]");
             AssertParser.FailsMatch(parser, "Patient.name[]");
             AssertParser.FailsMatch(parser, "Patient.name[4,]");
             AssertParser.FailsMatch(parser, "Patient.name[4,5]");
+            
         }
 
         [TestMethod, TestCategory("FhirPath")]

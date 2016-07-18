@@ -61,7 +61,7 @@ namespace Hl7.Fhir.FluentPath.Parser
         }
 
 
-        public static Parser<Expression> Invocation(Expression focus)
+        public static Parser<Expression> FunctionInvocation(Expression focus)
         {
             return Function(focus)
                 .Or(Lexer.Identifier.Select(i => new ChildExpression(focus, i)))
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.FluentPath.Parser
 
         public static readonly Parser<Expression> Term =
             Literal
-            .Or(Invocation(AxisExpression.This))
+            .Or(FunctionInvocation(AxisExpression.This))
             .XOr(Lexer.ExternalConstant.Select(n => (Expression)new VariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
             .XOr(BracketExpr)
             .XOr(EmptyList)
@@ -102,27 +102,39 @@ namespace Hl7.Fhir.FluentPath.Parser
 
         // | expression '.' invocation                                 #invocationExpression
         public static readonly Parser<Expression> InvocationExpression =
-            Term.Then(expr => chainInvocOperatorRest(expr));
+            Term.Then(expr => chainInvocation(expr));
 
-        private static Parser<Expression> chainInvocOperatorRest(Expression first)
+        private static Parser<Expression> chainInvocation(Expression focus)
         {
-            if (first == null) throw new ArgumentNullException("first");
+            if (focus == null) throw new ArgumentNullException("focus");
 
-            return Parse.Or(Parse.Char('.').Then(opvalue =>
-                            Invocation(first).Then(second => chainInvocOperatorRest(second))),
-                                Parse.Return(first));
+            return Parse.Or(Invocation(focus).Then(second => chainInvocation(second)),
+                                 Parse.Return(focus));
         }
 
-        // | expression '[' expression ']'                             #indexerExpression
-        public static readonly Parser<Expression> IndexerExpression =
-            InvocationExpression.Then(
-                invoc => Parse.Contained(Expression, Parse.Char('[').Token(), Parse.Char(']').Token()).Select(ix => new IndexerExpression(invoc, ix))
-                .Or(Parse.Return(invoc)));
+
+        public static Parser<Expression> Invocation(Expression focus)
+        {
+            return Parse.Or(DotInvocation(focus), IndexerInvocation(focus));
+        }
+
+        // '.' invocation
+        public static Parser<Expression> DotInvocation(Expression focus)
+        {
+            return Parse.Char('.').Then(op => FunctionInvocation(focus));
+        }
+
+        // '[' expression ']'                             #indexerExpression
+        public static Parser<Expression> IndexerInvocation(Expression focus)
+        {
+            return Parse.Contained(Expression, Parse.Char('[').Token(), Parse.Char(']').Token())
+                .Select(ix => new IndexerExpression(focus, ix));
+        }
 
         // | ('+' | '-') expression                                    #polarityExpression
         public static readonly Parser<Expression> PolarityExpression =
             from op in Lexer.PolarityOperator.Optional()
-            from indexer in IndexerExpression
+            from indexer in InvocationExpression
             select op.IsEmpty ? indexer : new UnaryExpression(op.Get(), indexer);
 
         public static Parser<Expression> BinaryExpression(Parser<string> oper, Parser<Expression> operands)

@@ -61,15 +61,11 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void TestDynaBinding()
         {
             var input = FhirValueList.Create(new ConstantValue("Hello world!"), new ConstantValue(4));
+            
             //TODO: Improve error on this:
             // Assert.AreEqual("ello", PathExpression.Scalar(@"substring(1,%context[1])", input));
             
-            Assert.AreEqual("ello", PathExpression.Scalar(@"($this[0]).substring(1,%context[1])", input));
-
-            //TODO: Shoul be able to parse this:
-            //Assert.AreEqual("ello", PathExpression.Scalar(@"$this[0].substring(1,%context[1])", input));
-
-            Assert.AreEqual("ello", PathExpression.Scalar(@"first().substring(1, %context.skip(1))", input));
+            Assert.AreEqual("ello", PathExpression.Scalar(@"$this[0].substring(1,%context[1])", input));        
         }
 
 
