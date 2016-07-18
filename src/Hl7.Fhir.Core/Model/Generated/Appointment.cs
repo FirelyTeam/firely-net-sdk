@@ -102,6 +102,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("noshow"), Description("No Show")]
             Noshow,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/appointmentstatus)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered in error")]
+            EnteredInError,
         }
 
         /// <summary>
@@ -299,7 +305,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow
+        /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
@@ -313,7 +319,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> _StatusElement;
         
         /// <summary>
-        /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow
+        /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

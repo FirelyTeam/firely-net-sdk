@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// = | is-a | is-not-a | regex | in | not-in
+            /// = | is-a | is-not-a | regex | in | not-in | generalizes
             /// </summary>
             [FhirElement("op", Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.FilterOperator> _OpElement;
             
             /// <summary>
-            /// = | is-a | is-not-a | regex | in | not-in
+            /// = | is-a | is-not-a | regex | in | not-in | generalizes
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1452,14 +1452,15 @@ namespace Hl7.Fhir.Model
         /// Additional identifier for the value set (e.g. HL7 v2 / CDA)
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=100)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Identifier Identifier
+        public List<Hl7.Fhir.Model.Identifier> Identifier
         {
-            get { return _Identifier; }
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
             set { _Identifier = value; OnPropertyChanged("Identifier"); }
         }
         
-        private Hl7.Fhir.Model.Identifier _Identifier;
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
         /// Logical identifier for this version of the value set
@@ -1870,7 +1871,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
-                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ConformanceResourceStatus>)StatusElement.DeepCopy();

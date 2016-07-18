@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Sat, 09 Jul 2016 13:55:21 GMT for FHIR v1.5.0
+// Model Generated on Mon, 18 Jul 2016 16:06:39 GMT for FHIR v1.5.0
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -9,9 +9,15 @@
 
 // Generated Shared Enumeration: FilterOperator
 
+// Generated Shared Enumeration: ActionSelectionBehavior
+
 // Generated Shared Enumeration: AdministrativeGender
 
-// Generated Shared Enumeration: FHIRDefinedType
+// Generated Shared Enumeration: ActionGroupingBehavior
+
+// Generated Shared Enumeration: ObservationStatus
+
+// Generated Shared Enumeration: ActionPrecheckBehavior
 
 // Generated Shared Enumeration: BindingStrength
 	// Used in model class (type): ElementDefinition.binding.strength
@@ -23,6 +29,11 @@
 // Generated Shared Enumeration: ListMode
 
 // Generated Shared Enumeration: SearchParamType
+
+// Generated Shared Enumeration: ActionCardinalityBehavior
+
+// Generated Shared Enumeration: ParticipantType
+	// Used in model class (type): ActionDefinition.participantType
 
 // Generated Shared Enumeration: ConformanceResourceStatus
 
@@ -37,6 +48,8 @@
 // Generated Shared Enumeration: DocumentReferenceStatus
 
 // Generated Shared Enumeration: MedicationAdministrationStatus
+
+// Generated Shared Enumeration: ActionRequiredBehavior
 
 // Generated Shared Enumeration: ActionRelationshipAnchor
 	// Used in model class (type): ActionDefinition.relatedAction.anchor

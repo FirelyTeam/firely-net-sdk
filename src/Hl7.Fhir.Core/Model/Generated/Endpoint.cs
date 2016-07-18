@@ -84,6 +84,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("off"), Description("Off")]
             Off,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/endpoint-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered in error")]
+            EnteredInError,
         }
 
         /// <summary>
@@ -101,7 +107,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// active | suspended | error | off
+        /// active | suspended | error | off | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
@@ -115,7 +121,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Endpoint.EndpointStatus> _StatusElement;
         
         /// <summary>
-        /// active | suspended | error | off
+        /// active | suspended | error | off | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -166,7 +172,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Organization that exposes the endpoint
+        /// Organization that manages this endpoint (may not be the organization that exposes the endpoint)
         /// </summary>
         [FhirElement("managingOrganization", InSummary=true, Order=120)]
         [References("Organization")]

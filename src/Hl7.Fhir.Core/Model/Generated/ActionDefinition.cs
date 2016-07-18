@@ -51,33 +51,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ActionDefinition"; } }
         
-        /// <summary>
-        /// The type of participant for the action
-        /// (url: http://hl7.org/fhir/ValueSet/action-participant-type)
-        /// </summary>
-        [FhirEnumeration("ParticipantType")]
-        public enum ParticipantType
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/action-participant-type)
-            /// </summary>
-            [EnumLiteral("patient"), Description("Patient")]
-            Patient,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/action-participant-type)
-            /// </summary>
-            [EnumLiteral("practitioner"), Description("Practitioner")]
-            Practitioner,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/action-participant-type)
-            /// </summary>
-            [EnumLiteral("related-person"), Description("Related Person")]
-            RelatedPerson,
-        }
-
         [FhirType("RelatedActionComponent")]
         [DataContract]
         public partial class RelatedActionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
@@ -100,7 +73,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Identifier _ActionIdentifier;
             
             /// <summary>
-            /// before | after
+            /// before | after | concurrent
             /// </summary>
             [FhirElement("relationship", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
@@ -114,7 +87,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.ActionRelationshipType> _RelationshipElement;
             
             /// <summary>
-            /// before | after
+            /// before | after | concurrent
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -635,13 +608,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("participantType", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Code<Hl7.Fhir.Model.ActionDefinition.ParticipantType>> ParticipantType_Element
+        public List<Code<Hl7.Fhir.Model.ParticipantType>> ParticipantTypeElement
         {
-            get { if(_ParticipantType_Element==null) _ParticipantType_Element = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ActionDefinition.ParticipantType>>(); return _ParticipantType_Element; }
-            set { _ParticipantType_Element = value; OnPropertyChanged("ParticipantType_Element"); }
+            get { if(_ParticipantTypeElement==null) _ParticipantTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ParticipantType>>(); return _ParticipantTypeElement; }
+            set { _ParticipantTypeElement = value; OnPropertyChanged("ParticipantTypeElement"); }
         }
         
-        private List<Code<Hl7.Fhir.Model.ActionDefinition.ParticipantType>> _ParticipantType_Element;
+        private List<Code<Hl7.Fhir.Model.ParticipantType>> _ParticipantTypeElement;
         
         /// <summary>
         /// patient | practitioner | related-person
@@ -649,16 +622,16 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IEnumerable<Hl7.Fhir.Model.ActionDefinition.ParticipantType?> ParticipantType_
+        public IEnumerable<Hl7.Fhir.Model.ParticipantType?> ParticipantType
         {
-            get { return ParticipantType_Element != null ? ParticipantType_Element.Select(elem => elem.Value) : null; }
+            get { return ParticipantTypeElement != null ? ParticipantTypeElement.Select(elem => elem.Value) : null; }
             set
             {
                 if(value == null)
-                  ParticipantType_Element = null; 
+                  ParticipantTypeElement = null; 
                 else
-                  ParticipantType_Element = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ActionDefinition.ParticipantType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ActionDefinition.ParticipantType>(elem)));
-                OnPropertyChanged("ParticipantType_");
+                  ParticipantTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ParticipantType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ParticipantType>(elem)));
+                OnPropertyChanged("ParticipantType");
             }
         }
         
@@ -766,7 +739,7 @@ namespace Hl7.Fhir.Model
                 if(SupportingEvidence != null) dest.SupportingEvidence = new List<Hl7.Fhir.Model.Attachment>(SupportingEvidence.DeepCopy());
                 if(Documentation != null) dest.Documentation = new List<Hl7.Fhir.Model.Attachment>(Documentation.DeepCopy());
                 if(RelatedAction != null) dest.RelatedAction = (Hl7.Fhir.Model.ActionDefinition.RelatedActionComponent)RelatedAction.DeepCopy();
-                if(ParticipantType_Element != null) dest.ParticipantType_Element = new List<Code<Hl7.Fhir.Model.ActionDefinition.ParticipantType>>(ParticipantType_Element.DeepCopy());
+                if(ParticipantTypeElement != null) dest.ParticipantTypeElement = new List<Code<Hl7.Fhir.Model.ParticipantType>>(ParticipantTypeElement.DeepCopy());
                 if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
                 if(Behavior != null) dest.Behavior = new List<Hl7.Fhir.Model.ActionDefinition.BehaviorComponent>(Behavior.DeepCopy());
                 if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
@@ -798,7 +771,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(SupportingEvidence, otherT.SupportingEvidence)) return false;
             if( !DeepComparable.Matches(Documentation, otherT.Documentation)) return false;
             if( !DeepComparable.Matches(RelatedAction, otherT.RelatedAction)) return false;
-            if( !DeepComparable.Matches(ParticipantType_Element, otherT.ParticipantType_Element)) return false;
+            if( !DeepComparable.Matches(ParticipantTypeElement, otherT.ParticipantTypeElement)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(Behavior, otherT.Behavior)) return false;
             if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
@@ -823,7 +796,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(SupportingEvidence, otherT.SupportingEvidence)) return false;
             if( !DeepComparable.IsExactly(Documentation, otherT.Documentation)) return false;
             if( !DeepComparable.IsExactly(RelatedAction, otherT.RelatedAction)) return false;
-            if( !DeepComparable.IsExactly(ParticipantType_Element, otherT.ParticipantType_Element)) return false;
+            if( !DeepComparable.IsExactly(ParticipantTypeElement, otherT.ParticipantTypeElement)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(Behavior, otherT.Behavior)) return false;
             if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;

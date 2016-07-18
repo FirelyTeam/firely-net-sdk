@@ -41,6 +41,9 @@ using System.ComponentModel;
 //
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// Primitive Type id
+    /// </summary>
     [FhirType("id")]
     [DataContract]
     public partial class Id : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged

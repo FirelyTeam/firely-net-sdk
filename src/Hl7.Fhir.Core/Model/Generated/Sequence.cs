@@ -577,9 +577,22 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "QualityComponent"; } }
             
             /// <summary>
+            /// Standard sequence for comparison
+            /// </summary>
+            [FhirElement("standardSequence", InSummary=true, Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept StandardSequence
+            {
+                get { return _StandardSequence; }
+                set { _StandardSequence = value; OnPropertyChanged("StandardSequence"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _StandardSequence;
+            
+            /// <summary>
             /// Start position (inclusive) of the sequence
             /// </summary>
-            [FhirElement("start", InSummary=true, Order=40)]
+            [FhirElement("start", InSummary=true, Order=50)]
             [DataMember]
             public Hl7.Fhir.Model.Integer StartElement
             {
@@ -611,7 +624,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// End position (exclusive) of the sequence
             /// </summary>
-            [FhirElement("end", InSummary=true, Order=50)]
+            [FhirElement("end", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Integer EndElement
             {
@@ -643,7 +656,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Quality score
             /// </summary>
-            [FhirElement("score", InSummary=true, Order=60)]
+            [FhirElement("score", InSummary=true, Order=70)]
             [DataMember]
             public Quantity Score
             {
@@ -656,111 +669,92 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Method for quality
             /// </summary>
-            [FhirElement("method", InSummary=true, Order=70)]
+            [FhirElement("method", InSummary=true, Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString MethodElement
+            public Hl7.Fhir.Model.CodeableConcept Method
             {
-                get { return _MethodElement; }
-                set { _MethodElement = value; OnPropertyChanged("MethodElement"); }
+                get { return _Method; }
+                set { _Method = value; OnPropertyChanged("Method"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _MethodElement;
+            private Hl7.Fhir.Model.CodeableConcept _Method;
             
             /// <summary>
-            /// Method for quality
+            /// True positives from the perspective of the truth data
+            /// </summary>
+            [FhirElement("truthTP", InSummary=true, Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDecimal TruthTPElement
+            {
+                get { return _TruthTPElement; }
+                set { _TruthTPElement = value; OnPropertyChanged("TruthTPElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDecimal _TruthTPElement;
+            
+            /// <summary>
+            /// True positives from the perspective of the truth data
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Method
+            public decimal? TruthTP
             {
-                get { return MethodElement != null ? MethodElement.Value : null; }
+                get { return TruthTPElement != null ? TruthTPElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      MethodElement = null; 
+                      TruthTPElement = null; 
                     else
-                      MethodElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Method");
+                      TruthTPElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("TruthTP");
                 }
             }
             
             /// <summary>
-            /// True positives
+            /// True positives from the perspective of the query data
             /// </summary>
-            [FhirElement("truePositives", InSummary=true, Order=80)]
+            [FhirElement("queryTP", InSummary=true, Order=100)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDecimal TruePositivesElement
+            public Hl7.Fhir.Model.FhirDecimal QueryTPElement
             {
-                get { return _TruePositivesElement; }
-                set { _TruePositivesElement = value; OnPropertyChanged("TruePositivesElement"); }
+                get { return _QueryTPElement; }
+                set { _QueryTPElement = value; OnPropertyChanged("QueryTPElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirDecimal _TruePositivesElement;
+            private Hl7.Fhir.Model.FhirDecimal _QueryTPElement;
             
             /// <summary>
-            /// True positives
+            /// True positives from the perspective of the query data
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public decimal? TruePositives
+            public decimal? QueryTP
             {
-                get { return TruePositivesElement != null ? TruePositivesElement.Value : null; }
+                get { return QueryTPElement != null ? QueryTPElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      TruePositivesElement = null; 
+                      QueryTPElement = null; 
                     else
-                      TruePositivesElement = new Hl7.Fhir.Model.FhirDecimal(value);
-                    OnPropertyChanged("TruePositives");
-                }
-            }
-            
-            /// <summary>
-            /// False positives
-            /// </summary>
-            [FhirElement("falsePositives", InSummary=true, Order=90)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirDecimal FalsePositivesElement
-            {
-                get { return _FalsePositivesElement; }
-                set { _FalsePositivesElement = value; OnPropertyChanged("FalsePositivesElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirDecimal _FalsePositivesElement;
-            
-            /// <summary>
-            /// False positives
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public decimal? FalsePositives
-            {
-                get { return FalsePositivesElement != null ? FalsePositivesElement.Value : null; }
-                set
-                {
-                    if(value == null)
-                      FalsePositivesElement = null; 
-                    else
-                      FalsePositivesElement = new Hl7.Fhir.Model.FhirDecimal(value);
-                    OnPropertyChanged("FalsePositives");
+                      QueryTPElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("QueryTP");
                 }
             }
             
             /// <summary>
             /// False negatives
             /// </summary>
-            [FhirElement("falseNegatives", InSummary=true, Order=100)]
+            [FhirElement("truthFN", InSummary=true, Order=110)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDecimal FalseNegativesElement
+            public Hl7.Fhir.Model.FhirDecimal TruthFNElement
             {
-                get { return _FalseNegativesElement; }
-                set { _FalseNegativesElement = value; OnPropertyChanged("FalseNegativesElement"); }
+                get { return _TruthFNElement; }
+                set { _TruthFNElement = value; OnPropertyChanged("TruthFNElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirDecimal _FalseNegativesElement;
+            private Hl7.Fhir.Model.FhirDecimal _TruthFNElement;
             
             /// <summary>
             /// False negatives
@@ -768,23 +762,87 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public decimal? FalseNegatives
+            public decimal? TruthFN
             {
-                get { return FalseNegativesElement != null ? FalseNegativesElement.Value : null; }
+                get { return TruthFNElement != null ? TruthFNElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      FalseNegativesElement = null; 
+                      TruthFNElement = null; 
                     else
-                      FalseNegativesElement = new Hl7.Fhir.Model.FhirDecimal(value);
-                    OnPropertyChanged("FalseNegatives");
+                      TruthFNElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("TruthFN");
                 }
             }
             
             /// <summary>
-            /// Precision (PPV)
+            /// False positives
             /// </summary>
-            [FhirElement("precision", InSummary=true, Order=110)]
+            [FhirElement("queryFP", InSummary=true, Order=120)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDecimal QueryFPElement
+            {
+                get { return _QueryFPElement; }
+                set { _QueryFPElement = value; OnPropertyChanged("QueryFPElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDecimal _QueryFPElement;
+            
+            /// <summary>
+            /// False positives
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public decimal? QueryFP
+            {
+                get { return QueryFPElement != null ? QueryFPElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      QueryFPElement = null; 
+                    else
+                      QueryFPElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("QueryFP");
+                }
+            }
+            
+            /// <summary>
+            /// False positives where the non-REF alleles in the Truth and Query Call Sets match
+            /// </summary>
+            [FhirElement("gtFP", InSummary=true, Order=130)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirDecimal GtFPElement
+            {
+                get { return _GtFPElement; }
+                set { _GtFPElement = value; OnPropertyChanged("GtFPElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirDecimal _GtFPElement;
+            
+            /// <summary>
+            /// False positives where the non-REF alleles in the Truth and Query Call Sets match
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public decimal? GtFP
+            {
+                get { return GtFPElement != null ? GtFPElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      GtFPElement = null; 
+                    else
+                      GtFPElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("GtFP");
+                }
+            }
+            
+            /// <summary>
+            /// Precision
+            /// </summary>
+            [FhirElement("precision", InSummary=true, Order=140)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal PrecisionElement
             {
@@ -795,7 +853,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _PrecisionElement;
             
             /// <summary>
-            /// Precision (PPV)
+            /// Precision
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -814,9 +872,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Recall (sensitivity)
+            /// Recall
             /// </summary>
-            [FhirElement("recall", InSummary=true, Order=120)]
+            [FhirElement("recall", InSummary=true, Order=150)]
             [DataMember]
             public Hl7.Fhir.Model.FhirDecimal RecallElement
             {
@@ -827,7 +885,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirDecimal _RecallElement;
             
             /// <summary>
-            /// Recall (sensitivity)
+            /// Recall
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -846,34 +904,34 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// F-measure
+            /// F-score
             /// </summary>
-            [FhirElement("fMeasure", InSummary=true, Order=130)]
+            [FhirElement("fScore", InSummary=true, Order=160)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirDecimal FMeasureElement
+            public Hl7.Fhir.Model.FhirDecimal FScoreElement
             {
-                get { return _FMeasureElement; }
-                set { _FMeasureElement = value; OnPropertyChanged("FMeasureElement"); }
+                get { return _FScoreElement; }
+                set { _FScoreElement = value; OnPropertyChanged("FScoreElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirDecimal _FMeasureElement;
+            private Hl7.Fhir.Model.FhirDecimal _FScoreElement;
             
             /// <summary>
-            /// F-measure
+            /// F-score
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public decimal? FMeasure
+            public decimal? FScore
             {
-                get { return FMeasureElement != null ? FMeasureElement.Value : null; }
+                get { return FScoreElement != null ? FScoreElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      FMeasureElement = null; 
+                      FScoreElement = null; 
                     else
-                      FMeasureElement = new Hl7.Fhir.Model.FhirDecimal(value);
-                    OnPropertyChanged("FMeasure");
+                      FScoreElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                    OnPropertyChanged("FScore");
                 }
             }
             
@@ -884,16 +942,19 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
+                    if(StandardSequence != null) dest.StandardSequence = (Hl7.Fhir.Model.CodeableConcept)StandardSequence.DeepCopy();
                     if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopy();
                     if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopy();
                     if(Score != null) dest.Score = (Quantity)Score.DeepCopy();
-                    if(MethodElement != null) dest.MethodElement = (Hl7.Fhir.Model.FhirString)MethodElement.DeepCopy();
-                    if(TruePositivesElement != null) dest.TruePositivesElement = (Hl7.Fhir.Model.FhirDecimal)TruePositivesElement.DeepCopy();
-                    if(FalsePositivesElement != null) dest.FalsePositivesElement = (Hl7.Fhir.Model.FhirDecimal)FalsePositivesElement.DeepCopy();
-                    if(FalseNegativesElement != null) dest.FalseNegativesElement = (Hl7.Fhir.Model.FhirDecimal)FalseNegativesElement.DeepCopy();
+                    if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
+                    if(TruthTPElement != null) dest.TruthTPElement = (Hl7.Fhir.Model.FhirDecimal)TruthTPElement.DeepCopy();
+                    if(QueryTPElement != null) dest.QueryTPElement = (Hl7.Fhir.Model.FhirDecimal)QueryTPElement.DeepCopy();
+                    if(TruthFNElement != null) dest.TruthFNElement = (Hl7.Fhir.Model.FhirDecimal)TruthFNElement.DeepCopy();
+                    if(QueryFPElement != null) dest.QueryFPElement = (Hl7.Fhir.Model.FhirDecimal)QueryFPElement.DeepCopy();
+                    if(GtFPElement != null) dest.GtFPElement = (Hl7.Fhir.Model.FhirDecimal)GtFPElement.DeepCopy();
                     if(PrecisionElement != null) dest.PrecisionElement = (Hl7.Fhir.Model.FhirDecimal)PrecisionElement.DeepCopy();
                     if(RecallElement != null) dest.RecallElement = (Hl7.Fhir.Model.FhirDecimal)RecallElement.DeepCopy();
-                    if(FMeasureElement != null) dest.FMeasureElement = (Hl7.Fhir.Model.FhirDecimal)FMeasureElement.DeepCopy();
+                    if(FScoreElement != null) dest.FScoreElement = (Hl7.Fhir.Model.FhirDecimal)FScoreElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -911,16 +972,19 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(StandardSequence, otherT.StandardSequence)) return false;
                 if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
                 if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
                 if( !DeepComparable.Matches(Score, otherT.Score)) return false;
-                if( !DeepComparable.Matches(MethodElement, otherT.MethodElement)) return false;
-                if( !DeepComparable.Matches(TruePositivesElement, otherT.TruePositivesElement)) return false;
-                if( !DeepComparable.Matches(FalsePositivesElement, otherT.FalsePositivesElement)) return false;
-                if( !DeepComparable.Matches(FalseNegativesElement, otherT.FalseNegativesElement)) return false;
+                if( !DeepComparable.Matches(Method, otherT.Method)) return false;
+                if( !DeepComparable.Matches(TruthTPElement, otherT.TruthTPElement)) return false;
+                if( !DeepComparable.Matches(QueryTPElement, otherT.QueryTPElement)) return false;
+                if( !DeepComparable.Matches(TruthFNElement, otherT.TruthFNElement)) return false;
+                if( !DeepComparable.Matches(QueryFPElement, otherT.QueryFPElement)) return false;
+                if( !DeepComparable.Matches(GtFPElement, otherT.GtFPElement)) return false;
                 if( !DeepComparable.Matches(PrecisionElement, otherT.PrecisionElement)) return false;
                 if( !DeepComparable.Matches(RecallElement, otherT.RecallElement)) return false;
-                if( !DeepComparable.Matches(FMeasureElement, otherT.FMeasureElement)) return false;
+                if( !DeepComparable.Matches(FScoreElement, otherT.FScoreElement)) return false;
                 
                 return true;
             }
@@ -931,16 +995,19 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(StandardSequence, otherT.StandardSequence)) return false;
                 if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
                 if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
                 if( !DeepComparable.IsExactly(Score, otherT.Score)) return false;
-                if( !DeepComparable.IsExactly(MethodElement, otherT.MethodElement)) return false;
-                if( !DeepComparable.IsExactly(TruePositivesElement, otherT.TruePositivesElement)) return false;
-                if( !DeepComparable.IsExactly(FalsePositivesElement, otherT.FalsePositivesElement)) return false;
-                if( !DeepComparable.IsExactly(FalseNegativesElement, otherT.FalseNegativesElement)) return false;
+                if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
+                if( !DeepComparable.IsExactly(TruthTPElement, otherT.TruthTPElement)) return false;
+                if( !DeepComparable.IsExactly(QueryTPElement, otherT.QueryTPElement)) return false;
+                if( !DeepComparable.IsExactly(TruthFNElement, otherT.TruthFNElement)) return false;
+                if( !DeepComparable.IsExactly(QueryFPElement, otherT.QueryFPElement)) return false;
+                if( !DeepComparable.IsExactly(GtFPElement, otherT.GtFPElement)) return false;
                 if( !DeepComparable.IsExactly(PrecisionElement, otherT.PrecisionElement)) return false;
                 if( !DeepComparable.IsExactly(RecallElement, otherT.RecallElement)) return false;
-                if( !DeepComparable.IsExactly(FMeasureElement, otherT.FMeasureElement)) return false;
+                if( !DeepComparable.IsExactly(FScoreElement, otherT.FScoreElement)) return false;
                 
                 return true;
             }

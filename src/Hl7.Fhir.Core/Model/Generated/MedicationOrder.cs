@@ -941,9 +941,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
+        /// Type of medication usage
+        /// </summary>
+        [FhirElement("category", Order=190)]
+        [DataMember]
+        public Hl7.Fhir.Model.Code CategoryElement
+        {
+            get { return _CategoryElement; }
+            set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Code _CategoryElement;
+        
+        /// <summary>
+        /// Type of medication usage
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Category
+        {
+            get { return CategoryElement != null ? CategoryElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  CategoryElement = null; 
+                else
+                  CategoryElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("Category");
+            }
+        }
+        
+        /// <summary>
         /// How medication should be taken
         /// </summary>
-        [FhirElement("dosageInstruction", Order=190)]
+        [FhirElement("dosageInstruction", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationOrder.DosageInstructionComponent> DosageInstruction
@@ -957,7 +989,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication supply authorization
         /// </summary>
-        [FhirElement("dispenseRequest", Order=200)]
+        [FhirElement("dispenseRequest", Order=210)]
         [DataMember]
         public Hl7.Fhir.Model.MedicationOrder.DispenseRequestComponent DispenseRequest
         {
@@ -970,7 +1002,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Any restrictions on medication substitution
         /// </summary>
-        [FhirElement("substitution", Order=210)]
+        [FhirElement("substitution", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.MedicationOrder.SubstitutionComponent Substitution
         {
@@ -983,7 +1015,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An order/prescription that this supersedes
         /// </summary>
-        [FhirElement("priorPrescription", Order=220)]
+        [FhirElement("priorPrescription", Order=230)]
         [References("MedicationOrder")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PriorPrescription
@@ -997,7 +1029,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A list of events of interest in the lifecycle
         /// </summary>
-        [FhirElement("eventHistory", Order=230)]
+        [FhirElement("eventHistory", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationOrder.EventHistoryComponent> EventHistory
@@ -1025,6 +1057,7 @@ namespace Hl7.Fhir.Model
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
                 if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+                if(CategoryElement != null) dest.CategoryElement = (Hl7.Fhir.Model.Code)CategoryElement.DeepCopy();
                 if(DosageInstruction != null) dest.DosageInstruction = new List<Hl7.Fhir.Model.MedicationOrder.DosageInstructionComponent>(DosageInstruction.DeepCopy());
                 if(DispenseRequest != null) dest.DispenseRequest = (Hl7.Fhir.Model.MedicationOrder.DispenseRequestComponent)DispenseRequest.DeepCopy();
                 if(Substitution != null) dest.Substitution = (Hl7.Fhir.Model.MedicationOrder.SubstitutionComponent)Substitution.DeepCopy();
@@ -1057,6 +1090,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+            if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.Matches(DosageInstruction, otherT.DosageInstruction)) return false;
             if( !DeepComparable.Matches(DispenseRequest, otherT.DispenseRequest)) return false;
             if( !DeepComparable.Matches(Substitution, otherT.Substitution)) return false;
@@ -1082,6 +1116,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+            if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.IsExactly(DosageInstruction, otherT.DosageInstruction)) return false;
             if( !DeepComparable.IsExactly(DispenseRequest, otherT.DispenseRequest)) return false;
             if( !DeepComparable.IsExactly(Substitution, otherT.Substitution)) return false;

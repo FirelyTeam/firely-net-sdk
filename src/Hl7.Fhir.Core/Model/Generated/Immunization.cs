@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Flag for whether immunization was given
         /// </summary>
-        [FhirElement("wasNotGiven", Order=140)]
+        [FhirElement("wasNotGiven", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean WasNotGivenElement

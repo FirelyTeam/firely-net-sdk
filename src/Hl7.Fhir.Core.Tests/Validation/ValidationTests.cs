@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Tests.Validation
             validateErrorOrFail(enc, membername: "StatusElement");
             validateErrorOrFail(enc,true);  // recursive checking shouldn't matter
 
-            enc.Status = Encounter.EncounterState.Planned;
+            enc.Status = Encounter.EncounterStatus.Planned;
 
             // Now, it should work
             DotNetAttributeValidation.Validate(enc);

@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Actor;
         
         /// <summary>
-        /// accepted | declined | tentative | in-process | completed | needs-action
+        /// accepted | declined | tentative | in-process | completed | needs-action | entered-in-error
         /// </summary>
         [FhirElement("participantStatus", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ParticipationStatus> _ParticipantStatusElement;
         
         /// <summary>
-        /// accepted | declined | tentative | in-process | completed | needs-action
+        /// accepted | declined | tentative | in-process | completed | needs-action | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

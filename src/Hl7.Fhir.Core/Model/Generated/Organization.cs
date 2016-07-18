@@ -258,9 +258,42 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// A list of alternate names that the organization is known as, or was known as in the past
+        /// </summary>
+        [FhirElement("alias", Order=130)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.FhirString> AliasElement
+        {
+            get { if(_AliasElement==null) _AliasElement = new List<Hl7.Fhir.Model.FhirString>(); return _AliasElement; }
+            set { _AliasElement = value; OnPropertyChanged("AliasElement"); }
+        }
+        
+        private List<Hl7.Fhir.Model.FhirString> _AliasElement;
+        
+        /// <summary>
+        /// A list of alternate names that the organization is known as, or was known as in the past
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> Alias
+        {
+            get { return AliasElement != null ? AliasElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if(value == null)
+                  AliasElement = null; 
+                else
+                  AliasElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                OnPropertyChanged("Alias");
+            }
+        }
+        
+        /// <summary>
         /// A contact detail for the organization
         /// </summary>
-        [FhirElement("telecom", Order=130)]
+        [FhirElement("telecom", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -274,7 +307,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An address for the organization
         /// </summary>
-        [FhirElement("address", Order=140)]
+        [FhirElement("address", Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Address> Address
@@ -288,7 +321,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The organization of which this organization forms a part
         /// </summary>
-        [FhirElement("partOf", InSummary=true, Order=150)]
+        [FhirElement("partOf", InSummary=true, Order=160)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PartOf
@@ -302,7 +335,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact for the organization for a certain purpose
         /// </summary>
-        [FhirElement("contact", Order=160)]
+        [FhirElement("contact", Order=170)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Organization.ContactComponent> Contact
@@ -316,7 +349,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Technical endpoints providing access to services operated for the organization
         /// </summary>
-        [FhirElement("endpoint", Order=170)]
+        [FhirElement("endpoint", Order=180)]
         [References("Endpoint")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -339,6 +372,7 @@ namespace Hl7.Fhir.Model
                 if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                if(AliasElement != null) dest.AliasElement = new List<Hl7.Fhir.Model.FhirString>(AliasElement.DeepCopy());
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(PartOf != null) dest.PartOf = (Hl7.Fhir.Model.ResourceReference)PartOf.DeepCopy();
@@ -365,6 +399,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(AliasElement, otherT.AliasElement)) return false;
             if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.Matches(Address, otherT.Address)) return false;
             if( !DeepComparable.Matches(PartOf, otherT.PartOf)) return false;
@@ -384,6 +419,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(AliasElement, otherT.AliasElement)) return false;
             if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
             if( !DeepComparable.IsExactly(Address, otherT.Address)) return false;
             if( !DeepComparable.IsExactly(PartOf, otherT.PartOf)) return false;

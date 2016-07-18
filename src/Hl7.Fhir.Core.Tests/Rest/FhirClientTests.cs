@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             FhirClient client = new FhirClient(testEndpoint);
             var observation = new Observation();
-            observation.Status = Observation.ObservationStatus.Preliminary;
+            observation.Status = ObservationStatus.Preliminary;
             observation.Code = new CodeableConcept("http://loinc.org", "2164-2");
             observation.Value = new SimpleQuantity()
             {

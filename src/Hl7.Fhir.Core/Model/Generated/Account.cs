@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Type;
         
         /// <summary>
-        /// active | inactive
+        /// active | inactive | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=120)]
         [DataMember]
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Code _StatusElement;
         
         /// <summary>
-        /// active | inactive
+        /// active | inactive | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -142,17 +142,17 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Valid from..to
+        /// Time window that transactions may be posted to this account
         /// </summary>
-        [FhirElement("activePeriod", InSummary=true, Order=130)]
+        [FhirElement("active", InSummary=true, Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.Period ActivePeriod
+        public Hl7.Fhir.Model.Period Active
         {
-            get { return _ActivePeriod; }
-            set { _ActivePeriod = value; OnPropertyChanged("ActivePeriod"); }
+            get { return _Active; }
+            set { _Active = value; OnPropertyChanged("Active"); }
         }
         
-        private Hl7.Fhir.Model.Period _ActivePeriod;
+        private Hl7.Fhir.Model.Period _Active;
         
         /// <summary>
         /// Base currency in which balance is tracked
@@ -181,9 +181,24 @@ namespace Hl7.Fhir.Model
         private Money _Balance;
         
         /// <summary>
+        /// The party(s) that are responsible for covering the payment of this account
+        /// </summary>
+        [FhirElement("coverage", InSummary=true, Order=160)]
+        [References("Coverage")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Coverage
+        {
+            get { if(_Coverage==null) _Coverage = new List<Hl7.Fhir.Model.ResourceReference>(); return _Coverage; }
+            set { _Coverage = value; OnPropertyChanged("Coverage"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Coverage;
+        
+        /// <summary>
         /// Transaction window
         /// </summary>
-        [FhirElement("coveragePeriod", InSummary=true, Order=160)]
+        [FhirElement("coveragePeriod", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Period CoveragePeriod
         {
@@ -196,7 +211,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What is account tied to?
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=170)]
+        [FhirElement("subject", InSummary=true, Order=180)]
         [References("Patient","Device","Practitioner","Location","HealthcareService","Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -210,7 +225,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who is responsible?
         /// </summary>
-        [FhirElement("owner", InSummary=true, Order=180)]
+        [FhirElement("owner", InSummary=true, Order=190)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Owner
@@ -224,7 +239,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Explanation of purpose/use
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=190)]
+        [FhirElement("description", InSummary=true, Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -264,9 +279,10 @@ namespace Hl7.Fhir.Model
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.Code)StatusElement.DeepCopy();
-                if(ActivePeriod != null) dest.ActivePeriod = (Hl7.Fhir.Model.Period)ActivePeriod.DeepCopy();
+                if(Active != null) dest.Active = (Hl7.Fhir.Model.Period)Active.DeepCopy();
                 if(Currency != null) dest.Currency = (Hl7.Fhir.Model.Coding)Currency.DeepCopy();
                 if(Balance != null) dest.Balance = (Money)Balance.DeepCopy();
+                if(Coverage != null) dest.Coverage = new List<Hl7.Fhir.Model.ResourceReference>(Coverage.DeepCopy());
                 if(CoveragePeriod != null) dest.CoveragePeriod = (Hl7.Fhir.Model.Period)CoveragePeriod.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
@@ -292,9 +308,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.Matches(ActivePeriod, otherT.ActivePeriod)) return false;
+            if( !DeepComparable.Matches(Active, otherT.Active)) return false;
             if( !DeepComparable.Matches(Currency, otherT.Currency)) return false;
             if( !DeepComparable.Matches(Balance, otherT.Balance)) return false;
+            if( !DeepComparable.Matches(Coverage, otherT.Coverage)) return false;
             if( !DeepComparable.Matches(CoveragePeriod, otherT.CoveragePeriod)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Owner, otherT.Owner)) return false;
@@ -313,9 +330,10 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( !DeepComparable.IsExactly(ActivePeriod, otherT.ActivePeriod)) return false;
+            if( !DeepComparable.IsExactly(Active, otherT.Active)) return false;
             if( !DeepComparable.IsExactly(Currency, otherT.Currency)) return false;
             if( !DeepComparable.IsExactly(Balance, otherT.Balance)) return false;
+            if( !DeepComparable.IsExactly(Coverage, otherT.Coverage)) return false;
             if( !DeepComparable.IsExactly(CoveragePeriod, otherT.CoveragePeriod)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Owner, otherT.Owner)) return false;

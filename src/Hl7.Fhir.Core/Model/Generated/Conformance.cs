@@ -219,6 +219,39 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
+        /// A code that indicates how the server supports conditional read.
+        /// (url: http://hl7.org/fhir/ValueSet/conditional-read-status)
+        /// </summary>
+        [FhirEnumeration("ConditionalReadStatus")]
+        public enum ConditionalReadStatus
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/conditional-read-status)
+            /// </summary>
+            [EnumLiteral("not-supported"), Description("Not Supported")]
+            NotSupported,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/conditional-read-status)
+            /// </summary>
+            [EnumLiteral("modified-since"), Description("If-Modified-Since")]
+            ModifiedSince,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/conditional-read-status)
+            /// </summary>
+            [EnumLiteral("not-match"), Description("If-None-Match")]
+            NotMatch,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/conditional-read-status)
+            /// </summary>
+            [EnumLiteral("full-support"), Description("Full Support")]
+            FullSupport,
+        }
+
+        /// <summary>
         /// A code that indicates how the server supports conditional delete.
         /// (url: http://hl7.org/fhir/ValueSet/conditional-delete-status)
         /// </summary>
@@ -331,6 +364,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/restful-interaction)
             /// </summary>
+            [EnumLiteral("batch"), Description("batch")]
+            Batch,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/restful-interaction)
+            /// </summary>
             [EnumLiteral("search-system"), Description("search-system")]
             SearchSystem,
             /// <summary>
@@ -339,39 +378,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("history-system"), Description("history-system")]
             HistorySystem,
-        }
-
-        /// <summary>
-        /// A code that indicates how transactions are supported.
-        /// (url: http://hl7.org/fhir/ValueSet/transaction-mode)
-        /// </summary>
-        [FhirEnumeration("TransactionMode")]
-        public enum TransactionMode
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/transaction-mode)
-            /// </summary>
-            [EnumLiteral("not-supported"), Description("None")]
-            NotSupported,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/transaction-mode)
-            /// </summary>
-            [EnumLiteral("batch"), Description("Batches supported")]
-            Batch,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/transaction-mode)
-            /// </summary>
-            [EnumLiteral("transaction"), Description("Transactions Supported")]
-            Transaction,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/transaction-mode)
-            /// </summary>
-            [EnumLiteral("both"), Description("Batches & Transactions")]
-            Both,
         }
 
         /// <summary>
@@ -891,7 +897,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Information about security of implementation
             /// </summary>
-            [FhirElement("security", Order=60)]
+            [FhirElement("security", InSummary=true, Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.Conformance.SecurityComponent Security
             {
@@ -930,41 +936,9 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Conformance.SystemInteractionComponent> _Interaction;
             
             /// <summary>
-            /// not-supported | batch | transaction | both
-            /// </summary>
-            [FhirElement("transactionMode", Order=90)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.Conformance.TransactionMode> TransactionMode_Element
-            {
-                get { return _TransactionMode_Element; }
-                set { _TransactionMode_Element = value; OnPropertyChanged("TransactionMode_Element"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.Conformance.TransactionMode> _TransactionMode_Element;
-            
-            /// <summary>
-            /// not-supported | batch | transaction | both
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Conformance.TransactionMode? TransactionMode_
-            {
-                get { return TransactionMode_Element != null ? TransactionMode_Element.Value : null; }
-                set
-                {
-                    if(value == null)
-                      TransactionMode_Element = null; 
-                    else
-                      TransactionMode_Element = new Code<Hl7.Fhir.Model.Conformance.TransactionMode>(value);
-                    OnPropertyChanged("TransactionMode_");
-                }
-            }
-            
-            /// <summary>
             /// Search params for searching all resources
             /// </summary>
-            [FhirElement("searchParam", Order=100)]
+            [FhirElement("searchParam", Order=90)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Conformance.SearchParamComponent> SearchParam
@@ -978,7 +952,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Definition of an operation or a custom query
             /// </summary>
-            [FhirElement("operation", Order=110)]
+            [FhirElement("operation", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Conformance.OperationComponent> Operation
@@ -992,7 +966,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Compartments served/used by system
             /// </summary>
-            [FhirElement("compartment", Order=120)]
+            [FhirElement("compartment", Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirUri> CompartmentElement
@@ -1034,7 +1008,6 @@ namespace Hl7.Fhir.Model
                     if(Security != null) dest.Security = (Hl7.Fhir.Model.Conformance.SecurityComponent)Security.DeepCopy();
                     if(Resource != null) dest.Resource = new List<Hl7.Fhir.Model.Conformance.ResourceComponent>(Resource.DeepCopy());
                     if(Interaction != null) dest.Interaction = new List<Hl7.Fhir.Model.Conformance.SystemInteractionComponent>(Interaction.DeepCopy());
-                    if(TransactionMode_Element != null) dest.TransactionMode_Element = (Code<Hl7.Fhir.Model.Conformance.TransactionMode>)TransactionMode_Element.DeepCopy();
                     if(SearchParam != null) dest.SearchParam = new List<Hl7.Fhir.Model.Conformance.SearchParamComponent>(SearchParam.DeepCopy());
                     if(Operation != null) dest.Operation = new List<Hl7.Fhir.Model.Conformance.OperationComponent>(Operation.DeepCopy());
                     if(CompartmentElement != null) dest.CompartmentElement = new List<Hl7.Fhir.Model.FhirUri>(CompartmentElement.DeepCopy());
@@ -1060,7 +1033,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Security, otherT.Security)) return false;
                 if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.Matches(Interaction, otherT.Interaction)) return false;
-                if( !DeepComparable.Matches(TransactionMode_Element, otherT.TransactionMode_Element)) return false;
                 if( !DeepComparable.Matches(SearchParam, otherT.SearchParam)) return false;
                 if( !DeepComparable.Matches(Operation, otherT.Operation)) return false;
                 if( !DeepComparable.Matches(CompartmentElement, otherT.CompartmentElement)) return false;
@@ -1079,7 +1051,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Security, otherT.Security)) return false;
                 if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.IsExactly(Interaction, otherT.Interaction)) return false;
-                if( !DeepComparable.IsExactly(TransactionMode_Element, otherT.TransactionMode_Element)) return false;
                 if( !DeepComparable.IsExactly(SearchParam, otherT.SearchParam)) return false;
                 if( !DeepComparable.IsExactly(Operation, otherT.Operation)) return false;
                 if( !DeepComparable.IsExactly(CompartmentElement, otherT.CompartmentElement)) return false;
@@ -1100,7 +1071,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Adds CORS Headers (http://enable-cors.org/)
             /// </summary>
-            [FhirElement("cors", Order=40)]
+            [FhirElement("cors", InSummary=true, Order=40)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean CorsElement
             {
@@ -1132,7 +1103,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// OAuth | SMART-on-FHIR | NTLM | Basic | Kerberos | Certificates
             /// </summary>
-            [FhirElement("service", Order=50)]
+            [FhirElement("service", InSummary=true, Order=50)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Service
@@ -1403,7 +1374,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Base System profile for all uses of resource
             /// </summary>
-            [FhirElement("profile", Order=50)]
+            [FhirElement("profile", InSummary=true, Order=50)]
             [References("StructureDefinition")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Profile
@@ -1415,9 +1386,22 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Profile;
             
             /// <summary>
+            /// Additional information about the use of the resource type
+            /// </summary>
+            [FhirElement("documentation", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Markdown Documentation
+            {
+                get { return _Documentation; }
+                set { _Documentation = value; OnPropertyChanged("Documentation"); }
+            }
+            
+            private Hl7.Fhir.Model.Markdown _Documentation;
+            
+            /// <summary>
             /// What operations are supported?
             /// </summary>
-            [FhirElement("interaction", Order=60)]
+            [FhirElement("interaction", Order=70)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Conformance.ResourceInteractionComponent> Interaction
@@ -1431,7 +1415,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// no-version | versioned | versioned-update
             /// </summary>
-            [FhirElement("versioning", Order=70)]
+            [FhirElement("versioning", Order=80)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Conformance.ResourceVersionPolicy> VersioningElement
             {
@@ -1463,7 +1447,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether vRead can return past versions
             /// </summary>
-            [FhirElement("readHistory", Order=80)]
+            [FhirElement("readHistory", Order=90)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ReadHistoryElement
             {
@@ -1495,7 +1479,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If update can commit to a new identity
             /// </summary>
-            [FhirElement("updateCreate", Order=90)]
+            [FhirElement("updateCreate", Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean UpdateCreateElement
             {
@@ -1527,7 +1511,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// If allows/uses conditional create
             /// </summary>
-            [FhirElement("conditionalCreate", Order=100)]
+            [FhirElement("conditionalCreate", Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ConditionalCreateElement
             {
@@ -1557,9 +1541,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// not-supported | modified-since | not-match | full-support
+            /// </summary>
+            [FhirElement("conditionalRead", Order=120)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.Conformance.ConditionalReadStatus> ConditionalReadElement
+            {
+                get { return _ConditionalReadElement; }
+                set { _ConditionalReadElement = value; OnPropertyChanged("ConditionalReadElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.Conformance.ConditionalReadStatus> _ConditionalReadElement;
+            
+            /// <summary>
+            /// not-supported | modified-since | not-match | full-support
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.Conformance.ConditionalReadStatus? ConditionalRead
+            {
+                get { return ConditionalReadElement != null ? ConditionalReadElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      ConditionalReadElement = null; 
+                    else
+                      ConditionalReadElement = new Code<Hl7.Fhir.Model.Conformance.ConditionalReadStatus>(value);
+                    OnPropertyChanged("ConditionalRead");
+                }
+            }
+            
+            /// <summary>
             /// If allows/uses conditional update
             /// </summary>
-            [FhirElement("conditionalUpdate", Order=110)]
+            [FhirElement("conditionalUpdate", Order=130)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ConditionalUpdateElement
             {
@@ -1591,7 +1607,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// not-supported | single | multiple - how conditional delete is supported
             /// </summary>
-            [FhirElement("conditionalDelete", Order=120)]
+            [FhirElement("conditionalDelete", Order=140)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Conformance.ConditionalDeleteStatus> ConditionalDeleteElement
             {
@@ -1623,7 +1639,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// _include values supported by the server
             /// </summary>
-            [FhirElement("searchInclude", Order=130)]
+            [FhirElement("searchInclude", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirString> SearchIncludeElement
@@ -1656,7 +1672,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// _revinclude values supported by the server
             /// </summary>
-            [FhirElement("searchRevInclude", Order=140)]
+            [FhirElement("searchRevInclude", Order=160)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.FhirString> SearchRevIncludeElement
@@ -1689,7 +1705,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Search params supported by implementation
             /// </summary>
-            [FhirElement("searchParam", Order=150)]
+            [FhirElement("searchParam", Order=170)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Conformance.SearchParamComponent> SearchParam
@@ -1709,11 +1725,13 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ResourceType>)TypeElement.DeepCopy();
                     if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
+                    if(Documentation != null) dest.Documentation = (Hl7.Fhir.Model.Markdown)Documentation.DeepCopy();
                     if(Interaction != null) dest.Interaction = new List<Hl7.Fhir.Model.Conformance.ResourceInteractionComponent>(Interaction.DeepCopy());
                     if(VersioningElement != null) dest.VersioningElement = (Code<Hl7.Fhir.Model.Conformance.ResourceVersionPolicy>)VersioningElement.DeepCopy();
                     if(ReadHistoryElement != null) dest.ReadHistoryElement = (Hl7.Fhir.Model.FhirBoolean)ReadHistoryElement.DeepCopy();
                     if(UpdateCreateElement != null) dest.UpdateCreateElement = (Hl7.Fhir.Model.FhirBoolean)UpdateCreateElement.DeepCopy();
                     if(ConditionalCreateElement != null) dest.ConditionalCreateElement = (Hl7.Fhir.Model.FhirBoolean)ConditionalCreateElement.DeepCopy();
+                    if(ConditionalReadElement != null) dest.ConditionalReadElement = (Code<Hl7.Fhir.Model.Conformance.ConditionalReadStatus>)ConditionalReadElement.DeepCopy();
                     if(ConditionalUpdateElement != null) dest.ConditionalUpdateElement = (Hl7.Fhir.Model.FhirBoolean)ConditionalUpdateElement.DeepCopy();
                     if(ConditionalDeleteElement != null) dest.ConditionalDeleteElement = (Code<Hl7.Fhir.Model.Conformance.ConditionalDeleteStatus>)ConditionalDeleteElement.DeepCopy();
                     if(SearchIncludeElement != null) dest.SearchIncludeElement = new List<Hl7.Fhir.Model.FhirString>(SearchIncludeElement.DeepCopy());
@@ -1738,11 +1756,13 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.Matches(Profile, otherT.Profile)) return false;
+                if( !DeepComparable.Matches(Documentation, otherT.Documentation)) return false;
                 if( !DeepComparable.Matches(Interaction, otherT.Interaction)) return false;
                 if( !DeepComparable.Matches(VersioningElement, otherT.VersioningElement)) return false;
                 if( !DeepComparable.Matches(ReadHistoryElement, otherT.ReadHistoryElement)) return false;
                 if( !DeepComparable.Matches(UpdateCreateElement, otherT.UpdateCreateElement)) return false;
                 if( !DeepComparable.Matches(ConditionalCreateElement, otherT.ConditionalCreateElement)) return false;
+                if( !DeepComparable.Matches(ConditionalReadElement, otherT.ConditionalReadElement)) return false;
                 if( !DeepComparable.Matches(ConditionalUpdateElement, otherT.ConditionalUpdateElement)) return false;
                 if( !DeepComparable.Matches(ConditionalDeleteElement, otherT.ConditionalDeleteElement)) return false;
                 if( !DeepComparable.Matches(SearchIncludeElement, otherT.SearchIncludeElement)) return false;
@@ -1760,11 +1780,13 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.IsExactly(Profile, otherT.Profile)) return false;
+                if( !DeepComparable.IsExactly(Documentation, otherT.Documentation)) return false;
                 if( !DeepComparable.IsExactly(Interaction, otherT.Interaction)) return false;
                 if( !DeepComparable.IsExactly(VersioningElement, otherT.VersioningElement)) return false;
                 if( !DeepComparable.IsExactly(ReadHistoryElement, otherT.ReadHistoryElement)) return false;
                 if( !DeepComparable.IsExactly(UpdateCreateElement, otherT.UpdateCreateElement)) return false;
                 if( !DeepComparable.IsExactly(ConditionalCreateElement, otherT.ConditionalCreateElement)) return false;
+                if( !DeepComparable.IsExactly(ConditionalReadElement, otherT.ConditionalReadElement)) return false;
                 if( !DeepComparable.IsExactly(ConditionalUpdateElement, otherT.ConditionalUpdateElement)) return false;
                 if( !DeepComparable.IsExactly(ConditionalDeleteElement, otherT.ConditionalDeleteElement)) return false;
                 if( !DeepComparable.IsExactly(SearchIncludeElement, otherT.SearchIncludeElement)) return false;
@@ -2202,7 +2224,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "SystemInteractionComponent"; } }
             
             /// <summary>
-            /// transaction | search-system | history-system
+            /// transaction | batch | search-system | history-system
             /// </summary>
             [FhirElement("code", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -2216,7 +2238,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Conformance.SystemRestfulInteraction> _CodeElement;
             
             /// <summary>
-            /// transaction | search-system | history-system
+            /// transaction | batch | search-system | history-system
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -2356,7 +2378,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The defined operation/query
             /// </summary>
-            [FhirElement("definition", Order=50)]
+            [FhirElement("definition", InSummary=true, Order=50)]
             [References("OperationDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -2503,7 +2525,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Declare support for this event
             /// </summary>
-            [FhirElement("event", Order=70)]
+            [FhirElement("event", InSummary=true, Order=70)]
             [Cardinality(Min=1,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Conformance.EventComponent> Event
@@ -2678,7 +2700,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Event type
             /// </summary>
-            [FhirElement("code", Order=40)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Coding Code
@@ -2790,7 +2812,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Profile that describes the request
             /// </summary>
-            [FhirElement("request", Order=80)]
+            [FhirElement("request", InSummary=true, Order=80)]
             [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -2805,7 +2827,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Profile that describes the response
             /// </summary>
-            [FhirElement("response", Order=90)]
+            [FhirElement("response", InSummary=true, Order=90)]
             [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -2986,7 +3008,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Constraint on a resource used in the document
             /// </summary>
-            [FhirElement("profile", Order=60)]
+            [FhirElement("profile", InSummary=true, Order=60)]
             [References("StructureDefinition")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
@@ -3486,7 +3508,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// formats supported (xml | json | mime type)
+        /// formats supported (xml | json | ttl | mime type)
         /// </summary>
         [FhirElement("format", InSummary=true, Order=260)]
         [Cardinality(Min=1,Max=-1)]
@@ -3500,7 +3522,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Code> _FormatElement;
         
         /// <summary>
-        /// formats supported (xml | json | mime type)
+        /// formats supported (xml | json | ttl | mime type)
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -3521,7 +3543,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Profiles for use cases supported
         /// </summary>
-        [FhirElement("profile", Order=270)]
+        [FhirElement("profile", InSummary=true, Order=270)]
         [References("StructureDefinition")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -3550,7 +3572,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If messaging is supported
         /// </summary>
-        [FhirElement("messaging", Order=290)]
+        [FhirElement("messaging", InSummary=true, Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Conformance.MessagingComponent> Messaging
@@ -3564,7 +3586,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Document definition
         /// </summary>
-        [FhirElement("document", Order=300)]
+        [FhirElement("document", InSummary=true, Order=300)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Conformance.DocumentComponent> Document

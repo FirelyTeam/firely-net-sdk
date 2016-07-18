@@ -288,9 +288,22 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.ResourceReference> _ActionResulting;
             
             /// <summary>
+            /// Results of the activity
+            /// </summary>
+            [FhirElement("outcome", Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Outcome
+            {
+                get { return _Outcome; }
+                set { _Outcome = value; OnPropertyChanged("Outcome"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Outcome;
+            
+            /// <summary>
             /// Comments about the activity status/progress
             /// </summary>
-            [FhirElement("progress", Order=50)]
+            [FhirElement("progress", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Annotation> Progress
@@ -304,8 +317,8 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Activity details defined in specific resource
             /// </summary>
-            [FhirElement("reference", Order=60)]
-            [References("Appointment","CommunicationRequest","DeviceUseRequest","DiagnosticOrder","MedicationOrder","NutritionOrder","Order","ProcedureRequest","ProcessRequest","ReferralRequest","SupplyRequest","VisionPrescription")]
+            [FhirElement("reference", Order=70)]
+            [References("Appointment","CommunicationRequest","DeviceUseRequest","DiagnosticRequest","MedicationOrder","NutritionRequest","ProcedureRequest","ProcessRequest","ReferralRequest","SupplyRequest","VisionPrescription")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Reference
             {
@@ -318,7 +331,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// In-line definition of activity
             /// </summary>
-            [FhirElement("detail", Order=70)]
+            [FhirElement("detail", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.CarePlan.DetailComponent Detail
             {
@@ -336,6 +349,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(ActionResulting != null) dest.ActionResulting = new List<Hl7.Fhir.Model.ResourceReference>(ActionResulting.DeepCopy());
+                    if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
                     if(Progress != null) dest.Progress = new List<Hl7.Fhir.Model.Annotation>(Progress.DeepCopy());
                     if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
                     if(Detail != null) dest.Detail = (Hl7.Fhir.Model.CarePlan.DetailComponent)Detail.DeepCopy();
@@ -357,6 +371,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(ActionResulting, otherT.ActionResulting)) return false;
+                if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
                 if( !DeepComparable.Matches(Progress, otherT.Progress)) return false;
                 if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
                 if( !DeepComparable.Matches(Detail, otherT.Detail)) return false;
@@ -371,6 +386,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(ActionResulting, otherT.ActionResulting)) return false;
+                if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
                 if( !DeepComparable.IsExactly(Progress, otherT.Progress)) return false;
                 if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
                 if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;

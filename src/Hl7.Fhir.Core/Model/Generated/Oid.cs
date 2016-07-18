@@ -41,6 +41,9 @@ using System.ComponentModel;
 //
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// Primitive Type oid
+    /// </summary>
     [FhirType("oid")]
     [DataContract]
     public partial class Oid : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged

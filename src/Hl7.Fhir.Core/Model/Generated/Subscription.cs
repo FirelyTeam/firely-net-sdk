@@ -198,10 +198,9 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Mimetype to send, or blank for no payload
+            /// Mimetype to send, or omit for no payload
             /// </summary>
             [FhirElement("payload", InSummary=true, Order=60)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString PayloadElement
             {
@@ -212,7 +211,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _PayloadElement;
             
             /// <summary>
-            /// Mimetype to send, or blank for no payload
+            /// Mimetype to send, or omit for no payload
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]

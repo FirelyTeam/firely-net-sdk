@@ -572,9 +572,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
+        /// Type of medication usage
+        /// </summary>
+        [FhirElement("category", Order=220)]
+        [DataMember]
+        public Hl7.Fhir.Model.Code CategoryElement
+        {
+            get { return _CategoryElement; }
+            set { _CategoryElement = value; OnPropertyChanged("CategoryElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Code _CategoryElement;
+        
+        /// <summary>
+        /// Type of medication usage
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Category
+        {
+            get { return CategoryElement != null ? CategoryElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  CategoryElement = null; 
+                else
+                  CategoryElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("Category");
+            }
+        }
+        
+        /// <summary>
         /// Details of how medication was taken
         /// </summary>
-        [FhirElement("dosage", Order=220)]
+        [FhirElement("dosage", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationStatement.DosageComponent> Dosage
@@ -605,6 +637,7 @@ namespace Hl7.Fhir.Model
                 if(ReasonForUseCode != null) dest.ReasonForUseCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonForUseCode.DeepCopy());
                 if(ReasonForUseReference != null) dest.ReasonForUseReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonForUseReference.DeepCopy());
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+                if(CategoryElement != null) dest.CategoryElement = (Hl7.Fhir.Model.Code)CategoryElement.DeepCopy();
                 if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.MedicationStatement.DosageComponent>(Dosage.DeepCopy());
                 return dest;
             }
@@ -636,6 +669,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ReasonForUseCode, otherT.ReasonForUseCode)) return false;
             if( !DeepComparable.Matches(ReasonForUseReference, otherT.ReasonForUseReference)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+            if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.Matches(Dosage, otherT.Dosage)) return false;
             
             return true;
@@ -660,6 +694,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ReasonForUseCode, otherT.ReasonForUseCode)) return false;
             if( !DeepComparable.IsExactly(ReasonForUseReference, otherT.ReasonForUseReference)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+            if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.IsExactly(Dosage, otherT.Dosage)) return false;
             
             return true;

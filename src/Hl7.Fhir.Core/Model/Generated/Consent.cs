@@ -42,7 +42,7 @@ using System.ComponentModel;
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Information about a healthcare consumer’s consent statements
+    /// A healthcare consumer’s policy choices to permits or denies recipients or roles to perform actions for specific purposes and periods of time
     /// </summary>
     [FhirType("Consent", IsResource=true)]
     [DataContract]
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Consent Exception Effective Time
+            /// Timeframe for data controlled by this exception
             /// </summary>
             [FhirElement("period", InSummary=true, Order=50)]
             [DataMember]
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Coding> _SecurityLabel;
             
             /// <summary>
-            /// Security Labels for the operation/context
+            /// Context of activities covered by this exception
             /// </summary>
             [FhirElement("purpose", InSummary=true, Order=90)]
             [Cardinality(Min=0,Max=-1)]
@@ -747,7 +747,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Who|what the consent is in regard to
+        /// Whose access is controlled by the policy
         /// </summary>
         [FhirElement("recipient", InSummary=true, Order=190)]
         [References("Device","Group","Organization","Patient","Practitioner","RelatedPerson","CareTeam")]
@@ -762,9 +762,23 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
         
         /// <summary>
-        /// Consent Exception
+        /// Context of activities for which the agreement is made
         /// </summary>
-        [FhirElement("except", InSummary=true, Order=200)]
+        [FhirElement("purpose", InSummary=true, Order=200)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Coding> Purpose
+        {
+            get { if(_Purpose==null) _Purpose = new List<Hl7.Fhir.Model.Coding>(); return _Purpose; }
+            set { _Purpose = value; OnPropertyChanged("Purpose"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Coding> _Purpose;
+        
+        /// <summary>
+        /// Additional rule -  addition or removal of permissions
+        /// </summary>
+        [FhirElement("except", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Consent.ExceptComponent> Except
@@ -793,6 +807,7 @@ namespace Hl7.Fhir.Model
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.Element)Source.DeepCopy();
                 if(PolicyElement != null) dest.PolicyElement = (Hl7.Fhir.Model.FhirUri)PolicyElement.DeepCopy();
                 if(Recipient != null) dest.Recipient = new List<Hl7.Fhir.Model.ResourceReference>(Recipient.DeepCopy());
+                if(Purpose != null) dest.Purpose = new List<Hl7.Fhir.Model.Coding>(Purpose.DeepCopy());
                 if(Except != null) dest.Except = new List<Hl7.Fhir.Model.Consent.ExceptComponent>(Except.DeepCopy());
                 return dest;
             }
@@ -822,6 +837,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
             if( !DeepComparable.Matches(PolicyElement, otherT.PolicyElement)) return false;
             if( !DeepComparable.Matches(Recipient, otherT.Recipient)) return false;
+            if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
             if( !DeepComparable.Matches(Except, otherT.Except)) return false;
             
             return true;
@@ -844,6 +860,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
             if( !DeepComparable.IsExactly(PolicyElement, otherT.PolicyElement)) return false;
             if( !DeepComparable.IsExactly(Recipient, otherT.Recipient)) return false;
+            if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
             if( !DeepComparable.IsExactly(Except, otherT.Except)) return false;
             
             return true;

@@ -142,9 +142,105 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Brief description of the related resource
+        /// </summary>
+        [FhirElement("display", InSummary=true, Order=40)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString DisplayElement
+        {
+            get { return _DisplayElement; }
+            set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _DisplayElement;
+        
+        /// <summary>
+        /// Brief description of the related resource
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Display
+        {
+            get { return DisplayElement != null ? DisplayElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  DisplayElement = null; 
+                else
+                  DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Display");
+            }
+        }
+        
+        /// <summary>
+        /// Bibliographic citation for the resource
+        /// </summary>
+        [FhirElement("citation", InSummary=true, Order=50)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString CitationElement
+        {
+            get { return _CitationElement; }
+            set { _CitationElement = value; OnPropertyChanged("CitationElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _CitationElement;
+        
+        /// <summary>
+        /// Bibliographic citation for the resource
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Citation
+        {
+            get { return CitationElement != null ? CitationElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  CitationElement = null; 
+                else
+                  CitationElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("Citation");
+            }
+        }
+        
+        /// <summary>
+        /// Url for the related resource
+        /// </summary>
+        [FhirElement("url", InSummary=true, Order=60)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirUri UrlElement
+        {
+            get { return _UrlElement; }
+            set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirUri _UrlElement;
+        
+        /// <summary>
+        /// Url for the related resource
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string Url
+        {
+            get { return UrlElement != null ? UrlElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  UrlElement = null; 
+                else
+                  UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                OnPropertyChanged("Url");
+            }
+        }
+        
+        /// <summary>
         /// The related document
         /// </summary>
-        [FhirElement("document", InSummary=true, Order=40)]
+        [FhirElement("document", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Attachment Document
         {
@@ -157,7 +253,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The related resource
         /// </summary>
-        [FhirElement("resource", InSummary=true, Order=50)]
+        [FhirElement("resource", InSummary=true, Order=80)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Resource
@@ -176,6 +272,9 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.RelatedResource.RelatedResourceType>)TypeElement.DeepCopy();
+                if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
+                if(CitationElement != null) dest.CitationElement = (Hl7.Fhir.Model.FhirString)CitationElement.DeepCopy();
+                if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(Document != null) dest.Document = (Hl7.Fhir.Model.Attachment)Document.DeepCopy();
                 if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
                 return dest;
@@ -196,6 +295,9 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
+            if( !DeepComparable.Matches(CitationElement, otherT.CitationElement)) return false;
+            if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.Matches(Document, otherT.Document)) return false;
             if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
             
@@ -209,6 +311,9 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
+            if( !DeepComparable.IsExactly(CitationElement, otherT.CitationElement)) return false;
+            if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.IsExactly(Document, otherT.Document)) return false;
             if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
             

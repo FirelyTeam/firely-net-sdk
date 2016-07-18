@@ -288,18 +288,18 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.CodeableConcept> _Concept;
             
             /// <summary>
-            /// Evidence that supports taking the action
+            /// Supporting documentation for the intended performer of the action
             /// </summary>
-            [FhirElement("supportingEvidence", Order=100)]
+            [FhirElement("documentation", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Attachment> SupportingEvidence
+            public List<RelatedResource> Documentation
             {
-                get { if(_SupportingEvidence==null) _SupportingEvidence = new List<Hl7.Fhir.Model.Attachment>(); return _SupportingEvidence; }
-                set { _SupportingEvidence = value; OnPropertyChanged("SupportingEvidence"); }
+                get { if(_Documentation==null) _Documentation = new List<RelatedResource>(); return _Documentation; }
+                set { _Documentation = value; OnPropertyChanged("Documentation"); }
             }
             
-            private List<Hl7.Fhir.Model.Attachment> _SupportingEvidence;
+            private List<RelatedResource> _Documentation;
             
             /// <summary>
             /// Relationship to another action
@@ -315,18 +315,18 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.GuidanceResponse.RelatedActionComponent _RelatedAction;
             
             /// <summary>
-            /// Supporting documentation for the intended performer of the action
+            /// When the action should take place
             /// </summary>
-            [FhirElement("documentation", Order=120)]
-            [Cardinality(Min=0,Max=-1)]
+            [FhirElement("timing", Order=120, Choice=ChoiceType.DatatypeChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
-            public List<Hl7.Fhir.Model.Attachment> Documentation
+            public Hl7.Fhir.Model.Element Timing
             {
-                get { if(_Documentation==null) _Documentation = new List<Hl7.Fhir.Model.Attachment>(); return _Documentation; }
-                set { _Documentation = value; OnPropertyChanged("Documentation"); }
+                get { return _Timing; }
+                set { _Timing = value; OnPropertyChanged("Timing"); }
             }
             
-            private List<Hl7.Fhir.Model.Attachment> _Documentation;
+            private Hl7.Fhir.Model.Element _Timing;
             
             /// <summary>
             /// Participant
@@ -376,23 +376,169 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Defines behaviors such as selection and grouping
+            /// visual-group | logical-group | sentence-group
             /// </summary>
-            [FhirElement("behavior", Order=150)]
-            [Cardinality(Min=0,Max=-1)]
+            [FhirElement("groupingBehavior", Order=150)]
             [DataMember]
-            public List<Hl7.Fhir.Model.GuidanceResponse.BehaviorComponent> Behavior
+            public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
             {
-                get { if(_Behavior==null) _Behavior = new List<Hl7.Fhir.Model.GuidanceResponse.BehaviorComponent>(); return _Behavior; }
-                set { _Behavior = value; OnPropertyChanged("Behavior"); }
+                get { return _GroupingBehaviorElement; }
+                set { _GroupingBehaviorElement = value; OnPropertyChanged("GroupingBehaviorElement"); }
             }
             
-            private List<Hl7.Fhir.Model.GuidanceResponse.BehaviorComponent> _Behavior;
+            private Code<Hl7.Fhir.Model.ActionGroupingBehavior> _GroupingBehaviorElement;
+            
+            /// <summary>
+            /// visual-group | logical-group | sentence-group
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.ActionGroupingBehavior? GroupingBehavior
+            {
+                get { return GroupingBehaviorElement != null ? GroupingBehaviorElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      GroupingBehaviorElement = null; 
+                    else
+                      GroupingBehaviorElement = new Code<Hl7.Fhir.Model.ActionGroupingBehavior>(value);
+                    OnPropertyChanged("GroupingBehavior");
+                }
+            }
+            
+            /// <summary>
+            /// any | all | all-or-none | exactly-one | at-most-one | one-or-more
+            /// </summary>
+            [FhirElement("selectionBehavior", Order=160)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
+            {
+                get { return _SelectionBehaviorElement; }
+                set { _SelectionBehaviorElement = value; OnPropertyChanged("SelectionBehaviorElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.ActionSelectionBehavior> _SelectionBehaviorElement;
+            
+            /// <summary>
+            /// any | all | all-or-none | exactly-one | at-most-one | one-or-more
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.ActionSelectionBehavior? SelectionBehavior
+            {
+                get { return SelectionBehaviorElement != null ? SelectionBehaviorElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      SelectionBehaviorElement = null; 
+                    else
+                      SelectionBehaviorElement = new Code<Hl7.Fhir.Model.ActionSelectionBehavior>(value);
+                    OnPropertyChanged("SelectionBehavior");
+                }
+            }
+            
+            /// <summary>
+            /// must | could | must-unless-documented
+            /// </summary>
+            [FhirElement("requiredBehavior", Order=170)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
+            {
+                get { return _RequiredBehaviorElement; }
+                set { _RequiredBehaviorElement = value; OnPropertyChanged("RequiredBehaviorElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.ActionRequiredBehavior> _RequiredBehaviorElement;
+            
+            /// <summary>
+            /// must | could | must-unless-documented
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.ActionRequiredBehavior? RequiredBehavior
+            {
+                get { return RequiredBehaviorElement != null ? RequiredBehaviorElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      RequiredBehaviorElement = null; 
+                    else
+                      RequiredBehaviorElement = new Code<Hl7.Fhir.Model.ActionRequiredBehavior>(value);
+                    OnPropertyChanged("RequiredBehavior");
+                }
+            }
+            
+            /// <summary>
+            /// yes | no
+            /// </summary>
+            [FhirElement("precheckBehavior", Order=180)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
+            {
+                get { return _PrecheckBehaviorElement; }
+                set { _PrecheckBehaviorElement = value; OnPropertyChanged("PrecheckBehaviorElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.ActionPrecheckBehavior> _PrecheckBehaviorElement;
+            
+            /// <summary>
+            /// yes | no
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.ActionPrecheckBehavior? PrecheckBehavior
+            {
+                get { return PrecheckBehaviorElement != null ? PrecheckBehaviorElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      PrecheckBehaviorElement = null; 
+                    else
+                      PrecheckBehaviorElement = new Code<Hl7.Fhir.Model.ActionPrecheckBehavior>(value);
+                    OnPropertyChanged("PrecheckBehavior");
+                }
+            }
+            
+            /// <summary>
+            /// single | multiple
+            /// </summary>
+            [FhirElement("cardinalityBehavior", Order=190)]
+            [DataMember]
+            public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
+            {
+                get { return _CardinalityBehaviorElement; }
+                set { _CardinalityBehaviorElement = value; OnPropertyChanged("CardinalityBehaviorElement"); }
+            }
+            
+            private Code<Hl7.Fhir.Model.ActionCardinalityBehavior> _CardinalityBehaviorElement;
+            
+            /// <summary>
+            /// single | multiple
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public Hl7.Fhir.Model.ActionCardinalityBehavior? CardinalityBehavior
+            {
+                get { return CardinalityBehaviorElement != null ? CardinalityBehaviorElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      CardinalityBehaviorElement = null; 
+                    else
+                      CardinalityBehaviorElement = new Code<Hl7.Fhir.Model.ActionCardinalityBehavior>(value);
+                    OnPropertyChanged("CardinalityBehavior");
+                }
+            }
             
             /// <summary>
             /// The target of the action
             /// </summary>
-            [FhirElement("resource", Order=160)]
+            [FhirElement("resource", Order=200)]
             [References()]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Resource
@@ -406,7 +552,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Sub action
             /// </summary>
-            [FhirElement("action", Order=170)]
+            [FhirElement("action", Order=210)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.GuidanceResponse.ActionComponent> Action
@@ -430,12 +576,16 @@ namespace Hl7.Fhir.Model
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(TextEquivalentElement != null) dest.TextEquivalentElement = (Hl7.Fhir.Model.FhirString)TextEquivalentElement.DeepCopy();
                     if(Concept != null) dest.Concept = new List<Hl7.Fhir.Model.CodeableConcept>(Concept.DeepCopy());
-                    if(SupportingEvidence != null) dest.SupportingEvidence = new List<Hl7.Fhir.Model.Attachment>(SupportingEvidence.DeepCopy());
+                    if(Documentation != null) dest.Documentation = new List<RelatedResource>(Documentation.DeepCopy());
                     if(RelatedAction != null) dest.RelatedAction = (Hl7.Fhir.Model.GuidanceResponse.RelatedActionComponent)RelatedAction.DeepCopy();
-                    if(Documentation != null) dest.Documentation = new List<Hl7.Fhir.Model.Attachment>(Documentation.DeepCopy());
+                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                     if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.ResourceReference>(Participant.DeepCopy());
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.GuidanceResponse.ActionType>)TypeElement.DeepCopy();
-                    if(Behavior != null) dest.Behavior = new List<Hl7.Fhir.Model.GuidanceResponse.BehaviorComponent>(Behavior.DeepCopy());
+                    if(GroupingBehaviorElement != null) dest.GroupingBehaviorElement = (Code<Hl7.Fhir.Model.ActionGroupingBehavior>)GroupingBehaviorElement.DeepCopy();
+                    if(SelectionBehaviorElement != null) dest.SelectionBehaviorElement = (Code<Hl7.Fhir.Model.ActionSelectionBehavior>)SelectionBehaviorElement.DeepCopy();
+                    if(RequiredBehaviorElement != null) dest.RequiredBehaviorElement = (Code<Hl7.Fhir.Model.ActionRequiredBehavior>)RequiredBehaviorElement.DeepCopy();
+                    if(PrecheckBehaviorElement != null) dest.PrecheckBehaviorElement = (Code<Hl7.Fhir.Model.ActionPrecheckBehavior>)PrecheckBehaviorElement.DeepCopy();
+                    if(CardinalityBehaviorElement != null) dest.CardinalityBehaviorElement = (Code<Hl7.Fhir.Model.ActionCardinalityBehavior>)CardinalityBehaviorElement.DeepCopy();
                     if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
                     if(Action != null) dest.Action = new List<Hl7.Fhir.Model.GuidanceResponse.ActionComponent>(Action.DeepCopy());
                     return dest;
@@ -461,12 +611,16 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.Matches(TextEquivalentElement, otherT.TextEquivalentElement)) return false;
                 if( !DeepComparable.Matches(Concept, otherT.Concept)) return false;
-                if( !DeepComparable.Matches(SupportingEvidence, otherT.SupportingEvidence)) return false;
-                if( !DeepComparable.Matches(RelatedAction, otherT.RelatedAction)) return false;
                 if( !DeepComparable.Matches(Documentation, otherT.Documentation)) return false;
+                if( !DeepComparable.Matches(RelatedAction, otherT.RelatedAction)) return false;
+                if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
                 if( !DeepComparable.Matches(Participant, otherT.Participant)) return false;
                 if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.Matches(Behavior, otherT.Behavior)) return false;
+                if( !DeepComparable.Matches(GroupingBehaviorElement, otherT.GroupingBehaviorElement)) return false;
+                if( !DeepComparable.Matches(SelectionBehaviorElement, otherT.SelectionBehaviorElement)) return false;
+                if( !DeepComparable.Matches(RequiredBehaviorElement, otherT.RequiredBehaviorElement)) return false;
+                if( !DeepComparable.Matches(PrecheckBehaviorElement, otherT.PrecheckBehaviorElement)) return false;
+                if( !DeepComparable.Matches(CardinalityBehaviorElement, otherT.CardinalityBehaviorElement)) return false;
                 if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.Matches(Action, otherT.Action)) return false;
                 
@@ -485,12 +639,16 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 if( !DeepComparable.IsExactly(TextEquivalentElement, otherT.TextEquivalentElement)) return false;
                 if( !DeepComparable.IsExactly(Concept, otherT.Concept)) return false;
-                if( !DeepComparable.IsExactly(SupportingEvidence, otherT.SupportingEvidence)) return false;
-                if( !DeepComparable.IsExactly(RelatedAction, otherT.RelatedAction)) return false;
                 if( !DeepComparable.IsExactly(Documentation, otherT.Documentation)) return false;
+                if( !DeepComparable.IsExactly(RelatedAction, otherT.RelatedAction)) return false;
+                if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
                 if( !DeepComparable.IsExactly(Participant, otherT.Participant)) return false;
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-                if( !DeepComparable.IsExactly(Behavior, otherT.Behavior)) return false;
+                if( !DeepComparable.IsExactly(GroupingBehaviorElement, otherT.GroupingBehaviorElement)) return false;
+                if( !DeepComparable.IsExactly(SelectionBehaviorElement, otherT.SelectionBehaviorElement)) return false;
+                if( !DeepComparable.IsExactly(RequiredBehaviorElement, otherT.RequiredBehaviorElement)) return false;
+                if( !DeepComparable.IsExactly(PrecheckBehaviorElement, otherT.PrecheckBehaviorElement)) return false;
+                if( !DeepComparable.IsExactly(CardinalityBehaviorElement, otherT.CardinalityBehaviorElement)) return false;
                 if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
                 if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;
                 
@@ -600,20 +758,6 @@ namespace Hl7.Fhir.Model
                 }
             }
             
-            /// <summary>
-            /// When the action should take place
-            /// </summary>
-            [FhirElement("timing", Order=80, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element Timing
-            {
-                get { return _Timing; }
-                set { _Timing = value; OnPropertyChanged("Timing"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _Timing;
-            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as RelatedActionComponent;
@@ -625,7 +769,6 @@ namespace Hl7.Fhir.Model
                     if(RelationshipElement != null) dest.RelationshipElement = (Code<Hl7.Fhir.Model.ActionRelationshipType>)RelationshipElement.DeepCopy();
                     if(Offset != null) dest.Offset = (Hl7.Fhir.Model.Element)Offset.DeepCopy();
                     if(AnchorElement != null) dest.AnchorElement = (Code<Hl7.Fhir.Model.ActionRelationshipAnchor>)AnchorElement.DeepCopy();
-                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                     return dest;
                 }
                 else
@@ -647,7 +790,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(RelationshipElement, otherT.RelationshipElement)) return false;
                 if( !DeepComparable.Matches(Offset, otherT.Offset)) return false;
                 if( !DeepComparable.Matches(AnchorElement, otherT.AnchorElement)) return false;
-                if( !DeepComparable.Matches(Timing, otherT.Timing)) return false;
                 
                 return true;
             }
@@ -662,89 +804,6 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(RelationshipElement, otherT.RelationshipElement)) return false;
                 if( !DeepComparable.IsExactly(Offset, otherT.Offset)) return false;
                 if( !DeepComparable.IsExactly(AnchorElement, otherT.AnchorElement)) return false;
-                if( !DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
-                
-                return true;
-            }
-            
-        }
-        
-        
-        [FhirType("BehaviorComponent")]
-        [DataContract]
-        public partial class BehaviorComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "BehaviorComponent"; } }
-            
-            /// <summary>
-            /// The type of behavior (grouping, precheck, selection, cardinality, etc)
-            /// </summary>
-            [FhirElement("type", Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Coding Type
-            {
-                get { return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
-            }
-            
-            private Hl7.Fhir.Model.Coding _Type;
-            
-            /// <summary>
-            /// Specific behavior (e.g. required, at-most-one, single, etc)
-            /// </summary>
-            [FhirElement("value", Order=50)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.Coding Value
-            {
-                get { return _Value; }
-                set { _Value = value; OnPropertyChanged("Value"); }
-            }
-            
-            private Hl7.Fhir.Model.Coding _Value;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as BehaviorComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Coding)Value.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new BehaviorComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as BehaviorComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as BehaviorComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 
                 return true;
             }
@@ -757,13 +816,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("requestId", Order=90)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString RequestIdElement
+        public Hl7.Fhir.Model.Id RequestIdElement
         {
             get { return _RequestIdElement; }
             set { _RequestIdElement = value; OnPropertyChanged("RequestIdElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _RequestIdElement;
+        private Hl7.Fhir.Model.Id _RequestIdElement;
         
         /// <summary>
         /// The id of the request associated with this response, if any
@@ -779,16 +838,29 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   RequestIdElement = null; 
                 else
-                  RequestIdElement = new Hl7.Fhir.Model.FhirString(value);
+                  RequestIdElement = new Hl7.Fhir.Model.Id(value);
                 OnPropertyChanged("RequestId");
             }
         }
         
         /// <summary>
+        /// Business identifier
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Identifier;
+        
+        /// <summary>
         /// A reference to a knowledge module
         /// </summary>
-        [FhirElement("module", InSummary=true, Order=100)]
-        [References("DecisionSupportServiceModule","DecisionSupportRule")]
+        [FhirElement("module", InSummary=true, Order=110)]
+        [References("DecisionSupportServiceModule")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Module
@@ -802,7 +874,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// success | data-requested | data-required | in-progress | failure
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=110)]
+        [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus> StatusElement
@@ -833,9 +905,111 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Patient the request was performed for
+        /// </summary>
+        [FhirElement("subject", Order=130)]
+        [References("Patient","Group")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Subject
+        {
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Subject;
+        
+        /// <summary>
+        /// Encounter or Episode during which the response was returned
+        /// </summary>
+        [FhirElement("context", Order=140)]
+        [References("Encounter","EpisodeOfCare")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Context
+        {
+            get { return _Context; }
+            set { _Context = value; OnPropertyChanged("Context"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Context;
+        
+        /// <summary>
+        /// When the guidance response was processed
+        /// </summary>
+        [FhirElement("occurrenceDateTime", Order=150)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirDateTime OccurrenceDateTimeElement
+        {
+            get { return _OccurrenceDateTimeElement; }
+            set { _OccurrenceDateTimeElement = value; OnPropertyChanged("OccurrenceDateTimeElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirDateTime _OccurrenceDateTimeElement;
+        
+        /// <summary>
+        /// When the guidance response was processed
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string OccurrenceDateTime
+        {
+            get { return OccurrenceDateTimeElement != null ? OccurrenceDateTimeElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  OccurrenceDateTimeElement = null; 
+                else
+                  OccurrenceDateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("OccurrenceDateTime");
+            }
+        }
+        
+        /// <summary>
+        /// Device returning the guidance
+        /// </summary>
+        [FhirElement("performer", Order=160)]
+        [References("Device")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Performer
+        {
+            get { return _Performer; }
+            set { _Performer = value; OnPropertyChanged("Performer"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Performer;
+        
+        /// <summary>
+        /// Reason for the response
+        /// </summary>
+        [FhirElement("reason", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Reason
+        {
+            get { return _Reason; }
+            set { _Reason = value; OnPropertyChanged("Reason"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Reason;
+        
+        /// <summary>
+        /// Additional notes about the response
+        /// </summary>
+        [FhirElement("note", Order=180)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Annotation> Note
+        {
+            get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+            set { _Note = value; OnPropertyChanged("Note"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Annotation> _Note;
+        
+        /// <summary>
         /// Messages resulting from the evaluation of the artifact or artifacts
         /// </summary>
-        [FhirElement("evaluationMessage", Order=120)]
+        [FhirElement("evaluationMessage", Order=190)]
         [References("OperationOutcome")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -850,7 +1024,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The output parameters of the evaluation, if any
         /// </summary>
-        [FhirElement("outputParameters", Order=130)]
+        [FhirElement("outputParameters", Order=200)]
         [References("Parameters")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference OutputParameters
@@ -864,7 +1038,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Proposed actions, if any
         /// </summary>
-        [FhirElement("action", Order=140)]
+        [FhirElement("action", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.GuidanceResponse.ActionComponent> Action
@@ -878,7 +1052,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional required data
         /// </summary>
-        [FhirElement("dataRequirement", Order=150)]
+        [FhirElement("dataRequirement", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<DataRequirement> DataRequirement
@@ -896,9 +1070,16 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(RequestIdElement != null) dest.RequestIdElement = (Hl7.Fhir.Model.FhirString)RequestIdElement.DeepCopy();
+                if(RequestIdElement != null) dest.RequestIdElement = (Hl7.Fhir.Model.Id)RequestIdElement.DeepCopy();
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Module != null) dest.Module = (Hl7.Fhir.Model.ResourceReference)Module.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>)StatusElement.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
+                if(OccurrenceDateTimeElement != null) dest.OccurrenceDateTimeElement = (Hl7.Fhir.Model.FhirDateTime)OccurrenceDateTimeElement.DeepCopy();
+                if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
+                if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
+                if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(EvaluationMessage != null) dest.EvaluationMessage = new List<Hl7.Fhir.Model.ResourceReference>(EvaluationMessage.DeepCopy());
                 if(OutputParameters != null) dest.OutputParameters = (Hl7.Fhir.Model.ResourceReference)OutputParameters.DeepCopy();
                 if(Action != null) dest.Action = new List<Hl7.Fhir.Model.GuidanceResponse.ActionComponent>(Action.DeepCopy());
@@ -921,8 +1102,15 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(RequestIdElement, otherT.RequestIdElement)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Module, otherT.Module)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
+            if( !DeepComparable.Matches(OccurrenceDateTimeElement, otherT.OccurrenceDateTimeElement)) return false;
+            if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(EvaluationMessage, otherT.EvaluationMessage)) return false;
             if( !DeepComparable.Matches(OutputParameters, otherT.OutputParameters)) return false;
             if( !DeepComparable.Matches(Action, otherT.Action)) return false;
@@ -938,8 +1126,15 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(RequestIdElement, otherT.RequestIdElement)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Module, otherT.Module)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
+            if( !DeepComparable.IsExactly(OccurrenceDateTimeElement, otherT.OccurrenceDateTimeElement)) return false;
+            if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
+            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(EvaluationMessage, otherT.EvaluationMessage)) return false;
             if( !DeepComparable.IsExactly(OutputParameters, otherT.OutputParameters)) return false;
             if( !DeepComparable.IsExactly(Action, otherT.Action)) return false;

@@ -682,9 +682,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Dispenser;
         
         /// <summary>
+        /// Organization responsible for the dispense of the medication
+        /// </summary>
+        [FhirElement("dispensingOrganization", Order=140)]
+        [References("Organization")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference DispensingOrganization
+        {
+            get { return _DispensingOrganization; }
+            set { _DispensingOrganization = value; OnPropertyChanged("DispensingOrganization"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _DispensingOrganization;
+        
+        /// <summary>
         /// Medication order that authorizes the dispense
         /// </summary>
-        [FhirElement("authorizingPrescription", Order=140)]
+        [FhirElement("authorizingPrescription", Order=150)]
         [References("MedicationOrder")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -699,7 +713,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Trial fill, partial fill, emergency fill, etc.
         /// </summary>
-        [FhirElement("type", Order=150)]
+        [FhirElement("type", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -712,7 +726,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Amount dispensed
         /// </summary>
-        [FhirElement("quantity", Order=160)]
+        [FhirElement("quantity", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity Quantity
         {
@@ -725,7 +739,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Amount of medication expressed as a timing amount
         /// </summary>
-        [FhirElement("daysSupply", Order=170)]
+        [FhirElement("daysSupply", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.SimpleQuantity DaysSupply
         {
@@ -738,7 +752,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Dispense processing time
         /// </summary>
-        [FhirElement("whenPrepared", InSummary=true, Order=180)]
+        [FhirElement("whenPrepared", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime WhenPreparedElement
         {
@@ -770,7 +784,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When product was given out
         /// </summary>
-        [FhirElement("whenHandedOver", Order=190)]
+        [FhirElement("whenHandedOver", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime WhenHandedOverElement
         {
@@ -802,7 +816,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the medication was sent
         /// </summary>
-        [FhirElement("destination", Order=200)]
+        [FhirElement("destination", Order=210)]
         [References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Destination
@@ -816,7 +830,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who collected the medication
         /// </summary>
-        [FhirElement("receiver", Order=210)]
+        [FhirElement("receiver", Order=220)]
         [References("Patient","Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -831,7 +845,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Information about the dispense
         /// </summary>
-        [FhirElement("note", Order=220)]
+        [FhirElement("note", Order=230)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -845,7 +859,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medicine administration instructions to the patient/caregiver
         /// </summary>
-        [FhirElement("dosageInstruction", Order=230)]
+        [FhirElement("dosageInstruction", Order=240)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationDispense.DosageInstructionComponent> DosageInstruction
@@ -859,7 +873,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Deals with substitution of one medicine for another
         /// </summary>
-        [FhirElement("substitution", Order=240)]
+        [FhirElement("substitution", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.MedicationDispense.SubstitutionComponent Substitution
         {
@@ -872,7 +886,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A list of events of interest in the lifecycle
         /// </summary>
-        [FhirElement("eventHistory", Order=250)]
+        [FhirElement("eventHistory", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.MedicationDispense.EventHistoryComponent> EventHistory
@@ -895,6 +909,7 @@ namespace Hl7.Fhir.Model
                 if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Dispenser != null) dest.Dispenser = (Hl7.Fhir.Model.ResourceReference)Dispenser.DeepCopy();
+                if(DispensingOrganization != null) dest.DispensingOrganization = (Hl7.Fhir.Model.ResourceReference)DispensingOrganization.DeepCopy();
                 if(AuthorizingPrescription != null) dest.AuthorizingPrescription = new List<Hl7.Fhir.Model.ResourceReference>(AuthorizingPrescription.DeepCopy());
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
@@ -929,6 +944,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Medication, otherT.Medication)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
             if( !DeepComparable.Matches(Dispenser, otherT.Dispenser)) return false;
+            if( !DeepComparable.Matches(DispensingOrganization, otherT.DispensingOrganization)) return false;
             if( !DeepComparable.Matches(AuthorizingPrescription, otherT.AuthorizingPrescription)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
             if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
@@ -956,6 +972,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Medication, otherT.Medication)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
             if( !DeepComparable.IsExactly(Dispenser, otherT.Dispenser)) return false;
+            if( !DeepComparable.IsExactly(DispensingOrganization, otherT.DispensingOrganization)) return false;
             if( !DeepComparable.IsExactly(AuthorizingPrescription, otherT.AuthorizingPrescription)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
             if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;

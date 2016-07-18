@@ -319,9 +319,41 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// Notes about identifier usage
+            /// </summary>
+            [FhirElement("comment", Order=70)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString CommentElement
+            {
+                get { return _CommentElement; }
+                set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _CommentElement;
+            
+            /// <summary>
+            /// Notes about identifier usage
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Comment
+            {
+                get { return CommentElement != null ? CommentElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      CommentElement = null; 
+                    else
+                      CommentElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Comment");
+                }
+            }
+            
+            /// <summary>
             /// When is identifier valid?
             /// </summary>
-            [FhirElement("period", Order=70)]
+            [FhirElement("period", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.Period Period
             {
@@ -341,6 +373,7 @@ namespace Hl7.Fhir.Model
                     if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>)TypeElement.DeepCopy();
                     if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
                     if(PreferredElement != null) dest.PreferredElement = (Hl7.Fhir.Model.FhirBoolean)PreferredElement.DeepCopy();
+                    if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     return dest;
                 }
@@ -362,6 +395,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
                 if( !DeepComparable.Matches(PreferredElement, otherT.PreferredElement)) return false;
+                if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
                 if( !DeepComparable.Matches(Period, otherT.Period)) return false;
                 
                 return true;
@@ -376,6 +410,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
                 if( !DeepComparable.IsExactly(PreferredElement, otherT.PreferredElement)) return false;
+                if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 
                 return true;
@@ -420,7 +455,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", Order=100)]
+        [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement

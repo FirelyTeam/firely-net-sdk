@@ -114,6 +114,24 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/goal-status)
+            /// </summary>
+            [EnumLiteral("on-target"), Description("On Target")]
+            OnTarget,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/goal-status)
+            /// </summary>
+            [EnumLiteral("ahead-of-target"), Description("Ahead of Target")]
+            AheadOfTarget,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/goal-status)
+            /// </summary>
+            [EnumLiteral("behind-target"), Description("Behind Target")]
+            BehindTarget,
         }
 
         [FhirType("OutcomeComponent")]
@@ -285,7 +303,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// proposed | planned | accepted | rejected | in-progress | achieved | sustaining | on-hold | cancelled
+        /// proposed | planned | accepted | rejected | in-progress | achieved | sustaining | on-hold | cancelled | on-target | ahead-of-target | behind-target
         /// </summary>
         [FhirElement("status", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
@@ -299,7 +317,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Goal.GoalStatus> _StatusElement;
         
         /// <summary>
-        /// proposed | planned | accepted | rejected | in-progress | achieved | sustaining | on-hold | cancelled
+        /// proposed | planned | accepted | rejected | in-progress | achieved | sustaining | on-hold | cancelled | on-target | ahead-of-target | behind-target
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -353,14 +371,15 @@ namespace Hl7.Fhir.Model
         /// Reason for current status
         /// </summary>
         [FhirElement("statusReason", Order=170)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept StatusReason
+        public List<Hl7.Fhir.Model.CodeableConcept> StatusReason
         {
-            get { return _StatusReason; }
+            get { if(_StatusReason==null) _StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _StatusReason; }
             set { _StatusReason = value; OnPropertyChanged("StatusReason"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _StatusReason;
+        private List<Hl7.Fhir.Model.CodeableConcept> _StatusReason;
         
         /// <summary>
         /// Who's responsible for creating Goal?
@@ -393,7 +412,7 @@ namespace Hl7.Fhir.Model
         /// Issues addressed by this goal
         /// </summary>
         [FhirElement("addresses", Order=200)]
-        [References("Condition","Observation","MedicationStatement","NutritionOrder","ProcedureRequest","RiskAssessment")]
+        [References("Condition","Observation","MedicationStatement","NutritionRequest","ProcedureRequest","RiskAssessment")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Addresses
@@ -447,7 +466,7 @@ namespace Hl7.Fhir.Model
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Goal.GoalStatus>)StatusElement.DeepCopy();
                 if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.Date)StatusDateElement.DeepCopy();
-                if(StatusReason != null) dest.StatusReason = (Hl7.Fhir.Model.CodeableConcept)StatusReason.DeepCopy();
+                if(StatusReason != null) dest.StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(StatusReason.DeepCopy());
                 if(ExpressedBy != null) dest.ExpressedBy = (Hl7.Fhir.Model.ResourceReference)ExpressedBy.DeepCopy();
                 if(Priority != null) dest.Priority = (Hl7.Fhir.Model.CodeableConcept)Priority.DeepCopy();
                 if(Addresses != null) dest.Addresses = new List<Hl7.Fhir.Model.ResourceReference>(Addresses.DeepCopy());

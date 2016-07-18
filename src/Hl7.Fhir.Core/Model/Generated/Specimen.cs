@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
         /// Why the specimen was collected
         /// </summary>
         [FhirElement("request", Order=160)]
-        [References("DiagnosticOrder","ProcedureRequest")]
+        [References("DiagnosticRequest","ProcedureRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Request

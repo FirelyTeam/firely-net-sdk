@@ -467,10 +467,10 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "LinkComponent"; } }
             
             /// <summary>
-            /// The other patient resource that the link refers to
+            /// The other patient or related person resource that the link refers to
             /// </summary>
-            [FhirElement("other", Order=40)]
-            [References("Patient")]
+            [FhirElement("other", InSummary=true, Order=40)]
+            [References("Patient","RelatedPerson")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Other
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// replace | refer | seealso - type of link
             /// </summary>
-            [FhirElement("type", Order=50)]
+            [FhirElement("type", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Code<Hl7.Fhir.Model.Patient.LinkType> TypeElement
@@ -812,17 +812,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient's nominated primary care provider
         /// </summary>
-        [FhirElement("careProvider", Order=230)]
+        [FhirElement("generalPractitioner", Order=230)]
         [References("Organization","Practitioner")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> CareProvider
+        public List<Hl7.Fhir.Model.ResourceReference> GeneralPractitioner
         {
-            get { if(_CareProvider==null) _CareProvider = new List<Hl7.Fhir.Model.ResourceReference>(); return _CareProvider; }
-            set { _CareProvider = value; OnPropertyChanged("CareProvider"); }
+            get { if(_GeneralPractitioner==null) _GeneralPractitioner = new List<Hl7.Fhir.Model.ResourceReference>(); return _GeneralPractitioner; }
+            set { _GeneralPractitioner = value; OnPropertyChanged("GeneralPractitioner"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _CareProvider;
+        private List<Hl7.Fhir.Model.ResourceReference> _GeneralPractitioner;
         
         /// <summary>
         /// Organization that is the custodian of the patient record
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Link to another patient resource that concerns the same actual person
         /// </summary>
-        [FhirElement("link", Order=250)]
+        [FhirElement("link", InSummary=true, Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Patient.LinkComponent> Link
@@ -873,7 +873,7 @@ namespace Hl7.Fhir.Model
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(Contact.DeepCopy());
                 if(Animal != null) dest.Animal = (Hl7.Fhir.Model.Patient.AnimalComponent)Animal.DeepCopy();
                 if(Communication != null) dest.Communication = new List<Hl7.Fhir.Model.Patient.CommunicationComponent>(Communication.DeepCopy());
-                if(CareProvider != null) dest.CareProvider = new List<Hl7.Fhir.Model.ResourceReference>(CareProvider.DeepCopy());
+                if(GeneralPractitioner != null) dest.GeneralPractitioner = new List<Hl7.Fhir.Model.ResourceReference>(GeneralPractitioner.DeepCopy());
                 if(ManagingOrganization != null) dest.ManagingOrganization = (Hl7.Fhir.Model.ResourceReference)ManagingOrganization.DeepCopy();
                 if(Link != null) dest.Link = new List<Hl7.Fhir.Model.Patient.LinkComponent>(Link.DeepCopy());
                 return dest;
@@ -907,7 +907,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(Animal, otherT.Animal)) return false;
             if( !DeepComparable.Matches(Communication, otherT.Communication)) return false;
-            if( !DeepComparable.Matches(CareProvider, otherT.CareProvider)) return false;
+            if( !DeepComparable.Matches(GeneralPractitioner, otherT.GeneralPractitioner)) return false;
             if( !DeepComparable.Matches(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.Matches(Link, otherT.Link)) return false;
             
@@ -934,7 +934,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(Animal, otherT.Animal)) return false;
             if( !DeepComparable.IsExactly(Communication, otherT.Communication)) return false;
-            if( !DeepComparable.IsExactly(CareProvider, otherT.CareProvider)) return false;
+            if( !DeepComparable.IsExactly(GeneralPractitioner, otherT.GeneralPractitioner)) return false;
             if( !DeepComparable.IsExactly(ManagingOrganization, otherT.ManagingOrganization)) return false;
             if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
             

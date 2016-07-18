@@ -175,7 +175,7 @@
             "value": "+33 (237) 998327"
         }]
     }],
-    "careProvider": [{"reference": "#org3141"}],
+    "generalPractitioner": [{"reference": "#org3141"}],
     "telecom": [
         {"use": "home"},
         {

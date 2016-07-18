@@ -1104,34 +1104,35 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Any datatype or resource, including abstract ones
+        /// Type defined or constrained by this structure
         /// </summary>
-        [FhirElement("baseType", InSummary=true, Order=300)]
+        [FhirElement("type", InSummary=true, Order=300)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Code BaseTypeElement
+        public Hl7.Fhir.Model.Code TypeElement
         {
-            get { return _BaseTypeElement; }
-            set { _BaseTypeElement = value; OnPropertyChanged("BaseTypeElement"); }
+            get { return _TypeElement; }
+            set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
         }
         
-        private Hl7.Fhir.Model.Code _BaseTypeElement;
+        private Hl7.Fhir.Model.Code _TypeElement;
         
         /// <summary>
-        /// Any datatype or resource, including abstract ones
+        /// Type defined or constrained by this structure
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string BaseType
+        public string Type
         {
-            get { return BaseTypeElement != null ? BaseTypeElement.Value : null; }
+            get { return TypeElement != null ? TypeElement.Value : null; }
             set
             {
                 if(value == null)
-                  BaseTypeElement = null; 
+                  TypeElement = null; 
                 else
-                  BaseTypeElement = new Hl7.Fhir.Model.Code(value);
-                OnPropertyChanged("BaseType");
+                  TypeElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("Type");
             }
         }
         
@@ -1253,7 +1254,7 @@ namespace Hl7.Fhir.Model
                 if(AbstractElement != null) dest.AbstractElement = (Hl7.Fhir.Model.FhirBoolean)AbstractElement.DeepCopy();
                 if(ContextTypeElement != null) dest.ContextTypeElement = (Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContext>)ContextTypeElement.DeepCopy();
                 if(ContextElement != null) dest.ContextElement = new List<Hl7.Fhir.Model.FhirString>(ContextElement.DeepCopy());
-                if(BaseTypeElement != null) dest.BaseTypeElement = (Hl7.Fhir.Model.Code)BaseTypeElement.DeepCopy();
+                if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
                 if(BaseDefinitionElement != null) dest.BaseDefinitionElement = (Hl7.Fhir.Model.FhirUri)BaseDefinitionElement.DeepCopy();
                 if(DerivationElement != null) dest.DerivationElement = (Code<Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule>)DerivationElement.DeepCopy();
                 if(Snapshot != null) dest.Snapshot = (Hl7.Fhir.Model.StructureDefinition.SnapshotComponent)Snapshot.DeepCopy();
@@ -1296,7 +1297,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(AbstractElement, otherT.AbstractElement)) return false;
             if( !DeepComparable.Matches(ContextTypeElement, otherT.ContextTypeElement)) return false;
             if( !DeepComparable.Matches(ContextElement, otherT.ContextElement)) return false;
-            if( !DeepComparable.Matches(BaseTypeElement, otherT.BaseTypeElement)) return false;
+            if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(BaseDefinitionElement, otherT.BaseDefinitionElement)) return false;
             if( !DeepComparable.Matches(DerivationElement, otherT.DerivationElement)) return false;
             if( !DeepComparable.Matches(Snapshot, otherT.Snapshot)) return false;
@@ -1332,7 +1333,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(AbstractElement, otherT.AbstractElement)) return false;
             if( !DeepComparable.IsExactly(ContextTypeElement, otherT.ContextTypeElement)) return false;
             if( !DeepComparable.IsExactly(ContextElement, otherT.ContextElement)) return false;
-            if( !DeepComparable.IsExactly(BaseTypeElement, otherT.BaseTypeElement)) return false;
+            if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(BaseDefinitionElement, otherT.BaseDefinitionElement)) return false;
             if( !DeepComparable.IsExactly(DerivationElement, otherT.DerivationElement)) return false;
             if( !DeepComparable.IsExactly(Snapshot, otherT.Snapshot)) return false;

@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(pat);
             Assert.AreEqual("Patient",pat.Snapshot.Element[0].Path);
 
-            var boolean = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
+            var boolean = source.GetStructureDefinitionForCoreType(FHIRAllTypes.Boolean);
             Assert.IsNotNull(boolean);
             Assert.AreEqual("boolean", boolean.Snapshot.Element[0].Path);
         }      

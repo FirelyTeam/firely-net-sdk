@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
         /// Request fulfilled by this request
         /// </summary>
         [FhirElement("basedOn", Order=100)]
-        [References("ReferralRequest","CarePlan","DiagnosticOrder","ProcedureRequest")]
+        [References("ReferralRequest","CarePlan","DiagnosticRequest","ProcedureRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> BasedOn

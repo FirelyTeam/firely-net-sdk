@@ -70,14 +70,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
             /// </summary>
-            [EnumLiteral("unconfirmed"), Description("Unconfirmed")]
-            Unconfirmed,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/allergy-intolerance-status)
-            /// </summary>
-            [EnumLiteral("confirmed"), Description("Confirmed")]
-            Confirmed,
+            [EnumLiteral("active-confirmed"), Description("Active Confirmed")]
+            ActiveConfirmed,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/allergy-intolerance-status)
@@ -247,7 +241,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ReactionComponent"; } }
             
             /// <summary>
-            /// Specific substance considered to be responsible for event
+            /// Specific substance or pharmaceutical product considered to be responsible for event
             /// </summary>
             [FhirElement("substance", InSummary=true, Order=40)]
             [DataMember]
@@ -508,7 +502,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// active | unconfirmed | confirmed | inactive | resolved | refuted | entered-in-error
+        /// active | active-confirmed | inactive | resolved | refuted | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [DataMember]
@@ -521,7 +515,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceStatus> _StatusElement;
         
         /// <summary>
-        /// active | unconfirmed | confirmed | inactive | resolved | refuted | entered-in-error
+        /// active | active-confirmed | inactive | resolved | refuted | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -636,18 +630,17 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Substance, (or class) considered to be responsible for risk
+        /// Allergy or intolerance code
         /// </summary>
-        [FhirElement("substance", InSummary=true, Order=140)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("code", InSummary=true, Order=140)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Substance
+        public Hl7.Fhir.Model.CodeableConcept Code
         {
-            get { return _Substance; }
-            set { _Substance = value; OnPropertyChanged("Substance"); }
+            get { return _Code; }
+            set { _Code = value; OnPropertyChanged("Code"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Substance;
+        private Hl7.Fhir.Model.CodeableConcept _Code;
         
         /// <summary>
         /// Who the sensitivity is for
@@ -665,34 +658,34 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
-        /// When recorded
+        /// Date record was believed accurate
         /// </summary>
-        [FhirElement("recordedDate", InSummary=true, Order=160)]
+        [FhirElement("attestedDate", InSummary=true, Order=160)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
+        public Hl7.Fhir.Model.FhirDateTime AttestedDateElement
         {
-            get { return _RecordedDateElement; }
-            set { _RecordedDateElement = value; OnPropertyChanged("RecordedDateElement"); }
+            get { return _AttestedDateElement; }
+            set { _AttestedDateElement = value; OnPropertyChanged("AttestedDateElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirDateTime _RecordedDateElement;
+        private Hl7.Fhir.Model.FhirDateTime _AttestedDateElement;
         
         /// <summary>
-        /// When recorded
+        /// Date record was believed accurate
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string RecordedDate
+        public string AttestedDate
         {
-            get { return RecordedDateElement != null ? RecordedDateElement.Value : null; }
+            get { return AttestedDateElement != null ? AttestedDateElement.Value : null; }
             set
             {
                 if(value == null)
-                  RecordedDateElement = null; 
+                  AttestedDateElement = null; 
                 else
-                  RecordedDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("RecordedDate");
+                  AttestedDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("AttestedDate");
             }
         }
         
@@ -759,15 +752,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date(/time) of last known occurrence of a reaction
         /// </summary>
-        [FhirElement("lastOccurence", InSummary=true, Order=200)]
+        [FhirElement("lastOccurrence", InSummary=true, Order=200)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime LastOccurenceElement
+        public Hl7.Fhir.Model.FhirDateTime LastOccurrenceElement
         {
-            get { return _LastOccurenceElement; }
-            set { _LastOccurenceElement = value; OnPropertyChanged("LastOccurenceElement"); }
+            get { return _LastOccurrenceElement; }
+            set { _LastOccurrenceElement = value; OnPropertyChanged("LastOccurrenceElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirDateTime _LastOccurenceElement;
+        private Hl7.Fhir.Model.FhirDateTime _LastOccurrenceElement;
         
         /// <summary>
         /// Date(/time) of last known occurrence of a reaction
@@ -775,16 +768,16 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string LastOccurence
+        public string LastOccurrence
         {
-            get { return LastOccurenceElement != null ? LastOccurenceElement.Value : null; }
+            get { return LastOccurrenceElement != null ? LastOccurrenceElement.Value : null; }
             set
             {
                 if(value == null)
-                  LastOccurenceElement = null; 
+                  LastOccurrenceElement = null; 
                 else
-                  LastOccurenceElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("LastOccurence");
+                  LastOccurrenceElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                OnPropertyChanged("LastOccurrence");
             }
         }
         
@@ -828,13 +821,13 @@ namespace Hl7.Fhir.Model
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType>)TypeElement.DeepCopy();
                 if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>)CategoryElement.DeepCopy();
                 if(CriticalityElement != null) dest.CriticalityElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>)CriticalityElement.DeepCopy();
-                if(Substance != null) dest.Substance = (Hl7.Fhir.Model.CodeableConcept)Substance.DeepCopy();
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(RecordedDateElement != null) dest.RecordedDateElement = (Hl7.Fhir.Model.FhirDateTime)RecordedDateElement.DeepCopy();
+                if(AttestedDateElement != null) dest.AttestedDateElement = (Hl7.Fhir.Model.FhirDateTime)AttestedDateElement.DeepCopy();
                 if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
                 if(Reporter != null) dest.Reporter = (Hl7.Fhir.Model.ResourceReference)Reporter.DeepCopy();
                 if(OnsetElement != null) dest.OnsetElement = (Hl7.Fhir.Model.FhirDateTime)OnsetElement.DeepCopy();
-                if(LastOccurenceElement != null) dest.LastOccurenceElement = (Hl7.Fhir.Model.FhirDateTime)LastOccurenceElement.DeepCopy();
+                if(LastOccurrenceElement != null) dest.LastOccurrenceElement = (Hl7.Fhir.Model.FhirDateTime)LastOccurrenceElement.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(Reaction != null) dest.Reaction = new List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent>(Reaction.DeepCopy());
                 return dest;
@@ -859,13 +852,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.Matches(CriticalityElement, otherT.CriticalityElement)) return false;
-            if( !DeepComparable.Matches(Substance, otherT.Substance)) return false;
+            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.Matches(RecordedDateElement, otherT.RecordedDateElement)) return false;
+            if( !DeepComparable.Matches(AttestedDateElement, otherT.AttestedDateElement)) return false;
             if( !DeepComparable.Matches(Recorder, otherT.Recorder)) return false;
             if( !DeepComparable.Matches(Reporter, otherT.Reporter)) return false;
             if( !DeepComparable.Matches(OnsetElement, otherT.OnsetElement)) return false;
-            if( !DeepComparable.Matches(LastOccurenceElement, otherT.LastOccurenceElement)) return false;
+            if( !DeepComparable.Matches(LastOccurrenceElement, otherT.LastOccurrenceElement)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(Reaction, otherT.Reaction)) return false;
             
@@ -883,13 +876,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(CategoryElement, otherT.CategoryElement)) return false;
             if( !DeepComparable.IsExactly(CriticalityElement, otherT.CriticalityElement)) return false;
-            if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
+            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
-            if( !DeepComparable.IsExactly(RecordedDateElement, otherT.RecordedDateElement)) return false;
+            if( !DeepComparable.IsExactly(AttestedDateElement, otherT.AttestedDateElement)) return false;
             if( !DeepComparable.IsExactly(Recorder, otherT.Recorder)) return false;
             if( !DeepComparable.IsExactly(Reporter, otherT.Reporter)) return false;
             if( !DeepComparable.IsExactly(OnsetElement, otherT.OnsetElement)) return false;
-            if( !DeepComparable.IsExactly(LastOccurenceElement, otherT.LastOccurenceElement)) return false;
+            if( !DeepComparable.IsExactly(LastOccurrenceElement, otherT.LastOccurrenceElement)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(Reaction, otherT.Reaction)) return false;
             

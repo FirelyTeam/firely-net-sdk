@@ -96,6 +96,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/episode-of-care-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            EnteredInError,
         }
 
         [FhirType("StatusHistoryComponent")]
@@ -106,7 +112,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "StatusHistoryComponent"; } }
             
             /// <summary>
-            /// planned | waitlist | active | onhold | finished | cancelled
+            /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
             /// </summary>
             [FhirElement("status", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -120,7 +126,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> _StatusElement;
             
             /// <summary>
-            /// planned | waitlist | active | onhold | finished | cancelled
+            /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -214,7 +220,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// planned | waitlist | active | onhold | finished | cancelled
+        /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
@@ -228,7 +234,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> _StatusElement;
         
         /// <summary>
-        /// planned | waitlist | active | onhold | finished | cancelled
+        /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -375,6 +381,21 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Team;
         
+        /// <summary>
+        /// The set of accounts that may be used for billing for this EpisodeOfCare
+        /// </summary>
+        [FhirElement("account", Order=200)]
+        [References("Account")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Account
+        {
+            get { if(_Account==null) _Account = new List<Hl7.Fhir.Model.ResourceReference>(); return _Account; }
+            set { _Account = value; OnPropertyChanged("Account"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Account;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as EpisodeOfCare;
@@ -393,6 +414,7 @@ namespace Hl7.Fhir.Model
                 if(ReferralRequest != null) dest.ReferralRequest = new List<Hl7.Fhir.Model.ResourceReference>(ReferralRequest.DeepCopy());
                 if(CareManager != null) dest.CareManager = (Hl7.Fhir.Model.ResourceReference)CareManager.DeepCopy();
                 if(Team != null) dest.Team = new List<Hl7.Fhir.Model.ResourceReference>(Team.DeepCopy());
+                if(Account != null) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
                 return dest;
             }
             else
@@ -421,6 +443,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ReferralRequest, otherT.ReferralRequest)) return false;
             if( !DeepComparable.Matches(CareManager, otherT.CareManager)) return false;
             if( !DeepComparable.Matches(Team, otherT.Team)) return false;
+            if( !DeepComparable.Matches(Account, otherT.Account)) return false;
             
             return true;
         }
@@ -442,6 +465,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ReferralRequest, otherT.ReferralRequest)) return false;
             if( !DeepComparable.IsExactly(CareManager, otherT.CareManager)) return false;
             if( !DeepComparable.IsExactly(Team, otherT.Team)) return false;
+            if( !DeepComparable.IsExactly(Account, otherT.Account)) return false;
             
             return true;
         }

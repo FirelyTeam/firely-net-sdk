@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Specification.Source
             return GetStructureDefinition(url);
         }
 
-        public StructureDefinition GetStructureDefinitionForCoreType(FHIRDefinedType type)
+        public StructureDefinition GetStructureDefinitionForCoreType(FHIRAllTypes type)
         {
             return GetStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
         }

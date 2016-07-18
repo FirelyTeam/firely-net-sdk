@@ -55,47 +55,53 @@ namespace Hl7.Fhir.Model
         
         /// <summary>
         /// Current state of the encounter
-        /// (url: http://hl7.org/fhir/ValueSet/encounter-state)
+        /// (url: http://hl7.org/fhir/ValueSet/encounter-status)
         /// </summary>
-        [FhirEnumeration("EncounterState")]
-        public enum EncounterState
+        [FhirEnumeration("EncounterStatus")]
+        public enum EncounterStatus
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-state)
+            /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
             [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-state)
+            /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
             [EnumLiteral("arrived"), Description("Arrived")]
             Arrived,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-state)
+            /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
             [EnumLiteral("in-progress"), Description("in Progress")]
             InProgress,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-state)
+            /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
             [EnumLiteral("onleave"), Description("On Leave")]
             Onleave,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-state)
+            /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
             [EnumLiteral("finished"), Description("Finished")]
             Finished,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/encounter-state)
+            /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/encounter-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+            EnteredInError,
         }
 
         /// <summary>
@@ -139,26 +145,26 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "StatusHistoryComponent"; } }
             
             /// <summary>
-            /// planned | arrived | in-progress | onleave | finished | cancelled
+            /// planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error
             /// </summary>
             [FhirElement("status", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Encounter.EncounterState> StatusElement
+            public Code<Hl7.Fhir.Model.Encounter.EncounterStatus> StatusElement
             {
                 get { return _StatusElement; }
                 set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.Encounter.EncounterState> _StatusElement;
+            private Code<Hl7.Fhir.Model.Encounter.EncounterStatus> _StatusElement;
             
             /// <summary>
-            /// planned | arrived | in-progress | onleave | finished | cancelled
+            /// planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Encounter.EncounterState? Status
+            public Hl7.Fhir.Model.Encounter.EncounterStatus? Status
             {
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
@@ -166,7 +172,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       StatusElement = null; 
                     else
-                      StatusElement = new Code<Hl7.Fhir.Model.Encounter.EncounterState>(value);
+                      StatusElement = new Code<Hl7.Fhir.Model.Encounter.EncounterStatus>(value);
                     OnPropertyChanged("Status");
                 }
             }
@@ -192,7 +198,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterState>)StatusElement.DeepCopy();
+                    if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterStatus>)StatusElement.DeepCopy();
                     if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                     return dest;
                 }
@@ -695,26 +701,26 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// planned | arrived | in-progress | onleave | finished | cancelled
+        /// planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Encounter.EncounterState> StatusElement
+        public Code<Hl7.Fhir.Model.Encounter.EncounterStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Encounter.EncounterState> _StatusElement;
+        private Code<Hl7.Fhir.Model.Encounter.EncounterStatus> _StatusElement;
         
         /// <summary>
-        /// planned | arrived | in-progress | onleave | finished | cancelled
+        /// planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Encounter.EncounterState? Status
+        public Hl7.Fhir.Model.Encounter.EncounterStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -722,7 +728,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.Encounter.EncounterState>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.Encounter.EncounterStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -909,9 +915,24 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ResourceReference> _Indication;
         
         /// <summary>
+        /// The set of accounts that may be used for billing for this Encounter
+        /// </summary>
+        [FhirElement("account", Order=240)]
+        [References("Account")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Account
+        {
+            get { if(_Account==null) _Account = new List<Hl7.Fhir.Model.ResourceReference>(); return _Account; }
+            set { _Account = value; OnPropertyChanged("Account"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Account;
+        
+        /// <summary>
         /// Details about the admission to a healthcare service
         /// </summary>
-        [FhirElement("hospitalization", Order=240)]
+        [FhirElement("hospitalization", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.Encounter.HospitalizationComponent Hospitalization
         {
@@ -924,7 +945,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// List of locations where the patient has been
         /// </summary>
-        [FhirElement("location", Order=250)]
+        [FhirElement("location", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Encounter.LocationComponent> Location
@@ -938,7 +959,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The custodian organization of this Encounter record
         /// </summary>
-        [FhirElement("serviceProvider", Order=260)]
+        [FhirElement("serviceProvider", Order=270)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ServiceProvider
@@ -952,7 +973,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Another Encounter this encounter is part of
         /// </summary>
-        [FhirElement("partOf", Order=270)]
+        [FhirElement("partOf", Order=280)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PartOf
@@ -971,7 +992,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterState>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Encounter.EncounterStatus>)StatusElement.DeepCopy();
                 if(StatusHistory != null) dest.StatusHistory = new List<Hl7.Fhir.Model.Encounter.StatusHistoryComponent>(StatusHistory.DeepCopy());
                 if(Class != null) dest.Class = (Hl7.Fhir.Model.Coding)Class.DeepCopy();
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
@@ -985,6 +1006,7 @@ namespace Hl7.Fhir.Model
                 if(Length != null) dest.Length = (Duration)Length.DeepCopy();
                 if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                 if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.ResourceReference>(Indication.DeepCopy());
+                if(Account != null) dest.Account = new List<Hl7.Fhir.Model.ResourceReference>(Account.DeepCopy());
                 if(Hospitalization != null) dest.Hospitalization = (Hl7.Fhir.Model.Encounter.HospitalizationComponent)Hospitalization.DeepCopy();
                 if(Location != null) dest.Location = new List<Hl7.Fhir.Model.Encounter.LocationComponent>(Location.DeepCopy());
                 if(ServiceProvider != null) dest.ServiceProvider = (Hl7.Fhir.Model.ResourceReference)ServiceProvider.DeepCopy();
@@ -1021,6 +1043,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Length, otherT.Length)) return false;
             if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
             if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
+            if( !DeepComparable.Matches(Account, otherT.Account)) return false;
             if( !DeepComparable.Matches(Hospitalization, otherT.Hospitalization)) return false;
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
             if( !DeepComparable.Matches(ServiceProvider, otherT.ServiceProvider)) return false;
@@ -1050,6 +1073,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Length, otherT.Length)) return false;
             if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
             if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
+            if( !DeepComparable.IsExactly(Account, otherT.Account)) return false;
             if( !DeepComparable.IsExactly(Hospitalization, otherT.Hospitalization)) return false;
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
             if( !DeepComparable.IsExactly(ServiceProvider, otherT.ServiceProvider)) return false;

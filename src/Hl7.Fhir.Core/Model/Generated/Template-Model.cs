@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Sat, 09 Jul 2016 13:55:12 GMT for FHIR v1.5.0
+// Model Generated on Mon, 18 Jul 2016 16:06:27 GMT for FHIR v1.5.0
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): CompartmentDefinition.resource.code
@@ -15,13 +15,16 @@
 	// Used in model class (resource): SearchParameter.target
 
 // Generated Shared Enumeration: OperationParameterUse
-	// Used in model class (resource): ModuleDefinition.parameter.use
 	// Used in model class (resource): OperationDefinition.parameter.use
 	// Used in model class (type): ParameterDefinition.use
 
 // Generated Shared Enumeration: FilterOperator
 	// Used in model class (resource): CodeSystem.filter.operator
 	// Used in model class (resource): ValueSet.compose.include.filter.op
+
+// Generated Shared Enumeration: ActionSelectionBehavior
+	// Used in model class (resource): GuidanceResponse.action.selectionBehavior
+	// Used in model class (resource): PlanDefinition.actionDefinition.selectionBehavior
 
 // Generated Shared Enumeration: AdministrativeGender
 	// Used in model class (resource): FamilyMemberHistory.gender
@@ -31,11 +34,17 @@
 	// Used in model class (resource): Practitioner.gender
 	// Used in model class (resource): RelatedPerson.gender
 
-// Generated Shared Enumeration: FHIRDefinedType
-	// Used in model class (resource): ModuleDefinition.parameter.type
-	// Used in model class (resource): ModuleDefinition.data.type
-	// Used in model class (resource): TestScript.setup.action.operation.resource
-	// Used in model class (resource): TestScript.setup.action.assert.resource
+// Generated Shared Enumeration: ActionGroupingBehavior
+	// Used in model class (resource): GuidanceResponse.action.groupingBehavior
+	// Used in model class (resource): PlanDefinition.actionDefinition.groupingBehavior
+
+// Generated Shared Enumeration: ObservationStatus
+	// Used in model class (resource): Observation.status
+	// Used in model class (resource): RiskAssessment.status
+
+// Generated Shared Enumeration: ActionPrecheckBehavior
+	// Used in model class (resource): GuidanceResponse.action.precheckBehavior
+	// Used in model class (resource): PlanDefinition.actionDefinition.precheckBehavior
 
 // Generated Shared Enumeration: BindingStrength
 	// Used in model class (resource): OperationDefinition.parameter.binding.strength
@@ -59,6 +68,15 @@
 	// Used in model class (resource): OperationDefinition.parameter.searchType
 	// Used in model class (resource): SearchParameter.type
 
+// Generated Shared Enumeration: ActionCardinalityBehavior
+	// Used in model class (resource): GuidanceResponse.action.cardinalityBehavior
+	// Used in model class (resource): PlanDefinition.actionDefinition.cardinalityBehavior
+
+// Generated Shared Enumeration: ParticipantType
+	// Used in model class (resource): ActivityDefinition.participantType
+	// Used in model class (resource): PlanDefinition.actionDefinition.participantType
+	// Used in model class (type): ActionDefinition.participantType
+
 // Generated Shared Enumeration: ConformanceResourceStatus
 	// Used in model class (resource): CodeSystem.status
 	// Used in model class (resource): ValueSet.status
@@ -81,12 +99,15 @@
 
 // Generated Shared Enumeration: ModuleMetadataStatus
 	// Used in model class (resource): ActivityDefinition.status
+	// Used in model class (resource): DecisionSupportServiceModule.status
 	// Used in model class (resource): Library.status
+	// Used in model class (resource): Measure.status
 	// Used in model class (resource): PlanDefinition.status
 	// Used in model class (type): ModuleMetadata.status
 
 // Generated Shared Enumeration: ActionRelationshipType
 	// Used in model class (resource): GuidanceResponse.action.relatedAction.relationship
+	// Used in model class (resource): PlanDefinition.actionDefinition.relatedAction.relationship
 	// Used in model class (type): ActionDefinition.relatedAction.relationship
 
 // Generated Shared Enumeration: DocumentReferenceStatus
@@ -98,8 +119,13 @@
 	// Used in model class (resource): MedicationAdministration.status
 	// Used in model class (resource): MedicationAdministration.eventHistory.status
 
+// Generated Shared Enumeration: ActionRequiredBehavior
+	// Used in model class (resource): GuidanceResponse.action.requiredBehavior
+	// Used in model class (resource): PlanDefinition.actionDefinition.requiredBehavior
+
 // Generated Shared Enumeration: ActionRelationshipAnchor
 	// Used in model class (resource): GuidanceResponse.action.relatedAction.anchor
+	// Used in model class (resource): PlanDefinition.actionDefinition.relatedAction.anchor
 	// Used in model class (type): ActionDefinition.relatedAction.anchor
 
 // Generated Shared Enumeration: FHIRAllTypes
@@ -129,7 +155,6 @@
 // Hl7.Fhir.Core\Model\Generated\QuestionnaireResponse.cs
 // Hl7.Fhir.Core\Model\Generated\Questionnaire.cs
 // Hl7.Fhir.Core\Model\Generated\Provenance.cs
-// Hl7.Fhir.Core\Model\Generated\Protocol.cs
 // Hl7.Fhir.Core\Model\Generated\ProcessResponse.cs
 // Hl7.Fhir.Core\Model\Generated\ProcessRequest.cs
 // Hl7.Fhir.Core\Model\Generated\ProcedureRequest.cs
@@ -142,15 +167,11 @@
 // Hl7.Fhir.Core\Model\Generated\PaymentNotice.cs
 // Hl7.Fhir.Core\Model\Generated\Patient.cs
 // Hl7.Fhir.Core\Model\Generated\Organization.cs
-// Hl7.Fhir.Core\Model\Generated\OrderSet.cs
-// Hl7.Fhir.Core\Model\Generated\OrderResponse.cs
-// Hl7.Fhir.Core\Model\Generated\Order.cs
 // Hl7.Fhir.Core\Model\Generated\OperationOutcome.cs
 // Hl7.Fhir.Core\Model\Generated\OperationDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Observation.cs
-// Hl7.Fhir.Core\Model\Generated\NutritionOrder.cs
+// Hl7.Fhir.Core\Model\Generated\NutritionRequest.cs
 // Hl7.Fhir.Core\Model\Generated\NamingSystem.cs
-// Hl7.Fhir.Core\Model\Generated\ModuleDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\MessageHeader.cs
 // Hl7.Fhir.Core\Model\Generated\MedicationStatement.cs
 // Hl7.Fhir.Core\Model\Generated\MedicationOrder.cs
@@ -186,8 +207,8 @@
 // Hl7.Fhir.Core\Model\Generated\EligibilityRequest.cs
 // Hl7.Fhir.Core\Model\Generated\DocumentReference.cs
 // Hl7.Fhir.Core\Model\Generated\DocumentManifest.cs
+// Hl7.Fhir.Core\Model\Generated\DiagnosticRequest.cs
 // Hl7.Fhir.Core\Model\Generated\DiagnosticReport.cs
-// Hl7.Fhir.Core\Model\Generated\DiagnosticOrder.cs
 // Hl7.Fhir.Core\Model\Generated\DeviceUseStatement.cs
 // Hl7.Fhir.Core\Model\Generated\DeviceUseRequest.cs
 // Hl7.Fhir.Core\Model\Generated\DeviceMetric.cs
@@ -195,7 +216,6 @@
 // Hl7.Fhir.Core\Model\Generated\Device.cs
 // Hl7.Fhir.Core\Model\Generated\DetectedIssue.cs
 // Hl7.Fhir.Core\Model\Generated\DecisionSupportServiceModule.cs
-// Hl7.Fhir.Core\Model\Generated\DecisionSupportRule.cs
 // Hl7.Fhir.Core\Model\Generated\DataElement.cs
 // Hl7.Fhir.Core\Model\Generated\Coverage.cs
 // Hl7.Fhir.Core\Model\Generated\Contract.cs

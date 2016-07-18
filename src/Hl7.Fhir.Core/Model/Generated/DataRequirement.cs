@@ -263,10 +263,10 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// The value of the filter, as a Period or dateTime value
+            /// The value of the filter, as a Period, DateTime, or Duration value
             /// </summary>
             [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -361,14 +361,15 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("profile", InSummary=true, Order=40)]
         [References("StructureDefinition")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Profile
+        public List<Hl7.Fhir.Model.ResourceReference> Profile
         {
-            get { return _Profile; }
+            get { if(_Profile==null) _Profile = new List<Hl7.Fhir.Model.ResourceReference>(); return _Profile; }
             set { _Profile = value; OnPropertyChanged("Profile"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Profile;
+        private List<Hl7.Fhir.Model.ResourceReference> _Profile;
         
         /// <summary>
         /// Indicates that specific structure elements are referenced by the knowledge module
@@ -439,7 +440,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)TypeElement.DeepCopy();
-                if(Profile != null) dest.Profile = (Hl7.Fhir.Model.ResourceReference)Profile.DeepCopy();
+                if(Profile != null) dest.Profile = new List<Hl7.Fhir.Model.ResourceReference>(Profile.DeepCopy());
                 if(MustSupportElement != null) dest.MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(MustSupportElement.DeepCopy());
                 if(CodeFilter != null) dest.CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(CodeFilter.DeepCopy());
                 if(DateFilter != null) dest.DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(DateFilter.DeepCopy());

@@ -77,16 +77,16 @@ namespace Hl7.Fhir.Model
         }
 
 
-        public static string FhirTypeToFhirTypeName(FHIRDefinedType type)
+        public static string FhirTypeToFhirTypeName(FHIRAllTypes type)
         {
             return type.GetLiteral();
         }
 
-        public static FHIRDefinedType? FhirTypeNameToFhirType(string name)
+        public static FHIRAllTypes? FhirTypeNameToFhirType(string name)
         {
-            FHIRDefinedType result = FHIRDefinedType.Patient;
+            FHIRAllTypes result = FHIRAllTypes.Patient;
 
-            if (Enum.TryParse<FHIRDefinedType>(name, ignoreCase: true, result: out result))
+            if (Enum.TryParse<FHIRAllTypes>(name, ignoreCase: true, result: out result))
                 return result;
             else
                 return null;
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
             return name != null && IsKnownResource(name);
         }
 
-        public static bool IsKnownResource(FHIRDefinedType type)
+        public static bool IsKnownResource(FHIRAllTypes type)
         {
             var name = FhirTypeToFhirTypeName(type);
             return name != null && IsKnownResource(name);
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
             return IsPrimitive(type.Name);
         }
 
-        public static bool IsPrimitive(FHIRDefinedType type)
+        public static bool IsPrimitive(FHIRAllTypes type)
         {
             return IsPrimitive(FhirTypeToFhirTypeName(type));
         }
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
             return IsDataType(type.Name);
         }
 
-        public static bool IsDataType(FHIRDefinedType type)
+        public static bool IsDataType(FHIRAllTypes type)
         {
             return IsDataType(FhirTypeToFhirTypeName(type));
         }
@@ -198,9 +198,9 @@ namespace Hl7.Fhir.Model
             return IsReference(type.Name);
         }
 
-        public static bool IsReference(FHIRDefinedType type)
+        public static bool IsReference(FHIRAllTypes type)
         {
-            return type == FHIRDefinedType.Reference;
+            return type == FHIRAllTypes.Reference;
         }
 
 
@@ -215,22 +215,33 @@ namespace Hl7.Fhir.Model
 
             var t = FhirTypeNameToFhirType(name);
 
-            if (t != null)
+            if (t.HasValue)
                 return IsConformanceResource(t.Value);
             else
                 return false;
         }
 
-        public static bool IsConformanceResource(FHIRDefinedType type)
+        public static bool IsConformanceResource(FHIRAllTypes type)
         {
             return ConformanceResources.Contains(type);
         }
 
 
 
-        public static readonly FHIRDefinedType[] ConformanceResources = { FHIRDefinedType.Conformance, FHIRDefinedType.StructureDefinition, FHIRDefinedType.ValueSet,
-            FHIRDefinedType.ConceptMap, FHIRDefinedType.DataElement, FHIRDefinedType.OperationDefinition, FHIRDefinedType.SearchParameter, FHIRDefinedType.NamingSystem,
-             FHIRDefinedType.ImplementationGuide, FHIRDefinedType.TestScript };
+        public static readonly FHIRAllTypes[] ConformanceResources = 
+            {
+                FHIRAllTypes.Conformance,
+                FHIRAllTypes.StructureDefinition,
+                FHIRAllTypes.ValueSet,
+                FHIRAllTypes.CodeSystem,
+                FHIRAllTypes.ConceptMap,
+                FHIRAllTypes.DataElement,
+                FHIRAllTypes.OperationDefinition,
+                FHIRAllTypes.SearchParameter,
+                FHIRAllTypes.NamingSystem,
+                FHIRAllTypes.ImplementationGuide,
+                FHIRAllTypes.TestScript 
+            };
 
         /// <summary>
         /// Is the given type a core Resource, Datatype or primitive

@@ -975,6 +975,20 @@ namespace Hl7.Fhir.Model
                 }
             }
             
+            /// <summary>
+            /// OperationOutcome with hints and warnings (for batch/transaction)
+            /// </summary>
+            [FhirElement("outcome", InSummary=true, Order=80, Choice=ChoiceType.ResourceChoice)]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
+            [DataMember]
+            public Hl7.Fhir.Model.Resource Outcome
+            {
+                get { return _Outcome; }
+                set { _Outcome = value; OnPropertyChanged("Outcome"); }
+            }
+            
+            private Hl7.Fhir.Model.Resource _Outcome;
+            
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ResponseComponent;
@@ -986,6 +1000,7 @@ namespace Hl7.Fhir.Model
                     if(LocationElement != null) dest.LocationElement = (Hl7.Fhir.Model.FhirUri)LocationElement.DeepCopy();
                     if(EtagElement != null) dest.EtagElement = (Hl7.Fhir.Model.FhirString)EtagElement.DeepCopy();
                     if(LastModifiedElement != null) dest.LastModifiedElement = (Hl7.Fhir.Model.Instant)LastModifiedElement.DeepCopy();
+                    if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.Resource)Outcome.DeepCopy();
                     return dest;
                 }
                 else
@@ -1007,6 +1022,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(LocationElement, otherT.LocationElement)) return false;
                 if( !DeepComparable.Matches(EtagElement, otherT.EtagElement)) return false;
                 if( !DeepComparable.Matches(LastModifiedElement, otherT.LastModifiedElement)) return false;
+                if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
                 
                 return true;
             }
@@ -1021,6 +1037,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(LocationElement, otherT.LocationElement)) return false;
                 if( !DeepComparable.IsExactly(EtagElement, otherT.EtagElement)) return false;
                 if( !DeepComparable.IsExactly(LastModifiedElement, otherT.LastModifiedElement)) return false;
+                if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
                 
                 return true;
             }

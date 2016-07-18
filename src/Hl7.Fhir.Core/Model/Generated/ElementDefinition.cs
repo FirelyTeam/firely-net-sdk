@@ -582,15 +582,14 @@ namespace Hl7.Fhir.Model
             /// Profile (StructureDefinition) to apply (or IG)
             /// </summary>
             [FhirElement("profile", InSummary=true, Order=50)]
-            [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.FhirUri> ProfileElement
+            public Hl7.Fhir.Model.FhirUri ProfileElement
             {
-                get { if(_ProfileElement==null) _ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(); return _ProfileElement; }
+                get { return _ProfileElement; }
                 set { _ProfileElement = value; OnPropertyChanged("ProfileElement"); }
             }
             
-            private List<Hl7.Fhir.Model.FhirUri> _ProfileElement;
+            private Hl7.Fhir.Model.FhirUri _ProfileElement;
             
             /// <summary>
             /// Profile (StructureDefinition) to apply (or IG)
@@ -598,23 +597,55 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IEnumerable<string> Profile
+            public string Profile
             {
-                get { return ProfileElement != null ? ProfileElement.Select(elem => elem.Value) : null; }
+                get { return ProfileElement != null ? ProfileElement.Value : null; }
                 set
                 {
                     if(value == null)
                       ProfileElement = null; 
                     else
-                      ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                      ProfileElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Profile");
+                }
+            }
+            
+            /// <summary>
+            /// Profile (StructureDefinition) to apply to reference target (or IG)
+            /// </summary>
+            [FhirElement("targetProfile", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirUri TargetProfileElement
+            {
+                get { return _TargetProfileElement; }
+                set { _TargetProfileElement = value; OnPropertyChanged("TargetProfileElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirUri _TargetProfileElement;
+            
+            /// <summary>
+            /// Profile (StructureDefinition) to apply to reference target (or IG)
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string TargetProfile
+            {
+                get { return TargetProfileElement != null ? TargetProfileElement.Value : null; }
+                set
+                {
+                    if(value == null)
+                      TargetProfileElement = null; 
+                    else
+                      TargetProfileElement = new Hl7.Fhir.Model.FhirUri(value);
+                    OnPropertyChanged("TargetProfile");
                 }
             }
             
             /// <summary>
             /// contained | referenced | bundled - how aggregated
             /// </summary>
-            [FhirElement("aggregation", InSummary=true, Order=60)]
+            [FhirElement("aggregation", InSummary=true, Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>> AggregationElement
@@ -647,7 +678,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// either | independent | specific
             /// </summary>
-            [FhirElement("versioning", InSummary=true, Order=70)]
+            [FhirElement("versioning", InSummary=true, Order=80)]
             [DataMember]
             public Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules> VersioningElement
             {
@@ -684,7 +715,8 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
-                    if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(ProfileElement.DeepCopy());
+                    if(ProfileElement != null) dest.ProfileElement = (Hl7.Fhir.Model.FhirUri)ProfileElement.DeepCopy();
+                    if(TargetProfileElement != null) dest.TargetProfileElement = (Hl7.Fhir.Model.FhirUri)TargetProfileElement.DeepCopy();
                     if(AggregationElement != null) dest.AggregationElement = new List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>>(AggregationElement.DeepCopy());
                     if(VersioningElement != null) dest.VersioningElement = (Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules>)VersioningElement.DeepCopy();
                     return dest;
@@ -706,6 +738,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.Matches(ProfileElement, otherT.ProfileElement)) return false;
+                if( !DeepComparable.Matches(TargetProfileElement, otherT.TargetProfileElement)) return false;
                 if( !DeepComparable.Matches(AggregationElement, otherT.AggregationElement)) return false;
                 if( !DeepComparable.Matches(VersioningElement, otherT.VersioningElement)) return false;
                 
@@ -720,6 +753,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
                 if( !DeepComparable.IsExactly(ProfileElement, otherT.ProfileElement)) return false;
+                if( !DeepComparable.IsExactly(TargetProfileElement, otherT.TargetProfileElement)) return false;
                 if( !DeepComparable.IsExactly(AggregationElement, otherT.AggregationElement)) return false;
                 if( !DeepComparable.IsExactly(VersioningElement, otherT.VersioningElement)) return false;
                 

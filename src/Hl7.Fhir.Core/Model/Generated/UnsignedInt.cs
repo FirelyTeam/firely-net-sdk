@@ -41,6 +41,9 @@ using System.ComponentModel;
 //
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// Primitive Type unsignedInt
+    /// </summary>
     [FhirType("unsignedInt")]
     [DataContract]
     public partial class UnsignedInt : Hl7.Fhir.Model.Primitive<int?>, System.ComponentModel.INotifyPropertyChanged

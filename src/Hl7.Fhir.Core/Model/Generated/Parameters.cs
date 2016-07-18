@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Resource _Resource;
             
             /// <summary>
-            /// Named part of a parameter (e.g. Tuple)
+            /// Named part of a multi-part parameter
             /// </summary>
             [FhirElement("part", Order=70)]
             [Cardinality(Min=0,Max=-1)]

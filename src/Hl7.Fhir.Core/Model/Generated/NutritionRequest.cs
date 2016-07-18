@@ -42,75 +42,75 @@ using System.ComponentModel;
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A request for a diet, formula or nutritional supplement
+    /// Diet, formula or nutritional supplement request
     /// </summary>
-    [FhirType("NutritionOrder", IsResource=true)]
+    [FhirType("NutritionRequest", IsResource=true)]
     [DataContract]
-    public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
+    public partial class NutritionRequest : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
     {
         [NotMapped]
-        public override ResourceType ResourceType { get { return ResourceType.NutritionOrder; } }
+        public override ResourceType ResourceType { get { return ResourceType.NutritionRequest; } }
         [NotMapped]
-        public override string TypeName { get { return "NutritionOrder"; } }
+        public override string TypeName { get { return "NutritionRequest"; } }
         
         /// <summary>
         /// Codes specifying the state of the request. Describes the lifecycle of the nutrition order.
-        /// (url: http://hl7.org/fhir/ValueSet/nutrition-order-status)
+        /// (url: http://hl7.org/fhir/ValueSet/nutrition-request-status)
         /// </summary>
         [FhirEnumeration("NutritionOrderStatus")]
         public enum NutritionOrderStatus
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-order-status)
+            /// (system: http://hl7.org/fhir/nutrition-request-status)
             /// </summary>
             [EnumLiteral("proposed"), Description("Proposed")]
             Proposed,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-order-status)
+            /// (system: http://hl7.org/fhir/nutrition-request-status)
             /// </summary>
             [EnumLiteral("draft"), Description("Draft")]
             Draft,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-order-status)
+            /// (system: http://hl7.org/fhir/nutrition-request-status)
             /// </summary>
             [EnumLiteral("planned"), Description("Planned")]
             Planned,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-order-status)
+            /// (system: http://hl7.org/fhir/nutrition-request-status)
             /// </summary>
             [EnumLiteral("requested"), Description("Requested")]
             Requested,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-order-status)
+            /// (system: http://hl7.org/fhir/nutrition-request-status)
             /// </summary>
             [EnumLiteral("active"), Description("Active")]
             Active,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-order-status)
+            /// (system: http://hl7.org/fhir/nutrition-request-status)
             /// </summary>
             [EnumLiteral("on-hold"), Description("On-Hold")]
             OnHold,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-order-status)
+            /// (system: http://hl7.org/fhir/nutrition-request-status)
             /// </summary>
             [EnumLiteral("completed"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-order-status)
+            /// (system: http://hl7.org/fhir/nutrition-request-status)
             /// </summary>
             [EnumLiteral("cancelled"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/nutrition-order-status)
+            /// (system: http://hl7.org/fhir/nutrition-request-status)
             /// </summary>
             [EnumLiteral("entered-in-error"), Description("Entered in Error")]
             EnteredInError,
@@ -157,13 +157,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("nutrient", Order=60)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent> Nutrient
+            public List<Hl7.Fhir.Model.NutritionRequest.NutrientComponent> Nutrient
             {
-                get { if(_Nutrient==null) _Nutrient = new List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>(); return _Nutrient; }
+                get { if(_Nutrient==null) _Nutrient = new List<Hl7.Fhir.Model.NutritionRequest.NutrientComponent>(); return _Nutrient; }
                 set { _Nutrient = value; OnPropertyChanged("Nutrient"); }
             }
             
-            private List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent> _Nutrient;
+            private List<Hl7.Fhir.Model.NutritionRequest.NutrientComponent> _Nutrient;
             
             /// <summary>
             /// Required  texture modifications
@@ -171,13 +171,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("texture", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.NutritionOrder.TextureComponent> Texture
+            public List<Hl7.Fhir.Model.NutritionRequest.TextureComponent> Texture
             {
-                get { if(_Texture==null) _Texture = new List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>(); return _Texture; }
+                get { if(_Texture==null) _Texture = new List<Hl7.Fhir.Model.NutritionRequest.TextureComponent>(); return _Texture; }
                 set { _Texture = value; OnPropertyChanged("Texture"); }
             }
             
-            private List<Hl7.Fhir.Model.NutritionOrder.TextureComponent> _Texture;
+            private List<Hl7.Fhir.Model.NutritionRequest.TextureComponent> _Texture;
             
             /// <summary>
             /// The required consistency of fluids and liquids provided to the patient
@@ -234,8 +234,8 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                     if(Schedule != null) dest.Schedule = new List<Hl7.Fhir.Model.Timing>(Schedule.DeepCopy());
-                    if(Nutrient != null) dest.Nutrient = new List<Hl7.Fhir.Model.NutritionOrder.NutrientComponent>(Nutrient.DeepCopy());
-                    if(Texture != null) dest.Texture = new List<Hl7.Fhir.Model.NutritionOrder.TextureComponent>(Texture.DeepCopy());
+                    if(Nutrient != null) dest.Nutrient = new List<Hl7.Fhir.Model.NutritionRequest.NutrientComponent>(Nutrient.DeepCopy());
+                    if(Texture != null) dest.Texture = new List<Hl7.Fhir.Model.NutritionRequest.TextureComponent>(Texture.DeepCopy());
                     if(FluidConsistencyType != null) dest.FluidConsistencyType = new List<Hl7.Fhir.Model.CodeableConcept>(FluidConsistencyType.DeepCopy());
                     if(InstructionElement != null) dest.InstructionElement = (Hl7.Fhir.Model.FhirString)InstructionElement.DeepCopy();
                     return dest;
@@ -740,13 +740,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("administration", Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent> Administration
+            public List<Hl7.Fhir.Model.NutritionRequest.AdministrationComponent> Administration
             {
-                get { if(_Administration==null) _Administration = new List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>(); return _Administration; }
+                get { if(_Administration==null) _Administration = new List<Hl7.Fhir.Model.NutritionRequest.AdministrationComponent>(); return _Administration; }
                 set { _Administration = value; OnPropertyChanged("Administration"); }
             }
             
-            private List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent> _Administration;
+            private List<Hl7.Fhir.Model.NutritionRequest.AdministrationComponent> _Administration;
             
             /// <summary>
             /// Upper limit on formula volume per unit of time
@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Model
                     if(AdditiveProductNameElement != null) dest.AdditiveProductNameElement = (Hl7.Fhir.Model.FhirString)AdditiveProductNameElement.DeepCopy();
                     if(CaloricDensity != null) dest.CaloricDensity = (Hl7.Fhir.Model.SimpleQuantity)CaloricDensity.DeepCopy();
                     if(RouteofAdministration != null) dest.RouteofAdministration = (Hl7.Fhir.Model.CodeableConcept)RouteofAdministration.DeepCopy();
-                    if(Administration != null) dest.Administration = new List<Hl7.Fhir.Model.NutritionOrder.AdministrationComponent>(Administration.DeepCopy());
+                    if(Administration != null) dest.Administration = new List<Hl7.Fhir.Model.NutritionRequest.AdministrationComponent>(Administration.DeepCopy());
                     if(MaxVolumeToDeliver != null) dest.MaxVolumeToDeliver = (Hl7.Fhir.Model.SimpleQuantity)MaxVolumeToDeliver.DeepCopy();
                     if(AdministrationInstructionElement != null) dest.AdministrationInstructionElement = (Hl7.Fhir.Model.FhirString)AdministrationInstructionElement.DeepCopy();
                     return dest;
@@ -977,13 +977,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("status", InSummary=true, Order=100)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> StatusElement
+        public Code<Hl7.Fhir.Model.NutritionRequest.NutritionOrderStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.NutritionRequest.NutritionOrderStatus> _StatusElement;
         
         /// <summary>
         /// proposed | draft | planned | requested | active | on-hold | completed | cancelled | entered-in-error
@@ -991,7 +991,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus? Status
+        public Hl7.Fhir.Model.NutritionRequest.NutritionOrderStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -999,7 +999,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.NutritionRequest.NutritionOrderStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1128,13 +1128,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("oralDiet", Order=180)]
         [DataMember]
-        public Hl7.Fhir.Model.NutritionOrder.OralDietComponent OralDiet
+        public Hl7.Fhir.Model.NutritionRequest.OralDietComponent OralDiet
         {
             get { return _OralDiet; }
             set { _OralDiet = value; OnPropertyChanged("OralDiet"); }
         }
         
-        private Hl7.Fhir.Model.NutritionOrder.OralDietComponent _OralDiet;
+        private Hl7.Fhir.Model.NutritionRequest.OralDietComponent _OralDiet;
         
         /// <summary>
         /// Supplement components
@@ -1142,36 +1142,36 @@ namespace Hl7.Fhir.Model
         [FhirElement("supplement", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent> Supplement
+        public List<Hl7.Fhir.Model.NutritionRequest.SupplementComponent> Supplement
         {
-            get { if(_Supplement==null) _Supplement = new List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>(); return _Supplement; }
+            get { if(_Supplement==null) _Supplement = new List<Hl7.Fhir.Model.NutritionRequest.SupplementComponent>(); return _Supplement; }
             set { _Supplement = value; OnPropertyChanged("Supplement"); }
         }
         
-        private List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent> _Supplement;
+        private List<Hl7.Fhir.Model.NutritionRequest.SupplementComponent> _Supplement;
         
         /// <summary>
         /// Enteral formula components
         /// </summary>
         [FhirElement("enteralFormula", Order=200)]
         [DataMember]
-        public Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent EnteralFormula
+        public Hl7.Fhir.Model.NutritionRequest.EnteralFormulaComponent EnteralFormula
         {
             get { return _EnteralFormula; }
             set { _EnteralFormula = value; OnPropertyChanged("EnteralFormula"); }
         }
         
-        private Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent _EnteralFormula;
+        private Hl7.Fhir.Model.NutritionRequest.EnteralFormulaComponent _EnteralFormula;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
-            var dest = other as NutritionOrder;
+            var dest = other as NutritionRequest;
             
             if (dest != null)
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.NutritionRequest.NutritionOrderStatus>)StatusElement.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
@@ -1179,9 +1179,9 @@ namespace Hl7.Fhir.Model
                 if(AllergyIntolerance != null) dest.AllergyIntolerance = new List<Hl7.Fhir.Model.ResourceReference>(AllergyIntolerance.DeepCopy());
                 if(FoodPreferenceModifier != null) dest.FoodPreferenceModifier = new List<Hl7.Fhir.Model.CodeableConcept>(FoodPreferenceModifier.DeepCopy());
                 if(ExcludeFoodModifier != null) dest.ExcludeFoodModifier = new List<Hl7.Fhir.Model.CodeableConcept>(ExcludeFoodModifier.DeepCopy());
-                if(OralDiet != null) dest.OralDiet = (Hl7.Fhir.Model.NutritionOrder.OralDietComponent)OralDiet.DeepCopy();
-                if(Supplement != null) dest.Supplement = new List<Hl7.Fhir.Model.NutritionOrder.SupplementComponent>(Supplement.DeepCopy());
-                if(EnteralFormula != null) dest.EnteralFormula = (Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent)EnteralFormula.DeepCopy();
+                if(OralDiet != null) dest.OralDiet = (Hl7.Fhir.Model.NutritionRequest.OralDietComponent)OralDiet.DeepCopy();
+                if(Supplement != null) dest.Supplement = new List<Hl7.Fhir.Model.NutritionRequest.SupplementComponent>(Supplement.DeepCopy());
+                if(EnteralFormula != null) dest.EnteralFormula = (Hl7.Fhir.Model.NutritionRequest.EnteralFormulaComponent)EnteralFormula.DeepCopy();
                 return dest;
             }
             else
@@ -1190,12 +1190,12 @@ namespace Hl7.Fhir.Model
         
         public override IDeepCopyable DeepCopy()
         {
-            return CopyTo(new NutritionOrder());
+            return CopyTo(new NutritionRequest());
         }
         
         public override bool Matches(IDeepComparable other)
         {
-            var otherT = other as NutritionOrder;
+            var otherT = other as NutritionRequest;
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
@@ -1217,7 +1217,7 @@ namespace Hl7.Fhir.Model
         
         public override bool IsExactly(IDeepComparable other)
         {
-            var otherT = other as NutritionOrder;
+            var otherT = other as NutritionRequest;
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;

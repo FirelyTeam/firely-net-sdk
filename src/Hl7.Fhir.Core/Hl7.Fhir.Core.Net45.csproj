@@ -112,10 +112,10 @@
     <Compile Include="Model\Generated\Date.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\DecisionSupportRule.cs">
+    <Compile Include="Model\Generated\DecisionSupportServiceModule.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\DecisionSupportServiceModule.cs">
+    <Compile Include="Model\Generated\DiagnosticRequest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\ElementDefinition.cs">
@@ -175,13 +175,10 @@
     <Compile Include="Model\Generated\Meta.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\ModuleDefinition.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\ModuleMetadata.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\OrderSet.cs">
+    <Compile Include="Model\Generated\NutritionRequest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\ParameterDefinition.cs">
@@ -194,9 +191,6 @@
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\PractitionerRole.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\Protocol.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Quantity.cs">
@@ -464,9 +458,6 @@
     <Compile Include="Model\Generated\NamingSystem.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\NutritionOrder.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\OperationDefinition.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -544,9 +535,6 @@
     <Compile Include="Model\Generated\Device.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\DiagnosticOrder.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\DiagnosticReport.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -599,12 +587,6 @@
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\OperationOutcome.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\Order.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\OrderResponse.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Organization.cs">

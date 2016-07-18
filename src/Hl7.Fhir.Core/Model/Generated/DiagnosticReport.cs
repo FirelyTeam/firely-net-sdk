@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
         /// What was requested
         /// </summary>
         [FhirElement("request", Order=180)]
-        [References("DiagnosticOrder","ProcedureRequest","ReferralRequest")]
+        [References("DiagnosticRequest","ProcedureRequest","ReferralRequest")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ResourceReference> Request

@@ -669,6 +669,21 @@ namespace Hl7.Fhir.Model
             }
         }
         
+        /// <summary>
+        /// For Composite resources to define the parts
+        /// </summary>
+        [FhirElement("component", Order=260)]
+        [References("SearchParameter")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Component
+        {
+            get { if(_Component==null) _Component = new List<Hl7.Fhir.Model.ResourceReference>(); return _Component; }
+            set { _Component = value; OnPropertyChanged("Component"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Component;
+        
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as SearchParameter;
@@ -693,6 +708,7 @@ namespace Hl7.Fhir.Model
                 if(XpathElement != null) dest.XpathElement = (Hl7.Fhir.Model.FhirString)XpathElement.DeepCopy();
                 if(XpathUsageElement != null) dest.XpathUsageElement = (Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType>)XpathUsageElement.DeepCopy();
                 if(TargetElement != null) dest.TargetElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(TargetElement.DeepCopy());
+                if(Component != null) dest.Component = new List<Hl7.Fhir.Model.ResourceReference>(Component.DeepCopy());
                 return dest;
             }
             else
@@ -727,6 +743,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(XpathElement, otherT.XpathElement)) return false;
             if( !DeepComparable.Matches(XpathUsageElement, otherT.XpathUsageElement)) return false;
             if( !DeepComparable.Matches(TargetElement, otherT.TargetElement)) return false;
+            if( !DeepComparable.Matches(Component, otherT.Component)) return false;
             
             return true;
         }
@@ -754,6 +771,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(XpathElement, otherT.XpathElement)) return false;
             if( !DeepComparable.IsExactly(XpathUsageElement, otherT.XpathUsageElement)) return false;
             if( !DeepComparable.IsExactly(TargetElement, otherT.TargetElement)) return false;
+            if( !DeepComparable.IsExactly(Component, otherT.Component)) return false;
             
             return true;
         }

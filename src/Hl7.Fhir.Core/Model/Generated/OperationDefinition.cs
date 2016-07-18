@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.OperationDefinition.BindingComponent _Binding;
             
             /// <summary>
-            /// Parts of a Tuple Parameter
+            /// Parts of a nested Parameter
             /// </summary>
             [FhirElement("part", Order=130)]
             [Cardinality(Min=0,Max=-1)]
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | retired
         /// </summary>
-        [FhirElement("status", Order=120)]
+        [FhirElement("status", InSummary=true, Order=120)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement

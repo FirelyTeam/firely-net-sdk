@@ -854,35 +854,35 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Short name shown for navigational assistance
+            /// Short title shown for navigational assistance
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=50)]
+            [FhirElement("title", InSummary=true, Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
+            public Hl7.Fhir.Model.FhirString TitleElement
             {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+                get { return _TitleElement; }
+                set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _NameElement;
+            private Hl7.Fhir.Model.FhirString _TitleElement;
             
             /// <summary>
-            /// Short name shown for navigational assistance
+            /// Short title shown for navigational assistance
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Name
+            public string Title
             {
-                get { return NameElement != null ? NameElement.Value : null; }
+                get { return TitleElement != null ? TitleElement.Value : null; }
                 set
                 {
                     if(value == null)
-                      NameElement = null; 
+                      TitleElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
+                      TitleElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Title");
                 }
             }
             
@@ -1039,7 +1039,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.FhirUri)SourceElement.DeepCopy();
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                    if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                     if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind>)KindElement.DeepCopy();
                     if(TypeElement != null) dest.TypeElement = new List<Code<Hl7.Fhir.Model.ResourceType>>(TypeElement.DeepCopy());
                     if(PackageElement != null) dest.PackageElement = new List<Hl7.Fhir.Model.FhirString>(PackageElement.DeepCopy());
@@ -1063,7 +1063,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(SourceElement, otherT.SourceElement)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.Matches(KindElement, otherT.KindElement)) return false;
                 if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.Matches(PackageElement, otherT.PackageElement)) return false;
@@ -1080,7 +1080,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(SourceElement, otherT.SourceElement)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+                if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
                 if( !DeepComparable.IsExactly(KindElement, otherT.KindElement)) return false;
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 if( !DeepComparable.IsExactly(PackageElement, otherT.PackageElement)) return false;
@@ -1443,7 +1443,7 @@ namespace Hl7.Fhir.Model
         /// Group of resources as used in .page.package
         /// </summary>
         [FhirElement("package", InSummary=true, Order=220)]
-        [Cardinality(Min=1,Max=-1)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ImplementationGuide.PackageComponent> Package
         {
@@ -1504,7 +1504,6 @@ namespace Hl7.Fhir.Model
         /// Page/Section in the Guide
         /// </summary>
         [FhirElement("page", InSummary=true, Order=250)]
-        [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ImplementationGuide.PageComponent Page
         {

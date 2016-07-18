@@ -41,6 +41,9 @@ using System.ComponentModel;
 //
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// Primitive Type markdown
+    /// </summary>
     [FhirType("markdown")]
     [DataContract]
     public partial class Markdown : Hl7.Fhir.Model.Primitive<string>, System.ComponentModel.INotifyPropertyChanged

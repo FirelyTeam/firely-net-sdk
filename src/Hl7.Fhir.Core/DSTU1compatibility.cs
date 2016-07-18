@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Model
 {
+    #region << DSTU2 Compatability >>
+    [Obsolete("The FHIRDefinedType enumeration was renamed, please change to FHIRAllTypes", true)]
+    public enum FHIRDefinedType
+    {
+    }
+    
+    #endregion
+
+    #region << DSTU1 Compatability >>
     /// <summary>
     /// The Query class from DSTU1 has been replaced by the 
     /// </summary>
@@ -45,4 +54,5 @@ namespace Hl7.Fhir.Model
         [Obsolete("This property was renamed to 'Effective' in DSTU2", true)]
         public FhirDateTime Applies { get; set; }
     }
+    #endregion
 }

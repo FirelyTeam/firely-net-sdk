@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Library"; } }
         
         /// <summary>
-        /// Logical URL to reference this module
+        /// Logical URL to reference this library
         /// </summary>
         [FhirElement("url", InSummary=true, Order=90)]
         [DataMember]
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirUri _UrlElement;
         
         /// <summary>
-        /// Logical URL to reference this module
+        /// Logical URL to reference this library
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Logical identifier(s) for the module
+        /// Logical identifier(s) for the library
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=100)]
         [Cardinality(Min=0,Max=-1)]
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// The version of the module, if any
+        /// The version of the library, if any
         /// </summary>
         [FhirElement("version", InSummary=true, Order=110)]
         [DataMember]
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _VersionElement;
         
         /// <summary>
-        /// The version of the module, if any
+        /// The version of the library, if any
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// A machine-friendly name for the module
+        /// A machine-friendly name for the library
         /// </summary>
         [FhirElement("name", InSummary=true, Order=120)]
         [DataMember]
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _NameElement;
         
         /// <summary>
-        /// A machine-friendly name for the module
+        /// A machine-friendly name for the library
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// A user-friendly title for the module
+        /// A user-friendly title for the library
         /// </summary>
         [FhirElement("title", InSummary=true, Order=130)]
         [DataMember]
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _TitleElement;
         
         /// <summary>
-        /// A user-friendly title for the module
+        /// A user-friendly title for the library
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// logic-library | model-definition | asset-collection
+        /// logic-library | model-definition | asset-collection | module-definition
         /// </summary>
         [FhirElement("type", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Natural language description of the module
+        /// Natural language description of the library
         /// </summary>
         [FhirElement("description", Order=170)]
         [DataMember]
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _DescriptionElement;
         
         /// <summary>
-        /// Natural language description of the module
+        /// Natural language description of the library
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Describes the purpose of the module
+        /// Describes the purpose of the library
         /// </summary>
         [FhirElement("purpose", Order=180)]
         [DataMember]
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _PurposeElement;
         
         /// <summary>
-        /// Describes the purpose of the module
+        /// Describes the purpose of the library
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Describes the clinical usage of the module
+        /// Describes the clinical usage of the library
         /// </summary>
         [FhirElement("usage", Order=190)]
         [DataMember]
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _UsageElement;
         
         /// <summary>
-        /// Describes the clinical usage of the module
+        /// Describes the clinical usage of the library
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Publication date for this version of the module
+        /// Publication date for this version of the library
         /// </summary>
         [FhirElement("publicationDate", Order=200)]
         [DataMember]
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Date _PublicationDateElement;
         
         /// <summary>
-        /// Publication date for this version of the module
+        /// Publication date for this version of the library
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Last review date for the module
+        /// Last review date for the library
         /// </summary>
         [FhirElement("lastReviewDate", Order=210)]
         [DataMember]
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Date _LastReviewDateElement;
         
         /// <summary>
-        /// Last review date for the module
+        /// Last review date for the library
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -435,7 +435,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The effective date range for the module
+        /// The effective date range for the library
         /// </summary>
         [FhirElement("effectivePeriod", Order=220)]
         [DataMember]
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Period _EffectivePeriod;
         
         /// <summary>
-        /// Describes the context of use for this module
+        /// Describes the context of use for this library
         /// </summary>
         [FhirElement("coverage", Order=230)]
         [Cardinality(Min=0,Max=-1)]
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
         private List<UsageContext> _Coverage;
         
         /// <summary>
-        /// Descriptional topics for the module
+        /// Descriptional topics for the library
         /// </summary>
         [FhirElement("topic", Order=240)]
         [Cardinality(Min=0,Max=-1)]
@@ -568,7 +568,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Related resources for the module
+        /// Related resources for the library
         /// </summary>
         [FhirElement("relatedResource", Order=290)]
         [Cardinality(Min=0,Max=-1)]

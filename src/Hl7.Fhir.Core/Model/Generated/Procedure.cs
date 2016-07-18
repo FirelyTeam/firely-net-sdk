@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// True if procedure was not performed as scheduled
         /// </summary>
-        [FhirElement("notPerformed", Order=140)]
+        [FhirElement("notPerformed", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean NotPerformedElement
         {
@@ -399,23 +399,38 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
         
         /// <summary>
-        /// Reason procedure performed
+        /// Condition that is the reason the procedure performed
         /// </summary>
-        [FhirElement("reason", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
-        [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("reasonReference", InSummary=true, Order=170)]
+        [References("Condition")]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Reason
+        public List<Hl7.Fhir.Model.ResourceReference> ReasonReference
         {
-            get { return _Reason; }
-            set { _Reason = value; OnPropertyChanged("Reason"); }
+            get { if(_ReasonReference==null) _ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _ReasonReference; }
+            set { _ReasonReference = value; OnPropertyChanged("ReasonReference"); }
         }
         
-        private Hl7.Fhir.Model.Element _Reason;
+        private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
+        
+        /// <summary>
+        /// Coded reason procedure performed
+        /// </summary>
+        [FhirElement("reasonCode", InSummary=true, Order=180)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
+        {
+            get { if(_ReasonCode==null) _ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ReasonCode; }
+            set { _ReasonCode = value; OnPropertyChanged("ReasonCode"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
         
         /// <summary>
         /// The people who performed the procedure
         /// </summary>
-        [FhirElement("performer", InSummary=true, Order=180)]
+        [FhirElement("performer", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Procedure.PerformerComponent> Performer
@@ -429,7 +444,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date/Period the procedure was performed
         /// </summary>
-        [FhirElement("performed", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("performed", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
         public Hl7.Fhir.Model.Element Performed
@@ -443,7 +458,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The encounter associated with the procedure
         /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=200)]
+        [FhirElement("encounter", InSummary=true, Order=210)]
         [References("Encounter")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Encounter
@@ -457,7 +472,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the procedure happened
         /// </summary>
-        [FhirElement("location", InSummary=true, Order=210)]
+        [FhirElement("location", InSummary=true, Order=220)]
         [References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Location
@@ -471,7 +486,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The result of procedure
         /// </summary>
-        [FhirElement("outcome", InSummary=true, Order=220)]
+        [FhirElement("outcome", InSummary=true, Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Outcome
         {
@@ -484,7 +499,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Any report resulting from the procedure
         /// </summary>
-        [FhirElement("report", Order=230)]
+        [FhirElement("report", Order=240)]
         [References("DiagnosticReport")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -499,7 +514,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Complication following the procedure
         /// </summary>
-        [FhirElement("complication", Order=240)]
+        [FhirElement("complication", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Complication
@@ -513,7 +528,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Instructions for follow up
         /// </summary>
-        [FhirElement("followUp", Order=250)]
+        [FhirElement("followUp", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> FollowUp
@@ -527,8 +542,8 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A request for this procedure
         /// </summary>
-        [FhirElement("request", Order=260)]
-        [References("CarePlan","DiagnosticOrder","ProcedureRequest","ReferralRequest")]
+        [FhirElement("request", Order=270)]
+        [References("CarePlan","DiagnosticRequest","ProcedureRequest","ReferralRequest")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Request
         {
@@ -541,7 +556,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional information about the procedure
         /// </summary>
-        [FhirElement("notes", Order=270)]
+        [FhirElement("notes", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Notes
@@ -555,7 +570,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Device changed in procedure
         /// </summary>
-        [FhirElement("focalDevice", Order=280)]
+        [FhirElement("focalDevice", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent> FocalDevice
@@ -569,17 +584,46 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Items used during procedure
         /// </summary>
-        [FhirElement("used", Order=290)]
+        [FhirElement("usedReference", Order=300)]
         [References("Device","Medication","Substance")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ResourceReference> Used
+        public List<Hl7.Fhir.Model.ResourceReference> UsedReference
         {
-            get { if(_Used==null) _Used = new List<Hl7.Fhir.Model.ResourceReference>(); return _Used; }
-            set { _Used = value; OnPropertyChanged("Used"); }
+            get { if(_UsedReference==null) _UsedReference = new List<Hl7.Fhir.Model.ResourceReference>(); return _UsedReference; }
+            set { _UsedReference = value; OnPropertyChanged("UsedReference"); }
         }
         
-        private List<Hl7.Fhir.Model.ResourceReference> _Used;
+        private List<Hl7.Fhir.Model.ResourceReference> _UsedReference;
+        
+        /// <summary>
+        /// Coded items used during the procedure
+        /// </summary>
+        [FhirElement("usedCode", Order=310)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> UsedCode
+        {
+            get { if(_UsedCode==null) _UsedCode = new List<Hl7.Fhir.Model.CodeableConcept>(); return _UsedCode; }
+            set { _UsedCode = value; OnPropertyChanged("UsedCode"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _UsedCode;
+        
+        /// <summary>
+        /// Events related to the procedure
+        /// </summary>
+        [FhirElement("component", Order=320)]
+        [References("MedicationAdministration","Procedure","Observation")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Component
+        {
+            get { if(_Component==null) _Component = new List<Hl7.Fhir.Model.ResourceReference>(); return _Component; }
+            set { _Component = value; OnPropertyChanged("Component"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Component;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -596,7 +640,8 @@ namespace Hl7.Fhir.Model
                 if(NotPerformedElement != null) dest.NotPerformedElement = (Hl7.Fhir.Model.FhirBoolean)NotPerformedElement.DeepCopy();
                 if(ReasonNotPerformed != null) dest.ReasonNotPerformed = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonNotPerformed.DeepCopy());
                 if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
-                if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
+                if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+                if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.Procedure.PerformerComponent>(Performer.DeepCopy());
                 if(Performed != null) dest.Performed = (Hl7.Fhir.Model.Element)Performed.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
@@ -608,7 +653,9 @@ namespace Hl7.Fhir.Model
                 if(Request != null) dest.Request = (Hl7.Fhir.Model.ResourceReference)Request.DeepCopy();
                 if(Notes != null) dest.Notes = new List<Hl7.Fhir.Model.Annotation>(Notes.DeepCopy());
                 if(FocalDevice != null) dest.FocalDevice = new List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent>(FocalDevice.DeepCopy());
-                if(Used != null) dest.Used = new List<Hl7.Fhir.Model.ResourceReference>(Used.DeepCopy());
+                if(UsedReference != null) dest.UsedReference = new List<Hl7.Fhir.Model.ResourceReference>(UsedReference.DeepCopy());
+                if(UsedCode != null) dest.UsedCode = new List<Hl7.Fhir.Model.CodeableConcept>(UsedCode.DeepCopy());
+                if(Component != null) dest.Component = new List<Hl7.Fhir.Model.ResourceReference>(Component.DeepCopy());
                 return dest;
             }
             else
@@ -634,7 +681,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(NotPerformedElement, otherT.NotPerformedElement)) return false;
             if( !DeepComparable.Matches(ReasonNotPerformed, otherT.ReasonNotPerformed)) return false;
             if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
-            if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(Performed, otherT.Performed)) return false;
             if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
@@ -646,7 +694,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Request, otherT.Request)) return false;
             if( !DeepComparable.Matches(Notes, otherT.Notes)) return false;
             if( !DeepComparable.Matches(FocalDevice, otherT.FocalDevice)) return false;
-            if( !DeepComparable.Matches(Used, otherT.Used)) return false;
+            if( !DeepComparable.Matches(UsedReference, otherT.UsedReference)) return false;
+            if( !DeepComparable.Matches(UsedCode, otherT.UsedCode)) return false;
+            if( !DeepComparable.Matches(Component, otherT.Component)) return false;
             
             return true;
         }
@@ -665,7 +715,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(NotPerformedElement, otherT.NotPerformedElement)) return false;
             if( !DeepComparable.IsExactly(ReasonNotPerformed, otherT.ReasonNotPerformed)) return false;
             if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
-            if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
+            if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
+            if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(Performed, otherT.Performed)) return false;
             if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
@@ -677,7 +728,9 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
             if( !DeepComparable.IsExactly(Notes, otherT.Notes)) return false;
             if( !DeepComparable.IsExactly(FocalDevice, otherT.FocalDevice)) return false;
-            if( !DeepComparable.IsExactly(Used, otherT.Used)) return false;
+            if( !DeepComparable.IsExactly(UsedReference, otherT.UsedReference)) return false;
+            if( !DeepComparable.IsExactly(UsedCode, otherT.UsedCode)) return false;
+            if( !DeepComparable.IsExactly(Component, otherT.Component)) return false;
             
             return true;
         }

@@ -335,9 +335,42 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// A list of alternate names that the location is known as, or was known as in the past
+        /// </summary>
+        [FhirElement("alias", Order=120)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.FhirString> AliasElement
+        {
+            get { if(_AliasElement==null) _AliasElement = new List<Hl7.Fhir.Model.FhirString>(); return _AliasElement; }
+            set { _AliasElement = value; OnPropertyChanged("AliasElement"); }
+        }
+        
+        private List<Hl7.Fhir.Model.FhirString> _AliasElement;
+        
+        /// <summary>
+        /// A list of alternate names that the location is known as, or was known as in the past
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> Alias
+        {
+            get { return AliasElement != null ? AliasElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if(value == null)
+                  AliasElement = null; 
+                else
+                  AliasElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                OnPropertyChanged("Alias");
+            }
+        }
+        
+        /// <summary>
         /// Additional details about the location that could be displayed as further information to identify the location beyond its name
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=120)]
+        [FhirElement("description", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DescriptionElement
         {
@@ -369,7 +402,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// instance | kind
         /// </summary>
-        [FhirElement("mode", InSummary=true, Order=130)]
+        [FhirElement("mode", InSummary=true, Order=140)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Location.LocationMode> ModeElement
         {
@@ -401,7 +434,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of function performed
         /// </summary>
-        [FhirElement("type", InSummary=true, Order=140)]
+        [FhirElement("type", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Type
         {
@@ -414,7 +447,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details of the location
         /// </summary>
-        [FhirElement("telecom", Order=150)]
+        [FhirElement("telecom", Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -428,7 +461,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Physical location
         /// </summary>
-        [FhirElement("address", Order=160)]
+        [FhirElement("address", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.Address Address
         {
@@ -441,7 +474,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Physical form of the location
         /// </summary>
-        [FhirElement("physicalType", InSummary=true, Order=170)]
+        [FhirElement("physicalType", InSummary=true, Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PhysicalType
         {
@@ -454,7 +487,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The absolute geographic location
         /// </summary>
-        [FhirElement("position", Order=180)]
+        [FhirElement("position", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Location.PositionComponent Position
         {
@@ -467,7 +500,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Organization responsible for provisioning and upkeep
         /// </summary>
-        [FhirElement("managingOrganization", InSummary=true, Order=190)]
+        [FhirElement("managingOrganization", InSummary=true, Order=200)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ManagingOrganization
@@ -481,7 +514,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Another Location this one is physically part of
         /// </summary>
-        [FhirElement("partOf", Order=200)]
+        [FhirElement("partOf", Order=210)]
         [References("Location")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference PartOf
@@ -495,7 +528,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Technical endpoints providing access to services operated for the location
         /// </summary>
-        [FhirElement("endpoint", Order=210)]
+        [FhirElement("endpoint", Order=220)]
         [References("Endpoint")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -517,6 +550,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Location.LocationStatus>)StatusElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
+                if(AliasElement != null) dest.AliasElement = new List<Hl7.Fhir.Model.FhirString>(AliasElement.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(ModeElement != null) dest.ModeElement = (Code<Hl7.Fhir.Model.Location.LocationMode>)ModeElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
@@ -547,6 +581,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.Matches(AliasElement, otherT.AliasElement)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
             if( !DeepComparable.Matches(Type, otherT.Type)) return false;
@@ -570,6 +605,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
+            if( !DeepComparable.IsExactly(AliasElement, otherT.AliasElement)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
             if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;

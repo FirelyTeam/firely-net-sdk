@@ -4,6 +4,35 @@
   <!-- Removed Meta/LastModified -->
   <type value="collection" />
   <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DomainResource-text" />
+    <resource>
+      <SearchParameter>
+        <id value="DomainResource-text" />
+        <url value="http://hl7.org/fhir/SearchParameter/DomainResource-text" />
+        <name value="_text" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (FHIR Infrastructure)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/fiwg/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="_text" />
+        <base value="DomainResource" />
+        <type value="string" />
+        <description value="Search on the narrative of the resource" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/Resource-content" />
     <resource>
       <SearchParameter>
@@ -212,35 +241,6 @@
         <description value="Tags applied to this resource" />
         <expression value="Resource.meta.tag" />
         <xpath value="f:Resource/f:meta/f:tag" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Resource-text" />
-    <resource>
-      <SearchParameter>
-        <id value="Resource-text" />
-        <url value="http://hl7.org/fhir/SearchParameter/Resource-text" />
-        <name value="_text" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (FHIR Infrastructure)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/fiwg/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="_text" />
-        <base value="Resource" />
-        <type value="string" />
-        <description value="Search on the narrative of the resource" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -594,8 +594,8 @@
         <xpathUsage value="normal" />
         <target value="ReferralRequest" />
         <target value="CarePlan" />
-        <target value="DiagnosticOrder" />
         <target value="ProcedureRequest" />
+        <target value="DiagnosticRequest" />
       </SearchParameter>
     </resource>
   </entry>
@@ -1160,7 +1160,7 @@
         <code value="status" />
         <base value="Account" />
         <type value="token" />
-        <description value="active | inactive" />
+        <description value="active | inactive | entered-in-error" />
         <expression value="Account.status" />
         <xpath value="f:Account/f:status" />
         <xpathUsage value="normal" />
@@ -1326,7 +1326,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -1334,8 +1333,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -1371,15 +1370,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -1392,7 +1387,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -1663,7 +1657,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -1671,8 +1664,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -1708,15 +1701,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -1729,7 +1718,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -2000,7 +1988,7 @@
         <code value="status" />
         <base value="Goal" />
         <type value="token" />
-        <description value="proposed | planned | accepted | rejected | in-progress | achieved | sustaining | on-hold | cancelled" />
+        <description value="proposed | planned | accepted | rejected | in-progress | achieved | sustaining | on-hold | cancelled | on-target | ahead-of-target | behind-target" />
         <expression value="Goal.status" />
         <xpath value="f:Goal/f:status" />
         <xpathUsage value="normal" />
@@ -2575,7 +2563,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -2583,8 +2570,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -2620,15 +2607,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -2641,7 +2624,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -2847,7 +2829,7 @@
         <code value="purpose" />
         <base value="Consent" />
         <type value="token" />
-        <description value="Security Labels for the operation/context" />
+        <description value="Context of activities covered by this exception" />
         <expression value="Consent.except.purpose" />
         <xpath value="f:Consent/f:except/f:purpose" />
         <xpathUsage value="normal" />
@@ -2878,7 +2860,7 @@
         <code value="recipient" />
         <base value="Consent" />
         <type value="reference" />
-        <description value="Who|what the consent is in regard to" />
+        <description value="Whose access is controlled by the policy" />
         <expression value="Consent.recipient" />
         <xpath value="f:Consent/f:recipient" />
         <xpathUsage value="normal" />
@@ -3266,8 +3248,8 @@
         <base value="Measure" />
         <type value="string" />
         <description value="Text search against the description" />
-        <expression value="Measure.moduleMetadata.description" />
-        <xpath value="f:Measure/f:moduleMetadata/f:description" />
+        <expression value="Measure.description" />
+        <xpath value="f:Measure/f:description" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -3297,8 +3279,8 @@
         <base value="Measure" />
         <type value="token" />
         <description value="Logical identifier for the module (e.g. CMS-143)" />
-        <expression value="Measure.moduleMetadata.identifier" />
-        <xpath value="f:Measure/f:moduleMetadata/f:identifier" />
+        <expression value="Measure.identifier" />
+        <xpath value="f:Measure/f:identifier" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -3328,8 +3310,8 @@
         <base value="Measure" />
         <type value="token" />
         <description value="Status of the module" />
-        <expression value="Measure.moduleMetadata.status" />
-        <xpath value="f:Measure/f:moduleMetadata/f:status" />
+        <expression value="Measure.status" />
+        <xpath value="f:Measure/f:status" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -3359,8 +3341,8 @@
         <base value="Measure" />
         <type value="string" />
         <description value="Text search against the title" />
-        <expression value="Measure.moduleMetadata.title" />
-        <xpath value="f:Measure/f:moduleMetadata/f:title" />
+        <expression value="Measure.title" />
+        <xpath value="f:Measure/f:title" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -3390,8 +3372,8 @@
         <base value="Measure" />
         <type value="token" />
         <description value="Topics associated with the module" />
-        <expression value="Measure.moduleMetadata.topic" />
-        <xpath value="f:Measure/f:moduleMetadata/f:topic" />
+        <expression value="Measure.topic" />
+        <xpath value="f:Measure/f:topic" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -3421,8 +3403,8 @@
         <base value="Measure" />
         <type value="string" />
         <description value="Version of the module (e.g. 1.0.0)" />
-        <expression value="Measure.moduleMetadata.version" />
-        <xpath value="f:Measure/f:moduleMetadata/f:version" />
+        <expression value="Measure.version" />
+        <xpath value="f:Measure/f:version" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -3513,7 +3495,7 @@
         <code value="payload" />
         <base value="Subscription" />
         <type value="string" />
-        <description value="Mimetype to send, or blank for no payload" />
+        <description value="Mimetype to send, or omit for no payload" />
         <expression value="Subscription.channel.payload" />
         <xpath value="f:Subscription/f:channel/f:payload" />
         <xpathUsage value="normal" />
@@ -4236,7 +4218,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -4244,8 +4225,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -4281,15 +4262,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -4302,7 +4279,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -4416,6 +4392,12 @@
         <type value="composite" />
         <description value="Combination of relation and relatesTo" />
         <xpathUsage value="normal" />
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/DocumentReference-relatesto" />
+        </component>
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/DocumentReference-relation" />
+        </component>
       </SearchParameter>
     </resource>
   </entry>
@@ -4949,7 +4931,7 @@
         <code value="format" />
         <base value="Conformance" />
         <type value="token" />
-        <description value="formats supported (xml | json | mime type)" />
+        <description value="formats supported (xml | json | ttl | mime type)" />
         <expression value="Conformance.format" />
         <xpath value="f:Conformance/f:format" />
         <xpathUsage value="normal" />
@@ -5545,8 +5527,8 @@
         <base value="PractitionerRole" />
         <type value="token" />
         <description value="The practitioner can perform this role at for the organization" />
-        <expression value="PractitionerRole.role" />
-        <xpath value="f:PractitionerRole/f:role" />
+        <expression value="PractitionerRole.code" />
+        <xpath value="f:PractitionerRole/f:code" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -5637,7 +5619,7 @@
         <code value="address" />
         <base value="RelatedPerson" />
         <type value="string" />
-        <description value="An address in any kind of address/part" />
+        <description value="A server defined search that may match any of the string fields in the Address, including line, city, state, country, postalCode, and/or text" />
         <expression value="RelatedPerson.address" />
         <xpath value="f:RelatedPerson/f:address" />
         <xpathUsage value="normal" />
@@ -5947,7 +5929,7 @@
         <code value="name" />
         <base value="RelatedPerson" />
         <type value="string" />
-        <description value="A portion of name in any name part" />
+        <description value="A server defined search that may match any of the string fields in the HumanName, including family, give, prefix, suffix, suffix, and/or text" />
         <expression value="RelatedPerson.name" />
         <xpath value="f:RelatedPerson/f:name" />
         <xpathUsage value="normal" />
@@ -6302,6 +6284,37 @@
     </resource>
   </entry>
   <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Practitioner-active" />
+    <resource>
+      <SearchParameter>
+        <id value="Practitioner-active" />
+        <url value="http://hl7.org/fhir/SearchParameter/Practitioner-active" />
+        <name value="active" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Patient Administration)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/pafm/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="active" />
+        <base value="Practitioner" />
+        <type value="token" />
+        <description value="Whether the practitioner record is active" />
+        <expression value="Practitioner.active" />
+        <xpath value="f:Practitioner/f:active" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/Practitioner-address" />
     <resource>
       <SearchParameter>
@@ -6325,7 +6338,7 @@
         <code value="address" />
         <base value="Practitioner" />
         <type value="string" />
-        <description value="An address in any kind of address/part" />
+        <description value="A server defined search that may match any of the string fields in the Address, including line, city, state, country, postalCode, and/or text" />
         <expression value="Practitioner.address" />
         <xpath value="f:Practitioner/f:address" />
         <xpathUsage value="normal" />
@@ -6543,8 +6556,8 @@
         <base value="Practitioner" />
         <type value="token" />
         <description value="A value in an email contact" />
-        <expression value="Practitioner.telecom.where(system='email') or Practitioner.practitionerRole.telecom.where(system='email')" />
-        <xpath value="f:Practitioner/f:telecom[system/@value='email'] | f:Practitioner/f:practitionerRole/f:telecom[system/@value='email']" />
+        <expression value="Practitioner.telecom.where(system='email') or Practitioner.role.telecom.where(system='email')" />
+        <xpath value="f:Practitioner/f:telecom[system/@value='email'] | f:Practitioner/f:role/f:telecom[system/@value='email']" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -6667,8 +6680,8 @@
         <base value="Practitioner" />
         <type value="token" />
         <description value="A practitioner's Identifier" />
-        <expression value="Practitioner.identifier | Practitioner.practitionerRole.identifier" />
-        <xpath value="f:Practitioner/f:identifier | f:Practitioner/f:practitionerRole/f:identifier" />
+        <expression value="Practitioner.identifier | Practitioner.role.identifier" />
+        <xpath value="f:Practitioner/f:identifier | f:Practitioner/f:role/f:identifier" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -6698,8 +6711,8 @@
         <base value="Practitioner" />
         <type value="reference" />
         <description value="One of the locations at which this practitioner provides care" />
-        <expression value="Practitioner.practitionerRole.location" />
-        <xpath value="f:Practitioner/f:practitionerRole/f:location" />
+        <expression value="Practitioner.role.location" />
+        <xpath value="f:Practitioner/f:role/f:location" />
         <xpathUsage value="normal" />
         <target value="Location" />
       </SearchParameter>
@@ -6729,7 +6742,7 @@
         <code value="name" />
         <base value="Practitioner" />
         <type value="string" />
-        <description value="A portion of either family or given name" />
+        <description value="A server defined search that may match any of the string fields in the HumanName, including family, give, prefix, suffix, suffix, and/or text" />
         <expression value="Practitioner.name" />
         <xpath value="f:Practitioner/f:name" />
         <xpathUsage value="normal" />
@@ -6761,8 +6774,8 @@
         <base value="Practitioner" />
         <type value="reference" />
         <description value="The identity of the organization the practitioner represents / acts on behalf of" />
-        <expression value="Practitioner.practitionerRole.organization" />
-        <xpath value="f:Practitioner/f:practitionerRole/f:organization" />
+        <expression value="Practitioner.role.organization" />
+        <xpath value="f:Practitioner/f:role/f:organization" />
         <xpathUsage value="normal" />
         <target value="Organization" />
       </SearchParameter>
@@ -6793,8 +6806,8 @@
         <base value="Practitioner" />
         <type value="token" />
         <description value="A value in a phone contact" />
-        <expression value="Practitioner.telecom.where(system='phone') or Practitioner.practitionerRole.telecom.where(system='phone')" />
-        <xpath value="f:Practitioner/f:telecom[system/@value='phone'] | f:Practitioner/f:practitionerRole/f:telecom[system/@value='phone']" />
+        <expression value="Practitioner.telecom.where(system='phone') or Practitioner.role.telecom.where(system='phone')" />
+        <xpath value="f:Practitioner/f:telecom[system/@value='phone'] | f:Practitioner/f:role/f:telecom[system/@value='phone']" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -6855,8 +6868,8 @@
         <base value="Practitioner" />
         <type value="token" />
         <description value="The practitioner can perform this role at for the organization" />
-        <expression value="Practitioner.practitionerRole.role" />
-        <xpath value="f:Practitioner/f:practitionerRole/f:role" />
+        <expression value="Practitioner.role.code" />
+        <xpath value="f:Practitioner/f:role/f:code" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -6886,8 +6899,8 @@
         <base value="Practitioner" />
         <type value="token" />
         <description value="The practitioner has this specialty at an organization" />
-        <expression value="Practitioner.practitionerRole.specialty" />
-        <xpath value="f:Practitioner/f:practitionerRole/f:specialty" />
+        <expression value="Practitioner.role.specialty" />
+        <xpath value="f:Practitioner/f:role/f:specialty" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -6917,8 +6930,8 @@
         <base value="Practitioner" />
         <type value="token" />
         <description value="The value in any kind of contact" />
-        <expression value="Practitioner.telecom | Practitioner.practitionerRole.telecom" />
-        <xpath value="f:Practitioner/f:telecom | f:Practitioner/f:practitionerRole/f:telecom" />
+        <expression value="Practitioner.telecom | Practitioner.role.telecom" />
+        <xpath value="f:Practitioner/f:telecom | f:Practitioner/f:role/f:telecom" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -7172,192 +7185,6 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/OrderSet-description" />
-    <resource>
-      <SearchParameter>
-        <id value="OrderSet-description" />
-        <url value="http://hl7.org/fhir/SearchParameter/OrderSet-description" />
-        <name value="description" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Clinical Decision Support)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="description" />
-        <base value="OrderSet" />
-        <type value="string" />
-        <description value="Text search against the description" />
-        <expression value="OrderSet.moduleMetadata.description" />
-        <xpath value="f:OrderSet/f:moduleMetadata/f:description" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/OrderSet-identifier" />
-    <resource>
-      <SearchParameter>
-        <id value="OrderSet-identifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/OrderSet-identifier" />
-        <name value="identifier" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Clinical Decision Support)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="identifier" />
-        <base value="OrderSet" />
-        <type value="token" />
-        <description value="Logical identifier for the module (e.g. CMS-143)" />
-        <expression value="OrderSet.moduleMetadata.identifier" />
-        <xpath value="f:OrderSet/f:moduleMetadata/f:identifier" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/OrderSet-status" />
-    <resource>
-      <SearchParameter>
-        <id value="OrderSet-status" />
-        <url value="http://hl7.org/fhir/SearchParameter/OrderSet-status" />
-        <name value="status" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Clinical Decision Support)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="status" />
-        <base value="OrderSet" />
-        <type value="token" />
-        <description value="Status of the module" />
-        <expression value="OrderSet.moduleMetadata.status" />
-        <xpath value="f:OrderSet/f:moduleMetadata/f:status" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/OrderSet-title" />
-    <resource>
-      <SearchParameter>
-        <id value="OrderSet-title" />
-        <url value="http://hl7.org/fhir/SearchParameter/OrderSet-title" />
-        <name value="title" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Clinical Decision Support)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="title" />
-        <base value="OrderSet" />
-        <type value="string" />
-        <description value="Text search against the title" />
-        <expression value="OrderSet.moduleMetadata.title" />
-        <xpath value="f:OrderSet/f:moduleMetadata/f:title" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/OrderSet-topic" />
-    <resource>
-      <SearchParameter>
-        <id value="OrderSet-topic" />
-        <url value="http://hl7.org/fhir/SearchParameter/OrderSet-topic" />
-        <name value="topic" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Clinical Decision Support)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="topic" />
-        <base value="OrderSet" />
-        <type value="token" />
-        <description value="Topics associated with the module" />
-        <expression value="OrderSet.moduleMetadata.topic" />
-        <xpath value="f:OrderSet/f:moduleMetadata/f:topic" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/OrderSet-version" />
-    <resource>
-      <SearchParameter>
-        <id value="OrderSet-version" />
-        <url value="http://hl7.org/fhir/SearchParameter/OrderSet-version" />
-        <name value="version" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Clinical Decision Support)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="version" />
-        <base value="OrderSet" />
-        <type value="string" />
-        <description value="Version of the module (e.g. 1.0.0)" />
-        <expression value="OrderSet.moduleMetadata.version" />
-        <xpath value="f:OrderSet/f:moduleMetadata/f:version" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/Slot-identifier" />
     <resource>
       <SearchParameter>
@@ -7537,7 +7364,7 @@
         <code value="address" />
         <base value="Person" />
         <type value="string" />
-        <description value="An address in any kind of address/part" />
+        <description value="A server defined search that may match any of the string fields in the Address, including line, city, state, country, postalCode, and/or text" />
         <expression value="Person.address" />
         <xpath value="f:Person/f:address" />
         <xpathUsage value="normal" />
@@ -7882,7 +7709,7 @@
         <code value="name" />
         <base value="Person" />
         <type value="string" />
-        <description value="A portion of name in any name part" />
+        <description value="A server defined search that may match any of the string fields in the HumanName, including family, give, prefix, suffix, suffix, and/or text" />
         <expression value="Person.name" />
         <xpath value="f:Person/f:name" />
         <xpathUsage value="normal" />
@@ -8398,7 +8225,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -8406,8 +8232,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -8443,15 +8269,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -8464,7 +8286,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -8544,7 +8365,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -8552,8 +8372,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -8589,15 +8409,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -8610,7 +8426,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -8690,7 +8505,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -8698,8 +8512,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -8735,15 +8549,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -8756,7 +8566,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -8838,8 +8647,8 @@
         <base value="RiskAssessment" />
         <type value="date" />
         <description value="When was assessment made?" />
-        <expression value="RiskAssessment.date" />
-        <xpath value="f:RiskAssessment/f:date" />
+        <expression value="RiskAssessment.occurrence.as(DateTime)" />
+        <xpath value="f:RiskAssessment/f:occurrenceDateTime" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -8869,8 +8678,8 @@
         <base value="RiskAssessment" />
         <type value="reference" />
         <description value="Where was assessment performed?" />
-        <expression value="RiskAssessment.encounter" />
-        <xpath value="f:RiskAssessment/f:encounter" />
+        <expression value="RiskAssessment.context" />
+        <xpath value="f:RiskAssessment/f:context" />
         <xpathUsage value="normal" />
         <target value="Encounter" />
       </SearchParameter>
@@ -9124,6 +8933,12 @@
         <type value="composite" />
         <description value="A composite of both characteristic and value" />
         <xpathUsage value="normal" />
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/Group-characteristic" />
+        </component>
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/Group-value" />
+        </component>
       </SearchParameter>
     </resource>
   </entry>
@@ -9623,7 +9438,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -9631,8 +9445,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -9668,15 +9482,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -9689,7 +9499,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -9800,7 +9609,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -9808,8 +9616,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -9845,15 +9653,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -9866,7 +9670,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -9946,7 +9749,7 @@
         <code value="active" />
         <base value="Organization" />
         <type value="token" />
-        <description value="Whether the organization's record is active" />
+        <description value="A server defined search that may match any of the string fields in the Address, including line, city, state, country, postalCode, and/or text" />
         <expression value="Organization.active" />
         <xpath value="f:Organization/f:active" />
         <xpathUsage value="normal" />
@@ -10194,9 +9997,9 @@
         <code value="name" />
         <base value="Organization" />
         <type value="string" />
-        <description value="A portion of the organization's name" />
-        <expression value="Organization.name" />
-        <xpath value="f:Organization/f:name" />
+        <description value="A portion of the organization's name, or alias" />
+        <expression value="Organization.name or Organization.alias" />
+        <xpath value="f:Organization/f:name | f:Organization/f:alias" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -10791,7 +10594,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -10799,8 +10601,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -10836,15 +10638,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -10857,7 +10655,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -11007,6 +10804,41 @@
     </resource>
   </entry>
   <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ImagingStudy-basedon" />
+    <resource>
+      <SearchParameter>
+        <id value="ImagingStudy-basedon" />
+        <url value="http://hl7.org/fhir/SearchParameter/ImagingStudy-basedon" />
+        <name value="basedon" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Imaging Integration)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/imagemgt/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="basedon" />
+        <base value="ImagingStudy" />
+        <type value="reference" />
+        <description value="The order for the image" />
+        <expression value="ImagingStudy.basedOn" />
+        <xpath value="f:ImagingStudy/f:basedOn" />
+        <xpathUsage value="normal" />
+        <target value="ReferralRequest" />
+        <target value="CarePlan" />
+        <target value="ProcedureRequest" />
+        <target value="DiagnosticRequest" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/ImagingStudy-bodysite" />
     <resource>
       <SearchParameter>
@@ -11034,6 +10866,39 @@
         <expression value="ImagingStudy.series.bodySite" />
         <xpath value="f:ImagingStudy/f:series/f:bodySite" />
         <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ImagingStudy-context" />
+    <resource>
+      <SearchParameter>
+        <id value="ImagingStudy-context" />
+        <url value="http://hl7.org/fhir/SearchParameter/ImagingStudy-context" />
+        <name value="context" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Imaging Integration)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/imagemgt/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="context" />
+        <base value="ImagingStudy" />
+        <type value="reference" />
+        <description value="The context of the study" />
+        <expression value="ImagingStudy.context" />
+        <xpath value="f:ImagingStudy/f:context" />
+        <xpathUsage value="normal" />
+        <target value="EpisodeOfCare" />
+        <target value="Encounter" />
       </SearchParameter>
     </resource>
   </entry>
@@ -11131,38 +10996,6 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ImagingStudy-order" />
-    <resource>
-      <SearchParameter>
-        <id value="ImagingStudy-order" />
-        <url value="http://hl7.org/fhir/SearchParameter/ImagingStudy-order" />
-        <name value="order" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Imaging Integration)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/imagemgt/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="order" />
-        <base value="ImagingStudy" />
-        <type value="reference" />
-        <description value="The order for the image" />
-        <expression value="ImagingStudy.order" />
-        <xpath value="f:ImagingStudy/f:order" />
-        <xpathUsage value="normal" />
-        <target value="DiagnosticOrder" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/ImagingStudy-patient" />
     <resource>
       <SearchParameter>
@@ -11191,6 +11024,37 @@
         <xpath value="f:ImagingStudy/f:patient" />
         <xpathUsage value="normal" />
         <target value="Patient" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ImagingStudy-reason" />
+    <resource>
+      <SearchParameter>
+        <id value="ImagingStudy-reason" />
+        <url value="http://hl7.org/fhir/SearchParameter/ImagingStudy-reason" />
+        <name value="reason" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Imaging Integration)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/imagemgt/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="reason" />
+        <base value="ImagingStudy" />
+        <type value="token" />
+        <description value="The reason for the study" />
+        <expression value="ImagingStudy.reason" />
+        <xpath value="f:ImagingStudy/f:reason" />
+        <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
   </entry>
@@ -12226,7 +12090,7 @@
         <code value="status" />
         <base value="Encounter" />
         <type value="token" />
-        <description value="planned | arrived | in-progress | onleave | finished | cancelled" />
+        <description value="planned | arrived | in-progress | onleave | finished | cancelled | entered-in-error" />
         <expression value="Encounter.status" />
         <xpath value="f:Encounter/f:status" />
         <xpathUsage value="normal" />
@@ -12545,6 +12409,38 @@
     </resource>
   </entry>
   <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/SearchParameter-component" />
+    <resource>
+      <SearchParameter>
+        <id value="SearchParameter-component" />
+        <url value="http://hl7.org/fhir/SearchParameter/SearchParameter-component" />
+        <name value="component" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (FHIR Infrastructure)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/fiwg/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="component" />
+        <base value="SearchParameter" />
+        <type value="reference" />
+        <description value="For Composite resources to define the parts" />
+        <expression value="SearchParameter.component" />
+        <xpath value="f:SearchParameter/f:component" />
+        <xpathUsage value="normal" />
+        <target value="SearchParameter" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/SearchParameter-context" />
     <resource>
       <SearchParameter>
@@ -12727,71 +12623,6 @@
         <expression value="SearchParameter.url" />
         <xpath value="f:SearchParameter/f:url" />
         <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Protocol-identifier" />
-    <resource>
-      <SearchParameter>
-        <id value="Protocol-identifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/Protocol-identifier" />
-        <name value="identifier" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (FHIR Infrastructure)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/fiwg/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="identifier" />
-        <base value="Protocol" />
-        <type value="token" />
-        <description value="The unique id for a particular protocol" />
-        <expression value="Protocol.identifier" />
-        <xpath value="f:Protocol/f:identifier" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Protocol-subject" />
-    <resource>
-      <SearchParameter>
-        <id value="Protocol-subject" />
-        <url value="http://hl7.org/fhir/SearchParameter/Protocol-subject" />
-        <name value="subject" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (FHIR Infrastructure)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/fiwg/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="subject" />
-        <base value="Protocol" />
-        <type value="reference" />
-        <description value="Protocols with specified subject" />
-        <expression value="Protocol.subject" />
-        <xpath value="f:Protocol/f:subject" />
-        <xpathUsage value="normal" />
-        <target value="Condition" />
-        <target value="Device" />
-        <target value="Medication" />
       </SearchParameter>
     </resource>
   </entry>
@@ -13464,311 +13295,6 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/OrderResponse-code" />
-    <resource>
-      <SearchParameter>
-        <id value="OrderResponse-code" />
-        <url value="http://hl7.org/fhir/SearchParameter/OrderResponse-code" />
-        <name value="code" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="code" />
-        <base value="OrderResponse" />
-        <type value="token" />
-        <description value="pending | review | rejected | error | accepted | cancelled | replaced | aborted | completed" />
-        <expression value="OrderResponse.orderStatus" />
-        <xpath value="f:OrderResponse/f:orderStatus" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/OrderResponse-date" />
-    <resource>
-      <SearchParameter>
-        <id value="OrderResponse-date" />
-        <url value="http://hl7.org/fhir/SearchParameter/OrderResponse-date" />
-        <name value="date" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="date" />
-        <base value="OrderResponse" />
-        <type value="date" />
-        <description value="When the response was made" />
-        <expression value="OrderResponse.date" />
-        <xpath value="f:OrderResponse/f:date" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/OrderResponse-fulfillment" />
-    <resource>
-      <SearchParameter>
-        <id value="OrderResponse-fulfillment" />
-        <url value="http://hl7.org/fhir/SearchParameter/OrderResponse-fulfillment" />
-        <name value="fulfillment" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="fulfillment" />
-        <base value="OrderResponse" />
-        <type value="reference" />
-        <description value="Details of the outcome of performing the order" />
-        <expression value="OrderResponse.fulfillment" />
-        <xpath value="f:OrderResponse/f:fulfillment" />
-        <xpathUsage value="normal" />
-        <target value="Account" />
-        <target value="ActivityDefinition" />
-        <target value="AllergyIntolerance" />
-        <target value="Appointment" />
-        <target value="AppointmentResponse" />
-        <target value="AuditEvent" />
-        <target value="Basic" />
-        <target value="Binary" />
-        <target value="BodySite" />
-        <target value="Bundle" />
-        <target value="CarePlan" />
-        <target value="CareTeam" />
-        <target value="Claim" />
-        <target value="ClaimResponse" />
-        <target value="ClinicalImpression" />
-        <target value="CodeSystem" />
-        <target value="Communication" />
-        <target value="CommunicationRequest" />
-        <target value="CompartmentDefinition" />
-        <target value="Composition" />
-        <target value="ConceptMap" />
-        <target value="Condition" />
-        <target value="Conformance" />
-        <target value="Consent" />
-        <target value="Contract" />
-        <target value="Coverage" />
-        <target value="DataElement" />
-        <target value="DecisionSupportRule" />
-        <target value="DecisionSupportServiceModule" />
-        <target value="DetectedIssue" />
-        <target value="Device" />
-        <target value="DeviceComponent" />
-        <target value="DeviceMetric" />
-        <target value="DeviceUseRequest" />
-        <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
-        <target value="DiagnosticReport" />
-        <target value="DocumentManifest" />
-        <target value="DocumentReference" />
-        <target value="EligibilityRequest" />
-        <target value="EligibilityResponse" />
-        <target value="Encounter" />
-        <target value="Endpoint" />
-        <target value="EnrollmentRequest" />
-        <target value="EnrollmentResponse" />
-        <target value="EpisodeOfCare" />
-        <target value="ExpansionProfile" />
-        <target value="ExplanationOfBenefit" />
-        <target value="FamilyMemberHistory" />
-        <target value="Flag" />
-        <target value="Goal" />
-        <target value="Group" />
-        <target value="GuidanceResponse" />
-        <target value="HealthcareService" />
-        <target value="ImagingManifest" />
-        <target value="ImagingStudy" />
-        <target value="Immunization" />
-        <target value="ImmunizationRecommendation" />
-        <target value="ImplementationGuide" />
-        <target value="Library" />
-        <target value="Linkage" />
-        <target value="List" />
-        <target value="Location" />
-        <target value="Measure" />
-        <target value="MeasureReport" />
-        <target value="Media" />
-        <target value="Medication" />
-        <target value="MedicationAdministration" />
-        <target value="MedicationDispense" />
-        <target value="MedicationOrder" />
-        <target value="MedicationStatement" />
-        <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
-        <target value="NamingSystem" />
-        <target value="NutritionOrder" />
-        <target value="Observation" />
-        <target value="OperationDefinition" />
-        <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
-        <target value="Organization" />
-        <target value="Patient" />
-        <target value="PaymentNotice" />
-        <target value="PaymentReconciliation" />
-        <target value="Person" />
-        <target value="PlanDefinition" />
-        <target value="Practitioner" />
-        <target value="PractitionerRole" />
-        <target value="Procedure" />
-        <target value="ProcedureRequest" />
-        <target value="ProcessRequest" />
-        <target value="ProcessResponse" />
-        <target value="Protocol" />
-        <target value="Provenance" />
-        <target value="Questionnaire" />
-        <target value="QuestionnaireResponse" />
-        <target value="ReferralRequest" />
-        <target value="RelatedPerson" />
-        <target value="RiskAssessment" />
-        <target value="Schedule" />
-        <target value="SearchParameter" />
-        <target value="Sequence" />
-        <target value="Slot" />
-        <target value="Specimen" />
-        <target value="StructureDefinition" />
-        <target value="StructureMap" />
-        <target value="Subscription" />
-        <target value="Substance" />
-        <target value="SupplyDelivery" />
-        <target value="SupplyRequest" />
-        <target value="Task" />
-        <target value="TestScript" />
-        <target value="ValueSet" />
-        <target value="VisionPrescription" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/OrderResponse-identifier" />
-    <resource>
-      <SearchParameter>
-        <id value="OrderResponse-identifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/OrderResponse-identifier" />
-        <name value="identifier" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="identifier" />
-        <base value="OrderResponse" />
-        <type value="token" />
-        <description value="Identifiers assigned to this order by the orderer or by the receiver" />
-        <expression value="OrderResponse.identifier" />
-        <xpath value="f:OrderResponse/f:identifier" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/OrderResponse-request" />
-    <resource>
-      <SearchParameter>
-        <id value="OrderResponse-request" />
-        <url value="http://hl7.org/fhir/SearchParameter/OrderResponse-request" />
-        <name value="request" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="request" />
-        <base value="OrderResponse" />
-        <type value="reference" />
-        <description value="The order that this is a response to" />
-        <expression value="OrderResponse.request" />
-        <xpath value="f:OrderResponse/f:request" />
-        <xpathUsage value="normal" />
-        <target value="Order" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/OrderResponse-who" />
-    <resource>
-      <SearchParameter>
-        <id value="OrderResponse-who" />
-        <url value="http://hl7.org/fhir/SearchParameter/OrderResponse-who" />
-        <name value="who" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="who" />
-        <base value="OrderResponse" />
-        <type value="reference" />
-        <description value="Who made the response" />
-        <expression value="OrderResponse.who" />
-        <xpath value="f:OrderResponse/f:who" />
-        <xpathUsage value="normal" />
-        <target value="Practitioner" />
-        <target value="Organization" />
-        <target value="Device" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/DeviceUseStatement-device" />
     <resource>
       <SearchParameter>
@@ -13982,7 +13508,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -13990,8 +13515,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -14027,15 +13552,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -14048,7 +13569,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -15107,7 +14627,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -15115,8 +14634,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -15152,15 +14671,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -15173,7 +14688,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -15377,7 +14891,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -15385,8 +14898,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -15422,15 +14935,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -15443,7 +14952,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -16070,12 +15578,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ExplanationOfBenefit-claimindentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ExplanationOfBenefit-claimidentifier" />
     <resource>
       <SearchParameter>
-        <id value="ExplanationOfBenefit-claimindentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/ExplanationOfBenefit-claimindentifier" />
-        <name value="claimindentifier" />
+        <id value="ExplanationOfBenefit-claimidentifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/ExplanationOfBenefit-claimidentifier" />
+        <name value="claimidentifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -16090,7 +15598,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="claimindentifier" />
+        <code value="claimidentifier" />
         <base value="ExplanationOfBenefit" />
         <type value="token" />
         <description value="The reference to the claim" />
@@ -16857,6 +16365,37 @@
     </resource>
   </entry>
   <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/AllergyIntolerance-code" />
+    <resource>
+      <SearchParameter>
+        <id value="AllergyIntolerance-code" />
+        <url value="http://hl7.org/fhir/SearchParameter/AllergyIntolerance-code" />
+        <name value="code" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Patient Care)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/patientcare/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="code" />
+        <base value="AllergyIntolerance" />
+        <type value="token" />
+        <description value="Allergy or intolerance code" />
+        <expression value="AllergyIntolerance.code | AllergyIntolerance.reaction.substance" />
+        <xpath value="f:AllergyIntolerance/f:code | f:AllergyIntolerance/f:reaction/f:substance" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/AllergyIntolerance-criticality" />
     <resource>
       <SearchParameter>
@@ -16911,9 +16450,9 @@
         <code value="date" />
         <base value="AllergyIntolerance" />
         <type value="date" />
-        <description value="When recorded" />
-        <expression value="AllergyIntolerance.recordedDate" />
-        <xpath value="f:AllergyIntolerance/f:recordedDate" />
+        <description value="Date record was believed accurate" />
+        <expression value="AllergyIntolerance.attestedDate" />
+        <xpath value="f:AllergyIntolerance/f:attestedDate" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -16974,8 +16513,8 @@
         <base value="AllergyIntolerance" />
         <type value="date" />
         <description value="Date(/time) of last known occurrence of a reaction" />
-        <expression value="AllergyIntolerance.lastOccurence" />
-        <xpath value="f:AllergyIntolerance/f:lastOccurence" />
+        <expression value="AllergyIntolerance.lastOccurrence" />
+        <xpath value="f:AllergyIntolerance/f:lastOccurrence" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -17227,40 +16766,9 @@
         <code value="status" />
         <base value="AllergyIntolerance" />
         <type value="token" />
-        <description value="active | unconfirmed | confirmed | inactive | resolved | refuted | entered-in-error" />
+        <description value="active | active-confirmed | inactive | resolved | refuted | entered-in-error" />
         <expression value="AllergyIntolerance.status" />
         <xpath value="f:AllergyIntolerance/f:status" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/AllergyIntolerance-substance" />
-    <resource>
-      <SearchParameter>
-        <id value="AllergyIntolerance-substance" />
-        <url value="http://hl7.org/fhir/SearchParameter/AllergyIntolerance-substance" />
-        <name value="substance" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Patient Care)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/patientcare/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="substance" />
-        <base value="AllergyIntolerance" />
-        <type value="token" />
-        <description value="Substance, (or class) considered to be responsible for risk" />
-        <expression value="AllergyIntolerance.substance | AllergyIntolerance.reaction.substance" />
-        <xpath value="f:AllergyIntolerance/f:substance | f:AllergyIntolerance/f:reaction/f:substance" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -17387,15 +16895,14 @@
         <xpath value="f:CarePlan/f:activity/f:reference" />
         <xpathUsage value="normal" />
         <target value="Appointment" />
-        <target value="Order" />
         <target value="ReferralRequest" />
+        <target value="NutritionRequest" />
         <target value="ProcessRequest" />
-        <target value="NutritionOrder" />
         <target value="VisionPrescription" />
-        <target value="DiagnosticOrder" />
         <target value="ProcedureRequest" />
         <target value="DeviceUseRequest" />
         <target value="MedicationOrder" />
+        <target value="DiagnosticRequest" />
         <target value="CommunicationRequest" />
         <target value="SupplyRequest" />
       </SearchParameter>
@@ -17652,6 +17159,12 @@
         <type value="composite" />
         <description value="A combination of the type of relationship and the related plan" />
         <xpathUsage value="normal" />
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/CarePlan-relatedcode" />
+        </component>
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/CarePlan-relatedplan" />
+        </component>
       </SearchParameter>
     </resource>
   </entry>
@@ -18333,9 +17846,9 @@
         <code value="type" />
         <base value="StructureDefinition" />
         <type value="token" />
-        <description value="Any datatype or resource, including abstract ones" />
-        <expression value="StructureDefinition.baseType" />
-        <xpath value="f:StructureDefinition/f:baseType" />
+        <description value="Type defined or constrained by this structure" />
+        <expression value="StructureDefinition.type" />
+        <xpath value="f:StructureDefinition/f:type" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -19217,7 +18730,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -19225,8 +18737,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -19262,15 +18774,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -19283,7 +18791,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -20877,12 +20384,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Order-date" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-actor" />
     <resource>
       <SearchParameter>
-        <id value="Order-date" />
-        <url value="http://hl7.org/fhir/SearchParameter/Order-date" />
-        <name value="date" />
+        <id value="DiagnosticRequest-actor" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-actor" />
+        <name value="actor" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
@@ -20897,168 +20404,215 @@
             <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
           </telecom>
         </contact>
-        <code value="date" />
-        <base value="Order" />
-        <type value="date" />
-        <description value="When the order was made" />
-        <expression value="Order.date" />
-        <xpath value="f:Order/f:date" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Order-detail" />
-    <resource>
-      <SearchParameter>
-        <id value="Order-detail" />
-        <url value="http://hl7.org/fhir/SearchParameter/Order-detail" />
-        <name value="detail" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="detail" />
-        <base value="Order" />
+        <code value="actor" />
+        <base value="DiagnosticRequest" />
         <type value="reference" />
-        <description value="What action is being ordered" />
-        <expression value="Order.detail" />
-        <xpath value="f:Order/f:detail" />
+        <description value="Who recorded or did this" />
+        <expression value="DiagnosticRequest.event.actor | DiagnosticRequest.item.event.actor" />
+        <xpath value="f:DiagnosticRequest/f:event/f:actor | f:DiagnosticRequest/f:item/f:event/f:actor" />
         <xpathUsage value="normal" />
-        <target value="Account" />
-        <target value="ActivityDefinition" />
-        <target value="AllergyIntolerance" />
-        <target value="Appointment" />
-        <target value="AppointmentResponse" />
-        <target value="AuditEvent" />
-        <target value="Basic" />
-        <target value="Binary" />
-        <target value="BodySite" />
-        <target value="Bundle" />
-        <target value="CarePlan" />
-        <target value="CareTeam" />
-        <target value="Claim" />
-        <target value="ClaimResponse" />
-        <target value="ClinicalImpression" />
-        <target value="CodeSystem" />
-        <target value="Communication" />
-        <target value="CommunicationRequest" />
-        <target value="CompartmentDefinition" />
-        <target value="Composition" />
-        <target value="ConceptMap" />
-        <target value="Condition" />
-        <target value="Conformance" />
-        <target value="Consent" />
-        <target value="Contract" />
-        <target value="Coverage" />
-        <target value="DataElement" />
-        <target value="DecisionSupportRule" />
-        <target value="DecisionSupportServiceModule" />
-        <target value="DetectedIssue" />
-        <target value="Device" />
-        <target value="DeviceComponent" />
-        <target value="DeviceMetric" />
-        <target value="DeviceUseRequest" />
-        <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
-        <target value="DiagnosticReport" />
-        <target value="DocumentManifest" />
-        <target value="DocumentReference" />
-        <target value="EligibilityRequest" />
-        <target value="EligibilityResponse" />
-        <target value="Encounter" />
-        <target value="Endpoint" />
-        <target value="EnrollmentRequest" />
-        <target value="EnrollmentResponse" />
-        <target value="EpisodeOfCare" />
-        <target value="ExpansionProfile" />
-        <target value="ExplanationOfBenefit" />
-        <target value="FamilyMemberHistory" />
-        <target value="Flag" />
-        <target value="Goal" />
-        <target value="Group" />
-        <target value="GuidanceResponse" />
-        <target value="HealthcareService" />
-        <target value="ImagingManifest" />
-        <target value="ImagingStudy" />
-        <target value="Immunization" />
-        <target value="ImmunizationRecommendation" />
-        <target value="ImplementationGuide" />
-        <target value="Library" />
-        <target value="Linkage" />
-        <target value="List" />
-        <target value="Location" />
-        <target value="Measure" />
-        <target value="MeasureReport" />
-        <target value="Media" />
-        <target value="Medication" />
-        <target value="MedicationAdministration" />
-        <target value="MedicationDispense" />
-        <target value="MedicationOrder" />
-        <target value="MedicationStatement" />
-        <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
-        <target value="NamingSystem" />
-        <target value="NutritionOrder" />
-        <target value="Observation" />
-        <target value="OperationDefinition" />
-        <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
-        <target value="Organization" />
-        <target value="Patient" />
-        <target value="PaymentNotice" />
-        <target value="PaymentReconciliation" />
-        <target value="Person" />
-        <target value="PlanDefinition" />
         <target value="Practitioner" />
-        <target value="PractitionerRole" />
-        <target value="Procedure" />
-        <target value="ProcedureRequest" />
-        <target value="ProcessRequest" />
-        <target value="ProcessResponse" />
-        <target value="Protocol" />
-        <target value="Provenance" />
-        <target value="Questionnaire" />
-        <target value="QuestionnaireResponse" />
-        <target value="ReferralRequest" />
-        <target value="RelatedPerson" />
-        <target value="RiskAssessment" />
-        <target value="Schedule" />
-        <target value="SearchParameter" />
-        <target value="Sequence" />
-        <target value="Slot" />
-        <target value="Specimen" />
-        <target value="StructureDefinition" />
-        <target value="StructureMap" />
-        <target value="Subscription" />
-        <target value="Substance" />
-        <target value="SupplyDelivery" />
-        <target value="SupplyRequest" />
-        <target value="Task" />
-        <target value="TestScript" />
-        <target value="ValueSet" />
-        <target value="VisionPrescription" />
+        <target value="Device" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Order-identifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-bodysite" />
     <resource>
       <SearchParameter>
-        <id value="Order-identifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/Order-identifier" />
+        <id value="DiagnosticRequest-bodysite" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-bodysite" />
+        <name value="bodysite" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Orders and Observations)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="bodysite" />
+        <base value="DiagnosticRequest" />
+        <type value="token" />
+        <description value="Location of requested test (if applicable)" />
+        <expression value="DiagnosticRequest.item.bodySite" />
+        <xpath value="f:DiagnosticRequest/f:item/f:bodySite" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-code" />
+    <resource>
+      <SearchParameter>
+        <id value="DiagnosticRequest-code" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-code" />
+        <name value="code" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Orders and Observations)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="code" />
+        <base value="DiagnosticRequest" />
+        <type value="token" />
+        <description value="Code to indicate the item (test or panel) being ordered" />
+        <expression value="DiagnosticRequest.item.code" />
+        <xpath value="f:DiagnosticRequest/f:item/f:code" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-encounter" />
+    <resource>
+      <SearchParameter>
+        <id value="DiagnosticRequest-encounter" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-encounter" />
+        <name value="encounter" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Orders and Observations)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="encounter" />
+        <base value="DiagnosticRequest" />
+        <type value="reference" />
+        <description value="The encounter that this diagnostic order is associated with" />
+        <expression value="DiagnosticRequest.encounter" />
+        <xpath value="f:DiagnosticRequest/f:encounter" />
+        <xpathUsage value="normal" />
+        <target value="Encounter" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-event-date" />
+    <resource>
+      <SearchParameter>
+        <id value="DiagnosticRequest-event-date" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-event-date" />
+        <name value="event-date" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Orders and Observations)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="event-date" />
+        <base value="DiagnosticRequest" />
+        <type value="date" />
+        <description value="The date at which the event happened" />
+        <expression value="DiagnosticRequest.event.dateTime" />
+        <xpath value="f:DiagnosticRequest/f:event/f:dateTime" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-event-status" />
+    <resource>
+      <SearchParameter>
+        <id value="DiagnosticRequest-event-status" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-event-status" />
+        <name value="event-status" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Orders and Observations)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="event-status" />
+        <base value="DiagnosticRequest" />
+        <type value="token" />
+        <description value="proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error" />
+        <expression value="DiagnosticRequest.event.status" />
+        <xpath value="f:DiagnosticRequest/f:event/f:status" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-event-status-date" />
+    <resource>
+      <SearchParameter>
+        <id value="DiagnosticRequest-event-status-date" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-event-status-date" />
+        <name value="event-status-date" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Orders and Observations)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="event-status-date" />
+        <base value="DiagnosticRequest" />
+        <type value="composite" />
+        <description value="A combination of past-status and date" />
+        <xpathUsage value="normal" />
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-event-status" />
+        </component>
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-event-date" />
+        </component>
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-identifier" />
+    <resource>
+      <SearchParameter>
+        <id value="DiagnosticRequest-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-identifier" />
         <name value="identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -21075,21 +20629,181 @@
           </telecom>
         </contact>
         <code value="identifier" />
-        <base value="Order" />
+        <base value="DiagnosticRequest" />
         <type value="token" />
-        <description value="Instance id from source, target, and/or  others" />
-        <expression value="Order.identifier" />
-        <xpath value="f:Order/f:identifier" />
+        <description value="Identifiers assigned to this order" />
+        <expression value="DiagnosticRequest.identifier" />
+        <xpath value="f:DiagnosticRequest/f:identifier" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Order-patient" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-item-date" />
     <resource>
       <SearchParameter>
-        <id value="Order-patient" />
-        <url value="http://hl7.org/fhir/SearchParameter/Order-patient" />
+        <id value="DiagnosticRequest-item-date" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-item-date" />
+        <name value="item-date" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Orders and Observations)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="item-date" />
+        <base value="DiagnosticRequest" />
+        <type value="date" />
+        <description value="The date at which the event happened" />
+        <expression value="DiagnosticRequest.item.event.dateTime" />
+        <xpath value="f:DiagnosticRequest/f:item/f:event/f:dateTime" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-item-past-status" />
+    <resource>
+      <SearchParameter>
+        <id value="DiagnosticRequest-item-past-status" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-item-past-status" />
+        <name value="item-past-status" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Orders and Observations)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="item-past-status" />
+        <base value="DiagnosticRequest" />
+        <type value="token" />
+        <description value="proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error" />
+        <expression value="DiagnosticRequest.item.event.status" />
+        <xpath value="f:DiagnosticRequest/f:item/f:event/f:status" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-item-status" />
+    <resource>
+      <SearchParameter>
+        <id value="DiagnosticRequest-item-status" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-item-status" />
+        <name value="item-status" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Orders and Observations)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="item-status" />
+        <base value="DiagnosticRequest" />
+        <type value="token" />
+        <description value="proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error" />
+        <expression value="DiagnosticRequest.item.status" />
+        <xpath value="f:DiagnosticRequest/f:item/f:status" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-item-status-date" />
+    <resource>
+      <SearchParameter>
+        <id value="DiagnosticRequest-item-status-date" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-item-status-date" />
+        <name value="item-status-date" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Orders and Observations)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="item-status-date" />
+        <base value="DiagnosticRequest" />
+        <type value="composite" />
+        <description value="A combination of item-past-status and item-date" />
+        <xpathUsage value="normal" />
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-item-past-status" />
+        </component>
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-item-date" />
+        </component>
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-orderer" />
+    <resource>
+      <SearchParameter>
+        <id value="DiagnosticRequest-orderer" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-orderer" />
+        <name value="orderer" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Orders and Observations)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="orderer" />
+        <base value="DiagnosticRequest" />
+        <type value="reference" />
+        <description value="Who ordered the test" />
+        <expression value="DiagnosticRequest.orderer" />
+        <xpath value="f:DiagnosticRequest/f:orderer" />
+        <xpathUsage value="normal" />
+        <target value="Practitioner" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-patient" />
+    <resource>
+      <SearchParameter>
+        <id value="DiagnosticRequest-patient" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-patient" />
         <name value="patient" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -21106,23 +20820,23 @@
           </telecom>
         </contact>
         <code value="patient" />
-        <base value="Order" />
+        <base value="DiagnosticRequest" />
         <type value="reference" />
-        <description value="Patient this order is about" />
-        <expression value="Order.subject" />
-        <xpath value="f:Order/f:subject" />
+        <description value="Who and/or what test is about" />
+        <expression value="DiagnosticRequest.subject" />
+        <xpath value="f:DiagnosticRequest/f:subject" />
         <xpathUsage value="normal" />
         <target value="Patient" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Order-source" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-status" />
     <resource>
       <SearchParameter>
-        <id value="Order-source" />
-        <url value="http://hl7.org/fhir/SearchParameter/Order-source" />
-        <name value="source" />
+        <id value="DiagnosticRequest-status" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-status" />
+        <name value="status" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
@@ -21137,24 +20851,22 @@
             <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
           </telecom>
         </contact>
-        <code value="source" />
-        <base value="Order" />
-        <type value="reference" />
-        <description value="Who initiated the order" />
-        <expression value="Order.source" />
-        <xpath value="f:Order/f:source" />
+        <code value="status" />
+        <base value="DiagnosticRequest" />
+        <type value="token" />
+        <description value="proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error" />
+        <expression value="DiagnosticRequest.status" />
+        <xpath value="f:DiagnosticRequest/f:status" />
         <xpathUsage value="normal" />
-        <target value="Practitioner" />
-        <target value="Organization" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Order-subject" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-subject" />
     <resource>
       <SearchParameter>
-        <id value="Order-subject" />
-        <url value="http://hl7.org/fhir/SearchParameter/Order-subject" />
+        <id value="DiagnosticRequest-subject" />
+        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticRequest-subject" />
         <name value="subject" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -21171,112 +20883,16 @@
           </telecom>
         </contact>
         <code value="subject" />
-        <base value="Order" />
+        <base value="DiagnosticRequest" />
         <type value="reference" />
-        <description value="Patient this order is about" />
-        <expression value="Order.subject" />
-        <xpath value="f:Order/f:subject" />
+        <description value="Who and/or what test is about" />
+        <expression value="DiagnosticRequest.subject" />
+        <xpath value="f:DiagnosticRequest/f:subject" />
         <xpathUsage value="normal" />
         <target value="Group" />
         <target value="Device" />
         <target value="Patient" />
-        <target value="Substance" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Order-target" />
-    <resource>
-      <SearchParameter>
-        <id value="Order-target" />
-        <url value="http://hl7.org/fhir/SearchParameter/Order-target" />
-        <name value="target" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="target" />
-        <base value="Order" />
-        <type value="reference" />
-        <description value="Who is intended to fulfill the order" />
-        <expression value="Order.target" />
-        <xpath value="f:Order/f:target" />
-        <xpathUsage value="normal" />
-        <target value="Practitioner" />
-        <target value="Organization" />
-        <target value="Device" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Order-when" />
-    <resource>
-      <SearchParameter>
-        <id value="Order-when" />
-        <url value="http://hl7.org/fhir/SearchParameter/Order-when" />
-        <name value="when" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="when" />
-        <base value="Order" />
-        <type value="date" />
-        <description value="A formal schedule" />
-        <expression value="Order.when.schedule" />
-        <xpath value="f:Order/f:when/f:schedule" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Order-whencode" />
-    <resource>
-      <SearchParameter>
-        <id value="Order-whencode" />
-        <url value="http://hl7.org/fhir/SearchParameter/Order-whencode" />
-        <name value="when_code" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="when_code" />
-        <base value="Order" />
-        <type value="token" />
-        <description value="Code specifies when request should be done. The code may simply be a priority code" />
-        <expression value="Order.when.code" />
-        <xpath value="f:Order/f:when/f:code" />
-        <xpathUsage value="normal" />
+        <target value="Location" />
       </SearchParameter>
     </resource>
   </entry>
@@ -23204,6 +22820,15 @@
         <type value="composite" />
         <description value="Genomic coordinate of the sequence. For example, a search for sequence in region 1:123-345 can be represented as `coordinate=1$lt345$gt123`" />
         <xpathUsage value="normal" />
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/Sequence-chromosome" />
+        </component>
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/Sequence-start" />
+        </component>
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/Sequence-end" />
+        </component>
       </SearchParameter>
     </resource>
   </entry>
@@ -24596,6 +24221,71 @@
     </resource>
   </entry>
   <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/GuidanceResponse-patient" />
+    <resource>
+      <SearchParameter>
+        <id value="GuidanceResponse-patient" />
+        <url value="http://hl7.org/fhir/SearchParameter/GuidanceResponse-patient" />
+        <name value="patient" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Clinical Decision Support)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="patient" />
+        <base value="GuidanceResponse" />
+        <type value="reference" />
+        <description value="The identity of a patient to search for guidance response results" />
+        <expression value="GuidanceResponse.subject" />
+        <xpath value="f:GuidanceResponse/f:subject" />
+        <xpathUsage value="normal" />
+        <target value="Patient" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/GuidanceResponse-subject" />
+    <resource>
+      <SearchParameter>
+        <id value="GuidanceResponse-subject" />
+        <url value="http://hl7.org/fhir/SearchParameter/GuidanceResponse-subject" />
+        <name value="subject" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Clinical Decision Support)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="subject" />
+        <base value="GuidanceResponse" />
+        <type value="reference" />
+        <description value="The subject that the guidance response is about" />
+        <expression value="GuidanceResponse.subject" />
+        <xpath value="f:GuidanceResponse/f:subject" />
+        <xpathUsage value="normal" />
+        <target value="Group" />
+        <target value="Patient" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/Observation-category" />
     <resource>
       <SearchParameter>
@@ -24683,6 +24373,12 @@
         <type value="composite" />
         <description value="Code and value parameter pair" />
         <xpathUsage value="normal" />
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/Observation-code" />
+        </component>
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/Observation-value[x]" />
+        </component>
       </SearchParameter>
     </resource>
   </entry>
@@ -24968,6 +24664,12 @@
         <type value="composite" />
         <description value="Related Observations - search on related-type and related-target together" />
         <xpathUsage value="normal" />
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/Observation-related-target" />
+        </component>
+        <component>
+          <reference value="http://hl7.org/fhir/SearchParameter/Observation-related-type" />
+        </component>
       </SearchParameter>
     </resource>
   </entry>
@@ -26928,7 +26630,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -26936,8 +26637,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -26973,15 +26674,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -26994,7 +26691,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -28557,8 +28253,8 @@
         <xpath value="f:DiagnosticReport/f:request" />
         <xpathUsage value="normal" />
         <target value="ReferralRequest" />
-        <target value="DiagnosticOrder" />
         <target value="ProcedureRequest" />
+        <target value="DiagnosticRequest" />
       </SearchParameter>
     </resource>
   </entry>
@@ -29284,11 +28980,11 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionOrder-additive" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionRequest-additive" />
     <resource>
       <SearchParameter>
-        <id value="NutritionOrder-additive" />
-        <url value="http://hl7.org/fhir/SearchParameter/NutritionOrder-additive" />
+        <id value="NutritionRequest-additive" />
+        <url value="http://hl7.org/fhir/SearchParameter/NutritionRequest-additive" />
         <name value="additive" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -29305,21 +29001,21 @@
           </telecom>
         </contact>
         <code value="additive" />
-        <base value="NutritionOrder" />
+        <base value="NutritionRequest" />
         <type value="token" />
         <description value="Type of module component to add to the feeding" />
-        <expression value="NutritionOrder.enteralFormula.additiveType" />
-        <xpath value="f:NutritionOrder/f:enteralFormula/f:additiveType" />
+        <expression value="NutritionRequest.enteralFormula.additiveType" />
+        <xpath value="f:NutritionRequest/f:enteralFormula/f:additiveType" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionOrder-datetime" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionRequest-datetime" />
     <resource>
       <SearchParameter>
-        <id value="NutritionOrder-datetime" />
-        <url value="http://hl7.org/fhir/SearchParameter/NutritionOrder-datetime" />
+        <id value="NutritionRequest-datetime" />
+        <url value="http://hl7.org/fhir/SearchParameter/NutritionRequest-datetime" />
         <name value="datetime" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -29336,21 +29032,21 @@
           </telecom>
         </contact>
         <code value="datetime" />
-        <base value="NutritionOrder" />
+        <base value="NutritionRequest" />
         <type value="date" />
         <description value="Return nutrition orders requested on this date" />
-        <expression value="NutritionOrder.dateTime" />
-        <xpath value="f:NutritionOrder/f:dateTime" />
+        <expression value="NutritionRequest.dateTime" />
+        <xpath value="f:NutritionRequest/f:dateTime" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionOrder-encounter" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionRequest-encounter" />
     <resource>
       <SearchParameter>
-        <id value="NutritionOrder-encounter" />
-        <url value="http://hl7.org/fhir/SearchParameter/NutritionOrder-encounter" />
+        <id value="NutritionRequest-encounter" />
+        <url value="http://hl7.org/fhir/SearchParameter/NutritionRequest-encounter" />
         <name value="encounter" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -29367,22 +29063,22 @@
           </telecom>
         </contact>
         <code value="encounter" />
-        <base value="NutritionOrder" />
+        <base value="NutritionRequest" />
         <type value="reference" />
         <description value="Return nutrition orders with this encounter identifier" />
-        <expression value="NutritionOrder.encounter" />
-        <xpath value="f:NutritionOrder/f:encounter" />
+        <expression value="NutritionRequest.encounter" />
+        <xpath value="f:NutritionRequest/f:encounter" />
         <xpathUsage value="normal" />
         <target value="Encounter" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionOrder-formula" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionRequest-formula" />
     <resource>
       <SearchParameter>
-        <id value="NutritionOrder-formula" />
-        <url value="http://hl7.org/fhir/SearchParameter/NutritionOrder-formula" />
+        <id value="NutritionRequest-formula" />
+        <url value="http://hl7.org/fhir/SearchParameter/NutritionRequest-formula" />
         <name value="formula" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -29399,21 +29095,21 @@
           </telecom>
         </contact>
         <code value="formula" />
-        <base value="NutritionOrder" />
+        <base value="NutritionRequest" />
         <type value="token" />
         <description value="Type of enteral or infant formula" />
-        <expression value="NutritionOrder.enteralFormula.baseFormulaType" />
-        <xpath value="f:NutritionOrder/f:enteralFormula/f:baseFormulaType" />
+        <expression value="NutritionRequest.enteralFormula.baseFormulaType" />
+        <xpath value="f:NutritionRequest/f:enteralFormula/f:baseFormulaType" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionOrder-identifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionRequest-identifier" />
     <resource>
       <SearchParameter>
-        <id value="NutritionOrder-identifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/NutritionOrder-identifier" />
+        <id value="NutritionRequest-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/NutritionRequest-identifier" />
         <name value="identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -29430,21 +29126,21 @@
           </telecom>
         </contact>
         <code value="identifier" />
-        <base value="NutritionOrder" />
+        <base value="NutritionRequest" />
         <type value="token" />
         <description value="Return nutrition orders with this external identifier" />
-        <expression value="NutritionOrder.identifier" />
-        <xpath value="f:NutritionOrder/f:identifier" />
+        <expression value="NutritionRequest.identifier" />
+        <xpath value="f:NutritionRequest/f:identifier" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionOrder-oraldiet" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionRequest-oraldiet" />
     <resource>
       <SearchParameter>
-        <id value="NutritionOrder-oraldiet" />
-        <url value="http://hl7.org/fhir/SearchParameter/NutritionOrder-oraldiet" />
+        <id value="NutritionRequest-oraldiet" />
+        <url value="http://hl7.org/fhir/SearchParameter/NutritionRequest-oraldiet" />
         <name value="oraldiet" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -29461,21 +29157,21 @@
           </telecom>
         </contact>
         <code value="oraldiet" />
-        <base value="NutritionOrder" />
+        <base value="NutritionRequest" />
         <type value="token" />
         <description value="Type of diet that can be consumed orally (i.e., take via the mouth)." />
-        <expression value="NutritionOrder.oralDiet.type" />
-        <xpath value="f:NutritionOrder/f:oralDiet/f:type" />
+        <expression value="NutritionRequest.oralDiet.type" />
+        <xpath value="f:NutritionRequest/f:oralDiet/f:type" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionOrder-patient" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionRequest-patient" />
     <resource>
       <SearchParameter>
-        <id value="NutritionOrder-patient" />
-        <url value="http://hl7.org/fhir/SearchParameter/NutritionOrder-patient" />
+        <id value="NutritionRequest-patient" />
+        <url value="http://hl7.org/fhir/SearchParameter/NutritionRequest-patient" />
         <name value="patient" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -29492,22 +29188,22 @@
           </telecom>
         </contact>
         <code value="patient" />
-        <base value="NutritionOrder" />
+        <base value="NutritionRequest" />
         <type value="reference" />
         <description value="The identity of the person who requires the diet, formula or nutritional supplement" />
-        <expression value="NutritionOrder.patient" />
-        <xpath value="f:NutritionOrder/f:patient" />
+        <expression value="NutritionRequest.patient" />
+        <xpath value="f:NutritionRequest/f:patient" />
         <xpathUsage value="normal" />
         <target value="Patient" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionOrder-provider" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionRequest-provider" />
     <resource>
       <SearchParameter>
-        <id value="NutritionOrder-provider" />
-        <url value="http://hl7.org/fhir/SearchParameter/NutritionOrder-provider" />
+        <id value="NutritionRequest-provider" />
+        <url value="http://hl7.org/fhir/SearchParameter/NutritionRequest-provider" />
         <name value="provider" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -29524,22 +29220,22 @@
           </telecom>
         </contact>
         <code value="provider" />
-        <base value="NutritionOrder" />
+        <base value="NutritionRequest" />
         <type value="reference" />
         <description value="The identify of the provider who placed the nutrition order" />
-        <expression value="NutritionOrder.orderer" />
-        <xpath value="f:NutritionOrder/f:orderer" />
+        <expression value="NutritionRequest.orderer" />
+        <xpath value="f:NutritionRequest/f:orderer" />
         <xpathUsage value="normal" />
         <target value="Practitioner" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionOrder-status" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionRequest-status" />
     <resource>
       <SearchParameter>
-        <id value="NutritionOrder-status" />
-        <url value="http://hl7.org/fhir/SearchParameter/NutritionOrder-status" />
+        <id value="NutritionRequest-status" />
+        <url value="http://hl7.org/fhir/SearchParameter/NutritionRequest-status" />
         <name value="status" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -29556,21 +29252,21 @@
           </telecom>
         </contact>
         <code value="status" />
-        <base value="NutritionOrder" />
+        <base value="NutritionRequest" />
         <type value="token" />
         <description value="Status of the nutrition order." />
-        <expression value="NutritionOrder.status" />
-        <xpath value="f:NutritionOrder/f:status" />
+        <expression value="NutritionRequest.status" />
+        <xpath value="f:NutritionRequest/f:status" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionOrder-supplement" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/NutritionRequest-supplement" />
     <resource>
       <SearchParameter>
-        <id value="NutritionOrder-supplement" />
-        <url value="http://hl7.org/fhir/SearchParameter/NutritionOrder-supplement" />
+        <id value="NutritionRequest-supplement" />
+        <url value="http://hl7.org/fhir/SearchParameter/NutritionRequest-supplement" />
         <name value="supplement" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Orders and Observations)" />
@@ -29587,11 +29283,11 @@
           </telecom>
         </contact>
         <code value="supplement" />
-        <base value="NutritionOrder" />
+        <base value="NutritionRequest" />
         <type value="token" />
         <description value="Type of supplement product requested" />
-        <expression value="NutritionOrder.supplement.type" />
-        <xpath value="f:NutritionOrder/f:supplement/f:type" />
+        <expression value="NutritionRequest.supplement.type" />
+        <xpath value="f:NutritionRequest/f:supplement/f:type" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -29842,7 +29538,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -29850,8 +29545,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -29887,15 +29582,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -29908,7 +29599,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -30554,192 +30244,6 @@
         <description value="Status of the prescription" />
         <expression value="MedicationOrder.status" />
         <xpath value="f:MedicationOrder/f:status" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DecisionSupportRule-description" />
-    <resource>
-      <SearchParameter>
-        <id value="DecisionSupportRule-description" />
-        <url value="http://hl7.org/fhir/SearchParameter/DecisionSupportRule-description" />
-        <name value="description" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Clinical Decision Support)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="description" />
-        <base value="DecisionSupportRule" />
-        <type value="string" />
-        <description value="Text search against the description" />
-        <expression value="DecisionSupportRule.moduleMetadata.description" />
-        <xpath value="f:DecisionSupportRule/f:moduleMetadata/f:description" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DecisionSupportRule-identifier" />
-    <resource>
-      <SearchParameter>
-        <id value="DecisionSupportRule-identifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/DecisionSupportRule-identifier" />
-        <name value="identifier" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Clinical Decision Support)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="identifier" />
-        <base value="DecisionSupportRule" />
-        <type value="token" />
-        <description value="Logical identifier for the module (e.g. CMS-143)" />
-        <expression value="DecisionSupportRule.moduleMetadata.identifier" />
-        <xpath value="f:DecisionSupportRule/f:moduleMetadata/f:identifier" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DecisionSupportRule-status" />
-    <resource>
-      <SearchParameter>
-        <id value="DecisionSupportRule-status" />
-        <url value="http://hl7.org/fhir/SearchParameter/DecisionSupportRule-status" />
-        <name value="status" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Clinical Decision Support)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="status" />
-        <base value="DecisionSupportRule" />
-        <type value="token" />
-        <description value="Status of the module" />
-        <expression value="DecisionSupportRule.moduleMetadata.status" />
-        <xpath value="f:DecisionSupportRule/f:moduleMetadata/f:status" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DecisionSupportRule-title" />
-    <resource>
-      <SearchParameter>
-        <id value="DecisionSupportRule-title" />
-        <url value="http://hl7.org/fhir/SearchParameter/DecisionSupportRule-title" />
-        <name value="title" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Clinical Decision Support)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="title" />
-        <base value="DecisionSupportRule" />
-        <type value="string" />
-        <description value="Text search against the title" />
-        <expression value="DecisionSupportRule.moduleMetadata.title" />
-        <xpath value="f:DecisionSupportRule/f:moduleMetadata/f:title" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DecisionSupportRule-topic" />
-    <resource>
-      <SearchParameter>
-        <id value="DecisionSupportRule-topic" />
-        <url value="http://hl7.org/fhir/SearchParameter/DecisionSupportRule-topic" />
-        <name value="topic" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Clinical Decision Support)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="topic" />
-        <base value="DecisionSupportRule" />
-        <type value="token" />
-        <description value="Topics associated with the module" />
-        <expression value="DecisionSupportRule.moduleMetadata.topic" />
-        <xpath value="f:DecisionSupportRule/f:moduleMetadata/f:topic" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DecisionSupportRule-version" />
-    <resource>
-      <SearchParameter>
-        <id value="DecisionSupportRule-version" />
-        <url value="http://hl7.org/fhir/SearchParameter/DecisionSupportRule-version" />
-        <name value="version" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Clinical Decision Support)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/dss/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="version" />
-        <base value="DecisionSupportRule" />
-        <type value="string" />
-        <description value="Version of the module (e.g. 1.0.0)" />
-        <expression value="DecisionSupportRule.moduleMetadata.version" />
-        <xpath value="f:DecisionSupportRule/f:moduleMetadata/f:version" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -31838,7 +31342,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -31846,8 +31349,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -31883,15 +31386,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -31904,7 +31403,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -32140,7 +31638,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -32148,8 +31645,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -32185,15 +31682,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -32206,7 +31699,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -32474,7 +31966,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -32482,8 +31973,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -32519,15 +32010,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -32540,7 +32027,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -32879,507 +32365,6 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-actor" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-actor" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-actor" />
-        <name value="actor" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="actor" />
-        <base value="DiagnosticOrder" />
-        <type value="reference" />
-        <description value="Who recorded or did this" />
-        <expression value="DiagnosticOrder.event.actor | DiagnosticOrder.item.event.actor" />
-        <xpath value="f:DiagnosticOrder/f:event/f:actor | f:DiagnosticOrder/f:item/f:event/f:actor" />
-        <xpathUsage value="normal" />
-        <target value="Practitioner" />
-        <target value="Device" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-bodysite" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-bodysite" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-bodysite" />
-        <name value="bodysite" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="bodysite" />
-        <base value="DiagnosticOrder" />
-        <type value="token" />
-        <description value="Location of requested test (if applicable)" />
-        <expression value="DiagnosticOrder.item.bodySite" />
-        <xpath value="f:DiagnosticOrder/f:item/f:bodySite" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-code" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-code" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-code" />
-        <name value="code" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="code" />
-        <base value="DiagnosticOrder" />
-        <type value="token" />
-        <description value="Code to indicate the item (test or panel) being ordered" />
-        <expression value="DiagnosticOrder.item.code" />
-        <xpath value="f:DiagnosticOrder/f:item/f:code" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-encounter" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-encounter" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-encounter" />
-        <name value="encounter" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="encounter" />
-        <base value="DiagnosticOrder" />
-        <type value="reference" />
-        <description value="The encounter that this diagnostic order is associated with" />
-        <expression value="DiagnosticOrder.encounter" />
-        <xpath value="f:DiagnosticOrder/f:encounter" />
-        <xpathUsage value="normal" />
-        <target value="Encounter" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-event-date" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-event-date" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-event-date" />
-        <name value="event-date" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="event-date" />
-        <base value="DiagnosticOrder" />
-        <type value="date" />
-        <description value="The date at which the event happened" />
-        <expression value="DiagnosticOrder.event.dateTime" />
-        <xpath value="f:DiagnosticOrder/f:event/f:dateTime" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-event-status" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-event-status" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-event-status" />
-        <name value="event-status" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="event-status" />
-        <base value="DiagnosticOrder" />
-        <type value="token" />
-        <description value="proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error" />
-        <expression value="DiagnosticOrder.event.status" />
-        <xpath value="f:DiagnosticOrder/f:event/f:status" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-event-status-date" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-event-status-date" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-event-status-date" />
-        <name value="event-status-date" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="event-status-date" />
-        <base value="DiagnosticOrder" />
-        <type value="composite" />
-        <description value="A combination of past-status and date" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-identifier" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-identifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-identifier" />
-        <name value="identifier" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="identifier" />
-        <base value="DiagnosticOrder" />
-        <type value="token" />
-        <description value="Identifiers assigned to this order" />
-        <expression value="DiagnosticOrder.identifier" />
-        <xpath value="f:DiagnosticOrder/f:identifier" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-item-date" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-item-date" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-item-date" />
-        <name value="item-date" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="item-date" />
-        <base value="DiagnosticOrder" />
-        <type value="date" />
-        <description value="The date at which the event happened" />
-        <expression value="DiagnosticOrder.item.event.dateTime" />
-        <xpath value="f:DiagnosticOrder/f:item/f:event/f:dateTime" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-item-past-status" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-item-past-status" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-item-past-status" />
-        <name value="item-past-status" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="item-past-status" />
-        <base value="DiagnosticOrder" />
-        <type value="token" />
-        <description value="proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error" />
-        <expression value="DiagnosticOrder.item.event.status" />
-        <xpath value="f:DiagnosticOrder/f:item/f:event/f:status" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-item-status" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-item-status" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-item-status" />
-        <name value="item-status" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="item-status" />
-        <base value="DiagnosticOrder" />
-        <type value="token" />
-        <description value="proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error" />
-        <expression value="DiagnosticOrder.item.status" />
-        <xpath value="f:DiagnosticOrder/f:item/f:status" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-item-status-date" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-item-status-date" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-item-status-date" />
-        <name value="item-status-date" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="item-status-date" />
-        <base value="DiagnosticOrder" />
-        <type value="composite" />
-        <description value="A combination of item-past-status and item-date" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-orderer" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-orderer" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-orderer" />
-        <name value="orderer" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="orderer" />
-        <base value="DiagnosticOrder" />
-        <type value="reference" />
-        <description value="Who ordered the test" />
-        <expression value="DiagnosticOrder.orderer" />
-        <xpath value="f:DiagnosticOrder/f:orderer" />
-        <xpathUsage value="normal" />
-        <target value="Practitioner" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-patient" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-patient" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-patient" />
-        <name value="patient" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="patient" />
-        <base value="DiagnosticOrder" />
-        <type value="reference" />
-        <description value="Who and/or what test is about" />
-        <expression value="DiagnosticOrder.subject" />
-        <xpath value="f:DiagnosticOrder/f:subject" />
-        <xpathUsage value="normal" />
-        <target value="Patient" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-status" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-status" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-status" />
-        <name value="status" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="status" />
-        <base value="DiagnosticOrder" />
-        <type value="token" />
-        <description value="proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error" />
-        <expression value="DiagnosticOrder.status" />
-        <xpath value="f:DiagnosticOrder/f:status" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-subject" />
-    <resource>
-      <SearchParameter>
-        <id value="DiagnosticOrder-subject" />
-        <url value="http://hl7.org/fhir/SearchParameter/DiagnosticOrder-subject" />
-        <name value="subject" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Orders and Observations)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="subject" />
-        <base value="DiagnosticOrder" />
-        <type value="reference" />
-        <description value="Who and/or what test is about" />
-        <expression value="DiagnosticOrder.subject" />
-        <xpath value="f:DiagnosticOrder/f:subject" />
-        <xpathUsage value="normal" />
-        <target value="Group" />
-        <target value="Device" />
-        <target value="Patient" />
-        <target value="Location" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/Patient-active" />
     <resource>
       <SearchParameter>
@@ -33434,7 +32419,7 @@
         <code value="address" />
         <base value="Patient" />
         <type value="string" />
-        <description value="An address in any kind of address/part of the patient" />
+        <description value="A server defined search that may match any of the string fields in the Address, including line, city, state, country, postalCode, and/or text" />
         <expression value="Patient.address" />
         <xpath value="f:Patient/f:address" />
         <xpathUsage value="normal" />
@@ -33690,39 +32675,6 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Patient-careprovider" />
-    <resource>
-      <SearchParameter>
-        <id value="Patient-careprovider" />
-        <url value="http://hl7.org/fhir/SearchParameter/Patient-careprovider" />
-        <name value="careprovider" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Patient Administration)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/pafm/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="careprovider" />
-        <base value="Patient" />
-        <type value="reference" />
-        <description value="Patient's nominated care provider, could be a care manager, not the organization that manages the record" />
-        <expression value="Patient.careProvider" />
-        <xpath value="f:Patient/f:careProvider" />
-        <xpathUsage value="normal" />
-        <target value="Practitioner" />
-        <target value="Organization" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/Patient-death-date" />
     <resource>
       <SearchParameter>
@@ -33878,6 +32830,39 @@
     </resource>
   </entry>
   <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Patient-general-practitioner" />
+    <resource>
+      <SearchParameter>
+        <id value="Patient-general-practitioner" />
+        <url value="http://hl7.org/fhir/SearchParameter/Patient-general-practitioner" />
+        <name value="general-practitioner" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Patient Administration)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/pafm/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="general-practitioner" />
+        <base value="Patient" />
+        <type value="reference" />
+        <description value="Patient's nominated general practitioner, not the organization that manages the record" />
+        <expression value="Patient.generalPractitioner" />
+        <xpath value="f:Patient/f:generalPractitioner" />
+        <xpathUsage value="normal" />
+        <target value="Practitioner" />
+        <target value="Organization" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/Patient-given" />
     <resource>
       <SearchParameter>
@@ -33999,6 +32984,7 @@
         <xpath value="f:Patient/f:link/f:other" />
         <xpathUsage value="normal" />
         <target value="Patient" />
+        <target value="RelatedPerson" />
       </SearchParameter>
     </resource>
   </entry>
@@ -34026,7 +33012,7 @@
         <code value="name" />
         <base value="Patient" />
         <type value="string" />
-        <description value="A portion of either family or given name of the patient" />
+        <description value="A server defined search that may match any of the string fields in the HumanName, including family, give, prefix, suffix, suffix, and/or text" />
         <expression value="Patient.name" />
         <xpath value="f:Patient/f:name" />
         <xpathUsage value="normal" />
@@ -34666,6 +33652,37 @@
     </resource>
   </entry>
   <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/QuestionnaireResponse-identifier" />
+    <resource>
+      <SearchParameter>
+        <id value="QuestionnaireResponse-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/QuestionnaireResponse-identifier" />
+        <name value="identifier" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Patient Care)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/patientcare/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="identifier" />
+        <base value="QuestionnaireResponse" />
+        <type value="token" />
+        <description value="The unique identifier for the questionnaire response" />
+        <expression value="QuestionnaireResponse.identifier" />
+        <xpath value="f:QuestionnaireResponse/f:identifier" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/QuestionnaireResponse-patient" />
     <resource>
       <SearchParameter>
@@ -34849,7 +33866,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -34857,8 +33873,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -34894,15 +33910,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -34915,7 +33927,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -35246,7 +34257,6 @@
         <target value="Contract" />
         <target value="Coverage" />
         <target value="DataElement" />
-        <target value="DecisionSupportRule" />
         <target value="DecisionSupportServiceModule" />
         <target value="DetectedIssue" />
         <target value="Device" />
@@ -35254,8 +34264,8 @@
         <target value="DeviceMetric" />
         <target value="DeviceUseRequest" />
         <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
         <target value="DiagnosticReport" />
+        <target value="DiagnosticRequest" />
         <target value="DocumentManifest" />
         <target value="DocumentReference" />
         <target value="EligibilityRequest" />
@@ -35291,15 +34301,11 @@
         <target value="MedicationOrder" />
         <target value="MedicationStatement" />
         <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
         <target value="NamingSystem" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="Observation" />
         <target value="OperationDefinition" />
         <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
         <target value="Organization" />
         <target value="Patient" />
         <target value="PaymentNotice" />
@@ -35312,7 +34318,6 @@
         <target value="ProcedureRequest" />
         <target value="ProcessRequest" />
         <target value="ProcessResponse" />
-        <target value="Protocol" />
         <target value="Provenance" />
         <target value="Questionnaire" />
         <target value="QuestionnaireResponse" />
@@ -35797,8 +34802,8 @@
         <base value="DecisionSupportServiceModule" />
         <type value="string" />
         <description value="Text search against the description" />
-        <expression value="DecisionSupportServiceModule.moduleMetadata.description" />
-        <xpath value="f:DecisionSupportServiceModule/f:moduleMetadata/f:description" />
+        <expression value="DecisionSupportServiceModule.description" />
+        <xpath value="f:DecisionSupportServiceModule/f:description" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -35828,8 +34833,8 @@
         <base value="DecisionSupportServiceModule" />
         <type value="token" />
         <description value="Logical identifier for the module (e.g. CMS-143)" />
-        <expression value="DecisionSupportServiceModule.moduleMetadata.identifier" />
-        <xpath value="f:DecisionSupportServiceModule/f:moduleMetadata/f:identifier" />
+        <expression value="DecisionSupportServiceModule.identifier" />
+        <xpath value="f:DecisionSupportServiceModule/f:identifier" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -35859,8 +34864,8 @@
         <base value="DecisionSupportServiceModule" />
         <type value="token" />
         <description value="Status of the module" />
-        <expression value="DecisionSupportServiceModule.moduleMetadata.status" />
-        <xpath value="f:DecisionSupportServiceModule/f:moduleMetadata/f:status" />
+        <expression value="DecisionSupportServiceModule.status" />
+        <xpath value="f:DecisionSupportServiceModule/f:status" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -35890,8 +34895,8 @@
         <base value="DecisionSupportServiceModule" />
         <type value="string" />
         <description value="Text search against the title" />
-        <expression value="DecisionSupportServiceModule.moduleMetadata.title" />
-        <xpath value="f:DecisionSupportServiceModule/f:moduleMetadata/f:title" />
+        <expression value="DecisionSupportServiceModule.title" />
+        <xpath value="f:DecisionSupportServiceModule/f:title" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -35921,8 +34926,8 @@
         <base value="DecisionSupportServiceModule" />
         <type value="token" />
         <description value="Topics associated with the module" />
-        <expression value="DecisionSupportServiceModule.moduleMetadata.topic" />
-        <xpath value="f:DecisionSupportServiceModule/f:moduleMetadata/f:topic" />
+        <expression value="DecisionSupportServiceModule.topic" />
+        <xpath value="f:DecisionSupportServiceModule/f:topic" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -35952,8 +34957,8 @@
         <base value="DecisionSupportServiceModule" />
         <type value="string" />
         <description value="Version of the module (e.g. 1.0.0)" />
-        <expression value="DecisionSupportServiceModule.moduleMetadata.version" />
-        <xpath value="f:DecisionSupportServiceModule/f:moduleMetadata/f:version" />
+        <expression value="DecisionSupportServiceModule.version" />
+        <xpath value="f:DecisionSupportServiceModule/f:version" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -36276,11 +35281,11 @@
         <xpathUsage value="normal" />
         <target value="Appointment" />
         <target value="ReferralRequest" />
-        <target value="NutritionOrder" />
+        <target value="NutritionRequest" />
         <target value="ProcedureRequest" />
         <target value="Procedure" />
-        <target value="DiagnosticOrder" />
         <target value="MedicationOrder" />
+        <target value="DiagnosticRequest" />
         <target value="SupplyRequest" />
       </SearchParameter>
     </resource>
@@ -36372,7 +35377,7 @@
         <code value="finding" />
         <base value="ClinicalImpression" />
         <type value="token" />
-        <description value="Specific text or code for finding" />
+        <description value="Specific text or code  for finding" />
         <expression value="ClinicalImpression.finding.item" />
         <xpath value="f:ClinicalImpression/f:finding/f:item" />
         <xpathUsage value="normal" />
@@ -36407,6 +35412,7 @@
         <expression value="ClinicalImpression.investigations.item" />
         <xpath value="f:ClinicalImpression/f:investigations/f:item" />
         <xpathUsage value="normal" />
+        <target value="RiskAssessment" />
         <target value="FamilyMemberHistory" />
         <target value="Observation" />
         <target value="DiagnosticReport" />
@@ -36475,18 +35481,17 @@
         <xpath value="f:ClinicalImpression/f:plan" />
         <xpathUsage value="normal" />
         <target value="Appointment" />
-        <target value="Order" />
         <target value="ReferralRequest" />
+        <target value="CarePlan" />
+        <target value="NutritionRequest" />
         <target value="ProcessRequest" />
         <target value="VisionPrescription" />
-        <target value="DiagnosticOrder" />
         <target value="ProcedureRequest" />
         <target value="DeviceUseRequest" />
-        <target value="SupplyRequest" />
-        <target value="CarePlan" />
-        <target value="NutritionOrder" />
         <target value="MedicationOrder" />
+        <target value="DiagnosticRequest" />
         <target value="CommunicationRequest" />
+        <target value="SupplyRequest" />
       </SearchParameter>
     </resource>
   </entry>
@@ -36556,37 +35561,6 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ClinicalImpression-resolved" />
-    <resource>
-      <SearchParameter>
-        <id value="ClinicalImpression-resolved" />
-        <url value="http://hl7.org/fhir/SearchParameter/ClinicalImpression-resolved" />
-        <name value="resolved" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Patient Care)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/patientcare/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="resolved" />
-        <base value="ClinicalImpression" />
-        <type value="token" />
-        <description value="Diagnoses/conditions resolved since previous assessment" />
-        <expression value="ClinicalImpression.resolved" />
-        <xpath value="f:ClinicalImpression/f:resolved" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/ClinicalImpression-ruledout" />
     <resource>
       <SearchParameter>
@@ -36641,186 +35615,9 @@
         <code value="status" />
         <base value="ClinicalImpression" />
         <type value="token" />
-        <description value="in-progress | completed | entered-in-error" />
+        <description value="draft | completed | entered-in-error" />
         <expression value="ClinicalImpression.status" />
         <xpath value="f:ClinicalImpression/f:status" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ClinicalImpression-trigger" />
-    <resource>
-      <SearchParameter>
-        <id value="ClinicalImpression-trigger" />
-        <url value="http://hl7.org/fhir/SearchParameter/ClinicalImpression-trigger" />
-        <name value="trigger" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Patient Care)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/patientcare/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="trigger" />
-        <base value="ClinicalImpression" />
-        <type value="reference" />
-        <description value="Request or event that necessitated this assessment" />
-        <expression value="ClinicalImpression.trigger.as(Reference)" />
-        <xpath value="f:ClinicalImpression/f:triggerReference" />
-        <xpathUsage value="normal" />
-        <target value="Account" />
-        <target value="ActivityDefinition" />
-        <target value="AllergyIntolerance" />
-        <target value="Appointment" />
-        <target value="AppointmentResponse" />
-        <target value="AuditEvent" />
-        <target value="Basic" />
-        <target value="Binary" />
-        <target value="BodySite" />
-        <target value="Bundle" />
-        <target value="CarePlan" />
-        <target value="CareTeam" />
-        <target value="Claim" />
-        <target value="ClaimResponse" />
-        <target value="ClinicalImpression" />
-        <target value="CodeSystem" />
-        <target value="Communication" />
-        <target value="CommunicationRequest" />
-        <target value="CompartmentDefinition" />
-        <target value="Composition" />
-        <target value="ConceptMap" />
-        <target value="Condition" />
-        <target value="Conformance" />
-        <target value="Consent" />
-        <target value="Contract" />
-        <target value="Coverage" />
-        <target value="DataElement" />
-        <target value="DecisionSupportRule" />
-        <target value="DecisionSupportServiceModule" />
-        <target value="DetectedIssue" />
-        <target value="Device" />
-        <target value="DeviceComponent" />
-        <target value="DeviceMetric" />
-        <target value="DeviceUseRequest" />
-        <target value="DeviceUseStatement" />
-        <target value="DiagnosticOrder" />
-        <target value="DiagnosticReport" />
-        <target value="DocumentManifest" />
-        <target value="DocumentReference" />
-        <target value="EligibilityRequest" />
-        <target value="EligibilityResponse" />
-        <target value="Encounter" />
-        <target value="Endpoint" />
-        <target value="EnrollmentRequest" />
-        <target value="EnrollmentResponse" />
-        <target value="EpisodeOfCare" />
-        <target value="ExpansionProfile" />
-        <target value="ExplanationOfBenefit" />
-        <target value="FamilyMemberHistory" />
-        <target value="Flag" />
-        <target value="Goal" />
-        <target value="Group" />
-        <target value="GuidanceResponse" />
-        <target value="HealthcareService" />
-        <target value="ImagingManifest" />
-        <target value="ImagingStudy" />
-        <target value="Immunization" />
-        <target value="ImmunizationRecommendation" />
-        <target value="ImplementationGuide" />
-        <target value="Library" />
-        <target value="Linkage" />
-        <target value="List" />
-        <target value="Location" />
-        <target value="Measure" />
-        <target value="MeasureReport" />
-        <target value="Media" />
-        <target value="Medication" />
-        <target value="MedicationAdministration" />
-        <target value="MedicationDispense" />
-        <target value="MedicationOrder" />
-        <target value="MedicationStatement" />
-        <target value="MessageHeader" />
-        <target value="ModuleDefinition" />
-        <target value="NamingSystem" />
-        <target value="NutritionOrder" />
-        <target value="Observation" />
-        <target value="OperationDefinition" />
-        <target value="OperationOutcome" />
-        <target value="Order" />
-        <target value="OrderResponse" />
-        <target value="OrderSet" />
-        <target value="Organization" />
-        <target value="Patient" />
-        <target value="PaymentNotice" />
-        <target value="PaymentReconciliation" />
-        <target value="Person" />
-        <target value="PlanDefinition" />
-        <target value="Practitioner" />
-        <target value="PractitionerRole" />
-        <target value="Procedure" />
-        <target value="ProcedureRequest" />
-        <target value="ProcessRequest" />
-        <target value="ProcessResponse" />
-        <target value="Protocol" />
-        <target value="Provenance" />
-        <target value="Questionnaire" />
-        <target value="QuestionnaireResponse" />
-        <target value="ReferralRequest" />
-        <target value="RelatedPerson" />
-        <target value="RiskAssessment" />
-        <target value="Schedule" />
-        <target value="SearchParameter" />
-        <target value="Sequence" />
-        <target value="Slot" />
-        <target value="Specimen" />
-        <target value="StructureDefinition" />
-        <target value="StructureMap" />
-        <target value="Subscription" />
-        <target value="Substance" />
-        <target value="SupplyDelivery" />
-        <target value="SupplyRequest" />
-        <target value="Task" />
-        <target value="TestScript" />
-        <target value="ValueSet" />
-        <target value="VisionPrescription" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ClinicalImpression-trigger-code" />
-    <resource>
-      <SearchParameter>
-        <id value="ClinicalImpression-trigger-code" />
-        <url value="http://hl7.org/fhir/SearchParameter/ClinicalImpression-trigger-code" />
-        <name value="trigger-code" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (Patient Care)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/patientcare/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="trigger-code" />
-        <base value="ClinicalImpression" />
-        <type value="token" />
-        <description value="Request or event that necessitated this assessment" />
-        <expression value="ClinicalImpression.trigger.as(CodeableConcept)" />
-        <xpath value="f:ClinicalImpression/f:triggerCodeableConcept" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -37691,9 +36488,9 @@
         <code value="name" />
         <base value="Location" />
         <type value="string" />
-        <description value="A (portion of the) name of the location" />
-        <expression value="Location.name" />
-        <xpath value="f:Location/f:name" />
+        <description value="A (portion of the) name of the location or alias" />
+        <expression value="Location.name or Location.alias" />
+        <xpath value="f:Location/f:name | f:Location/f:alias" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -37722,7 +36519,7 @@
         <code value="near" />
         <base value="Location" />
         <type value="token" />
-        <description value="The coordinates expressed as [lat],[long] (using the WGS84 datum, see notes) to find locations near to (servers may search using a square rather than a circle for efficiency)" />
+        <description value="The coordinates expressed as [latitude]:[longitude] (using the WGS84 datum, see notes) to find locations near to (servers may search using a square rather than a circle for efficiency).   Requires the near-distance parameter to be provided also" />
         <expression value="Location.position" />
         <xpath value="f:Location/f:position" />
         <xpathUsage value="nearby" />
@@ -37752,8 +36549,8 @@
         </contact>
         <code value="near-distance" />
         <base value="Location" />
-        <type value="token" />
-        <description value="A distance quantity to limit the near search to locations within a specific distance" />
+        <type value="quantity" />
+        <description value="A distance quantity to limit the near search to locations within a specific distance  Requires the near parameter to be included also" />
         <expression value="Location.position" />
         <xpath value="f:Location/f:position" />
         <xpathUsage value="distance" />
@@ -37946,51 +36743,6 @@
         <type value="token" />
         <description value="Matches on the 11179-objectClassProperty extension value" />
         <xpath value="f:DataElement/f:element/f:mapping/f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-objectClassProperty'] | f:DataElement/f:element/f:mapping/f:extension[@url='http://hl7.org/fhir/StructureDefinition/11179-objectClassProperty']" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/condition-daf-Condition-age" />
-    <resource>
-      <SearchParameter>
-        <id value="condition-daf-Condition-age" />
-        <url value="http://hl7.org/fhir/SearchParameter/condition-daf-Condition-age" />
-        <name value="age" />
-        <code value="age" />
-        <base value="Condition" />
-        <type value="number" />
-        <description value="Search based on Condition onsetAge" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/familymemberhistory-daf-FamilyMemberHistory-condition" />
-    <resource>
-      <SearchParameter>
-        <id value="familymemberhistory-daf-FamilyMemberHistory-condition" />
-        <url value="http://hl7.org/fhir/SearchParameter/familymemberhistory-daf-FamilyMemberHistory-condition" />
-        <name value="condition" />
-        <code value="condition" />
-        <base value="FamilyMemberHistory" />
-        <type value="token" />
-        <description value="Search for a history of a particular condition within a patient's family." />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/familymemberhistory-daf-FamilyMemberHistory-relationship" />
-    <resource>
-      <SearchParameter>
-        <id value="familymemberhistory-daf-FamilyMemberHistory-relationship" />
-        <url value="http://hl7.org/fhir/SearchParameter/familymemberhistory-daf-FamilyMemberHistory-relationship" />
-        <name value="relationship" />
-        <code value="relationship" />
-        <base value="FamilyMemberHistory" />
-        <type value="token" />
-        <description value="Search for family history of members based on relationship" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>

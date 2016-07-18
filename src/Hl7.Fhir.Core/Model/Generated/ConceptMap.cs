@@ -753,7 +753,6 @@ namespace Hl7.Fhir.Model
             /// Code System (if necessary)
             /// </summary>
             [FhirElement("system", Order=50)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirUri SystemElement
             {

@@ -54,6 +54,39 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Condition"; } }
         
         /// <summary>
+        /// Preferred value set for Condition Clinical Status.
+        /// (url: http://hl7.org/fhir/ValueSet/condition-clinical)
+        /// </summary>
+        [FhirEnumeration("ConditionClinicalStatusCodes")]
+        public enum ConditionClinicalStatusCodes
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/condition-clinical)
+            /// </summary>
+            [EnumLiteral("active"), Description("Active")]
+            Active,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/condition-clinical)
+            /// </summary>
+            [EnumLiteral("relapse"), Description("Relapse")]
+            Relapse,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/condition-clinical)
+            /// </summary>
+            [EnumLiteral("remission"), Description("Remission")]
+            Remission,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/condition-clinical)
+            /// </summary>
+            [EnumLiteral("resolved"), Description("Resolved")]
+            Resolved,
+        }
+
+        /// <summary>
         /// The verification status to support or decline the clinical status of the condition or diagnosis.
         /// (url: http://hl7.org/fhir/ValueSet/condition-ver-status)
         /// </summary>
@@ -383,13 +416,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("clinicalStatus", InSummary=true, Order=160)]
         [DataMember]
-        public Hl7.Fhir.Model.Code ClinicalStatusElement
+        public Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes> ClinicalStatusElement
         {
             get { return _ClinicalStatusElement; }
             set { _ClinicalStatusElement = value; OnPropertyChanged("ClinicalStatusElement"); }
         }
         
-        private Hl7.Fhir.Model.Code _ClinicalStatusElement;
+        private Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes> _ClinicalStatusElement;
         
         /// <summary>
         /// active | relapse | remission | resolved
@@ -397,7 +430,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string ClinicalStatus
+        public Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes? ClinicalStatus
         {
             get { return ClinicalStatusElement != null ? ClinicalStatusElement.Value : null; }
             set
@@ -405,7 +438,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   ClinicalStatusElement = null; 
                 else
-                  ClinicalStatusElement = new Hl7.Fhir.Model.Code(value);
+                  ClinicalStatusElement = new Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes>(value);
                 OnPropertyChanged("ClinicalStatus");
             }
         }
@@ -553,7 +586,7 @@ namespace Hl7.Fhir.Model
                 if(DateRecordedElement != null) dest.DateRecordedElement = (Hl7.Fhir.Model.Date)DateRecordedElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
-                if(ClinicalStatusElement != null) dest.ClinicalStatusElement = (Hl7.Fhir.Model.Code)ClinicalStatusElement.DeepCopy();
+                if(ClinicalStatusElement != null) dest.ClinicalStatusElement = (Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes>)ClinicalStatusElement.DeepCopy();
                 if(VerificationStatusElement != null) dest.VerificationStatusElement = (Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus>)VerificationStatusElement.DeepCopy();
                 if(Severity != null) dest.Severity = (Hl7.Fhir.Model.CodeableConcept)Severity.DeepCopy();
                 if(Onset != null) dest.Onset = (Hl7.Fhir.Model.Element)Onset.DeepCopy();

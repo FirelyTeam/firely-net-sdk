@@ -59,7 +59,8 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Is this the Derivation Property? (do we still need to check the base?)
-                return BaseType == "Extension";
+                // TODO: verify this is STU3
+                return this.Type == "Extension";
             }
         }
     }

@@ -54,57 +54,6 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "Observation"; } }
         
         /// <summary>
-        /// Codes providing the status of an observation.
-        /// (url: http://hl7.org/fhir/ValueSet/observation-status)
-        /// </summary>
-        [FhirEnumeration("ObservationStatus")]
-        public enum ObservationStatus
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-status)
-            /// </summary>
-            [EnumLiteral("registered"), Description("Registered")]
-            Registered,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-status)
-            /// </summary>
-            [EnumLiteral("preliminary"), Description("Preliminary")]
-            Preliminary,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-status)
-            /// </summary>
-            [EnumLiteral("final"), Description("Final")]
-            Final,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-status)
-            /// </summary>
-            [EnumLiteral("amended"), Description("Amended")]
-            Amended,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-status)
-            /// </summary>
-            [EnumLiteral("cancelled"), Description("cancelled")]
-            Cancelled,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-status)
-            /// </summary>
-            [EnumLiteral("entered-in-error"), Description("Entered in Error")]
-            EnteredInError,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/observation-status)
-            /// </summary>
-            [EnumLiteral("unknown"), Description("Unknown Status")]
-            Unknown,
-        }
-
-        /// <summary>
         /// Codes specifying how two observations are related.
         /// (url: http://hl7.org/fhir/ValueSet/observation-relationshiptypes)
         /// </summary>
@@ -549,13 +498,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Observation.ObservationStatus> StatusElement
+        public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Observation.ObservationStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.ObservationStatus> _StatusElement;
         
         /// <summary>
         /// registered | preliminary | final | amended +
@@ -563,7 +512,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Observation.ObservationStatus? Status
+        public Hl7.Fhir.Model.ObservationStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -571,7 +520,7 @@ namespace Hl7.Fhir.Model
                 if(value == null)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.Observation.ObservationStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.ObservationStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -869,7 +818,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Observation.ObservationStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ObservationStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();

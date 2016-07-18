@@ -84,6 +84,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("busy-tentative"), Description("Busy (Tentative)")]
             BusyTentative,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/slotstatus)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered in error")]
+            EnteredInError,
         }
 
         /// <summary>
@@ -170,7 +176,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Schedule;
         
         /// <summary>
-        /// busy | free | busy-unavailable | busy-tentative
+        /// busy | free | busy-unavailable | busy-tentative | entered-in-error
         /// </summary>
         [FhirElement("status", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
@@ -184,7 +190,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Slot.SlotStatus> _StatusElement;
         
         /// <summary>
-        /// busy | free | busy-unavailable | busy-tentative
+        /// busy | free | busy-unavailable | busy-tentative | entered-in-error
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

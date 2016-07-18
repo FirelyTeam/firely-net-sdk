@@ -52,32 +52,116 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "UsageContext"; } }
         
         /// <summary>
-        /// patient-gender | patient-age-group | clinical-focus | target-user | workflow-setting | workflow-task | clinical-venue | jurisdiction
+        /// Patient gender
         /// </summary>
-        [FhirElement("focus", InSummary=true, Order=30)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("patientGender", InSummary=true, Order=30)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Coding Focus
+        public List<Hl7.Fhir.Model.CodeableConcept> PatientGender
         {
-            get { return _Focus; }
-            set { _Focus = value; OnPropertyChanged("Focus"); }
+            get { if(_PatientGender==null) _PatientGender = new List<Hl7.Fhir.Model.CodeableConcept>(); return _PatientGender; }
+            set { _PatientGender = value; OnPropertyChanged("PatientGender"); }
         }
         
-        private Hl7.Fhir.Model.Coding _Focus;
+        private List<Hl7.Fhir.Model.CodeableConcept> _PatientGender;
         
         /// <summary>
-        /// Value of the usage attribute
+        /// Demographic category
         /// </summary>
-        [FhirElement("value", InSummary=true, Order=40)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("patientAgeGroup", InSummary=true, Order=40)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Value
+        public List<Hl7.Fhir.Model.CodeableConcept> PatientAgeGroup
         {
-            get { return _Value; }
-            set { _Value = value; OnPropertyChanged("Value"); }
+            get { if(_PatientAgeGroup==null) _PatientAgeGroup = new List<Hl7.Fhir.Model.CodeableConcept>(); return _PatientAgeGroup; }
+            set { _PatientAgeGroup = value; OnPropertyChanged("PatientAgeGroup"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Value;
+        private List<Hl7.Fhir.Model.CodeableConcept> _PatientAgeGroup;
+        
+        /// <summary>
+        /// Clinical concepts addressed
+        /// </summary>
+        [FhirElement("clinicalFocus", InSummary=true, Order=50)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> ClinicalFocus
+        {
+            get { if(_ClinicalFocus==null) _ClinicalFocus = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ClinicalFocus; }
+            set { _ClinicalFocus = value; OnPropertyChanged("ClinicalFocus"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _ClinicalFocus;
+        
+        /// <summary>
+        /// Target user type
+        /// </summary>
+        [FhirElement("targetUser", InSummary=true, Order=60)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> TargetUser
+        {
+            get { if(_TargetUser==null) _TargetUser = new List<Hl7.Fhir.Model.CodeableConcept>(); return _TargetUser; }
+            set { _TargetUser = value; OnPropertyChanged("TargetUser"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _TargetUser;
+        
+        /// <summary>
+        /// Workflow setting
+        /// </summary>
+        [FhirElement("workflowSetting", InSummary=true, Order=70)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> WorkflowSetting
+        {
+            get { if(_WorkflowSetting==null) _WorkflowSetting = new List<Hl7.Fhir.Model.CodeableConcept>(); return _WorkflowSetting; }
+            set { _WorkflowSetting = value; OnPropertyChanged("WorkflowSetting"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _WorkflowSetting;
+        
+        /// <summary>
+        /// Clinical task context
+        /// </summary>
+        [FhirElement("workflowTask", InSummary=true, Order=80)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> WorkflowTask
+        {
+            get { if(_WorkflowTask==null) _WorkflowTask = new List<Hl7.Fhir.Model.CodeableConcept>(); return _WorkflowTask; }
+            set { _WorkflowTask = value; OnPropertyChanged("WorkflowTask"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _WorkflowTask;
+        
+        /// <summary>
+        /// Applicable venue
+        /// </summary>
+        [FhirElement("clinicalVenue", InSummary=true, Order=90)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> ClinicalVenue
+        {
+            get { if(_ClinicalVenue==null) _ClinicalVenue = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ClinicalVenue; }
+            set { _ClinicalVenue = value; OnPropertyChanged("ClinicalVenue"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _ClinicalVenue;
+        
+        /// <summary>
+        /// Intended jurisdiction
+        /// </summary>
+        [FhirElement("jurisdiction", InSummary=true, Order=100)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
+        {
+            get { if(_Jurisdiction==null) _Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Jurisdiction; }
+            set { _Jurisdiction = value; OnPropertyChanged("Jurisdiction"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
         
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
@@ -86,8 +170,14 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Focus != null) dest.Focus = (Hl7.Fhir.Model.Coding)Focus.DeepCopy();
-                if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
+                if(PatientGender != null) dest.PatientGender = new List<Hl7.Fhir.Model.CodeableConcept>(PatientGender.DeepCopy());
+                if(PatientAgeGroup != null) dest.PatientAgeGroup = new List<Hl7.Fhir.Model.CodeableConcept>(PatientAgeGroup.DeepCopy());
+                if(ClinicalFocus != null) dest.ClinicalFocus = new List<Hl7.Fhir.Model.CodeableConcept>(ClinicalFocus.DeepCopy());
+                if(TargetUser != null) dest.TargetUser = new List<Hl7.Fhir.Model.CodeableConcept>(TargetUser.DeepCopy());
+                if(WorkflowSetting != null) dest.WorkflowSetting = new List<Hl7.Fhir.Model.CodeableConcept>(WorkflowSetting.DeepCopy());
+                if(WorkflowTask != null) dest.WorkflowTask = new List<Hl7.Fhir.Model.CodeableConcept>(WorkflowTask.DeepCopy());
+                if(ClinicalVenue != null) dest.ClinicalVenue = new List<Hl7.Fhir.Model.CodeableConcept>(ClinicalVenue.DeepCopy());
+                if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 return dest;
             }
             else
@@ -105,8 +195,14 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Focus, otherT.Focus)) return false;
-            if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+            if( !DeepComparable.Matches(PatientGender, otherT.PatientGender)) return false;
+            if( !DeepComparable.Matches(PatientAgeGroup, otherT.PatientAgeGroup)) return false;
+            if( !DeepComparable.Matches(ClinicalFocus, otherT.ClinicalFocus)) return false;
+            if( !DeepComparable.Matches(TargetUser, otherT.TargetUser)) return false;
+            if( !DeepComparable.Matches(WorkflowSetting, otherT.WorkflowSetting)) return false;
+            if( !DeepComparable.Matches(WorkflowTask, otherT.WorkflowTask)) return false;
+            if( !DeepComparable.Matches(ClinicalVenue, otherT.ClinicalVenue)) return false;
+            if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
             
             return true;
         }
@@ -117,8 +213,14 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Focus, otherT.Focus)) return false;
-            if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+            if( !DeepComparable.IsExactly(PatientGender, otherT.PatientGender)) return false;
+            if( !DeepComparable.IsExactly(PatientAgeGroup, otherT.PatientAgeGroup)) return false;
+            if( !DeepComparable.IsExactly(ClinicalFocus, otherT.ClinicalFocus)) return false;
+            if( !DeepComparable.IsExactly(TargetUser, otherT.TargetUser)) return false;
+            if( !DeepComparable.IsExactly(WorkflowSetting, otherT.WorkflowSetting)) return false;
+            if( !DeepComparable.IsExactly(WorkflowTask, otherT.WorkflowTask)) return false;
+            if( !DeepComparable.IsExactly(ClinicalVenue, otherT.ClinicalVenue)) return false;
+            if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
             
             return true;
         }
