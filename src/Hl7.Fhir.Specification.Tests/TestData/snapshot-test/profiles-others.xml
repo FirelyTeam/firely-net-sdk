@@ -3,7 +3,7 @@
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="profiles-others"/>
   <meta>
-    <lastUpdated value="2016-07-18T02:54:25.019+00:00"/>
+    <lastUpdated value="2016-07-19T05:57:21.779+00:00"/>
   </meta>
   <type value="collection"/>
   <entry>
@@ -2827,6 +2827,13 @@
               <max value="*"/>
             </base>
             <constraint>
+              <key value="fhs-2"/>
+              <severity value="error"/>
+              <human value="Can only have estimatedAge is age[x] is present"/>
+              <expression value="age.exists() or estimatedAge.empty()"/>
+              <xpath value="exists(*[starts-with(local-name(.), &#39;age&#39;)]) or not(exists(f:estimatedAge))"/>
+            </constraint>
+            <constraint>
               <key value="fhs-1"/>
               <severity value="error"/>
               <human value="Can have age[x] or born[x], but not both"/>
@@ -3271,7 +3278,8 @@
           <element id="FamilyMemberHistory:familymemberhistory-genetic.age[x]">
             <path value="FamilyMemberHistory.age[x]"/>
             <short value="(approximate) age"/>
-            <definition value="The actual or approximate age of the relative at the time the family member history is recorded."/>
+            <definition value="The age of the relative at the time the family member history is recorded."/>
+            <comments value="use estimatedAge to indicate whether the age is actual or not."/>
             <requirements value="While age can be calculated from date of birth, sometimes recording age directly is more natureal for clinicians."/>
             <min value="0"/>
             <max value="1"/>
@@ -3290,10 +3298,31 @@
               <code value="string"/>
             </type>
             <condition value="fhs-1"/>
+            <isSummary value="true"/>
             <mapping>
               <identity value="rim"/>
               <map value="participation[typeCode=SBJ].act[classCode=OBS,moodCode=EVN, code=&quot;age&quot;].value"/>
             </mapping>
+          </element>
+          <element id="FamilyMemberHistory:familymemberhistory-genetic.estimatedAge">
+            <path value="FamilyMemberHistory.estimatedAge"/>
+            <short value="Age is estimated?"/>
+            <definition value="If true, indicates that the age value specified is an estimated value."/>
+            <requirements value="Clinicians often prefer to specify an estimaged age rather than an age range."/>
+            <min value="0"/>
+            <max value="1"/>
+            <base>
+              <path value="FamilyMemberHistory.estimatedAge"/>
+              <min value="0"/>
+              <max value="1"/>
+            </base>
+            <type>
+              <code value="boolean"/>
+            </type>
+            <meaningWhenMissing value="It is unknown whether the age is an estimate or not"/>
+            <condition value="fhs-2"/>
+            <isModifier value="true"/>
+            <isSummary value="true"/>
           </element>
           <element id="FamilyMemberHistory:familymemberhistory-genetic.deceased[x]">
             <path value="FamilyMemberHistory.deceased[x]"/>
@@ -3321,6 +3350,7 @@
             <type>
               <code value="string"/>
             </type>
+            <isSummary value="true"/>
             <mapping>
               <identity value="rim"/>
               <map value="player[classCode=LIV, determinerCode=INSTANCE].deceasedInd, deceasedDate (could be URG)  For age, you&#39;d hang an observation off the role"/>
@@ -3578,7 +3608,7 @@
         <name value="Shareable ValueSet"/>
         <status value="draft"/>
         <publisher value="HL7"/>
-        <date value="2016-07-18T02:54:25+00:00"/>
+        <date value="2016-07-19T05:57:21+00:00"/>
         <description value="Enforces the minimum information set for the value set metadata required by HL7 and other organisations that share and publish value sets"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -5837,9 +5867,76 @@
               <map value="id"/>
             </mapping>
           </element>
+          <element id="DiagnosticRequest:orderforgenetics.definition">
+            <path value="DiagnosticRequest.definition"/>
+            <short value="Protocol or definition"/>
+            <definition value="Protocol or definition followed by this request."/>
+            <min value="0"/>
+            <max value="*"/>
+            <base>
+              <path value="DiagnosticRequest.definition"/>
+              <min value="0"/>
+              <max value="*"/>
+            </base>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
+            </type>
+            <isSummary value="true"/>
+          </element>
+          <element id="DiagnosticRequest:orderforgenetics.basedOn">
+            <path value="DiagnosticRequest.basedOn"/>
+            <short value="What request fulfills"/>
+            <definition value="Plan/proposal/order fulfilled by this request."/>
+            <min value="0"/>
+            <max value="*"/>
+            <base>
+              <path value="DiagnosticRequest.basedOn"/>
+              <min value="0"/>
+              <max value="*"/>
+            </base>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
+            </type>
+            <isSummary value="true"/>
+          </element>
+          <element id="DiagnosticRequest:orderforgenetics.replaces">
+            <path value="DiagnosticRequest.replaces"/>
+            <short value="What request replaces"/>
+            <definition value="The request takes the place of the referenced completed or terminated request(s)."/>
+            <min value="0"/>
+            <max value="*"/>
+            <base>
+              <path value="DiagnosticRequest.replaces"/>
+              <min value="0"/>
+              <max value="*"/>
+            </base>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
+            </type>
+            <isSummary value="true"/>
+          </element>
+          <element id="DiagnosticRequest:orderforgenetics.requisition">
+            <path value="DiagnosticRequest.requisition"/>
+            <short value="Identifier of composite request"/>
+            <definition value="Composite request this is part of."/>
+            <min value="0"/>
+            <max value="1"/>
+            <base>
+              <path value="DiagnosticRequest.requisition"/>
+              <min value="0"/>
+              <max value="1"/>
+            </base>
+            <type>
+              <code value="Identifier"/>
+            </type>
+            <isSummary value="true"/>
+          </element>
           <element id="DiagnosticRequest:orderforgenetics.status">
             <path value="DiagnosticRequest.status"/>
-            <short value="proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error"/>
+            <short value="draft | active | suspended | completed | entered-in-error | cancelled"/>
             <definition value="The status of the order."/>
             <comments value="Typically the system placing the order sets the status to &quot;requested&quot;. Thereafter, the order is maintained by the receiver that updates the status as the request is handled."/>
             <min value="0"/>
@@ -5858,7 +5955,7 @@
               <strength value="required"/>
               <description value="The status of a diagnostic order."/>
               <valueSetReference>
-                <reference value="http://hl7.org/fhir/ValueSet/diagnostic-request-status"/>
+                <reference value="http://hl7.org/fhir/ValueSet/request-status"/>
               </valueSetReference>
             </binding>
             <mapping>
@@ -5870,41 +5967,73 @@
               <map value="status"/>
             </mapping>
           </element>
-          <element id="DiagnosticRequest:orderforgenetics.priority">
-            <path value="DiagnosticRequest.priority"/>
-            <short value="routine | urgent | stat | asap"/>
-            <definition value="The clinical priority associated with this order."/>
-            <comments value="The Task resource also has a priority. Generally, these should be the same, but they can be different. For instance, where the clinician indicates the order is urgent, but the subsequent workflow process overrules the priority for some reason. The effective default value is &quot;normal&quot;."/>
-            <min value="0"/>
+          <element id="DiagnosticRequest:orderforgenetics.stage">
+            <path value="DiagnosticRequest.stage"/>
+            <short value="proposal | plan | orig. order | encoded +"/>
+            <definition value="Whether the request is a proposal, plan, an original order or a reflex order."/>
+            <min value="1"/>
             <max value="1"/>
             <base>
-              <path value="DiagnosticRequest.priority"/>
-              <min value="0"/>
+              <path value="DiagnosticRequest.stage"/>
+              <min value="1"/>
               <max value="1"/>
             </base>
             <type>
-              <code value="code"/>
+              <code value="CodeableConcept"/>
             </type>
+            <isModifier value="true"/>
             <isSummary value="true"/>
             <binding>
-              <strength value="required"/>
-              <description value="The clinical priority of a diagnostic order."/>
+              <strength value="extensible"/>
+              <description value="The kind of diagnostic request"/>
               <valueSetReference>
-                <reference value="http://hl7.org/fhir/ValueSet/diagnostic-request-priority"/>
+                <reference value="http://hl7.org/fhir/ValueSet/diagnostic-request-stage"/>
               </valueSetReference>
             </binding>
             <mapping>
+              <identity value="w5"/>
+              <map value="class"/>
+            </mapping>
+          </element>
+          <element id="DiagnosticRequest:orderforgenetics.code">
+            <path value="DiagnosticRequest.code"/>
+            <short value="What’s being requested/ordered"/>
+            <definition value="A code that identifies a particular diagnostic investigation, or panel of investigations, that have been requested."/>
+            <comments value="Many laboratory tests and radiology tests embed the specimen/organ system in the test name, for example,  serum or serum/plasma glucose, or a chest xray. The specimen may not be recorded separately from the test code."/>
+            <min value="1"/>
+            <max value="1"/>
+            <base>
+              <path value="DiagnosticRequest.code"/>
+              <min value="1"/>
+              <max value="1"/>
+            </base>
+            <type>
+              <code value="CodeableConcept"/>
+            </type>
+            <isSummary value="true"/>
+            <binding>
+              <strength value="preferred"/>
+              <description value="Codes for tests/services that can be performed by diagnostic services."/>
+              <valueSetReference>
+                <reference value="http://hl7.org/fhir/ValueSet/diagnostic-requests"/>
+              </valueSetReference>
+            </binding>
+            <mapping>
+              <identity value="v2"/>
+              <map value="OBX-4"/>
+            </mapping>
+            <mapping>
               <identity value="rim"/>
-              <map value=".priorityCode"/>
+              <map value=".code"/>
             </mapping>
             <mapping>
               <identity value="w5"/>
-              <map value="grade"/>
+              <map value="what"/>
             </mapping>
           </element>
           <element id="DiagnosticRequest:orderforgenetics.subject">
             <path value="DiagnosticRequest.subject"/>
-            <short value="Who and/or what test is about"/>
+            <short value="Individual the test is ordered for"/>
             <definition value="On whom or what the investigation is to be performed. This is usually a human patient, but diagnostic tests can also be requested on animals, groups of humans or animals, devices such as dialysis machines, or even locations (typically for environmental scans)."/>
             <min value="1"/>
             <max value="1"/>
@@ -5939,20 +6068,24 @@
               <map value="who.focus"/>
             </mapping>
           </element>
-          <element id="DiagnosticRequest:orderforgenetics.encounter">
-            <path value="DiagnosticRequest.encounter"/>
-            <short value="The encounter that this diagnostic order is associated with"/>
-            <definition value="An encounter that provides additional information about the healthcare context in which this request is made."/>
+          <element id="DiagnosticRequest:orderforgenetics.context">
+            <path value="DiagnosticRequest.context"/>
+            <short value="Encounter or Episode during which request was created"/>
+            <definition value="An encounter or episode of care that provides additional information about the healthcare context in which this request is made."/>
             <min value="0"/>
             <max value="1"/>
             <base>
-              <path value="DiagnosticRequest.encounter"/>
+              <path value="DiagnosticRequest.context"/>
               <min value="0"/>
               <max value="1"/>
             </base>
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
             </type>
             <isSummary value="true"/>
             <mapping>
@@ -5964,14 +6097,127 @@
               <map value="context"/>
             </mapping>
           </element>
-          <element id="DiagnosticRequest:orderforgenetics.orderer">
-            <path value="DiagnosticRequest.orderer"/>
-            <short value="Who ordered the test"/>
-            <definition value="The practitioner that holds legal responsibility for ordering the investigation."/>
+          <element id="DiagnosticRequest:orderforgenetics.occurrence[x]">
+            <path value="DiagnosticRequest.occurrence[x]"/>
+            <short value="When testing should occur"/>
+            <definition value="The date/time at which the diagnostic testing should occur."/>
             <min value="0"/>
             <max value="1"/>
             <base>
-              <path value="DiagnosticRequest.orderer"/>
+              <path value="DiagnosticRequest.occurrence[x]"/>
+              <min value="0"/>
+              <max value="1"/>
+            </base>
+            <type>
+              <code value="dateTime"/>
+            </type>
+            <type>
+              <code value="Period"/>
+            </type>
+            <type>
+              <code value="Timing"/>
+            </type>
+            <isSummary value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value=".effectiveTime"/>
+            </mapping>
+            <mapping>
+              <identity value="w5"/>
+              <map value="when.planned"/>
+            </mapping>
+          </element>
+          <element id="DiagnosticRequest:orderforgenetics.authored">
+            <path value="DiagnosticRequest.authored"/>
+            <short value="Date request signed"/>
+            <definition value="When the request transitioned to being actionable."/>
+            <min value="0"/>
+            <max value="1"/>
+            <base>
+              <path value="DiagnosticRequest.authored"/>
+              <min value="0"/>
+              <max value="1"/>
+            </base>
+            <type>
+              <code value="dateTime"/>
+            </type>
+            <isSummary value="true"/>
+            <mapping>
+              <identity value="w5"/>
+              <map value="when.recorded"/>
+            </mapping>
+          </element>
+          <element id="DiagnosticRequest:orderforgenetics.requester">
+            <path value="DiagnosticRequest.requester"/>
+            <short value="Who/what is requesting diagnostics"/>
+            <definition value="Who/what is requesting diagnostics.  The practitioner that holds legal responsibility for ordering the investigation."/>
+            <comments value="This not the dispatcher, but rather who is authorizing."/>
+            <min value="0"/>
+            <max value="1"/>
+            <base>
+              <path value="DiagnosticRequest.requester"/>
+              <min value="0"/>
+              <max value="1"/>
+            </base>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Device"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+            </type>
+            <isSummary value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value=".participation[typeCode=AUT].role"/>
+            </mapping>
+            <mapping>
+              <identity value="w5"/>
+              <map value="who.author"/>
+            </mapping>
+          </element>
+          <element id="DiagnosticRequest:orderforgenetics.performerType">
+            <path value="DiagnosticRequest.performerType"/>
+            <short value="Performer role"/>
+            <definition value="Desired type of performer for doing the diagnostic testing. (."/>
+            <comments value="this is a  role, not  aparticipation type.  I.e. doesn’t describe the task, describes the capacity.  Examples “compounding pharmacy” or “psychiatrist” or “internal referral”."/>
+            <min value="0"/>
+            <max value="1"/>
+            <base>
+              <path value="DiagnosticRequest.performerType"/>
+              <min value="0"/>
+              <max value="1"/>
+            </base>
+            <type>
+              <code value="CodeableConcept"/>
+            </type>
+            <isSummary value="true"/>
+            <binding>
+              <strength value="example"/>
+              <description value="Indicates specific responsibility of an individual within the care team, such as &quot;Primary physician&quot;, &quot;Team coordinator&quot;, &quot;Caregiver&quot;, etc."/>
+              <valueSetReference>
+                <reference value="http://hl7.org/fhir/ValueSet/participant-role"/>
+              </valueSetReference>
+            </binding>
+            <mapping>
+              <identity value="w5"/>
+              <map value="who.actor"/>
+            </mapping>
+          </element>
+          <element id="DiagnosticRequest:orderforgenetics.performer">
+            <path value="DiagnosticRequest.performer"/>
+            <short value="Requested perfomer"/>
+            <definition value="The desired perfomer for doing the diagnostic testing."/>
+            <comments value="Use the standard [XXX extension]() for listing alternative  alternative performers and/or roles and/or preference."/>
+            <min value="0"/>
+            <max value="1"/>
+            <base>
+              <path value="DiagnosticRequest.performer"/>
               <min value="0"/>
               <max value="1"/>
             </base>
@@ -5979,10 +6225,26 @@
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
             </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Device"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
+            </type>
             <isSummary value="true"/>
             <mapping>
               <identity value="rim"/>
-              <map value=".participation[typeCode=AUT].role"/>
+              <map value=".participation[AUT or PFM]"/>
             </mapping>
             <mapping>
               <identity value="w5"/>
@@ -6004,6 +6266,7 @@
             <type>
               <code value="CodeableConcept"/>
             </type>
+            <isSummary value="true"/>
             <binding>
               <strength value="example"/>
               <description value="Diagnosis or problem codes justifying the reason for requesting the diagnostic investigation."/>
@@ -6014,6 +6277,10 @@
             <mapping>
               <identity value="rim"/>
               <map value=".reasonCode"/>
+            </mapping>
+            <mapping>
+              <identity value="w5"/>
+              <map value="why"/>
             </mapping>
           </element>
           <element id="DiagnosticRequest:orderforgenetics.supportingInformation">
@@ -6032,15 +6299,7 @@
             </base>
             <type>
               <code value="Reference"/>
-              <profile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
-            </type>
-            <type>
-              <code value="Reference"/>
-              <profile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
-            </type>
-            <type>
-              <code value="Reference"/>
-              <profile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
             </type>
             <mapping>
               <identity value="v2"/>
@@ -6051,388 +6310,10 @@
               <map value="outboundRelationship[typeCode=SPRT]/target[classCode=ACT, moodCode=EVN]"/>
             </mapping>
           </element>
-          <element id="DiagnosticRequest:orderforgenetics.event">
-            <path value="DiagnosticRequest.event"/>
-            <short value="A list of events of interest in the lifecycle"/>
-            <definition value="A summary of the events of interest that have occurred as the request is processed; e.g. when the order was made, various processing steps (specimens received), when it was completed."/>
-            <comments value="This is not the same as an audit trail. It is a view of the important things that happened in the past. Typically, there would only be one entry for any given status, and systems may not record all the status events."/>
-            <min value="0"/>
-            <max value="*"/>
-            <base>
-              <path value="DiagnosticRequest.event"/>
-              <min value="0"/>
-              <max value="*"/>
-            </base>
-            <type>
-              <code value="BackboneElement"/>
-            </type>
-            <mapping>
-              <identity value="rim"/>
-              <map value=".inboundRelationship[typeCode=FLFS].source"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.event.id">
-            <path value="DiagnosticRequest.event.id"/>
-            <representation value="xmlAttr"/>
-            <short value="xml:id (or equivalent in JSON)"/>
-            <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-            <min value="0"/>
-            <max value="1"/>
-            <base>
-              <path value="Element.id"/>
-              <min value="0"/>
-              <max value="*"/>
-            </base>
-            <type>
-              <code value="string"/>
-            </type>
-            <mapping>
-              <identity value="rim"/>
-              <map value="n/a"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.event.extension">
-            <path value="DiagnosticRequest.event.extension"/>
-            <short value="Additional Content defined by implementations"/>
-            <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-            <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-            <alias value="extensions"/>
-            <alias value="user content"/>
-            <min value="0"/>
-            <max value="*"/>
-            <base>
-              <path value="Element.extension"/>
-              <min value="0"/>
-              <max value="*"/>
-            </base>
-            <type>
-              <code value="Extension"/>
-            </type>
-            <mapping>
-              <identity value="rim"/>
-              <map value="n/a"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.event.modifierExtension">
-            <path value="DiagnosticRequest.event.modifierExtension"/>
-            <short value="Extensions that cannot be ignored"/>
-            <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-            <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-            <alias value="extensions"/>
-            <alias value="user content"/>
-            <alias value="modifiers"/>
-            <min value="0"/>
-            <max value="*"/>
-            <base>
-              <path value="BackboneElement.modifierExtension"/>
-              <min value="0"/>
-              <max value="*"/>
-            </base>
-            <type>
-              <code value="Extension"/>
-            </type>
-            <isModifier value="true"/>
-            <isSummary value="true"/>
-            <mapping>
-              <identity value="rim"/>
-              <map value="N/A"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.event.status">
-            <path value="DiagnosticRequest.event.status"/>
-            <short value="proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error"/>
-            <definition value="The status for the event."/>
-            <min value="1"/>
-            <max value="1"/>
-            <base>
-              <path value="DiagnosticRequest.event.status"/>
-              <min value="1"/>
-              <max value="1"/>
-            </base>
-            <type>
-              <code value="code"/>
-            </type>
-            <isSummary value="true"/>
-            <binding>
-              <strength value="required"/>
-              <description value="The status of a diagnostic order."/>
-              <valueSetReference>
-                <reference value="http://hl7.org/fhir/ValueSet/diagnostic-request-status"/>
-              </valueSetReference>
-            </binding>
-            <mapping>
-              <identity value="rim"/>
-              <map value=".statusCode also influenced by whether a ControlAct fulfillment requeste exists, whether a promise exists, status of the review component, whether a fulfilling observation exists, whether a refusal exists"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.event.description">
-            <path value="DiagnosticRequest.event.description"/>
-            <short value="More information about the event and its context"/>
-            <definition value="Additional information about the event that occurred - e.g. if the status remained unchanged."/>
-            <min value="0"/>
-            <max value="1"/>
-            <base>
-              <path value="DiagnosticRequest.event.description"/>
-              <min value="0"/>
-              <max value="1"/>
-            </base>
-            <type>
-              <code value="CodeableConcept"/>
-            </type>
-            <isSummary value="true"/>
-            <binding>
-              <strength value="example"/>
-              <description value="Additional information about an event that occurred to a diagnostic order - e.g. if the status remained unchanged."/>
-              <valueSetReference>
-                <reference value="http://hl7.org/fhir/ValueSet/diagnostic-request-event"/>
-              </valueSetReference>
-            </binding>
-            <mapping>
-              <identity value="rim"/>
-              <map value=".text"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.event.dateTime">
-            <path value="DiagnosticRequest.event.dateTime"/>
-            <short value="The date at which the event happened"/>
-            <definition value="The date/time at which the event occurred."/>
-            <min value="1"/>
-            <max value="1"/>
-            <base>
-              <path value="DiagnosticRequest.event.dateTime"/>
-              <min value="1"/>
-              <max value="1"/>
-            </base>
-            <type>
-              <code value="dateTime"/>
-            </type>
-            <isSummary value="true"/>
-            <mapping>
-              <identity value="rim"/>
-              <map value=".effectiveTime"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.event.actor">
-            <path value="DiagnosticRequest.event.actor"/>
-            <short value="Who recorded or did this"/>
-            <definition value="The person responsible for performing or recording the action."/>
-            <min value="0"/>
-            <max value="1"/>
-            <base>
-              <path value="DiagnosticRequest.event.actor"/>
-              <min value="0"/>
-              <max value="1"/>
-            </base>
-            <type>
-              <code value="Reference"/>
-              <profile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
-            </type>
-            <type>
-              <code value="Reference"/>
-              <profile value="http://hl7.org/fhir/StructureDefinition/Device"/>
-            </type>
-            <mapping>
-              <identity value="rim"/>
-              <map value=".participation[AUT or PFM]"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.item">
-            <path value="DiagnosticRequest.item"/>
-            <short value="The items the orderer requested"/>
-            <definition value="The specific diagnostic investigations that are requested as part of this request. Sometimes, there can only be one item per request, but in most contexts, more than one investigation can be requested."/>
-            <comments value="There would always be at least one item in normal usage, but this is optional so that a workflow can quote order details without having to list the items."/>
-            <min value="0"/>
-            <max value="*"/>
-            <base>
-              <path value="DiagnosticRequest.item"/>
-              <min value="0"/>
-              <max value="*"/>
-            </base>
-            <type>
-              <code value="BackboneElement"/>
-            </type>
-            <mapping>
-              <identity value="rim"/>
-              <map value=".outboundRelationship[typeCode=COMP].target[classCode=OBS, moodCode=OBS]"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.item.id">
-            <path value="DiagnosticRequest.item.id"/>
-            <representation value="xmlAttr"/>
-            <short value="xml:id (or equivalent in JSON)"/>
-            <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-            <min value="0"/>
-            <max value="1"/>
-            <base>
-              <path value="Element.id"/>
-              <min value="0"/>
-              <max value="*"/>
-            </base>
-            <type>
-              <code value="string"/>
-            </type>
-            <mapping>
-              <identity value="rim"/>
-              <map value="n/a"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.item.extension">
-            <path value="DiagnosticRequest.item.extension"/>
-            <short value="Additional Content defined by implementations"/>
-            <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-            <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-            <alias value="extensions"/>
-            <alias value="user content"/>
-            <min value="0"/>
-            <max value="*"/>
-            <base>
-              <path value="Element.extension"/>
-              <min value="0"/>
-              <max value="*"/>
-            </base>
-            <type>
-              <code value="Extension"/>
-            </type>
-            <mapping>
-              <identity value="rim"/>
-              <map value="n/a"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.item.modifierExtension">
-            <path value="DiagnosticRequest.item.modifierExtension"/>
-            <short value="Extensions that cannot be ignored"/>
-            <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions."/>
-            <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-            <alias value="extensions"/>
-            <alias value="user content"/>
-            <alias value="modifiers"/>
-            <min value="0"/>
-            <max value="*"/>
-            <base>
-              <path value="BackboneElement.modifierExtension"/>
-              <min value="0"/>
-              <max value="*"/>
-            </base>
-            <type>
-              <code value="Extension"/>
-            </type>
-            <isModifier value="true"/>
-            <isSummary value="true"/>
-            <mapping>
-              <identity value="rim"/>
-              <map value="N/A"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.item.code">
-            <path value="DiagnosticRequest.item.code"/>
-            <short value="Code to indicate the item (test or panel) being ordered"/>
-            <definition value="A code that identifies a particular diagnostic investigation, or panel of investigations, that have been requested."/>
-            <comments value="Many laboratory tests and radiology tests embed the specimen/organ system in the test name, for example,  serum or serum/plasma glucose, or a chest xray. The specimen may not be recorded separately from the test code."/>
-            <min value="1"/>
-            <max value="1"/>
-            <base>
-              <path value="DiagnosticRequest.item.code"/>
-              <min value="1"/>
-              <max value="1"/>
-            </base>
-            <type>
-              <code value="CodeableConcept"/>
-            </type>
-            <isSummary value="true"/>
-            <binding>
-              <strength value="preferred"/>
-              <description value="Codes for tests/services that can be performed by diagnostic services."/>
-              <valueSetReference>
-                <reference value="http://hl7.org/fhir/ValueSet/diagnostic-requests"/>
-              </valueSetReference>
-            </binding>
-            <mapping>
-              <identity value="v2"/>
-              <map value="OBX-4"/>
-            </mapping>
-            <mapping>
-              <identity value="rim"/>
-              <map value=".code"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.item.bodySite">
-            <path value="DiagnosticRequest.item.bodySite"/>
-            <short value="Location of requested test (if applicable)"/>
-            <definition value="Anatomical location where the request test should be performed.  This is the target site."/>
-            <comments value="If the use case requires BodySite to be handled as a separate resource instead of an inline coded element (e.g. to identify and track separately)  then use the standard extension [body-site-instance](extension-body-site-instance.html)."/>
-            <alias value="location"/>
-            <min value="0"/>
-            <max value="1"/>
-            <base>
-              <path value="DiagnosticRequest.item.bodySite"/>
-              <min value="0"/>
-              <max value="1"/>
-            </base>
-            <type>
-              <code value="CodeableConcept"/>
-            </type>
-            <binding>
-              <strength value="example"/>
-              <description value="Codes describing anatomical locations. May include laterality."/>
-              <valueSetReference>
-                <reference value="http://hl7.org/fhir/ValueSet/body-site"/>
-              </valueSetReference>
-            </binding>
-            <mapping>
-              <identity value="rim"/>
-              <map value="targetSiteCode"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.item.status">
-            <path value="DiagnosticRequest.item.status"/>
-            <short value="proposed | draft | planned | requested | received | accepted | in-progress | review | completed | cancelled | suspended | rejected | failed | entered-in-error"/>
-            <definition value="The status of this individual item within the order."/>
-            <comments value="If the request has multiple items that have their own life cycles, then the items will have their own status while the overall diagnostic order is (usually) &quot;in-progress&quot;."/>
-            <min value="0"/>
-            <max value="1"/>
-            <base>
-              <path value="DiagnosticRequest.item.status"/>
-              <min value="0"/>
-              <max value="1"/>
-            </base>
-            <type>
-              <code value="code"/>
-            </type>
-            <isSummary value="true"/>
-            <binding>
-              <strength value="required"/>
-              <description value="The status of a diagnostic order."/>
-              <valueSetReference>
-                <reference value="http://hl7.org/fhir/ValueSet/diagnostic-request-status"/>
-              </valueSetReference>
-            </binding>
-            <mapping>
-              <identity value="rim"/>
-              <map value=".statusCode also influenced by whether a ControlAct fulfillment requeste exists, whether a promise exists, status of the review component, whether a fulfilling observation exists, whether a refusal exists"/>
-            </mapping>
-          </element>
-          <element id="DiagnosticRequest:orderforgenetics.item.event">
-            <path value="DiagnosticRequest.item.event"/>
-            <short value="Events specific to this item"/>
-            <definition value="A summary of the events of interest that have occurred as this item of the request is processed."/>
-            <min value="0"/>
-            <max value="*"/>
-            <base>
-              <path value="DiagnosticRequest.item.event"/>
-              <min value="0"/>
-              <max value="*"/>
-            </base>
-            <contentReference value="#DiagnosticRequest:orderforgenetics.event"/>
-            <isSummary value="true"/>
-            <mapping>
-              <identity value="rim"/>
-              <map value=".inboundRelationship[typeCode=FLFS].source"/>
-            </mapping>
-          </element>
           <element id="DiagnosticRequest:orderforgenetics.note">
             <path value="DiagnosticRequest.note"/>
-            <short value="Other notes and comments"/>
-            <definition value="Any other notes associated with this patient, specimen or order (e.g. &quot;patient hates needles&quot;)."/>
+            <short value="Comments"/>
+            <definition value="Any other notes and comments made about the service request. (e.g. &quot;patient hates needles&quot;)."/>
             <min value="0"/>
             <max value="*"/>
             <base>
@@ -6447,6 +6328,25 @@
               <identity value="rim"/>
               <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=OBS, moodCode=EVN, code=&quot;annotation&quot;].value"/>
             </mapping>
+          </element>
+          <element id="DiagnosticRequest:orderforgenetics.relevantHistory">
+            <path value="DiagnosticRequest.relevantHistory"/>
+            <short value="Request provenance"/>
+            <definition value="Key events in the history of the request."/>
+            <comments value="This may not include provenances for all versions of the request – only those deemed “relevant” or important.
+This SHALL NOT include the Provenance associated with this current version of the resource.  (If that provenance is deemed to be a “relevant” change, it will need to be added as part of a later update.  Until then, it can be queried directly as the Provenance that points to this version using _revinclude
+All Provenances should have some historical version of this Request as their subject."/>
+            <min value="0"/>
+            <max value="*"/>
+            <base>
+              <path value="DiagnosticRequest.relevantHistory"/>
+              <min value="0"/>
+              <max value="*"/>
+            </base>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Provenance"/>
+            </type>
           </element>
         </snapshot>
         <differential>
@@ -6485,7 +6385,7 @@
         <name value="Shareable CodeSystem"/>
         <status value="draft"/>
         <publisher value="HL7"/>
-        <date value="2016-07-18T02:54:25+00:00"/>
+        <date value="2016-07-19T05:57:21+00:00"/>
         <description value="Enforces the minimum information set for the value set metadata required by HL7 and other organisations that share and publish value sets"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -56207,25 +56107,13 @@ Some reporting work flows require that the original narrative of a final documen
               <max value="1"/>
             </base>
             <type>
-              <code value="boolean"/>
-            </type>
-            <type>
-              <code value="integer"/>
-            </type>
-            <type>
-              <code value="decimal"/>
-            </type>
-            <type>
               <code value="base64Binary"/>
             </type>
             <type>
-              <code value="instant"/>
+              <code value="boolean"/>
             </type>
             <type>
-              <code value="string"/>
-            </type>
-            <type>
-              <code value="uri"/>
+              <code value="code"/>
             </type>
             <type>
               <code value="date"/>
@@ -56234,25 +56122,43 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="dateTime"/>
             </type>
             <type>
-              <code value="time"/>
-            </type>
-            <type>
-              <code value="code"/>
-            </type>
-            <type>
-              <code value="oid"/>
+              <code value="decimal"/>
             </type>
             <type>
               <code value="id"/>
             </type>
             <type>
-              <code value="unsignedInt"/>
+              <code value="instant"/>
+            </type>
+            <type>
+              <code value="integer"/>
+            </type>
+            <type>
+              <code value="markdown"/>
+            </type>
+            <type>
+              <code value="oid"/>
             </type>
             <type>
               <code value="positiveInt"/>
             </type>
             <type>
-              <code value="markdown"/>
+              <code value="string"/>
+            </type>
+            <type>
+              <code value="time"/>
+            </type>
+            <type>
+              <code value="unsignedInt"/>
+            </type>
+            <type>
+              <code value="uri"/>
+            </type>
+            <type>
+              <code value="Address"/>
+            </type>
+            <type>
+              <code value="Age"/>
             </type>
             <type>
               <code value="Annotation"/>
@@ -56261,40 +56167,46 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="Attachment"/>
             </type>
             <type>
-              <code value="Identifier"/>
-            </type>
-            <type>
               <code value="CodeableConcept"/>
             </type>
             <type>
               <code value="Coding"/>
             </type>
             <type>
-              <code value="Quantity"/>
+              <code value="ContactPoint"/>
             </type>
             <type>
               <code value="Count"/>
             </type>
             <type>
-              <code value="Age"/>
+              <code value="Distance"/>
             </type>
             <type>
               <code value="Duration"/>
             </type>
             <type>
-              <code value="Distance"/>
+              <code value="HumanName"/>
+            </type>
+            <type>
+              <code value="Identifier"/>
             </type>
             <type>
               <code value="Money"/>
             </type>
             <type>
-              <code value="Range"/>
-            </type>
-            <type>
               <code value="Period"/>
             </type>
             <type>
+              <code value="Quantity"/>
+            </type>
+            <type>
+              <code value="Range"/>
+            </type>
+            <type>
               <code value="Ratio"/>
+            </type>
+            <type>
+              <code value="Reference"/>
             </type>
             <type>
               <code value="SampledData"/>
@@ -56303,19 +56215,7 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="Signature"/>
             </type>
             <type>
-              <code value="HumanName"/>
-            </type>
-            <type>
-              <code value="Address"/>
-            </type>
-            <type>
-              <code value="ContactPoint"/>
-            </type>
-            <type>
               <code value="Timing"/>
-            </type>
-            <type>
-              <code value="Reference"/>
             </type>
             <type>
               <code value="Meta"/>
@@ -56363,25 +56263,13 @@ Some reporting work flows require that the original narrative of a final documen
               <max value="1"/>
             </base>
             <type>
-              <code value="boolean"/>
-            </type>
-            <type>
-              <code value="integer"/>
-            </type>
-            <type>
-              <code value="decimal"/>
-            </type>
-            <type>
               <code value="base64Binary"/>
             </type>
             <type>
-              <code value="instant"/>
+              <code value="boolean"/>
             </type>
             <type>
-              <code value="string"/>
-            </type>
-            <type>
-              <code value="uri"/>
+              <code value="code"/>
             </type>
             <type>
               <code value="date"/>
@@ -56390,25 +56278,43 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="dateTime"/>
             </type>
             <type>
-              <code value="time"/>
-            </type>
-            <type>
-              <code value="code"/>
-            </type>
-            <type>
-              <code value="oid"/>
+              <code value="decimal"/>
             </type>
             <type>
               <code value="id"/>
             </type>
             <type>
-              <code value="unsignedInt"/>
+              <code value="instant"/>
+            </type>
+            <type>
+              <code value="integer"/>
+            </type>
+            <type>
+              <code value="markdown"/>
+            </type>
+            <type>
+              <code value="oid"/>
             </type>
             <type>
               <code value="positiveInt"/>
             </type>
             <type>
-              <code value="markdown"/>
+              <code value="string"/>
+            </type>
+            <type>
+              <code value="time"/>
+            </type>
+            <type>
+              <code value="unsignedInt"/>
+            </type>
+            <type>
+              <code value="uri"/>
+            </type>
+            <type>
+              <code value="Address"/>
+            </type>
+            <type>
+              <code value="Age"/>
             </type>
             <type>
               <code value="Annotation"/>
@@ -56417,40 +56323,46 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="Attachment"/>
             </type>
             <type>
-              <code value="Identifier"/>
-            </type>
-            <type>
               <code value="CodeableConcept"/>
             </type>
             <type>
               <code value="Coding"/>
             </type>
             <type>
-              <code value="Quantity"/>
+              <code value="ContactPoint"/>
             </type>
             <type>
               <code value="Count"/>
             </type>
             <type>
-              <code value="Age"/>
+              <code value="Distance"/>
             </type>
             <type>
               <code value="Duration"/>
             </type>
             <type>
-              <code value="Distance"/>
+              <code value="HumanName"/>
+            </type>
+            <type>
+              <code value="Identifier"/>
             </type>
             <type>
               <code value="Money"/>
             </type>
             <type>
-              <code value="Range"/>
-            </type>
-            <type>
               <code value="Period"/>
             </type>
             <type>
+              <code value="Quantity"/>
+            </type>
+            <type>
+              <code value="Range"/>
+            </type>
+            <type>
               <code value="Ratio"/>
+            </type>
+            <type>
+              <code value="Reference"/>
             </type>
             <type>
               <code value="SampledData"/>
@@ -56459,19 +56371,7 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="Signature"/>
             </type>
             <type>
-              <code value="HumanName"/>
-            </type>
-            <type>
-              <code value="Address"/>
-            </type>
-            <type>
-              <code value="ContactPoint"/>
-            </type>
-            <type>
               <code value="Timing"/>
-            </type>
-            <type>
-              <code value="Reference"/>
             </type>
             <type>
               <code value="Meta"/>
@@ -56502,25 +56402,13 @@ Some reporting work flows require that the original narrative of a final documen
               <max value="1"/>
             </base>
             <type>
-              <code value="boolean"/>
-            </type>
-            <type>
-              <code value="integer"/>
-            </type>
-            <type>
-              <code value="decimal"/>
-            </type>
-            <type>
               <code value="base64Binary"/>
             </type>
             <type>
-              <code value="instant"/>
+              <code value="boolean"/>
             </type>
             <type>
-              <code value="string"/>
-            </type>
-            <type>
-              <code value="uri"/>
+              <code value="code"/>
             </type>
             <type>
               <code value="date"/>
@@ -56529,25 +56417,43 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="dateTime"/>
             </type>
             <type>
-              <code value="time"/>
-            </type>
-            <type>
-              <code value="code"/>
-            </type>
-            <type>
-              <code value="oid"/>
+              <code value="decimal"/>
             </type>
             <type>
               <code value="id"/>
             </type>
             <type>
-              <code value="unsignedInt"/>
+              <code value="instant"/>
+            </type>
+            <type>
+              <code value="integer"/>
+            </type>
+            <type>
+              <code value="markdown"/>
+            </type>
+            <type>
+              <code value="oid"/>
             </type>
             <type>
               <code value="positiveInt"/>
             </type>
             <type>
-              <code value="markdown"/>
+              <code value="string"/>
+            </type>
+            <type>
+              <code value="time"/>
+            </type>
+            <type>
+              <code value="unsignedInt"/>
+            </type>
+            <type>
+              <code value="uri"/>
+            </type>
+            <type>
+              <code value="Address"/>
+            </type>
+            <type>
+              <code value="Age"/>
             </type>
             <type>
               <code value="Annotation"/>
@@ -56556,40 +56462,46 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="Attachment"/>
             </type>
             <type>
-              <code value="Identifier"/>
-            </type>
-            <type>
               <code value="CodeableConcept"/>
             </type>
             <type>
               <code value="Coding"/>
             </type>
             <type>
-              <code value="Quantity"/>
+              <code value="ContactPoint"/>
             </type>
             <type>
               <code value="Count"/>
             </type>
             <type>
-              <code value="Age"/>
+              <code value="Distance"/>
             </type>
             <type>
               <code value="Duration"/>
             </type>
             <type>
-              <code value="Distance"/>
+              <code value="HumanName"/>
+            </type>
+            <type>
+              <code value="Identifier"/>
             </type>
             <type>
               <code value="Money"/>
             </type>
             <type>
-              <code value="Range"/>
-            </type>
-            <type>
               <code value="Period"/>
             </type>
             <type>
+              <code value="Quantity"/>
+            </type>
+            <type>
+              <code value="Range"/>
+            </type>
+            <type>
               <code value="Ratio"/>
+            </type>
+            <type>
+              <code value="Reference"/>
             </type>
             <type>
               <code value="SampledData"/>
@@ -56598,19 +56510,7 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="Signature"/>
             </type>
             <type>
-              <code value="HumanName"/>
-            </type>
-            <type>
-              <code value="Address"/>
-            </type>
-            <type>
-              <code value="ContactPoint"/>
-            </type>
-            <type>
               <code value="Timing"/>
-            </type>
-            <type>
-              <code value="Reference"/>
             </type>
             <type>
               <code value="Meta"/>
@@ -56637,25 +56537,13 @@ Some reporting work flows require that the original narrative of a final documen
               <max value="1"/>
             </base>
             <type>
-              <code value="boolean"/>
-            </type>
-            <type>
-              <code value="integer"/>
-            </type>
-            <type>
-              <code value="decimal"/>
-            </type>
-            <type>
               <code value="base64Binary"/>
             </type>
             <type>
-              <code value="instant"/>
+              <code value="boolean"/>
             </type>
             <type>
-              <code value="string"/>
-            </type>
-            <type>
-              <code value="uri"/>
+              <code value="code"/>
             </type>
             <type>
               <code value="date"/>
@@ -56664,25 +56552,43 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="dateTime"/>
             </type>
             <type>
-              <code value="time"/>
-            </type>
-            <type>
-              <code value="code"/>
-            </type>
-            <type>
-              <code value="oid"/>
+              <code value="decimal"/>
             </type>
             <type>
               <code value="id"/>
             </type>
             <type>
-              <code value="unsignedInt"/>
+              <code value="instant"/>
+            </type>
+            <type>
+              <code value="integer"/>
+            </type>
+            <type>
+              <code value="markdown"/>
+            </type>
+            <type>
+              <code value="oid"/>
             </type>
             <type>
               <code value="positiveInt"/>
             </type>
             <type>
-              <code value="markdown"/>
+              <code value="string"/>
+            </type>
+            <type>
+              <code value="time"/>
+            </type>
+            <type>
+              <code value="unsignedInt"/>
+            </type>
+            <type>
+              <code value="uri"/>
+            </type>
+            <type>
+              <code value="Address"/>
+            </type>
+            <type>
+              <code value="Age"/>
             </type>
             <type>
               <code value="Annotation"/>
@@ -56691,40 +56597,46 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="Attachment"/>
             </type>
             <type>
-              <code value="Identifier"/>
-            </type>
-            <type>
               <code value="CodeableConcept"/>
             </type>
             <type>
               <code value="Coding"/>
             </type>
             <type>
-              <code value="Quantity"/>
+              <code value="ContactPoint"/>
             </type>
             <type>
               <code value="Count"/>
             </type>
             <type>
-              <code value="Age"/>
+              <code value="Distance"/>
             </type>
             <type>
               <code value="Duration"/>
             </type>
             <type>
-              <code value="Distance"/>
+              <code value="HumanName"/>
+            </type>
+            <type>
+              <code value="Identifier"/>
             </type>
             <type>
               <code value="Money"/>
             </type>
             <type>
-              <code value="Range"/>
-            </type>
-            <type>
               <code value="Period"/>
             </type>
             <type>
+              <code value="Quantity"/>
+            </type>
+            <type>
+              <code value="Range"/>
+            </type>
+            <type>
               <code value="Ratio"/>
+            </type>
+            <type>
+              <code value="Reference"/>
             </type>
             <type>
               <code value="SampledData"/>
@@ -56733,19 +56645,7 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="Signature"/>
             </type>
             <type>
-              <code value="HumanName"/>
-            </type>
-            <type>
-              <code value="Address"/>
-            </type>
-            <type>
-              <code value="ContactPoint"/>
-            </type>
-            <type>
               <code value="Timing"/>
-            </type>
-            <type>
-              <code value="Reference"/>
             </type>
             <type>
               <code value="Meta"/>

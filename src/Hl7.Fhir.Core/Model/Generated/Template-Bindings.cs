@@ -967,6 +967,51 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
+    /// The status of a request
+    /// (url: http://hl7.org/fhir/ValueSet/request-status)
+    /// </summary>
+    [FhirEnumeration("RequestStatus")]
+    public enum RequestStatus
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-status)
+        /// </summary>
+        [EnumLiteral("draft"), Description("Draft")]
+        Draft,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-status)
+        /// </summary>
+        [EnumLiteral("active"), Description("Active")]
+        Active,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-status)
+        /// </summary>
+        [EnumLiteral("suspended"), Description("Suspended")]
+        Suspended,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-status)
+        /// </summary>
+        [EnumLiteral("completed"), Description("Completed")]
+        Completed,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-status)
+        /// </summary>
+        [EnumLiteral("entered-in-error"), Description("Entered in Error")]
+        EnteredInError,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/request-status)
+        /// </summary>
+        [EnumLiteral("cancelled"), Description("Cancelled")]
+        Cancelled,
+    }
+
+    /// <summary>
     /// The status of the document reference.
     /// (url: http://hl7.org/fhir/ValueSet/document-reference-status)
     /// </summary>

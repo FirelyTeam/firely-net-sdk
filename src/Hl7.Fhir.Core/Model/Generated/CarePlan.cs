@@ -418,9 +418,23 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Category;
             
             /// <summary>
+            /// Protocol or definition
+            /// </summary>
+            [FhirElement("definition", Order=50)]
+            [References("PlanDefinition","Questionnaire")]
+            [DataMember]
+            public Hl7.Fhir.Model.ResourceReference Definition
+            {
+                get { return _Definition; }
+                set { _Definition = value; OnPropertyChanged("Definition"); }
+            }
+            
+            private Hl7.Fhir.Model.ResourceReference _Definition;
+            
+            /// <summary>
             /// Detail type of activity
             /// </summary>
-            [FhirElement("code", Order=50)]
+            [FhirElement("code", Order=60)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept Code
             {
@@ -433,7 +447,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Why activity should be done
             /// </summary>
-            [FhirElement("reasonCode", Order=60)]
+            [FhirElement("reasonCode", Order=70)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -447,7 +461,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Condition triggering need for activity
             /// </summary>
-            [FhirElement("reasonReference", Order=70)]
+            [FhirElement("reasonReference", Order=80)]
             [References("Condition")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -462,7 +476,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Goals this activity relates to
             /// </summary>
-            [FhirElement("goal", Order=80)]
+            [FhirElement("goal", Order=90)]
             [References("Goal")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -477,7 +491,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// not-started | scheduled | in-progress | on-hold | completed | cancelled
             /// </summary>
-            [FhirElement("status", Order=90)]
+            [FhirElement("status", Order=100)]
             [DataMember]
             public Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus> StatusElement
             {
@@ -509,7 +523,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reason for current status
             /// </summary>
-            [FhirElement("statusReason", Order=100)]
+            [FhirElement("statusReason", Order=110)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept StatusReason
             {
@@ -522,7 +536,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Do NOT do
             /// </summary>
-            [FhirElement("prohibited", Order=110)]
+            [FhirElement("prohibited", Order=120)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ProhibitedElement
@@ -555,7 +569,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When activity is to occur
             /// </summary>
-            [FhirElement("scheduled", Order=120, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("scheduled", Order=130, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element Scheduled
@@ -569,7 +583,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Where it should happen
             /// </summary>
-            [FhirElement("location", Order=130)]
+            [FhirElement("location", Order=140)]
             [References("Location")]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Location
@@ -583,7 +597,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who will be responsible?
             /// </summary>
-            [FhirElement("performer", Order=140)]
+            [FhirElement("performer", Order=150)]
             [References("Practitioner","Organization","RelatedPerson","Patient")]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
@@ -598,7 +612,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What is to be administered/supplied
             /// </summary>
-            [FhirElement("product", Order=150, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("product", Order=160, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
             public Hl7.Fhir.Model.Element Product
@@ -612,7 +626,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// How to consume/day?
             /// </summary>
-            [FhirElement("dailyAmount", Order=160)]
+            [FhirElement("dailyAmount", Order=170)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity DailyAmount
             {
@@ -625,7 +639,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// How much to administer/supply/consume
             /// </summary>
-            [FhirElement("quantity", Order=170)]
+            [FhirElement("quantity", Order=180)]
             [DataMember]
             public Hl7.Fhir.Model.SimpleQuantity Quantity
             {
@@ -638,7 +652,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Extra info describing activity to perform
             /// </summary>
-            [FhirElement("description", Order=180)]
+            [FhirElement("description", Order=190)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString DescriptionElement
             {
@@ -675,6 +689,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
+                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.ResourceReference)Definition.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
                     if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
@@ -707,6 +722,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Category, otherT.Category)) return false;
+                if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
                 if( !DeepComparable.Matches(Code, otherT.Code)) return false;
                 if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
                 if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
@@ -732,6 +748,7 @@ namespace Hl7.Fhir.Model
                 
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
+                if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
                 if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;

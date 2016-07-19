@@ -388,13 +388,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("doseSequence", Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.Integer DoseSequenceElement
+            public Hl7.Fhir.Model.PositiveInt DoseSequenceElement
             {
                 get { return _DoseSequenceElement; }
                 set { _DoseSequenceElement = value; OnPropertyChanged("DoseSequenceElement"); }
             }
             
-            private Hl7.Fhir.Model.Integer _DoseSequenceElement;
+            private Hl7.Fhir.Model.PositiveInt _DoseSequenceElement;
             
             /// <summary>
             /// Dose number within sequence
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
                     if(value == null)
                       DoseSequenceElement = null; 
                     else
-                      DoseSequenceElement = new Hl7.Fhir.Model.Integer(value);
+                      DoseSequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("DoseSequence");
                 }
             }
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(DoseSequenceElement != null) dest.DoseSequenceElement = (Hl7.Fhir.Model.Integer)DoseSequenceElement.DeepCopy();
+                    if(DoseSequenceElement != null) dest.DoseSequenceElement = (Hl7.Fhir.Model.PositiveInt)DoseSequenceElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
                     if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();

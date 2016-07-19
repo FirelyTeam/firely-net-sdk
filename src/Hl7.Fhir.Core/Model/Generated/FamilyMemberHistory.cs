@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// (approximate) age
         /// </summary>
-        [FhirElement("age", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("age", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Age
@@ -401,9 +401,41 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Age;
         
         /// <summary>
+        /// Age is estimated?
+        /// </summary>
+        [FhirElement("estimatedAge", InSummary=true, Order=180)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean EstimatedAgeElement
+        {
+            get { return _EstimatedAgeElement; }
+            set { _EstimatedAgeElement = value; OnPropertyChanged("EstimatedAgeElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _EstimatedAgeElement;
+        
+        /// <summary>
+        /// Age is estimated?
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? EstimatedAge
+        {
+            get { return EstimatedAgeElement != null ? EstimatedAgeElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  EstimatedAgeElement = null; 
+                else
+                  EstimatedAgeElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("EstimatedAge");
+            }
+        }
+        
+        /// <summary>
         /// Dead? How old/when?
         /// </summary>
-        [FhirElement("deceased", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("deceased", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
         [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
         public Hl7.Fhir.Model.Element Deceased
@@ -417,7 +449,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// General note about related person
         /// </summary>
-        [FhirElement("note", Order=190)]
+        [FhirElement("note", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.Annotation Note
         {
@@ -430,7 +462,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Condition that the related person had
         /// </summary>
-        [FhirElement("condition", Order=200)]
+        [FhirElement("condition", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> Condition
@@ -457,6 +489,7 @@ namespace Hl7.Fhir.Model
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                 if(Born != null) dest.Born = (Hl7.Fhir.Model.Element)Born.DeepCopy();
                 if(Age != null) dest.Age = (Hl7.Fhir.Model.Element)Age.DeepCopy();
+                if(EstimatedAgeElement != null) dest.EstimatedAgeElement = (Hl7.Fhir.Model.FhirBoolean)EstimatedAgeElement.DeepCopy();
                 if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.Element)Deceased.DeepCopy();
                 if(Note != null) dest.Note = (Hl7.Fhir.Model.Annotation)Note.DeepCopy();
                 if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent>(Condition.DeepCopy());
@@ -486,6 +519,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.Matches(Born, otherT.Born)) return false;
             if( !DeepComparable.Matches(Age, otherT.Age)) return false;
+            if( !DeepComparable.Matches(EstimatedAgeElement, otherT.EstimatedAgeElement)) return false;
             if( !DeepComparable.Matches(Deceased, otherT.Deceased)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(Condition, otherT.Condition)) return false;
@@ -508,6 +542,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(GenderElement, otherT.GenderElement)) return false;
             if( !DeepComparable.IsExactly(Born, otherT.Born)) return false;
             if( !DeepComparable.IsExactly(Age, otherT.Age)) return false;
+            if( !DeepComparable.IsExactly(EstimatedAgeElement, otherT.EstimatedAgeElement)) return false;
             if( !DeepComparable.IsExactly(Deceased, otherT.Deceased)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(Condition, otherT.Condition)) return false;

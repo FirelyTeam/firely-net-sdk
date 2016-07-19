@@ -357,9 +357,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// Whether this healthcareservice is in active use
+        /// </summary>
+        [FhirElement("active", InSummary=true, Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirBoolean ActiveElement
+        {
+            get { return _ActiveElement; }
+            set { _ActiveElement = value; OnPropertyChanged("ActiveElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirBoolean _ActiveElement;
+        
+        /// <summary>
+        /// Whether this healthcareservice is in active use
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public bool? Active
+        {
+            get { return ActiveElement != null ? ActiveElement.Value : null; }
+            set
+            {
+                if(value == null)
+                  ActiveElement = null; 
+                else
+                  ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("Active");
+            }
+        }
+        
+        /// <summary>
         /// Organization that provides this service
         /// </summary>
-        [FhirElement("providedBy", InSummary=true, Order=100)]
+        [FhirElement("providedBy", InSummary=true, Order=110)]
         [References("Organization")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference ProvidedBy
@@ -373,7 +405,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Broad category of service being performed or delivered
         /// </summary>
-        [FhirElement("serviceCategory", InSummary=true, Order=110)]
+        [FhirElement("serviceCategory", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept ServiceCategory
         {
@@ -386,7 +418,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of service that may be delivered or performed
         /// </summary>
-        [FhirElement("serviceType", InSummary=true, Order=120)]
+        [FhirElement("serviceType", InSummary=true, Order=130)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
@@ -400,7 +432,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specialties handled by the HealthcareService
         /// </summary>
-        [FhirElement("specialty", InSummary=true, Order=130)]
+        [FhirElement("specialty", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -414,7 +446,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Location(s) where service may be provided
         /// </summary>
-        [FhirElement("location", InSummary=true, Order=140)]
+        [FhirElement("location", InSummary=true, Order=150)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -429,7 +461,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description of service as presented to a consumer while searching
         /// </summary>
-        [FhirElement("serviceName", InSummary=true, Order=150)]
+        [FhirElement("serviceName", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ServiceNameElement
         {
@@ -461,7 +493,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Additional description and/or any specific issues not covered elsewhere
         /// </summary>
-        [FhirElement("comment", InSummary=true, Order=160)]
+        [FhirElement("comment", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString CommentElement
         {
@@ -493,7 +525,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Extra details about the service that can't be placed in the other fields
         /// </summary>
-        [FhirElement("extraDetails", Order=170)]
+        [FhirElement("extraDetails", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ExtraDetailsElement
         {
@@ -525,7 +557,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Facilitates quick identification of the service
         /// </summary>
-        [FhirElement("photo", InSummary=true, Order=180)]
+        [FhirElement("photo", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Attachment Photo
         {
@@ -538,7 +570,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contacts related to the healthcare service
         /// </summary>
-        [FhirElement("telecom", Order=190)]
+        [FhirElement("telecom", Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -552,7 +584,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Location(s) service is inteded for/available to
         /// </summary>
-        [FhirElement("coverageArea", Order=200)]
+        [FhirElement("coverageArea", Order=210)]
         [References("Location")]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
@@ -567,7 +599,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Conditions under which service is available/offered
         /// </summary>
-        [FhirElement("serviceProvisionCode", Order=210)]
+        [FhirElement("serviceProvisionCode", Order=220)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ServiceProvisionCode
@@ -581,7 +613,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specific eligibility requirements required to use the service
         /// </summary>
-        [FhirElement("eligibility", Order=220)]
+        [FhirElement("eligibility", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Eligibility
         {
@@ -594,7 +626,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Describes the eligibility conditions for the service
         /// </summary>
-        [FhirElement("eligibilityNote", Order=230)]
+        [FhirElement("eligibilityNote", Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString EligibilityNoteElement
         {
@@ -626,7 +658,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Program Names that categorize the service
         /// </summary>
-        [FhirElement("programName", Order=240)]
+        [FhirElement("programName", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.FhirString> ProgramNameElement
@@ -659,7 +691,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Collection of characteristics (attributes)
         /// </summary>
-        [FhirElement("characteristic", Order=250)]
+        [FhirElement("characteristic", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Characteristic
@@ -673,7 +705,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Ways that the service accepts referrals
         /// </summary>
-        [FhirElement("referralMethod", Order=260)]
+        [FhirElement("referralMethod", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> ReferralMethod
@@ -687,7 +719,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// PKI Public keys to support secure communications
         /// </summary>
-        [FhirElement("publicKey", Order=270)]
+        [FhirElement("publicKey", Order=280)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublicKeyElement
         {
@@ -719,7 +751,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If an appointment is required for access to this service
         /// </summary>
-        [FhirElement("appointmentRequired", Order=280)]
+        [FhirElement("appointmentRequired", Order=290)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean AppointmentRequiredElement
         {
@@ -751,7 +783,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Times the Service Site is available
         /// </summary>
-        [FhirElement("availableTime", Order=290)]
+        [FhirElement("availableTime", Order=300)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent> AvailableTime
@@ -765,7 +797,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Not available during this time due to provided reason
         /// </summary>
-        [FhirElement("notAvailable", Order=300)]
+        [FhirElement("notAvailable", Order=310)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent> NotAvailable
@@ -779,7 +811,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Description of availability exceptions
         /// </summary>
-        [FhirElement("availabilityExceptions", Order=310)]
+        [FhirElement("availabilityExceptions", Order=320)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString AvailabilityExceptionsElement
         {
@@ -816,6 +848,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(ActiveElement != null) dest.ActiveElement = (Hl7.Fhir.Model.FhirBoolean)ActiveElement.DeepCopy();
                 if(ProvidedBy != null) dest.ProvidedBy = (Hl7.Fhir.Model.ResourceReference)ProvidedBy.DeepCopy();
                 if(ServiceCategory != null) dest.ServiceCategory = (Hl7.Fhir.Model.CodeableConcept)ServiceCategory.DeepCopy();
                 if(ServiceType != null) dest.ServiceType = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceType.DeepCopy());
@@ -856,6 +889,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.Matches(ProvidedBy, otherT.ProvidedBy)) return false;
             if( !DeepComparable.Matches(ServiceCategory, otherT.ServiceCategory)) return false;
             if( !DeepComparable.Matches(ServiceType, otherT.ServiceType)) return false;
@@ -889,6 +923,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(ActiveElement, otherT.ActiveElement)) return false;
             if( !DeepComparable.IsExactly(ProvidedBy, otherT.ProvidedBy)) return false;
             if( !DeepComparable.IsExactly(ServiceCategory, otherT.ServiceCategory)) return false;
             if( !DeepComparable.IsExactly(ServiceType, otherT.ServiceType)) return false;

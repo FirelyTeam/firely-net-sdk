@@ -345,9 +345,39 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
+        /// Request fulfilled by this Questionnaire
+        /// </summary>
+        [FhirElement("basedOn", InSummary=true, Order=100)]
+        [References("DiagnosticRequest","ReferralRequest","CarePlan")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> BasedOn
+        {
+            get { if(_BasedOn==null) _BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(); return _BasedOn; }
+            set { _BasedOn = value; OnPropertyChanged("BasedOn"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
+        
+        /// <summary>
+        /// Part of this action
+        /// </summary>
+        [FhirElement("parent", InSummary=true, Order=110)]
+        [References("Observation","Procedure")]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.ResourceReference> Parent
+        {
+            get { if(_Parent==null) _Parent = new List<Hl7.Fhir.Model.ResourceReference>(); return _Parent; }
+            set { _Parent = value; OnPropertyChanged("Parent"); }
+        }
+        
+        private List<Hl7.Fhir.Model.ResourceReference> _Parent;
+        
+        /// <summary>
         /// Form being answered
         /// </summary>
-        [FhirElement("questionnaire", InSummary=true, Order=100)]
+        [FhirElement("questionnaire", InSummary=true, Order=120)]
         [References("Questionnaire")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Questionnaire
@@ -361,7 +391,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// in-progress | completed | amended
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=110)]
+        [FhirElement("status", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> StatusElement
@@ -394,7 +424,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The subject of the questions
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=120)]
+        [FhirElement("subject", InSummary=true, Order=140)]
         [References()]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject
@@ -406,9 +436,23 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
+        /// Encounter or Episode during which questionnaire was completed
+        /// </summary>
+        [FhirElement("context", InSummary=true, Order=150)]
+        [References("Encounter","EpisodeOfCare")]
+        [DataMember]
+        public Hl7.Fhir.Model.ResourceReference Context
+        {
+            get { return _Context; }
+            set { _Context = value; OnPropertyChanged("Context"); }
+        }
+        
+        private Hl7.Fhir.Model.ResourceReference _Context;
+        
+        /// <summary>
         /// Person who received and recorded the answers
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=130)]
+        [FhirElement("author", InSummary=true, Order=160)]
         [References("Device","Practitioner","Patient","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Author
@@ -422,7 +466,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date this version was authored
         /// </summary>
-        [FhirElement("authored", InSummary=true, Order=140)]
+        [FhirElement("authored", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime AuthoredElement
         {
@@ -454,7 +498,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The person who answered the questions
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=150)]
+        [FhirElement("source", InSummary=true, Order=180)]
         [References("Patient","Practitioner","RelatedPerson")]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Source
@@ -466,23 +510,9 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Source;
         
         /// <summary>
-        /// Primary encounter during which the answers were collected
-        /// </summary>
-        [FhirElement("encounter", InSummary=true, Order=160)]
-        [References("Encounter")]
-        [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Encounter
-        {
-            get { return _Encounter; }
-            set { _Encounter = value; OnPropertyChanged("Encounter"); }
-        }
-        
-        private Hl7.Fhir.Model.ResourceReference _Encounter;
-        
-        /// <summary>
         /// Groups and questions
         /// </summary>
-        [FhirElement("item", Order=170)]
+        [FhirElement("item", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
@@ -501,13 +531,15 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
+                if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
+                if(Parent != null) dest.Parent = new List<Hl7.Fhir.Model.ResourceReference>(Parent.DeepCopy());
                 if(Questionnaire != null) dest.Questionnaire = (Hl7.Fhir.Model.ResourceReference)Questionnaire.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>)StatusElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
+                if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(AuthoredElement != null) dest.AuthoredElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredElement.DeepCopy();
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
-                if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(Item != null) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(Item.DeepCopy());
                 return dest;
             }
@@ -527,13 +559,15 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
+            if( !DeepComparable.Matches(Parent, otherT.Parent)) return false;
             if( !DeepComparable.Matches(Questionnaire, otherT.Questionnaire)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(Author, otherT.Author)) return false;
             if( !DeepComparable.Matches(AuthoredElement, otherT.AuthoredElement)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
-            if( !DeepComparable.Matches(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.Matches(Item, otherT.Item)) return false;
             
             return true;
@@ -546,13 +580,15 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
+            if( !DeepComparable.IsExactly(Parent, otherT.Parent)) return false;
             if( !DeepComparable.IsExactly(Questionnaire, otherT.Questionnaire)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
+            if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
             if( !DeepComparable.IsExactly(AuthoredElement, otherT.AuthoredElement)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
-            if( !DeepComparable.IsExactly(Encounter, otherT.Encounter)) return false;
             if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
             
             return true;

@@ -42,7 +42,7 @@ using System.ComponentModel;
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Allergy or Intolerance (generally: Risk Of Adverse reaction to a substance)
+    /// Allergy or Intolerance (generally: Risk of adverse reaction to a substance)
     /// </summary>
     [FhirType("AllergyIntolerance", IsResource=true)]
     [DataContract]
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Model
         public override string TypeName { get { return "AllergyIntolerance"; } }
         
         /// <summary>
-        /// Assertion about certainty associated with a propensity, or potential risk, of a reaction to the identified Substance.
+        /// Assertion about certainty associated with a propensity, or potential risk, of a reaction to the identified substance.
         /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-status)
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceStatus")]
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Category of an identified Substance.
+        /// Category of an identified substance.
         /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-category)
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceCategory")]
@@ -144,16 +144,10 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("environment"), Description("Environment")]
             Environment,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/allergy-intolerance-category)
-            /// </summary>
-            [EnumLiteral("other"), Description("Other")]
-            Other,
         }
 
         /// <summary>
-        /// Estimate of the potential clinical harm, or seriousness, of a reaction to an identified Substance.
+        /// Estimate of the potential clinical harm, or seriousness, of a reaction to an identified substance.
         /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality)
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceCriticality")]
@@ -180,7 +174,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Statement about the degree of clinical certainty that a Specific Substance was the cause of the Manifestation in an reaction event.
+        /// Statement about the degree of clinical certainty that a specific substance was the cause of the manifestation in an reaction event.
         /// (url: http://hl7.org/fhir/ValueSet/reaction-event-certainty)
         /// </summary>
         [FhirEnumeration("AllergyIntoleranceCertainty")]
@@ -566,7 +560,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// food | medication | environment | other - Category of Substance
+        /// food | medication | environment
         /// </summary>
         [FhirElement("category", InSummary=true, Order=120)]
         [DataMember]
@@ -579,7 +573,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory> _CategoryElement;
         
         /// <summary>
-        /// food | medication | environment | other - Category of Substance
+        /// food | medication | environment
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

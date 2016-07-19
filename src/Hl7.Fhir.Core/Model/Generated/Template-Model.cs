@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Mon, 18 Jul 2016 16:06:27 GMT for FHIR v1.5.0
+// Model Generated on Tue, 19 Jul 2016 19:13:47 GMT for FHIR v1.5.0
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): CompartmentDefinition.resource.code
@@ -113,6 +113,10 @@
 // Generated Shared Enumeration: DocumentReferenceStatus
 	// Used in model class (resource): DocumentManifest.status
 	// Used in model class (resource): DocumentReference.status
+
+// Generated Shared Enumeration: RequestStatus
+	// Used in model class (resource): DeviceUseRequest.status
+	// Used in model class (resource): DiagnosticRequest.status
 
 // Generated Shared Enumeration: MedicationAdministrationStatus
 	// Used in model class (resource): Immunization.status

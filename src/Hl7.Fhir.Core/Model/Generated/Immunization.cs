@@ -281,7 +281,6 @@ namespace Hl7.Fhir.Model
             /// Dose number within series
             /// </summary>
             [FhirElement("doseSequence", Order=40)]
-            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.PositiveInt DoseSequenceElement
             {

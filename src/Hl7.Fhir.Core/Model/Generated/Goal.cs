@@ -270,37 +270,18 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Category;
         
         /// <summary>
-        /// What's the desired outcome?
+        /// Code or text describing goal
         /// </summary>
         [FhirElement("description", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirString DescriptionElement
+        public Hl7.Fhir.Model.CodeableConcept Description
         {
-            get { return _DescriptionElement; }
-            set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            get { return _Description; }
+            set { _Description = value; OnPropertyChanged("Description"); }
         }
         
-        private Hl7.Fhir.Model.FhirString _DescriptionElement;
-        
-        /// <summary>
-        /// What's the desired outcome?
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Description
-        {
-            get { return DescriptionElement != null ? DescriptionElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  DescriptionElement = null; 
-                else
-                  DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Description");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _Description;
         
         /// <summary>
         /// proposed | planned | accepted | rejected | in-progress | achieved | sustaining | on-hold | cancelled | on-target | ahead-of-target | behind-target
@@ -463,7 +444,7 @@ namespace Hl7.Fhir.Model
                 if(Start != null) dest.Start = (Hl7.Fhir.Model.Element)Start.DeepCopy();
                 if(Target != null) dest.Target = (Hl7.Fhir.Model.Element)Target.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
-                if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                if(Description != null) dest.Description = (Hl7.Fhir.Model.CodeableConcept)Description.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Goal.GoalStatus>)StatusElement.DeepCopy();
                 if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.Date)StatusDateElement.DeepCopy();
                 if(StatusReason != null) dest.StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(StatusReason.DeepCopy());
@@ -494,7 +475,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Start, otherT.Start)) return false;
             if( !DeepComparable.Matches(Target, otherT.Target)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
-            if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.Matches(Description, otherT.Description)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
             if( !DeepComparable.Matches(StatusReason, otherT.StatusReason)) return false;
@@ -518,7 +499,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Start, otherT.Start)) return false;
             if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
-            if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+            if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
             if( !DeepComparable.IsExactly(StatusReason, otherT.StatusReason)) return false;

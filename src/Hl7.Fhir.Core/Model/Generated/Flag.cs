@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
         /// Who/What is flag about?
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=130)]
-        [References("Patient","Location","Group","Organization","Practitioner")]
+        [References("Patient","Location","Group","Organization","Practitioner","PlanDefinition","Medication","Procedure")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Subject

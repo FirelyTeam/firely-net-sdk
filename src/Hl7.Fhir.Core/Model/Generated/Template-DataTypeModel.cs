@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Mon, 18 Jul 2016 16:06:21 GMT for FHIR v1.5.0
+// Model Generated on Tue, 19 Jul 2016 19:13:39 GMT for FHIR v1.5.0
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -46,6 +46,8 @@
 	// Used in model class (type): ActionDefinition.relatedAction.relationship
 
 // Generated Shared Enumeration: DocumentReferenceStatus
+
+// Generated Shared Enumeration: RequestStatus
 
 // Generated Shared Enumeration: MedicationAdministrationStatus
 

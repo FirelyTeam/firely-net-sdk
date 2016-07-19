@@ -485,15 +485,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// True if medication is/was not being taken
         /// </summary>
-        [FhirElement("wasNotTaken", InSummary=true, Order=170)]
+        [FhirElement("notTaken", InSummary=true, Order=170)]
         [DataMember]
-        public Hl7.Fhir.Model.FhirBoolean WasNotTakenElement
+        public Hl7.Fhir.Model.FhirBoolean NotTakenElement
         {
-            get { return _WasNotTakenElement; }
-            set { _WasNotTakenElement = value; OnPropertyChanged("WasNotTakenElement"); }
+            get { return _NotTakenElement; }
+            set { _NotTakenElement = value; OnPropertyChanged("NotTakenElement"); }
         }
         
-        private Hl7.Fhir.Model.FhirBoolean _WasNotTakenElement;
+        private Hl7.Fhir.Model.FhirBoolean _NotTakenElement;
         
         /// <summary>
         /// True if medication is/was not being taken
@@ -501,16 +501,16 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public bool? WasNotTaken
+        public bool? NotTaken
         {
-            get { return WasNotTakenElement != null ? WasNotTakenElement.Value : null; }
+            get { return NotTakenElement != null ? NotTakenElement.Value : null; }
             set
             {
                 if(value == null)
-                  WasNotTakenElement = null; 
+                  NotTakenElement = null; 
                 else
-                  WasNotTakenElement = new Hl7.Fhir.Model.FhirBoolean(value);
-                OnPropertyChanged("WasNotTaken");
+                  NotTakenElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                OnPropertyChanged("NotTaken");
             }
         }
         
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
                 if(InformationSource != null) dest.InformationSource = (Hl7.Fhir.Model.ResourceReference)InformationSource.DeepCopy();
                 if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
                 if(DateAssertedElement != null) dest.DateAssertedElement = (Hl7.Fhir.Model.FhirDateTime)DateAssertedElement.DeepCopy();
-                if(WasNotTakenElement != null) dest.WasNotTakenElement = (Hl7.Fhir.Model.FhirBoolean)WasNotTakenElement.DeepCopy();
+                if(NotTakenElement != null) dest.NotTakenElement = (Hl7.Fhir.Model.FhirBoolean)NotTakenElement.DeepCopy();
                 if(ReasonNotTaken != null) dest.ReasonNotTaken = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonNotTaken.DeepCopy());
                 if(ReasonForUseCode != null) dest.ReasonForUseCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonForUseCode.DeepCopy());
                 if(ReasonForUseReference != null) dest.ReasonForUseReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonForUseReference.DeepCopy());
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(InformationSource, otherT.InformationSource)) return false;
             if( !DeepComparable.Matches(SupportingInformation, otherT.SupportingInformation)) return false;
             if( !DeepComparable.Matches(DateAssertedElement, otherT.DateAssertedElement)) return false;
-            if( !DeepComparable.Matches(WasNotTakenElement, otherT.WasNotTakenElement)) return false;
+            if( !DeepComparable.Matches(NotTakenElement, otherT.NotTakenElement)) return false;
             if( !DeepComparable.Matches(ReasonNotTaken, otherT.ReasonNotTaken)) return false;
             if( !DeepComparable.Matches(ReasonForUseCode, otherT.ReasonForUseCode)) return false;
             if( !DeepComparable.Matches(ReasonForUseReference, otherT.ReasonForUseReference)) return false;
@@ -689,7 +689,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(InformationSource, otherT.InformationSource)) return false;
             if( !DeepComparable.IsExactly(SupportingInformation, otherT.SupportingInformation)) return false;
             if( !DeepComparable.IsExactly(DateAssertedElement, otherT.DateAssertedElement)) return false;
-            if( !DeepComparable.IsExactly(WasNotTakenElement, otherT.WasNotTakenElement)) return false;
+            if( !DeepComparable.IsExactly(NotTakenElement, otherT.NotTakenElement)) return false;
             if( !DeepComparable.IsExactly(ReasonNotTaken, otherT.ReasonNotTaken)) return false;
             if( !DeepComparable.IsExactly(ReasonForUseCode, otherT.ReasonForUseCode)) return false;
             if( !DeepComparable.IsExactly(ReasonForUseReference, otherT.ReasonForUseReference)) return false;
