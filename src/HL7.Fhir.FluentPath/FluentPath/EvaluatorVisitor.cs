@@ -15,7 +15,7 @@ namespace Hl7.Fhir.FluentPath
     {
         public override Evaluator VisitConstant(FP.ConstantExpression expression)
         {
-            return Return(new ConstantValue(expression.Value));
+            return Eval.Return(new ConstantValue(expression.Value));
         }
 
         public override Evaluator VisitFunctionCall(FP.FunctionCallExpression expression)
@@ -31,22 +31,22 @@ namespace Hl7.Fhir.FluentPath
 
         public override Evaluator VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
         {
-            return Return(FhirValueList.Empty);
+            return Eval.Return(FhirValueList.Empty);
         }
 
         public override Evaluator VisitVariableRef(FP.VariableRefExpression expression)
         {
-            // Special case: $this
+            // Special case: $this   -> can now GO AWAY -> this is a declared name in the context
             if (expression is FP.AxisExpression)
             {
                 var axis = (FP.AxisExpression)expression;
                 if (axis.AxisName == "this")
-                    return Focus();
+                    return Eval.Focus();
                 else
                     throw new NotSupportedException("Cannot resolve axis reference " + axis.AxisName);
             }
             else
-                return ResolveValue(expression.Name);
+                return Eval.ResolveValue(expression.Name);
         }
 
         public override Evaluator VisitTypeBinaryExpression(FP.TypeBinaryExpression expression)
@@ -54,36 +54,16 @@ namespace Hl7.Fhir.FluentPath
             throw new NotImplementedException();
         }
 
-        public static Evaluator Return(Hl7.Fhir.FluentPath.IValueProvider value)
-        {
-            return (_,__) => (new[] { (Hl7.Fhir.FluentPath.IValueProvider)value });
-        }
-
-        public static Evaluator Return(IEnumerable<Hl7.Fhir.FluentPath.IValueProvider> value)
-        {
-            return (_,__) => value;
-        }
-
-        public static Evaluator ResolveValue(string name)
-        {
-            return (ctx,_) => ctx.ResolveValue(name);
-        }
-
-
-        public static Evaluator Focus()
-        {
-            return (_, f) => f;
-        }
-
         private static Evaluator buildBindingInvoke(string functionName, Evaluator focus, IEnumerable<Evaluator> arguments, Invokee invokee)
         {
-            return (ctx,f) =>
+            return (ctx) =>
             {
-                var focusNodes = focus(ctx,f);
+                var focusNodes = focus(ctx);
+                var newContext = ctx.Nest(focusNodes);
 
                 try
                 {
-                    return invokee(ctx, focusNodes, arguments);
+                    return invokee(newContext, focusNodes, arguments);
                 }
                 catch (Exception e)
                 {

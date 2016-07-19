@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Gramm_Invocation()
         {
-            var parser = Grammar.Invocation(AxisExpression.This).End();
+            var parser = Grammar.InvocationExpression.End();
 
             AssertParser.SucceedsMatch(parser, "childname", new ChildExpression(AxisExpression.This, "childname"));
            // AssertParser.SucceedsMatch(parser, "$this", AxisExpression.This);

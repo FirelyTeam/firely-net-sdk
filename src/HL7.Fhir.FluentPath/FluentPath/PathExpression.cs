@@ -60,10 +60,10 @@ namespace Hl7.Fhir.FluentPath
             return evaluator.Select(input);
         }
 
-        public static IEnumerable<IValueProvider> Select(string expression, IEnumerable<IValueProvider> input, IEvaluationContext context)
+        public static IEnumerable<IValueProvider> Select(string expression, IEvaluationContext context)
         {
             var evaluator = Compile(expression);
-            return evaluator.Select(input, context);
+            return evaluator.Select(context);
         }
 
         public static object Scalar(string expression, IEnumerable<IValueProvider> input)
@@ -72,10 +72,10 @@ namespace Hl7.Fhir.FluentPath
             return evaluator.Scalar(input);
         }
 
-        public static object Scalar(string expression, IEnumerable<IValueProvider> input, IEvaluationContext context)
+        public static object Scalar(string expression, IEvaluationContext context)
         {
             var evaluator = Compile(expression);
-            return evaluator.Scalar(input, context);
+            return evaluator.Scalar(context);
         }
 
         public static bool IsTrue(string expression, IEnumerable<IValueProvider> input)
@@ -84,10 +84,10 @@ namespace Hl7.Fhir.FluentPath
             return evaluator.Predicate(input);
         }
 
-        public static bool IsTrue(string expression, IEnumerable<IValueProvider> input, IEvaluationContext context)
+        public static bool IsTrue(string expression, IEvaluationContext context)
         {
             var evaluator = Compile(expression);
-            return evaluator.Predicate(input, context);
+            return evaluator.Predicate(context);
         }
     }
 

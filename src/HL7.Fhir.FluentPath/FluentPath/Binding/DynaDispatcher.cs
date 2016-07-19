@@ -61,7 +61,7 @@ namespace Hl7.Fhir.FluentPath.Binding
 
             foreach (var arg in args)
             {
-                var argValue = arg(context, focus);
+                var argValue = arg(context);
                 if (!argValue.Any()) return FhirValueList.Empty;
                 actualArgs.Add(Typecasts.Unbox(argValue));
             }

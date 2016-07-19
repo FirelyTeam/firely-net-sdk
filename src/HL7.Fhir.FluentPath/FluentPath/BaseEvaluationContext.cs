@@ -20,48 +20,83 @@ namespace Hl7.Fhir.FluentPath
         {
         }
 
-        private Stack<IEnumerable<IValueProvider>> _focusStack = new Stack<IEnumerable<IValueProvider>>();
-
-        public void Push(IEnumerable<IValueProvider> focus)
+        public static BaseEvaluationContext Root(IEnumerable<IValueProvider> input)
         {
-            _focusStack.Push(focus);
+            var newContext = new BaseEvaluationContext();
+
+            newContext.SetThis(input);
+            newContext.SetOriginalContext(input);
+
+            return newContext;
         }
 
-        public void Pop()
+        private Dictionary<string, IEnumerable<IValueProvider>> _namedValues = new Dictionary<string, IEnumerable<IValueProvider>>();
+
+        public virtual void SetValue(string name, IEnumerable<IValueProvider> value)
         {
-            _focusStack.Pop();
+            _namedValues.Remove(name);
+
+            //if (value is Evaluator)
+            //    _namedValues.Add(name, (Evaluator)value);
+            //else
+            //  _namedValues.Add(name, Eval.Return(value));
+
+             _namedValues.Add(name, value);
         }
 
-        public IEnumerable<IValueProvider> CurrentFocus
+
+        public IEvaluationContext Parent { get; private set; }
+
+        public virtual IEvaluationContext Nest()
         {
-            get { return _focusStack.Peek(); }
+            var newContext = new BaseEvaluationContext();
+            newContext.Parent = this;
+
+            return newContext;
         }
 
-        public IEnumerable<IValueProvider> OriginalContext { get; set; }
 
-        public virtual IEnumerable<IValueProvider> InvokeExternalFunction(string name, IEnumerable<IValueProvider> focus, IEnumerable<IEnumerable<IValueProvider>> parameters)
+        public virtual void Log(string argument, object data)
         {
-            throw new NotSupportedException("Function '{0}' is unknown".FormatWith(name));
-        }
+            if (data == null)
+                System.Diagnostics.Trace.WriteLine("(null)");
 
-        public virtual void Log(string argument, IEnumerable<IValueProvider> focus)
-        {
-
-            //System.Diagnostics.Trace.WriteLine(argument);
-
-            foreach (var element in focus)
+            else if (data is IEnumerable<IValueProvider>)
             {
-                //System.Diagnostics.Trace.WriteLine("=========");
-                //System.Diagnostics.Trace.WriteLine(element.ToString());
+                foreach (var element in (IEnumerable<IValueProvider>)data)
+                {
+                    System.Diagnostics.Trace.WriteLine("=========");
+                    System.Diagnostics.Trace.WriteLine(element.ToString());
+                }
             }
+            else if (data is IValueProvider)
+            {
+                var element = (IValueProvider)data;
+                System.Diagnostics.Trace.WriteLine(element.ToString());
+            }
+            else
+                System.Diagnostics.Trace.WriteLine(data.ToString());
         }
+
 
         public virtual IEnumerable<IValueProvider> ResolveValue(string name)
         {
-            if (name == "context")
-                return OriginalContext;
+            // First, try to directly get "normal" values
+            IEnumerable<IValueProvider> result = null;
+            _namedValues.TryGetValue(name, out result);
 
+            if (result != null) return result;
+
+            // If that failed, try to see if the parent has it
+            if (Parent != null)
+            {
+                result = Parent.ResolveValue(name);
+                if (result != null) return result;
+            }
+
+            // If that failed, get the special built-in ones
             string value = null;
+
             if (name.StartsWith("ext-"))
                 value = "http://hl7.org/fhir/StructureDefinition/" + name.Substring(4);
             else if (name.StartsWith("vs-"))
@@ -73,7 +108,16 @@ namespace Hl7.Fhir.FluentPath
             else if (name == "ucum")
                 value = "http://unitsofmeasure.org";
 
-            return value != null ? FhirValueList.Create(value) : null;
+            if (value != null)
+                return FhirValueList.Create(value);
+            else
+                return null;
+        }
+
+
+        public virtual IEnumerable<IValueProvider> InvokeExternalFunction(string name, IEnumerable<IValueProvider> focus, IEnumerable<IEnumerable<IValueProvider>> parameters)
+        {
+            throw new NotSupportedException("Function '{0}' is unknown".FormatWith(name));
         }
     }
 }

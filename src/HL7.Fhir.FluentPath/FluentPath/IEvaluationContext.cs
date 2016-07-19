@@ -18,11 +18,33 @@ namespace Hl7.Fhir.FluentPath
     public interface IEvaluationContext
     {
         /// <summary>
-        /// Invoked whenever a log() function is encountered in an expression.
+        /// Keeps track of the parent context - this allows scoping of named values
         /// </summary>
-        /// <param name="argument">The parameter passed to the FhirPath log() function</param>
-        /// <param name="focus">The focus at the moment the log() function was called</param>
-        void Log(string argument, IEnumerable<IValueProvider> focus);
+        IEvaluationContext Parent { get; }
+
+        /// <summary>
+        /// Returns a new scoped context, for which the current context is the parent
+        /// </summary>
+        /// <returns></returns>
+        IEvaluationContext Nest();
+
+        /// <summary>
+        /// Provide a named reference to an Evaluator 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>Returns null when the name is not known</returns>
+        IEnumerable<IValueProvider> ResolveValue(string name);
+
+        /// <summary>
+        /// Sets a name to the given value. If the value is already set, it will be replaced.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <remarks>
+        /// If the value is an object other than an Evaluator, the given value will be
+        /// wrapped in an Evaluator that returns the given value.
+        /// </remarks>
+        void SetValue(string name, IEnumerable<IValueProvider> value);
 
         /// <summary>
         /// Whenever the engine encountes an unknown function, it will call this method to try to invoke it externally
@@ -31,17 +53,37 @@ namespace Hl7.Fhir.FluentPath
         /// <param name="parameters">An ordered set parameters, each a collection of IFhirPathValues representing the value of that parameter</param>
         /// <remarks>Should throw NotSupportedException if the external function is not supported.</remarks>
         IEnumerable<IValueProvider> InvokeExternalFunction(string name, IEnumerable<IValueProvider> focus, IEnumerable<IEnumerable<IValueProvider>> parameters);
+    }
 
-        /// <summary>
-        /// Provide a value when a value reference (%name) is encountered in an expression
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns>Return null when the constant is not known</returns>
-        IEnumerable<IValueProvider> ResolveValue(string name);
 
-        /// <summary>
-        /// Context that was in focus when evaluation started
-        /// </summary>
-        IEnumerable<IValueProvider> OriginalContext { get; set; }
+    public static class IEvaluationContextExtensions
+    {
+        public static void SetThis(this IEvaluationContext ctx, IEnumerable<IValueProvider> value)
+        {
+            ctx.SetValue("this", value);
+        }
+
+        public static IEnumerable<IValueProvider> GetThis(this IEvaluationContext ctx)
+        {
+            return ctx.ResolveValue("this");
+        }
+
+        public static void SetOriginalContext(this IEvaluationContext ctx, IEnumerable<IValueProvider> value)
+        {
+            ctx.SetValue("context", value);
+        }
+
+        public static IEnumerable<IValueProvider> GetOriginalContext(this IEvaluationContext ctx)
+        {
+            return ctx.ResolveValue("context");
+        }
+
+        public static IEvaluationContext Nest(this IEvaluationContext ctx, IEnumerable<IValueProvider> input)
+        {
+            var nested = ctx.Nest();
+            nested.SetThis(input);
+
+            return nested;
+        }
     }
 }

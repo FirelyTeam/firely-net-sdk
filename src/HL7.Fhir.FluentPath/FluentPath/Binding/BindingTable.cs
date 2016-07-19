@@ -200,7 +200,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             {
                 var left = args.First();
                 var right = args.Skip(1).First();
-                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(()=>left(ctx, f).BooleanEval(), ()=>right(ctx, f).BooleanEval()));
+                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(()=>left(ctx).BooleanEval(), ()=>right(ctx).BooleanEval()));
             };
         }
 
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             return (ctx, focus, args) =>
             {
-                var evaluatedArguments = args.Select(a => a(ctx, focus));
+                var evaluatedArguments = args.Select(a => a(ctx));
                 return ctx.InvokeExternalFunction(name, focus, evaluatedArguments);
             };
         }
@@ -229,8 +229,8 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             foreach (IValueProvider element in focus)
             {
-                var newFocus = FhirValueList.Create(element);
-                if (lambda(ctx, newFocus).BooleanEval() == true)
+                var newContext = ctx.Nest(FhirValueList.Create(element));
+                if (lambda(newContext).BooleanEval() == true)
                     yield return element; 
             }
         }

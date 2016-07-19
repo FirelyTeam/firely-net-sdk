@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public delegate IEnumerable<IValueProvider> Evaluator(IEvaluationContext ctx, IEnumerable<IValueProvider> focus);
+    public delegate IEnumerable<IValueProvider> Evaluator(IEvaluationContext ctx);
    // public delegate object ScalarEvaluator(IEnumerable<IFhirPathValue> focus, IEvaluationContext ctx);
 
     // There is a special case around the entry point, where the type of the entry point can be represented, but is optional.
@@ -27,31 +27,30 @@ namespace Hl7.Fhir.FluentPath
 
     public static class Eval
     {
-        public static IEnumerable<IValueProvider> Select(this Evaluator evaluator, IEnumerable<IValueProvider> input, IEvaluationContext context)
+        public static IEnumerable<IValueProvider> Select(this Evaluator evaluator, IEvaluationContext context)
         {
-            context.OriginalContext = input;
-            return evaluator(context, input);
+            return evaluator(context);
         }
 
         public static IEnumerable<IValueProvider> Select(this Evaluator evaluator, IEnumerable<IValueProvider> input)
         {
-            return evaluator.Select(input, new BaseEvaluationContext());
+            return evaluator.Select( BaseEvaluationContext.Root(input));
         }
 
-        public static object Scalar(this Evaluator evaluator, IEnumerable<IValueProvider> input, IEvaluationContext context)
+        public static object Scalar(this Evaluator evaluator, IEvaluationContext context)
         {
-            return evaluator.Select(input, context).Single().Value;
+            return evaluator.Select(context).Single().Value;
         }
 
         public static object Scalar(this Evaluator evaluator, IEnumerable<IValueProvider> input)
         {
-            return evaluator.Scalar(input, new BaseEvaluationContext());
+            return evaluator.Scalar(BaseEvaluationContext.Root(input));
         }
 
         // For predicates, Empty is considered false (?)
-        public static bool Predicate(this Evaluator evaluator, IEnumerable<IValueProvider> input, IEvaluationContext context)
+        public static bool Predicate(this Evaluator evaluator, IEvaluationContext context)
         {
-            var result = evaluator.Select(input, context).BooleanEval();
+            var result = evaluator.Select(context).BooleanEval();
 
             if (!result == null)
                 return false;
@@ -61,7 +60,29 @@ namespace Hl7.Fhir.FluentPath
 
         public static bool Predicate(this Evaluator evaluator, IEnumerable<IValueProvider> input)
         {
-            return evaluator.Predicate(input, new BaseEvaluationContext());
+            return evaluator.Predicate(BaseEvaluationContext.Root(input));
+        }
+
+
+        public static Evaluator Return(Hl7.Fhir.FluentPath.IValueProvider value)
+        {
+            return _ => (new[] { (Hl7.Fhir.FluentPath.IValueProvider)value });
+        }
+
+        public static Evaluator Return(IEnumerable<Hl7.Fhir.FluentPath.IValueProvider> value)
+        {
+            return _ => value;
+        }
+
+        public static Evaluator ResolveValue(string name)
+        {
+            return ctx => ctx.ResolveValue(name);
+        }
+
+
+        public static Evaluator Focus()
+        {
+            return ctx => ctx.GetThis();
         }
 
 
@@ -86,7 +107,7 @@ namespace Hl7.Fhir.FluentPath
         //    return (f, c) => f.Select(elements => mapper(elements, c));
         //}
 
-      
+
 
         //public static Evaluator StartsWith(Evaluator prefix)
         //{
@@ -135,6 +156,6 @@ namespace Hl7.Fhir.FluentPath
         //    };
         //}
 
-        
+
     }
-  }
+}
