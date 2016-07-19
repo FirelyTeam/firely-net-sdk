@@ -18,28 +18,6 @@ namespace Hl7.Fhir.FluentPath.Binding
 
     public class BindingTable
     {
-        private static ParamBinding<IEnumerable<IValueProvider>> parAny(string name)
-        {
-            return new ParamBinding<IEnumerable<IValueProvider>>(name);
-        }
-
-        private static FocusBinding<IEnumerable<IValueProvider>> anyFocus = new FocusBinding<IEnumerable<IValueProvider>>();
-
-        private class ParamBinding<T> : ParamBinding
-        {
-            public ParamBinding(string name) : base(name, TypeInfo.ForNativeType(typeof(T)))
-            {
-            }
-        }
-
-        private class FocusBinding<T> : ParamBinding<T>
-        {
-            public FocusBinding() : base("focus")
-            {
-            }
-        }
-
-
         static BindingTable()
         {
             // Functions that operate on the focus, without null propagation
@@ -127,7 +105,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             logic("binary.implies", (a, b) => a.Implies(b));
 
             // Special late-bound functions
-            _functions.Add(new CallBinding("where", buildWhereLambda(), new ParamBinding("condition", TypeInfo.Any)));
+            _functions.Add(new CallBinding("where", buildWhereLambda(), 1));
         }
 
         public static Invokee Resolve(string functionName, IEnumerable<TypeInfo> argumentTypes)
@@ -158,13 +136,13 @@ namespace Hl7.Fhir.FluentPath.Binding
 
         private static void focus(string name, Func<IEnumerable<IValueProvider>, object> focusFunc)
         {
-            _functions.Add(new CallBinding(name, buildFocusInputCall(focusFunc), new ParamBinding[] { }));
+            _functions.Add(new CallBinding(name, buildFocusInputCall(focusFunc), 0));
         }
 
         private static DynaDispatcher add<F>(string name, Func<F,object> func)
         {
             var db = new DynaDispatcher();
-            _functions.Add(new CallBinding(name, db.Invoke, new ParamBinding[] { } ));
+            _functions.Add(new CallBinding(name, db.Invoke, 0));
             db.Add(func);
 
             return db;
@@ -173,7 +151,7 @@ namespace Hl7.Fhir.FluentPath.Binding
         private static DynaDispatcher add<F,A>(string name, Func<F,A,object> func)
         {
             var db = new DynaDispatcher();
-            _functions.Add(new CallBinding(name, db.Invoke, parAny("param1")));
+            _functions.Add(new CallBinding(name, db.Invoke, 1));
             db.Add(func);
 
             return db;
@@ -182,7 +160,7 @@ namespace Hl7.Fhir.FluentPath.Binding
         private static DynaDispatcher add<F,A, B>(string name, Func<F,A,B,object> func)
         {
             var db = new DynaDispatcher();
-            _functions.Add(new CallBinding(name, db.Invoke, parAny("param1"), parAny("param2")));
+            _functions.Add(new CallBinding(name, db.Invoke, 2));
             db.Add(func);
 
             return db;
@@ -190,7 +168,7 @@ namespace Hl7.Fhir.FluentPath.Binding
 
         private static void logic(string name, Func<Func<bool?>,Func<bool?>,bool?> func)
         {
-            _functions.Add(new CallBinding(name, buildLogicCall(func), new ParamBinding("left", TypeInfo.Boolean), new ParamBinding("right", TypeInfo.Boolean)));
+            _functions.Add(new CallBinding(name, buildLogicCall(func), 2));
         }
 
 
@@ -242,7 +220,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             return (ctx, args) =>
             {
                 var focus = ctx.GetThis();
-                return Typecasts.WrapNative<IEnumerable<IValueProvider>>(anyFocus, func, focus);
+                return Typecasts.WrapNative<IEnumerable<IValueProvider>>(func, focus);
             };
         }            
     }

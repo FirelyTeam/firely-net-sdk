@@ -16,19 +16,19 @@ namespace Hl7.Fhir.FluentPath.Binding
         public string Name { get; private set; }
         public Invokee Function { get; private set; }
 
-        public IEnumerable<ParamBinding> Arguments { get; private set; }
+        public int NumArgs { get; private set; }
 
-        public CallBinding(string name, Invokee function, params ParamBinding[] arguments)
+        public CallBinding(string name, Invokee function, int numArgs)
         {
             Name = name;
             Function = function;
-            Arguments = arguments;
+            NumArgs = numArgs;
         }
 
         public bool StaticMatches(string functionName, IEnumerable<TypeInfo> argumentTypes)
         {
             //TODO: Match types
-            return functionName == Name && argumentTypes.Count() == Arguments.Count();
+            return functionName == Name && argumentTypes.Count() == NumArgs;
         }
     }
 }

@@ -118,20 +118,20 @@ namespace Hl7.Fhir.FluentPath.Binding
             return cast(unboxed);
         }
 
-        public static IEnumerable<IValueProvider> WrapNative<F>(ParamBinding b1, Func<F,object> f, IEnumerable<IValueProvider> p1)
+        public static IEnumerable<IValueProvider> WrapNative<F>(Func<F,object> f, IEnumerable<IValueProvider> p1)
         {
-            return CastTo<IEnumerable<IValueProvider>>(f(b1.Bind<F>(p1)));
+            return CastTo<IEnumerable<IValueProvider>>(f(Typecasts.CastTo<F>(p1)));
         }
 
-        public static IEnumerable<IValueProvider> WrapNative<F,A>(ParamBinding b1, ParamBinding b2, Func<F, A, object> f, IEnumerable<IValueProvider> p1, IEnumerable<IValueProvider> p2)
+        public static IEnumerable<IValueProvider> WrapNative<F,A>(Func<F, A, object> f, IEnumerable<IValueProvider> p1, IEnumerable<IValueProvider> p2)
         {
-            return CastTo<IEnumerable<IValueProvider>>(f(b1.Bind<F>(p1), b2.Bind<A>(p2)));
+            return CastTo<IEnumerable<IValueProvider>>(f(Typecasts.CastTo<F>(p1), Typecasts.CastTo<A>(p2)));
         }
 
-        public static IEnumerable<IValueProvider> WrapNative<F, A, B>(ParamBinding b1, ParamBinding b2, ParamBinding b3, 
+        public static IEnumerable<IValueProvider> WrapNative<F, A, B>( 
                         Func<F, A, B, object> f, IEnumerable<IValueProvider> p1, IEnumerable<IValueProvider> p2, IEnumerable<IValueProvider> p3)
         {
-            return CastTo<IEnumerable<IValueProvider>>(f(b1.Bind<F>(p1), b2.Bind<A>(p2), b3.Bind<B>(p3)  ));
+            return CastTo<IEnumerable<IValueProvider>>(f(Typecasts.CastTo<F>(p1), Typecasts.CastTo<A>(p2), Typecasts.CastTo<B>(p3)) );
         }
 
     }

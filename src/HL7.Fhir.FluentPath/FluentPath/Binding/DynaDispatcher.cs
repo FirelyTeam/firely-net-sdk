@@ -80,7 +80,7 @@ namespace Hl7.Fhir.FluentPath.Binding
                         }
                         catch(TargetInvocationException tie)
                         {
-                            // Unrwarp the very non-informative T.I.E, and throw the nested exception instead
+                            // Unwrap the very non-informative T.I.E, and throw the nested exception instead
                             throw tie.InnerException;
                         }
                     }
