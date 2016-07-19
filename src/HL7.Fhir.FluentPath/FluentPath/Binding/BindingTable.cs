@@ -196,7 +196,7 @@ namespace Hl7.Fhir.FluentPath.Binding
 
         private static Invokee buildLogicCall(Func<Func<bool?>, Func<bool?>, bool?> func)
         {
-            return (ctx, f, args) =>
+            return (ctx, args) =>
             {
                 var left = args.First();
                 var right = args.Skip(1).First();
@@ -206,8 +206,9 @@ namespace Hl7.Fhir.FluentPath.Binding
 
         private static Invokee buildExternalCall(string name)
         {
-            return (ctx, focus, args) =>
+            return (ctx, args) =>
             {
+                var focus = ctx.GetThis();
                 var evaluatedArguments = args.Select(a => a(ctx));
                 return ctx.InvokeExternalFunction(name, focus, evaluatedArguments);
             };
@@ -216,8 +217,9 @@ namespace Hl7.Fhir.FluentPath.Binding
 
         private static Invokee buildWhereLambda()
         {
-            return (ctx, focus, args) =>
+            return (ctx, args) =>
             {
+                var focus = ctx.GetThis();
                 Evaluator lambda = args.First();
 
                 return run(ctx, focus, lambda);
@@ -237,8 +239,9 @@ namespace Hl7.Fhir.FluentPath.Binding
 
         private static Invokee buildFocusInputCall(Func<IEnumerable<IValueProvider>,object> func)
         {
-            return (ctx, focus, args) =>
+            return (ctx, args) =>
             {
+                var focus = ctx.GetThis();
                 return Typecasts.WrapNative<IEnumerable<IValueProvider>>(anyFocus, func, focus);
             };
         }            

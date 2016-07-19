@@ -52,9 +52,10 @@ namespace Hl7.Fhir.FluentPath.Binding
             return this;
         }
 
-        public IEnumerable<IValueProvider> Invoke(IEvaluationContext context, IEnumerable<IValueProvider> focus, IEnumerable<Evaluator> args)
+        public IEnumerable<IValueProvider> Invoke(IEvaluationContext context, IEnumerable<Evaluator> args)
         {
             List<object> actualArgs = new List<object>();
+            var focus = context.GetThis();
 
             if (!focus.Any()) return FhirValueList.Empty;
             actualArgs.Add(Typecasts.Unbox(focus));

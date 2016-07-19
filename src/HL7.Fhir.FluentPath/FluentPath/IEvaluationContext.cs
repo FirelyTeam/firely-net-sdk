@@ -50,7 +50,8 @@ namespace Hl7.Fhir.FluentPath
         /// Whenever the engine encountes an unknown function, it will call this method to try to invoke it externally
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="parameters">An ordered set parameters, each a collection of IFhirPathValues representing the value of that parameter</param>
+        /// <param name="parameters">An ordered set parameters, each a collection of IFhirPathValues representing the value of that parameter. The
+        /// first parameter is the focus.</param>
         /// <remarks>Should throw NotSupportedException if the external function is not supported.</remarks>
         IEnumerable<IValueProvider> InvokeExternalFunction(string name, IEnumerable<IValueProvider> focus, IEnumerable<IEnumerable<IValueProvider>> parameters);
     }

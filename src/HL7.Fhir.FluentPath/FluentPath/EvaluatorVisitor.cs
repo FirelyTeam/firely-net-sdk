@@ -63,7 +63,7 @@ namespace Hl7.Fhir.FluentPath
 
                 try
                 {
-                    return invokee(newContext, focusNodes, arguments);
+                    return invokee(newContext, arguments);
                 }
                 catch (Exception e)
                 {

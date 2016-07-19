@@ -11,5 +11,5 @@ using System.Collections.Generic;
 namespace Hl7.Fhir.FluentPath.Binding
 {
     //TODO: Can we even make the context lazy (IE the focus is evaluated as late as possible?)
-    public delegate IEnumerable<IValueProvider> Invokee(IEvaluationContext context, IEnumerable<IValueProvider> focus, IEnumerable<Evaluator> arguments);  
+    public delegate IEnumerable<IValueProvider> Invokee(IEvaluationContext context, IEnumerable<Evaluator> arguments);  
 }
