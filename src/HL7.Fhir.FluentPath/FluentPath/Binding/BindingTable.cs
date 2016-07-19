@@ -21,82 +21,90 @@ namespace Hl7.Fhir.FluentPath.Binding
         static BindingTable()
         {
             // Functions that operate on the focus, without null propagation
-            focus("empty", f => !f.Any());
-            focus("exists", f => f.Any());
-            focus("count", f => f.Count());
+            add("empty", (IEnumerable<object> f) => !f.Any());
+            add("exists", (IEnumerable<object> f) => f.Any());
+            add("count", (IEnumerable<object> f) => f.Count());
 
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
-            add("not", (IEnumerable<IValueProvider> f) => f.Not());
-            add("builtin.children", (IEnumerable<IValueProvider> f, string a) => f.Children(a));
+            nullp("not", (IEnumerable<IValueProvider> f) => f.Not());
+            nullp("builtin.children", (IEnumerable<IValueProvider> f, string a) => f.Children(a));
 
-            add("binary.=", (object f, IEnumerable<IValueProvider>  a, IEnumerable<IValueProvider> b) => a.IsEqualTo(b));
-            add("binary.!=", (object f, IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b) => !a.IsEqualTo(b));
+            nullp("binary.=", (object f, IEnumerable<IValueProvider>  a, IEnumerable<IValueProvider> b) => a.IsEqualTo(b));
+            nullp("binary.!=", (object f, IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b) => !a.IsEqualTo(b));
 
-            add("unary.-", (object f, long a) => -a)
-                .Add((object f, decimal a) => -a);
-            add("unary.+", (object f, long a) => a)
-                .Add((object f, decimal a) => a);
+            nullp("unary.-", (object f, long a) => -a);
+            nullp("unary.-", (object f, decimal a) => -a);
+            nullp("unary.+", (object f, long a) => a);
+            nullp("unary.+", (object f, decimal a) => a);
 
-            add("binary.*", (object f, long a, long b) => a * b)
-                .Add( (object f, decimal a, decimal b) => a * b);
-            add("binary./", (object f, decimal a, decimal b) => a / b);
-                //.Add((object f, decimal a, decimal b) => a / b);
-            add("binary.+", (object f, long a, long b) => a + b)
-                .Add((object f, decimal a, decimal b) => a + b)
-                .Add((object f, string a, string b) => a + b);
-            add("binary.-", (object f, long a, long b) => a - b)
-                .Add((object f, decimal a, decimal b) => a - b);
-            add("binary.div", (object f, long a, long b) => a / b)
-                .Add((object f, decimal a, decimal b) => (long)Math.Truncate(a / b));
-            add("binary.mod", (object f, long a, long b) => a % b)
-                .Add((object f, decimal a, decimal b) => a % b);
+            nullp("binary.*", (object f, long a, long b) => a * b);
+            nullp("binary.*", (object f, decimal a, decimal b) => a * b);
 
-            add("binary.>", (object f, long a, long b) => a > b)
-                .Add((object f, decimal a, decimal b) => a > b)
-                .Add((object f, string a, string b) => String.Compare(a, b) > 0)
-                .Add((object f, PartialDateTime a, PartialDateTime b) => a > b)
-                .Add((object f, Time a, Time b) => a > b);
-            add("binary.<", (object f, long a, long b) => a < b)
-                .Add((object f, decimal a, decimal b) => a < b)
-                .Add((object f, string a, string b) => String.Compare(a, b) < 0)
-                .Add((object f, PartialDateTime a, PartialDateTime b) => a < b)
-                .Add((object f, Time a, Time b) => a < b);
-            add("binary.<=", (object f, long a, long b) => a <= b)
-                .Add((object f, decimal a, decimal b) => a <= b)
-                .Add((object f, string a, string b) => String.Compare(a, b) <= 0)
-                .Add((object f, PartialDateTime a, PartialDateTime b) => a <= b)
-                .Add((object f, Time a, Time b) => a <= b);
-            add("binary.>=", (object f, long a, long b) => a >= b)
-                .Add((object f, decimal a, decimal b) => a >= b)
-                .Add((object f, string a, string b) => String.Compare(a, b) >= 0)
-                .Add((object f, PartialDateTime a, PartialDateTime b) => a >= b)
-                .Add((object f, Time a, Time b) => a >= b);
+            nullp("binary./", (object f, decimal a, decimal b) => a / b);
+            //.Add((object f, decimal a, decimal b) => a / b);
 
-            add("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.Union(r) );
-            add("binary.contains", (object f, IEnumerable<IValueProvider> a, IValueProvider b) => a.Contains(b) );
-            add("binary.in", (object f, IValueProvider a, IEnumerable<IValueProvider> b) => b.Contains(a));
-            add("distinct", (IEnumerable<IValueProvider> f) => f.Distinct());
-            add("isDistinct", (IEnumerable<IValueProvider> f) => f.IsDistinct());
-            add("subsetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => f.SubsetOf(a));
-            add("supersetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => a.SubsetOf(f));
+            nullp("binary.+", (object f, long a, long b) => a + b);
+            nullp("binary.+", (object f, decimal a, decimal b) => a + b);
+            nullp("binary.+", (object f, string a, string b) => a + b);
 
-            add("single", (IEnumerable<IValueProvider> f) => f.Single());
-            add("skip", (IEnumerable<IValueProvider> f, long a) =>  f.Skip((int)a));
-            add("first", (IEnumerable<IValueProvider> f) => f.First());
-            add("last", (IEnumerable<IValueProvider> f) => f.Last());
-            add("tail", (IEnumerable<IValueProvider> f) => f.Tail());
-            add("take", (IEnumerable<IValueProvider> f, long a) => f.Take((int)a));
-            add("builtin.item", (IEnumerable<IValueProvider> f, long a) => f.Item((int)a));
+            nullp("binary.-", (object f, long a, long b) => a - b);
+            nullp("binary.-", (object f, decimal a, decimal b) => a - b);
 
-            add("toInteger", (IValueProvider f) => f.ToInteger());
-            add("toDecimal", (IValueProvider f) => f.ToDecimal());
-            add("toString", (IValueProvider f) => f.ToStringRepresentation());
+            nullp("binary.div", (object f, long a, long b) => a / b);
+            nullp("binary.div", (object f, decimal a, decimal b) => (long)Math.Truncate(a / b));
 
-            add("substring", (string f, long a) => f.Substring((int)a));
-            add("substring", (string f, long a, long b) => f.Substring((int)a, (int)b));
+            nullp("binary.mod", (object f, long a, long b) => a % b);
+            nullp("binary.mod", (object f, decimal a, decimal b) => a % b);
 
-            add("today", (object f) => PartialDateTime.Today());
-            add("now", (object f) => PartialDateTime.Now());
+            nullp("binary.>", (object f, long a, long b) => a > b);
+            nullp("binary.>", (object f, decimal a, decimal b) => a > b);
+            nullp("binary.>", (object f, string a, string b) => String.Compare(a, b) > 0);
+            nullp("binary.>", (object f, PartialDateTime a, PartialDateTime b) => a > b);
+            nullp("binary.>", (object f, Time a, Time b) => a > b);
+
+            nullp("binary.<", (object f, long a, long b) => a < b);
+            nullp("binary.<", (object f, decimal a, decimal b) => a < b);
+            nullp("binary.<", (object f, string a, string b) => String.Compare(a, b) < 0);
+            nullp("binary.<", (object f, PartialDateTime a, PartialDateTime b) => a < b);
+            nullp("binary.<", (object f, Time a, Time b) => a < b);
+
+            nullp("binary.<=", (object f, long a, long b) => a <= b);
+            nullp("binary.<=", (object f, decimal a, decimal b) => a <= b);
+            nullp("binary.<=", (object f, string a, string b) => String.Compare(a, b) <= 0);
+            nullp("binary.<=", (object f, PartialDateTime a, PartialDateTime b) => a <= b);
+            nullp("binary.<=", (object f, Time a, Time b) => a <= b);
+
+            nullp("binary.>=", (object f, long a, long b) => a >= b);
+            nullp("binary.>=", (object f, decimal a, decimal b) => a >= b);
+            nullp("binary.>=", (object f, string a, string b) => String.Compare(a, b) >= 0);
+            nullp("binary.>=", (object f, PartialDateTime a, PartialDateTime b) => a >= b);
+            nullp("binary.>=", (object f, Time a, Time b) => a >= b);
+
+            nullp("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.Union(r) );
+            nullp("binary.contains", (object f, IEnumerable<IValueProvider> a, IValueProvider b) => a.Contains(b) );
+            nullp("binary.in", (object f, IValueProvider a, IEnumerable<IValueProvider> b) => b.Contains(a));
+            nullp("distinct", (IEnumerable<IValueProvider> f) => f.Distinct());
+            nullp("isDistinct", (IEnumerable<IValueProvider> f) => f.IsDistinct());
+            nullp("subsetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => f.SubsetOf(a));
+            nullp("supersetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => a.SubsetOf(f));
+
+            nullp("single", (IEnumerable<IValueProvider> f) => f.Single());
+            nullp("skip", (IEnumerable<IValueProvider> f, long a) =>  f.Skip((int)a));
+            nullp("first", (IEnumerable<IValueProvider> f) => f.First());
+            nullp("last", (IEnumerable<IValueProvider> f) => f.Last());
+            nullp("tail", (IEnumerable<IValueProvider> f) => f.Tail());
+            nullp("take", (IEnumerable<IValueProvider> f, long a) => f.Take((int)a));
+            nullp("builtin.item", (IEnumerable<IValueProvider> f, long a) => f.Item((int)a));
+
+            nullp("toInteger", (IValueProvider f) => f.ToInteger());
+            nullp("toDecimal", (IValueProvider f) => f.ToDecimal());
+            nullp("toString", (IValueProvider f) => f.ToStringRepresentation());
+
+            nullp("substring", (string f, long a) => f.Substring((int)a));
+            nullp("substring", (string f, long a, long b) => f.Substring((int)a, (int)b));
+
+            nullp("today", (object f) => PartialDateTime.Today());
+            nullp("now", (object f) => PartialDateTime.Now());
 
             // Logic operators do not use null propagation and may do short-cut eval
             logic("binary.and", (a, b) => a.And(b));
@@ -105,15 +113,23 @@ namespace Hl7.Fhir.FluentPath.Binding
             logic("binary.implies", (a, b) => a.Implies(b));
 
             // Special late-bound functions
-            _functions.Add(new CallBinding("where", buildWhereLambda(), typeof(Evaluator)));
+            _functions.Add(new CallBinding("where", buildWhereLambda(), typeof(object), typeof(Evaluator)));
         }
 
-        public static Invokee Resolve(string functionName, IEnumerable<TypeInfo> argumentTypes)
+        public static Invokee Resolve(string functionName, IEnumerable<Type> argumentTypes)
         {
-            CallBinding binding = _functions.SingleOrDefault(f => f.StaticMatches(functionName, argumentTypes));                        
+            var bindings = _functions.Where(f => f.StaticMatches(functionName, argumentTypes));                        
 
-            if (binding != null)
-                return binding.Function;
+            if(bindings.Any())
+            {
+                if (bindings.Count() > 1)
+                {
+                    return (new DynaDispatcher(functionName, bindings)).Invoke();
+                }
+                else
+                    return bindings.Single().Function;
+            }
+
             else
             {
                 if (_functions.Any(f => f.Name == functionName))
@@ -134,52 +150,29 @@ namespace Hl7.Fhir.FluentPath.Binding
         private static List<CallBinding> _functions = new List<CallBinding>();
 
 
-        private static void focus<R>(string name, Func<IEnumerable<IValueProvider>, R> focusFunc)
+        private static void add<A,R>(string name, Func<A, R> focusFunc)
         {
-            _functions.Add(new CallBinding(name, InvokeeFactory.Wrap(focusFunc)));
+            _functions.Add(new CallBinding(name, InvokeeFactory.Wrap(focusFunc), typeof(A)));
         }
 
-        private static DynaDispatcher add<F>(string name, Func<F,object> func)
+        private static void nullp<F>(string name, Func<F,object> func)
         {
-            var db = new DynaDispatcher(name);
-            _functions.Add(new CallBinding(name, db.Invoke));
-            db.Add(func);
-
-            return db;
+            _functions.Add(new CallBinding(name, InvokeeFactory.Wrap(func).NullProp(), typeof(F)));
         }
 
-        private static DynaDispatcher add<F,A>(string name, Func<F,A,object> func)
+        private static void nullp<F,A>(string name, Func<F,A,object> func)
         {
-            var db = new DynaDispatcher(name);
-            _functions.Add(new CallBinding(name, db.Invoke, typeof(object)));
-            db.Add(func);
-
-            return db;
+            _functions.Add(new CallBinding(name, InvokeeFactory.Wrap(func).NullProp(), typeof(F), typeof(A)));
         }
 
-        private static DynaDispatcher add<F,A, B>(string name, Func<F,A,B,object> func)
+        private static void nullp<F,A, B>(string name, Func<F,A,B,object> func)
         {
-            var db = new DynaDispatcher(name);
-            _functions.Add(new CallBinding(name, db.Invoke, typeof(object), typeof(object)));
-            db.Add(func);
-
-            return db;
+            _functions.Add(new CallBinding(name, InvokeeFactory.Wrap(func).NullProp(), typeof(F), typeof(A), typeof(B)));
         }
 
         private static void logic(string name, Func<Func<bool?>,Func<bool?>,bool?> func)
         {
-            _functions.Add(new CallBinding(name, buildLogicCall(func), typeof(Func<bool?>), typeof(Func<bool?>)));
-        }
-
-
-        private static Invokee buildLogicCall(Func<Func<bool?>, Func<bool?>, bool?> func)
-        {
-            return (ctx, args) =>
-            {
-                var left = args.First();
-                var right = args.Skip(1).First();
-                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(()=>left(ctx).BooleanEval(), ()=>right(ctx).BooleanEval()));
-            };
+            _functions.Add(new CallBinding(name, InvokeeFactory.WrapLogic(func), typeof(object), typeof(Func<bool?>), typeof(Func<bool?>)));
         }
 
         private static Invokee buildExternalCall(string name)
@@ -191,7 +184,6 @@ namespace Hl7.Fhir.FluentPath.Binding
                 return ctx.InvokeExternalFunction(name, focus, evaluatedArguments);
             };
         }
-
 
         private static Invokee buildWhereLambda()
         {

@@ -15,6 +15,12 @@ namespace Hl7.Fhir.FluentPath.Binding
             _name = name;
         }
 
+        public DynaDispatcher(string name, IEnumerable<CallBinding> bindings)
+        {
+            _name = name;
+            _candidates.AddRange(bindings);
+        }
+
         private List<CallBinding> _candidates = new List<CallBinding>();
         private string _name;
 
@@ -36,37 +42,30 @@ namespace Hl7.Fhir.FluentPath.Binding
             return this;
         }
 
-        public IEnumerable<IValueProvider> Invoke(IEvaluationContext context, IEnumerable<Evaluator> args)
+        public Invokee Invoke()
+        {
+            Invokee v = invokeNested;
+            return v.NullProp();
+        }
+
+        private IEnumerable<IValueProvider> invokeNested(IEvaluationContext context, IEnumerable<Evaluator> args)
         {
             List<object> actualArgs = new List<object>();
-            var focus = context.GetThis();
-
-            if (!focus.Any()) return FhirValueList.Empty;
-            actualArgs.Add(Typecasts.Unbox(focus));
-
-            foreach (var arg in args)
-            {
-                var argValue = arg(context);
-                if (!argValue.Any()) return FhirValueList.Empty;
-                actualArgs.Add(Typecasts.Unbox(argValue));
-            }
+            actualArgs.Add(context.GetThis());
+            actualArgs.AddRange(args.Select(a => a(context)));
 
             foreach(var entry in _candidates)
             {
-                if (entry.ArgumentTypes.Count() == actualArgs.Count())
+                if (entry.DynamicMatches(_name,actualArgs))
                 {
-                    var casts = actualArgs.Zip(entry.ArgumentTypes, (aa, ea) => Typecasts.GetImplicitCast(aa.GetType(), ea));
-                    if(casts.All(c => c != null))
+                    try
                     {
-                        try
-                        {
-                            return entry.Function(context, args);
-                        }
-                        catch(TargetInvocationException tie)
-                        {
-                            // Unwrap the very non-informative T.I.E, and throw the nested exception instead
-                            throw tie.InnerException;
-                        }
+                        return entry.Function(context, args);
+                    }
+                    catch (TargetInvocationException tie)
+                    {
+                        // Unwrap the very non-informative T.I.E, and throw the nested exception instead
+                        throw tie.InnerException;
                     }
                 }
             }
@@ -87,7 +86,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             
             if(arguments.Skip(1).Any())
             {
-                result = "with parameters of type '{0}' on {1}"
+                result = "with parameters of type '{0}' "
                         .FormatWith(String.Join(",", arguments.Skip(1).Select(a => readableName(a.GetType()))), result);
             }
 

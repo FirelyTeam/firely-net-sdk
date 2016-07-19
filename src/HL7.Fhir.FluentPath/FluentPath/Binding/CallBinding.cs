@@ -26,10 +26,21 @@ namespace Hl7.Fhir.FluentPath.Binding
             ArgumentTypes = argTypes;
         }
 
-        public bool StaticMatches(string functionName, IEnumerable<TypeInfo> argumentTypes)
+        public bool StaticMatches(string functionName, IEnumerable<Type> argumentTypes)
         {
             //TODO: Match types
             return functionName == Name && argumentTypes.Count() == ArgumentTypes.Count();
+        }
+
+        public bool DynamicMatches(string functionName, IEnumerable<object> argumentValues)
+        {
+            if (ArgumentTypes.Count() != argumentValues.Count())
+                return false;
+
+            var casts = argumentValues.Select(av => Typecasts.Unbox(av))
+                .Zip(ArgumentTypes, (aa, ea) => Typecasts.GetImplicitCast(aa.GetType(), ea));
+
+            return casts.All(c => c != null);
         }
 
         public static CallBinding Create<R>(string name, Func<R> func)

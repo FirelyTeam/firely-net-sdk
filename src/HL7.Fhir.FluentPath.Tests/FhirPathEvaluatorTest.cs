@@ -56,6 +56,12 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.AreEqual(3L, PathExpression.Scalar(@"Patient.identifier.value.count()", testInput));
         }
 
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestNullPropagation()
+        {
+            isTrue(@"({}.substring(0)).empty()");
+            isTrue(@"('hello'.substring({})).empty()");
+        }
 
         [TestMethod, TestCategory("FhirPath")]
         public void TestDynaBinding()

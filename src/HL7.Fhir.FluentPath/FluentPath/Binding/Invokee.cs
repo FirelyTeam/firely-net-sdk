@@ -35,7 +35,6 @@ namespace Hl7.Fhir.FluentPath.Binding
         }
 
 
-
         public static Invokee Wrap<R>(Func<R> func)
         {
             return (ctx, args) =>
@@ -73,5 +72,17 @@ namespace Hl7.Fhir.FluentPath.Binding
                 return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(focus, argA, argB)); 
             };
         }
+
+
+        public static Invokee WrapLogic(Func<Func<bool?>, Func<bool?>, bool?> func)
+        {
+            return (ctx, args) =>
+            {
+                var left = args.First();
+                var right = args.Skip(1).First();
+                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(() => left(ctx).BooleanEval(), () => right(ctx).BooleanEval()));
+            };
+        }
+
     }
 }

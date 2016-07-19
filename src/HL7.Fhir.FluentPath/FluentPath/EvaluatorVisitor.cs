@@ -23,7 +23,9 @@ namespace Hl7.Fhir.FluentPath
             var focusEval = expression.Focus.ToEvaluator();
             var argsEval = expression.Arguments.Select(arg => arg.ToEvaluator());
 
-            var types = expression.Arguments.Select(a => a.ExpressionType);
+            // We have no real type information, so just pass object as the type
+            var types = new List<Type>() { typeof(object) }; //   for the focus;
+            types.AddRange(expression.Arguments.Select(a => typeof(object)));   // for the arguments
             Invokee boundFunction = BindingTable.Resolve(expression.FunctionName, types);
 
             return buildBindingInvoke(expression.FunctionName, focusEval, argsEval, boundFunction);
