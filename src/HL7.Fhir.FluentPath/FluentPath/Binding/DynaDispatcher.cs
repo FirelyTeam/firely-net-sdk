@@ -10,45 +10,29 @@ namespace Hl7.Fhir.FluentPath.Binding
 {
     internal class DynaDispatcher
     {
-        class DynaEntry
+        public DynaDispatcher(string name)
         {
-            public IEnumerable<Type> ArgTypes;
-            public Delegate Invokee;
+            _name = name;
         }
 
-        private List<DynaEntry> _candidates = new List<DynaEntry>();
+        private List<CallBinding> _candidates = new List<CallBinding>();
+        private string _name;
 
-        public DynaDispatcher Add<F, R>(Func<F, R> f)
+        public DynaDispatcher Add<A, R>(Func<A, R> f)
         {
-            return Add((Delegate)f);
+            _candidates.Add(CallBinding.Create(_name, f));
+            return this;
         }
 
         public DynaDispatcher Add<F, A, R>(Func<F, A, R> f)
         {
-            return Add((Delegate)f);
+            _candidates.Add(CallBinding.Create(_name, f));
+            return this;
         }
 
         public DynaDispatcher Add<F, A, B, R>(Func<F, A, B, R> f)
         {
-            return Add((Delegate)f);
-        }
-
-        private DynaDispatcher Add(Delegate f)
-        {
-            var entry = new DynaEntry();
-
-            entry.ArgTypes = f.Method.GetParameters().Select(p => p.ParameterType);
-            entry.Invokee = f;
-            _candidates.Add(entry);
-
-            return this;
-        }
-
-        private DynaDispatcher Add(IEnumerable<Delegate> f)
-        {
-            foreach (var candidate in f)
-                Add(candidate);
-
+            _candidates.Add(CallBinding.Create(_name, f));
             return this;
         }
 
@@ -69,14 +53,14 @@ namespace Hl7.Fhir.FluentPath.Binding
 
             foreach(var entry in _candidates)
             {
-                if (entry.ArgTypes.Count() == actualArgs.Count())
+                if (entry.ArgumentTypes.Count() == actualArgs.Count())
                 {
-                    var casts = actualArgs.Zip(entry.ArgTypes, (aa, ea) => Typecasts.GetImplicitCast(aa.GetType(), ea));
+                    var casts = actualArgs.Zip(entry.ArgumentTypes, (aa, ea) => Typecasts.GetImplicitCast(aa.GetType(), ea));
                     if(casts.All(c => c != null))
                     {
                         try
                         {
-                            return Typecasts.CastTo<IEnumerable<IValueProvider>>(entry.Invokee.Method.Invoke(entry.Invokee.Target, actualArgs.Zip(casts, (a, c) => c(a)).ToArray()));
+                            return entry.Function(context, args);
                         }
                         catch(TargetInvocationException tie)
                         {
@@ -118,14 +102,6 @@ namespace Hl7.Fhir.FluentPath.Binding
                 return "object";
             else
                 return t.Name;
-        }
-
-        private static IEnumerable<IValueProvider> PropEmpty(IEnumerable<IValueProvider> source, Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> f)
-        {
-            if (source.Any())
-                return f(source);
-            else
-                return FhirValueList.Empty;
-        }
+        }    
     }
 }
