@@ -53,6 +53,8 @@
     <Compile Include="FluentPath\Binding\DynaDispatcher.cs" />
     <Compile Include="FluentPath\Binding\Invokee.cs" />
     <Compile Include="FluentPath\Binding\Typecasts.cs" />
+    <Compile Include="FluentPath\Expressions\EvaluatorVisitor.cs" />
+    <Compile Include="FluentPath\Expressions\TreeVisualizerVisitor.cs" />
     <Compile Include="FluentPath\Functions\CollectionOperators.cs" />
     <Compile Include="FluentPath\Functions\ConversionOperators.cs" />
     <Compile Include="FluentPath\Functions\EqualityOperators.cs" />
@@ -77,8 +79,6 @@
     <Compile Include="FluentPath\PartialDateTime.cs" />
     <Compile Include="FluentPath\PathExpression.cs" />
     <Compile Include="FluentPath\Time.cs" />
-    <Compile Include="FluentPath\EvaluatorVisitor.cs" />
-    <Compile Include="FluentPath\TreeVisualizerVisitor.cs" />
     <Compile Include="FluentPath\ConstantValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\IPositionInfo.cs" />

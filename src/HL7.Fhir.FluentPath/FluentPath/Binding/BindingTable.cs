@@ -206,10 +206,5 @@ namespace Hl7.Fhir.FluentPath.Binding
                     yield return element; 
             }
         }
-
-        private static Invokee buildFocusInputCall(Func<IEnumerable<IValueProvider>,object> func)
-        {
-            return InvokeeFactory.Wrap(func);
-        }            
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.FluentPath.Binding;
 
-namespace Hl7.Fhir.FluentPath
+namespace Hl7.Fhir.FluentPath.Expressions
 {
     internal class EvaluatorVisitor : FP.ExpressionVisitor<Evaluator>
     {

@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.FluentPath.Expressions;
 using System.Diagnostics;
 using Hl7.Fhir.FluentPath.InstanceTree;
 using Hl7.Fhir.Navigation;
