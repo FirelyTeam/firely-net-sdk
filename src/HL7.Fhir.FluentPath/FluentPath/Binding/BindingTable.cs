@@ -25,6 +25,16 @@ namespace Hl7.Fhir.FluentPath.Binding
             add("exists", (IEnumerable<object> f) => f.Any());
             add("count", (IEnumerable<object> f) => f.Count());
 
+            add("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.DistinctUnion(r));
+            add("binary.contains", (object f, IEnumerable<IValueProvider> a, IValueProvider b) => a.Contains(b));
+            add("binary.in", (object f, IValueProvider a, IEnumerable<IValueProvider> b) => b.Contains(a));
+            add("distinct", (IEnumerable<IValueProvider> f) => f.Distinct());
+            add("isDistinct", (IEnumerable<IValueProvider> f) => f.IsDistinct());
+            add("subsetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => f.SubsetOf(a));
+            add("supersetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => a.SubsetOf(f));
+
+
+
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
             nullp("not", (IEnumerable<IValueProvider> f) => f.Not());
             nullp("builtin.children", (IEnumerable<IValueProvider> f, string a) => f.Children(a));
@@ -80,14 +90,6 @@ namespace Hl7.Fhir.FluentPath.Binding
             nullp("binary.>=", (object f, PartialDateTime a, PartialDateTime b) => a >= b);
             nullp("binary.>=", (object f, Time a, Time b) => a >= b);
 
-            nullp("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.Union(r) );
-            nullp("binary.contains", (object f, IEnumerable<IValueProvider> a, IValueProvider b) => a.Contains(b) );
-            nullp("binary.in", (object f, IValueProvider a, IEnumerable<IValueProvider> b) => b.Contains(a));
-            nullp("distinct", (IEnumerable<IValueProvider> f) => f.Distinct());
-            nullp("isDistinct", (IEnumerable<IValueProvider> f) => f.IsDistinct());
-            nullp("subsetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => f.SubsetOf(a));
-            nullp("supersetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => a.SubsetOf(f));
-
             nullp("single", (IEnumerable<IValueProvider> f) => f.Single());
             nullp("skip", (IEnumerable<IValueProvider> f, long a) =>  f.Skip((int)a));
             nullp("first", (IEnumerable<IValueProvider> f) => f.First());
@@ -113,8 +115,11 @@ namespace Hl7.Fhir.FluentPath.Binding
             logic("binary.implies", (a, b) => a.Implies(b));
 
             // Special late-bound functions
-            _functions.Add(new CallBinding("where", buildWhereLambda(), typeof(object), typeof(Evaluator)));
-            _functions.Add(new CallBinding("select", buildSelectLambda(), typeof(object), typeof(Evaluator)));
+            _functions.Add(new CallBinding("where", buildLambdaCall(runWhere), typeof(object), typeof(Evaluator)));
+            _functions.Add(new CallBinding("select", buildLambdaCall(runSelect), typeof(object), typeof(Evaluator)));
+            _functions.Add(new CallBinding("all", buildLambdaCall(runAll), typeof(object), typeof(Evaluator)));
+            _functions.Add(new CallBinding("any", buildLambdaCall(runAny), typeof(object), typeof(Evaluator)));
+            _functions.Add(new CallBinding("repeat", buildLambdaCall(runRepeat), typeof(object), typeof(Evaluator)));
         }
 
         public static Invokee Resolve(string functionName, IEnumerable<Type> argumentTypes)
@@ -151,9 +156,19 @@ namespace Hl7.Fhir.FluentPath.Binding
         private static List<CallBinding> _functions = new List<CallBinding>();
 
 
-        private static void add<A,R>(string name, Func<A, R> focusFunc)
+        private static void add<A,R>(string name, Func<A, R> func)
         {
-            _functions.Add(new CallBinding(name, InvokeeFactory.Wrap(focusFunc), typeof(A)));
+            _functions.Add(new CallBinding(name, InvokeeFactory.Wrap(func), typeof(A)));
+        }
+
+        private static void add<A,B,R>(string name, Func<A,B,R> func)
+        {
+            _functions.Add(new CallBinding(name, InvokeeFactory.Wrap(func), typeof(A), typeof(B)));
+        }
+
+        private static void add<A, B, C, R>(string name, Func<A, B, C, R> func)
+        {
+            _functions.Add(new CallBinding(name, InvokeeFactory.Wrap(func), typeof(A), typeof(B), typeof(C)));
         }
 
         private static void nullp<F>(string name, Func<F,object> func)
@@ -186,28 +201,16 @@ namespace Hl7.Fhir.FluentPath.Binding
             };
         }
 
-        private static Invokee buildWhereLambda()
+        private static Invokee buildLambdaCall(Func<IEvaluationContext,IEnumerable<IValueProvider>,Evaluator,IEnumerable<IValueProvider>> evaluator)
         {
             return (ctx, args) =>
             {
                 var focus = ctx.GetThis();
                 Evaluator lambda = args.First();
 
-                return runWhere(ctx, focus, lambda);
+                return evaluator(ctx, focus, lambda);
             };
         }
-
-        private static Invokee buildSelectLambda()
-        {
-            return (ctx, args) =>
-            {
-                var focus = ctx.GetThis();
-                Evaluator lambda = args.First();
-
-                return runSelect(ctx, focus, lambda);
-            };
-        }
-
 
         private static IEnumerable<IValueProvider> runWhere(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
         {
@@ -228,6 +231,57 @@ namespace Hl7.Fhir.FluentPath.Binding
                 foreach (var resultElement in result)       // implement SelectMany()
                     yield return resultElement;
             }
+        }
+
+        private static IEnumerable<IValueProvider> runRepeat(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
+        {
+            var fullResult = new List<IValueProvider>();
+            List<IValueProvider> newNodes = new List<IValueProvider>(focus);
+
+            while (newNodes.Any())
+            {
+                var current = newNodes;
+                newNodes = new List<IValueProvider>();
+
+                foreach (IValueProvider element in current)
+                {
+                    var newContext = ctx.Nest(FhirValueList.Create(element));
+                    newNodes.AddRange(lambda(newContext));
+                }
+
+                fullResult.AddRange(newNodes);
+            }
+
+            return fullResult;
+        }
+
+        private static IEnumerable<IValueProvider> runAll(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
+        {
+            foreach (IValueProvider element in focus)
+            {
+                var newContext = ctx.Nest(FhirValueList.Create(element));
+
+                var result = lambda(newContext).BooleanEval();
+                if (result == null) return FhirValueList.Empty;
+                if (result == false) return FhirValueList.Create(false);
+            }
+
+            return FhirValueList.Create(true);
+        }
+
+        private static IEnumerable<IValueProvider> runAny(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
+        {
+            foreach (IValueProvider element in focus)
+            {
+                var newContext = ctx.Nest(FhirValueList.Create(element));
+                var result = lambda(newContext).BooleanEval();
+
+                //if (result == null) return FhirValueList.Empty; -> otherwise this would not be where().exists()
+                //Patient.identifier.any(use = 'official') would return {} if ANY identifier has no 'use' element. Unexpected behaviour, I think
+                if (result == true) return FhirValueList.Create(true);
+            }
+
+            return FhirValueList.Create(false);
         }
 
     }

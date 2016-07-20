@@ -15,7 +15,7 @@ namespace Hl7.Fhir.FluentPath.Binding
     public delegate IEnumerable<IValueProvider> Invokee(IEvaluationContext context, IEnumerable<Evaluator> arguments);
 
     public static class InvokeeFactory
-    {
+    {        
         public static Invokee NullProp(this Invokee source)
         {
             return (ctx, args) =>

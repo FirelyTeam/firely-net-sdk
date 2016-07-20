@@ -238,12 +238,12 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"Patient.identifier.use.isDistinct() = false");
             isTrue(@"Patient.identifier.system.isDistinct()");
             isTrue(@"(3|4).isDistinct()");
-            isTrue(@"{}.isDistinct().empty()");
+            isTrue(@"{}.isDistinct()");
 
             isTrue(@"Patient.identifier.skip(1).subsetOf(%context.Patient.identifier)");
             isTrue(@"Patient.identifier.supersetOf(%context.Patient.identifier)");
-            isTrue(@"Patient.identifier.supersetOf({}).empty()");
-            isTrue(@"{}.subsetOf(%context.Patient.identifier).empty()");
+            isTrue(@"Patient.identifier.supersetOf({})");
+            isTrue(@"{}.subsetOf(%context.Patient.identifier)");
         }
 
         [TestMethod, TestCategory("FhirPath")]
@@ -251,10 +251,53 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             isTrue(@"Patient.identifier.last() in Patient.identifier");
             isTrue(@"4 in (3|4.0|5)");
+            isTrue(@"(3|4.0|5|3).count() = 3");
             isTrue(@"Patient.identifier contains Patient.identifier.last()");
             isTrue(@"(3|4.0|5) contains 4");
-            isTrue(@"({} contains 4).empty()");
-            isTrue(@"(4 in {}).empty()");
+            isTrue(@"({} contains 4) = false");
+            isTrue(@"(4 in {}) = false");
+            isTrue(@"Patient.identifier.count() = (Patient.identifier | Patient.identifier).count()");
+            isTrue(@"(Patient.identifier | Patient.name).count() = Patient.identifier.count() + Patient.name.count()");
+            isTrue(@"Patient.select(identifier | name).count() = Patient.select(identifier.count() + name.count())");
+        }
+
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestWhere()
+        {
+            isTrue("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2");
+
+            isTrue(@"(5 | 'hi' | 4).where($this = 'hi').count()=1");
+            isTrue(@"{}.where($this = 'hi').count()=0");
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestAll()
+        {
+            isTrue(@"Patient.identifier.skip(1).all(use = 'official')");
+            isTrue(@"Patient.identifier.skip(999).all(use = 'official')");   // {}.All() aways returns true
+            isTrue(@"Patient.identifier.skip(1).all({}).empty()");   // empty results still count as "empty"
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestAny()
+        {
+            isTrue(@"Patient.identifier.any(use = 'official')");
+            isTrue(@"Patient.identifier.skip(999).any(use = 'official') = false");   // {}.Any() aways returns true
+            isTrue(@"Patient.contained.skip(1).group.group.any(concept.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestRepeat()
+        {
+            isTrue(@"Patient.contained.skip(1).repeat(group).count() = 4");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group|question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
+            Assert.AreEqual(11L, PathExpression.Scalar(@"Patient.contained.skip(1).repeat(group | question).count()", testInput));       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group|question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group).select(concept.code) contains 'COMORBIDITY'");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group).any(concept.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group).any(concept.code = 'CARDIAL') = false");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group|question).any(concept.code = 'CARDIAL')");       // really need to filter on Questionnare (as('Questionnaire'))
         }
 
 
