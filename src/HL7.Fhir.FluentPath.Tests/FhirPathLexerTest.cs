@@ -168,9 +168,10 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var parser = Lexer.Unicode.End();
 
-            AssertParser.SucceedsMatch(parser, "u0000");
-            AssertParser.SucceedsMatch(parser, "u09af");
-            AssertParser.SucceedsMatch(parser, "uffff");
+            AssertParser.SucceedsMatch(parser, @"uface", "face");
+            AssertParser.SucceedsMatch(parser, "u0000", "0000");
+            AssertParser.SucceedsMatch(parser, "u09af", "09af");
+            AssertParser.SucceedsMatch(parser, "uffff", "ffff");
 
             AssertParser.FailsMatch(parser, "u");
             AssertParser.FailsMatch(parser, "u0");
@@ -185,16 +186,16 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var parser = Lexer.Escape.End();
 
-            AssertParser.SucceedsMatch(parser, @"\uface");
-            AssertParser.SucceedsMatch(parser, @"\'");
-            AssertParser.SucceedsMatch(parser, @"\""");
-            AssertParser.SucceedsMatch(parser, @"\\");
-            AssertParser.SucceedsMatch(parser, @"\/");
+            AssertParser.SucceedsMatch(parser, @"\uface", "龜");
+            AssertParser.SucceedsMatch(parser, @"\'", @"'");
+            AssertParser.SucceedsMatch(parser, @"\""", "\"");
+            AssertParser.SucceedsMatch(parser, @"\\", @"\");
+            AssertParser.SucceedsMatch(parser, @"\/", "/");
             //AssertParser.SucceedsMatch(parser, @"\b"); - removed in STU3
-            AssertParser.SucceedsMatch(parser, @"\f");
-            AssertParser.SucceedsMatch(parser, @"\n");
-            AssertParser.SucceedsMatch(parser, @"\r");
-            AssertParser.SucceedsMatch(parser, @"\t");
+            AssertParser.SucceedsMatch(parser, @"\f", "\f");
+            AssertParser.SucceedsMatch(parser, @"\n", "\n");
+            AssertParser.SucceedsMatch(parser, @"\r", "\r");
+            AssertParser.SucceedsMatch(parser, @"\t", "\t");
 
             AssertParser.FailsMatch(parser, @"\");
             AssertParser.FailsMatch(parser, @"\ugdef");
@@ -210,15 +211,17 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Lex_String()
         {
-            var parser = Lexer.String.End();
+            var parser = Lexer.String.End();            
 
             SucceedsDelimitedString(parser, @"'single quotes'");
             SucceedsDelimitedString(parser, @"'""single quotes with doubles""'");
-            SucceedsDelimitedString(parser, @"'single \' quotes'");
-            SucceedsDelimitedString(parser, @"'single \"" quotes'");
+            AssertParser.SucceedsMatch(parser, @"'single \' quotes'", @"single ' quotes");
             SucceedsDelimitedString(parser, @"''");
 
-            SucceedsDelimitedString(parser, @"'xxx \u0123 yyyy \\\/\f\n\r\t zzz !@#$%^&*()_-=+[]{}|;:,.<>?`~'");
+            AssertParser.SucceedsMatch(parser, @"'xxx \u0040 yyy \\\/\f\n\r\t zzz !@#$%^&*()_-=+[]{}|;:,.<>?`~'",
+                            "xxx @ yyy \\/\f\n\r\t zzz " + @"!@#$%^&*()_-=+[]{}|;:,.<>?`~");
+            AssertParser.SucceedsMatch(parser, @"'\\b(?<month>\\d{1,2})/(?<day>\\d{1,2})/(?<year>\\d{2,4})\\b'",
+                            @"\b(?<month>\d{1,2})/(?<day>\d{1,2})/(?<year>\d{2,4})\b");
 
             AssertParser.FailsMatch(parser, @"'\q incorrect escape'");
             AssertParser.FailsMatch(parser, @"""double quotes""");
