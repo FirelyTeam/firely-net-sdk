@@ -42,7 +42,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             return this;
         }
 
-        public Invokee Invoke()
+        public Invokee MakeDispatcher()
         {
             Invokee v = invokeNested;
             return v.NullProp();

@@ -114,6 +114,7 @@ namespace Hl7.Fhir.FluentPath.Binding
 
             // Special late-bound functions
             _functions.Add(new CallBinding("where", buildWhereLambda(), typeof(object), typeof(Evaluator)));
+            _functions.Add(new CallBinding("select", buildSelectLambda(), typeof(object), typeof(Evaluator)));
         }
 
         public static Invokee Resolve(string functionName, IEnumerable<Type> argumentTypes)
@@ -124,7 +125,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             {
                 if (bindings.Count() > 1)
                 {
-                    return (new DynaDispatcher(functionName, bindings)).Invoke();
+                    return (new DynaDispatcher(functionName, bindings)).MakeDispatcher();
                 }
                 else
                     return bindings.Single().Function;
@@ -192,12 +193,23 @@ namespace Hl7.Fhir.FluentPath.Binding
                 var focus = ctx.GetThis();
                 Evaluator lambda = args.First();
 
-                return run(ctx, focus, lambda);
+                return runWhere(ctx, focus, lambda);
             };
         }
-        
 
-        private static IEnumerable<IValueProvider> run(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
+        private static Invokee buildSelectLambda()
+        {
+            return (ctx, args) =>
+            {
+                var focus = ctx.GetThis();
+                Evaluator lambda = args.First();
+
+                return runSelect(ctx, focus, lambda);
+            };
+        }
+
+
+        private static IEnumerable<IValueProvider> runWhere(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
         {
             foreach (IValueProvider element in focus)
             {
@@ -206,5 +218,17 @@ namespace Hl7.Fhir.FluentPath.Binding
                     yield return element; 
             }
         }
+
+        private static IEnumerable<IValueProvider> runSelect(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
+        {
+            foreach (IValueProvider element in focus)
+            {
+                var newContext = ctx.Nest(FhirValueList.Create(element));
+                var result = lambda(newContext);
+                foreach (var resultElement in result)       // implement SelectMany()
+                    yield return resultElement;
+            }
+        }
+
     }
 }

@@ -285,10 +285,8 @@ namespace Hl7.Fhir.Tests.FhirPath
             //            .where(display.startsWith('Walt')).resolve().identifier.first().value = 'Gastro'", navigator,
             //                    new TestEvaluationContext()));
 
-
-
-            //isTrue(
-            //            @"Patient.name.select(given|family).count() = 2", navigator));
+            isTrue(@"Patient.name.select(given|family).count() = 2");
+            isTrue(@"Patient.identifier.where(use = 'official').select(value + 'yep') = ('7654321yep' | '11223344yep')");
 
             //isTrue(
             //        @"Patient.**.contains('wne') = contact.relationship.coding.code and
