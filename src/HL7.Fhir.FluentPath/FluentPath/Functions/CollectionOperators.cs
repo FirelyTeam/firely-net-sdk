@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FluentPath.Functions
 {
-    public static class CollectionOperators
+    internal static class CollectionOperators
     {
         public static IEnumerable<IValueProvider> Item(this IEnumerable<IValueProvider> focus, int index)
         {

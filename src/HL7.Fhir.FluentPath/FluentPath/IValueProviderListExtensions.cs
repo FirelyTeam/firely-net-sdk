@@ -50,12 +50,6 @@ namespace Hl7.Fhir.FluentPath
             return result;
         }
 
-        //public static IEnumerable<IValueProvider> Any(this IEnumerable<IValueProvider> focus,
-        //Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> condition)
-        //{
-        //    return FhirValueList.Create(focus.Any(v => condition(FhirValueList.Create(v)).booleanEval()));
-        //}
-
 
         //public static IEnumerable<IFluentPathElement> Resolve(this IEnumerable<IFluentPathValue> focus, FhirClient client)
         //{
@@ -97,17 +91,6 @@ namespace Hl7.Fhir.FluentPath
         {
             return focus.JustElements().SelectMany(node => node.EnumerateChildrenByName(name));
         }
-
-        //public static IEnumerable<IFhirPathElement> Child(this IEnumerable<IFhirPathValue> focus, string name)
-        //{
-        //    return focus.JustFhirPathElements().Child(name);
-        //}
-
-        //public static IEnumerable<IFhirPathElement> Child(this IEnumerable<IFhirPathElement> focus, string name)
-        //{
-        //    return focus.SelectMany(node => node.Children().Where(child => child.IsMatch(name)));
-        //}
-
 
         public static IEnumerable<IElementNavigator> Children(this IValueProvider focus)
         {

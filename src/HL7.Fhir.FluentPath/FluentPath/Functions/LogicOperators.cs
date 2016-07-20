@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FluentPath.Functions
 {
-    public static class ThreeValuedLogicExtensions
+    internal static class ThreeValuedLogicExtensions
     {
         // Version of And that does short-cut evaluation using 3V boolean logic
         public static bool? And(this Func<bool?> left, Func<bool?> right)

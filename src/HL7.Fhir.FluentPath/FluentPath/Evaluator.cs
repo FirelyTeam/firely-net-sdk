@@ -87,38 +87,6 @@ namespace Hl7.Fhir.FluentPath
         }
 
 
-        //public static Evaluator All(Evaluator condition)
-        //{
-        //    return (f,c) => f.All(elements => condition(elements,c));
-        //}
-
-        //public static Evaluator Any(Evaluator condition)
-        //{
-        //    return (f, c) =>
-        //    {
-        //        if (condition != null)
-        //            return f.Any(elements => condition(elements, c));
-        //        else
-        //            return FhirValueList.Create(f.Any());
-        //    };
-        //}
-
-        //public static Evaluator Select(Evaluator mapper)
-        //{
-        //    return (f, c) => f.Select(elements => mapper(elements, c));
-        //}
-
-
-
-        //public static Evaluator StartsWith(Evaluator prefix)
-        //{
-        //    return (f, c) =>
-        //    {
-        //        var p = prefix(f, c).Single().AsString();
-        //        return f.StartingWith(p);
-        //    };
-        //}
-
         //public static Evaluator Log(Evaluator argument)
         //{
         //    return (f, c) =>
@@ -128,35 +96,5 @@ namespace Hl7.Fhir.FluentPath
         //        return f;
         //    };
         //}
-
-        //public static Evaluator Today()
-        //{
-        //    return Eval.Return(PartialDateTime.Today());
-        //}
-
-        //public static Evaluator Distinct()
-        //{
-        //    return (f, c) => f.Distinct();
-        //}
-
-        //public static Evaluator Contains(Evaluator substring)
-        //{
-        //    return (f, c) =>
-        //    {
-        //        var subs = substring(f, c).AsString();
-        //        return f.JustValues().Where(v => v.AsStringRepresentation().Contains(subs));
-        //    };
-        //}
-
-        //public static Evaluator Matches(Evaluator regexp)
-        //{
-        //    return (f, c) =>
-        //    {
-        //        var r = regexp(f, c).AsString();
-        //        return f.JustValues().Where(v => Regex.IsMatch(v.AsStringRepresentation(), r));
-        //    };
-        //}
-
-
     }
 }

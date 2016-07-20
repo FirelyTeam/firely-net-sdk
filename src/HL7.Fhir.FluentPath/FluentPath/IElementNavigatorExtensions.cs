@@ -14,12 +14,6 @@ namespace Hl7.Fhir.FluentPath
 {
     public static class IFluentPathElementExtensions
     {
-        //public static IEnumerable<IElementNavigator> AllChildren(this IElementNavigator element)
-        //{
-        //    return element.GetChildNames().SelectMany(name => element.GetChildrenByName(name));
-        //}
-
-
         public static IEnumerable<IElementNavigator> EnumerateChildrenByName(this IElementNavigator element, string name)
         {
 

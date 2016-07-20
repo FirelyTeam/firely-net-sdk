@@ -8,9 +8,9 @@ using System.Xml;
 
 namespace Hl7.Fhir.FluentPath.Functions
 {
-    public static class ConversionOperators
+    internal static class ConversionOperators
     {
-        internal static T GetValue<T>(this IValueProvider val, string name)
+        private static T getValue<T>(this IValueProvider val, string name)
         {
             if (val == null) throw Error.ArgumentNull(name);
             if (val.Value == null) throw Error.ArgumentNull(name + ".Value");
@@ -22,7 +22,7 @@ namespace Hl7.Fhir.FluentPath.Functions
         // FluentPath toInteger() function
         public static long? ToInteger(this IValueProvider focus)
         {
-            var val = focus.GetValue<object>("focus");
+            var val = focus.getValue<object>("focus");
 
             if (val is long)
                 return (long)val;
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.FluentPath.Functions
         // FluentPath toDecimal() function
         public static decimal? ToDecimal(this IValueProvider focus)
         {
-            var val = focus.GetValue<object>("focus");
+            var val = focus.getValue<object>("focus");
 
             if (val is decimal)
                 return (decimal)val;
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.FluentPath.Functions
         // FluentPath toString() function
         public static string ToStringRepresentation(this IValueProvider focus)
         {
-            var val = focus.GetValue<object>("focus");
+            var val = focus.getValue<object>("focus");
 
             if (val is string)
                 return (string)val;

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.FluentPath.Functions;
+using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.FluentPath.Binding
 {
@@ -102,8 +103,16 @@ namespace Hl7.Fhir.FluentPath.Binding
             nullp("toDecimal", (IValueProvider f) => f.ToDecimal());
             nullp("toString", (IValueProvider f) => f.ToStringRepresentation());
 
-            nullp("substring", (string f, long a) => f.Substring((int)a));
-            nullp("substring", (string f, long a, long b) => f.Substring((int)a, (int)b));
+            nullp("substring", (string f, long a) => f.FpSubstring((int)a));
+            nullp("substring", (string f, long a, long b) => f.FpSubstring((int)a, (int)b));
+            nullp("startsWith", (string f, string fragment) => f.StartsWith(fragment));
+            nullp("endsWith", (string f, string fragment) => f.EndsWith(fragment));
+            nullp("matches", (string f, string regex) => Regex.IsMatch(f, regex));
+            nullp("indexOf", (string f, string fragment) => f.FpIndexOf(fragment));
+            nullp("contains", (string f, string fragment) => f.Contains(fragment));
+            nullp("replaceMatches", (string f, string regex, string subst) => Regex.Replace(f, regex, subst));
+            nullp("replace", (string f, string regex, string subst) => f.FpReplace(regex, subst));
+            nullp("length", (string f) => f.Length);
 
             nullp("today", (object f) => PartialDateTime.Today());
             nullp("now", (object f) => PartialDateTime.Now());
