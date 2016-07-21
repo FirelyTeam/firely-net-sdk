@@ -25,6 +25,9 @@ namespace Hl7.Fhir.Navigation
         {
             get
             {
+#if DEBUG
+                Console.WriteLine("Read Name: {0} (value = {1})", current.Name, current.Value);
+#endif
                 return current.Name;
             }
         }
@@ -34,9 +37,15 @@ namespace Hl7.Fhir.Navigation
             get
             {
                 if (current.Value != null)
+                {
+#if DEBUG
+                    Console.WriteLine("    -> Read Value of {0}: {1}",
+                        current.Name,
+                        current.Value.Value);
+#endif
                     return current.Value.Value;
-                else
-                    return null;
+                }
+                return null;
             }
         }
 

@@ -35,6 +35,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hl7.Fhir.DSTU2.Core, Version=0.90.5.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Hl7.Fhir.DSTU2.0.90.5-alpha3\lib\net45\Hl7.Fhir.DSTU2.Core.dll</HintPath>
+      <Private>True</Private>
+      <Aliases>dstu2</Aliases>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Sprache, Version=2.0.0.51, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sprache.2.0.0.51\lib\portable-net4+netcore45+win8+wp8+sl5+MonoAndroid+Xamarin.iOS10+MonoTouch\Sprache.dll</HintPath>
@@ -58,6 +63,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AssertParser.cs" />
+    <Compile Include="Experimentation\FhirPathEvaluatorTestFromSpec.cs" />
+    <Compile Include="Experimentation\NavigatorPOCO.cs" />
     <Compile Include="TestEvaluationContext.cs" />
     <Compile Include="FhirPathEvaluatorTest.cs" />
     <Compile Include="FhirPathGrammarTest.cs" />
@@ -106,8 +113,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="TestData\examples-json.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
