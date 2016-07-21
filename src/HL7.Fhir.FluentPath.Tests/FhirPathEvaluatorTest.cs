@@ -229,6 +229,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"(3|Patient.identifier|1) != (1|Patient.identifier|3)");
 
             isTrue(@"Patient.gender = 'male'"); // gender has an extension
+            isTrue(@"Patient.communication = Patient.communication");       // different extensions, same values
             isTrue(@"Patient.communication.first() = Patient.communication.skip(1)");       // different extensions, same values
 
             isTrue(@"@2015-01-01 = @2015-01-01");
