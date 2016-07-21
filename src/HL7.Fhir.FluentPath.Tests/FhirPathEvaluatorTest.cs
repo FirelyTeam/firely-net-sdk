@@ -6,6 +6,9 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+// To introduce the DSTU2 FHIR specification
+extern alias dstu2;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -25,15 +28,17 @@ namespace Hl7.Fhir.Tests.FhirPath
     public class FhirPathEvaluatorTest
 #endif
     {
-        FhirInstanceTree tree;
         IEnumerable<IValueProvider> testInput;
 
         [TestInitialize]
         public void Setup()
         {
             var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
-            tree = TreeConstructor.FromXml(tpXml);
-            testInput = FhirValueList.Create(new TreeNavigator(tree));
+            // var tree = TreeConstructor.FromXml(tpXml);
+            // testInput = FhirValueList.Create(new TreeNavigator(tree));
+
+            var patient = dstu2::Hl7.Fhir.Serialization.FhirParser.ParseFromXml(tpXml) as dstu2::Hl7.Fhir.Model.Resource;
+             testInput = FhirValueList.Create(new ModelNavigator(patient));
         }
 
 
@@ -79,6 +84,8 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestSubsetting()
         {
+            isTrue(@"Patient.identifier[1] != Patient.identifier.first()");
+
             isTrue(@"Patient.identifier[0] = Patient.identifier.first()");
             isTrue(@"Patient.identifier[2] = Patient.identifier.last()");
             isTrue(@"Patient.identifier[0] | Patient.identifier[1]  = Patient.identifier.take(2)");
@@ -110,6 +117,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 
         private void isTrue(string expr)
         {
+            Console.WriteLine("Testing for isTrue({0})", expr);
             Assert.IsTrue(PathExpression.IsTrue(expr, testInput));
         }
 
