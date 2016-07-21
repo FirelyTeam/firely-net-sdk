@@ -6,6 +6,9 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+// To introduce the DSTU2 FHIR specification
+extern alias dstu2;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -25,15 +28,15 @@ namespace Hl7.Fhir.Tests.FhirPath
     public class FhirPathTest
 #endif
     {
-        FhirInstanceTree tree;
-
         public IElementNavigator getTestData()
         {
             var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
-            tree = TreeConstructor.FromXml(tpXml);
-            var navigator = new TreeNavigator(tree);
+            // var tree = TreeConstructor.FromXml(tpXml);
+            // var navigator = new TreeNavigator(tree);
+            // return navigator;
 
-            return navigator;
+            var patient = dstu2::Hl7.Fhir.Serialization.FhirParser.ParseFromXml(tpXml) as dstu2::Hl7.Fhir.Model.Resource;
+            return new ModelNavigator(patient);
         }
 
         [TestMethod, TestCategory("FhirPath")]
