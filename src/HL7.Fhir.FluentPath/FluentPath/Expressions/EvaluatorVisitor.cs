@@ -11,14 +11,14 @@ using Hl7.Fhir.FluentPath.Binding;
 
 namespace Hl7.Fhir.FluentPath.Expressions
 {
-    internal class EvaluatorVisitor : FP.ExpressionVisitor<Evaluator>
+    internal class EvaluatorVisitor : FP.ExpressionVisitor<Invokee>
     {
-        public override Evaluator VisitConstant(FP.ConstantExpression expression)
+        public override Invokee VisitConstant(FP.ConstantExpression expression)
         {
-            return Eval.Return(new ConstantValue(expression.Value));
+            return InvokeeFactory.Return(new ConstantValue(expression.Value));
         }
 
-        public override Evaluator VisitFunctionCall(FP.FunctionCallExpression expression)
+        public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression)
         {
             var focusEval = expression.Focus.ToEvaluator();
             var argsEval = expression.Arguments.Select(arg => arg.ToEvaluator());
@@ -31,36 +31,36 @@ namespace Hl7.Fhir.FluentPath.Expressions
             return buildBindingInvoke(expression.FunctionName, focusEval, argsEval, boundFunction);
         }
 
-        public override Evaluator VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
+        public override Invokee VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
         {
-            return Eval.Return(FhirValueList.Empty);
+            return InvokeeFactory.Return(FhirValueList.Empty);
         }
 
-        public override Evaluator VisitVariableRef(FP.VariableRefExpression expression)
+        public override Invokee VisitVariableRef(FP.VariableRefExpression expression)
         {
             // Special case: $this   -> can now GO AWAY -> this is a declared name in the context
             if (expression is FP.AxisExpression)
             {
                 var axis = (FP.AxisExpression)expression;
                 if (axis.AxisName == "this")
-                    return Eval.Focus();
+                    return InvokeeFactory.Focus();
                 else
                     throw new NotSupportedException("Cannot resolve axis reference " + axis.AxisName);
             }
             else
-                return Eval.ResolveValue(expression.Name);
+                return InvokeeFactory.ResolveValue(expression.Name);
         }
 
-        public override Evaluator VisitTypeBinaryExpression(FP.TypeBinaryExpression expression)
+        public override Invokee VisitTypeBinaryExpression(FP.TypeBinaryExpression expression)
         {
             throw new NotImplementedException();
         }
 
-        private static Evaluator buildBindingInvoke(string functionName, Evaluator focus, IEnumerable<Evaluator> arguments, Invokee invokee)
+        private static Invokee buildBindingInvoke(string functionName, Invokee focus, IEnumerable<Invokee> arguments, Invokee invokee)
         {
-            return (ctx) =>
+            return (ctx,_) =>
             {
-                var focusNodes = focus(ctx);
+                var focusNodes = focus(ctx, InvokeeFactory.EmptyArgs);
                 var newContext = ctx.Nest(focusNodes);
 
                 try
@@ -78,10 +78,10 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
     public static class EvaluatorExpressionExtensions
     {
-        public static Evaluator ToEvaluator(this FP.Expression expr)
+        public static Invokee ToEvaluator(this FP.Expression expr)
         {
             var compiler = new EvaluatorVisitor();
-            return expr.Accept<Evaluator>(compiler);
+            return expr.Accept<Invokee>(compiler);
         }
     }
 

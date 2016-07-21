@@ -124,11 +124,11 @@ namespace Hl7.Fhir.FluentPath.Binding
             logic("binary.implies", (a, b) => a.Implies(b));
 
             // Special late-bound functions
-            _functions.Add(new CallBinding("where", buildLambdaCall(runWhere), typeof(object), typeof(Evaluator)));
-            _functions.Add(new CallBinding("select", buildLambdaCall(runSelect), typeof(object), typeof(Evaluator)));
-            _functions.Add(new CallBinding("all", buildLambdaCall(runAll), typeof(object), typeof(Evaluator)));
-            _functions.Add(new CallBinding("any", buildLambdaCall(runAny), typeof(object), typeof(Evaluator)));
-            _functions.Add(new CallBinding("repeat", buildLambdaCall(runRepeat), typeof(object), typeof(Evaluator)));
+            _functions.Add(new CallBinding("where", buildLambdaCall(runWhere), typeof(object), typeof(Invokee)));
+            _functions.Add(new CallBinding("select", buildLambdaCall(runSelect), typeof(object), typeof(Invokee)));
+            _functions.Add(new CallBinding("all", buildLambdaCall(runAll), typeof(object), typeof(Invokee)));
+            _functions.Add(new CallBinding("any", buildLambdaCall(runAny), typeof(object), typeof(Invokee)));
+            _functions.Add(new CallBinding("repeat", buildLambdaCall(runRepeat), typeof(object), typeof(Invokee)));
         }
 
         public static Invokee Resolve(string functionName, IEnumerable<Type> argumentTypes)
@@ -205,44 +205,44 @@ namespace Hl7.Fhir.FluentPath.Binding
             return (ctx, args) =>
             {
                 var focus = ctx.GetThis();
-                var evaluatedArguments = args.Select(a => a(ctx));
+                var evaluatedArguments = args.Select(a => a(ctx,InvokeeFactory.EmptyArgs));
                 return ctx.InvokeExternalFunction(name, focus, evaluatedArguments);
             };
         }
 
-        private static Invokee buildLambdaCall(Func<IEvaluationContext,IEnumerable<IValueProvider>,Evaluator,IEnumerable<IValueProvider>> evaluator)
+        private static Invokee buildLambdaCall(Func<IEvaluationContext,IEnumerable<IValueProvider>,Invokee,IEnumerable<IValueProvider>> evaluator)
         {
             return (ctx, args) =>
             {
                 var focus = ctx.GetThis();
-                Evaluator lambda = args.First();
+                Invokee lambda = args.First();
 
                 return evaluator(ctx, focus, lambda);
             };
         }
 
-        private static IEnumerable<IValueProvider> runWhere(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
+        private static IEnumerable<IValueProvider> runWhere(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Invokee lambda)
         {
             foreach (IValueProvider element in focus)
             {
                 var newContext = ctx.Nest(FhirValueList.Create(element));
-                if (lambda(newContext).BooleanEval() == true)
+                if (lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval() == true)
                     yield return element; 
             }
         }
 
-        private static IEnumerable<IValueProvider> runSelect(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
+        private static IEnumerable<IValueProvider> runSelect(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Invokee lambda)
         {
             foreach (IValueProvider element in focus)
             {
                 var newContext = ctx.Nest(FhirValueList.Create(element));
-                var result = lambda(newContext);
+                var result = lambda(newContext, InvokeeFactory.EmptyArgs);
                 foreach (var resultElement in result)       // implement SelectMany()
                     yield return resultElement;
             }
         }
 
-        private static IEnumerable<IValueProvider> runRepeat(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
+        private static IEnumerable<IValueProvider> runRepeat(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Invokee lambda)
         {
             var fullResult = new List<IValueProvider>();
             List<IValueProvider> newNodes = new List<IValueProvider>(focus);
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.FluentPath.Binding
                 foreach (IValueProvider element in current)
                 {
                     var newContext = ctx.Nest(FhirValueList.Create(element));
-                    newNodes.AddRange(lambda(newContext));
+                    newNodes.AddRange(lambda(newContext, InvokeeFactory.EmptyArgs));
                 }
 
                 fullResult.AddRange(newNodes);
@@ -264,13 +264,13 @@ namespace Hl7.Fhir.FluentPath.Binding
             return fullResult;
         }
 
-        private static IEnumerable<IValueProvider> runAll(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
+        private static IEnumerable<IValueProvider> runAll(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Invokee lambda)
         {
             foreach (IValueProvider element in focus)
             {
                 var newContext = ctx.Nest(FhirValueList.Create(element));
 
-                var result = lambda(newContext).BooleanEval();
+                var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
                 if (result == null) return FhirValueList.Empty;
                 if (result == false) return FhirValueList.Create(false);
             }
@@ -278,12 +278,12 @@ namespace Hl7.Fhir.FluentPath.Binding
             return FhirValueList.Create(true);
         }
 
-        private static IEnumerable<IValueProvider> runAny(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Evaluator lambda)
+        private static IEnumerable<IValueProvider> runAny(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Invokee lambda)
         {
             foreach (IValueProvider element in focus)
             {
                 var newContext = ctx.Nest(FhirValueList.Create(element));
-                var result = lambda(newContext).BooleanEval();
+                var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
 
                 //if (result == null) return FhirValueList.Empty; -> otherwise this would not be where().exists()
                 //Patient.identifier.any(use = 'official') would return {} if ANY identifier has no 'use' element. Unexpected behaviour, I think

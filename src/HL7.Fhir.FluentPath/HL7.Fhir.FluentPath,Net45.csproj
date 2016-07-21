@@ -58,7 +58,6 @@
     <Compile Include="FluentPath\Functions\CollectionOperators.cs" />
     <Compile Include="FluentPath\Functions\ConversionOperators.cs" />
     <Compile Include="FluentPath\Functions\EqualityOperators.cs" />
-    <Compile Include="FluentPath\Evaluator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionVisitor.cs" />
     <Compile Include="ElementsModel\NavigatorExtensions.cs" />
     <Compile Include="ElementsModel\INavigator.cs" />

@@ -50,7 +50,6 @@
     <Compile Include="FluentPath\Binding\DynaDispatcher.cs" />
     <Compile Include="FluentPath\Binding\Invokee.cs" />
     <Compile Include="FluentPath\Binding\Typecasts.cs" />
-    <Compile Include="FluentPath\Evaluator.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionVisitor.cs" />
     <Compile Include="ElementsModel\NavigatorExtensions.cs" />
     <Compile Include="ElementsModel\INavigator.cs" />
