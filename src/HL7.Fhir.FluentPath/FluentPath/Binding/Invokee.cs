@@ -73,6 +73,17 @@ namespace Hl7.Fhir.FluentPath.Binding
         }
 
 
+        public static Invokee Trace()
+        {
+            return (ctx, args) =>
+            {
+                var focus = ctx.GetThis();
+                var argValue = Typecasts.CastTo<string>(args.First()(ctx, InvokeeFactory.EmptyArgs));
+                ctx.Trace(argValue,focus);
+                return focus;
+            };
+        }
+
         public static Invokee Wrap<R>(Func<R> func)
         {
             return (ctx, args) =>

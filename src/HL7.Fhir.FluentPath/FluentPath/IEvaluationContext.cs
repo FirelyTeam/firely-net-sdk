@@ -54,6 +54,8 @@ namespace Hl7.Fhir.FluentPath
         /// first parameter is the focus.</param>
         /// <remarks>Should throw NotSupportedException if the external function is not supported.</remarks>
         IEnumerable<IValueProvider> InvokeExternalFunction(string name, IEnumerable<IValueProvider> focus, IEnumerable<IEnumerable<IValueProvider>> parameters);
+
+        void Trace(string name, object data);
     }
 
 

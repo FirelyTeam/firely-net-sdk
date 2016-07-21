@@ -34,7 +34,8 @@ namespace Hl7.Fhir.FluentPath.Binding
             add("subsetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => f.SubsetOf(a));
             add("supersetOf", (IEnumerable<IValueProvider> f, IEnumerable<IValueProvider> a) => a.SubsetOf(f));
 
-
+            add("today", (object f) => PartialDateTime.Today());
+            add("now", (object f) => PartialDateTime.Now());
 
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
             nullp("not", (IEnumerable<IValueProvider> f) => f.Not());
@@ -114,9 +115,6 @@ namespace Hl7.Fhir.FluentPath.Binding
             nullp("replace", (string f, string regex, string subst) => f.FpReplace(regex, subst));
             nullp("length", (string f) => f.Length);
 
-            nullp("today", (object f) => PartialDateTime.Today());
-            nullp("now", (object f) => PartialDateTime.Now());
-
             // Logic operators do not use null propagation and may do short-cut eval
             logic("binary.and", (a, b) => a.And(b));
             logic("binary.or", (a, b) => a.Or(b));
@@ -129,6 +127,8 @@ namespace Hl7.Fhir.FluentPath.Binding
             _functions.Add(new CallBinding("all", buildLambdaCall(runAll), typeof(object), typeof(Invokee)));
             _functions.Add(new CallBinding("any", buildLambdaCall(runAny), typeof(object), typeof(Invokee)));
             _functions.Add(new CallBinding("repeat", buildLambdaCall(runRepeat), typeof(object), typeof(Invokee)));
+
+            _functions.Add(new CallBinding("trace", InvokeeFactory.Trace(), typeof(object), typeof(string)));
         }
 
 

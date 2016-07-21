@@ -56,8 +56,10 @@ namespace Hl7.Fhir.FluentPath
         }
 
 
-        public virtual void Log(string argument, object data)
+        public virtual void Trace(string name, object data)
         {
+            System.Diagnostics.Trace.WriteLine("=== {0} ===".FormatWith(name));
+
             if (data == null)
                 System.Diagnostics.Trace.WriteLine("(null)");
 
