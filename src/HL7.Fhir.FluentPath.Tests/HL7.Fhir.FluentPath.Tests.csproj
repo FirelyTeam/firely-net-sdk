@@ -63,6 +63,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AssertParser.cs" />
+    <Compile Include="Experimentation\FhirPathEvaluatorTestFromSpec.cs" />
     <Compile Include="Experimentation\NavigatorPOCO.cs" />
     <Compile Include="TestEvaluationContext.cs" />
     <Compile Include="FhirPathEvaluatorTest.cs" />
