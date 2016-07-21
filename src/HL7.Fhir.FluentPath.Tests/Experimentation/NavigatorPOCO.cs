@@ -14,12 +14,20 @@ namespace Hl7.Fhir.Tests.FhirPath
     {
         public ModelNavigator(Base model)
         {
-            var root = new PocoRootObject();
-            root.Value = model;
-            root.ObjectName = model.TypeName;
-            _model = model;
-            _model = root;
-            _current = new ElementNavigator(model.TypeName, root);
+            if (model != null)
+            {
+                // The current implementation of FluentPath has a dummy (root)
+                // element ahead of the real resoure root.
+                // uncomment this section (and remove the below) to remove that.
+                // _model = model;
+                // _current = new ElementNavigator(model.TypeName, model);
+
+                var root = new PocoRootObject();
+                root.Value = model;
+                root.ObjectName = model.TypeName;
+                _model = root;
+                _current = new ElementNavigator(model.TypeName, root);
+            }
         }
 
         public ModelNavigator(Base model, ElementNavigator current)
@@ -211,61 +219,11 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             get
             {
-                // This should convert any types that are not already converted by
-                // Hl7.Fhir.FluentPath.ConstantValue.ToFluentPathValue()
-
+                // This is only required where the element is a primitive
                 object result = _value;
-                // Now do some conversions on these types to remove the FHIRish ness of the types
-                if (result is FhirString)
-                {
-                    if (result != null)
-                        return (result as FhirString).Value;
-                    return "";
-                }
-                if (result is FhirDecimal)
-                {
-                    if (result != null && (result as FhirDecimal).Value.HasValue)
-                        return (result as FhirDecimal).Value;
-                    return null;
-                }
-                if (result is Instant)
-                {
-                    if (result != null && (result as Instant).Value.HasValue)
-                    {
-                        //    PartialDateTime dateResult = new PartialDateTime((result as Instant).Value.Value);
-                        //    return dateResult;
-                    }
-                    return null;
-                }
-                if (result is FhirDateTime)
-                {
-                    if (result != null)
-                    {
-                        PartialDateTime dateResult = PartialDateTime.Parse((result as FhirDateTime).Value);
-                        return dateResult;
-                    }
-                    return null;
-                }
-                if (result is Date)
-                {
-                    if (result != null)
-                    {
-                        PartialDateTime dateResult = PartialDateTime.Parse((result as Date).Value);
-                        return dateResult;
-                    }
-                    return null;
-                }
-                if (result is Identifier)
-                {
-                    return (result as Identifier).Value;
-                }
-                if (_mapping != null && _mapping.IsCodeOfT && result != null)
-                {
-                    return result.ToString();
-                }
-                if (result == null)
-                    return null;
-                return result;
+                if (result is Primitive)
+                    return (result as Primitive).ObjectValue;
+                return null; // result;
             }
         }
 

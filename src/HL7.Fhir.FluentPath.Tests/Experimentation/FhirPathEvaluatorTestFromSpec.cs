@@ -133,37 +133,37 @@ public class FluentPathTests
 
     private Patient patient()  {
     if (_patient == null)
-      _patient = (Patient) FhirParser.ParseResourceFromXml(File.ReadAllText("C:/work/org.hl7.fhir/build - DSTU2.0/source/patient/patient-example.xml"));
+      _patient = (Patient) FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\patient-example.xml"));
     return _patient;
   }
 
 private Appointment appointment() {
     if (_appointment == null)
-      _appointment = (Appointment) FhirParser.ParseResourceFromXml(File.ReadAllText("C:/work/org.hl7.fhir/build - DSTU2.0/source/appointment/appointment-example-request.xml"));
+      _appointment = (Appointment) FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\appointment-example-request.xml"));
     return _appointment;
   }
 
   private Questionnaire questionnaire() {
     if (_questionnaire == null)
-      _questionnaire = (Questionnaire) FhirParser.ParseResourceFromXml(File.ReadAllText("C:/work/org.hl7.fhir/build - DSTU2.0/source/questionnaire/questionnaire-example.xml"));
+      _questionnaire = (Questionnaire) FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\questionnaire-example.xml"));
     return _questionnaire;
   }
 
   private ValueSet valueset() {
     if (_valueset == null)
-      _valueset = (ValueSet) FhirParser.ParseResourceFromXml(File.ReadAllText("C:/work/org.hl7.fhir/build - DSTU2.0/source/valueset/valueset-example-expansion.xml"));
+      _valueset = (ValueSet) FhirParser.ParseResourceFromXml(File.ReadAllText("TetData\\valueset-example-expansion.xml"));
     return _valueset;
   }
 
   private Observation observation() {
     if (_observation == null)
-      _observation = (Observation) FhirParser.ParseResourceFromXml(File.ReadAllText("C:/work/org.hl7.fhir/build - DSTU2.0/source/observation/observation-example.xml"));
+      _observation = (Observation) FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\observation-example.xml"));
     return _observation;
   }
 
   private Parameters parameters() {
     if (_parameters == null)
-      _parameters = (Parameters) FhirParser.ParseResourceFromJson(File.ReadAllText("C:/work/org.hl7.fhir/build - DSTU2.0/publish/gao/example-gao-request-parameters-CT-head.json"));
+      _parameters = (Parameters) FhirParser.ParseResourceFromJson(File.ReadAllText("TestData\\example-gao-request-parameters-CT-head.json"));
     return _parameters;
   }
 
@@ -999,6 +999,7 @@ internal class TestingUtilities
   [TestMethod, TestCategory("FhirPathFromSpec")]
   public void testTyping()  {
     ElementDefinition ed = new ElementDefinition();
+        ed.Binding = new ElementDefinition.BindingComponent();
     ed.Binding.setValueSet(new UriType("http://test.org"));
     testBoolean(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSetUri", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
   }
@@ -1046,7 +1047,7 @@ sq1.setValue(0.4);
        
   [TestMethod, TestCategory("FhirPathFromSpec")]
   public void testExtensionDefinitions()  {
-    Bundle b = (Bundle)FhirParser.ParseResourceFromJson(File.ReadAllText("C:/work/org.hl7.fhir/build - DSTU2.0/publish/extension-definitions.json"));
+    Bundle b = (Bundle)FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\extension-definitions.xml"));
     foreach (Bundle.EntryComponent be in b.Entry) {
       testStructureDefinition((StructureDefinition) be.Resource);
     }
