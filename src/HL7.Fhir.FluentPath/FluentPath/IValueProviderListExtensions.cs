@@ -44,26 +44,11 @@ namespace Hl7.Fhir.FluentPath
             return !(focus.BooleanEval().Value);
         }
 
-
-
-        //public static IEnumerable<IValueProvider> Any(this IEnumerable<IValueProvider> focus,
-        //Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> condition)
-        //{
-        //    return FhirValueList.Create(focus.Any(v => condition(FhirValueList.Create(v)).booleanEval()));
-        //}
-
-        //public static IEnumerable<IValueProvider> All(this IEnumerable<IValueProvider> focus,
-        //        Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> condition)
-        //{
-        //    return FhirValueList.Create(focus.All(v => condition(FhirValueList.Create(v)).booleanEval()));
-        //}
-
-
-        //public static IEnumerable<IValueProvider> Select(this IEnumerable<IValueProvider> focus,
-        //        Func<IEnumerable<IValueProvider>, IEnumerable<IValueProvider>> mapper)
-        //{
-        //    return focus.SelectMany(v => mapper(FhirValueList.Create(v)));
-        //}
+        public static IEnumerable<IValueProvider> DistinctUnion(this IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b)
+        {
+            var result = a.Union(b, new EqualityOperators.ValueProviderEqualityComparer());
+            return result;
+        }
 
 
         //public static IEnumerable<IFluentPathElement> Resolve(this IEnumerable<IFluentPathValue> focus, FhirClient client)
@@ -106,17 +91,6 @@ namespace Hl7.Fhir.FluentPath
         {
             return focus.JustElements().SelectMany(node => node.EnumerateChildrenByName(name));
         }
-
-        //public static IEnumerable<IFhirPathElement> Child(this IEnumerable<IFhirPathValue> focus, string name)
-        //{
-        //    return focus.JustFhirPathElements().Child(name);
-        //}
-
-        //public static IEnumerable<IFhirPathElement> Child(this IEnumerable<IFhirPathElement> focus, string name)
-        //{
-        //    return focus.SelectMany(node => node.Children().Where(child => child.IsMatch(name)));
-        //}
-
 
         public static IEnumerable<IElementNavigator> Children(this IValueProvider focus)
         {

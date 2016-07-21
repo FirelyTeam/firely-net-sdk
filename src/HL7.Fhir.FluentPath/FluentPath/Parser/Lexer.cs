@@ -9,6 +9,7 @@
 using Sprache;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -99,13 +100,13 @@ namespace Hl7.Fhir.FluentPath.Parser
         public static readonly Parser<string> Unicode =
             from u in Parse.Char('u')
             from hex in Parse.Chars("0123456789ABCDEFabcdef").Repeat(4).Text()
-            select u + hex;
+            select hex;
 
         public static readonly Parser<string> Escape =
             from backslash in Parse.Char('\\')
             from escUnicode in
-                Parse.Chars("\"'\\/fnrt").Once().Text().Or(Unicode)
-            select backslash + escUnicode;
+                Parse.Chars("\"'\\/fnrt").Once().Unescape().Or(Unicode.Unescape())
+            select escUnicode;
 
         public static readonly Parser<string> String =
             from openQ in Parse.Char('\'')
@@ -113,7 +114,7 @@ namespace Hl7.Fhir.FluentPath.Parser
             from closeQ in Parse.Char('\'')
             select string.Concat(str);
 
-
+  
         // BOOL: 'true' | 'false';
         public static readonly Parser<bool> Bool =
             Parse.String("true").XOr(Parse.String("false")).Text().Select(s => Boolean.Parse(s));
@@ -126,5 +127,38 @@ namespace Hl7.Fhir.FluentPath.Parser
 
         public static readonly Parser<string> Axis =
             Parse.Char('$').Then(q => Parse.String("this")).Text().Select(v => v);
+    }
+
+
+    public static class ParserExtensions
+    {
+        public static Parser<string> Unescape(this Parser<IEnumerable<char>> c)
+        {
+            return c.Select(chr => new String( Unescape(chr.Single()), 1));
+        }
+
+        public static char Unescape(char c)
+        {
+            // return the escaped character after a '\'
+            switch (c)
+            {
+                case 'f': return '\f';
+                case 'n': return '\n';
+                case 'r': return '\r';
+                case 't': return '\t';
+                default: return c;
+            }
+        }
+
+        public static Parser<string> Unescape(this Parser<string> c)
+        {
+            return c.Select(s => new String(Unescape(s), 1));
+        }
+
+        public static char Unescape(string unicodeHex)
+        {
+            return ((char)int.Parse(unicodeHex, NumberStyles.HexNumber));
+        }
+
     }
 }

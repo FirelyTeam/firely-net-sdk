@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FluentPath.Functions
 {
-    public static class EqualityOperators
+    internal static class EqualityOperators
     {
         public static bool? IsEqualTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
         {

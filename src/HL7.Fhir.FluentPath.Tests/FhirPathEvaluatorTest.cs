@@ -246,12 +246,12 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"Patient.identifier.use.isDistinct() = false");
             isTrue(@"Patient.identifier.system.isDistinct()");
             isTrue(@"(3|4).isDistinct()");
-            isTrue(@"{}.isDistinct().empty()");
+            isTrue(@"{}.isDistinct()");
 
             isTrue(@"Patient.identifier.skip(1).subsetOf(%context.Patient.identifier)");
             isTrue(@"Patient.identifier.supersetOf(%context.Patient.identifier)");
-            isTrue(@"Patient.identifier.supersetOf({}).empty()");
-            isTrue(@"{}.subsetOf(%context.Patient.identifier).empty()");
+            isTrue(@"Patient.identifier.supersetOf({})");
+            isTrue(@"{}.subsetOf(%context.Patient.identifier)");
         }
 
         [TestMethod, TestCategory("FhirPath")]
@@ -259,10 +259,53 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             isTrue(@"Patient.identifier.last() in Patient.identifier");
             isTrue(@"4 in (3|4.0|5)");
+            isTrue(@"(3|4.0|5|3).count() = 3");
             isTrue(@"Patient.identifier contains Patient.identifier.last()");
             isTrue(@"(3|4.0|5) contains 4");
-            isTrue(@"({} contains 4).empty()");
-            isTrue(@"(4 in {}).empty()");
+            isTrue(@"({} contains 4) = false");
+            isTrue(@"(4 in {}) = false");
+            isTrue(@"Patient.identifier.count() = (Patient.identifier | Patient.identifier).count()");
+            isTrue(@"(Patient.identifier | Patient.name).count() = Patient.identifier.count() + Patient.name.count()");
+            isTrue(@"Patient.select(identifier | name).count() = Patient.select(identifier.count() + name.count())");
+        }
+
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestWhere()
+        {
+            isTrue("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2");
+
+            isTrue(@"(5 | 'hi' | 4).where($this = 'hi').count()=1");
+            isTrue(@"{}.where($this = 'hi').count()=0");
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestAll()
+        {
+            isTrue(@"Patient.identifier.skip(1).all(use = 'official')");
+            isTrue(@"Patient.identifier.skip(999).all(use = 'official')");   // {}.All() aways returns true
+            isTrue(@"Patient.identifier.skip(1).all({}).empty()");   // empty results still count as "empty"
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestAny()
+        {
+            isTrue(@"Patient.identifier.any(use = 'official')");
+            isTrue(@"Patient.identifier.skip(999).any(use = 'official') = false");   // {}.Any() aways returns true
+            isTrue(@"Patient.contained.skip(1).group.group.any(concept.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestRepeat()
+        {
+            isTrue(@"Patient.contained.skip(1).repeat(group).count() = 4");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group|question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
+            Assert.AreEqual(11L, PathExpression.Scalar(@"Patient.contained.skip(1).repeat(group | question).count()", testInput));       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group|question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group).select(concept.code) contains 'COMORBIDITY'");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group).any(concept.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group).any(concept.code = 'CARDIAL') = false");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group|question).any(concept.code = 'CARDIAL')");       // really need to filter on Questionnare (as('Questionnaire'))
         }
 
 
@@ -281,6 +324,10 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"(Patient.identifier.where(use='official').last() in Patient.identifier) and
                        (Patient.identifier.first() in Patient.identifier.tail()).not()");
 
+            isTrue(@"Patient.identifier.any(use='official') and identifier.where(use='usual').exists()");
+
+            //isTrue(@"Patient.**.where($focus.contains('222')).item(1) = $context.contained.address.line", navigator));
+
             // TODO: Better error reporting for this:
             //isTrue(@"(Patient.identifier.where(use='official') in Patient.identifier) and
             //           (Patient.identifier.first() in Patient.identifier.tail()).not()");
@@ -293,10 +340,8 @@ namespace Hl7.Fhir.Tests.FhirPath
             //            .where(display.startsWith('Walt')).resolve().identifier.first().value = 'Gastro'", navigator,
             //                    new TestEvaluationContext()));
 
-
-
-            //isTrue(
-            //            @"Patient.name.select(given|family).count() = 2", navigator));
+            isTrue(@"Patient.name.select(given|family).count() = 2");
+            isTrue(@"Patient.identifier.where(use = 'official').select(value + 'yep') = ('7654321yep' | '11223344yep')");
 
             //isTrue(
             //        @"Patient.**.contains('wne') = contact.relationship.coding.code and
@@ -308,15 +353,11 @@ namespace Hl7.Fhir.Tests.FhirPath
             //        gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
             //        .substring(5) = 'metrosexual'", navigator));
 
-            //isTrue(
-            //        @"Patient.identifier.any(use='official') and identifier.where(use='usual').any()", navigator));
 
             //isTrue(
             //        @"gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
             //        .select('m' + $focus.substring(1,4) + $focus.substring(5)) = 'metrosexual'", navigator));
 
-            //isTrue(
-            //        @"Patient.**.where($focus.contains('222')).item(1) = $context.contained.address.line", navigator));
         }
 
         [TestMethod, TestCategory("FhirPath")]
@@ -339,33 +380,62 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
         [TestMethod, TestCategory("FhirPath")]
-        public void TestExpressionSubstringFunction()
+        public void TestSubstring()
         {
-            // Check that date comes in
-            //isTrue("QuestionnaireResponse.group.group.where(linkId=\"Section - C\").question.where(linkId=\"C1\").answer.group.where(linkId = \"C1fields\").question.where(linkId = \"DateReturnToNormalDuties\").answer.valueDate.empty()", navigator));
+            isTrue("Patient.contained.birthDate.substring(0,10) = '1973-05-31'");
+            isTrue("Patient.contained.birthDate.substring(2,10) = '73-05-31'");
+            isTrue("Patient.contained.birthDate.substring(2,8) = '73-05-31'");
 
-            //Assert.IsFalse(PathExpression.IsTrue("QuestionnaireResponse.group.group.where(linkId=\"Section - C\").question.where(linkId=\"C1\").answer.group.where(linkId = \"C1fields\").question.where(linkId = \"DateReturnToNormalDuties\").answer.valueDate.empty().not()", navigator));
+            isTrue("Patient.contained.birthDate.substring(-1,8).empty()");
+            isTrue("Patient.contained.birthDate.substring(999,1).empty()");
+            isTrue("''.substring(0,1).empty()");
+            isTrue("{}.substring(0,10).empty()");
+            isTrue("{}.substring(0,10).empty()");
 
-            // Assert.AreEqual("1973-05-31", PathExpression.Evaluate("Patient.contained.Patient.birthDate.substring(0,10)", tree).ToString());
-
-            // Assert.AreEqual(null, PathExpression.Evaluate("Patient.birthDate2", tree).ToString());
-
-            // Assert.AreEqual(null, PathExpression.Evaluate("Patient.birthDate2.substring(0,10)", tree).ToString());
+            try
+            {
+                // TODO: Improve exception on this one
+                isTrue("Patient.identifier.use.substring(0,10)");
+                Assert.Fail();
+            }
+            catch(InvalidOperationException)
+            {
+            }
         }
 
         [TestMethod, TestCategory("FhirPath")]
-        public void TestExpressionRegexFunction()
+        public void TestStringOps()
         {
-            // Check that date comes in
-            //isTrue("Patient.identifier.where(system=\"urn:oid:0.1.2.3.4.5.6.7\").value.matches(\"^[1-6]+$\")", navigator));
+            isTrue("Patient.contained.birthDate.startsWith('')");
+            isTrue("Patient.contained.birthDate.startsWith('1973')");
+            isTrue("Patient.contained.birthDate.startsWith('1974')=false");
 
-            //Assert.IsFalse(PathExpression.IsTrue("Patient.identifier.where(system=\"urn:oid:0.1.2.3.4.5.6.7\").value.matches(\"^[1-3]+$\")", navigator));
+            isTrue("Patient.contained.birthDate.endsWith('')");
+            isTrue("Patient.contained.birthDate.endsWith('-31')");
+            isTrue("Patient.contained.birthDate.startsWith('+31')=false");
 
-            // Assert.AreEqual("1973-05-31", PathExpression.Evaluate("Patient.contained.Patient.birthDate.substring(0,10)", tree).ToString());
+            isTrue("Patient.identifier.where(system='urn:oid:0.1.2.3.4.5.6.7').value.matches('^[1-6]+$')");
+            isTrue("Patient.identifier.where(system='urn:oid:0.1.2.3.4.5.6.7').value.matches('^[1-3]+$') = false");
 
-            // Assert.AreEqual(null, PathExpression.Evaluate("Patient.birthDate2", tree).ToString());
+            isTrue("Patient.contained.name.family.indexOf('ywo') = 4");
+            isTrue("Patient.contained.name.family.indexOf('') = 0");
+            isTrue("Patient.contained.name.family.indexOf('qq').empty()");
 
-            // Assert.AreEqual(null, PathExpression.Evaluate("Patient.birthDate2.substring(0,10)", tree).ToString());
+            isTrue("Patient.contained.name.family.contains('ywo')");
+            isTrue("Patient.contained.name.family.contains('ywox')=false");
+            isTrue("Patient.contained.name.family.contains('')");
+
+            isTrue(@"'11/30/1972'.replaceMatches('\\b(?<month>\\d{1,2})/(?<day>\\d{1,2})/(?<year>\\d{2,4})\\b','${day}-${month}-${year}') = '30-11-1972'");
+
+            isTrue(@"'abc'.replace('a', 'q') = 'qbc'");
+            isTrue(@"'abc'.replace('a', 'qq') = 'qqbc'");
+            isTrue(@"'abc'.replace('q', 'x') = 'abc'");
+            isTrue(@"'abc'.replace('ab', '') = 'c'");
+            isTrue(@"'abc'.replace('', 'xh') = 'xhaxhbxhc'");
+
+            isTrue("Patient.contained.name.family.length() = " + "Everywoman".Length);
+            isTrue("''.length() = 0");
+            isTrue("{}.length().empty()");
         }
     }
 }
