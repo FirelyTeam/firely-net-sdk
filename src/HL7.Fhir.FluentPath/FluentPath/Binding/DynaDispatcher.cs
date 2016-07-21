@@ -48,11 +48,11 @@ namespace Hl7.Fhir.FluentPath.Binding
             return v.NullProp();
         }
 
-        private IEnumerable<IValueProvider> invokeNested(IEvaluationContext context, IEnumerable<Evaluator> args)
+        private IEnumerable<IValueProvider> invokeNested(IEvaluationContext context, IEnumerable<Invokee> args)
         {
             List<object> actualArgs = new List<object>();
             actualArgs.Add(context.GetThis());
-            actualArgs.AddRange(args.Select(a => a(context)));
+            actualArgs.AddRange(args.Select(a => a(context, InvokeeFactory.EmptyArgs)));
 
             foreach(var entry in _candidates)
             {

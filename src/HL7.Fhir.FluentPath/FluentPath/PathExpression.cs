@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hl7.Fhir.FluentPath.Binding;
 
 namespace Hl7.Fhir.FluentPath
 {
@@ -38,7 +39,7 @@ namespace Hl7.Fhir.FluentPath
         }
 
 
-        public static Evaluator Compile(string expression)
+        public static Invokee Compile(string expression)
         {
             //var cacheName = expression.Replace(" ", "");
 
@@ -48,7 +49,7 @@ namespace Hl7.Fhir.FluentPath
             return Compile(Parse(expression));
         }
 
-        public static Evaluator Compile(this Expression expression)
+        public static Invokee Compile(this Expression expression)
         {
             return expression.ToEvaluator();
         }
