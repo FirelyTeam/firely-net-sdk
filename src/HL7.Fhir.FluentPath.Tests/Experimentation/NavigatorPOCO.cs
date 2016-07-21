@@ -211,61 +211,10 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             get
             {
-                // This should convert any types that are not already converted by
-                // Hl7.Fhir.FluentPath.ConstantValue.ToFluentPathValue()
-
-                object result = _value;
-                // Now do some conversions on these types to remove the FHIRish ness of the types
-                if (result is FhirString)
-                {
-                    if (result != null)
-                        return (result as FhirString).Value;
-                    return "";
-                }
-                if (result is FhirDecimal)
-                {
-                    if (result != null && (result as FhirDecimal).Value.HasValue)
-                        return (result as FhirDecimal).Value;
+                if (_value as Primitive != null)
+                    return ((Primitive)_value).ObjectValue;
+                else
                     return null;
-                }
-                if (result is Instant)
-                {
-                    if (result != null && (result as Instant).Value.HasValue)
-                    {
-                        //    PartialDateTime dateResult = new PartialDateTime((result as Instant).Value.Value);
-                        //    return dateResult;
-                    }
-                    return null;
-                }
-                if (result is FhirDateTime)
-                {
-                    if (result != null)
-                    {
-                        PartialDateTime dateResult = PartialDateTime.Parse((result as FhirDateTime).Value);
-                        return dateResult;
-                    }
-                    return null;
-                }
-                if (result is Date)
-                {
-                    if (result != null)
-                    {
-                        PartialDateTime dateResult = PartialDateTime.Parse((result as Date).Value);
-                        return dateResult;
-                    }
-                    return null;
-                }
-                if (result is Identifier)
-                {
-                    return (result as Identifier).Value;
-                }
-                if (_mapping != null && _mapping.IsCodeOfT && result != null)
-                {
-                    return result.ToString();
-                }
-                if (result == null)
-                    return null;
-                return result;
             }
         }
 
