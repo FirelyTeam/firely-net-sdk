@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             // testInput = FhirValueList.Create(new TreeNavigator(tree));
 
             var patient = dstu2::Hl7.Fhir.Serialization.FhirParser.ParseFromXml(tpXml) as dstu2::Hl7.Fhir.Model.Resource;
-             testInput = FhirValueList.Create(new ModelNavigator(patient));
+            testInput = FhirValueList.Create(new ModelNavigator(patient));
         }
 
 
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 
         private void isTrue(string expr)
         {
-            Console.WriteLine("Testing for isTrue({0})", expr);
+            Console.WriteLine("======================\r\nTesting for isTrue({0})\r\n----------------------", expr);
             Assert.IsTrue(PathExpression.IsTrue(expr, testInput));
         }
 

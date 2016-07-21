@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             root.ObjectName = model.TypeName;
             _model = model;
             _model = root;
-            _current = new ElementNavigator(model.TypeName, root.GetType(), root);
+            _current = new ElementNavigator(model.TypeName, root);
         }
 
         public ModelNavigator(Base model, ElementNavigator current)
@@ -165,31 +165,6 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
     }
 
-    //public class ModelTree : FhirPath.IFhirPathElement
-    //{
-    //    public ModelTree(Resource resource)
-    //    {
-    //        if (resource != null)
-    //        {
-    //            // _root = new ModelTreeRoot(resource);
-    //            _root = new ModelElement(null, resource.ResourceType.ToString(), resource.GetType(), resource);
-    //        }
-    //    }
-
-    //    ModelElement _root;
-
-    //    public IFhirPathElement Parent { get { throw new NotImplementedException(); } }
-
-    //    public object Value { get { throw new NotImplementedException(); } }
-
-    //    public IEnumerable<ChildNode> Children()
-    //    {
-    //        List<ChildNode> children = new List<ChildNode>();
-    //        children.Add(new ChildNode(_root.Name, _root));
-    //        return children;
-    //    }
-    //}
-
     [System.Diagnostics.DebuggerDisplay(@"\{Name = {_name} Value = {_value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public class ElementNavigator
     {
@@ -203,11 +178,21 @@ namespace Hl7.Fhir.Tests.FhirPath
             return inspector.FindClassMappingByType(elementType);
         }
 
-        public ElementNavigator(string name, Type elementType, object value)
+        public ElementNavigator(string name, object value)
         {
             _name = name;
             _value = value;
-            _mapping = GetMappingForType(elementType);
+
+            var elementType = value.GetType();
+            if (!(this._value is PocoRootObject))
+            {
+                _mapping = GetMappingForType(elementType);
+                if (_mapping == null)
+                {
+                    // unknown type encountered
+                    Console.WriteLine("Unkown type encountered");
+                }
+            }
         }
 
         private string _name;
@@ -297,7 +282,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             if (_mapping == null && this._value is PocoRootObject)
             {
                 var po = this._value as PocoRootObject;
-                children.Add(new ElementNavigator(po.ObjectName, po.Value.GetType(), po.Value));
+                children.Add(new ElementNavigator(po.ObjectName, po.Value));
                 return children;
             }
             ElementNavigator previousChild = null;
@@ -314,7 +299,7 @@ namespace Hl7.Fhir.Tests.FhirPath
                         {
                             if (colItem != null)
                             {
-                                children.Add(new ElementNavigator(item.Name, item.ElementType, colItem));
+                                children.Add(new ElementNavigator(item.Name, colItem));
                                 if (previousChild != null)
                                     previousChild._nextSibbling = children.Last();
                                 previousChild = children.Last();
@@ -323,7 +308,7 @@ namespace Hl7.Fhir.Tests.FhirPath
                     }
                     else
                     {
-                        children.Add(new ElementNavigator(item.Name, item.ElementType, itemValue));
+                        children.Add(new ElementNavigator(item.Name, itemValue));
                         if (previousChild != null)
                             previousChild._nextSibbling = children.Last();
                         previousChild = children.Last();
