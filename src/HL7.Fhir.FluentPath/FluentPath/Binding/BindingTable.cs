@@ -17,7 +17,7 @@ using System.Text.RegularExpressions;
 namespace Hl7.Fhir.FluentPath.Binding
 {
 
-    public class BindingTable
+    public static class BindingTable
     {
         static BindingTable()
         {
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.FluentPath.Binding
 
             nullp("single", (IEnumerable<IValueProvider> f) => f.Single());
             nullp("skip", (IEnumerable<IValueProvider> f, long a) =>  f.Skip((int)a));
-            nullp("first", (IEnumerable<IValueProvider> f) => f.First());
+            nullp("first", (IEnumerable<IValueProvider> f) => f.MyFirst());
             nullp("last", (IEnumerable<IValueProvider> f) => f.Last());
             nullp("tail", (IEnumerable<IValueProvider> f) => f.Tail());
             nullp("take", (IEnumerable<IValueProvider> f, long a) => f.Take((int)a));
@@ -129,6 +129,12 @@ namespace Hl7.Fhir.FluentPath.Binding
             _functions.Add(new CallBinding("all", buildLambdaCall(runAll), typeof(object), typeof(Invokee)));
             _functions.Add(new CallBinding("any", buildLambdaCall(runAny), typeof(object), typeof(Invokee)));
             _functions.Add(new CallBinding("repeat", buildLambdaCall(runRepeat), typeof(object), typeof(Invokee)));
+        }
+
+
+        public static IValueProvider MyFirst(this IEnumerable<IValueProvider> focus)
+        {
+            return focus.First();
         }
 
         public static Invokee Resolve(string functionName, IEnumerable<Type> argumentTypes)

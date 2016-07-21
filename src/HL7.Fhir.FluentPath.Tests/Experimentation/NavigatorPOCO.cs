@@ -219,11 +219,10 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             get
             {
-                // This is only required where the element is a primitive
-                object result = _value;
-                if (result is Primitive)
-                    return (result as Primitive).ObjectValue;
-                return null; // result;
+                if (_value as Primitive != null)
+                    return ((Primitive)_value).ObjectValue;
+                else
+                    return null;
             }
         }
 
