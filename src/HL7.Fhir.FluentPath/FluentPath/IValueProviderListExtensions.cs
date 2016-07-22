@@ -107,9 +107,9 @@ namespace Hl7.Fhir.FluentPath
             return focus.JustElements().SelectMany(node => node.EnumerateChildren());
         }
 
-        public static IEnumerable<IElementNavigator> Descendants(this IEnumerable<IElementNavigator> focus)
+        public static IEnumerable<IElementNavigator> Descendants(this IEnumerable<IValueProvider> focus)
         {
-            return focus.SelectMany(node => node.Descendants());
+            return focus.JustElements().SelectMany(node => node.Descendants());
         }
 
     

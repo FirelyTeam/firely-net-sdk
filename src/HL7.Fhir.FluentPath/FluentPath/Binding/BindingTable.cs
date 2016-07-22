@@ -43,6 +43,9 @@ namespace Hl7.Fhir.FluentPath.Binding
             nullp("not", (IEnumerable<IValueProvider> f) => f.Not());
             nullp("builtin.children", (IEnumerable<IValueProvider> f, string a) => f.Children(a));
 
+            nullp("children", (IEnumerable<IValueProvider> f) => f.Children());
+            nullp("descendants", (IEnumerable<IValueProvider> f) => f.Descendants());
+
             nullp("binary.=", (object f, IEnumerable<IValueProvider>  a, IEnumerable<IValueProvider> b) => a.IsEqualTo(b));
             nullp("binary.!=", (object f, IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b) => !a.IsEqualTo(b));
 

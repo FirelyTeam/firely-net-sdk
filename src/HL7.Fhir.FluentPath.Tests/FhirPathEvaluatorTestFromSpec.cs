@@ -498,11 +498,12 @@ public class FluentPathTests
     public void testDistinct()
     {
         testBoolean(patient(), "(1 | 2 | 3).isDistinct()", true);
-        testBoolean(questionnaire(), "Questionnaire.descendents().linkId.isDistinct()", true);
-        testBoolean(questionnaire(), "Questionnaire.descendents().linkId.select(substring(0,1)).isDistinct().not()", true);
+        //Error in test: descendents = descendants
+        testBoolean(questionnaire(), "Questionnaire.descendants().linkId.isDistinct()", true);
+        testBoolean(questionnaire(), "Questionnaire.descendants().linkId.select(substring(0,1)).isDistinct().not()", true);
         test(patient(), "(1 | 2 | 3).distinct()", 3, typeof(long));
-        test(questionnaire(), "Questionnaire.descendents().linkId.distinct()", 9, typeof(string));
-        test(questionnaire(), "Questionnaire.descendents().linkId.select(substring(0,1)).distinct()", 2, typeof(string));
+        test(questionnaire(), "Questionnaire.descendants().linkId.distinct()", 9, typeof(string));
+        test(questionnaire(), "Questionnaire.descendants().linkId.select(substring(0,1)).distinct()", 2, typeof(string));
     }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
