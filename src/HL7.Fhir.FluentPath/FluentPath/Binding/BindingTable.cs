@@ -37,6 +37,8 @@ namespace Hl7.Fhir.FluentPath.Binding
             add("today", (object f) => PartialDateTime.Today());
             add("now", (object f) => PartialDateTime.Now());
 
+            add("binary.&", (object f, string a, string b) => (a ?? "") + (b ?? ""));
+
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
             nullp("not", (IEnumerable<IValueProvider> f) => f.Not());
             nullp("builtin.children", (IEnumerable<IValueProvider> f, string a) => f.Children(a));

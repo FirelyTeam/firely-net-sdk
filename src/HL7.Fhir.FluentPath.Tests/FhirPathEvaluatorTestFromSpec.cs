@@ -173,32 +173,31 @@ public class FluentPathTests
         return _parameters;
     }
 
-    private void test(Resource resource, String expression, int count)
+    private void test(Resource resource, String expression, long count)
     {
-        test(resource, expression, count, new String[] { });
+        test(resource, expression, count, new Type[] { });
     }
 
-    private void test(Resource resource, String expression, int count, String types)
+    private void test(Resource resource, String expression, long count, Type types)
     {
-        test(resource, expression, count, new String[] { types });
+        test(resource, expression, count, new Type[] { types });
     }
 
     // @SuppressWarnings("deprecation")
-    private void test(Resource resource, String expression, int count, String[] types)
+    private void test(Resource resource, String expression, long count, Type[] types)
     {
         var tpXml = FhirSerializer.SerializeToXml(resource);
         var npoco = new ModelNavigator(resource);
 
-        FhirInstanceTree tree = TreeConstructor.FromXml(tpXml);
         var outcome = PathExpression.Select(expression, FhirValueList.Create(npoco));
         Assert.AreEqual(count, outcome.Count());
 
         if (types != null && types.Count() > 0)
         {
-            string msg = String.Join(", ", types);
+            string msg = String.Join(",", types.Select(t => t.Name));
             foreach (IValueProvider b in outcome)
             {
-                Assert.IsTrue(types.Contains(b.Value.GetType().Name.ToLower()), String.Format("Object type {0} not ok from {1}", b.Value.GetType().Name, msg));
+                Assert.IsTrue(types.Contains(b.Value.GetType()), String.Format("Object type {0} not ok from {1}", b.Value.GetType().Name, msg));
             }
         }
     }
@@ -269,7 +268,7 @@ public class FluentPathTests
     [TestMethod, TestCategory("FhirPathFromSpec")]
     public void testSimple()
     {
-        test(patient(), "name.given", 3, "string");
+        test(patient(), "name.given", 3, typeof(string));
     }
 
     internal class TestingUtilities
@@ -286,7 +285,7 @@ public class FluentPathTests
     [TestMethod, TestCategory("FhirPathFromSpec")]
     public void testSimpleDoubleQuotes()
     {
-        test(patient(), "name.\"given\"", 3, "string");
+        test(patient(), "name.\"given\"", 3, typeof(string));
     }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
@@ -298,7 +297,7 @@ public class FluentPathTests
     [TestMethod, TestCategory("FhirPathFromSpec")]
     public void testSimpleWithContext()
     {
-        test(patient(), "Patient.name.given", 3, "string");
+        test(patient(), "Patient.name.given", 3, typeof(string));
     }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
@@ -310,7 +309,7 @@ public class FluentPathTests
     [TestMethod, TestCategory("FhirPathFromSpec")]
     public void testPolymorphismA()
     {
-        test(observation(), "Observation.value.unit", 1, "string");
+        test(observation(), "Observation.value.unit", 1, typeof(string));
     }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
@@ -360,13 +359,13 @@ public class FluentPathTests
     [TestMethod, TestCategory("FhirPathFromSpec")]
     public void testDollarThis2()
     {
-        test(patient(), "Patient.name.given.where(substring($this.length()-3) = 'ter')", 1, "string");
+        test(patient(), "Patient.name.given.where(substring($this.length()-3) = 'ter')", 1, typeof(string));
     }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
     public void testDollarOrderAllowed()
     {
-        test(patient(), "Patient.name.skip(1).given", 1, "string");
+        test(patient(), "Patient.name.skip(1).given", 1, typeof(string));
     }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
@@ -501,17 +500,17 @@ public class FluentPathTests
         testBoolean(patient(), "(1 | 2 | 3).isDistinct()", true);
         testBoolean(questionnaire(), "Questionnaire.descendents().linkId.isDistinct()", true);
         testBoolean(questionnaire(), "Questionnaire.descendents().linkId.select(substring(0,1)).isDistinct().not()", true);
-        test(patient(), "(1 | 2 | 3).distinct()", 3, "integer");
-        test(questionnaire(), "Questionnaire.descendents().linkId.distinct()", 9, "string");
-        test(questionnaire(), "Questionnaire.descendents().linkId.select(substring(0,1)).distinct()", 2, "string");
+        test(patient(), "(1 | 2 | 3).distinct()", 3, typeof(long));
+        test(questionnaire(), "Questionnaire.descendents().linkId.distinct()", 9, typeof(string));
+        test(questionnaire(), "Questionnaire.descendents().linkId.select(substring(0,1)).distinct()", 2, typeof(string));
     }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
     public void testCount()
     {
-        test(patient(), "Patient.name.count()", 1, "integer");
+        test(patient(), "Patient.name.count()", 1, typeof(long));
         testBoolean(patient(), "Patient.name.count() = 2", true);
-        test(patient(), "Patient.name.first().count()", 1, "integer");
+        test(patient(), "Patient.name.first().count()", 1L, typeof(long));
         testBoolean(patient(), "Patient.name.first().count() = 1", true);
     }
 
@@ -669,7 +668,10 @@ public class FluentPathTests
         testBoolean(patient(), "'12345'.contains('35') = false", true);
         testBoolean(patient(), "'12345'.contains('12345') = true", true);
         testBoolean(patient(), "'12345'.contains('012345') = false", true);
-        testBoolean(patient(), "'12345'.contains('') = false", true);
+
+        //Error in test: contains('') will always return true
+        //testBoolean(patient(), "'12345'.contains('') = false", true);
+        testBoolean(patient(), "'12345'.contains('')", true);
     }
 
 

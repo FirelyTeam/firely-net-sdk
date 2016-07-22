@@ -58,6 +58,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"1.exists()");
             isTrue(@"Patient.identifier.exists()");
             isTrue(@"Patient.dientifeir.exists().not()");
+            Assert.AreEqual(3L, PathExpression.Scalar(@"identifier.count()", testInput));
             Assert.AreEqual(3L, PathExpression.Scalar(@"Patient.identifier.count()", testInput));
             Assert.AreEqual(3L, PathExpression.Scalar(@"Patient.identifier.value.count()", testInput));
         }

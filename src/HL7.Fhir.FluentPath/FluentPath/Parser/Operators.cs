@@ -23,7 +23,7 @@ namespace Hl7.Fhir.FluentPath.Parser
 
         internal static readonly Parser<string> PolarityOperator = Lexer.Operator("+", "-");
         internal static readonly Parser<string> MulOperator = Lexer.Operator("*","/","div","mod");
-        internal static readonly Parser<string> AddOperator = Lexer.Operator("+", "-");
+        internal static readonly Parser<string> AddOperator = Lexer.Operator("+", "-", "&");
         internal static readonly Parser<string> UnionOperator = Lexer.Operator("|");
 
         // NOTE: ORDER MATTERS, since otherwise shorter ops will be recognized before longer ones!
