@@ -354,39 +354,39 @@ namespace Hl7.Fhir.FluentPath.Expressions
         public static readonly AxisExpression This = new AxisExpression("this");
     }
 
-    public class TypeBinaryExpression : Expression
-    {
-        public TypeBinaryExpression(string op, Expression expression, TypeInfo type) : base(TypeInfo.Any)
-        {
-            Expression = expression;
-            Type = type;
-            Op = op;
-        }
+    //public class TypeBinaryExpression : Expression
+    //{
+    //    public TypeBinaryExpression(string op, Expression expression, string type) : base(TypeInfo.Any)
+    //    {
+    //        Expression = expression;
+    //        Type = TypeInfo.ByName(type);
+    //        Op = op;
+    //    }
 
-        public string Op { get; private set; }
-        public Expression Expression { get; private set; }
+    //    public string Op { get; private set; }
+    //    public Expression Expression { get; private set; }
 
-        public TypeInfo Type { get; private set; }
+    //    public TypeInfo Type { get; private set; }
 
-        public override T Accept<T>(ExpressionVisitor<T> visitor)
-        {
-            return visitor.VisitTypeBinaryExpression(this);
-        }
+    //    public override T Accept<T>(ExpressionVisitor<T> visitor)
+    //    {
+    //        return visitor.VisitTypeBinaryExpression(this);
+    //    }
 
-        public override bool Equals(object obj)
-        {
-            if (base.Equals(obj) && obj is TypeBinaryExpression)
-            {
-                var f = (TypeBinaryExpression)obj;
-                return Object.Equals(Expression, f.Expression) && Type == f.Type;
-            }
-            else
-                return false;
-        }
+    //    public override bool Equals(object obj)
+    //    {
+    //        if (base.Equals(obj) && obj is TypeBinaryExpression)
+    //        {
+    //            var f = (TypeBinaryExpression)obj;
+    //            return Object.Equals(Expression, f.Expression) && Type == f.Type;
+    //        }
+    //        else
+    //            return false;
+    //    }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode() ^ Expression.GetHashCode() ^ Type.GetHashCode();
-        }
-    }
+    //    public override int GetHashCode()
+    //    {
+    //        return base.GetHashCode() ^ Expression.GetHashCode() ^ Type.GetHashCode();
+    //    }
+    //}
 }

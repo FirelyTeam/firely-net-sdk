@@ -117,6 +117,11 @@ namespace Hl7.Fhir.FluentPath.Binding
             nullp("replace", (string f, string regex, string subst) => f.FpReplace(regex, subst));
             nullp("length", (string f) => f.Length);
 
+            nullp("is", (IValueProvider f, string name) => f.Is(name));
+            nullp("as", (IEnumerable<IValueProvider> f, string name) => f.FilterType(name));
+            nullp("binary.is", (object f, IValueProvider left, string name) => left.Is(name));
+            nullp("binary.as", (object f, IValueProvider left, string name) => left.CastAs(name));
+
             // Logic operators do not use null propagation and may do short-cut eval
             logic("binary.and", (a, b) => a.And(b));
             logic("binary.or", (a, b) => a.Or(b));

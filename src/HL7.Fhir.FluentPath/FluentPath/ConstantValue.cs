@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public class ConstantValue : IValueProvider
+    public class ConstantValue : IValueProvider, ITypeNameProvider
     {
         public static object ToFluentPathValue(object value)
         {
@@ -60,6 +60,28 @@ namespace Hl7.Fhir.FluentPath
         {
             get;
             private set;
+        }
+
+        public string TypeName
+        {
+            get
+            {
+                if (Value is Boolean)
+                    return TypeInfo.Boolean.Name;
+                else if (Value is String)
+                    return TypeInfo.String.Name;
+                else if (Value is long)
+                    return TypeInfo.Integer.Name;
+                else if (Value is decimal)
+                    return TypeInfo.Decimal.Name;
+                else if (Value is PartialDateTime)
+                    return TypeInfo.DateTime.Name;
+                else if (Value is Time)
+                    return TypeInfo.Time.Name;
+                else
+                    throw Error.NotSupported("Don't know how to derive the FluentPath typename for an instance of .NET type {0} (with value '{1}')"
+                            .FormatWith(Value.GetType().Name, Value.ToString()));
+            }
         }
 
         public override string ToString()

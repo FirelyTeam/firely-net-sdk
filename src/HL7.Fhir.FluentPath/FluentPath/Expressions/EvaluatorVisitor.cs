@@ -51,11 +51,6 @@ namespace Hl7.Fhir.FluentPath.Expressions
                 return InvokeeFactory.ResolveValue(expression.Name);
         }
 
-        public override Invokee VisitTypeBinaryExpression(FP.TypeBinaryExpression expression)
-        {
-            throw new NotImplementedException();
-        }
-
         private static Invokee buildBindingInvoke(string functionName, Invokee focus, IEnumerable<Invokee> arguments, Invokee invokee)
         {
             return (ctx,_) =>

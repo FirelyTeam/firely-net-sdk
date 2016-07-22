@@ -125,7 +125,8 @@ namespace Hl7.Fhir.FluentPath.Binding
                     if (cast == null)
                     {
                         //TODO: Spell out why a little bit more explicit than...
-                        throw new InvalidCastException("Cannot cast from '{0}' to '{1}'".FormatWith(source.GetType().Name, to.Name));
+                        throw new InvalidCastException("Cannot cast from '{0}' to '{1}'".FormatWith(Typecasts.ReadableFluentPathName(source.GetType()),
+                            Typecasts.ReadableFluentPathName(to)));
                     }
 
                     return cast(source);
@@ -146,6 +147,16 @@ namespace Hl7.Fhir.FluentPath.Binding
            if (!t.IsValueType) return true; // ref-type
            if (Nullable.GetUnderlyingType(t) != null) return true; // Nullable<T>
            return false; // value-type
+        }
+
+        public static string ReadableFluentPathName(Type t)
+        {
+            if (typeof(IEnumerable<IValueProvider>).IsAssignableFrom(t))
+                return "collection";
+            else if (typeof(IValueProvider).IsAssignableFrom(t))
+                return "complex object";
+            else
+                return t.Name;
         }
     }
 }

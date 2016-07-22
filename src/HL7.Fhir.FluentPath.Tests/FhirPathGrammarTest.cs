@@ -55,7 +55,11 @@ namespace Hl7.Fhir.Tests.FhirPath
                         AxisExpression.This,
                         new FunctionCallExpression(AxisExpression.This, "somethingElse", TypeInfo.Any, new ConstantExpression(true))));
 
+            AssertParser.SucceedsMatch(parser, "as(Patient)", new FunctionCallExpression(AxisExpression.This, "as", TypeInfo.Any, new ConstantExpression("Patient")));
+
             AssertParser.FailsMatch(parser, "$that");
+       //     AssertParser.FailsMatch(parser, "as(Patient.identifier)");
+            AssertParser.FailsMatch(parser, "as('Patient')");
             AssertParser.FailsMatch(parser, "doSomething(");
         }
 
@@ -158,8 +162,8 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var parser = Grammar.TypeExpression.End();
 
-            AssertParser.SucceedsMatch(parser, "4 is integer", new TypeBinaryExpression("is", new ConstantExpression(4), TypeInfo.Integer));
-            AssertParser.SucceedsMatch(parser, "8 as notoddbuteven", new TypeBinaryExpression("as", new ConstantExpression(8), TypeInfo.ByName("notoddbuteven")));
+            AssertParser.SucceedsMatch(parser, "4 is integer", new BinaryExpression("is", new ConstantExpression(4), new ConstantExpression("integer")));
+            AssertParser.SucceedsMatch(parser, "8 as notoddbuteven", new BinaryExpression("as", new ConstantExpression(8), new ConstantExpression("notoddbuteven")));
 
             AssertParser.FailsMatch(parser, "4 is 5");
             // AssertParser.FailsMatch(parser, "5div6");    oops

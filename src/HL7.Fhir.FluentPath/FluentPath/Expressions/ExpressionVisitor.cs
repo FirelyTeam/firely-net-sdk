@@ -32,6 +32,6 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
         public abstract T VisitVariableRef(VariableRefExpression expression);
 
-        public abstract T VisitTypeBinaryExpression(TypeBinaryExpression expression);
+        //public abstract T VisitTypeBinaryExpression(TypeBinaryExpression expression);
     }
 }

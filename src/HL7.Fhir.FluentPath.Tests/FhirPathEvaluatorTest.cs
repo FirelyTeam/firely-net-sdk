@@ -271,6 +271,23 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"Patient.select(identifier | name).count() = Patient.select(identifier.count() + name.count())");
         }
 
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestTypeOperations()
+        {
+            //isTrue("3.is(integer)");
+            //isTrue("Patient.name.first().is(HumanName)");
+            //isTrue("Patient.select(name|identifier).as(HumanName).all($this is HumanName)");
+            //isTrue("Patient.name.given.first() is string");
+            //isTrue("Patient.name.given.first() is integer = false");
+            //isTrue("Patient.active is boolean");
+            //isTrue("Patient.contained.first() is Patient");
+            //isTrue("Patient.contained.as(Patient).count() = 1");
+            isTrue("Patient.deceased is boolean");
+            isTrue("Patient.gender is code");
+            isTrue("Patient.contained.as(Patient).birthDate is date");
+            //check deceased
+        }
+
 
         [TestMethod, TestCategory("FhirPath")]
         public void TestWhere()

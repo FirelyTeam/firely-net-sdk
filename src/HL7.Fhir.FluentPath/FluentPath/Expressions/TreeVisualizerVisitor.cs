@@ -67,13 +67,13 @@ namespace Hl7.Fhir.FluentPath.Expressions
             return _result;              
         }
 
-        public override StringBuilder VisitTypeBinaryExpression(TypeBinaryExpression expression)
-        {
-            append("{0} {1}".FormatWith(expression.Op, expression.Type.Name));
-            appendType(expression);
+        //public override StringBuilder VisitTypeBinaryExpression(TypeBinaryExpression expression)
+        //{
+        //    append("{0} {1}".FormatWith(expression.Op, expression.Type.Name));
+        //    appendType(expression);
 
-            return _result;
-        }
+        //    return _result;
+        //}
 
         private void appendType(Expression expr)
         {

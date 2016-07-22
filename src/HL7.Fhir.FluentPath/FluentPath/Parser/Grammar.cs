@@ -55,9 +55,19 @@ namespace Hl7.Fhir.FluentPath.Parser
             return
                 from n in Lexer.Identifier.Select(name => name)
                 from lparen in Parse.Char('(').Token()
-                from paramList in Parse.Ref(() => Grammar.Expression.Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
+                from paramList in Parse.Ref(() => FunctionParameter(n).Named("parameter")).DelimitedBy(Parse.Char(',').Token()).Optional()
                 from rparen in Parse.Char(')').Token()
                 select new FunctionCallExpression(context, n, TypeInfo.Any, paramList.GetOrElse(Enumerable.Empty<Expression>()));
+        }
+
+        public static Parser<Expression> FunctionParameter(string name)
+        {
+            // Make exception for is() and as() FUNCTIONS (operators are handled elsewhere), since they don't
+            // take a normal parameter, but an identifier (which is not normally a FluentPath type)
+            if (name != "is" && name != "as")
+                return Grammar.Expression;
+            else
+                return TypeSpecifier.Select(s => new ConstantExpression(s));
         }
 
 
@@ -80,8 +90,9 @@ namespace Hl7.Fhir.FluentPath.Parser
             .Named("Term");
 
 
-        public static readonly Parser<TypeInfo> TypeSpecifier =
-            Lexer.QualifiedIdentifier.Select(qi => TypeInfo.ByName(qi)).Token();
+        public static readonly Parser<string> TypeSpecifier =
+            //Lexer.QualifiedIdentifier.Select(qi => TypeInfo.ByName(qi)).Token();
+            Lexer.QualifiedIdentifier.Token();
 
         //expression
         // : term                                                      #termExpression
@@ -165,7 +176,7 @@ namespace Hl7.Fhir.FluentPath.Parser
             InEqExpression.Then(
                     ineq => (from isas in Lexer.TypeOperator
                              from tp in TypeSpecifier
-                             select new TypeBinaryExpression(isas, ineq, tp))
+                             select new BinaryExpression(isas, ineq, new ConstantExpression(tp)))
                     .Or(Parse.Return(ineq)));
 
         // | expression('=' | '~' | '!=' | '!~' | '<>') expression    #equalityExpression

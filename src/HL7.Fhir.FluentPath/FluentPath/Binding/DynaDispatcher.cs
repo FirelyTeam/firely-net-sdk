@@ -82,25 +82,15 @@ namespace Hl7.Fhir.FluentPath.Binding
             if (!arguments.Any())
                 return "(no signature)";
 
-            result = "on focus of type '{0}'".FormatWith(readableName(arguments.First().GetType()));
+            result = "on focus of type '{0}'".FormatWith(Typecasts.ReadableFluentPathName(arguments.First().GetType()));
             
             if(arguments.Skip(1).Any())
             {
                 result = "with parameters of type '{0}' "
-                        .FormatWith(String.Join(",", arguments.Skip(1).Select(a => readableName(a.GetType()))), result);
+                        .FormatWith(String.Join(",", arguments.Skip(1).Select(a => Typecasts.ReadableFluentPathName(a.GetType()))), result);
             }
 
             return "Function cannot be called " + result;
-        }
-
-        private string readableName(Type t)
-        {
-            if (typeof(IEnumerable<IValueProvider>).IsAssignableFrom(t))
-                return "collection";
-            else if (typeof(IValueProvider).IsAssignableFrom(t))
-                return "object";
-            else
-                return t.Name;
-        }    
+        }     
     }
 }
