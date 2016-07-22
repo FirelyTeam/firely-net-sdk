@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -34,25 +35,14 @@ namespace Hl7.Fhir.Specification.Tests
 		{
 			MarkChanges = false,
 			ExpandTypeProfiles = true,
-			IgnoreMissingTypeProfiles = true
+			// Throw on unresolved profile references; must include in TestData folder
+			IgnoreMissingTypeProfiles = false
 		};
 
 		[TestInitialize]
 		public void Setup()
 		{
 			_testSource = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/snapshot-test")));
-		}
-
-		[TestMethod]
-		//[Ignore]
-		public void GenerateSingleSnapshot()
-		{
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-adverseevent");
-            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceresponse");
-
-            Assert.IsNotNull(sd);
-
-			generateSnapshotAndCompare(sd, _testSource);
 		}
 
 		// [WMR 20160718] Generate snapshot for extension definition fails with exception:
@@ -63,46 +53,81 @@ namespace Hl7.Fhir.Specification.Tests
 		public void GenerateExtensionSnapshot()
 		{
 			var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
-            Assert.IsNotNull(sd);
+			Assert.IsNotNull(sd);
 
 			generateSnapshotAndCompare(sd, _testSource);
 		}
 
-		// [WMR 20160721] Following profiles are not yet handled (TODO)
-		private readonly string[] skippedProfiles =
+		[TestMethod]
+		//[Ignore]
+		public void GenerateSingleSnapshot()
+		{
+			var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-diagnosticorder");
+			Assert.IsNotNull(sd);
+
+            DumpReferences(sd);
+
+			generateSnapshotAndCompare(sd, _testSource);
+		}
+
+        // [WMR 20160722] For debugging purposes
+        [Conditional("DEBUG")]
+        public void DumpReferences(StructureDefinition sd)
+        {
+            Debug.WriteLine("References for StructureDefinition '{0}' ('{1}')".FormatWith(sd.Name, sd.Url));
+            Debug.WriteLine("Base = '{0}'".FormatWith(sd.Base));
+
+            var profiles = sd.Snapshot.Element.SelectMany(e => e.Type).SelectMany(t => t.Profile);
+            profiles = profiles.OrderBy(p => p).Distinct();
+
+            // FhirClient client = new FhirClient("http://fhir2.healthintersections.com.au/open/");
+            // var folderPath = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\snapshot-test\download");
+            // if (Directory.Exists(folderPath)) { Directory.CreateDirectory(folderPath); }
+
+            foreach (var profile in profiles)
+            {
+                Debug.WriteLine(profile);
+
+                //try
+                //{
+                //    var xml = client.Get(profile);
+                //    var filePath = Path.Combine()
+                //    File.WriteAllText(folderPath, )
+                //}
+                //catch (Exception ex)
+                //{
+                //    Debug.WriteLine(ex.Message);
+                //}
+            }
+        }
+
+        // [WMR 20160721] Following profiles are not yet handled (TODO)
+        private readonly string[] skippedProfiles =
 		{
 			// Profiles with invalid type slice (?)
 			@"http://hl7.org/fhir/StructureDefinition/uslab-obscode",
 			@"http://hl7.org/fhir/StructureDefinition/uslab-obsquantity",
-			@"http://hl7.org/fhir/StructureDefinition/uslab-obsother",
 			@"http://hl7.org/fhir/StructureDefinition/uslab-obsrange",
 			@"http://hl7.org/fhir/StructureDefinition/uslab-obsratio",
-			@"http://hl7.org/fhir/StructureDefinition/uslab-obspanel",
-			@"http://hl7.org/fhir/StructureDefinition/uslab-patient",
-			@"http://hl7.org/fhir/StructureDefinition/uslab-phpatient",
-			@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire",
-			@"http://hl7.org/fhir/StructureDefinition/sdc-valueset",
-			@"http://hl7.org/fhir/StructureDefinition/daf-medicationstatement",
 
-			// Following profile have inline constraints on extensions
-			// => Must resolve & expand the external extension profiles (TODO)
+			// Original daf-medicationstatement profile is invalid (constraint on MedicationStatement.medication)
+			// @"http://hl7.org/fhir/StructureDefinition/daf-medicationstatement",
+
+			// TODO: Snapshot expansion does not yet support sliced base profiles.
+			// (Due to complex extensions)
 			@"http://hl7.org/fhir/StructureDefinition/qicore-adverseevent",
-			@"http://hl7.org/fhir/StructureDefinition/qicore-diagnosticreport",
 			@"http://hl7.org/fhir/StructureDefinition/qicore-encounter",
 			@"http://hl7.org/fhir/StructureDefinition/qicore-goal",
 			@"http://hl7.org/fhir/StructureDefinition/qicore-patient",
-
-			// Inherit custom extension cardinality from CQIF extension definitions (must be resolvable!)
-			// @"http://hl7.org/fhir/StructureDefinition/cqif-guidanceresponse",
-			// @"http://hl7.org/fhir/StructureDefinition/cqif-evidence",
+            @"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire",
 
 			// Profiles on profiles
 			@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact",    // Derived from cqif-knowledgemodule
 
-            // Differential defines constraint on MedicationOrder.reason[x]
-            // Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
-            @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
-        };
+			// Differential defines constraint on MedicationOrder.reason[x]
+			// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
+			@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
+		};
 
 		[TestMethod]
 		// [Ignore]
@@ -146,24 +171,24 @@ namespace Hl7.Fhir.Specification.Tests
    
 		private IEnumerable<StructureDefinition> findConstraintStrucDefs()
 		{
-            var testSDs = _testSource.ListConformanceResources().Where(ci => ci.Type == ResourceType.StructureDefinition);
+			var testSDs = _testSource.ListConformanceResources().Where(ci => ci.Type == ResourceType.StructureDefinition);
 
-            foreach (var sdInfo in testSDs)
+			foreach (var sdInfo in testSDs)
 			{
-                // [WMR 20160721] Select all profiles in profiles-others.xml
-                var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
-                if (fileName == "profiles-others")
-                {
-                    var sd = _testSource.GetStructureDefinition(sdInfo.Url);
+				// [WMR 20160721] Select all profiles in profiles-others.xml
+				var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
+				if (fileName == "profiles-others")
+				{
+					var sd = _testSource.GetStructureDefinition(sdInfo.Url);
 
-				    if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
-					    "but could not get structure definition by that url later on!").FormatWith(sdInfo.Url, sdInfo.Origin));
+					if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
+						"but could not get structure definition by that url later on!").FormatWith(sdInfo.Url, sdInfo.Origin));
 
-                    if (sd.IsConstraint || sd.IsExtension)
-					    yield return sd;
-                }
-            }
-        }
+					if (sd.IsConstraint || sd.IsExtension)
+						yield return sd;
+				}
+			}
+		}
 
 		[TestMethod]
 		public void MakeDifferentialTree()

@@ -134,24 +134,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     if (match.Action == ElementMatcher.MatchAction.Add)
                     {
                         // Add a slice element
-#if false
-                        // [WMR 20160719] Wrong! e.g. profile sdcde-dataelement, slice DataElement.element.mapping
-
-                        // TODO: move this logic to matcher, the Add should point to the last slice where
-                        // the new slice will be added after.
-
-                        // Find last entry in slice to add to the end
-                        var current = snapNav.Path;
-                        while (snapNav.Current.Path == current && snapNav.MoveToNext()) ;
-                        snapNav.MoveToPrevious();       // take one step back...
-                        var dest = snapNav.Bookmark();
-                        snapNav.ReturnToBookmark(match.BaseBookmark);
-                        snapNav.DuplicateAfter(dest);
-                        markChange(snapNav.Current);
-
-                        mergeElement(snapNav, diffNav);
-                        snapNav.Current.Slicing = null;         // Probably not good enough...
-#elif true
                         // [WMR 20160720] NEW
 
                         // Ensure that we have a valid bookmark to the last slice element in the snapshot
@@ -176,7 +158,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                         // Update last slice bookmark to the newly added slice
                         lastSnapSlice = snapNav.Bookmark();
-#endif
+
                     }
                     else if (match.Action == ElementMatcher.MatchAction.Merge)
                     {
@@ -286,9 +268,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 if (baseNameRef == null)
                                 {
                                     baseNav.MoveToFirstChild();
-                                    // [WMR 20160720] Changed, use SnapshotGeneratorSettings
-                                    // (new ElementDefnMerger(_markChanges)).Merge(snap.Current, sourceNav.Current);
-                                    (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
                                 }
                                 else
                                 {
@@ -296,8 +275,18 @@ namespace Hl7.Fhir.Specification.Snapshot
                                     {
                                         throw Error.InvalidOperation("Found type profile with invalid name reference '{0}' - the base profile does not contain an element with name '{1}'".FormatWith(primaryDiffTypeProfile, baseNameRef));
                                     }
-                                    // Recursively merge the type profile
+                                }
+
+                                // Merge the external type profile
+                                if (diff.HasChildren)
+                                {
+                                    // Recursively merge the full profile, then merge overriding constraints from differential
                                     mergeElement(snap, baseNav);
+                                }
+                                else
+                                {
+                                    // Only merge the profile root element; no need to expand children
+                                    (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
                                 }
 #else
                                 baseNav.MoveToFirstChild();
@@ -315,6 +304,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         }
                         else
                         {
+                            Debug.Print("Warning! Unresolved external type profile reference: '{0}' - Ignore, skip expansion...".FormatWith(primaryDiffTypeProfile));
                             if (!_settings.IgnoreMissingTypeProfiles)
                             {
                                 // throw Error.NotSupported("Trying to navigate down a node that has a declared type profile of '{0}', which is unknown".FormatWith(primaryDiffTypeProfile));
@@ -323,7 +313,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                                     "The profile contains an unresolved reference to an external type profile with url '{0}'".FormatWith(primaryDiffTypeProfile)
                                 );
                             }
-                            Debug.Print("Warning! Unresolved external type profile reference: '{0}' - Ignore, skip expansion...".FormatWith(primaryDiffTypeProfile));
                         }
                     }
                 }
