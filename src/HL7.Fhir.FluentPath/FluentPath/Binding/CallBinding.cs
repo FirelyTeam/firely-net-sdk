@@ -37,10 +37,9 @@ namespace Hl7.Fhir.FluentPath.Binding
             if (ArgumentTypes.Count() != argumentValues.Count())
                 return false;
 
-            var casts = argumentValues.Select(av => Typecasts.Unbox(av))
-                .Zip(ArgumentTypes, (aa, ea) => Typecasts.GetImplicitCast(aa.GetType(), ea));
+            var casts = argumentValues.Zip(ArgumentTypes, (aa, ea) => Typecasts.CanCastTo(aa, ea));
 
-            return casts.All(c => c != null);
+            return casts.All(c => c == true);
         }
 
         public static CallBinding Create<R>(string name, Func<R> func)

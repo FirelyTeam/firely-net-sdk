@@ -63,14 +63,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AssertParser.cs" />
-    <Compile Include="Experimentation\FhirPathEvaluatorTestFromSpec.cs" />
     <Compile Include="Experimentation\NavigatorPOCO.cs" />
+    <Compile Include="CastTests.cs" />
+    <Compile Include="FhirPathTest.cs" />
     <Compile Include="TestEvaluationContext.cs" />
     <Compile Include="FhirPathEvaluatorTest.cs" />
     <Compile Include="FhirPathGrammarTest.cs" />
     <Compile Include="FhirPathLexerTest.cs" />
     <Compile Include="ISODateTimeTest.cs" />
-    <Compile Include="FhirPathTest.cs" />
     <Compile Include="InstanceTree\FhirInstanceTree.cs" />
     <Compile Include="InstanceTree\INodeConversionStrategy.cs" />
     <Compile Include="InstanceTree\TreeConstructorXml.cs" />
