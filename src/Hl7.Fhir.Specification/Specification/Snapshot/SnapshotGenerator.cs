@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var baseStructure = _resolver.GetStructureDefinition(structure.Base);
 
             if (baseStructure == null) throw Error.InvalidOperation("Could not locate the base StructureDefinition for url " + structure.Base);
-            if (baseStructure.Snapshot == null) throw Error.InvalidOperation("Snapshot generator required the base at {0} to have a snapshot representation", structure.Base);
+            if (baseStructure.Snapshot == null) throw Error.InvalidOperation("Snapshot generator required the base at '{0}' to have a snapshot representation", structure.Base);
 
             var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
             generateBaseElements(snapshot.Element);
@@ -127,9 +127,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 foreach (var match in matches)
                 {
                     if (!snapNav.ReturnToBookmark(match.BaseBookmark))
-                        throw Error.InvalidOperation("Internal merging error: bookmark {0} in snap is no longer available", match.BaseBookmark);
+                        throw Error.InvalidOperation("Internal merging error: bookmark '{0}' in snap is no longer available", match.BaseBookmark);
                     if (!diffNav.ReturnToBookmark(match.DiffBookmark))
-                        throw Error.InvalidOperation("Internal merging error: bookmark {0} in diff is no longer available", match.DiffBookmark);
+                        throw Error.InvalidOperation("Internal merging error: bookmark '{0}' in diff is no longer available", match.DiffBookmark);
 
                     if (match.Action == ElementMatcher.MatchAction.Add)
                     {
@@ -186,136 +186,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         private void mergeElement(ElementNavigator snap, ElementNavigator diff)
         {
-            // [WMR 20160720] Merge custom element type profiles, e.g. Patient.name with type.profile = "MyHumanName"
-            // Also for extensions, i.e. an extension element in a profile inherits constraints from the extension definition
-            // Specifically, the profile extension element inherits the cardinality from the extension definition root element (unless overridden in differential)
-            //
-            // Controversial - see GForge #9791
-            //
-            // How to merge elements with a custom type profile constraint?
-            //
-            // Example 1: Patient.Address with type.profile = AddressNL
-            //            A. Merge constraints from base profile element Patient.Address
-            //            B. Merge constraints from external profile AddressNL
-            //
-            // Example 2: slice value[x] + valueQuantity(Age)
-            //            A. Merge constraints from value[x] into valueQuantity
-            //            B. Merge constraints from Age profile into valueQuantity
-            //
-            // Ewout: no clear answer, valid use cases exist for both options
-            //
-            // Following logic is configurable
-            // By default, use strategy (A): ignore custom type profile, merge from base
-            // If ExpandTypeProfiles is enabled, then first merge custom type profile before merging base
-
             if (_settings.ExpandTypeProfiles)
             {
-                // [WMR 20160721] Note that we also try to resolve and expand extension definitions!
-                var primaryDiffType = diff.Current.Type.FirstOrDefault();
-                if (primaryDiffType != null && primaryDiffType.Code != FHIRDefinedType.Reference)
-                {
-                    var primaryDiffTypeProfile = primaryDiffType.Profile.FirstOrDefault();
-                    var primarySnapType = snap.Current.Type.FirstOrDefault();
-                    var primarySnapTypeProfile = primarySnapType != null ? primarySnapType.Profile.FirstOrDefault() : null;
-                    if (!string.IsNullOrEmpty(primaryDiffTypeProfile) && primaryDiffTypeProfile != primarySnapTypeProfile)
-                    {
-                        // Debug.Print("Path = '{0}' - Merge custom type profile '{1}'".FormatWith(diff.Path, primaryTypeProfile));
-
-                        // cf. ExpandElement
-
-#if HANDLE_COMPLEX_REFERENCES
-                        // [WMR 20160721] NEW: Handle type profiles with name references
-                        // e.g. profile "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent"
-                        // Extension element "cause" => "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-cause"
-                        // Constraint on extension child element "certainty" => "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-cause#certainty"
-                        // This means: 
-                        // - First inherit child element constraints from extension definition, element with name "certainty"
-                        // - Then override inherited constraints by explicit element constraints in profile differential
-                        var pos = primaryDiffTypeProfile.IndexOf('#');
-                        string baseNameRef = null;
-                        if (pos > 0)
-                        {
-                            baseNameRef = primaryDiffTypeProfile.Substring(pos + 1);
-                            primaryDiffTypeProfile = primaryDiffTypeProfile.Substring(0, pos);
-                        }
-#endif
-
-                        var baseType = _resolver.GetStructureDefinition(primaryDiffTypeProfile);
-
-                        if (baseType != null)
-                        {
-                            if (baseType.Snapshot != null)
-                            {
-                                // Clone and rebase
-                                baseType = (StructureDefinition)baseType.DeepCopy();
-#if HANDLE_COMPLEX_REFERENCES
-                                var rebasePath = diff.Path;
-                                if (baseNameRef != null && pos > 0)
-                                {
-                                    rebasePath = ElementNavigator.GetParentPath(rebasePath);
-                                }
-                                baseType.Snapshot.Rebase(rebasePath);
-#else
-                                baseType.Snapshot.Rebase(diff.Path);
-#endif
-
-                                generateBaseElements(baseType.Snapshot.Element);
-                                var baseNav = new ElementNavigator(baseType.Snapshot.Element);
-
-#if HANDLE_COMPLEX_REFERENCES
-                                // [WMR 20160721] NEW - Handle type profiles with name references
-                                // sourceNav.MoveToFirstChild();
-                                if (baseNameRef == null)
-                                {
-                                    baseNav.MoveToFirstChild();
-                                }
-                                else
-                                {
-                                    if (!baseNav.JumpToNameReference(baseNameRef))
-                                    {
-                                        throw Error.InvalidOperation("Found type profile with invalid name reference '{0}' - the base profile does not contain an element with name '{1}'".FormatWith(primaryDiffTypeProfile, baseNameRef));
-                                    }
-                                }
-
-                                // Merge the external type profile
-                                if (diff.HasChildren)
-                                {
-                                    // Recursively merge the full profile, then merge overriding constraints from differential
-                                    mergeElement(snap, baseNav);
-                                }
-                                else
-                                {
-                                    // Only merge the profile root element; no need to expand children
-                                    (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
-                                }
-#else
-                                baseNav.MoveToFirstChild();
-
-                                // [WMR 20160720] Changed, use SnapshotGeneratorSettings
-                                // (new ElementDefnMerger(_markChanges)).Merge(snap.Current, baseNav.Current);
-                                (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
-#endif
-
-                            }
-                            else if (!_settings.IgnoreMissingTypeProfiles)
-                            {
-                                throw Error.NotSupported("Found definition of type profile '{0}', but is does not contain a snapshot representation.".FormatWith(primaryDiffTypeProfile));
-                            }
-                        }
-                        else
-                        {
-                            Debug.Print("Warning! Unresolved external type profile reference: '{0}' - Ignore, skip expansion...".FormatWith(primaryDiffTypeProfile));
-                            if (!_settings.IgnoreMissingTypeProfiles)
-                            {
-                                // throw Error.NotSupported("Trying to navigate down a node that has a declared type profile of '{0}', which is unknown".FormatWith(primaryDiffTypeProfile));
-                                throw Error.ResourceReferenceNotFoundException(
-                                    primaryDiffTypeProfile,
-                                    "The profile contains an unresolved reference to an external type profile with url '{0}'".FormatWith(primaryDiffTypeProfile)
-                                );
-                            }
-                        }
-                    }
-                }
+                ExpandTypeProfiles(snap, diff);
             }
 
             // [WMR 20160720] Changed, use SnapshotGeneratorSettings
@@ -335,14 +208,16 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // have reduced the numer of types to 1. Still, if you don't do that, we cannot
                     // accept constraints on children, need to select a single type first...
                     if (snap.Current.Type.Count > 1)
-                        throw new NotSupportedException("Differential has a constraint on a choice element {0}, but does so without using a type slice".FormatWith(diff.Path));
+                    {
+                        throw new NotSupportedException("Differential has a constraint on a choice element '{0}', but does so without using a type slice".FormatWith(diff.Path));
+                    }
 
                     ExpandElement(snap, _resolver, _settings);
 
                     if (!snap.HasChildren)
                     {
                         // Snapshot's element turns out not to be expandable, so we can't move to the desired path
-                        throw Error.InvalidOperation("Differential has nested constraints for node {0}, but this is a leaf node in base", diff.Path);
+                        throw Error.InvalidOperation("Differential has nested constraints for node '{0}', but this is a leaf node in base", diff.Path);
                     }
                 }
 
@@ -355,6 +230,137 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Information is redundant (same value as [...]extension/type/profile)
                 // => snapshot generator should add this
                 fixExtensionUrl(snap);
+            }
+        }
+
+        // [WMR 20160720] Merge custom element type profiles, e.g. Patient.name with type.profile = "MyHumanName"
+        // Also for extensions, i.e. an extension element in a profile inherits constraints from the extension definition
+        // Specifically, the profile extension element inherits the cardinality from the extension definition root element (unless overridden in differential)
+        //
+        // Controversial - see GForge #9791
+        //
+        // How to merge elements with a custom type profile constraint?
+        //
+        // Example 1: Patient.Address with type.profile = AddressNL
+        //            A. Merge constraints from base profile element Patient.Address
+        //            B. Merge constraints from external profile AddressNL
+        //
+        // Example 2: slice value[x] + valueQuantity(Age)
+        //            A. Merge constraints from value[x] into valueQuantity
+        //            B. Merge constraints from Age profile into valueQuantity
+        //
+        // Ewout: no clear answer, valid use cases exist for both options
+        //
+        // Following logic is configurable
+        // By default, use strategy (A): ignore custom type profile, merge from base
+        // If ExpandTypeProfiles is enabled, then first merge custom type profile before merging base
+        private void ExpandTypeProfiles(ElementNavigator snap, ElementNavigator diff)
+        {
+            // [WMR 20160721] Note that we also try to resolve and expand extension definitions!
+            var primaryDiffType = diff.Current.Type.FirstOrDefault();
+            if (primaryDiffType != null && primaryDiffType.Code != FHIRDefinedType.Reference)
+            {
+                var primaryDiffTypeProfile = primaryDiffType.Profile.FirstOrDefault();
+                var primarySnapType = snap.Current.Type.FirstOrDefault();
+                var primarySnapTypeProfile = primarySnapType != null ? primarySnapType.Profile.FirstOrDefault() : null;
+                if (!string.IsNullOrEmpty(primaryDiffTypeProfile) && primaryDiffTypeProfile != primarySnapTypeProfile)
+                {
+                    // Debug.Print("Path = '{0}' - Merge custom type profile '{1}'".FormatWith(diff.Path, primaryTypeProfile));
+
+                    // cf. ExpandElement
+
+#if HANDLE_COMPLEX_REFERENCES
+                    // [WMR 20160721] NEW: Handle type profiles with name references
+                    // e.g. profile "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent"
+                    // Extension element "cause" => "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-cause"
+                    // Constraint on extension child element "certainty" => "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-cause#certainty"
+                    // This means: 
+                    // - First inherit child element constraints from extension definition, element with name "certainty"
+                    // - Then override inherited constraints by explicit element constraints in profile differential
+                    var pos = primaryDiffTypeProfile.IndexOf('#');
+                    string baseNameRef = null;
+                    if (pos > 0)
+                    {
+                        baseNameRef = primaryDiffTypeProfile.Substring(pos + 1);
+                        primaryDiffTypeProfile = primaryDiffTypeProfile.Substring(0, pos);
+                    }
+#endif
+
+                    var baseType = _resolver.GetStructureDefinition(primaryDiffTypeProfile);
+
+                    if (baseType != null)
+                    {
+                        if (baseType.Snapshot != null)
+                        {
+                            // Clone and rebase
+                            baseType = (StructureDefinition)baseType.DeepCopy();
+#if HANDLE_COMPLEX_REFERENCES
+                            var rebasePath = diff.Path;
+                            if (baseNameRef != null && pos > 0)
+                            {
+                                rebasePath = ElementNavigator.GetParentPath(rebasePath);
+                            }
+                            baseType.Snapshot.Rebase(rebasePath);
+#else
+                                baseType.Snapshot.Rebase(diff.Path);
+#endif
+
+                            generateBaseElements(baseType.Snapshot.Element);
+                            var baseNav = new ElementNavigator(baseType.Snapshot.Element);
+
+#if HANDLE_COMPLEX_REFERENCES
+                            // [WMR 20160721] NEW - Handle type profiles with name references
+                            // sourceNav.MoveToFirstChild();
+                            if (baseNameRef == null)
+                            {
+                                baseNav.MoveToFirstChild();
+                            }
+                            else
+                            {
+                                if (!baseNav.JumpToNameReference(baseNameRef))
+                                {
+                                    throw Error.InvalidOperation("Found type profile with invalid name reference '{0}' - the base profile does not contain an element with name '{1}'".FormatWith(primaryDiffTypeProfile, baseNameRef));
+                                }
+                            }
+
+                            // Merge the external type profile
+                            if (diff.HasChildren)
+                            {
+                                // Recursively merge the full profile, then merge overriding constraints from differential
+                                mergeElement(snap, baseNav);
+                            }
+                            else
+                            {
+                                // Only merge the profile root element; no need to expand children
+                                (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
+                            }
+#else
+                                baseNav.MoveToFirstChild();
+
+                                // [WMR 20160720] Changed, use SnapshotGeneratorSettings
+                                // (new ElementDefnMerger(_markChanges)).Merge(snap.Current, baseNav.Current);
+                                (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
+#endif
+
+                        }
+                        else if (!_settings.IgnoreMissingTypeProfiles)
+                        {
+                            throw Error.NotSupported("Found definition of type profile '{0}', but is does not contain a snapshot representation.".FormatWith(primaryDiffTypeProfile));
+                        }
+                    }
+                    else
+                    {
+                        Debug.Print("Warning! Unresolved external type profile reference: '{0}' - Ignore, skip expansion...".FormatWith(primaryDiffTypeProfile));
+                        if (!_settings.IgnoreMissingTypeProfiles)
+                        {
+                            // throw Error.NotSupported("Trying to navigate down a node that has a declared type profile of '{0}', which is unknown".FormatWith(primaryDiffTypeProfile));
+                            throw Error.ResourceReferenceNotFoundException(
+                                primaryDiffTypeProfile,
+                                "The profile contains an unresolved reference to an external type profile with url '{0}'".FormatWith(primaryDiffTypeProfile)
+                            );
+                        }
+                    }
+                }
             }
         }
 
@@ -400,7 +406,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Before we start, is the base element sliceable?
             if (!snap.Current.IsRepeating() && !snap.Current.IsChoice())
-                throw Error.InvalidOperation("The slicing entry in the differential at {0} indicates an slice, but the base element is not a repeating or choice element",
+                throw Error.InvalidOperation("The slicing entry in the differential at '{0}' indicates an slice, but the base element is not a repeating or choice element",
                    diff.Current.Path);
 
             ElementDefinition slicingEntry = diff.Current;
@@ -416,7 +422,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else
                 {
-                    throw Error.InvalidOperation("The slice group at {0} does not start with a slice entry element", diff.Current.Path);
+                    throw Error.InvalidOperation("The slice group at '{0}' does not start with a slice entry element", diff.Current.Path);
                 }
             }
 
@@ -473,7 +479,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             else if (defn.Type != null && defn.Type.Count > 0)
             {
                 if (defn.Type.Count > 1)
-                    throw new NotSupportedException("Element at path {0} has a choice of types, cannot expand".FormatWith(nav.Path));
+                    throw new NotSupportedException("Element at path '{0}' has a choice of types, cannot expand".FormatWith(nav.Path));
                 else
                 {
                     // [WMR 20160720] Handle custom type profiles (GForge #9791)

@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Specification.Tests
 		//[Ignore]
 		public void GenerateSingleSnapshot()
 		{
-			var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-diagnosticorder");
+			var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/uslab-obsratio");
 			Assert.IsNotNull(sd);
 
             DumpReferences(sd);
@@ -104,15 +104,6 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20160721] Following profiles are not yet handled (TODO)
         private readonly string[] skippedProfiles =
 		{
-			// Profiles with invalid type slice (?)
-			@"http://hl7.org/fhir/StructureDefinition/uslab-obscode",
-			@"http://hl7.org/fhir/StructureDefinition/uslab-obsquantity",
-			@"http://hl7.org/fhir/StructureDefinition/uslab-obsrange",
-			@"http://hl7.org/fhir/StructureDefinition/uslab-obsratio",
-
-			// Original daf-medicationstatement profile is invalid (constraint on MedicationStatement.medication)
-			// @"http://hl7.org/fhir/StructureDefinition/daf-medicationstatement",
-
 			// TODO: Snapshot expansion does not yet support sliced base profiles.
 			// (Due to complex extensions)
 			@"http://hl7.org/fhir/StructureDefinition/qicore-adverseevent",
@@ -121,7 +112,7 @@ namespace Hl7.Fhir.Specification.Tests
 			@"http://hl7.org/fhir/StructureDefinition/qicore-patient",
             @"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire",
 
-			// Profiles on profiles
+			// TODO: Profiles on profiles
 			@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact",    // Derived from cqif-knowledgemodule
 
 			// Differential defines constraint on MedicationOrder.reason[x]
@@ -133,6 +124,9 @@ namespace Hl7.Fhir.Specification.Tests
 		// [Ignore]
 		public void GenerateSnapshot()
 		{
+            var start = DateTime.Now;
+            int count = 0;
+
 			foreach (var original in findConstraintStrucDefs()
 				// [WMR 20160721] Skip invalid profiles
 				.Where(sd => !skippedProfiles.Contains(sd.Url))
@@ -144,7 +138,12 @@ namespace Hl7.Fhir.Specification.Tests
 				Debug.WriteLine("Generating Snapshot for " + original.Url);
 
 				generateSnapshotAndCompare(original, _testSource);
-			}
+                count++;
+            }
+
+            var duration = DateTime.Now.Subtract(start).TotalMilliseconds;
+            var avg = duration / count;
+            Debug.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
 		}
 
 		private void generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)

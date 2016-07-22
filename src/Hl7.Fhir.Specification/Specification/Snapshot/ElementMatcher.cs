@@ -152,7 +152,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             // TODO: test sliced base
 
             bool baseIsSliced = snapNav.Current.Slicing != null;
-            bool diffIsSliced = diffNav.Current.IsExtension() || nextChildName(diffNav) == diffNav.PathName;
+            var nextDiffChildName = nextChildName(diffNav);
+            bool diffIsSliced = diffNav.Current.IsExtension() || nextDiffChildName == diffNav.PathName;
 
 #if true
             // [WMR 20160720] New logic
@@ -168,7 +169,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (diffIsTypeSlice)
             {
                 // Only a single type slice? Then merge
-                if (!isPossibleTypeSlice(snapNav.PathName, nextChildName(diffNav)))
+                if (!isPossibleTypeSlice(snapNav.PathName, nextDiffChildName))
                 {
                     match.Action = MatchAction.Merge;
                     return new List<MatchInfo>() { match };
@@ -256,7 +257,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             var bm = snapNav.Bookmark();
             var diffName = diffNav.PathName;
             bool baseIsSliced = snapNav.Current.Slicing != null;
-            bool diffIsSliced = diffNav.Current.IsExtension() || nextChildName(diffNav) == diffNav.PathName;
 
             if (baseIsSliced)
                 throw Error.NotSupported("Cannot yet handle re-slicing found at diff {0}".FormatWith(diffNav.Path));
@@ -307,8 +307,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             var bm = snapNav.Bookmark();
             var diffName = diffNav.PathName;
             bool baseIsSliced = snapNav.Current.Slicing != null;
-            bool diffIsSliced = diffNav.Current.IsExtension() || nextChildName(diffNav) == diffNav.PathName;
-            bool diffIsTypeSlice = isPossibleTypeSlice(snapNav.PathName, diffNav.PathName);
 
             if (baseIsSliced)
             {
