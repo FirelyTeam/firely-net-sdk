@@ -39,9 +39,9 @@ namespace Hl7.Fhir.Navigation
                 if (current.Value != null)
                 {
 #if DEBUG
-                    Console.WriteLine("    -> Read Value of {0}: {1}",
-                        current.Name,
-                        current.Value.Value);
+//                    Console.WriteLine("    -> Read Value of {0}: {1}",
+//                        current.Name,
+//                        current.Value.Value);
 #endif
                     return current.Value.Value;
                 }
