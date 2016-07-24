@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Tests.FhirPath
                 if (_current != null)
                 {
 #if DEBUG
-                    Console.WriteLine("Read Name: {0} (value = {1})", _current.Name, _current.ActualValue);
+//                    Console.WriteLine("Read Name: {0} (value = {1})", _current.Name, _current.ActualValue);
 #endif
                     return _current.Name;
                 }
