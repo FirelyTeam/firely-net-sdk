@@ -92,6 +92,11 @@ namespace Hl7.Fhir.Model
             Value = value;
         }
 
+        public override string TypeName
+        {
+            get { return "code"; }
+        }
+
         //public override IDeepCopyable CopyTo(IDeepCopyable other)
         //{
         //    var dest = other as Code<T>;

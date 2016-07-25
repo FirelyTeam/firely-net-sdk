@@ -16,6 +16,11 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public object ObjectValue { get; set; }
 
+        public override string TypeName
+        {
+            get { return "Primitive"; }
+        }
+
         public override string ToString()
         {
             return PrimitiveTypeConverter.ConvertTo<string>(this.ObjectValue);
