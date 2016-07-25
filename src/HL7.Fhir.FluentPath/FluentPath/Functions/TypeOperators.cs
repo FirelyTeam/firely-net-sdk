@@ -27,6 +27,19 @@ namespace Hl7.Fhir.FluentPath.Functions
                 throw Error.InvalidOperation("Is operator is called on data which does not support ITypeNameProvider");
         }
 
+        public static bool Is(this IEnumerable<IValueProvider> f, string typeName)
+        {
+            var focus = f.First();
+
+            if (focus is ITypeNameProvider)
+            {
+                return ((ITypeNameProvider)focus).TypeName == typeName;     // I have no information about classes/subclasses
+            }
+            else
+                throw Error.InvalidOperation("Is operator is called on data which does not support ITypeNameProvider");
+        }
+
+
         public static IEnumerable<IValueProvider> FilterType(this IEnumerable<IValueProvider> focus, string typeName)
         {
             return focus.Where(item => item.Is(typeName));

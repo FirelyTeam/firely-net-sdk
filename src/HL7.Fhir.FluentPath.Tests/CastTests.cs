@@ -39,17 +39,17 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void TestUnbox()
         {
 
-            Assert.AreEqual(null, Typecasts.Unbox(emptyColl));
-            Assert.AreEqual(collection,Typecasts.Unbox(collection));
-            Assert.AreEqual(complex, Typecasts.Unbox(singleC));
+            Assert.AreEqual(null, Typecasts.Unbox(emptyColl, typeof(string)));
+            Assert.AreEqual(collection,Typecasts.Unbox(collection, typeof(IEnumerable<IValueProvider>)));
+            Assert.AreEqual(complex, Typecasts.Unbox(singleC, typeof(IValueProvider)));
 
-            Assert.AreEqual(4L, Typecasts.Unbox(singleV));
-            Assert.AreEqual(4L, Typecasts.Unbox(new ConstantValue(4)));
+            Assert.AreEqual(4L, Typecasts.Unbox(singleV, typeof(long)));
+            Assert.AreEqual(4L, Typecasts.Unbox(new ConstantValue(4), typeof(long)));
 
-            Assert.AreEqual(complex, Typecasts.Unbox(complex));
-            Assert.AreEqual(null, Typecasts.Unbox(null));
-            Assert.AreEqual(4L, Typecasts.Unbox(4L));
-            Assert.AreEqual("hi!", Typecasts.Unbox("hi!"));
+            Assert.AreEqual(complex, Typecasts.Unbox(complex, typeof(IValueProvider)));
+            Assert.AreEqual(null, Typecasts.Unbox(null, typeof(string)));
+            Assert.AreEqual(4L, Typecasts.Unbox(4L, typeof(long)));
+            Assert.AreEqual("hi!", Typecasts.Unbox("hi!", typeof(string)));
         }
 
         [TestMethod, TestCategory("FhirPath")]

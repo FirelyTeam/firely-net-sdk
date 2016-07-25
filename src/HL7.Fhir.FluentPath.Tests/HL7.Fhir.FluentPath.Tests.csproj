@@ -65,7 +65,6 @@
     <Compile Include="AssertParser.cs" />
     <Compile Include="Experimentation\NavigatorPOCO.cs" />
     <Compile Include="CastTests.cs" />
-    <Compile Include="FhirPathEvaluatorTestFromSpec.cs" />
     <Compile Include="FhirPathTest.cs" />
     <Compile Include="TestEvaluationContext.cs" />
     <Compile Include="FhirPathEvaluatorTest.cs" />
@@ -157,6 +156,7 @@
     </Content>
     <Content Include="TestData\questionnaire-example.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="TestData\TestPatient.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

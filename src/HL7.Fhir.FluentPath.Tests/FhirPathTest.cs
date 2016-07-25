@@ -104,7 +104,9 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void TestNavigation()
         {
             var values = getTestData();
-            
+
+            var r = values.EnumerateChildrenByName("Patient");
+
             var result = values.EnumerateChildrenByName("Patient").EnumerateChildrenByName("identifier").EnumerateChildrenByName("use");
             Assert.AreEqual(3, result.Count()); 
             Assert.AreEqual("usual", result.First().Value);

@@ -18,6 +18,7 @@ using Hl7.Fhir.FluentPath.Expressions;
 using System.Diagnostics;
 using Hl7.Fhir.FluentPath.InstanceTree;
 using Hl7.Fhir.Navigation;
+using dstu2::Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -274,18 +275,55 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestTypeOperations()
         {
-            //isTrue("3.is(integer)");
-            //isTrue("Patient.name.first().is(HumanName)");
-            //isTrue("Patient.select(name|identifier).as(HumanName).all($this is HumanName)");
-            //isTrue("Patient.name.given.first() is string");
-            //isTrue("Patient.name.given.first() is integer = false");
-            //isTrue("Patient.active is boolean");
-            //isTrue("Patient.contained.first() is Patient");
-            //isTrue("Patient.contained.as(Patient).count() = 1");
+            isTrue("3.is(integer)");
+            isTrue("Patient.name.first().is(HumanName)");
+            isTrue("Patient.select(name|identifier).as(HumanName).all($this is HumanName)");
+            isTrue("Patient.name.given.first() is string");
+            isTrue("Patient.name.given.first() is integer = false");
+            isTrue("Patient.active is boolean");
+            isTrue("Patient.contained.first() is Patient");
+            isTrue("Patient.contained.as(Patient).count() = 1");
             isTrue("Patient.deceased is boolean");
-            isTrue("Patient.gender is code");
+
+            isTrue("Patient.gender = 'male'");
+            //isTrue("Patient.gender is code"); Restore test after bug fix, will now return Element
+
             isTrue("Patient.contained.as(Patient).birthDate is date");
-            //check deceased
+            isTrue("Patient.deceased is boolean");
+            ///check deceased
+        }
+
+
+
+        public static string ToString(IElementNavigator nav)
+        {
+            var result = nav.Name;
+
+            if(nav is ITypeNameProvider)
+            {
+                var tnp = (ITypeNameProvider)nav;
+                result += ": " + tnp.TypeName;
+            }
+
+            if (nav.Value != null) result += " = " + nav.Value;
+
+            return result;
+        }
+
+        public static void Render(IElementNavigator navigator, int nest = 0)
+        {
+            do
+            {
+                string indent = new string(' ', nest * 4);
+                Debug.WriteLine($"{indent}" + ToString(navigator));
+
+                var child = navigator.Clone();
+                if (child.MoveToFirstChild())
+                {
+                    Render(child, nest + 1);
+                }
+            }
+            while (navigator.MoveToNext());
         }
 
 

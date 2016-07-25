@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -14,29 +15,16 @@ namespace Hl7.Fhir.Tests.FhirPath
     {
         public ModelNavigator(Base model)
         {
-            if (model != null)
-            {
-                // The current implementation of FluentPath has a dummy (root)
-                // element ahead of the real resoure root.
-                // uncomment this section (and remove the below) to remove that.
-                // _model = model;
-                // _current = new ElementNavigator(model.TypeName, model);
+            if (model == null) throw Error.ArgumentNull("model");
 
-                var root = new PocoRootObject();
-                root.Value = model;
-                root.ObjectName = model.TypeName;
-                _model = root;
-                _current = new ElementNavigator(model.TypeName, root);
-            }
+            _current = new ElementNavigator(model.TypeName, model);
         }
 
-        public ModelNavigator(Base model, ElementNavigator current)
+        internal ModelNavigator(ElementNavigator current)
         {
-            _model = model;
-            _current = current;
+            _current =  current;
         }
 
-        private Base _model;
         private ElementNavigator _current;
 
         /// <summary>
@@ -46,16 +34,10 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             get
             {
-                if (_current != null)
-                {
-#if DEBUG
-                    Console.WriteLine("    -> Read Value of {0}: {1}",
-                        _current.Name,
-                        _current.ActualValue);
+#if DEBUGX
+                Console.WriteLine("    -> Read Value of {0}: {1}", _current.Name, _current.Value);
 #endif
-                    return _current.ActualValue;
-                }
-                return null;
+                return _current.Value;
             }
         }
 
@@ -66,9 +48,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             get
             {
-                if (_current != null)
-                    return _current.GetTypeName(); // This needs to be fixed
-                return "Element"; // unknown type, so just returning Element for now
+                return _current.TypeName; // This needs to be fixed
             }
         }
 
@@ -79,36 +59,20 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             get
             {
-                if (_current != null)
-                {
-#if DEBUG
-                    Console.WriteLine("Read Name: {0} (value = {1})", _current.Name, _current.ActualValue);
+#if DEBUGX
+                Console.WriteLine("Read Name: {0} (value = {1})", _current.Name, _current.Value);
 #endif
-                    return _current.Name;
-                }
-                return null;
-            }
-        }
-
-        private string GetName()
-        {
-            if (_current != null)
-            {
                 return _current.Name;
             }
-            return null;
         }
-
         public bool MoveToFirstChild()
         {
-            if (_current != null && _current.Children().Count > 0)
+            if (_current.Children().Any())
             {
-                string oldName = this.GetName();
                 _current = _current.Children()[0];
-                // Console.WriteLine("Move To First Child of {0} -> {1}", oldName, this.GetName());
                 return true;
             }
-            // Console.WriteLine("Move To First Child of {0} failed, no children", this.GetName());
+
             return false;
         }
 
@@ -120,11 +84,11 @@ namespace Hl7.Fhir.Tests.FhirPath
         /// </returns>
         public bool MoveToNext()
         {
-            if (_current != null && _current.NextSibbling != null)
+            if (_current != null && _current.Next != null)
             {
-                string oldName = this.GetName();
-                _current = _current.NextSibbling;
-                string newName = this.GetName();
+                string oldName = this.Name;
+                _current = _current.Next;
+                string newName = this.Name;
                 // Console.WriteLine("Move Next: {0} -> {1}", oldName, newName);
                 return true;
             }
@@ -139,42 +103,12 @@ namespace Hl7.Fhir.Tests.FhirPath
         public IElementNavigator Clone()
         {
             // Console.WriteLine("Cloning: {0}", this.GetName());
-            return new ModelNavigator(_model, _current);
+            return new ModelNavigator(_current);
         }
     }
 
-    public class PocoRootObject : Base
-    {
-        public string ObjectName;
 
-        public Base Value { get; set; }
-
-        public override string TypeName
-        {
-            get
-            {
-                return "(root)";
-            }
-        }
-
-        public override IDeepCopyable DeepCopy()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool IsExactly(IDeepComparable other)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool Matches(IDeepComparable pattern)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    [System.Diagnostics.DebuggerDisplay(@"\{Name = {_name} Value = {_value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-    public class ElementNavigator
+    internal class ElementNavigator
     {
         static dstu2::Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {
@@ -186,68 +120,70 @@ namespace Hl7.Fhir.Tests.FhirPath
             return inspector.FindClassMappingByType(elementType);
         }
 
-        public ElementNavigator(string name, object value)
+        internal ElementNavigator(string name, Base value)
         {
-            _name = name;
-            _value = value;
+            if (value == null) throw Error.ArgumentNull("value");
 
-            var elementType = value.GetType();
-            if (!(this._value is PocoRootObject))
-            {
-                _mapping = GetMappingForType(elementType);
-                if (_mapping == null)
-                {
-                    // unknown type encountered
-                    Console.WriteLine("Unkown type encountered");
-                }
-            }
+            _pocoElement = value;
+            Name = name;
+
+            _mapping = GetMappingForType(value.GetType());
+
+            if (_mapping == null)
+                Console.WriteLine("Unkown type '{0}' encountered".FormatWith(value.GetType().Name));
         }
 
-        private string _name;
-        private object _value;
+        private Base _pocoElement;
         private dstu2::Hl7.Fhir.Introspection.ClassMapping _mapping;
-        private ElementNavigator _nextSibbling;
 
-        public string Name { get { return _name; } }
-        public ElementNavigator NextSibbling { get { return _nextSibbling; } }
+        public string Name { get; private set; }
 
-        public string GetTypeName()
-        {
-            return _mapping.Name;
-        }
-        public object ActualValue
+        public object Value
         {
             get
             {
-                if (_value as Primitive != null)
-                    return ((Primitive)_value).ObjectValue;
+                if (_pocoElement as Primitive != null)
+                    return ((Primitive)_pocoElement).ObjectValue;
                 else
                     return null;
             }
         }
 
+        public string TypeName
+        {
+            get
+            {
+#if DEBUG
+                Console.WriteLine("Read TypeName '{0}' for Element '{1}' (value '{2}')".FormatWith(_mapping.Name, Name, Value ?? "(nothing)"));
+#endif
+
+                return _pocoElement.TypeName;
+                //return _mapping.Name;
+            }
+        }
+
+
+        public ElementNavigator Next { get; private set; }
+
         private List<ElementNavigator> _children;
 
         public List<ElementNavigator> Children()
         {
-            if (_children != null)
-                return _children;
-            List<ElementNavigator> children = new List<ElementNavigator>();
-            _children = children;
-            if (_value == null)
-                return children;
-            if (_mapping == null && this._value is PocoRootObject)
-            {
-                var po = this._value as PocoRootObject;
-                children.Add(new ElementNavigator(po.ObjectName, po.Value));
-                return children;
-            }
+            // Cache children
+            if (_children != null) return _children;
+
+            _children = new List<ElementNavigator>();
+
             ElementNavigator previousChild = null;
+
             foreach (var item in _mapping.PropertyMappings)
             {
-                if (item.IsPrimitive && item.Name.ToLower() == "value")
+                // Don't expose "value" as a child, that's our ValueProvider.Value (if we're a primitive)
+                if (item.IsPrimitive)
                     continue;
-                var itemValue = item.GetValue(_value);
+
+                var itemValue = item.GetValue(_pocoElement);
+
                 if (itemValue != null)
                 {
                     if (item.IsCollection)
@@ -256,24 +192,24 @@ namespace Hl7.Fhir.Tests.FhirPath
                         {
                             if (colItem != null)
                             {
-                                children.Add(new ElementNavigator(item.Name, colItem));
+                                _children.Add(new ElementNavigator(item.Name, (Base)colItem));
                                 if (previousChild != null)
-                                    previousChild._nextSibbling = children.Last();
-                                previousChild = children.Last();
+                                    previousChild.Next = _children.Last();
+                                previousChild = _children.Last();
                             }
                         }
                     }
                     else
                     {
-                        children.Add(new ElementNavigator(item.Name, itemValue));
+                        _children.Add(new ElementNavigator(item.Name, (Base)itemValue));
                         if (previousChild != null)
-                            previousChild._nextSibbling = children.Last();
-                        previousChild = children.Last();
+                            previousChild.Next = _children.Last();
+                        previousChild = _children.Last();
                     }
                 }
             }
-            return children;
+
+            return _children;
         }
     }
-
 }

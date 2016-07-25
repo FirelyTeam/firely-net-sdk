@@ -68,9 +68,11 @@ namespace Hl7.Fhir.FluentPath.Binding
             return null;
         }
 
-        internal static object Unbox(object instance)
+        internal static object Unbox(object instance, Type to)
         {
             if (instance == null) return null;
+
+            if (typeof(IEnumerable<IValueProvider>).IsAssignableFrom(to)) return instance;
 
             if (instance is IEnumerable<IValueProvider>)
             {
@@ -80,7 +82,9 @@ namespace Hl7.Fhir.FluentPath.Binding
                     instance = list.Single();
             }
 
-            if(instance is IValueProvider)
+            if (typeof(IValueProvider).IsAssignableFrom(to)) return instance;
+
+            if (instance is IValueProvider)
             {
                 var element = (IValueProvider)instance;
 
@@ -96,7 +100,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             if (source == null)
                 return to.IsNullable();
 
-            var from = Unbox(source);
+            var from = Unbox(source, to);
             if (from == null)
                 return to.IsNullable();
 
@@ -116,7 +120,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             {
                 if (to.IsAssignableFrom(source.GetType())) return source;  // for efficiency
 
-                source = Unbox(source);
+                source = Unbox(source, to);
 
                 if (source != null)
                 {
