@@ -54,7 +54,7 @@ namespace Hl7.Fhir.FluentPath
             return expression.ToEvaluator();
         }
 
-    
+
         public static IEnumerable<IValueProvider> Select(string expression, IEnumerable<IValueProvider> input)
         {
             var evaluator = Compile(expression);
@@ -82,10 +82,22 @@ namespace Hl7.Fhir.FluentPath
         public static bool IsTrue(string expression, IEnumerable<IValueProvider> input)
         {
             var evaluator = Compile(expression);
-            return evaluator.Predicate(input);
+            return evaluator.IsTrue(input);
         }
 
         public static bool IsTrue(string expression, IEvaluationContext context)
+        {
+            var evaluator = Compile(expression);
+            return evaluator.IsTrue(context);
+        }
+
+        public static bool Predicate(string expression, IEnumerable<IValueProvider> input)
+        {
+            var evaluator = Compile(expression);
+            return evaluator.Predicate(input);
+        }
+
+        public static bool Predicate(string expression, IEvaluationContext context)
         {
             var evaluator = Compile(expression);
             return evaluator.Predicate(context);

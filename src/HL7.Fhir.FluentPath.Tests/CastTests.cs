@@ -13,11 +13,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sprache;
 using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.FluentPath.InstanceTree;
-using Hl7.Fhir.Navigation;
-using Hl7.Fhir.FluentPath.Functions;
 using Hl7.Fhir.FluentPath.Binding;
 
 namespace Hl7.Fhir.Tests.FhirPath

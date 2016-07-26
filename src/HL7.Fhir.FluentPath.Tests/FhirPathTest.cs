@@ -15,8 +15,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Sprache;
 using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.FluentPath.InstanceTree;
-using Hl7.Fhir.Navigation;
 using Hl7.Fhir.FluentPath.Functions;
 
 namespace Hl7.Fhir.Tests.FhirPath

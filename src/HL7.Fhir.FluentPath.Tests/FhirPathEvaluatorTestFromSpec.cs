@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.FluentPath.InstanceTree;
 
 
 using boolean = System.Boolean;
@@ -24,6 +23,8 @@ using dstu2::Hl7.Fhir.Serialization;
 using System.IO;
 using Hl7.Fhir.Tests.FhirPath;
 using System.Xml;
+using Hl7.Fhir.Support;
+using Hl7.Fhir.FluentPath.Binding;
 
 static class ConverterExtensions
 {
@@ -107,15 +108,14 @@ public class FluentPathTests
     {
         test(resource, expression, count, new String[] { types });
     }
-
-    // @SuppressWarnings("deprecation")
+    
     private void test(Resource resource, String expression, int count, String[] types)
     {
         var tpXml = FhirSerializer.SerializeToXml(resource);
         var npoco = new ModelNavigator(resource);
+ //       FhirPathEvaluatorTest.Render(npoco);
 
-        FhirInstanceTree tree = TreeConstructor.FromXml(tpXml);
-        var outcome = PathExpression.Select(expression, FhirValueList.Create(npoco));
+        var outcome = PathExpression.Compile(expression).Select(FhirValueList.Create(npoco));
         Assert.AreEqual(count, outcome.Count());
 
         if (types != null && types.Count() > 0)
@@ -129,77 +129,48 @@ public class FluentPathTests
     }
 
     // @SuppressWarnings("deprecation")
-    private void testBoolean(Resource resource, String expression, boolean value)
+    private void testPredicate(Resource resource, String expression, boolean value)
     {
-        Console.WriteLine("======================\r\nTesting for isTrue({0})\r\n----------------------", expression);
-        // var tpXml = FhirSerializer.SerializeToXml(resource);
-        // var tree = TreeConstructor.FromXml(tpXml);
-        Assert.AreEqual(value, PathExpression.IsTrue(expression, FhirValueList.Create(new ModelNavigator(resource))));
-
-        //        if (TestingUtilities.context == null)
-        //    	TestingUtilities.context = SimpleWorkerContext.fromPack("C:\\work\\org.hl7.fhir\\build\\publish\\validation-min.xml.zip");
-        //    FHIRPathEngine fp = new FHIRPathEngine(TestingUtilities.context);
-
-        //ExpressionNode node = fp.parse(expression);
-        //fp.check(null, null, resource.getResourceType().toString(), node);
-        //    List<Base> outcome = fp.evaluate(null, null, resource, node);
-        //    if (fp.hasLog())
-        //      System.out.println(fp.takeLog());
-
-        //    Assert.assertTrue("Wrong answer", fp.convertToBoolean(outcome) == value);
+        var nav = new ModelNavigator(resource);
+        Assert.AreEqual(value, PathExpression.Predicate(expression, FhirValueList.Create(nav)));
     }
 
     // @SuppressWarnings("deprecation")
-    private void testBoolean(Resource resource, Base focus, String focusType, String expression, boolean value)
+    private void testPredicate(Resource resource, Base focus, String focusType, String expression, boolean value)
     {
-        // var tpXml = FhirSerializer.SerializeToXml(resource);
-        // var tree = TreeConstructor.FromXml(tpXml);
-        Assert.AreEqual(value, PathExpression.IsTrue(expression, FhirValueList.Create(new ModelNavigator(resource))));
-        //       Need the focus type to be handled here in the test
-        //        if (TestingUtilities.context == null)
-        //    	TestingUtilities.context = SimpleWorkerContext.fromPack("C:\\work\\org.hl7.fhir\\build\\publish\\validation-min.xml.zip");
-        //    FHIRPathEngine fp = new FHIRPathEngine(TestingUtilities.context);
+        var context = BaseEvaluationContext.Root(ModelNavigator.CreateInput(resource));
+        context.SetThis(ModelNavigator.CreateInput(focus));
 
-        //ExpressionNode node = fp.parse(expression);
-        //fp.check(null, resource == null ? null : resource.getResourceType().toString(), focusType, node);
-        //    List<Base> outcome = fp.evaluate(null, resource, focus, node);
-        //    if (fp.hasLog())
-        //      System.out.println(fp.takeLog());
-
-        //    Assert.assertTrue("Wrong answer", fp.convertToBoolean(outcome) == value);
+        Assert.AreEqual(value, PathExpression.Predicate(expression, context));
     }
 
     private void testWrong(Resource resource, String expression)
     {
-        // var tpXml = FhirSerializer.SerializeToXml(resource);
-        // var tree = TreeConstructor.FromXml(tpXml);
         Assert.IsFalse(PathExpression.IsTrue(expression, FhirValueList.Create(new ModelNavigator(resource))));
-
-        //    if (TestingUtilities.context == null)
-        //    	TestingUtilities.context = SimpleWorkerContext.fromPack("C:\\work\\org.hl7.fhir\\build\\publish\\validation-min.xml.zip");
-        //    FHIRPathEngine fp = new FHIRPathEngine(TestingUtilities.context);
-
-        //    try {
-        //      ExpressionNode node = fp.parse(expression);
-        //fp.check(null, null, resource.getResourceType().toString(), node);
-        //      fp.evaluate(null, null, resource, node);
-        //      if (fp.hasLog())
-        //        System.out.println(fp.takeLog());
-        //      Assert.assertTrue("Fail expected", false);
-        //    } catch (PathEngineException e) {
-        //      // ok  
-        //    }
     }
 
 
     Dictionary<string, DomainResource> _cache = new Dictionary<string, DomainResource>();
 
-    [TestMethod, TestCategory("FhirPathFromSpec"), Ignore]
-    public void testPublishedTests()
+    [TestMethod, TestCategory("FhirPathFromSpec")]
+    public void TestPublishedTests()
+    {
+        var files = Directory.EnumerateFiles(@"C:\git\fluentpath\tests", "*.xml", SearchOption.TopDirectoryOnly);
+
+        foreach (var file in files)
+        {
+            Console.WriteLine("==== Running tests from file '{0}' ====".FormatWith(file));
+            runTests(file);
+            Console.WriteLine(Environment.NewLine);
+        }
+    }
+
+    private void runTests(string pathToTest)
     {
         // Read the test file, then execute each of them
         XmlDocument doc = new XmlDocument();
-        doc.Load(@"C:\src\fluentpath\tests.xml");
+
+        doc.Load(pathToTest);
         foreach (XmlElement item in doc.SelectNodes("//test"))
         {
             string groupName = (item.ParentNode as XmlElement).GetAttribute("name");
@@ -213,8 +184,8 @@ public class FluentPathTests
             DomainResource resource = null;
             if (!_cache.ContainsKey(inputfile))
             {
-                string basepath = @"C:\Work\org.hl7.fhir\Clean Build\publish\";
-                _cache.Add(inputfile, (DomainResource)FhirParser.ParseResourceFromXml(File.ReadAllText(basepath + inputfile)));
+                string basepath = @"C:\git\fluentpath\tests\input\dstu2\";
+                _cache.Add(inputfile, (DomainResource)(new FhirXmlParser().Parse<DomainResource>(File.ReadAllText(basepath + inputfile))));
             }
             resource = _cache[inputfile];
 
@@ -222,9 +193,9 @@ public class FluentPathTests
                 && ((output[0] as XmlElement).InnerText == "true" || (output[0] as XmlElement).InnerText == "false"))
             {
                 if ((output[0] as XmlElement).InnerText == "true")
-                    testBoolean(resource, expression, true);
+                    testPredicate(resource, expression, true);
                 else
-                    testBoolean(resource, expression, false);
+                    testPredicate(resource, expression, false);
             }
             else if ((item.SelectSingleNode("expression") as XmlElement).GetAttribute("invalid") == "true")
             {
@@ -245,7 +216,7 @@ public class FluentPathTests
         ElementDefinition ed = new ElementDefinition();
         ed.Binding = new ElementDefinition.BindingComponent();
         ed.Binding.setValueSet(new UriType("http://test.org"));
-        testBoolean(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSetUri", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
+        testPredicate(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSetUri", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
     }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
@@ -263,11 +234,11 @@ public class FluentPathTests
         sq1.setCode("%");
         sq1.setSystem("http://unitsofmeasure.org");
         r.addPrediction().setProbability(new Range().setLow(sq).setHigh(sq1));
-        testBoolean(r, r.getPrediction()[0].getProbability(), "RiskAssessment.prediction.probabilityRange",
+        testPredicate(r, r.getPrediction()[0].getProbability(), "RiskAssessment.prediction.probabilityRange",
             "(low.empty() or ((low.code = '%') and (low.system = %ucum))) and (high.empty() or ((high.code = '%') and (high.system = %ucum)))", true);
-        testBoolean(r, r.getPrediction()[0], "RiskAssessment.prediction", "probability is decimal implies probability.as(decimal) <= 100", true);
+        testPredicate(r, r.getPrediction()[0], "RiskAssessment.prediction", "probability is decimal implies probability.as(decimal) <= 100", true);
         r.getPrediction()[0].setProbability(new DecimalType(80));
-        testBoolean(r, r.getPrediction()[0], "RiskAssessment.prediction", "probability.as(decimal) <= 100", true);
+        testPredicate(r, r.getPrediction()[0], "RiskAssessment.prediction", "probability.as(decimal) <= 100", true);
     }
 
     /*  [TestMethod, TestCategory("FhirPathFromSpec")]
@@ -295,7 +266,7 @@ public class FluentPathTests
 
     private void testStructureDefinition(StructureDefinition sd)
     {
-        testBoolean(sd, sd, "StructureDefinition", "snapshot.element.tail().all(path.startsWith(%resource.snapshot.element.first().path&'.')) and differential.element.tail().all(path.startsWith(%resource.differential.element.first().path&'.'))", true);
+        testPredicate(sd, sd, "StructureDefinition", "snapshot.element.tail().all(path.startsWith(%resource.snapshot.element.first().path&'.')) and differential.element.tail().all(path.startsWith(%resource.differential.element.first().path&'.'))", true);
     }
 
 }

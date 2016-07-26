@@ -13,6 +13,11 @@ namespace Hl7.Fhir.Tests.FhirPath
 {
     public class ModelNavigator : IElementNavigator
     {
+        public static IEnumerable<IValueProvider> CreateInput(Base model)
+        {
+            return new List<IValueProvider>() { new ModelNavigator(model) };
+        }
+
         public ModelNavigator(Base model)
         {
             if (model == null) throw Error.ArgumentNull("model");
@@ -155,15 +160,21 @@ namespace Hl7.Fhir.Tests.FhirPath
             }
         }
 
+
+        private static string[] quantitySubtypes = { "SimpleQuantity", "Age", "Count", "Distance", "Duration", "Money" };
+
         public string TypeName
         {
             get
             {
-#if DEBUG
+#if DEBUGX
                 Console.WriteLine("Read TypeName '{0}' for Element '{1}' (value '{2}')".FormatWith(_mapping.Name, Name, Value ?? "(nothing)"));
 #endif
 
-                return _pocoElement.TypeName;
+                var tn = _pocoElement.TypeName;
+                if (quantitySubtypes.Contains(tn)) tn = "Quantity";
+
+                return tn;
                 //return _mapping.Name;
             }
         }

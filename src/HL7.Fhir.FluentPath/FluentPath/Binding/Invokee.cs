@@ -28,7 +28,11 @@ namespace Hl7.Fhir.FluentPath.Binding
 
         public static object Scalar(this Invokee evaluator, IEvaluationContext context)
         {
-            return evaluator.Select(context).Single().Value;
+            var result = evaluator.Select(context);
+            if (result.Any())
+                return evaluator.Select(context).Single().Value;
+            else
+                return null;
         }
 
         public static object Scalar(this Invokee evaluator, IEnumerable<IValueProvider> input)
@@ -36,13 +40,13 @@ namespace Hl7.Fhir.FluentPath.Binding
             return evaluator.Scalar(BaseEvaluationContext.Root(input));
         }
 
-        // For predicates, Empty is considered false (?)
+        // For predicates, Empty is considered true
         public static bool Predicate(this Invokee evaluator, IEvaluationContext context)
         {
             var result = evaluator.Select(context).BooleanEval();
 
-            if (!result == null)
-                return false;
+            if (result == null)
+                return true;
             else
                 return result.Value;
         }
@@ -51,6 +55,23 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             return evaluator.Predicate(BaseEvaluationContext.Root(input));
         }
+
+
+        public static bool IsTrue(this Invokee evaluator, IEvaluationContext context)
+        {
+            var result = evaluator.Select(context).BooleanEval();
+
+            if (result == null)
+                return false;
+            else
+                return result.Value;
+        }
+
+        public static bool IsTrue(this Invokee evaluator, IEnumerable<IValueProvider> input)
+        {
+            return evaluator.IsTrue(BaseEvaluationContext.Root(input));
+        }
+
 
         public static readonly IEnumerable<Invokee> EmptyArgs = Enumerable.Empty<Invokee>();
 

@@ -17,19 +17,22 @@ namespace Hl7.Fhir.FluentPath
     {
         public static IEnumerable<IElementNavigator> EnumerateChildrenByName(this IElementNavigator element, string name)
         {
-            var result = element.GetChildrenByName(name);
-
-            // If we are at a resource, we should match a path that is possibly not rooted in the resource
-            // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")        
-            if (!result.Any() && char.IsUpper(name[0])) 
+            if (char.IsUpper(name[0]))
             {
-                // Probably a resource name ;-)
-                // If we match the name of the resource, return all its children
-                if(element is ITypeNameProvider)
+                if (!char.IsUpper(element.Name[0]))
+                    throw Error.InvalidOperation("Resource type name may only appear at the root of a document");
+
+                // If we are at a resource, we should match a path that is possibly not rooted in the resource
+                // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")        
+                if (element is ITypeNameProvider)
                 {
                     if (((ITypeNameProvider)element).TypeName == name)
                     {
                         return new List<IElementNavigator>() { element };
+                    }
+                    else
+                    {
+                        return Enumerable.Empty<IElementNavigator>();
                     }
                 }
                 else
@@ -38,8 +41,8 @@ namespace Hl7.Fhir.FluentPath
                         "You could try leaving out the resource name of the expression.");
                 }
             }
-
-            return result;
+            else
+                return element.GetChildrenByName(name);
         }
 
         public static IEnumerable<IElementNavigator> EnumerateChildrenByName(this IEnumerable<IElementNavigator> elements, string name)

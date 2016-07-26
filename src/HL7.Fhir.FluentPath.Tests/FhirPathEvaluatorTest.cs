@@ -16,9 +16,8 @@ using System.Linq;
 using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.FluentPath.Expressions;
 using System.Diagnostics;
-using Hl7.Fhir.FluentPath.InstanceTree;
-using Hl7.Fhir.Navigation;
 using dstu2::Hl7.Fhir.Model;
+using Hl7.Fhir.FluentPath.Binding;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -119,8 +118,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 
         private void isTrue(string expr)
         {
-            Console.WriteLine("======================\r\nTesting for isTrue({0})\r\n----------------------", expr);
-            Assert.IsTrue(PathExpression.IsTrue(expr, testInput));
+            Assert.IsTrue(PathExpression.Compile(expr).Predicate(testInput));
         }
 
         [TestMethod, TestCategory("FhirPath")]
@@ -272,29 +270,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"Patient.select(identifier | name).count() = Patient.select(identifier.count() + name.count())");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
-        public void TestTypeOperations()
-        {
-            isTrue("3.is(integer)");
-            isTrue("Patient.name.first().is(HumanName)");
-            isTrue("Patient.select(name|identifier).as(HumanName).all($this is HumanName)");
-            isTrue("Patient.name.given.first() is string");
-            isTrue("Patient.name.given.first() is integer = false");
-            isTrue("Patient.active is boolean");
-            isTrue("Patient.contained.first() is Patient");
-            isTrue("Patient.contained.as(Patient).count() = 1");
-            isTrue("Patient.deceased is boolean");
-
-            isTrue("Patient.gender = 'male'");
-            //isTrue("Patient.gender is code"); Restore test after bug fix, will now return Element
-
-            isTrue("Patient.contained.as(Patient).birthDate is date");
-            isTrue("Patient.deceased is boolean");
-            ///check deceased
-        }
-
-
-
+    
         public static string ToString(IElementNavigator nav)
         {
             var result = nav.Name;
