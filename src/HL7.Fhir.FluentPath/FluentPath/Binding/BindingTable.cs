@@ -75,25 +75,25 @@ namespace Hl7.Fhir.FluentPath.Binding
 
             nullp("binary.>", (object f, long a, long b) => a > b);
             nullp("binary.>", (object f, decimal a, decimal b) => a > b);
-            nullp("binary.>", (object f, string a, string b) => String.Compare(a, b) > 0);
+            nullp("binary.>", (object f, string a, string b) => String.CompareOrdinal(a, b) > 0);
             nullp("binary.>", (object f, PartialDateTime a, PartialDateTime b) => a > b);
             nullp("binary.>", (object f, Time a, Time b) => a > b);
 
             nullp("binary.<", (object f, long a, long b) => a < b);
             nullp("binary.<", (object f, decimal a, decimal b) => a < b);
-            nullp("binary.<", (object f, string a, string b) => String.Compare(a, b) < 0);
+            nullp("binary.<", (object f, string a, string b) => String.CompareOrdinal(a, b) < 0);
             nullp("binary.<", (object f, PartialDateTime a, PartialDateTime b) => a < b);
             nullp("binary.<", (object f, Time a, Time b) => a < b);
 
             nullp("binary.<=", (object f, long a, long b) => a <= b);
             nullp("binary.<=", (object f, decimal a, decimal b) => a <= b);
-            nullp("binary.<=", (object f, string a, string b) => String.Compare(a, b) <= 0);
+            nullp("binary.<=", (object f, string a, string b) => String.CompareOrdinal(a, b) <= 0);
             nullp("binary.<=", (object f, PartialDateTime a, PartialDateTime b) => a <= b);
             nullp("binary.<=", (object f, Time a, Time b) => a <= b);
 
             nullp("binary.>=", (object f, long a, long b) => a >= b);
             nullp("binary.>=", (object f, decimal a, decimal b) => a >= b);
-            nullp("binary.>=", (object f, string a, string b) => String.Compare(a, b) >= 0);
+            nullp("binary.>=", (object f, string a, string b) => String.CompareOrdinal(a, b) >= 0);
             nullp("binary.>=", (object f, PartialDateTime a, PartialDateTime b) => a >= b);
             nullp("binary.>=", (object f, Time a, Time b) => a >= b);
 

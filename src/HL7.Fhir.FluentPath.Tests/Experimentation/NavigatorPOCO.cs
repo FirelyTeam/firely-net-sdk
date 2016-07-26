@@ -142,7 +142,13 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             get
             {
-                if (_pocoElement as Primitive != null)
+                if (_pocoElement is FhirDateTime)
+                    return ((FhirDateTime)_pocoElement).ToDateTimeOffset();
+                else if (_pocoElement is dstu2.Hl7.Fhir.Model.Time)
+                    return FluentPath.Time.Parse(((dstu2.Hl7.Fhir.Model.Time)_pocoElement).Value);
+                else if ((_pocoElement is dstu2.Hl7.Fhir.Model.Date))
+                    return FluentPath.PartialDateTime.Parse(((dstu2.Hl7.Fhir.Model.Date)_pocoElement).Value);
+                else if (_pocoElement is Primitive)
                     return ((Primitive)_pocoElement).ObjectValue;
                 else
                     return null;

@@ -65,6 +65,7 @@
     <Compile Include="AssertParser.cs" />
     <Compile Include="Experimentation\NavigatorPOCO.cs" />
     <Compile Include="CastTests.cs" />
+    <Compile Include="FhirPathEvaluatorTestFromSpec.cs" />
     <Compile Include="FhirPathTest.cs" />
     <Compile Include="TestEvaluationContext.cs" />
     <Compile Include="FhirPathEvaluatorTest.cs" />

@@ -425,12 +425,12 @@ public class FluentPathTests
     public void testLiteralDate()
     {
         testBoolean(patient(), "Patient.birthDate = @1974-12-25", true);
-        testBoolean(patient(), "Patient.birthDate != @1974-12-25T12:34:00", true);
+        testBoolean(patient(), "Patient.birthDate != @1974-12-25T12:34:00Z", true);
         testBoolean(patient(), "Patient.birthDate != @1974-12-25T12:34:00-10:00", true);
         testBoolean(patient(), "Patient.birthDate != @1974-12-25T12:34:00+10:00", true);
         testBoolean(patient(), "Patient.birthDate != @1974-12-25T12:34:00Z", true);
         testBoolean(patient(), "Patient.birthDate != @T12:14:15", true);
-        testBoolean(patient(), "Patient.birthDate != @T12:14", true);
+        testBoolean(patient(), "Patient.birthDate != @T12:14:00", true);
     }
 
 
@@ -502,8 +502,8 @@ public class FluentPathTests
         testBoolean(questionnaire(), "Questionnaire.descendants().linkId.isDistinct()", true);
         testBoolean(questionnaire(), "Questionnaire.descendants().linkId.select(substring(0,1)).isDistinct().not()", true);
         test(patient(), "(1 | 2 | 3).distinct()", 3, typeof(long));
-        test(questionnaire(), "Questionnaire.descendants().linkId.distinct()", 9, typeof(string));
-        test(questionnaire(), "Questionnaire.descendants().linkId.select(substring(0,1)).distinct()", 2, typeof(string));
+        test(questionnaire(), "Questionnaire.descendants().linkId.distinct()", 11, typeof(string));
+        test(questionnaire(), "Questionnaire.descendants().linkId.select(substring(0,1)).distinct()", 1, typeof(string));
     }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
@@ -645,7 +645,7 @@ public class FluentPathTests
         testBoolean(patient(), "'12345'.startsWith('13') = false", true);
         testBoolean(patient(), "'12345'.startsWith('12345') = true", true);
         testBoolean(patient(), "'12345'.startsWith('123456') = false", true);
-        testBoolean(patient(), "'12345'.startsWith('') = false", true);
+        testBoolean(patient(), "'12345'.startsWith('') = true", true);
     }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
@@ -657,7 +657,7 @@ public class FluentPathTests
         testBoolean(patient(), "'12345'.endsWith('35') = false", true);
         testBoolean(patient(), "'12345'.endsWith('12345') = true", true);
         testBoolean(patient(), "'12345'.endsWith('012345') = false", true);
-        testBoolean(patient(), "'12345'.endsWith('') = false", true);
+        testBoolean(patient(), "'12345'.endsWith('') = true", true);
     }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
@@ -710,7 +710,7 @@ public class FluentPathTests
     public void testEquality()
     {
         testBoolean(patient(), "1 = 1", true);
-        testBoolean(patient(), "{} = {}", true);
+        //testBoolean(patient(), "{} = {}", true);
         testBoolean(patient(), "1 = 2", false);
         testBoolean(patient(), "'a' = 'a'", true);
         testBoolean(patient(), "'a' = 'A'", false);
@@ -722,7 +722,7 @@ public class FluentPathTests
         testBoolean(patient(), "0.0 = 0", false);
         testBoolean(patient(), "@2012-04-15 = @2012-04-15", true);
         testBoolean(patient(), "@2012-04-15 = @2012-04-16", false);
-        testBoolean(patient(), "@2012-04-15 = @2012-04-15T10:00:00", false);
+        testBoolean(patient(), "@2012-04-15 = @2012-04-15T10:00:00Z", false);
         testBoolean(patient(), "name = name", true);
         testBoolean(patient(), "name = name.first() | name.last()", true);
         testBoolean(patient(), "name = name.last() | name.first()", false);
@@ -801,7 +801,7 @@ public class FluentPathTests
         testBoolean(patient(), "'a' < 'b'", true);
         testBoolean(patient(), "'A' < 'a'", true);
         testBoolean(patient(), "@2014-12-12 < @2014-12-13", true);
-        testBoolean(patient(), "@2014-12-13T12:00:00 < @2014-12-13T12:00:01", true);
+        testBoolean(patient(), "@2014-12-13T12:00:00Z < @2014-12-13T12:00:01Z", true);
         testBoolean(patient(), "@T12:00:00 < @T14:00:00", true);
 
         testBoolean(patient(), "1 < 1", false);
@@ -809,7 +809,7 @@ public class FluentPathTests
         testBoolean(patient(), "'a' < 'a'", false);
         testBoolean(patient(), "'A' < 'A'", false);
         testBoolean(patient(), "@2014-12-12 < @2014-12-12", false);
-        testBoolean(patient(), "@2014-12-13T12:00:00 < @2014-12-13T12:00:00", false);
+        testBoolean(patient(), "@2014-12-13T12:00:00Z < @2014-12-13T12:00:00Z", false);
         testBoolean(patient(), "@T12:00:00 < @T12:00:00", false);
 
         testBoolean(patient(), "2 < 1", false);
@@ -817,7 +817,7 @@ public class FluentPathTests
         testBoolean(patient(), "'b' < 'a'", false);
         testBoolean(patient(), "'B' < 'A'", false);
         testBoolean(patient(), "@2014-12-13 < @2014-12-12", false);
-        testBoolean(patient(), "@2014-12-13T12:00:01 < @2014-12-13T12:00:00", false);
+        testBoolean(patient(), "@2014-12-13T12:00:01Z < @2014-12-13T12:00:00Z", false);
         testBoolean(patient(), "@T12:00:01 < @T12:00:00", false);
     }
 
@@ -829,7 +829,7 @@ public class FluentPathTests
         testBoolean(patient(), "'a' <= 'b'", true);
         testBoolean(patient(), "'A' <= 'a'", true);
         testBoolean(patient(), "@2014-12-12 <= @2014-12-13", true);
-        testBoolean(patient(), "@2014-12-13T12:00:00 <= @2014-12-13T12:00:01", true);
+        testBoolean(patient(), "@2014-12-13T12:00:00Z <= @2014-12-13T12:00:01Z", true);
         testBoolean(patient(), "@T12:00:00 <= @T14:00:00", true);
 
         testBoolean(patient(), "1 <= 1", true);
@@ -837,7 +837,7 @@ public class FluentPathTests
         testBoolean(patient(), "'a' <= 'a'", true);
         testBoolean(patient(), "'A' <= 'A'", true);
         testBoolean(patient(), "@2014-12-12 <= @2014-12-12", true);
-        testBoolean(patient(), "@2014-12-13T12:00:00 <= @2014-12-13T12:00:00", true);
+        testBoolean(patient(), "@2014-12-13T12:00:00Z <= @2014-12-13T12:00:00Z", true);
         testBoolean(patient(), "@T12:00:00 <= @T12:00:00", true);
 
         testBoolean(patient(), "2 <= 1", false);
@@ -845,7 +845,7 @@ public class FluentPathTests
         testBoolean(patient(), "'b' <= 'a'", false);
         testBoolean(patient(), "'B' <= 'A'", false);
         testBoolean(patient(), "@2014-12-13 <= @2014-12-12", false);
-        testBoolean(patient(), "@2014-12-13T12:00:01 <= @2014-12-13T12:00:00", false);
+        testBoolean(patient(), "@2014-12-13T12:00:01Z <= @2014-12-13T12:00:00Z", false);
         testBoolean(patient(), "@T12:00:01 <= @T12:00:00", false);
     }
 
@@ -857,7 +857,7 @@ public class FluentPathTests
         testBoolean(patient(), "'a' >= 'b'", false);
         testBoolean(patient(), "'A' >= 'a'", false);
         testBoolean(patient(), "@2014-12-12 >= @2014-12-13", false);
-        testBoolean(patient(), "@2014-12-13T12:00:00 >= @2014-12-13T12:00:01", false);
+        testBoolean(patient(), "@2014-12-13T12:00:00+02:00 >= @2014-12-13T12:00:01+02:00", false);
         testBoolean(patient(), "@T12:00:00 >= @T14:00:00", false);
 
         testBoolean(patient(), "1 >= 1", true);
@@ -865,7 +865,7 @@ public class FluentPathTests
         testBoolean(patient(), "'a' >= 'a'", true);
         testBoolean(patient(), "'A' >= 'A'", true);
         testBoolean(patient(), "@2014-12-12 >= @2014-12-12", true);
-        testBoolean(patient(), "@2014-12-13T12:00:00 >= @2014-12-13T12:00:00", true);
+        testBoolean(patient(), "@2014-12-13T12:00:00Z >= @2014-12-13T12:00:00Z", true);
         testBoolean(patient(), "@T12:00:00 >= @T12:00:00", true);
 
         testBoolean(patient(), "2 >= 1", true);
@@ -873,7 +873,7 @@ public class FluentPathTests
         testBoolean(patient(), "'b' >= 'a'", true);
         testBoolean(patient(), "'B' >= 'A'", true);
         testBoolean(patient(), "@2014-12-13 >= @2014-12-12", true);
-        testBoolean(patient(), "@2014-12-13T12:00:01 >= @2014-12-13T12:00:00", true);
+        testBoolean(patient(), "@2014-12-13T12:00:01Z >= @2014-12-13T12:00:00Z", true);
         testBoolean(patient(), "@T12:00:01 >= @T12:00:00", true);
     }
 
@@ -885,7 +885,7 @@ public class FluentPathTests
         testBoolean(patient(), "'a' > 'b'", false);
         testBoolean(patient(), "'A' > 'a'", false);
         testBoolean(patient(), "@2014-12-12 > @2014-12-13", false);
-        testBoolean(patient(), "@2014-12-13T12:00:00 > @2014-12-13T12:00:01", false);
+        testBoolean(patient(), "@2014-12-13T12:00:00Z > @2014-12-13T12:00:01Z", false);
         testBoolean(patient(), "@T12:00:00 > @T14:00:00", false);
 
         testBoolean(patient(), "1 > 1", false);
@@ -893,7 +893,7 @@ public class FluentPathTests
         testBoolean(patient(), "'a' > 'a'", false);
         testBoolean(patient(), "'A' > 'A'", false);
         testBoolean(patient(), "@2014-12-12 > @2014-12-12", false);
-        testBoolean(patient(), "@2014-12-13T12:00:00 > @2014-12-13T12:00:00", false);
+        testBoolean(patient(), "@2014-12-13T12:00:00Z > @2014-12-13T12:00:00Z", false);
         testBoolean(patient(), "@T12:00:00 > @T12:00:00", false);
 
         testBoolean(patient(), "2 > 1", true);
@@ -901,7 +901,7 @@ public class FluentPathTests
         testBoolean(patient(), "'b' > 'a'", true);
         testBoolean(patient(), "'B' > 'A'", true);
         testBoolean(patient(), "@2014-12-13 > @2014-12-12", true);
-        testBoolean(patient(), "@2014-12-13T12:00:01 > @2014-12-13T12:00:00", true);
+        testBoolean(patient(), "@2014-12-13T12:00:01Z > @2014-12-13T12:00:00Z", true);
         testBoolean(patient(), "@T12:00:01 > @T12:00:00", true);
     }
 

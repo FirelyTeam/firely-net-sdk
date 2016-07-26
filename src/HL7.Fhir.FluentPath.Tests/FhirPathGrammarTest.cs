@@ -31,6 +31,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.SucceedsMatch(parser, "@2013-12", new ConstantExpression(PartialDateTime.Parse("2013-12")));
             AssertParser.SucceedsMatch(parser, "@T12:23:34Z", new ConstantExpression(Time.Parse("T12:23:34Z")));
             AssertParser.SucceedsMatch(parser, "true", new ConstantExpression(true));
+            AssertParser.SucceedsMatch(parser, "@2014-12-13T12:00:00+02:00", new ConstantExpression(PartialDateTime.Parse("2014-12-13T12:00:00+02:00")));
 
             AssertParser.FailsMatch(parser, "%constant");
             AssertParser.FailsMatch(parser, "\"quotedstring\"");
@@ -79,6 +80,8 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.SucceedsMatch(parser, "true", new ConstantExpression(true));
             AssertParser.SucceedsMatch(parser, "(3)", new ConstantExpression(3L));
             AssertParser.SucceedsMatch(parser, "{}", NewNodeListInitExpression.Empty);
+            AssertParser.SucceedsMatch(parser, "@2014-12-13T12:00:00+02:00", new ConstantExpression(PartialDateTime.Parse("2014-12-13T12:00:00+02:00")));
+
         }
 
         private static readonly Expression patientName = new ChildExpression(new ChildExpression(AxisExpression.This, "Patient"), "name");
@@ -189,6 +192,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "<>");
         }
 
+   
         [TestMethod, TestCategory("FhirPath")]
         public void FhirPath_Gramm_Eq()
         {
