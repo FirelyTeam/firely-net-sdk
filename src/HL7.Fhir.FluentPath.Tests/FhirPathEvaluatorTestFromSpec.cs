@@ -138,7 +138,7 @@ public class FluentPathTests
     // @SuppressWarnings("deprecation")
     private void testPredicate(Resource resource, Base focus, String focusType, String expression, boolean value)
     {
-        var context = BaseEvaluationContext.Root(ModelNavigator.CreateInput(resource));
+        var context = BaseEvaluationContext.Root(resource==null ? ModelNavigator.CreateInput(focus) : ModelNavigator.CreateInput(resource));
         context.SetThis(ModelNavigator.CreateInput(focus));
 
         Assert.AreEqual(value, PathExpression.Predicate(expression, context));

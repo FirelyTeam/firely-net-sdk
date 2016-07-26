@@ -415,12 +415,12 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestSubstring()
         {
-            isTrue("Patient.contained.birthDate.substring(0,10) = '1973-05-31'");
-            isTrue("Patient.contained.birthDate.substring(2,10) = '73-05-31'");
-            isTrue("Patient.contained.birthDate.substring(2,8) = '73-05-31'");
+            isTrue("Patient.name.family.substring(0,6) = 'Donald'");
+            isTrue("Patient.name.family.substring(2,6) = 'nald'");
+            isTrue("Patient.name.family.substring(2,4) = 'nald'");
 
-            isTrue("Patient.contained.birthDate.substring(-1,8).empty()");
-            isTrue("Patient.contained.birthDate.substring(999,1).empty()");
+            isTrue("Patient.name.family.substring(-1,8).empty()");
+            isTrue("Patient.name.family.substring(999,1).empty()");
             isTrue("''.substring(0,1).empty()");
             isTrue("{}.substring(0,10).empty()");
             isTrue("{}.substring(0,10).empty()");
@@ -439,13 +439,13 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestStringOps()
         {
-            isTrue("Patient.contained.birthDate.startsWith('')");
-            isTrue("Patient.contained.birthDate.startsWith('1973')");
-            isTrue("Patient.contained.birthDate.startsWith('1974')=false");
+            isTrue("Patient.name.family.startsWith('')");
+            isTrue("Patient.name.family.startsWith('Don')");
+            isTrue("Patient.name.family.startsWith('Dox')=false");
 
-            isTrue("Patient.contained.birthDate.endsWith('')");
-            isTrue("Patient.contained.birthDate.endsWith('-31')");
-            isTrue("Patient.contained.birthDate.startsWith('+31')=false");
+            isTrue("Patient.name.family.endsWith('')");
+            isTrue("Patient.name.family.endsWith('ald')");
+            isTrue("Patient.name.family.endsWith('old')=false");
 
             isTrue("Patient.identifier.where(system='urn:oid:0.1.2.3.4.5.6.7').value.matches('^[1-6]+$')");
             isTrue("Patient.identifier.where(system='urn:oid:0.1.2.3.4.5.6.7').value.matches('^[1-3]+$') = false");
