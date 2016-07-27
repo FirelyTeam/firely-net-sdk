@@ -151,7 +151,6 @@ namespace Hl7.Fhir.Tests.FhirPath
             // verify less than clause
             Eval.FixedNowValue = new DateTime(2016, 4, 29);
             Assert.IsTrue(PathExpression.Predicate(expression, tree));
-
         }
     }
 }

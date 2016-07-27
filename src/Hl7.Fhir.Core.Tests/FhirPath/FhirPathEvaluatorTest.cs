@@ -121,6 +121,8 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestExpressionDateAddFunction()
         {
+            Eval.FixedNowValue = null;
+
             var first = PathExpression.Scalar("now()", null);
             System.Threading.Thread.Sleep(500);
             var second = PathExpression.Scalar("now().dateadd('mm',2)", null);
