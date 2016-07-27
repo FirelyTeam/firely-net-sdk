@@ -13,7 +13,7 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
 
         public object Value
         {
-            get;  private set;
+            get;  internal set;
         }
 
         public IFhirPathElement Parent
@@ -58,6 +58,12 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
             }
 
             return rep;     // If all else fails, it's probably just a string
+        }
+
+        internal UntypedValue(string representation, object value)
+        {
+            Representation = representation;
+            Value = value;
         }
 
         public UntypedValue(string representation)

@@ -38,7 +38,24 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
             FhirInstanceTree result = null;
 
             if (hasValue)
-                result = parent.AddLastChild(newNodeName, (IFhirPathValue)new UntypedValue(value));
+            {
+                if (newNodeName == "valueString")
+                {
+                    var v = new UntypedValue(value, value);
+                    result = parent.AddLastChild(newNodeName, (IFhirPathValue)v);
+                }
+                else
+                {
+                    var v = new UntypedValue(value);
+                    if (newNodeName == "valueDecimal") // force the type to be decimal
+                    {
+                        v.Value = System.Convert.ToDecimal(v.Value);
+                        result = parent.AddLastChild(newNodeName, (IFhirPathValue)v);
+                    }
+                    else
+                        result = parent.AddLastChild(newNodeName, (IFhirPathValue)v);
+                }
+            }
             else
                 result = parent.AddLastChild(newNodeName);
 

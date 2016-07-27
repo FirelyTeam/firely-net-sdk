@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
                 if (result is FhirDecimal)
                 {
                     if (result != null && (result as FhirDecimal).Value.HasValue)
-                        return (result as FhirDecimal).Value;
+                        return (result as FhirDecimal).Value.Value;
                     return null;
                 }
                 if (result is Instant)
@@ -220,9 +220,17 @@ namespace Hl7.Fhir.Model
                     }
                     return null;
                 }
+                if (result is Integer)
+                {
+                    return Convert.ToInt64((result as Primitive).ObjectValue);
+                }
                 if (result == null)
                     return null;
-                return result;
+                if (result is Primitive)
+                {
+                    return (result as Primitive).ObjectValue;
+                }
+                return null;
             }
         }
 
@@ -234,12 +242,12 @@ namespace Hl7.Fhir.Model
                 return _children;
             List<ChildNode> children = new List<ChildNode>();
             _children = children;
-            if (_value == null)
+            if (_value == null || _mapping == null || _mapping.HasPrimitiveValueMember)
                 return children;
             foreach (var item in _mapping.PropertyMappings)
             {
-                if (item.IsPrimitive && item.Name.ToLower() == "value")
-                    continue;
+                // if (item.IsPrimitive && item.Name.ToLower() == "value")
+                //    continue;
                 var itemValue = item.GetValue(_value);
                 if (itemValue != null)
                 {
@@ -253,7 +261,14 @@ namespace Hl7.Fhir.Model
                     }
                     else
                     {
-                        children.Add(new ChildNode(item.Name, new ModelElement(this, item.Name, item.ElementType, itemValue)));
+                        string propertySerializationName = item.Name;
+                        if (item.Choice == Introspection.ChoiceType.DatatypeChoice 
+                            && item.Name == "value"
+                            && itemValue is Primitive)
+                        {
+                            propertySerializationName = "value" + (itemValue as Primitive).TypeName.Substring(0, 1).ToUpper() + (itemValue as Primitive).TypeName.Substring(1);
+                        }
+                        children.Add(new ChildNode(propertySerializationName, new ModelElement(this, item.Name, item.ElementType, itemValue)));
                     }
                 }
             }

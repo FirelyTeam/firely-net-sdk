@@ -53,8 +53,20 @@ namespace Hl7.Fhir.FhirPath
 
         public static bool Predicate(this Evaluator evaluator, IFhirPathValue instance, IEvaluationContext context)
         {
-            var result = evaluator.Evaluate(instance, context);
-            return result.BooleanEval().AsBoolean();
+            var focus = evaluator.Evaluate(instance, context);
+
+            // An empty result is considered "true" for invariant processing
+            if (!focus.Any())
+                return true;
+
+            // A single result that's a boolean should be interpreted as a boolean
+            else if (focus.JustValues().Count() == 1 && focus.JustValues().Single().Value is Boolean)
+            {
+                return focus.Single().AsBoolean();
+            }
+
+            // Otherwise, we have "some" content, which we'll consider "true"
+            return true;
         }
 
         public static bool IsTrue(this Evaluator evaluator, IFhirPathValue instance)
@@ -346,7 +358,7 @@ namespace Hl7.Fhir.FhirPath
         {
             return (f, c) =>
             {
-                System.Diagnostics.Trace.WriteLine("Evaluating the today() expression");
+            //    System.Diagnostics.Trace.WriteLine("Evaluating the today() expression");
                 if (FixedNowValue.HasValue)
                 {
                     return new[] { new TypedValue(new PartialDateTime(FixedNowValue.Value.Date, PartialDateTime.Precision.Day)) };

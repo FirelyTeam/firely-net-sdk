@@ -154,7 +154,7 @@ namespace Hl7.Fhir.FhirPath
         public static IEnumerable<IFhirPathValue> CountItems(this IEnumerable<IFhirPathValue> focus)
         {
             var result = focus.Count();
-            System.Diagnostics.Trace.WriteLine(String.Format("Count() = '{0}'", result));
+        //    System.Diagnostics.Trace.WriteLine(String.Format("Count() = '{0}'", result));
             return FhirValueList.Create(result);
         }
 
