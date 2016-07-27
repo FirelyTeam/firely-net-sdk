@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
                 get { return OnsetElement != null ? OnsetElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         OnsetElement = null; 
                     else
                         OnsetElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
             get { return OnsetElement != null ? OnsetElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   OnsetElement = null; 
                 else
                   OnsetElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
             get { return RecordedDateElement != null ? RecordedDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   RecordedDateElement = null; 
                 else
                   RecordedDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceStatus>(value);
@@ -701,7 +701,7 @@ namespace Hl7.Fhir.Model
             get { return CriticalityElement != null ? CriticalityElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   CriticalityElement = null; 
                 else
                   CriticalityElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>(value);
@@ -734,7 +734,7 @@ namespace Hl7.Fhir.Model
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   TypeElement = null; 
                 else
                   TypeElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType>(value);
@@ -767,7 +767,7 @@ namespace Hl7.Fhir.Model
             get { return CategoryElement != null ? CategoryElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   CategoryElement = null; 
                 else
                   CategoryElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>(value);
@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Model
             get { return LastOccurenceElement != null ? LastOccurenceElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   LastOccurenceElement = null; 
                 else
                   LastOccurenceElement = new Hl7.Fhir.Model.FhirDateTime(value);

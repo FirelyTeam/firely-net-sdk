@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus>(value);
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
             get { return TimeElement != null ? TimeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TimeElement = null; 
                 else
                   TimeElement = new Hl7.Fhir.Model.FhirDateTime(value);

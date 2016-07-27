@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
                 get { return LotNumberElement != null ? LotNumberElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         LotNumberElement = null; 
                     else
                         LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
                 get { return ExpirationDateElement != null ? ExpirationDateElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         ExpirationDateElement = null; 
                     else
                         ExpirationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
             get { return IsBrandElement != null ? IsBrandElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   IsBrandElement = null; 
                 else
                   IsBrandElement = new Hl7.Fhir.Model.FhirBoolean(value);

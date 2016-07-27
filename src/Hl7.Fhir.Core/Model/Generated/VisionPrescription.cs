@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Model
                 get { return ColorElement != null ? ColorElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         ColorElement = null; 
                     else
                         ColorElement = new Hl7.Fhir.Model.FhirString(value);
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
                 get { return BrandElement != null ? BrandElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         BrandElement = null; 
                     else
                         BrandElement = new Hl7.Fhir.Model.FhirString(value);
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
                 get { return NotesElement != null ? NotesElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         NotesElement = null; 
                     else
                         NotesElement = new Hl7.Fhir.Model.FhirString(value);
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
             get { return DateWrittenElement != null ? DateWrittenElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateWrittenElement = null; 
                 else
                   DateWrittenElement = new Hl7.Fhir.Model.FhirDateTime(value);

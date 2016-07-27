@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
             get { return WhenElement != null ? WhenElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   WhenElement = null; 
                 else
                   WhenElement = new Hl7.Fhir.Model.Instant(value);
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
             get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ContentTypeElement = null; 
                 else
                   ContentTypeElement = new Hl7.Fhir.Model.Code(value);
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
             get { return BlobElement != null ? BlobElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   BlobElement = null; 
                 else
                   BlobElement = new Hl7.Fhir.Model.Base64Binary(value);

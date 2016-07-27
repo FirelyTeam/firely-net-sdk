@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
                 get { return ModeElement != null ? ModeElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         ModeElement = null; 
                     else
                         ModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(elem)));
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
                 get { return TimeElement != null ? TimeElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         TimeElement = null; 
                     else
                         TimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
                 get { return TitleElement != null ? TitleElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         TitleElement = null; 
                     else
                         TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -774,7 +774,7 @@ namespace Hl7.Fhir.Model
             get { return TitleElement != null ? TitleElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TitleElement = null; 
                 else
                   TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -808,7 +808,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Composition.CompositionStatus>(value);
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
             get { return ConfidentialityElement != null ? ConfidentialityElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ConfidentialityElement = null; 
                 else
                   ConfidentialityElement = new Code<Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality>(value);

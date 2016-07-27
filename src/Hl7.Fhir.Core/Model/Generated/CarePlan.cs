@@ -748,7 +748,7 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -898,7 +898,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus>(value);
@@ -976,7 +976,7 @@ namespace Hl7.Fhir.Model
             get { return ModifiedElement != null ? ModifiedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ModifiedElement = null; 
                 else
                   ModifiedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1024,7 +1024,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);

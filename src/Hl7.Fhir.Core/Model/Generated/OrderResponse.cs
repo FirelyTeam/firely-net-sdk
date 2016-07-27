@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
             get { return OrderStatus_Element != null ? OrderStatus_Element.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   OrderStatus_Element = null; 
                 else
                   OrderStatus_Element = new Code<Hl7.Fhir.Model.OrderResponse.OrderStatus>(value);
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);

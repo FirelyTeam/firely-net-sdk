@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
                 get { return BusinessArrangementElement != null ? BusinessArrangementElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         BusinessArrangementElement = null; 
                     else
                         BusinessArrangementElement = new Hl7.Fhir.Model.FhirString(value);
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
                 get { return PreAuthRefElement != null ? PreAuthRefElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         PreAuthRefElement = null; 
                     else
                         PreAuthRefElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
                 get { return DiagnosisLinkIdElement != null ? DiagnosisLinkIdElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         DiagnosisLinkIdElement = null; 
                     else
                         DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
@@ -760,7 +760,7 @@ namespace Hl7.Fhir.Model
                 get { return ServiceDateElement != null ? ServiceDateElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         ServiceDateElement = null; 
                     else
                         ServiceDateElement = new Hl7.Fhir.Model.Date(value);
@@ -1660,7 +1660,7 @@ namespace Hl7.Fhir.Model
                 get { return PriorDateElement != null ? PriorDateElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         PriorDateElement = null; 
                     else
                         PriorDateElement = new Hl7.Fhir.Model.Date(value);
@@ -1793,7 +1793,7 @@ namespace Hl7.Fhir.Model
                 get { return ExtractionDateElement != null ? ExtractionDateElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         ExtractionDateElement = null; 
                     else
                         ExtractionDateElement = new Hl7.Fhir.Model.Date(value);
@@ -1877,7 +1877,7 @@ namespace Hl7.Fhir.Model
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   TypeElement = null; 
                 else
                   TypeElement = new Code<Hl7.Fhir.Model.Claim.ClaimType>(value);
@@ -1953,7 +1953,7 @@ namespace Hl7.Fhir.Model
             get { return CreatedElement != null ? CreatedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CreatedElement = null; 
                 else
                   CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -2031,7 +2031,7 @@ namespace Hl7.Fhir.Model
             get { return Use_Element != null ? Use_Element.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   Use_Element = null; 
                 else
                   Use_Element = new Code<Hl7.Fhir.Model.Claim.Use>(value);
@@ -2257,7 +2257,7 @@ namespace Hl7.Fhir.Model
             get { return SchoolElement != null ? SchoolElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   SchoolElement = null; 
                 else
                   SchoolElement = new Hl7.Fhir.Model.FhirString(value);
@@ -2290,7 +2290,7 @@ namespace Hl7.Fhir.Model
             get { return AccidentElement != null ? AccidentElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   AccidentElement = null; 
                 else
                   AccidentElement = new Hl7.Fhir.Model.Date(value);

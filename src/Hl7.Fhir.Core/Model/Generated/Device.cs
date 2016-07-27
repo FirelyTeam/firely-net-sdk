@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Device.DeviceStatus>(value);
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
             get { return ManufacturerElement != null ? ManufacturerElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ManufacturerElement = null; 
                 else
                   ManufacturerElement = new Hl7.Fhir.Model.FhirString(value);
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
             get { return ModelElement != null ? ModelElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ModelElement = null; 
                 else
                   ModelElement = new Hl7.Fhir.Model.FhirString(value);
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
             get { return VersionElement != null ? VersionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   VersionElement = null; 
                 else
                   VersionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
             get { return ManufactureDateElement != null ? ManufactureDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ManufactureDateElement = null; 
                 else
                   ManufactureDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
             get { return ExpiryElement != null ? ExpiryElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ExpiryElement = null; 
                 else
                   ExpiryElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
             get { return UdiElement != null ? UdiElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UdiElement = null; 
                 else
                   UdiElement = new Hl7.Fhir.Model.FhirString(value);
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
             get { return LotNumberElement != null ? LotNumberElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   LotNumberElement = null; 
                 else
                   LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
             get { return UrlElement != null ? UrlElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UrlElement = null; 
                 else
                   UrlElement = new Hl7.Fhir.Model.FhirUri(value);

@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
                 get { return EffectiveTimeElement != null ? EffectiveTimeElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         EffectiveTimeElement = null; 
                     else
                         EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
                 get { return SignatureElement != null ? SignatureElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         SignatureElement = null; 
                     else
                         SignatureElement = new Hl7.Fhir.Model.FhirString(value);
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
                 get { return IssuedElement != null ? IssuedElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         IssuedElement = null; 
                     else
                         IssuedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         TextElement = null; 
                     else
                         TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -945,7 +945,7 @@ namespace Hl7.Fhir.Model
                 get { return EffectiveTimeElement != null ? EffectiveTimeElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         EffectiveTimeElement = null; 
                     else
                         EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1366,7 +1366,7 @@ namespace Hl7.Fhir.Model
             get { return IssuedElement != null ? IssuedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   IssuedElement = null; 
                 else
                   IssuedElement = new Hl7.Fhir.Model.FhirDateTime(value);

@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
             get { return OutcomeElement != null ? OutcomeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   OutcomeElement = null; 
                 else
                   OutcomeElement = new Code<Hl7.Fhir.Model.RemittanceOutcome>(value);
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
             get { return DispositionElement != null ? DispositionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DispositionElement = null; 
                 else
                   DispositionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
             get { return CreatedElement != null ? CreatedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CreatedElement = null; 
                 else
                   CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);

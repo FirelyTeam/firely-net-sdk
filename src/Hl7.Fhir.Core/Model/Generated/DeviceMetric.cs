@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
             get { return OperationalStatusElement != null ? OperationalStatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   OperationalStatusElement = null; 
                 else
                   OperationalStatusElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus>(value);
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
             get { return ColorElement != null ? ColorElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ColorElement = null; 
                 else
                   ColorElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor>(value);
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model
             get { return CategoryElement != null ? CategoryElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   CategoryElement = null; 
                 else
                   CategoryElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory>(value);

@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
                 get { return IdentifierElement != null ? IdentifierElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         IdentifierElement = null; 
                     else
                         IdentifierElement = new Hl7.Fhir.Model.Id(value);
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
                 get { return SoftwareElement != null ? SoftwareElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         SoftwareElement = null; 
                     else
                         SoftwareElement = new Hl7.Fhir.Model.FhirString(value);
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
                 get { return VersionElement != null ? VersionElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         VersionElement = null; 
                     else
                         VersionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
                 get { return EndpointElement != null ? EndpointElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         EndpointElement = null; 
                     else
                         EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
                 get { return EndpointElement != null ? EndpointElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         EndpointElement = null; 
                     else
                         EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
             get { return TimestampElement != null ? TimestampElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   TimestampElement = null; 
                 else
                   TimestampElement = new Hl7.Fhir.Model.Instant(value);

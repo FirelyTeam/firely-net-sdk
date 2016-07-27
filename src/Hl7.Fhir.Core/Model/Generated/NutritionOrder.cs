@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
                 get { return InstructionElement != null ? InstructionElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         InstructionElement = null; 
                     else
                         InstructionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
                 get { return ProductNameElement != null ? ProductNameElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         ProductNameElement = null; 
                     else
                         ProductNameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
                 get { return InstructionElement != null ? InstructionElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         InstructionElement = null; 
                     else
                         InstructionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model
                 get { return BaseFormulaProductNameElement != null ? BaseFormulaProductNameElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         BaseFormulaProductNameElement = null; 
                     else
                         BaseFormulaProductNameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -714,7 +714,7 @@ namespace Hl7.Fhir.Model
                 get { return AdditiveProductNameElement != null ? AdditiveProductNameElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         AdditiveProductNameElement = null; 
                     else
                         AdditiveProductNameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Model
                 get { return AdministrationInstructionElement != null ? AdministrationInstructionElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         AdministrationInstructionElement = null; 
                     else
                         AdministrationInstructionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1067,7 +1067,7 @@ namespace Hl7.Fhir.Model
             get { return DateTimeElement != null ? DateTimeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateTimeElement = null; 
                 else
                   DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1100,7 +1100,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>(value);

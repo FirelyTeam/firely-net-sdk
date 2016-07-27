@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
                 get { return RationaleElement != null ? RationaleElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         RationaleElement = null; 
                     else
                         RationaleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
             get { return MitigationElement != null ? MitigationElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   MitigationElement = null; 
                 else
                   MitigationElement = new Hl7.Fhir.Model.FhirString(value);

@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         DateElement = null; 
                     else
                         DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
                 get { return ValueElement != null ? ValueElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         ValueElement = null; 
                     else
                         ValueElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
                 get { return SeriesElement != null ? SeriesElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         SeriesElement = null; 
                     else
                         SeriesElement = new Hl7.Fhir.Model.FhirString(value);

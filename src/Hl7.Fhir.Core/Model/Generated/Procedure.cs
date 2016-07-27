@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Procedure.ProcedureStatus>(value);
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
             get { return NotPerformedElement != null ? NotPerformedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   NotPerformedElement = null; 
                 else
                   NotPerformedElement = new Hl7.Fhir.Model.FhirBoolean(value);

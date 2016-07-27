@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestStatus>(value);
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
             get { return OrderedOnElement != null ? OrderedOnElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   OrderedOnElement = null; 
                 else
                   OrderedOnElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
             get { return PriorityElement != null ? PriorityElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   PriorityElement = null; 
                 else
                   PriorityElement = new Code<Hl7.Fhir.Model.ProcedureRequest.ProcedureRequestPriority>(value);

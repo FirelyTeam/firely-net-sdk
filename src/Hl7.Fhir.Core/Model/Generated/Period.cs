@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
             get { return StartElement != null ? StartElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   StartElement = null; 
                 else
                   StartElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             get { return EndElement != null ? EndElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   EndElement = null; 
                 else
                   EndElement = new Hl7.Fhir.Model.FhirDateTime(value);

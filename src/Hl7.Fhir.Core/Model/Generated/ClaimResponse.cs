@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
                 get { return NoteNumberElement != null ? NoteNumberElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         NoteNumberElement = null; 
                     else
                         NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
@@ -826,7 +826,7 @@ namespace Hl7.Fhir.Model
                 get { return SequenceLinkIdElement != null ? SequenceLinkIdElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         SequenceLinkIdElement = null; 
                     else
                         SequenceLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
@@ -889,7 +889,7 @@ namespace Hl7.Fhir.Model
                 get { return NoteNumberLinkIdElement != null ? NoteNumberLinkIdElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         NoteNumberLinkIdElement = null; 
                     else
                         NoteNumberLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
@@ -1578,7 +1578,7 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         TextElement = null; 
                     else
                         TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1752,7 +1752,7 @@ namespace Hl7.Fhir.Model
                 get { return BusinessArrangementElement != null ? BusinessArrangementElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         BusinessArrangementElement = null; 
                     else
                         BusinessArrangementElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1801,7 +1801,7 @@ namespace Hl7.Fhir.Model
                 get { return PreAuthRefElement != null ? PreAuthRefElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         PreAuthRefElement = null; 
                     else
                         PreAuthRefElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -1986,7 +1986,7 @@ namespace Hl7.Fhir.Model
             get { return CreatedElement != null ? CreatedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CreatedElement = null; 
                 else
                   CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -2064,7 +2064,7 @@ namespace Hl7.Fhir.Model
             get { return OutcomeElement != null ? OutcomeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   OutcomeElement = null; 
                 else
                   OutcomeElement = new Code<Hl7.Fhir.Model.RemittanceOutcome>(value);
@@ -2097,7 +2097,7 @@ namespace Hl7.Fhir.Model
             get { return DispositionElement != null ? DispositionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DispositionElement = null; 
                 else
                   DispositionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -2259,7 +2259,7 @@ namespace Hl7.Fhir.Model
             get { return PaymentDateElement != null ? PaymentDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PaymentDateElement = null; 
                 else
                   PaymentDateElement = new Hl7.Fhir.Model.Date(value);

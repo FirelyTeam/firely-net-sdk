@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
                 get { return DaysOfWeek_Element != null ? DaysOfWeek_Element.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         DaysOfWeek_Element = null; 
                     else
                         DaysOfWeek_Element = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.HealthcareService.DaysOfWeek>(elem)));
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
                 get { return AvailableStartTimeElement != null ? AvailableStartTimeElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         AvailableStartTimeElement = null; 
                     else
                         AvailableStartTimeElement = new Hl7.Fhir.Model.Time(value);
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
                 get { return AvailableEndTimeElement != null ? AvailableEndTimeElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         AvailableEndTimeElement = null; 
                     else
                         AvailableEndTimeElement = new Hl7.Fhir.Model.Time(value);
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model
             get { return ServiceNameElement != null ? ServiceNameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ServiceNameElement = null; 
                 else
                   ServiceNameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model
             get { return CommentElement != null ? CommentElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CommentElement = null; 
                 else
                   CommentElement = new Hl7.Fhir.Model.FhirString(value);
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
             get { return ExtraDetailsElement != null ? ExtraDetailsElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ExtraDetailsElement = null; 
                 else
                   ExtraDetailsElement = new Hl7.Fhir.Model.FhirString(value);
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
             get { return EligibilityNoteElement != null ? EligibilityNoteElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   EligibilityNoteElement = null; 
                 else
                   EligibilityNoteElement = new Hl7.Fhir.Model.FhirString(value);
@@ -791,7 +791,7 @@ namespace Hl7.Fhir.Model
             get { return ProgramNameElement != null ? ProgramNameElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ProgramNameElement = null; 
                 else
                   ProgramNameElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -854,7 +854,7 @@ namespace Hl7.Fhir.Model
             get { return PublicKeyElement != null ? PublicKeyElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PublicKeyElement = null; 
                 else
                   PublicKeyElement = new Hl7.Fhir.Model.FhirString(value);
@@ -887,7 +887,7 @@ namespace Hl7.Fhir.Model
             get { return AppointmentRequiredElement != null ? AppointmentRequiredElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   AppointmentRequiredElement = null; 
                 else
                   AppointmentRequiredElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -950,7 +950,7 @@ namespace Hl7.Fhir.Model
             get { return AvailabilityExceptionsElement != null ? AvailabilityExceptionsElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   AvailabilityExceptionsElement = null; 
                 else
                   AvailabilityExceptionsElement = new Hl7.Fhir.Model.FhirString(value);

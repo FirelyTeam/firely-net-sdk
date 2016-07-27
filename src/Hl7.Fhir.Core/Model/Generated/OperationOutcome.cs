@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
                 get { return DiagnosticsElement != null ? DiagnosticsElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         DiagnosticsElement = null; 
                     else
                         DiagnosticsElement = new Hl7.Fhir.Model.FhirString(value);
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
                 get { return LocationElement != null ? LocationElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         LocationElement = null; 
                     else
                         LocationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));

@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Encounter.EncounterState>(value);
@@ -854,7 +854,7 @@ namespace Hl7.Fhir.Model
             get { return ClassElement != null ? ClassElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ClassElement = null; 
                 else
                   ClassElement = new Code<Hl7.Fhir.Model.Encounter.EncounterClass>(value);

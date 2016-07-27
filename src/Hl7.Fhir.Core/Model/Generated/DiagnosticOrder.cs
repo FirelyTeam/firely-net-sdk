@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
                 get { return DateTimeElement != null ? DateTimeElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         DateTimeElement = null; 
                     else
                         DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
             get { return PriorityElement != null ? PriorityElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   PriorityElement = null; 
                 else
                   PriorityElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority>(value);

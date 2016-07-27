@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
                 get { return CountElement != null ? CountElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                    if (!value.HasValue)
                       CountElement = null; 
                     else
                       CountElement = new Hl7.Fhir.Model.Integer(value);
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
                 get { return DurationElement != null ? DurationElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                    if (!value.HasValue)
                       DurationElement = null; 
                     else
                       DurationElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
                 get { return DurationMaxElement != null ? DurationMaxElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                    if (!value.HasValue)
                       DurationMaxElement = null; 
                     else
                       DurationMaxElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
                 get { return DurationUnitsElement != null ? DurationUnitsElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                    if (!value.HasValue)
                       DurationUnitsElement = null; 
                     else
                       DurationUnitsElement = new Code<Hl7.Fhir.Model.Timing.UnitsOfTime>(value);
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
                 get { return FrequencyElement != null ? FrequencyElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                    if (!value.HasValue)
                       FrequencyElement = null; 
                     else
                       FrequencyElement = new Hl7.Fhir.Model.Integer(value);
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
                 get { return FrequencyMaxElement != null ? FrequencyMaxElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                    if (!value.HasValue)
                       FrequencyMaxElement = null; 
                     else
                       FrequencyMaxElement = new Hl7.Fhir.Model.Integer(value);
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
                 get { return PeriodElement != null ? PeriodElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                    if (!value.HasValue)
                       PeriodElement = null; 
                     else
                       PeriodElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
                 get { return PeriodMaxElement != null ? PeriodMaxElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                    if (!value.HasValue)
                       PeriodMaxElement = null; 
                     else
                       PeriodMaxElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
                 get { return PeriodUnitsElement != null ? PeriodUnitsElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                    if (!value.HasValue)
                       PeriodUnitsElement = null; 
                     else
                       PeriodUnitsElement = new Code<Hl7.Fhir.Model.Timing.UnitsOfTime>(value);
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
                 get { return WhenElement != null ? WhenElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                    if (!value.HasValue)
                       WhenElement = null; 
                     else
                       WhenElement = new Code<Hl7.Fhir.Model.Timing.EventTiming>(value);
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
             get { return EventElement != null ? EventElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   EventElement = null; 
                 else
                   EventElement = new List<Hl7.Fhir.Model.FhirDateTime>(value.Select(elem=>new Hl7.Fhir.Model.FhirDateTime(elem)));

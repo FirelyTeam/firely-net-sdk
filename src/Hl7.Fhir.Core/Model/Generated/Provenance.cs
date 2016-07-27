@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
                 get { return TargetElement != null ? TargetElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         TargetElement = null; 
                     else
                         TargetElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
                 get { return ReferenceElement != null ? ReferenceElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         ReferenceElement = null; 
                     else
                         ReferenceElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
                 get { return DisplayElement != null ? DisplayElement.Value : null; }
                 set
                 {
-                    if (value != null)
+                    if (value == null)
                         DisplayElement = null; 
                     else
                         DisplayElement = new Hl7.Fhir.Model.FhirString(value);
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
             get { return RecordedElement != null ? RecordedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   RecordedElement = null; 
                 else
                   RecordedElement = new Hl7.Fhir.Model.Instant(value);
@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Model
             get { return PolicyElement != null ? PolicyElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PolicyElement = null; 
                 else
                   PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
