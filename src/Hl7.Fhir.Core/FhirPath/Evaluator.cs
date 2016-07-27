@@ -345,7 +345,7 @@ namespace Hl7.Fhir.FhirPath
         {
             return (f, c) =>
             {
-                System.Diagnostics.Trace.WriteLine("Evaluating the now() expression");
+                // System.Diagnostics.Trace.WriteLine("Evaluating the now() expression");
                 if (FixedNowValue.HasValue)
                 {
                     return new[] { new TypedValue(PartialDateTime.Parse(FixedNowValue.Value.ToFhirDateTime())) };
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.FhirPath
         {
             return (f, c) =>
             {
-            //    System.Diagnostics.Trace.WriteLine("Evaluating the today() expression");
+                // System.Diagnostics.Trace.WriteLine("Evaluating the today() expression");
                 if (FixedNowValue.HasValue)
                 {
                     return new[] { new TypedValue(new PartialDateTime(FixedNowValue.Value.Date, PartialDateTime.Precision.Day)) };
