@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Model
 {
+    [System.Diagnostics.DebuggerDisplay(@"\{{ToString()}}")]
     public partial class OperationOutcome
     {
         [Obsolete("You should now pass in the IssueType. This now defaults to IssueType.Processing")]
