@@ -37,6 +37,16 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual("value", xr.Element("child").Value);
         }
 
+        [TestMethod]
+        public void OperationOutcomeLocation()
+        {
+            OperationOutcome oo = new OperationOutcome();
+            oo.Issue.Add(new OperationOutcome.IssueComponent()
+            {
+                Location = new string[] { "yes" }
+            });
+            Assert.AreEqual(1, oo.Issue[0].Location.Count());
+        }
 
         [TestMethod]
         public void DateTimeHandling()

@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Time.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="DSTU1compatibility.cs" />
     <Compile Include="FhirPath\EvaluationContext.cs" />

@@ -559,6 +559,7 @@
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\PositiveInt.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
+    <Compile Include="Model\Time.cs" />
     <Compile Include="Model\UnsignedInt.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />
