@@ -409,7 +409,19 @@ namespace Hl7.Fhir.FhirPath
             return (f, c) =>
             {
                 var r = regexp(f, c).AsString();
-                return f.JustValues().Where(v => Regex.IsMatch(v.AsStringRepresentation(), r));
+                // This will return true only if all items that evaluate are matching
+                bool result = true;
+                foreach (var v in f.JustValues())
+                {
+                    if (!Regex.IsMatch(v.AsStringRepresentation(), r))
+                    {
+                        result = false;
+                        break;
+                    }
+                }
+                return new[] { new TypedValue(result) };
+
+                // return f.JustValues().Where(v => Regex.IsMatch(v.AsStringRepresentation(), r));
             };
         }
 

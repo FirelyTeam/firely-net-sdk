@@ -153,6 +153,8 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             Assert.IsFalse(PathExpression.Predicate("Patient.identifier.where(system=\"urn:oid:0.1.2.3.4.5.6.7\").value.matches(\"^[1-3]+$\")", tree));
 
+            Assert.IsTrue(PathExpression.Predicate("Patient.identifier.where(system=\"urn:oid:0.1.2.3.4.5.6.7\").value.matches(\"^[1-6]+$\")", tree));
+
             // Assert.AreEqual("1973-05-31", PathExpression.Evaluate("Patient.contained.Patient.birthDate.substring(0,10)", tree).ToString());
 
             // Assert.AreEqual(null, PathExpression.Evaluate("Patient.birthDate2", tree).ToString());
