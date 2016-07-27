@@ -82,25 +82,36 @@ namespace Hl7.Fhir.FluentPath
 
 
 
-        //public static IEnumerable<IValueProvider> Extension(this IEnumerable<IValueProvider> focus, string url)
-        //{            
-        //    return focus.Children("extension").Where(es => es.Children("url").IsEqualTo(url));
-        //}
+        public static IEnumerable<IValueProvider> Extension(this IEnumerable<IValueProvider> focus, string url)
+        {
+            return focus.Children("extension").Where(es => es.Children("url").Single().IsEqualTo(new ConstantValue(url)));
+        }
 
-        public static IEnumerable<IElementNavigator> Children(this IEnumerable<IValueProvider> focus, string name)
+        public static IEnumerable<IValueProvider> Children(this IEnumerable<IValueProvider> focus, string name)
         {
             return focus.JustElements().SelectMany(node => node.EnumerateChildrenByName(name));
         }
 
-        public static IEnumerable<IElementNavigator> Children(this IValueProvider focus)
+        public static IEnumerable<IValueProvider> Children(this IValueProvider focus)
         {
             if (focus is IElementNavigator)
             {
                 return ((IElementNavigator)focus).EnumerateChildren();
             }
 
-            return Enumerable.Empty<IElementNavigator>();
+            return FhirValueList.Empty;
         }
+
+        public static IEnumerable<IValueProvider> Children(this IValueProvider focus, string name)
+        {
+            if (focus is IElementNavigator)
+            {
+                return ((IElementNavigator)focus).EnumerateChildrenByName(name);
+            }
+
+            return FhirValueList.Empty;
+        }
+
 
         public static IEnumerable<IElementNavigator> Children(this IEnumerable<IValueProvider> focus)
         {

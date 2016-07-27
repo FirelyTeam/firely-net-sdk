@@ -143,6 +143,17 @@ namespace Hl7.Fhir.FluentPath.Binding
             };
         }
 
+        public static Invokee Wrap<A, B, C, D, R>(Func<A, B, C, D, R> func)
+        {
+            return (ctx, args) =>
+            {
+                var focus = Typecasts.CastTo<A>(ctx.GetThis());
+                var argA = Typecasts.CastTo<B>(args.First()(ctx, InvokeeFactory.EmptyArgs));
+                var argB = Typecasts.CastTo<C>(args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs));
+                var argC = Typecasts.CastTo<D>(args.Skip(2).First()(ctx, InvokeeFactory.EmptyArgs));
+                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(focus, argA, argB, argC));
+            };
+        }
 
         public static Invokee WrapLogic(Func<Func<bool?>, Func<bool?>, bool?> func)
         {

@@ -74,11 +74,11 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void TestDynaBinding()
         {
             var input = FhirValueList.Create(new ConstantValue("Hello world!"), new ConstantValue(4));
-            
+
             //TODO: Improve error on this:
             // Assert.AreEqual("ello", PathExpression.Scalar(@"substring(1,%context[1])", input));
-            
-            Assert.AreEqual("ello", PathExpression.Scalar(@"$this[0].substring(1,%context[1])", input));        
+
+            Assert.AreEqual("ello", PathExpression.Scalar(@"$this[0].substring(1,%context[1])", input));
         }
 
 
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Tests.FhirPath
                 isTrue(@"Patient.identifier.single()");
                 Assert.Fail();
             }
-            catch(InvalidOperationException io)
+            catch (InvalidOperationException io)
             {
                 Assert.IsTrue(io.Message.Contains("contains more than one element"));
             }
@@ -210,8 +210,29 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"true.toString() = 'true'");
             isTrue(@"true.toDecimal() = 1");
             isTrue(@"Patient.identifier.value.first().toDecimal() = 654321");
+            isTrue(@"@2014-12-14.toString() = '2014-12-14'");
         }
 
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestIIf()
+        {
+            isTrue(@"Patient.name.iif(exists(), 'named', 'unnamed') = 'named'");
+            isTrue(@"Patient.name.iif(empty(), 'unnamed', 'named') = 'named'");
+
+            isTrue(@"Patient.contained[0].name.iif(exists(), 'named', 'unnamed') = 'named'");
+            isTrue(@"Patient.contained[0].name.iif(empty(), 'unnamed', 'named') = 'named'");
+
+            isTrue(@"Patient.name.iif({}, 'named', 'unnamed') = 'unnamed'");
+        }
+
+        [TestMethod, TestCategory("FhirPath")]
+        public void TestExtension()
+        {
+            Render((IElementNavigator)testInput.First());
+            isTrue(@"Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime').exists()");
+            isTrue(@"Patient.birthDate.extension(%""ext-patient-birthTime"").exists()");
+            isTrue(@"Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime1').empty()");
+        }
 
         [TestMethod, TestCategory("FhirPath")]
         public void TestEquality()
@@ -270,12 +291,17 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"Patient.select(identifier | name).count() = Patient.select(identifier.count() + name.count())");
         }
 
-    
-        public static string ToString(IElementNavigator nav)
-        {
-            var result = nav.Name;
 
-            if(nav is ITypeNameProvider)
+        public static string ToString(IValueProvider nav)
+        {
+            var result = "";
+
+            if (nav is INameProvider)
+            {
+                result = ((INameProvider)nav).Name;
+            }
+
+            if (nav is ITypeNameProvider)
             {
                 var tnp = (ITypeNameProvider)nav;
                 result += ": " + tnp.TypeName;
@@ -431,7 +457,7 @@ namespace Hl7.Fhir.Tests.FhirPath
                 isTrue("Patient.identifier.use.substring(0,10)");
                 Assert.Fail();
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
             }
         }
@@ -450,13 +476,13 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue("Patient.identifier.where(system='urn:oid:0.1.2.3.4.5.6.7').value.matches('^[1-6]+$')");
             isTrue("Patient.identifier.where(system='urn:oid:0.1.2.3.4.5.6.7').value.matches('^[1-3]+$') = false");
 
-            isTrue("Patient.contained.name.family.indexOf('ywo') = 4");
-            isTrue("Patient.contained.name.family.indexOf('') = 0");
-            isTrue("Patient.contained.name.family.indexOf('qq').empty()");
+            isTrue("Patient.contained.name[0].family.indexOf('ywo') = 4");
+            isTrue("Patient.contained.name[0].family.indexOf('') = 0");
+            isTrue("Patient.contained.name[0].family.indexOf('qq').empty()");
 
-            isTrue("Patient.contained.name.family.contains('ywo')");
-            isTrue("Patient.contained.name.family.contains('ywox')=false");
-            isTrue("Patient.contained.name.family.contains('')");
+            isTrue("Patient.contained.name[0].family.contains('ywo')");
+            isTrue("Patient.contained.name[0].family.contains('ywox')=false");
+            isTrue("Patient.contained.name[0].family.contains('')");
 
             isTrue(@"'11/30/1972'.replaceMatches('\\b(?<month>\\d{1,2})/(?<day>\\d{1,2})/(?<year>\\d{2,4})\\b','${day}-${month}-${year}') = '30-11-1972'");
 
@@ -466,7 +492,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"'abc'.replace('ab', '') = 'c'");
             isTrue(@"'abc'.replace('', 'xh') = 'xhaxhbxhc'");
 
-            isTrue("Patient.contained.name.family.length() = " + "Everywoman".Length);
+            isTrue("Patient.contained.name[0].family.length() = " + "Everywoman".Length);
             isTrue("''.length() = 0");
             isTrue("{}.length().empty()");
         }

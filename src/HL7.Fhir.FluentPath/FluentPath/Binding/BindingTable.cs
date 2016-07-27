@@ -39,6 +39,9 @@ namespace Hl7.Fhir.FluentPath.Binding
 
             add("binary.&", (object f, string a, string b) => (a ?? "") + (b ?? ""));
 
+            add("iif", (IEnumerable<IValueProvider> f, bool? condition, IEnumerable<IValueProvider> result) => f.IIf(condition, result));
+            add("iif", (IEnumerable<IValueProvider> f, bool? condition, IEnumerable<IValueProvider> result, IEnumerable<IValueProvider> otherwise) => f.IIf(condition, result, otherwise));
+
             // Functions that use normal null propagation and work with the focus (buy may ignore it)
             nullp("not", (IEnumerable<IValueProvider> f) => f.Not());
             nullp("builtin.children", (IEnumerable<IValueProvider> f, string a) => f.Children(a));
@@ -125,6 +128,8 @@ namespace Hl7.Fhir.FluentPath.Binding
             nullp("binary.is", (object f, IValueProvider left, string name) => left.Is(name));
             nullp("binary.as", (object f, IValueProvider left, string name) => left.CastAs(name));
 
+            nullp("extension", (IEnumerable<IValueProvider> f, string url) => f.Extension(url));
+
             // Logic operators do not use null propagation and may do short-cut eval
             logic("binary.and", (a, b) => a.And(b));
             logic("binary.or", (a, b) => a.Or(b));
@@ -194,6 +199,11 @@ namespace Hl7.Fhir.FluentPath.Binding
         private static void add<A, B, C, R>(string name, Func<A, B, C, R> func)
         {
             _functions.Add(new CallBinding(name, InvokeeFactory.Wrap(func), typeof(A), typeof(B), typeof(C)));
+        }
+
+        private static void add<A, B, C, D, R>(string name, Func<A, B, C, D, R> func)
+        {
+            _functions.Add(new CallBinding(name, InvokeeFactory.Wrap(func), typeof(A), typeof(B), typeof(C), typeof(D)));
         }
 
         private static void nullp<F>(string name, Func<F,object> func)

@@ -93,6 +93,10 @@ namespace Hl7.Fhir.FluentPath.Functions
                 return XmlConvert.ToString((decimal)val);
             else if (val is bool)
                 return (bool)val ? "true" : "false";
+            else if (val is Time)
+                return ((Time)val).ToString();
+            else if (val is PartialDateTime)
+                return ((PartialDateTime)val).ToString();
 
             return null;
         }

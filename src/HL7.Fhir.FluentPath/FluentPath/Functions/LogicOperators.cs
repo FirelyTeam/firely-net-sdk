@@ -92,5 +92,18 @@ namespace Hl7.Fhir.FluentPath.Functions
             return null;
         }
 
+        public static IEnumerable<IValueProvider> IIf(this IEnumerable<IValueProvider> focus, bool? condition, IEnumerable<IValueProvider> result)
+        {
+            return IIf(focus, condition, result, null);
+        }
+
+        public static IEnumerable<IValueProvider> IIf(this IEnumerable<IValueProvider> focus, bool? condition, IEnumerable<IValueProvider> result, IEnumerable<IValueProvider> otherwise)
+        {
+            if (condition == true)
+                return result;
+            else
+                return otherwise;
+        }
     }
+
 }

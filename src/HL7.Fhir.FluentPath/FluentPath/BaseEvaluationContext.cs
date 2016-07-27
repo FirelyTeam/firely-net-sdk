@@ -58,27 +58,37 @@ namespace Hl7.Fhir.FluentPath
 
         public virtual void Trace(string name, object data)
         {
-            System.Diagnostics.Trace.WriteLine("=== {0} ===".FormatWith(name));
+            System.Diagnostics.Trace.WriteLine("=== Trace {0} ===".FormatWith(name));
 
             if (data == null)
                 System.Diagnostics.Trace.WriteLine("(null)");
 
             else if (data is IEnumerable<IValueProvider>)
             {
+                System.Diagnostics.Trace.WriteLine("Collection:".FormatWith(name));
                 foreach (var element in (IEnumerable<IValueProvider>)data)
                 {
-                    System.Diagnostics.Trace.WriteLine("=========");
-                    System.Diagnostics.Trace.WriteLine(element.ToString());
+                    if(element.Value != null)
+                        System.Diagnostics.Trace.WriteLine("   " + element.Value.ToString());
                 }
             }
             else if (data is IValueProvider)
             {
                 var element = (IValueProvider)data;
-                System.Diagnostics.Trace.WriteLine(element.ToString());
+                System.Diagnostics.Trace.WriteLine("Value:".FormatWith(name));
+
+                if (element.Value != null)
+                {                    
+                    System.Diagnostics.Trace.WriteLine(element.Value.ToString());
+                }
             }
             else
                 System.Diagnostics.Trace.WriteLine(data.ToString());
+
+            System.Diagnostics.Trace.WriteLine(Environment.NewLine);
         }
+
+
 
 
         public virtual IEnumerable<IValueProvider> ResolveValue(string name)

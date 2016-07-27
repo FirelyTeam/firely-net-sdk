@@ -158,7 +158,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             if (typeof(IEnumerable<IValueProvider>).IsAssignableFrom(t))
                 return "collection";
             else if (typeof(IValueProvider).IsAssignableFrom(t))
-                return "complex object";
+                return "any single value";
             else
                 return t.Name;
         }

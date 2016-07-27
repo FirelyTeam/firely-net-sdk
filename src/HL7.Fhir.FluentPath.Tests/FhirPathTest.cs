@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.AreEqual("4", new ConstantValue(4L).ToString());
             Assert.AreEqual("true", new ConstantValue(true).ToString());
             Assert.AreEqual("false", new ConstantValue(false).ToString());
-            Assert.IsNull(new ConstantValue(DateTimeOffset.Now).ToString());
+            Assert.IsNotNull(new ConstantValue(DateTimeOffset.Now).ToString());
         }
 
         [TestMethod, TestCategory("FhirPath")]

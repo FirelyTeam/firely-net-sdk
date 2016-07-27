@@ -28,6 +28,12 @@
         <family value="Everywoman"/>
         <given value="Eve"/>
       </name>
+      <name id="anothername">
+        <!-- See if this is roundtripped -->
+        <use value="usual"/>
+        <family value="Everywoman"/>
+        <given value="Eveline"/>
+      </name>
       <telecom>
         <system value="phone"/>
         <value value="555-555-2003"/>
@@ -209,6 +215,11 @@
       <valueCode value="metrosexual" />
     </extension>
   </gender>
+  <birthDate value="1974-12-25">
+    <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthTime">
+      <valueDateTime value="1974-12-25T14:35:45-05:00"/>
+    </extension>
+  </birthDate>
   <deceasedBoolean value="false" />
   <photo>
     <contentType value="image/gif"/>

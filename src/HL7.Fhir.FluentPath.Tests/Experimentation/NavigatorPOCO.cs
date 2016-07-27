@@ -30,6 +30,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             _current =  current;
         }
 
+
         private ElementNavigator _current;
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             if (_current.Children().Any())
             {
-                _current = _current.Children()[0];
+                _current = _current.Children().First();
                 return true;
             }
 
@@ -109,124 +110,6 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             // Console.WriteLine("Cloning: {0}", this.GetName());
             return new ModelNavigator(_current);
-        }
-    }
-
-
-    internal class ElementNavigator
-    {
-        static dstu2::Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
-        {
-            dstu2::Hl7.Fhir.Serialization.ResourceReader rdr = new dstu2::Hl7.Fhir.Serialization.ResourceReader(null, null);
-            dstu2::Hl7.Fhir.Introspection.ModelInspector inspector;
-            var ti = rdr.GetType().GetField("_inspector", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-            inspector = ti.GetValue(rdr) as dstu2::Hl7.Fhir.Introspection.ModelInspector;
-            // inspector = dstu2::Hl7.Fhir.Serialization.SerializationConfig.Inspector;
-            return inspector.FindClassMappingByType(elementType);
-        }
-
-        internal ElementNavigator(string name, Base value)
-        {
-            if (value == null) throw Error.ArgumentNull("value");
-
-            _pocoElement = value;
-            Name = name;
-
-            _mapping = GetMappingForType(value.GetType());
-
-            if (_mapping == null)
-                Console.WriteLine("Unkown type '{0}' encountered".FormatWith(value.GetType().Name));
-        }
-
-        private Base _pocoElement;
-        private dstu2::Hl7.Fhir.Introspection.ClassMapping _mapping;
-
-        public string Name { get; private set; }
-
-        public object Value
-        {
-            get
-            {
-                if (_pocoElement is FhirDateTime)
-                    return ((FhirDateTime)_pocoElement).ToDateTimeOffset();
-                else if (_pocoElement is dstu2.Hl7.Fhir.Model.Time)
-                    return FluentPath.Time.Parse(((dstu2.Hl7.Fhir.Model.Time)_pocoElement).Value);
-                else if ((_pocoElement is dstu2.Hl7.Fhir.Model.Date))
-                    return FluentPath.PartialDateTime.Parse(((dstu2.Hl7.Fhir.Model.Date)_pocoElement).Value);
-                else if (_pocoElement is Primitive)
-                    return ((Primitive)_pocoElement).ObjectValue;
-                else
-                    return null;
-            }
-        }
-
-
-        private static string[] quantitySubtypes = { "SimpleQuantity", "Age", "Count", "Distance", "Duration", "Money" };
-
-        public string TypeName
-        {
-            get
-            {
-#if DEBUGX
-                Console.WriteLine("Read TypeName '{0}' for Element '{1}' (value '{2}')".FormatWith(_mapping.Name, Name, Value ?? "(nothing)"));
-#endif
-
-                var tn = _pocoElement.TypeName;
-                if (quantitySubtypes.Contains(tn)) tn = "Quantity";
-
-                return tn;
-                //return _mapping.Name;
-            }
-        }
-
-
-        public ElementNavigator Next { get; private set; }
-
-        private List<ElementNavigator> _children;
-
-        public List<ElementNavigator> Children()
-        {
-            // Cache children
-            if (_children != null) return _children;
-
-            _children = new List<ElementNavigator>();
-
-            ElementNavigator previousChild = null;
-
-            foreach (var item in _mapping.PropertyMappings)
-            {
-                // Don't expose "value" as a child, that's our ValueProvider.Value (if we're a primitive)
-                if (item.IsPrimitive)
-                    continue;
-
-                var itemValue = item.GetValue(_pocoElement);
-
-                if (itemValue != null)
-                {
-                    if (item.IsCollection)
-                    {
-                        foreach (var colItem in (itemValue as System.Collections.IList))
-                        {
-                            if (colItem != null)
-                            {
-                                _children.Add(new ElementNavigator(item.Name, (Base)colItem));
-                                if (previousChild != null)
-                                    previousChild.Next = _children.Last();
-                                previousChild = _children.Last();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        _children.Add(new ElementNavigator(item.Name, (Base)itemValue));
-                        if (previousChild != null)
-                            previousChild.Next = _children.Last();
-                        previousChild = _children.Last();
-                    }
-                }
-            }
-
-            return _children;
         }
     }
 }
