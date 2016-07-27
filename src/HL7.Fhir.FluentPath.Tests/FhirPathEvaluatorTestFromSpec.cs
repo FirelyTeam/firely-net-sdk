@@ -129,24 +129,47 @@ public class FluentPathTests
     }
 
     // @SuppressWarnings("deprecation")
-    private void testPredicate(Resource resource, String expression, boolean value)
+    private void testBoolean(Resource resource, String expression, boolean value)
     {
         var nav = new ModelNavigator(resource);
-        Assert.AreEqual(value, PathExpression.Predicate(expression, FhirValueList.Create(nav)));
+        Assert.IsTrue(PathExpression.IsBoolean(expression, value, FhirValueList.Create(nav)));
     }
 
     // @SuppressWarnings("deprecation")
-    private void testPredicate(Resource resource, Base focus, String focusType, String expression, boolean value)
+    private void testBoolean(Resource resource, Base focus, String focusType, String expression, boolean value)
     {
         var context = BaseEvaluationContext.Root(resource==null ? ModelNavigator.CreateInput(focus) : ModelNavigator.CreateInput(resource));
         context.SetThis(ModelNavigator.CreateInput(focus));
 
-        Assert.AreEqual(value, PathExpression.Predicate(expression, context));
+        Assert.IsTrue(PathExpression.IsBoolean(expression, value, context));
     }
 
-    private void testWrong(Resource resource, String expression)
+
+    enum ErrorType
     {
-        Assert.IsFalse(PathExpression.IsTrue(expression, FhirValueList.Create(new ModelNavigator(resource))));
+        Syntax,
+        Semantics
+    }
+
+    private void testInvalid(Resource resource, ErrorType type, String expression)
+    {
+        try
+        {
+            PathExpression.Select(expression, FhirValueList.Create(new ModelNavigator(resource)));
+            Assert.Fail();
+        }
+        catch(FormatException)
+        {
+            if (type != ErrorType.Syntax) Assert.Fail();
+        }
+        catch (InvalidCastException)
+        {
+            if (type != ErrorType.Semantics) Assert.Fail();
+        }
+        catch (InvalidOperationException)
+        {
+            if (type != ErrorType.Semantics) Assert.Fail();
+        }
     }
 
 
@@ -155,7 +178,7 @@ public class FluentPathTests
     [TestMethod, TestCategory("FhirPathFromSpec")]
     public void TestPublishedTests()
     {
-        var files = Directory.EnumerateFiles(@"C:\git\fluentpath\tests", "*.xml", SearchOption.TopDirectoryOnly);
+        var files = Directory.EnumerateFiles(@"C:\git\fluentpath\tests\dstu2", "*.xml", SearchOption.TopDirectoryOnly);
 
         foreach (var file in files)
         {
@@ -171,44 +194,99 @@ public class FluentPathTests
         XmlDocument doc = new XmlDocument();
 
         doc.Load(pathToTest);
+
+        int numFailed = 0;
+        int totalTests = 0;
+
         foreach (XmlElement item in doc.SelectNodes("//test"))
         {
             string groupName = (item.ParentNode as XmlElement).GetAttribute("name");
             string name = item.GetAttribute("name");
             string inputfile = item.GetAttribute("inputfile");
+            string mode = item.GetAttribute("mode");
             string expression = item.SelectSingleNode("expression").InnerText;
-            Console.WriteLine("{0} - {1}: {2}", groupName, name, expression);
+
+            if (mode == "strict") continue; // don't do 'strict' tests yet
+       
             var output = item.SelectNodes("output");
 
             // Now perform this unit test
             DomainResource resource = null;
             if (!_cache.ContainsKey(inputfile))
             {
-                string basepath = @"C:\git\fluentpath\tests\input\dstu2\";
+                string basepath = @"C:\git\fluentpath\tests\dstu2\input\";
                 _cache.Add(inputfile, (DomainResource)(new FhirXmlParser().Parse<DomainResource>(File.ReadAllText(basepath + inputfile))));
             }
             resource = _cache[inputfile];
 
-            if (output.Count == 1 && (output[0] as XmlElement).GetAttribute("type") == "boolean"
-                && ((output[0] as XmlElement).InnerText == "true" || (output[0] as XmlElement).InnerText == "false"))
+            try
             {
-                if ((output[0] as XmlElement).InnerText == "true")
-                    testPredicate(resource, expression, true);
-                else
-                    testPredicate(resource, expression, false);
+                totalTests += 1;
+                runTestItem(item, expression, output, resource);
             }
-            else if ((item.SelectSingleNode("expression") as XmlElement).GetAttribute("invalid") == "true")
+            catch(AssertFailedException afe)
             {
-                testWrong(resource, expression);
+                Console.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
+                Console.WriteLine(afe.Message);
+                numFailed += 1;   
             }
-            else
+            catch (InvalidOperationException ioe)
             {
-                // Still need to check the types (and values)
-                test(resource, expression, output.Count);
+                Console.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
+                Console.WriteLine(ioe.Message);
+                numFailed += 1;
             }
+            catch (FormatException fe)
+            {
+                Console.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
+                Console.WriteLine(fe.Message);
+                numFailed += 1;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
+                throw e;
+            }
+        }
+
+        Console.WriteLine("Ran {0} tests in total, {1} succeeded, {2} failed.".FormatWith(totalTests, totalTests - numFailed, numFailed));
+
+        if(numFailed > 0)
+        {
+            Assert.Fail("There were {0} unsuccessful tests (out of a total of {1})".FormatWith(numFailed, totalTests));
         }
     }
 
+    private void runTestItem(XmlElement item, string expression, XmlNodeList output, dstu2::Hl7.Fhir.Model.DomainResource resource)
+    {
+        if (output.Count == 1 && (output[0] as XmlElement).GetAttribute("type") == "boolean"
+            && ((output[0] as XmlElement).InnerText == "true" || (output[0] as XmlElement).InnerText == "false"))
+        {
+            if ((output[0] as XmlElement).InnerText == "true")
+                testBoolean(resource, expression, true);
+            else
+                testBoolean(resource, expression, false);
+        }
+        else if (!String.IsNullOrEmpty((item.SelectSingleNode("expression") as XmlElement).GetAttribute("invalid")))
+        {
+            var errorTypeS = (item.SelectSingleNode("expression") as XmlElement).GetAttribute("invalid");
+            ErrorType errorType;
+
+            if (errorTypeS == "syntax")
+                errorType = ErrorType.Syntax;
+            else if (errorTypeS == "semantic")
+                errorType = ErrorType.Semantics;
+            else
+                throw new ArgumentException("unknown error type");
+
+            testInvalid(resource, errorType, expression);
+        }
+        else
+        {
+            // Still need to check the types (and values)
+            test(resource, expression, output.Count);
+        }
+    }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
     public void testTyping()
@@ -216,7 +294,7 @@ public class FluentPathTests
         ElementDefinition ed = new ElementDefinition();
         ed.Binding = new ElementDefinition.BindingComponent();
         ed.Binding.setValueSet(new UriType("http://test.org"));
-        testPredicate(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSetUri", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
+        testBoolean(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSetUri", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
     }
 
     [TestMethod, TestCategory("FhirPathFromSpec")]
@@ -234,11 +312,11 @@ public class FluentPathTests
         sq1.setCode("%");
         sq1.setSystem("http://unitsofmeasure.org");
         r.addPrediction().setProbability(new Range().setLow(sq).setHigh(sq1));
-        testPredicate(r, r.getPrediction()[0].getProbability(), "RiskAssessment.prediction.probabilityRange",
+        testBoolean(r, r.getPrediction()[0].getProbability(), "RiskAssessment.prediction.probabilityRange",
             "(low.empty() or ((low.code = '%') and (low.system = %ucum))) and (high.empty() or ((high.code = '%') and (high.system = %ucum)))", true);
-        testPredicate(r, r.getPrediction()[0], "RiskAssessment.prediction", "probability is decimal implies probability.as(decimal) <= 100", true);
+        testBoolean(r, r.getPrediction()[0], "RiskAssessment.prediction", "probability is decimal implies probability.as(decimal) <= 100", true);
         r.getPrediction()[0].setProbability(new DecimalType(80));
-        testPredicate(r, r.getPrediction()[0], "RiskAssessment.prediction", "probability.as(decimal) <= 100", true);
+        testBoolean(r, r.getPrediction()[0], "RiskAssessment.prediction", "probability.as(decimal) <= 100", true);
     }
 
     /*  [TestMethod, TestCategory("FhirPathFromSpec")]
@@ -266,7 +344,7 @@ public class FluentPathTests
 
     private void testStructureDefinition(StructureDefinition sd)
     {
-        testPredicate(sd, sd, "StructureDefinition", "snapshot.element.tail().all(path.startsWith(%resource.snapshot.element.first().path&'.')) and differential.element.tail().all(path.startsWith(%resource.differential.element.first().path&'.'))", true);
+        testBoolean(sd, sd, "StructureDefinition", "snapshot.element.tail().all(path.startsWith(%resource.snapshot.element.first().path&'.')) and differential.element.tail().all(path.startsWith(%resource.differential.element.first().path&'.'))", true);
     }
 
 }

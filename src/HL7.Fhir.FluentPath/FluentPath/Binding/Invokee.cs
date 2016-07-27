@@ -57,19 +57,19 @@ namespace Hl7.Fhir.FluentPath.Binding
         }
 
 
-        public static bool IsTrue(this Invokee evaluator, IEvaluationContext context)
+        public static bool IsBoolean(this Invokee evaluator, bool value, IEvaluationContext context)
         {
             var result = evaluator.Select(context).BooleanEval();
 
             if (result == null)
                 return false;
             else
-                return result.Value;
+                return result.Value == value;
         }
 
-        public static bool IsTrue(this Invokee evaluator, IEnumerable<IValueProvider> input)
+        public static bool IsBoolean(this Invokee evaluator, bool value, IEnumerable<IValueProvider> input)
         {
-            return evaluator.IsTrue(BaseEvaluationContext.Root(input));
+            return evaluator.IsBoolean(value, BaseEvaluationContext.Root(input));
         }
 
 

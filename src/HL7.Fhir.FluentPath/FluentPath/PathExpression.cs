@@ -79,16 +79,16 @@ namespace Hl7.Fhir.FluentPath
             return evaluator.Scalar(context);
         }
 
-        public static bool IsTrue(string expression, IEnumerable<IValueProvider> input)
+        public static bool IsBoolean(string expression, bool value, IEnumerable<IValueProvider> input)
         {
             var evaluator = Compile(expression);
-            return evaluator.IsTrue(input);
+            return evaluator.IsBoolean(value, input);
         }
 
-        public static bool IsTrue(string expression, IEvaluationContext context)
+        public static bool IsBoolean(string expression, bool value, IEvaluationContext context)
         {
             var evaluator = Compile(expression);
-            return evaluator.IsTrue(context);
+            return evaluator.IsBoolean(value, context);
         }
 
         public static bool Predicate(string expression, IEnumerable<IValueProvider> input)

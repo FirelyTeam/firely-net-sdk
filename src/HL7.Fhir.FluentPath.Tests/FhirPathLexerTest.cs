@@ -82,16 +82,17 @@ namespace Hl7.Fhir.Tests.FhirPath
             SucceedsPartialDateTime(parser, "@2015-01");
             SucceedsPartialDateTime(parser, "@2015-01-02T12:34:00Z");
             SucceedsPartialDateTime(parser, "@2015-01-03T12:34:34+02:30");
+            SucceedsPartialDateTime(parser, "@2015-01-03T12:34:34");
+      //      SucceedsPartialDateTime(parser, "@2015-01-01T23");  TODO: Make this work
             AssertParser.FailsMatch(parser, "@2015-32-02T12:34:00Z");
             AssertParser.FailsMatch(parser, "@2015-01-02T28:34:00Z");
-            AssertParser.FailsMatch(parser, "@2015-01-03T12:34:34");    // no timezone
             AssertParser.FailsMatch(parser, "T12:34:34+02:30");
             AssertParser.FailsMatch(parser, "12:34:34+02:30");
             AssertParser.FailsMatch(parser, "@T12:34:34+02:30");
             AssertParser.FailsMatch(parser, "@12:34:34+02:30");
             AssertParser.FailsMatch(parser, "@20150103T12:34:34+02:30");
             AssertParser.FailsMatch(parser, "@-2015-01");
-            AssertParser.FailsMatch(parser, "@2015-01-01T23");
+
         }
 
         private void SucceedsTime(Parser<Time> parser, string s)
@@ -108,6 +109,9 @@ namespace Hl7.Fhir.Tests.FhirPath
             SucceedsTime(parser, "@T12:34:34+02:30");
             SucceedsTime(parser, "@T12:34:34");
 
+            // SucceedsTime(parser, "@T12:35");     TODO: make this work
+            // SucceedsTime(parser, "@T12");
+
             AssertParser.FailsMatch(parser, "2001-01-01T12:34:34+02:30");
             AssertParser.FailsMatch(parser, "@2001-01-01T12:34:34+02:30");
             AssertParser.FailsMatch(parser, "T12:34:34+02:30");
@@ -115,8 +119,6 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "@12:34:34+02:30");
 
             AssertParser.FailsMatch(parser, "@T12:34:34+48:30");
-            AssertParser.FailsMatch(parser, "@T12:35");
-            AssertParser.FailsMatch(parser, "@T12");
         }
 
             [TestMethod, TestCategory("FhirPath")]
