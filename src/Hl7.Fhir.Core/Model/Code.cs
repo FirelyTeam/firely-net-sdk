@@ -92,6 +92,7 @@ namespace Hl7.Fhir.Model
             Value = value;
         }
 
+        [NotMapped]
         public override string TypeName
         {
             get { return "code"; }
