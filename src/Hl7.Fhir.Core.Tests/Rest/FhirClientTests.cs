@@ -907,15 +907,17 @@ namespace Hl7.Fhir.Tests.Rest
             var testEndpointDSTU1 = new Uri("http://spark.furore.com/fhir");
             var testEndpointDSTU12 = new Uri("http://fhirtest.uhn.ca/baseDstu1");
             var testEndpointDSTU22 = new Uri("http://fhirtest.uhn.ca/baseDstu2");
-            var testEndpointDSTU23 = new Uri("http://fhir-dev.healthintersections.com.au/open");
+            var testEndpointDSTU23 = new Uri("http://fhir3.healthintersections.com.au/open");
 
             var client = new FhirClient(testEndpointDSTU1);
+            client.ParserSettings.AllowUnrecognizedEnums = true;
 
             Conformance p;
 
             try
             {
                 client = new FhirClient(testEndpointDSTU23, verifyFhirVersion: true);
+                client.ParserSettings.AllowUnrecognizedEnums = true;
                 p = client.Conformance();
             }
             catch (NotSupportedException)
@@ -924,6 +926,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
 
             client = new FhirClient(testEndpointDSTU23);
+            client.ParserSettings.AllowUnrecognizedEnums = true;
             p = client.Conformance();
 
             //client = new FhirClient(testEndpointDSTU2);
@@ -936,7 +939,8 @@ namespace Hl7.Fhir.Tests.Rest
 
 
             client = new FhirClient(testEndpointDSTU12);
-                       
+            client.ParserSettings.AllowUnrecognizedEnums = true;
+
             try
             {
                 p = client.Conformance();
