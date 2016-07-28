@@ -61,7 +61,6 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.AreEqual("T12:34:44Z", pd.ToString());
 
             Assert.IsFalse(Time.TryParse("12:34:44Z", out pd));
-            Assert.IsFalse(Time.TryParse("T12:34", out pd));           
         }
 
         [TestMethod]

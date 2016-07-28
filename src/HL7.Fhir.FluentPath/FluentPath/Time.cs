@@ -22,7 +22,7 @@ namespace Hl7.Fhir.FluentPath
         {
             try
             {
-                var dummy = XmlConvert.ToDateTimeOffset("2016-01-01" + value);
+                var dummy = XmlConvert.ToDateTimeOffset(toDTOParseable(value));
             }
             catch
             {
@@ -46,10 +46,20 @@ namespace Hl7.Fhir.FluentPath
             }
         }
 
+        private static string toDTOParseable(string value)
+        {
+            if (value.Length == 3)
+                value += ":00";
+            if (value.Length == 6)
+                value += ":00";
+
+            return "2016-01-01" + value;
+        }
+
         
         private DateTimeOffset toDTO()
         {
-            return XmlConvert.ToDateTimeOffset("2016-01-01" + _value);
+            return XmlConvert.ToDateTimeOffset(toDTOParseable(_value)).ToUniversalTime();
         }
 
      
@@ -85,6 +95,17 @@ namespace Hl7.Fhir.FluentPath
         public static bool operator !=(Time a, Time b)
         {
             return !Object.Equals(a, b);
+        }
+
+        public bool IsEquivalentTo(Time other)
+        {
+            if (other == null) return false;
+
+            var left = toDTO();
+            var right = other.toDTO();
+
+            return   (left.Year == right.Year) && (left.Month == right.Month) && (left.Day == right.Day)              
+                            && (left.Hour == right.Hour) && (left.Minute == right.Minute);
         }
 
         public override bool Equals(object obj)

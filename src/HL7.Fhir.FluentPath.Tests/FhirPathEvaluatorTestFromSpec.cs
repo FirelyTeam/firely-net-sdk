@@ -25,6 +25,8 @@ using Hl7.Fhir.Tests.FhirPath;
 using System.Xml;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.FluentPath.Binding;
+using System.Xml.Linq;
+using Hl7.Fhir.FluentPath.Functions;
 
 static class ConverterExtensions
 {
@@ -99,33 +101,30 @@ static class ConverterExtensions
 [TestClass]
 public class FluentPathTests
 {
-    private void test(Resource resource, String expression, int count)
-    {
-        test(resource, expression, count, new String[] { });
-    }
-
-    private void test(Resource resource, String expression, int count, String types)
-    {
-        test(resource, expression, count, new String[] { types });
-    }
-    
-    private void test(Resource resource, String expression, int count, String[] types)
+    private void test(Resource resource, String expression, IEnumerable<XElement> expected)
     {
         var tpXml = FhirSerializer.SerializeToXml(resource);
         var npoco = new ModelNavigator(resource);
- //       FhirPathEvaluatorTest.Render(npoco);
+        //       FhirPathEvaluatorTest.Render(npoco);
 
-        var outcome = PathExpression.Compile(expression).Select(FhirValueList.Create(npoco));
-        Assert.AreEqual(count, outcome.Count());
+        IEnumerable<IValueProvider> actual = PathExpression.Compile(expression).Select(FhirValueList.Create(npoco));
+        Assert.AreEqual(expected.Count(), actual.Count());
 
-        if (types != null && types.Count() > 0)
-        {
-            string msg = String.Join(", ", types);
-            foreach (IValueProvider b in outcome)
-            {
-                Assert.IsTrue(types.Contains(b.Value.GetType().Name.ToLower()), String.Format("Object type {0} not ok from {1}", b.Value.GetType().Name, msg));
-            }
-        }
+        expected.Zip(actual, compare).Count();
+    }
+
+    private static bool compare(XElement expected, IValueProvider actual)
+    {
+        var type = expected.Attribute("type").Value;        
+        var tp = (ITypeNameProvider)actual;
+        Assert.AreEqual(type, tp.TypeName, "incorrect output type");
+
+        if (expected.IsEmpty) return true;      // we are not checking the value
+
+        var value = expected.Value;
+        Assert.AreEqual(value, actual.ToStringRepresentation(), "incorrect output value");
+
+        return true;
     }
 
     // @SuppressWarnings("deprecation")
@@ -191,25 +190,21 @@ public class FluentPathTests
     private void runTests(string pathToTest)
     {
         // Read the test file, then execute each of them
-        XmlDocument doc = new XmlDocument();
-
-        doc.Load(pathToTest);
+        var doc = XDocument.Load(pathToTest);
 
         int numFailed = 0;
         int totalTests = 0;
 
-        foreach (XmlElement item in doc.SelectNodes("//test"))
+        foreach (var item in doc.Descendants("test"))
         {
-            string groupName = (item.ParentNode as XmlElement).GetAttribute("name");
-            string name = item.GetAttribute("name");
-            string inputfile = item.GetAttribute("inputfile");
-            string mode = item.GetAttribute("mode");
-            string expression = item.SelectSingleNode("expression").InnerText;
+            string groupName = item.Parent.Attribute("name").Value;
+            string name = item.Attribute("name")?.Value ?? "(no name)";
+            string inputfile = item.Attribute("inputfile").Value;
+            var mode = item.Attribute("mode");
+            string expression = item.Element("expression").Value;
 
-            if (mode == "strict") continue; // don't do 'strict' tests yet
+            if (mode != null && mode.Value == "strict") continue; // don't do 'strict' tests yet
        
-            var output = item.SelectNodes("output");
-
             // Now perform this unit test
             DomainResource resource = null;
             if (!_cache.ContainsKey(inputfile))
@@ -222,24 +217,24 @@ public class FluentPathTests
             try
             {
                 totalTests += 1;
-                runTestItem(item, expression, output, resource);
+                runTestItem(item, resource);
             }
             catch(AssertFailedException afe)
             {
                 Console.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                Console.WriteLine(afe.Message);
+                Console.WriteLine("   " + afe.Message);
                 numFailed += 1;   
             }
             catch (InvalidOperationException ioe)
             {
                 Console.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                Console.WriteLine(ioe.Message);
+                Console.WriteLine("   " + ioe.Message);
                 numFailed += 1;
             }
             catch (FormatException fe)
             {
                 Console.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                Console.WriteLine(fe.Message);
+                Console.WriteLine("   " + fe.Message);
                 numFailed += 1;
             }
             catch (Exception e)
@@ -257,34 +252,40 @@ public class FluentPathTests
         }
     }
 
-    private void runTestItem(XmlElement item, string expression, XmlNodeList output, dstu2::Hl7.Fhir.Model.DomainResource resource)
+    private void runTestItem(XElement testLine, dstu2::Hl7.Fhir.Model.DomainResource resource)
     {
-        if (output.Count == 1 && (output[0] as XmlElement).GetAttribute("type") == "boolean"
-            && ((output[0] as XmlElement).InnerText == "true" || (output[0] as XmlElement).InnerText == "false"))
+        var expression = testLine.Element("expression");
+        var output = testLine.Elements("output");
+
+        //if (output.Count == 1 && (output[0] as XmlElement).GetAttribute("type") == "boolean"
+        //    && ((output[0] as XmlElement).InnerText == "true" || (output[0] as XmlElement).InnerText == "false"))
+        //{
+        //    if ((output[0] as XmlElement).InnerText == "true")
+        //        testBoolean(resource, expression, true);
+        //    else
+        //        testBoolean(resource, expression, false);
+        //}
+
+        bool hasInvalid;
+        string invalid = expression.TryGetAttribute("invalid", out hasInvalid);
+
+        if(hasInvalid)
         {
-            if ((output[0] as XmlElement).InnerText == "true")
-                testBoolean(resource, expression, true);
-            else
-                testBoolean(resource, expression, false);
-        }
-        else if (!String.IsNullOrEmpty((item.SelectSingleNode("expression") as XmlElement).GetAttribute("invalid")))
-        {
-            var errorTypeS = (item.SelectSingleNode("expression") as XmlElement).GetAttribute("invalid");
             ErrorType errorType;
 
-            if (errorTypeS == "syntax")
+            if (invalid == "syntax")
                 errorType = ErrorType.Syntax;
-            else if (errorTypeS == "semantic")
+            else if (invalid == "semantic")
                 errorType = ErrorType.Semantics;
             else
                 throw new ArgumentException("unknown error type");
 
-            testInvalid(resource, errorType, expression);
+            testInvalid(resource, errorType, expression.Value);
         }
         else
         {
             // Still need to check the types (and values)
-            test(resource, expression, output.Count);
+            test(resource, expression.Value, output);
         }
     }
 

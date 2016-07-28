@@ -9,6 +9,7 @@
 using Hl7.Fhir.FluentPath;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace Hl7.Fhir.FluentPath.Functions
 {
     internal static class EqualityOperators
     {
-        public static bool? IsEqualTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
+        public static bool IsEqualTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
         {
             if (left.Count() != right.Count()) return false;
 
@@ -26,6 +27,15 @@ namespace Hl7.Fhir.FluentPath.Functions
 
         public static bool IsEqualTo(this IValueProvider left, IValueProvider right)
         {
+            // If the values have names, compare them
+            if (left is INameProvider && right is INameProvider)
+            {
+                var lNP = (INameProvider)left;
+                var rNP = (INameProvider)right;
+
+                if (lNP.Name != rNP.Name) return false;
+            }
+
             var l = left.Value;
             var r = right.Value;
 
@@ -51,37 +61,82 @@ namespace Hl7.Fhir.FluentPath.Functions
                 else
                     return false;
             }
+            else if (l == null && r == null)
+            {
+                // Compare complex types (extensions on primitives are not compared, but handled (=ignored) above
+                var childrenL = left.Children();
+                var childrenR = right.Children();
 
-            // Compare complex types (extensions on primitives are not compared, but handled (=ignored) above
-            var childrenL = left.Children();
-            var childrenR = right.Children();
-
-            if (childrenL.Any() && childrenR.Any())
-                return childrenL.IsEqualTo(childrenR).Value;    // NOTE: Assumes null will never be returned when any() children exist
-
-            // Else, we're comparing a complex to a primitive which (probably) should return false
-            return false;
+                return childrenL.IsEqualTo(childrenR);    // NOTE: Assumes null will never be returned when any() children exist
+            }
+            else
+            {
+                // Else, we're comparing a complex (without a value) to a primitive which (probably) should return false
+                return false;
+            }
         }
 
-        public static bool IsEqualTo(this string left, string right)
+
+        public static bool IsEquivalentTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
         {
-            return left == right;
+            if (left.Count() != right.Count()) return false;
+
+            return left.All(l => right.Any(r => l.IsEquivalentTo(r)));
         }
 
-        public static bool IsEqualTo(this bool left, bool right)
-        {
-            return left == right;
-        }
 
-        public static bool IsEqualTo(this long left, long right)
+        public static bool IsEquivalentTo(this IValueProvider left, IValueProvider right)
         {
-            return left == right;
-        }
+            // If the values have names, compare them
+            if (left is INameProvider && right is INameProvider)
+            {
+                var lNP = (INameProvider)left;
+                var rNP = (INameProvider)right;
 
-        public static bool IsEqualTo(this decimal left, decimal right)
-        {
-            // return left.ToString() == right.ToString();  -- this is what the spec says, but that's incorrect
-            return left == right;
+                if (lNP.Name != rNP.Name) return false;
+
+                if (lNP.Name == "id") return true;      // don't compare 'id' elements
+            }
+
+            var l = left.Value;
+            var r = right.Value;
+
+            // Compare primitives (or extended primitives)
+            if (l != null && r != null)
+            {
+                if (l.GetType() == typeof(string) && r.GetType() == typeof(string))
+                    return ((string)l).IsEquivalentTo((string)r);
+                else if (l.GetType() == typeof(bool) && r.GetType() == typeof(bool))
+                    return (bool)l == (bool)r;
+                else if (l.GetType() == typeof(long) && r.GetType() == typeof(long))
+                    return (long)l == (long)r;
+                else if (l.GetType() == typeof(decimal) && r.GetType() == typeof(decimal))
+                    return ((decimal)l).IsEquivalentTo((decimal)r);
+                else if (l.GetType() == typeof(long) && r.GetType() == typeof(decimal))
+                    return ((decimal)(long)l).IsEquivalentTo((decimal)r);
+                else if (l.GetType() == typeof(decimal) && r.GetType() == typeof(long))
+                    return ((decimal)l).IsEquivalentTo((decimal)(long)r);
+                else if (l.GetType() == typeof(Time) && r.GetType() == typeof(Time))
+                    return ((Time)l).IsEquivalentTo((Time)r);
+                else if (l.GetType() == typeof(PartialDateTime) && r.GetType() == typeof(PartialDateTime))
+                    return ((PartialDateTime)l).IsEquivalentTo((PartialDateTime)r);
+                else
+                    return false;
+            }
+            else if (l == null && r == null)
+            {
+                // Compare complex types (extensions on primitives are not compared, but handled (=ignored) above
+
+                var childrenL = left.Children();
+                var childrenR = right.Children();
+
+                return childrenL.IsEquivalentTo(childrenR);    // NOTE: Assumes null will never be returned when any() children exist
+            }
+            else
+            {
+                // Else, we're comparing a complex (without a value) to a primitive which (probably) should return false
+                return false;
+            }
         }
 
 
@@ -93,6 +148,29 @@ namespace Hl7.Fhir.FluentPath.Functions
         //    return FhirValueList.Create(left.All((IValueProvider l) => right.Any(r => l.IsEquivalentTo(r))));
         //}
 
+
+        public static bool IsEquivalentTo(this string a, string b)
+        {
+            if (b == null) return false;
+
+            return String.Compare(a, b, CultureInfo.InvariantCulture,
+                CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols) == 0;
+        }
+
+        public static bool IsEquivalentTo(this decimal a, decimal b)
+        {
+            var prec = Math.Min(a.precision(), b.precision());
+            var aR = Math.Round(a, prec);
+            var bR = Math.Round(b, prec);
+
+            return aR == bR;
+        }
+
+        private static int precision(this decimal a)
+        {
+            var repr = a.ToString(CultureInfo.InvariantCulture);
+            return repr.Length - repr.IndexOf('.') - 1;
+        }
 
         internal class ValueProviderEqualityComparer : IEqualityComparer<IValueProvider>
         {

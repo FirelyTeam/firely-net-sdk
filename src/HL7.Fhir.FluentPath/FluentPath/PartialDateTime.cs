@@ -90,6 +90,15 @@ namespace Hl7.Fhir.FluentPath
             return !Object.Equals(a, b);
         }
 
+        public bool IsEquivalentTo(PartialDateTime other)
+        {
+            if (other == null) return false;
+
+            var len = Math.Min(10,Math.Min(_value.Length, other._value.Length));
+
+            return String.Compare(_value, 0, other._value, 0, len) == 0;
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null) return false;

@@ -51,6 +51,8 @@ namespace Hl7.Fhir.FluentPath.Binding
 
             nullp("binary.=", (object f, IEnumerable<IValueProvider>  a, IEnumerable<IValueProvider> b) => a.IsEqualTo(b));
             nullp("binary.!=", (object f, IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b) => !a.IsEqualTo(b));
+            nullp("binary.~", (object f, IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b) => a.IsEquivalentTo(b));
+            nullp("binary.!~", (object f, IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b) => !a.IsEquivalentTo(b));
 
             nullp("unary.-", (object f, long a) => -a);
             nullp("unary.-", (object f, decimal a) => -a);
