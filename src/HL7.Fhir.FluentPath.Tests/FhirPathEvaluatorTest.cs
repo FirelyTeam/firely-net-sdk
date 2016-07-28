@@ -18,6 +18,8 @@ using Hl7.Fhir.FluentPath.Expressions;
 using System.Diagnostics;
 using dstu2::Hl7.Fhir.Model;
 using Hl7.Fhir.FluentPath.Binding;
+using Hl7.Fhir.Support;
+using System.Xml.Linq;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -28,23 +30,32 @@ namespace Hl7.Fhir.Tests.FhirPath
     public class FhirPathEvaluatorTest
 #endif
     {
-        IEnumerable<IValueProvider> testInput;
-        IEnumerable<IValueProvider> questionnaire;
+        static IEnumerable<IValueProvider> testInput;
+        static IEnumerable<IValueProvider> questionnaire;
+        static int counter = 0;
+        static XDocument xdoc;
 
-        [TestInitialize]
-        public void Setup()
+        [ClassInitialize]
+        public static void Setup(TestContext context)
         {
             var parser = new dstu2::Hl7.Fhir.Serialization.FhirXmlParser();
 
-            var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
+            var tpXml = System.IO.File.ReadAllText("TestData\\fp-test-patient.xml");
             var patient = parser.Parse<Patient>(tpXml);
             testInput = FhirValueList.Create(new ModelNavigator(patient));
            
             tpXml = System.IO.File.ReadAllText("TestData\\questionnaire-example.xml");
             var quest = parser.Parse<Questionnaire>(tpXml);
             questionnaire = FhirValueList.Create(new ModelNavigator(quest));
+
+            xdoc = new XDocument(new XElement("group", new XAttribute("name", "CSharpTests")));
         }
 
+        [ClassCleanup]
+        public static void Cleanup()
+        {
+            xdoc.Save(@"c:\temp\csharp-tests.xml");
+        }
 
         [TestMethod, TestCategory("FhirPath")]
         public void TestTreeVisualizerVisitor()
@@ -78,10 +89,6 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void TestDynaBinding()
         {
             var input = FhirValueList.Create(new ConstantValue("Hello world!"), new ConstantValue(4));
-
-            //TODO: Improve error on this:
-            // Assert.AreEqual("ello", PathExpression.Scalar(@"substring(1,%context[1])", input));
-
             Assert.AreEqual("ello", PathExpression.Scalar(@"$this[0].substring(1,%context[1])", input));
         }
 
@@ -120,14 +127,26 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"(5 > {}).empty()");
         }
 
+
+
         private void isTrue(string expr)
         {
-            Assert.IsTrue(PathExpression.Compile(expr).Predicate(testInput));
+            counter += 1;
+            var testName = "CSharpTest" + counter.ToString("D4");
+            var fileName = "fp-test-patient.xml";
+
+            var testXml = new XElement("test",
+                        new XAttribute("name", testName), new XAttribute("inputfile", fileName),
+                        new XElement("expression", new XText(expr)),
+                        new XElement("output", new XAttribute("type", "boolean"), new XText("true")));
+            xdoc.Elements().First().Add(testXml);
+
+            Assert.IsTrue(PathExpression.Compile(expr).IsBoolean(true,testInput));
         }
 
         private void isTrue(string expr, IEnumerable<IValueProvider> input)
         {
-            Assert.IsTrue(PathExpression.Compile(expr).Predicate(input));
+            Assert.IsTrue(PathExpression.Compile(expr).IsBoolean(true,input));
         }
 
         [TestMethod, TestCategory("FhirPath")]
@@ -237,7 +256,6 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestExtension()
         {
-            Render((IElementNavigator)testInput.First());
             isTrue(@"Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime').exists()");
             isTrue(@"Patient.birthDate.extension(%""ext-patient-birthTime"").exists()");
             isTrue(@"Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime1').empty()");
@@ -373,14 +391,14 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestRepeat()
         {
-            //isTrue(@"Patient.contained.skip(1).repeat(group).count() = 4");       // really need to filter on Questionnare (as('Questionnaire'))
-            //isTrue(@"Patient.contained.skip(1).repeat(group|question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
-            //Assert.AreEqual(11L, PathExpression.Scalar(@"Patient.contained.skip(1).repeat(group | question).count()", testInput));       // really need to filter on Questionnare (as('Questionnaire'))
-            //isTrue(@"Patient.contained.skip(1).repeat(group|question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
-            //isTrue(@"Patient.contained.skip(1).repeat(group).select(concept.code) contains 'COMORBIDITY'");       // really need to filter on Questionnare (as('Questionnaire'))
-            //isTrue(@"Patient.contained.skip(1).repeat(group).any(concept.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
-            //isTrue(@"Patient.contained.skip(1).repeat(group).any(concept.code = 'CARDIAL') = false");       // really need to filter on Questionnare (as('Questionnaire'))
-            //isTrue(@"Patient.contained.skip(1).repeat(group|question).any(concept.code = 'CARDIAL')");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group).count() = 4");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group|question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group | question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group|question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group).select(concept.code) contains 'COMORBIDITY'");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group).any(concept.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group).any(concept.code = 'CARDIAL') = false");       // really need to filter on Questionnare (as('Questionnaire'))
+            isTrue(@"Patient.contained.skip(1).repeat(group|question).any(concept.code = 'CARDIAL')");       // really need to filter on Questionnare (as('Questionnaire'))
 
             isTrue(@"Questionnaire.descendants().linkId.distinct()", questionnaire);
             isTrue(@"Questionnaire.repeat(group | question).concept.count()", questionnaire);
@@ -404,37 +422,22 @@ namespace Hl7.Fhir.Tests.FhirPath
 
             isTrue(@"Patient.identifier.any(use='official') and identifier.where(use='usual').exists()");
 
-            //isTrue(@"Patient.**.where($focus.contains('222')).item(1) = $context.contained.address.line", navigator));
-
-            // TODO: Better error reporting for this:
-            //isTrue(@"(Patient.identifier.where(use='official') in Patient.identifier) and
-            //           (Patient.identifier.first() in Patient.identifier.tail()).not()");
-
-
-            //// xpath gebruikt $current for $focus....waarom dat niet gebruiken?
-            //isTrue(
-            //      @"Patient.contact.relationship.coding.where($focus.system = %vs-patient-contact-relationship and 
-            //            $focus.code = 'owner').log('after owner').$parent.$parent.organization.log('org')
-            //            .where(display.startsWith('Walt')).resolve().identifier.first().value = 'Gastro'", navigator,
-            //                    new TestEvaluationContext()));
+            isTrue(@"Patient.descendants().where($this.as(string).contains('222'))[1] = %context.contained.address.line");
 
             isTrue(@"Patient.name.select(given|family).count() = 2");
             isTrue(@"Patient.identifier.where(use = 'official').select(value + 'yep') = ('7654321yep' | '11223344yep')");
+            isTrue(@"Patient.descendants().where(($this is code) and ($this.contains('wne'))).trace('them') = contact.relationship.coding.code");
+            isTrue(@"Patient.descendants().as(code).where(matches('i.*/gif')) in Patient.photo.children()");
 
-            //isTrue(
-            //        @"Patient.**.contains('wne') = contact.relationship.coding.code and
-            //        Patient.**.matches('i.*/gif') in Patient.photo.*", navigator));
+            isTrue(
+                @"'m' + gender.extension('http://example.org/StructureDefinition/real-gender').value.as(code)
+                    .substring(1,4) + 
+                    gender.extension('http://example.org/StructureDefinition/real-gender').value.as(code)
+                    .substring(5) = 'metrosexual'");
 
-            //isTrue(
-            //    @"'m' + gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
-            //        .substring(1,4) + 
-            //        gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
-            //        .substring(5) = 'metrosexual'", navigator));
-
-
-            //isTrue(
-            //        @"gender.extension('http://example.org/StructureDefinition/real-gender').valueCode
-            //        .select('m' + $focus.substring(1,4) + $focus.substring(5)) = 'metrosexual'", navigator));
+            isTrue(
+                    @"gender.extension('http://example.org/StructureDefinition/real-gender').value.as(code)
+                    .select('m' + $this.substring(1,4) + $this.substring(5)) = 'metrosexual'");
 
         }
 

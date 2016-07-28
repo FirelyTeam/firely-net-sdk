@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Tests.FhirPath
     {
         public IElementNavigator getTestData()
         {
-            var tpXml = System.IO.File.ReadAllText("TestData\\FhirPathTestResource.xml");
+            var tpXml = System.IO.File.ReadAllText("TestData\\fp-test-patient.xml");
             // var tree = TreeConstructor.FromXml(tpXml);
             // var navigator = new TreeNavigator(tree);
             // return navigator;

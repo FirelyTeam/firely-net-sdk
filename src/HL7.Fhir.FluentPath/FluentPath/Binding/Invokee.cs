@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,11 +79,7 @@ namespace Hl7.Fhir.FluentPath.Binding
         public static Invokee NullProp(this Invokee source)
         {
             return (ctx, args) =>
-            {
-                var focus = ctx.GetThis();
-
-                if (!focus.Any()) return FhirValueList.Empty;
-                
+            {               
                 foreach (var arg in args)
                 {
                     var argValue = arg(ctx, InvokeeFactory.EmptyArgs);
@@ -98,8 +95,8 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             return (ctx, args) =>
             {
-                var focus = ctx.GetThis();
-                var argValue = Typecasts.CastTo<string>(args.First()(ctx, InvokeeFactory.EmptyArgs));
+                var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
+                var argValue = Typecasts.CastTo<string>(args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs));
                 ctx.Trace(argValue,focus);
                 return focus;
             };
@@ -117,7 +114,7 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             return (ctx, args) =>
             {
-                var focus = Typecasts.CastTo<A>(ctx.GetThis());
+                var focus = Typecasts.CastTo<A>(args.First()(ctx, InvokeeFactory.EmptyArgs));
                 return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(focus));
             };
         }
@@ -126,8 +123,8 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             return (ctx, args) =>
             {
-                var focus = Typecasts.CastTo<A>(ctx.GetThis());
-                var argA = Typecasts.CastTo<B>(args.First()(ctx, InvokeeFactory.EmptyArgs));
+                var focus = Typecasts.CastTo<A>(args.First()(ctx, InvokeeFactory.EmptyArgs));
+                var argA = Typecasts.CastTo<B>(args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs));
                 return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(focus,argA));
             };
         }
@@ -136,9 +133,9 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             return (ctx, args) =>
             {
-                var focus = Typecasts.CastTo<A>(ctx.GetThis());
-                var argA = Typecasts.CastTo<B>(args.First()(ctx, InvokeeFactory.EmptyArgs));
-                var argB = Typecasts.CastTo<C>(args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs));
+                var focus = Typecasts.CastTo<A>(args.First()(ctx, InvokeeFactory.EmptyArgs));
+                var argA = Typecasts.CastTo<B>(args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs));
+                var argB = Typecasts.CastTo<C>(args.Skip(2).First()(ctx, InvokeeFactory.EmptyArgs));
                 return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(focus, argA, argB)); 
             };
         }
@@ -147,10 +144,10 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             return (ctx, args) =>
             {
-                var focus = Typecasts.CastTo<A>(ctx.GetThis());
-                var argA = Typecasts.CastTo<B>(args.First()(ctx, InvokeeFactory.EmptyArgs));
-                var argB = Typecasts.CastTo<C>(args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs));
-                var argC = Typecasts.CastTo<D>(args.Skip(2).First()(ctx, InvokeeFactory.EmptyArgs));
+                var focus = Typecasts.CastTo<A>(args.First()(ctx, InvokeeFactory.EmptyArgs));
+                var argA = Typecasts.CastTo<B>(args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs));
+                var argB = Typecasts.CastTo<C>(args.Skip(2).First()(ctx, InvokeeFactory.EmptyArgs));
+                var argC = Typecasts.CastTo<D>(args.Skip(3).First()(ctx, InvokeeFactory.EmptyArgs));
                 return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(focus, argA, argB, argC));
             };
         }
@@ -159,8 +156,11 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             return (ctx, args) =>
             {
-                var left = args.First();
-                var right = args.Skip(1).First();
+                // Ignore focus
+                var left = args.Skip(1).First();
+                var right = args.Skip(2).First();
+
+                // Return function that actually executes the Invokee at the last moment
                 return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(() => left(ctx, InvokeeFactory.EmptyArgs).BooleanEval(), () => right(ctx, InvokeeFactory.EmptyArgs).BooleanEval()));
             };
         }
@@ -180,10 +180,19 @@ namespace Hl7.Fhir.FluentPath.Binding
             return (ctx, __) => ctx.ResolveValue(name);
         }
 
-
-        public static Invokee Focus()
+        public static Invokee Invoke(string functionName, IEnumerable<Invokee> arguments, Invokee invokee)
         {
-            return (ctx, _) => ctx.GetThis();
+            return (ctx, _) =>
+            {
+                try
+                {
+                    return invokee(ctx, arguments);
+                }
+                catch (Exception e)
+                {
+                    throw new InvalidOperationException("Invocation of '{0}' failed: {1}".FormatWith(functionName, e.Message));
+                }
+            };
         }
 
     }

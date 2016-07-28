@@ -20,7 +20,7 @@ namespace Hl7.Fhir.FluentPath
         }
 
        
-        public override IEnumerable<IValueProvider> InvokeExternalFunction(string name, IEnumerable<IValueProvider> focus, IEnumerable<IEnumerable<IValueProvider>> parameters)
+        public override IEnumerable<IValueProvider> InvokeExternalFunction(string name, IEnumerable<IEnumerable<IValueProvider>> parameters)
         {
             if(name == "resolve")
             {

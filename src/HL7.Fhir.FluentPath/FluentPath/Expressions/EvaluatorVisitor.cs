@@ -20,15 +20,17 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression)
         {
-            var focusEval = expression.Focus.ToEvaluator();
-            var argsEval = expression.Arguments.Select(arg => arg.ToEvaluator());
+            var arguments = new List<Invokee>() { expression.Focus.ToEvaluator() };
+            arguments.AddRange(expression.Arguments.Select(arg => arg.ToEvaluator()));
 
             // We have no real type information, so just pass object as the type
             var types = new List<Type>() { typeof(object) }; //   for the focus;
             types.AddRange(expression.Arguments.Select(a => typeof(object)));   // for the arguments
+
+            // Now locate the function based on the types and name
             Invokee boundFunction = BindingTable.Resolve(expression.FunctionName, types);
 
-            return buildBindingInvoke(expression.FunctionName, focusEval, argsEval, boundFunction);
+            return InvokeeFactory.Invoke(expression.FunctionName, arguments, boundFunction);
         }
 
         public override Invokee VisitNewNodeListInit(FP.NewNodeListInitExpression expression)
@@ -38,36 +40,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
         public override Invokee VisitVariableRef(FP.VariableRefExpression expression)
         {
-            // Special case: $this   -> can now GO AWAY -> this is a declared name in the context
-            if (expression is FP.AxisExpression)
-            {
-                var axis = (FP.AxisExpression)expression;
-                if (axis.AxisName == "this")
-                    return InvokeeFactory.Focus();
-                else
-                    throw new NotSupportedException("Cannot resolve axis reference " + axis.AxisName);
-            }
-            else
-                return InvokeeFactory.ResolveValue(expression.Name);
-        }
-
-        private static Invokee buildBindingInvoke(string functionName, Invokee focus, IEnumerable<Invokee> arguments, Invokee invokee)
-        {
-            return (ctx,_) =>
-            {
-                var focusNodes = focus(ctx, InvokeeFactory.EmptyArgs);
-                var newContext = ctx.Nest(focusNodes);
-
-                try
-                {
-                    return invokee(newContext, arguments);
-                }
-                catch (Exception e)
-                {
-                    throw new InvalidOperationException("Invocation of '{0}' failed: {1}".FormatWith(functionName, e.Message));
-                }
-
-            };
+            return InvokeeFactory.ResolveValue(expression.Name);
         }
     }
 

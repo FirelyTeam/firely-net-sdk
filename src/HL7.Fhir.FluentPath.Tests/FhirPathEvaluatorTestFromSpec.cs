@@ -174,6 +174,9 @@ public class FluentPathTests
 
     Dictionary<string, DomainResource> _cache = new Dictionary<string, DomainResource>();
 
+    int numFailed = 0;
+    int totalTests = 0;
+
     [TestMethod, TestCategory("FhirPathFromSpec")]
     public void TestPublishedTests()
     {
@@ -185,15 +188,20 @@ public class FluentPathTests
             runTests(file);
             Console.WriteLine(Environment.NewLine);
         }
+
+        Console.WriteLine("Ran {0} tests in total, {1} succeeded, {2} failed.".FormatWith(totalTests, totalTests - numFailed, numFailed));
+
+        if (numFailed > 0)
+        {
+            Assert.Fail("There were {0} unsuccessful tests (out of a total of {1})".FormatWith(numFailed, totalTests));
+        }
+
     }
 
     private void runTests(string pathToTest)
     {
         // Read the test file, then execute each of them
         var doc = XDocument.Load(pathToTest);
-
-        int numFailed = 0;
-        int totalTests = 0;
 
         foreach (var item in doc.Descendants("test"))
         {
@@ -242,13 +250,6 @@ public class FluentPathTests
                 Console.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
                 throw e;
             }
-        }
-
-        Console.WriteLine("Ran {0} tests in total, {1} succeeded, {2} failed.".FormatWith(totalTests, totalTests - numFailed, numFailed));
-
-        if(numFailed > 0)
-        {
-            Assert.Fail("There were {0} unsuccessful tests (out of a total of {1})".FormatWith(numFailed, totalTests));
         }
     }
 

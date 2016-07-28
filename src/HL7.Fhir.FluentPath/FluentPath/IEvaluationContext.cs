@@ -53,7 +53,7 @@ namespace Hl7.Fhir.FluentPath
         /// <param name="parameters">An ordered set parameters, each a collection of IFhirPathValues representing the value of that parameter. The
         /// first parameter is the focus.</param>
         /// <remarks>Should throw NotSupportedException if the external function is not supported.</remarks>
-        IEnumerable<IValueProvider> InvokeExternalFunction(string name, IEnumerable<IValueProvider> focus, IEnumerable<IEnumerable<IValueProvider>> parameters);
+        IEnumerable<IValueProvider> InvokeExternalFunction(string name, IEnumerable<IEnumerable<IValueProvider>> parameters);
 
         void Trace(string name, object data);
     }
@@ -63,12 +63,7 @@ namespace Hl7.Fhir.FluentPath
     {
         public static void SetThis(this IEvaluationContext ctx, IEnumerable<IValueProvider> value)
         {
-            ctx.SetValue("this", value);
-        }
-
-        public static IEnumerable<IValueProvider> GetThis(this IEvaluationContext ctx)
-        {
-            return ctx.ResolveValue("this");
+            ctx.SetValue("builtin.this", value);
         }
 
         public static void SetOriginalContext(this IEvaluationContext ctx, IEnumerable<IValueProvider> value)

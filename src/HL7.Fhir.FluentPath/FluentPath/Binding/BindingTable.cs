@@ -139,11 +139,11 @@ namespace Hl7.Fhir.FluentPath.Binding
             logic("binary.implies", (a, b) => a.Implies(b));
 
             // Special late-bound functions
-            _functions.Add(new CallBinding("where", buildLambdaCall(runWhere), typeof(object), typeof(Invokee)));
-            _functions.Add(new CallBinding("select", buildLambdaCall(runSelect), typeof(object), typeof(Invokee)));
-            _functions.Add(new CallBinding("all", buildLambdaCall(runAll), typeof(object), typeof(Invokee)));
-            _functions.Add(new CallBinding("any", buildLambdaCall(runAny), typeof(object), typeof(Invokee)));
-            _functions.Add(new CallBinding("repeat", buildLambdaCall(runRepeat), typeof(object), typeof(Invokee)));
+            _functions.Add(new CallBinding("where", runWhere, typeof(object), typeof(Invokee)));
+            _functions.Add(new CallBinding("select", runSelect, typeof(object), typeof(Invokee)));
+            _functions.Add(new CallBinding("all", runAll, typeof(object), typeof(Invokee)));
+            _functions.Add(new CallBinding("any", runAny, typeof(object), typeof(Invokee)));
+            _functions.Add(new CallBinding("repeat", runRepeat, typeof(object), typeof(Invokee)));
 
             _functions.Add(new CallBinding("trace", InvokeeFactory.Trace(), typeof(object), typeof(string)));
         }
@@ -232,35 +232,29 @@ namespace Hl7.Fhir.FluentPath.Binding
         {
             return (ctx, args) =>
             {
-                var focus = ctx.GetThis();
                 var evaluatedArguments = args.Select(a => a(ctx,InvokeeFactory.EmptyArgs));
-                return ctx.InvokeExternalFunction(name, focus, evaluatedArguments);
+                return ctx.InvokeExternalFunction(name, evaluatedArguments);
             };
         }
 
-        private static Invokee buildLambdaCall(Func<IEvaluationContext,IEnumerable<IValueProvider>,Invokee,IEnumerable<IValueProvider>> evaluator)
+        private static IEnumerable<IValueProvider> runWhere(IEvaluationContext ctx, IEnumerable<Invokee> arguments)
         {
-            return (ctx, args) =>
-            {
-                var focus = ctx.GetThis();
-                Invokee lambda = args.First();
+            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+            var lambda = arguments.Skip(1).First();
 
-                return evaluator(ctx, focus, lambda);
-            };
-        }
-
-        private static IEnumerable<IValueProvider> runWhere(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Invokee lambda)
-        {
             foreach (IValueProvider element in focus)
             {
                 var newContext = ctx.Nest(FhirValueList.Create(element));
                 if (lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval() == true)
-                    yield return element; 
+                    yield return element;
             }
         }
 
-        private static IEnumerable<IValueProvider> runSelect(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Invokee lambda)
+        private static IEnumerable<IValueProvider> runSelect(IEvaluationContext ctx, IEnumerable<Invokee> arguments)
         {
+            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+            var lambda = arguments.Skip(1).First();
+
             foreach (IValueProvider element in focus)
             {
                 var newContext = ctx.Nest(FhirValueList.Create(element));
@@ -270,8 +264,11 @@ namespace Hl7.Fhir.FluentPath.Binding
             }
         }
 
-        private static IEnumerable<IValueProvider> runRepeat(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Invokee lambda)
+        private static IEnumerable<IValueProvider> runRepeat(IEvaluationContext ctx, IEnumerable<Invokee> arguments)
         {
+            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+            var lambda = arguments.Skip(1).First();
+
             var fullResult = new List<IValueProvider>();
             List<IValueProvider> newNodes = new List<IValueProvider>(focus);
 
@@ -292,8 +289,11 @@ namespace Hl7.Fhir.FluentPath.Binding
             return fullResult;
         }
 
-        private static IEnumerable<IValueProvider> runAll(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Invokee lambda)
+        private static IEnumerable<IValueProvider> runAll(IEvaluationContext ctx, IEnumerable<Invokee> arguments)
         {
+            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+            var lambda = arguments.Skip(1).First();
+
             foreach (IValueProvider element in focus)
             {
                 var newContext = ctx.Nest(FhirValueList.Create(element));
@@ -306,8 +306,11 @@ namespace Hl7.Fhir.FluentPath.Binding
             return FhirValueList.Create(true);
         }
 
-        private static IEnumerable<IValueProvider> runAny(IEvaluationContext ctx, IEnumerable<IValueProvider> focus, Invokee lambda)
+        private static IEnumerable<IValueProvider> runAny(IEvaluationContext ctx, IEnumerable<Invokee> arguments)
         {
+            var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
+            var lambda = arguments.Skip(1).First();
+
             foreach (IValueProvider element in focus)
             {
                 var newContext = ctx.Nest(FhirValueList.Create(element));

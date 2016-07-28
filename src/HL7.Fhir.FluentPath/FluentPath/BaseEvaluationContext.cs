@@ -127,7 +127,7 @@ namespace Hl7.Fhir.FluentPath
         }
 
 
-        public virtual IEnumerable<IValueProvider> InvokeExternalFunction(string name, IEnumerable<IValueProvider> focus, IEnumerable<IEnumerable<IValueProvider>> parameters)
+        public virtual IEnumerable<IValueProvider> InvokeExternalFunction(string name, IEnumerable<IEnumerable<IValueProvider>> parameters)
         {
             throw new NotSupportedException("Function '{0}' is unknown".FormatWith(name));
         }
