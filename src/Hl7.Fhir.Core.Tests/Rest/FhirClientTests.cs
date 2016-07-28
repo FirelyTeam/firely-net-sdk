@@ -48,6 +48,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void FetchConformance()
         {
             FhirClient client = new FhirClient(testEndpoint);
+            client.ParserSettings.AllowUnrecognizedEnums = true;
 
             var entry = client.Conformance();
 
@@ -359,7 +360,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// This test is also used as a "setup" test for the History test.
         /// If you change the number of operations in here, this will make the History test fail.
         /// </summary>
-        [TestMethod, Ignore]
+        [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CreateEditDelete()
         {
@@ -490,7 +491,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// This test will fail if the system records AuditEvents 
         /// and counts them in the WholeSystemHistory
         /// </summary>
-        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest"), Ignore]
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void History()
         {
             DateTimeOffset timestampBeforeCreationAndDeletions = DateTimeOffset.Now;
@@ -686,11 +687,12 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(fe);
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CallsCallbacks()
         {
             FhirClient client = new FhirClient(testEndpoint);
+            client.ParserSettings.AllowUnrecognizedEnums = true;
 
             bool calledBefore = false;
             HttpStatusCode? status = null;
