@@ -83,16 +83,12 @@ namespace Hl7.Fhir.Serialization
             if (mode == SerializationMode.ValueElement && !prop.RepresentsValueElement) return;
             if (mode == SerializationMode.NonValueElements && prop.RepresentsValueElement) return;
 
-            object value = null;
-            if (prop.IsPrimitive && (instance is Primitive))
-                value = (instance as Primitive).ObjectValue;
-            else
-                value = prop.GetValue(instance);
+            object value = prop.GetValue(instance);
             var isEmptyArray = (value as IList) != null && ((IList)value).Count == 0;
 
          //   Message.Info("Handling member {0}.{1}", mapping.Name, prop.Name);
 
-            if (value != null && !isEmptyArray)
+            if ((value != null || prop.RepresentsValueElement && prop.ElementType.IsEnum() && !string.IsNullOrEmpty(((Primitive)instance).ObjectValue as string)) && !isEmptyArray)
             {
                 string memberName = prop.Name;
 
