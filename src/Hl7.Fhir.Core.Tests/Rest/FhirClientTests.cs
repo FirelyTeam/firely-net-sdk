@@ -44,6 +44,28 @@ namespace Hl7.Fhir.Tests.Rest
             System.Diagnostics.Trace.WriteLine("Testing against fhir server: " + testEndpoint);
         }
 
+        public static void DebugDumpBundle(Hl7.Fhir.Model.Bundle b)
+        {
+            System.Diagnostics.Trace.WriteLine(String.Format("--------------------------------------------\r\nBundle Type: {0} ({1} total items, {2} included)", b.Type.ToString(), b.Total, (b.Entry != null ? b.Entry.Count.ToString() : "-")));
+            if (b.Entry != null)
+            {
+                foreach (var item in b.Entry)
+                {
+                    if (item.Request != null)
+                        System.Diagnostics.Trace.WriteLine(String.Format("        {0}: {1}", item.Request.Method.ToString(), item.Request.Url));
+                    if (item.Response != null && item.Response.Status != null)
+                        System.Diagnostics.Trace.WriteLine(String.Format("        {0}", item.Response.Status));
+                    if (item.Resource != null && item.Resource is Hl7.Fhir.Model.DomainResource)
+                    {
+                        if (item.Resource.Meta != null && item.Resource.Meta.LastUpdated.HasValue)
+                            System.Diagnostics.Trace.WriteLine(String.Format("            Last Updated:{0}, [{1}]", item.Resource.Meta.LastUpdated.Value, item.Resource.Meta.LastUpdated.Value.ToString("HH:mm:ss.FFFF")));
+                        Hl7.Fhir.Rest.ResourceIdentity ri = new Hl7.Fhir.Rest.ResourceIdentity(item.FullUrl);
+                        System.Diagnostics.Trace.WriteLine(String.Format("            {0}", (item.Resource as Hl7.Fhir.Model.DomainResource).ResourceIdentity(ri.BaseUri).OriginalString));
+                    }
+                }
+            }
+        }
+
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void FetchConformance()
         {
@@ -499,8 +521,11 @@ namespace Hl7.Fhir.Tests.Rest
             CreateEditDelete(); // this test does a create, update, update, delete (4 operations)
 
             FhirClient client = new FhirClient(testEndpoint);
+            System.Diagnostics.Trace.WriteLine("History of this specific patient since just before the create, update, update, delete (4 operations)");
             Bundle history = client.History(createdTestPatientUrl);
             Assert.IsNotNull(history);
+            DebugDumpBundle(history);
+
             Assert.AreEqual(4, history.Entry.Count());
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());            
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
@@ -508,24 +533,30 @@ namespace Hl7.Fhir.Tests.Rest
             //// Now, assume no one is quick enough to insert something between now and the next
             //// tests....
 
+            System.Diagnostics.Trace.WriteLine("\r\nHistory on the patient type");
             history = client.TypeHistory("Patient", timestampBeforeCreationAndDeletions);
             Assert.IsNotNull(history);
+            DebugDumpBundle(history);
             Assert.AreEqual(4, history.Entry.Count());
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
+            System.Diagnostics.Trace.WriteLine("\r\nHistory on the patient type (using the generic method in the client)");
             history = client.TypeHistory<Patient>(timestampBeforeCreationAndDeletions, summary: SummaryType.True);
             Assert.IsNotNull(history);
+            DebugDumpBundle(history);
             Assert.AreEqual(4, history.Entry.Count());
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
+            System.Diagnostics.Trace.WriteLine("\r\nWhole system history since the start of this test");
             history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions);
             Assert.IsNotNull(history);
+            DebugDumpBundle(history);
             Assert.IsTrue(4 <= history.Entry.Count(), "Whole System history should have at least 4 new events");
             // Check that the number of patients that have been created is what we expected
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null && entry.Resource is Patient).Count());
-            Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
+            Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted() && entry.Request.Url.Contains("Patient")).Count());
         }
 
 
