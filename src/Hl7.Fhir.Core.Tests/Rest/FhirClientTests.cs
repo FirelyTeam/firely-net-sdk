@@ -517,6 +517,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void History()
         {
+            System.Threading.Thread.Sleep(500);
             DateTimeOffset timestampBeforeCreationAndDeletions = DateTimeOffset.Now;
 
             CreateEditDelete(); // this test does a create, update, update, delete (4 operations)
