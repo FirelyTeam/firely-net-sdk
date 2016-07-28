@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Tests.Model
             var firstEntry = testBundle.FindEntry("http://server1.com/fhir/Patient/5678").First();
             
             Assert.AreEqual(Bundle.SearchEntryMode.Match, firstEntry.Search.Mode);
+            Assert.AreEqual("5678", firstEntry.Resource.Id);
 
             testBundle.AddSearchEntry(
                 new Patient { Id = "5679" },
@@ -91,9 +92,15 @@ namespace Hl7.Fhir.Tests.Model
                 new decimal(0.1));
 
             var secondEntry = testBundle.FindEntry("http://server1.com/fhir/Patient/5679").First();
-            Assert.AreEqual(Bundle.SearchEntryMode.Match, secondEntry.Search.Mode);
+            Assert.AreEqual(Bundle.SearchEntryMode.Include, secondEntry.Search.Mode);
+            Assert.AreEqual("5679", secondEntry.Resource.Id);
             Assert.AreEqual((Decimal)0.1, secondEntry.Search.Score);
 
+            // Retest that the first one can still be located
+            firstEntry = testBundle.FindEntry("http://server1.com/fhir/Patient/5678").First();
+
+            Assert.AreEqual(Bundle.SearchEntryMode.Match, firstEntry.Search.Mode);
+            Assert.AreEqual("5678", firstEntry.Resource.Id);
         }
     }
 }
