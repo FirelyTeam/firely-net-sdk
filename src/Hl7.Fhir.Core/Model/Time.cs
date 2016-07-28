@@ -1,4 +1,4 @@
-﻿/*
+/*
   Copyright (c) 2011-2012, HL7, Inc
   All rights reserved.
   
@@ -40,7 +40,7 @@ using System.Xml;
 namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")]
-    public partial class Time
+    public partial class Time : IStringValue
     {
         public static bool IsValidValue(string value)
         {

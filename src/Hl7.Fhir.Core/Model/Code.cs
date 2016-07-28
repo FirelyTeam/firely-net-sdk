@@ -38,6 +38,7 @@ using System.Text.RegularExpressions;
 
 using Hl7.Fhir.Introspection;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model
 {
@@ -53,44 +54,78 @@ namespace Hl7.Fhir.Model
     [FhirType("codeOfT")]
     [DataContract]
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-    public class Code<T> : Element where T : struct
+    public class Code<T> : Primitive<T>, INullableValue<T> where T : struct
     {
+        static Code()
+        {
+            if (!typeof(T).IsEnum())
+                throw new ArgumentException("T must be an enumerated type");
+        }
+
+
         // Primitive value of element
-        [FhirElement("value", InSummary=true, IsPrimitiveValue=true)]
+        [FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 30)]
         [DataMember]
-        public T? Value { get; set; }
+        public T? Value
+        {
+            get
+            {
+                if (ObjectValue != null)
+                    return EnumUtility.ParseLiteral<T>((string)ObjectValue);
+                else
+                    return null;
+            }
+
+            set
+            {
+                if (value != null)
+                    ObjectValue = ((Enum)(object)value).GetLiteral();
+                else
+                    ObjectValue = null;
+            }
+        }
 
         public Code() : this(null) {}
 
         public Code(T? value)
         {
-#if PORTABLE45
-			if (!typeof(T).GetTypeInfo().IsEnum) 
-                throw new ArgumentException("T must be an enumerated type");
-#else
-            if (!typeof(T).IsEnum) 
-                throw new ArgumentException("T must be an enumerated type");
-#endif
             Value = value;
         }
 
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
+        [NotMapped]
+        public override string TypeName
         {
-            var dest = other as Code<T>;
-
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if (Value != null) dest.Value = Value;
-                return dest;
-            }
-            else
-                throw new ArgumentException("Can only copy to an object of the same type", "other");
+            get { return "code"; }
         }
 
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new Code<T>());
-        }
+        //public override IDeepCopyable CopyTo(IDeepCopyable other)
+        //{
+        //    var dest = other as Code<T>;
+
+        //    if (dest != null)
+        //    {
+        //        base.CopyTo(dest);
+        //        if (RawValue != null) dest.RawValue = RawValue;
+        //        return dest;
+        //    }
+        //    else
+        //        throw new ArgumentException("Can only copy to an object of the same type", "other");
+        //}
+
+        //public override IDeepCopyable DeepCopy()
+        //{
+        //    return CopyTo(new Code<T>());
+        //}
+
+
+        //public override bool Matches(IDeepComparable other)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public override bool IsExactly(IDeepComparable other)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

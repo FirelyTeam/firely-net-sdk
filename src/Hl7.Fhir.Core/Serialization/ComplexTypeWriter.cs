@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Serialization
         public ComplexTypeWriter(IFhirWriter writer)
         {
             _writer = writer;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
         }
 
         internal void Serialize(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode = SerializationMode.AllMembers)
@@ -49,19 +49,19 @@ namespace Hl7.Fhir.Serialization
             // Emit members that need xml /attributes/ first (to facilitate stream writer API)
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint == XmlSerializationHint.Attribute))
             {
-                WriteProperties(mapping, instance, summary, mode, prop);
+                writeProperty(mapping, instance, summary, mode, prop);
             }
 
             // Then emit the rest
             foreach (var prop in mapping.PropertyMappings.Where(pm => pm.SerializationHint != XmlSerializationHint.Attribute))
             {
-                WriteProperties(mapping, instance, summary, mode, prop);
+                writeProperty(mapping, instance, summary, mode, prop);
             }
 
             _writer.WriteEndComplexContent();
         }
 
-        private void WriteProperties(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode, PropertyMapping prop)
+        private void writeProperty(ClassMapping mapping, object instance, Rest.SummaryType summary, SerializationMode mode, PropertyMapping prop)
         {
             if (instance is Bundle && !(summary == Rest.SummaryType.Count && prop.Name.ToLower() == "entry")
                 || prop.Name == "id"
@@ -83,14 +83,24 @@ namespace Hl7.Fhir.Serialization
             if (mode == SerializationMode.ValueElement && !prop.RepresentsValueElement) return;
             if (mode == SerializationMode.NonValueElements && prop.RepresentsValueElement) return;
 
-            var value = prop.GetValue(instance);
+            object value = prop.GetValue(instance);
             var isEmptyArray = (value as IList) != null && ((IList)value).Count == 0;
 
          //   Message.Info("Handling member {0}.{1}", mapping.Name, prop.Name);
 
-            if (value != null && !isEmptyArray)
+            if ((value != null || prop.RepresentsValueElement && prop.ElementType.IsEnum() && !string.IsNullOrEmpty(((Primitive)instance).ObjectValue as string)) && !isEmptyArray)
             {
                 string memberName = prop.Name;
+
+                // Enumerated Primitive.Value of Code<T> will always serialize the ObjectValue, not the derived enumeration
+                if (prop.RepresentsValueElement && prop.ElementType.IsEnum())
+                {
+                    value = ((Primitive)instance).ObjectValue;
+                    //var rawValueProp = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
+                    //var rawValue = rawValueProp.GetValue(instance, null);
+                    //if (rawValue != null)
+                    //    value = rawValue;
+                }
 
                 // For Choice properties, determine the actual name of the element
                 // by appending its type to the base property name (i.e. deceasedBoolean, deceasedDate)

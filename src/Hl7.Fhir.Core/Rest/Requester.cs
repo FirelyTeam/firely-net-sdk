@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Net;
@@ -22,6 +23,8 @@ namespace Hl7.Fhir.Rest
         public int Timeout { get; set; }           // In miliseconds
         public Prefer Prefer { get; set; }
 
+        public ParserSettings ParserSettings { get; set; }
+
         public Requester(Uri baseUrl)
         {
             BaseUrl = baseUrl;
@@ -29,6 +32,7 @@ namespace Hl7.Fhir.Rest
             PreferredFormat = ResourceFormat.Xml;
             Timeout = 100 * 1000;       // Default timeout is 100 seconds            
             Prefer = Rest.Prefer.ReturnRepresentation;
+            ParserSettings = Hl7.Fhir.Serialization.ParserSettings.Default;
         }
 
 
@@ -69,14 +73,14 @@ namespace Hl7.Fhir.Rest
                     // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
                     try
                     {
-                        LastResult = webResponse.ToBundleEntry(inBody);
+                        LastResult = webResponse.ToBundleEntry(inBody, ParserSettings);
 
                         if (webResponse.StatusCode.IsSuccessful())
                             return LastResult;
                         else
                             throw httpNonSuccessStatusToException(webResponse.StatusCode, LastResult.Resource);
                     }
-                    catch(FormatException fe)
+                    catch(UnsupportedBodyTypeException bte)
                     {
                         // The server responded with HTML code. Still build a FhirOperationException and set a LastResult.
                         // Build a very minimal LastResult
@@ -84,7 +88,7 @@ namespace Hl7.Fhir.Rest
                         errorResult.Response = new Bundle.ResponseComponent();
                         errorResult.Response.Status = ((int)webResponse.StatusCode).ToString();
 
-                        OperationOutcome operationOutcome = OperationOutcome.ForException(fe, OperationOutcome.IssueType.Invalid);
+                        OperationOutcome operationOutcome = OperationOutcome.ForException(bte, OperationOutcome.IssueType.Invalid);
 
                         errorResult.Resource = operationOutcome;
                         LastResult = errorResult;

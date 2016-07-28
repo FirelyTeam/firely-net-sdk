@@ -85,9 +85,6 @@ namespace Hl7.Fhir.Model
         }
 
 
-        public const string COMMENT_USERDATA_KEY = "$FHIR_COMMENTS";
-
-
         /// <summary>
         /// A Comment recorded against this element in the FHIR Resource
         /// </summary>

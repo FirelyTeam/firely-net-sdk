@@ -41,6 +41,8 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         public bool IsResource { get; private set; }
 
+        public bool IsCodeOfT { get; private set; }
+
         /// <summary>
         /// PropertyMappings indexed by uppercase name for access speed
         /// </summary>
@@ -108,6 +110,9 @@ namespace Hl7.Fhir.Introspection
                 result.Name = collectTypeName(type);
                 result.Profile = getProfile(type);
                 result.IsResource = IsFhirResource(type);
+
+                result.IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
+                                    ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>));
 
                 if (!result.IsResource && !String.IsNullOrEmpty(result.Profile))
                     throw Error.Argument("type", "Type {0} is not a resource, so its FhirType attribute may not specify a profile".FormatWith(type.Name));

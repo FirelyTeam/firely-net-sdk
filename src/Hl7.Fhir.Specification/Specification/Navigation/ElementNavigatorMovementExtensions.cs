@@ -45,7 +45,6 @@ namespace Hl7.Fhir.Specification.Navigation
             return false;           
         }
 
-
         public static bool MoveToPrevious(this BaseElementNavigator nav, string name)
         {
             var bm = nav.Bookmark();
@@ -64,7 +63,6 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             return MoveToNext(nav, name) || MoveToPrevious(nav,name);
         }
-
 
         public static bool JumpToFirst(this BaseElementNavigator nav, string path)
         {

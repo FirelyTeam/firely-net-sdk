@@ -24,10 +24,13 @@ namespace Hl7.Fhir.Serialization
         private IFhirReader _reader;
         private ModelInspector _inspector;
 
-        public ResourceReader(IFhirReader reader)
+        public ParserSettings Settings { get; private set; }
+
+        public ResourceReader(IFhirReader reader, ParserSettings settings)
         {
             _reader = reader;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
+            Settings = settings;
         }
 
         public Resource Deserialize(Resource existing=null)
@@ -42,7 +45,7 @@ namespace Hl7.Fhir.Serialization
              
             // Delegate the actual work to the ComplexTypeReader, since
             // the serialization of Resources and ComplexTypes are virtually the same
-            var cplxReader = new ComplexTypeReader(_reader);
+            var cplxReader = new ComplexTypeReader(_reader, Settings);
             return (Resource)cplxReader.Deserialize(mapping, existing);
         }
     }

@@ -631,6 +631,9 @@ if (!abstractType){
     }
 
 #>
+
+<# if(!isPrimitive)
+{ #>
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as <#= resourceName #>;
@@ -715,7 +718,8 @@ if (!abstractType){
             
             return true;
         }
-        
+    
+<# } #>    
     }
     
 }

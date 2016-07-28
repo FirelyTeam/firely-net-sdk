@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Markdown
+    public partial class Markdown : IStringValue
     {
         public static bool IsValidValue(string value)
         {

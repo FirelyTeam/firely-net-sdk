@@ -27,18 +27,19 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ConfigureFailOnUnknownMember()
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir'><daytona></daytona></Patient>";
+            var parser = new FhirXmlParser();
 
             try
             {
-                FhirParser.ParseResourceFromXml(xml);
+                parser.Parse<Resource>(xml);
                 Assert.Fail("Should have failed on unknown member");
             }
             catch (FormatException)
             {
             }
 
-            SerializationConfig.AcceptUnknownMembers = true;
-            FhirParser.ParseResourceFromXml(xml);
+            parser.Settings.AcceptUnknownMembers = true;
+            parser.Parse<Resource>(xml);
         }
 
 
@@ -47,14 +48,17 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var xml = "<Patient xmlns='http://hl7.org/fhir' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' " +
                             "xsi:schemaLocation='http://hl7.org/fhir ../../schema/fhir-all.xsd'></Patient>";
+            var parser = new FhirXmlParser();
 
-            FhirParser.ParseResourceFromXml(xml);
+            // By default, parser will accept xsi: elements
+            parser.Parse<Resource>(xml);
 
-            SerializationConfig.EnforceNoXsiAttributesOnRoot = true;
+            // Now, enforce xsi: attributes are no longer accepted
+            parser.Settings.DisallowXsiAttributesOnRoot = true;
 
             try
             {
-                FhirParser.ParseResourceFromXml(xml);
+                parser.Parse<Resource>(xml);
                 Assert.Fail("Should have failed on xsi: elements in root");
             }
             catch (FormatException)
@@ -68,8 +72,8 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var xml = "<ns4:ValueSet xmlns:ns4=\"http://hl7.org/fhir\"><f:identifier xmlns:f=\"http://hl7.org/fhir\"><f:value value=\"....\"/></f:identifier></ns4:ValueSet>";
 
-            FhirParser.ParseResourceFromXml(xml);
-            Assert.IsNotNull(FhirParser.ParseResourceFromXml(xml));
+            FhirXmlParser.Parse<Resource>(xml);
+            Assert.IsNotNull(FhirXmlParser.Parse<Resource>(xml));
         }
 
 
@@ -78,12 +82,60 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var xml = "<Basic xmlns='http://hl7.org/fhir'><extension url='http://blabla.nl'><valueString value='Daar gaat ie dan" + "&#xA;" + "verdwijnt dit?' /></extension></Basic>";
 
-            var basic = (DomainResource)FhirParser.ParseFromXml(xml);
+            var basic = FhirXmlParser.Parse<DomainResource>(xml);
 
             Assert.IsTrue(basic.GetStringExtension("http://blabla.nl").Contains("\n"));
 
             var outp = FhirSerializer.SerializeResourceToXml(basic);
             Assert.IsTrue(outp.Contains("&#xA;"));
+        }
+
+        internal FhirXmlParser FhirXmlParser = new FhirXmlParser();
+        internal FhirJsonParser FhirJsonParser = new FhirJsonParser();
+
+
+        [TestMethod]
+        public void AcceptUnknownEnums()
+        {
+            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            var pser = new FhirXmlParser();
+
+            // Assume that we can happily read the patient gender when enums are enforced
+            var p = pser.Parse<Patient>(xml);
+
+            Assert.IsNotNull(p.Gender);
+            Assert.AreEqual("male", p.GenderElement.ObjectValue);
+            Assert.AreEqual(AdministrativeGender.Male, p.Gender.Value);
+
+            // Verify that if we relax the restriction that everything still works
+            pser.Settings.AllowUnrecognizedEnums = true;
+            p = pser.Parse<Patient>(xml);
+
+            Assert.IsNotNull(p.Gender);
+            Assert.AreEqual("male", p.GenderElement.ObjectValue);
+            Assert.AreEqual(AdministrativeGender.Male, p.Gender.Value);
+
+
+            // Now, pollute the data with an incorrect administrative gender
+            // and verify that the system throws the format exception
+            var xml2 = xml.Replace("\"male\"", "\"superman\"");
+
+            try
+            {
+                pser.Settings.AllowUnrecognizedEnums = false;
+                p = pser.Parse<Patient>(xml2);
+                Assert.Fail();
+            }
+            catch(FormatException)
+            {
+                // By default, should *not* accept unknown enums
+            }
+
+            // Now, allow unknown enums and check support
+            pser.Settings.AllowUnrecognizedEnums = true;
+            p = pser.Parse<Patient>(xml2);
+            Assert.IsNull(p.Gender);
+            Assert.AreEqual("superman", p.GenderElement.ObjectValue);
         }
 
 #if !PORTABLE45
@@ -95,13 +147,13 @@ namespace Hl7.Fhir.Tests.Serialization
             string json = File.ReadAllText(@"TestData\json-edge-cases.json");
             var tempPath = Path.GetTempPath();
 
-            var poco = FhirParser.ParseResourceFromJson(json);
+            var poco = FhirJsonParser.Parse<Resource>(json);
             Assert.IsNotNull(poco);
             var xml = FhirSerializer.SerializeResourceToXml(poco);
             Assert.IsNotNull(xml);
             File.WriteAllText(Path.Combine(tempPath, "edgecase.xml"), xml);
 
-            poco = FhirParser.ParseResourceFromXml(xml);
+            poco = FhirXmlParser.Parse<Resource>(xml);
             Assert.IsNotNull(poco);
             var json2 = FhirSerializer.SerializeResourceToJson(poco);
             Assert.IsNotNull(json2);
@@ -122,7 +174,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = FhirSerializer.SerializeResourceToXml(o);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
 
-            var o2 = FhirParser.ParseFromXml(xml) as Observation;
+            var o2 = FhirXmlParser.Parse<Observation>(xml);
             o2.ResourceBase = new Uri("http://nu.nl/fhir");
             xml = FhirSerializer.SerializeResourceToXml(o2);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
@@ -135,9 +187,9 @@ namespace Hl7.Fhir.Tests.Serialization
             p.Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Nasty, a text with both \"double\" quotes and 'single' quotes</div>" };
 
             var xml = FhirSerializer.SerializeResourceToXml(p);
-            Assert.IsNotNull(FhirParser.ParseResourceFromXml(xml));
+            Assert.IsNotNull(FhirXmlParser.Parse<Resource>(xml));
             var json = FhirSerializer.SerializeResourceToJson(p);
-            Assert.IsNotNull(FhirParser.ParseResourceFromJson(json));
+            Assert.IsNotNull(FhirJsonParser.Parse<Resource>(json));
         }
 
         // TODO: Unfortunately, this is currently too much work to validate. See comments on the bottom of
@@ -152,7 +204,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             try
             {
-                var prof = FhirParser.ParseResourceFromJson(json);
+                var prof = FhirJsonParser.Parse<Resource>(json);
                 Assert.Fail("Should have failed parsing");
             }
             catch (FormatException ex)

@@ -23,6 +23,25 @@ namespace Hl7.Fhir.Serialization
 {
     public static class SerializationUtil
     {     
+        public static bool ProbeIsXml(string data)
+        {
+            Regex xml = new Regex("^<[^>]+>");
+
+            return xml.IsMatch(data.TrimStart());
+        }
+
+        public static bool ProbeIsJson(string data)
+        {
+            return data.TrimStart().StartsWith("{");
+        }
+
+
+        public static XDocument XDocumentFromXmlText(string xml)
+        {
+            return XDocument.Parse(SerializationUtil.SanitizeXml(xml));
+        }
+
+
         // [WMR 20160421] Note: StringReader, XmlReader and JsonReader don't require explicit disposal
         // JsonTextReader overrides Close method => explicitly dispose
 

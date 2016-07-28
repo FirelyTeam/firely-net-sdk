@@ -91,6 +91,13 @@ namespace Hl7.Fhir.Specification.Navigation
             return elem.Path.EndsWith(".extension") || elem.Path.EndsWith(".modifierExtension");
         }
 
+        // [WMR 20160720] NEW
+        public static bool IsReference(this ElementDefinition elem)
+        {
+            var primaryType = elem.Type.FirstOrDefault();
+            return primaryType != null && primaryType.Code.HasValue && ModelInfo.IsReference(primaryType.Code.Value);
+        }
+
         public static bool IsChoice(this ElementDefinition defn)
         {
             return defn.Path.EndsWith("[x]");

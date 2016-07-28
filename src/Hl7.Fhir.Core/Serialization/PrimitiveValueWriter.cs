@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Serialization
         public PrimitiveValueWriter(IFhirWriter data)
         {
             _writer = data;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
         }
 
 
@@ -41,10 +41,7 @@ namespace Hl7.Fhir.Serialization
 
                 if (nativeType.IsEnum())
                 {
-                    var enumMapping = _inspector.FindEnumMappingByType(nativeType);
-
-                    if (enumMapping != null)
-                        value = enumMapping.GetLiteral((Enum)value);
+                    value = ((Enum)value).GetLiteral();
                 }
             }
 

@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void ParseMeta()
         {
-            var poco = (Meta)FhirParser.ParseFromXml(metaXml, typeof(Meta));
+            var poco = (Meta)(new FhirXmlParser().Parse(metaXml, typeof(Meta)));
             var xml = FhirSerializer.SerializeToXml(poco,root:"meta");
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
@@ -70,17 +70,17 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void TestProbing()
         {
-            Assert.IsFalse(FhirParser.ProbeIsJson("this is nothing"));
-            Assert.IsFalse(FhirParser.ProbeIsJson("  crap { "));
-            Assert.IsFalse(FhirParser.ProbeIsJson("<element/>"));
-            Assert.IsTrue(FhirParser.ProbeIsJson("   { x:5 }"));
+            Assert.IsFalse(SerializationUtil.ProbeIsJson("this is nothing"));
+            Assert.IsFalse(SerializationUtil.ProbeIsJson("  crap { "));
+            Assert.IsFalse(SerializationUtil.ProbeIsJson("<element/>"));
+            Assert.IsTrue(SerializationUtil.ProbeIsJson("   { x:5 }"));
 
-            Assert.IsFalse(FhirParser.ProbeIsXml("this is nothing"));
-            Assert.IsFalse(FhirParser.ProbeIsXml("  crap { "));
-            Assert.IsFalse(FhirParser.ProbeIsXml(" < crap  "));
-            Assert.IsFalse(FhirParser.ProbeIsXml("   { x:5 }"));
-            Assert.IsTrue(FhirParser.ProbeIsXml("   <element/>"));
-            Assert.IsTrue(FhirParser.ProbeIsXml("<?xml />"));
+            Assert.IsFalse(SerializationUtil.ProbeIsXml("this is nothing"));
+            Assert.IsFalse(SerializationUtil.ProbeIsXml("  crap { "));
+            Assert.IsFalse(SerializationUtil.ProbeIsXml(" < crap  "));
+            Assert.IsFalse(SerializationUtil.ProbeIsXml("   { x:5 }"));
+            Assert.IsTrue(SerializationUtil.ProbeIsXml("   <element/>"));
+            Assert.IsTrue(SerializationUtil.ProbeIsXml("<?xml />"));
         }
 
         [TestMethod]
@@ -152,9 +152,13 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual(0, q.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
 
             // Verify that reloading the content into an object...
-            var qInflate = FhirParser.ParseFromXml(qText) as Questionnaire;
+            var qInflate = FhirXmlParser.Parse<Questionnaire>(qText);
             Assert.AreEqual(1, qInflate.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
         }
+
+
+        private FhirXmlParser FhirXmlParser = new FhirXmlParser();
+        private FhirJsonParser FhirJsonParser = new FhirJsonParser();
 
         [TestMethod]
         public void TestBundleSummary()
@@ -193,7 +197,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             string json = File.ReadAllText(@"TestData\TestPatient.json");
 
-            var pat = FhirParser.ParseFromJson(json) as Patient;
+            var pat = FhirJsonParser.Parse<Patient>(json);
 
             Assert.AreEqual(1, pat.Telecom[0].FhirCommentsElement.Count);
             Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
@@ -201,7 +205,7 @@ namespace Hl7.Fhir.Tests.Serialization
             pat.Telecom[0].FhirCommentsElement.Add(new FhirString("A second line"));
 
             json = FhirSerializer.SerializeResourceToJson(pat);
-            pat = FhirParser.ParseFromJson(json) as Patient;
+            pat = FhirJsonParser.Parse<Patient>(json);
 
             Assert.AreEqual(2, pat.Telecom[0].FhirCommentsElement.Count);
             Assert.AreEqual("   home communication details aren't known   ", pat.Telecom[0].FhirComments.First());
@@ -213,7 +217,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
 
-            var pat = FhirParser.ParseFromXml(xml) as Patient;
+            var pat = FhirXmlParser.Parse<Patient>(xml);
 
             Assert.AreEqual(1, pat.Name[0].FhirCommentsElement.Count);
             Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
@@ -221,7 +225,7 @@ namespace Hl7.Fhir.Tests.Serialization
             pat.Name[0].FhirCommentsElement.Add(new FhirString("A second line"));
 
             xml = FhirSerializer.SerializeResourceToXml(pat);
-            pat = FhirParser.ParseFromXml(xml) as Patient;
+            pat = FhirXmlParser.Parse<Patient>(xml);
 
             Assert.AreEqual(2, pat.Name[0].FhirCommentsElement.Count);
             Assert.AreEqual("See if this is roundtripped", pat.Name[0].FhirComments.First());
@@ -238,7 +242,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var xml = FhirSerializer.SerializeToXml(b);
 
-            b = (Bundle)FhirParser.ParseFromXml(xml);
+            b = FhirXmlParser.Parse<Bundle>(xml);
 
             Assert.IsTrue(!b.NextLink.ToString().EndsWith("/"));
         }
@@ -305,12 +309,12 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var obs = new Observation { Value = new FhirDecimal(dec6) };
             var json = FhirSerializer.SerializeResourceToJson(obs);
-            var obs2 = (Observation)FhirParser.ParseFromJson(json);
+            var obs2 = FhirJsonParser.Parse<Observation>(json);
             Assert.AreEqual("6", ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
 
             obs = new Observation { Value = new FhirDecimal(dec60) };
             json = FhirSerializer.SerializeResourceToJson(obs);
-            obs2 = (Observation)FhirParser.ParseFromJson(json);
+            obs2 = FhirJsonParser.Parse<Observation>(json);
             Assert.AreEqual("6.0", ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
 
@@ -320,7 +324,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var dec = 3.1415926535897932384626433833m;
             var obs = new Observation { Value = new FhirDecimal(dec) };
             var json = FhirSerializer.SerializeResourceToJson(obs);
-            var obs2 = (Observation)FhirParser.ParseFromJson(json);
+            var obs2 = FhirJsonParser.Parse<Observation>(json);
             Assert.AreEqual(dec.ToString(CultureInfo.InvariantCulture), ((FhirDecimal)obs2.Value).Value.Value.ToString(CultureInfo.InvariantCulture));
         }
 
@@ -355,13 +359,30 @@ namespace Hl7.Fhir.Tests.Serialization
 
             try
             {
-                FhirParser.ParseFromXml(input);
+                FhirXmlParser.Parse<Resource>(input);
                 Assert.Fail();
             }
             catch (Exception e)
             {
                 Assert.IsTrue(e.Message.Contains("DTD is prohibited"));
             }
+        }
+
+        [TestMethod]
+        public void SerializeUnknownEnums()
+        {
+            string xml = File.ReadAllText(@"TestData\TestPatient.xml");
+            var pser = new FhirXmlParser();
+            var p = pser.Parse<Patient>(xml);
+            string outp = FhirSerializer.SerializeResourceToXml(p);
+            Assert.IsTrue(outp.Contains("\"male\""));
+
+            // Pollute the data with an incorrect administrative gender
+            p.GenderElement.ObjectValue = "superman";
+
+            outp = FhirSerializer.SerializeResourceToXml(p);
+            Assert.IsFalse(outp.Contains("\"male\""));
+            Assert.IsTrue(outp.Contains("\"superman\""));
         }
     }
 }

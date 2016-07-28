@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-
+using System.IO;
 
 namespace Hl7.Fhir.Support
 {
@@ -171,5 +171,17 @@ namespace Hl7.Fhir.Support
         {
             return new NotImplementedException();
         }
+
+        // [WMR 20160721] NEW - To signal unresolved resource references
+        internal static ResourceReferenceNotFoundException ResourceReferenceNotFoundException(string url)
+        {
+            return new ResourceReferenceNotFoundException(url);
+        }
+
+        internal static ResourceReferenceNotFoundException ResourceReferenceNotFoundException(string url, string messageFormat, params object[] messageArgs)
+        {
+            return new ResourceReferenceNotFoundException(url, Error.formatMessage(messageFormat, messageArgs));
+        }
+
     }
 }

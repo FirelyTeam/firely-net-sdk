@@ -95,10 +95,10 @@ namespace Hl7.Fhir.FhirPath.InstanceTree
                 if (attr.IsNamespaceDeclaration) continue;
 
                 // skip xmlns:xsi declaration
-                if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !SerializationConfig.EnforceNoXsiAttributesOnRoot) continue;
+                if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !ParserSettings.Default.DisallowXsiAttributesOnRoot) continue;
 
                 // skip schemaLocation
-                if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !SerializationConfig.EnforceNoXsiAttributesOnRoot) continue;
+                if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !ParserSettings.Default.DisallowXsiAttributesOnRoot) continue;
 
                 if (attr.Name.NamespaceName == "")
                     yield return attr;

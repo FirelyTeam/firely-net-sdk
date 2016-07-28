@@ -48,10 +48,8 @@ namespace Hl7.Fhir.Model
             try
             {
                 // There is currently no validation in the portable .net
-                // for the XDocument validation, would need to scan for
-                // another implementation to cover this
 #if !PORTABLE45
-                var doc = FhirParser.XDocumentFromXml(value as string);
+                var doc = SerializationUtil.XDocumentFromXmlText(value as string);
                 doc.Validate(_xhtmlSchemaSet.Value, validationEventHandler: null);
 #endif
 

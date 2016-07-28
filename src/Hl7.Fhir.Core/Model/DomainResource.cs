@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
             _name = name;
             _parent = parent;
             _value = value;
-            _mapping = Serialization.SerializationConfig.Inspector.FindClassMappingByType(elementType);
+            _mapping = Serialization.BaseFhirParser.Inspector.FindClassMappingByType(elementType);
         }
 
         private IFhirPathElement _parent;

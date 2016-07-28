@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests.Rest
         string testEndpoint = FhirClientTests.testEndpoint.OriginalString;
 #endif
 
-        [TestMethod] //Server throws error: Access violation at address 000000000129D56C in module 'FHIRServer.exe'. Read of address 0000000000000000
+        [TestMethod] 
         [TestCategory("IntegrationTest")]
         public void InvokeTestPatientGetEverything()
         {
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("IntegrationTest")]
+        [TestCategory("IntegrationTest"), Ignore]
         public void InvokeExpandUsingInstanceOp()
         {
             var client = new FhirClient(testEndpoint);
@@ -86,11 +86,13 @@ namespace Hl7.Fhir.Tests.Rest
                 FhirClientOperations.Operation.EXPAND_VALUESET);
 
         }
+    
 
         /// <summary>
         /// http://hl7.org/fhir/valueset-operations.html#lookup
         /// </summary>
         [TestMethod]
+        [TestCategory("IntegrationTest"), Ignore]
         public void InvokeLookupCoding()
         {
             var client = new FhirClient(testEndpoint);
@@ -103,7 +105,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("IntegrationTest")]
+        [TestCategory("IntegrationTest"), Ignore]
         public void InvokeLookupCode()
         {
             var client = new FhirClient(testEndpoint);
@@ -113,7 +115,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);
         }
 
-        [TestMethod, Ignore]//returns 500: validation of slices is not done yet.
+        [TestMethod]//returns 500: validation of slices is not done yet.
         [TestCategory("IntegrationTest")]
         public void InvokeResourceValidation()
         {

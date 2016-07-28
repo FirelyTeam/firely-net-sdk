@@ -20,11 +20,17 @@ namespace Hl7.Fhir.Serialization
 {
     public class XmlDomFhirReader : IFhirReader
     {
+        public const string BINARY_CONTENT_MEMBER_NAME = "content";
+
+        public bool DisallowXsiAttributesOnRoot { get; set; }
+
         XObject _current;
 
         // [WMR 20160421] Caller can safely dispose reader after calling this ctor
-        public XmlDomFhirReader(XmlReader reader)
+        public XmlDomFhirReader(XmlReader reader, bool disallowXsiAttributesOnRoot = false)
         {
+            DisallowXsiAttributesOnRoot = disallowXsiAttributesOnRoot;
+
             var internalReader = SerializationUtil.WrapXmlReader(reader);
             XDocument doc;
 
@@ -76,8 +82,8 @@ namespace Hl7.Fhir.Serialization
             foreach(var attr in rootElem.Attributes()) //.Where(xattr => xattr.Name.LocalName != "xmlns"))
             {
                 if (attr.IsNamespaceDeclaration) continue;      // skip xmlns declarations
-                if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !SerializationConfig.EnforceNoXsiAttributesOnRoot ) continue;   // skip xmlns:xsi declaration
-                if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !SerializationConfig.EnforceNoXsiAttributesOnRoot) continue;     // skip schemaLocation
+                if (attr.Name == XName.Get("{http://www.w3.org/2000/xmlns/}xsi") && !DisallowXsiAttributesOnRoot ) continue;   // skip xmlns:xsi declaration
+                if (attr.Name == XName.Get("{http://www.w3.org/2001/XMLSchema-instance}schemaLocation") && !DisallowXsiAttributesOnRoot) continue;     // skip schemaLocation
 
                 if (attr.Name.NamespaceName == "")
                     result.Add(Tuple.Create(attr.Name.LocalName, (IFhirReader)new XmlDomFhirReader(attr)));
@@ -90,7 +96,7 @@ namespace Hl7.Fhir.Serialization
                 if(node is XText)
                 {
                     // A nested text node (the content attribute of a Binary)
-                    result.Add(Tuple.Create(SerializationConfig.BINARY_CONTENT_MEMBER_NAME, (IFhirReader)new XmlDomFhirReader(node)));
+                    result.Add(Tuple.Create(BINARY_CONTENT_MEMBER_NAME, (IFhirReader)new XmlDomFhirReader(node)));
                 }
                 else if(node is XElement)
                 {
