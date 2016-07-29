@@ -28,15 +28,20 @@ namespace Hl7.Fhir.Rest
 
     public static class ContentType
     {
-        public const string JSON_CONTENT_HEADER = "application/json+fhir";  // The formal FHIR mime type (still to be registered).
+        public const string JSON_CONTENT_HEADER = "application/fhir+json";  // The formal FHIR mime type (still to be registered).
         public static readonly string[] JSON_CONTENT_HEADERS = new string[]
             { JSON_CONTENT_HEADER,
-                "application/fhir+json", "application/json", "text/json"};
+                "text/json",
+                "application/json",
+                "application/json+fhir" };
 
-        public const string XML_CONTENT_HEADER = "application/xml+fhir";   // The formal FHIR mime type (still to be registered).
+        public const string XML_CONTENT_HEADER = "application/fhir+xml";   // The formal FHIR mime type (still to be registered).
         public static readonly string[] XML_CONTENT_HEADERS = new string[]
-            { XML_CONTENT_HEADER, "text/xml", "application/xml",
-                "application/fhir+xml", "text/xml+fhir" };
+            { XML_CONTENT_HEADER,
+                "text/xml",
+                "text/xml+fhir",
+                "application/xml",
+                "application/xml+fhir" };
 
         public const string FORMAT_PARAM_XML = "xml";
         public const string FORMAT_PARAM_JSON = "json";

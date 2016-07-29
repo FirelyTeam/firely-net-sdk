@@ -93,9 +93,6 @@
     <Compile Include="Model\Generated\Account.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\ActionDefinition.cs">
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\ActivityDefinition.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -262,9 +259,6 @@
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Meta.cs">
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\ModuleMetadata.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\NamingSystem.cs">

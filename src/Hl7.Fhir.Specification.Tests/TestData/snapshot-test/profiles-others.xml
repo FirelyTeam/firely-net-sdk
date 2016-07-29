@@ -3,7 +3,7 @@
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="profiles-others"/>
   <meta>
-    <lastUpdated value="2016-07-19T05:57:21.779+00:00"/>
+    <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
   </meta>
   <type value="collection"/>
   <entry>
@@ -67,6 +67,38 @@
               <min value="0"/>
               <max value="*"/>
             </base>
+            <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="rim"/>
               <map value="Document[classCode=&quot;DOC&quot; and moodCode=&quot;EVN&quot;]"/>
@@ -334,6 +366,10 @@
             <isSummary value="true"/>
             <mapping>
               <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
+            <mapping>
+              <identity value="rim"/>
               <map value="Patient[classCode=PAT]"/>
             </mapping>
             <mapping>
@@ -500,6 +536,10 @@
               <profile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
             </type>
             <isSummary value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="PRD (as one example)"/>
@@ -1925,6 +1965,38 @@
               <min value="0"/>
               <max value="*"/>
             </base>
+            <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="rim"/>
               <map value="Act[classCode=FOLDER, moodCode=EVN]"/>
@@ -2183,6 +2255,10 @@
               <profile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
             </type>
             <isSummary value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="rim"/>
               <map value="Patient[classCode=PAT]"/>
@@ -2794,14 +2870,14 @@
         <description value="Adds additional information to a family member history supporting both the capture of mother/father relationships as well as additional observations necessary to enable genetics-based risk analysis for patients"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -2827,6 +2903,34 @@
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="fhs-2"/>
               <severity value="error"/>
               <human value="Can only have estimatedAge is age[x] is present"/>
@@ -2840,6 +2944,10 @@
               <expression value="age.empty() or born.empty()"/>
               <xpath value="not (*[starts-with(local-name(.), &#39;age&#39;)] and *[starts-with(local-name(.), &#39;birth&#39;)])"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="Not in scope for v2"/>
@@ -2982,7 +3090,7 @@
           </element>
           <element id="FamilyMemberHistory:familymemberhistory-genetic.extension">
             <path value="FamilyMemberHistory.extension"/>
-            <slicing id="85">
+            <slicing id="91">
               <discriminator value="url"/>
               <ordered value="false"/>
               <rules value="open"/>
@@ -3016,6 +3124,14 @@
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/family-member-history-genetics-parent"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -3041,6 +3157,14 @@
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/family-member-history-genetics-observation"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -3608,7 +3732,7 @@
         <name value="Shareable ValueSet"/>
         <status value="draft"/>
         <publisher value="HL7"/>
-        <date value="2016-07-19T05:57:21+00:00"/>
+        <date value="2016-07-29T05:44:09+00:00"/>
         <description value="Enforces the minimum information set for the value set metadata required by HL7 and other organisations that share and publish value sets"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -3650,6 +3774,34 @@
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="vsd-2"/>
               <severity value="error"/>
               <human value="A value set with only one import SHALL also have an include and/or an exclude"/>
@@ -3663,6 +3815,10 @@
               <expression value="compose.exists() or expansion.exists()"/>
               <xpath value="exists(f:compose) or exists(f:expansion)"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="rim"/>
               <map value="N/A"/>
@@ -4705,7 +4861,7 @@
           </element>
           <element id="ValueSet:shareablevalueset.compose.include.concept.display">
             <path value="ValueSet.compose.include.concept.display"/>
-            <short value="Test to display for this code for this value set"/>
+            <short value="Text to display for this code for this value set"/>
             <definition value="The text to display to the user for this concept in the context of this valueset. If no display is provided, then applications using the value set use the display specified for the code by the system."/>
             <comments value="The value set resource allows for an alternative display to be specified for when this concept is used in this particular value set. See notes in the value set narrative about the correct use of this element."/>
             <min value="0"/>
@@ -5659,6 +5815,38 @@
               <min value="0"/>
               <max value="*"/>
             </base>
+            <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="rim"/>
               <map value="Observation[classCode=OBS, moodCode=RQO, code&lt;&quot;diagnostic order&quot;]"/>
@@ -5811,6 +5999,14 @@
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/diagnosticrequest-geneticsItem"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -5969,7 +6165,7 @@
           </element>
           <element id="DiagnosticRequest:orderforgenetics.stage">
             <path value="DiagnosticRequest.stage"/>
-            <short value="proposal | plan | orig. order | encoded +"/>
+            <short value="proposal | plan | original-order | reflex-order"/>
             <definition value="Whether the request is a proposal, plan, an original order or a reflex order."/>
             <min value="1"/>
             <max value="1"/>
@@ -6385,7 +6581,7 @@ All Provenances should have some historical version of this Request as their sub
         <name value="Shareable CodeSystem"/>
         <status value="draft"/>
         <publisher value="HL7"/>
-        <date value="2016-07-19T05:57:21+00:00"/>
+        <date value="2016-07-29T05:44:09+00:00"/>
         <description value="Enforces the minimum information set for the value set metadata required by HL7 and other organisations that share and publish value sets"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -6427,12 +6623,44 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="csd-1"/>
               <severity value="error"/>
               <human value="Within a code system definition, all the codes SHALL be unique"/>
-              <expression value="descendents().code.isDistinct()"/>
+              <expression value="(concept.code | descendents().concept.code).isDistinct()"/>
               <xpath value="count(distinct-values(descendant::f:concept/f:code/@value))=count(descendant::f:concept)"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="rim"/>
               <map value="N/A"/>
@@ -7078,6 +7306,29 @@ All Provenances should have some historical version of this Request as their sub
               <code value="uri"/>
             </type>
             <isSummary value="true"/>
+          </element>
+          <element id="CodeSystem:shareablecodesystem.hierarchyMeaning">
+            <path value="CodeSystem.hierarchyMeaning"/>
+            <short value="grouped-by | subsumes | part-of | classified-with"/>
+            <definition value="The meaning of the heirarchy of concepts."/>
+            <min value="0"/>
+            <max value="1"/>
+            <base>
+              <path value="CodeSystem.hierarchyMeaning"/>
+              <min value="0"/>
+              <max value="1"/>
+            </base>
+            <type>
+              <code value="code"/>
+            </type>
+            <isSummary value="true"/>
+            <binding>
+              <strength value="required"/>
+              <description value="The meaning of the hierarchy of concepts in a code system"/>
+              <valueSetReference>
+                <reference value="http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning"/>
+              </valueSetReference>
+            </binding>
           </element>
           <element id="CodeSystem:shareablecodesystem.compositional">
             <path value="CodeSystem.compositional"/>
@@ -8032,14 +8283,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="This profile describes the direct or derived, qualitative or quantitative physiological measurement, setting, or calculation data produced by a medical device or a device component."/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -8070,6 +8321,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -8083,6 +8362,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -8462,7 +8745,11 @@ All Provenances should have some historical version of this Request as their sub
             <mustSupport value="false"/>
             <mapping>
               <identity value="rim"/>
-              <map value="Encounter[moodCode=EVN]"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Encounter[@moodCode=&#39;EVN&#39;]"/>
             </mapping>
             <mapping>
               <identity value="w5"/>
@@ -8803,6 +9090,10 @@ All Provenances should have some historical version of this Request as their sub
             <mustSupport value="false"/>
             <mapping>
               <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
+            <mapping>
+              <identity value="rim"/>
               <map value="Role[classCode=SPEC]"/>
             </mapping>
             <mapping>
@@ -8827,6 +9118,10 @@ All Provenances should have some historical version of this Request as their sub
               <profile value="http://hl7.org/fhir/StructureDefinition/DeviceMetric"/>
             </type>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="w5"/>
               <map value="administrative.device"/>
@@ -9060,7 +9355,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:devicemetricobservation.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -9205,6 +9500,10 @@ All Provenances should have some historical version of this Request as their sub
               <profile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
             </type>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -9725,14 +10024,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="Describes how the observation resource is used to report structured genetic test results"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -9763,6 +10062,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -9776,6 +10103,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -9918,7 +10249,7 @@ All Provenances should have some historical version of this Request as their sub
           </element>
           <element id="Observation:observationforgenetics.extension">
             <path value="Observation.extension"/>
-            <slicing id="86">
+            <slicing id="92">
               <discriminator value="url"/>
               <ordered value="false"/>
               <rules value="open"/>
@@ -9952,6 +10283,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsTranscriptReferenceSequenceId"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -9976,6 +10315,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsProteinReferenceSequenceId"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10000,6 +10347,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsDNASequenceVariant"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10024,6 +10379,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsDNAVariantId"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10048,6 +10411,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsDNASequenceVariantType"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10072,6 +10443,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsAminoAcidChange"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10096,6 +10475,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsAminoAcidChangeType"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10121,6 +10508,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsGene"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10145,6 +10540,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsDNARegionName"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10169,6 +10572,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsAlleleName"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10193,6 +10604,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsAllelicState"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10217,6 +10636,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsAllelicFrequency"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10242,6 +10669,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsCopyNumberEvent"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10266,6 +10701,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsGenomicSourceClass"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10290,6 +10733,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsPhaseSet"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10314,6 +10765,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsSequence"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -10338,6 +10797,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/observation-geneticsInterpretation"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -11169,7 +11636,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:observationforgenetics.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -11309,6 +11776,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -11831,14 +12302,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="Defines constraints and extensions on the Observation resource for use in querying and retrieving Vital Signs information."/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -11869,6 +12340,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -11882,6 +12381,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -13519,6 +14022,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -13534,6 +14045,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -13745,6 +14260,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -13760,6 +14283,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -14034,7 +14561,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:vitalsigns.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -14174,6 +14701,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -14743,14 +15274,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="FHIR Body Weight Profile"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -14781,6 +15312,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -14794,6 +15353,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -16480,6 +17043,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -16495,6 +17066,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -16706,6 +17281,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -16721,6 +17304,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -16995,7 +17582,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:bodyweight.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -17135,6 +17722,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -17500,14 +18091,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="FHIR Respiratory Rate Profile"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -17538,6 +18129,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -17551,6 +18170,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -19231,6 +19854,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -19246,6 +19877,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -19457,6 +20092,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -19472,6 +20115,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -19746,7 +20393,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:resprate.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -19886,6 +20533,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -20248,14 +20899,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="FHIR Heart Rate Profile"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -20286,6 +20937,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -20299,6 +20978,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -21979,6 +22662,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -21994,6 +22685,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -22205,6 +22900,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -22220,6 +22923,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -22494,7 +23201,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:heartrate.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -22634,6 +23341,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -22996,14 +23707,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="FHIR Body Temperature Profile"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -23034,6 +23745,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -23047,6 +23786,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -24733,6 +25476,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -24748,6 +25499,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -24959,6 +25714,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -24974,6 +25737,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -25248,7 +26015,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:bodytemp.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -25388,6 +26155,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -25753,14 +26524,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="FHIR Body Height Profile"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -25791,6 +26562,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -25804,6 +26603,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -27490,6 +28293,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -27505,6 +28316,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -27716,6 +28531,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -27731,6 +28554,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -28005,7 +28832,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:bodyheight.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -28145,6 +28972,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -28510,14 +29341,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="FHIR Head Circumference Profile"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -28548,6 +29379,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -28561,6 +29420,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -30247,6 +31110,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -30262,6 +31133,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -30473,6 +31348,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -30488,6 +31371,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -30762,7 +31649,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:headcircum.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -30902,6 +31789,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -31267,14 +32158,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="FHIR Oxygen Saturation Profile"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -31305,6 +32196,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -31318,6 +32237,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -32998,6 +33921,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -33013,6 +33944,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -33224,6 +34159,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -33239,6 +34182,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -33513,7 +34460,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:oxygensat.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -33653,6 +34600,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -34015,14 +34966,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="FHIR Body Mass Index (BMI) Profile"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -34053,6 +35004,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -34066,6 +35045,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -35746,6 +36729,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -35761,6 +36752,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -35972,6 +36967,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -35987,6 +36990,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -36261,7 +37268,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:bmi.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -36401,6 +37408,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -36763,14 +37774,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="FHIR Mean Blood Pressure Profile"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -36801,6 +37812,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -36814,6 +37853,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -38494,6 +39537,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -38509,6 +39560,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -38720,6 +39775,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -38735,6 +39798,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -39009,7 +40076,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:mbp.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -39149,6 +40216,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -39511,14 +40582,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="FHIR Blood Pressure Profile"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -39549,6 +40620,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -39562,6 +40661,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -41241,6 +42344,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -41256,6 +42367,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -41467,6 +42582,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Quantity"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -41482,6 +42605,10 @@ All Provenances should have some historical version of this Request as their sub
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
             <mustSupport value="true"/>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -41756,7 +42883,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:bp.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -41896,6 +43023,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -43629,14 +44760,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="Lipid Lab Report"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -43668,6 +44799,38 @@ All Provenances should have some historical version of this Request as their sub
               <min value="0"/>
               <max value="*"/>
             </base>
+            <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="ORU -&gt; OBR"/>
@@ -44812,14 +45975,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="Describes how the lab report is used for a standard Lipid Profile - Cholesterol, Triglyceride and Cholesterol fractions. Uses LOINC codes"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -44850,6 +46013,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -44863,6 +46054,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -45937,6 +47132,14 @@ All Provenances should have some historical version of this Request as their sub
             <fixedQuantity>
               <value value="4.5"/>
             </fixedQuantity>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -45951,6 +47154,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="comparator.empty()"/>
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -46038,7 +47245,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:cholesterol.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -46178,6 +47385,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -46639,14 +47850,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="Triglyceride Result"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -46677,6 +47888,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -46690,6 +47929,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -47662,7 +48905,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:triglyceride.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -47802,6 +49045,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -48208,14 +49455,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="HDL Cholesterol Result"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -48246,6 +49493,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -48259,6 +49534,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -49121,6 +50400,14 @@ All Provenances should have some historical version of this Request as their sub
             <fixedQuantity>
               <value value="1.5"/>
             </fixedQuantity>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -49135,6 +50422,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="comparator.empty()"/>
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -49248,7 +50539,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:hdlcholesterol.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -49388,6 +50679,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -49801,14 +51096,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="LDL Cholesterol Result"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -49839,6 +51134,34 @@ All Provenances should have some historical version of this Request as their sub
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="obs-7"/>
               <severity value="error"/>
               <human value="If code is the same as a component code then the value element associated with the code SHALL NOT be present"/>
@@ -49852,6 +51175,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="dataAbsentReason.empty() or value.empty()"/>
               <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="OBX"/>
@@ -50008,6 +51335,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/lipid-report-ldl-chol-calculated"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -50734,6 +52069,14 @@ All Provenances should have some historical version of this Request as their sub
             <fixedQuantity>
               <value value="3.0"/>
             </fixedQuantity>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="qty-3"/>
               <severity value="error"/>
@@ -50748,6 +52091,10 @@ All Provenances should have some historical version of this Request as their sub
               <expression value="comparator.empty()"/>
               <xpath value="not(exists(f:comparator))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="SN (see also Range) or CQ"/>
@@ -50835,7 +52182,7 @@ All Provenances should have some historical version of this Request as their sub
           <element id="Observation:ldlcholesterol.related">
             <path value="Observation.related"/>
             <short value="Resource related to this observation"/>
-            <definition value="A  reference to another resource (usually another Observation but could  also be a QuestionnaireAnswer) whose relationship is defined by the relationship type code."/>
+            <definition value="A  reference to another resource (usually another Observation) whose relationship is defined by the relationship type code."/>
             <comments value="For a discussion on the ways Observations can assembled in groups together see [Notes below](observation.html#4.20.4)."/>
             <requirements value="Normally, an observation will have either a value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and a set of related observations or sometimes QuestionnaireResponse  from which the measure is derived."/>
             <min value="0"/>
@@ -50975,6 +52322,10 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Reference"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
+            </type>
+            <type>
+              <code value="Reference"/>
+              <profile value="http://hl7.org/fhir/StructureDefinition/Sequence"/>
             </type>
             <mapping>
               <identity value="rim"/>
@@ -51400,14 +52751,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="Describes how the DiagnosticReport resource is used to report structured genetic test results"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -51439,6 +52790,38 @@ All Provenances should have some historical version of this Request as their sub
               <min value="0"/>
               <max value="*"/>
             </base>
+            <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="ORU -&gt; OBR"/>
@@ -51581,7 +52964,7 @@ All Provenances should have some historical version of this Request as their sub
           </element>
           <element id="DiagnosticReport:reportforgenetics.extension">
             <path value="DiagnosticReport.extension"/>
-            <slicing id="87">
+            <slicing id="93">
               <discriminator value="url"/>
               <ordered value="false"/>
               <rules value="open"/>
@@ -51615,6 +52998,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/DiagnosticReport-geneticsAssessedCondition"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -51639,6 +53030,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/DiagnosticReport-geneticsFamilyMemberHistory"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -51663,6 +53062,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/DiagnosticReport-geneticsAnalysis"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -52432,14 +53839,14 @@ All Provenances should have some historical version of this Request as their sub
         <description value="Describes how the HLA genotyping results"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
-          <identity value="v2"/>
-          <uri value="http://hl7.org/v2"/>
-          <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
           <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="v2"/>
+          <uri value="http://hl7.org/v2"/>
+          <name value="HL7 v2 Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -52471,6 +53878,38 @@ All Provenances should have some historical version of this Request as their sub
               <min value="0"/>
               <max value="*"/>
             </base>
+            <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="v2"/>
               <map value="ORU -&gt; OBR"/>
@@ -52613,7 +54052,7 @@ All Provenances should have some historical version of this Request as their sub
           </element>
           <element id="DiagnosticReport:hlaresult.extension">
             <path value="DiagnosticReport.extension"/>
-            <slicing id="88">
+            <slicing id="94">
               <discriminator value="url"/>
               <ordered value="false"/>
               <rules value="open"/>
@@ -52647,30 +54086,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsAlleleDatabase"/>
             </type>
+            <condition value="ele-1"/>
             <constraint>
-              <key value="ext-1"/>
+              <key value="ele-1"/>
               <severity value="error"/>
-              <human value="Must have either extensions or value[x], not both"/>
-              <expression value="extension.exists() != value.exists()"/>
-              <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
             </constraint>
-          </element>
-          <element id="DiagnosticReport:hlaresult.extension:alleleasignmentdate$hla-genotyping-resultsAlleleAsignmentDate">
-            <path value="DiagnosticReport.extension"/>
-            <name value="AlleleAsignmentDate"/>
-            <short value="AlleleAsignmentData"/>
-            <definition value="AlleleAsignmentData."/>
-            <min value="0"/>
-            <max value="1"/>
-            <base>
-              <path value="DomainResource.extension"/>
-              <min value="0"/>
-              <max value="*"/>
-            </base>
-            <type>
-              <code value="Extension"/>
-              <profile value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsAlleleAsignmentDate"/>
-            </type>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -52695,6 +54118,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsGlstring"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -52719,30 +54150,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsHaploid"/>
             </type>
+            <condition value="ele-1"/>
             <constraint>
-              <key value="ext-1"/>
+              <key value="ele-1"/>
               <severity value="error"/>
-              <human value="Must have either extensions or value[x], not both"/>
-              <expression value="extension.exists() != value.exists()"/>
-              <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
             </constraint>
-          </element>
-          <element id="DiagnosticReport:hlaresult.extension:consensussequenceblock$hla-genotyping-resultsConsensusSequenceBlock">
-            <path value="DiagnosticReport.extension"/>
-            <name value="ConsensusSequenceBlock"/>
-            <short value="ConsensusSequenceBlock"/>
-            <definition value="ConsensusSequenceBlock."/>
-            <min value="0"/>
-            <max value="*"/>
-            <base>
-              <path value="DomainResource.extension"/>
-              <min value="0"/>
-              <max value="*"/>
-            </base>
-            <type>
-              <code value="Extension"/>
-              <profile value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsConsensusSequenceBlock"/>
-            </type>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -52767,6 +54182,14 @@ All Provenances should have some historical version of this Request as their sub
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsMethod"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -53477,18 +54900,6 @@ All Provenances should have some historical version of this Request as their sub
               <profile value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsAlleleDatabase"/>
             </type>
           </element>
-          <element id="DiagnosticReport:hlaresult.extension:alleleasignmentdate$hla-genotyping-resultsAlleleAsignmentDate">
-            <path value="DiagnosticReport.extension"/>
-            <name value="AlleleAsignmentDate"/>
-            <short value="AlleleAsignmentData"/>
-            <definition value="AlleleAsignmentData."/>
-            <min value="0"/>
-            <max value="1"/>
-            <type>
-              <code value="Extension"/>
-              <profile value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsAlleleAsignmentDate"/>
-            </type>
-          </element>
           <element id="DiagnosticReport:hlaresult.extension:glstring$hla-genotyping-resultsGlstring">
             <path value="DiagnosticReport.extension"/>
             <name value="Glstring"/>
@@ -53511,18 +54922,6 @@ All Provenances should have some historical version of this Request as their sub
             <type>
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsHaploid"/>
-            </type>
-          </element>
-          <element id="DiagnosticReport:hlaresult.extension:consensussequenceblock$hla-genotyping-resultsConsensusSequenceBlock">
-            <path value="DiagnosticReport.extension"/>
-            <name value="ConsensusSequenceBlock"/>
-            <short value="ConsensusSequenceBlock"/>
-            <definition value="ConsensusSequenceBlock."/>
-            <min value="0"/>
-            <max value="*"/>
-            <type>
-              <code value="Extension"/>
-              <profile value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-resultsConsensusSequenceBlock"/>
             </type>
           </element>
           <element id="DiagnosticReport:hlaresult.extension:method$hla-genotyping-resultsMethod">
@@ -53597,6 +54996,38 @@ All Provenances should have some historical version of this Request as their sub
               <min value="0"/>
               <max value="*"/>
             </base>
+            <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="rim"/>
               <map value="Document[classCode=&quot;DOC&quot; and moodCode=&quot;EVN&quot; and isNormalAct()]"/>
@@ -54923,6 +56354,11 @@ Some reporting work flows require that the original narrative of a final documen
         <description value="Identifies how the ElementDefinition data type is used when it appears within a data element"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
+        </mapping>
+        <mapping>
           <identity value="dex"/>
           <uri value="http://wiki.ihe.net/index.php?title=Data_Element_Exchange"/>
           <name value="IHE Data Element Exchange (DEX)"/>
@@ -54931,11 +56367,6 @@ Some reporting work flows require that the original narrative of a final documen
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
-        </mapping>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="iso11179"/>
@@ -54965,6 +56396,14 @@ Some reporting work flows require that the original narrative of a final documen
               <min value="0"/>
               <max value="*"/>
             </base>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="eld-2"/>
               <severity value="error"/>
@@ -55029,6 +56468,10 @@ Some reporting work flows require that the original narrative of a final documen
               <xpath value="not(exists(f:*[starts-with(local-name(.), &#39;fixed&#39;)])) or not(exists(f:meaningWhenMissing))"/>
             </constraint>
             <mapping>
+              <identity value="rim"/>
+              <map value="n/a"/>
+            </mapping>
+            <mapping>
               <identity value="dex"/>
               <map value="RetrieveMetadata response"/>
             </mapping>
@@ -55067,7 +56510,7 @@ Some reporting work flows require that the original narrative of a final documen
           </element>
           <element id="ElementDefinition:elementdefinition-de.extension">
             <path value="ElementDefinition.extension"/>
-            <slicing id="89">
+            <slicing id="95">
               <discriminator value="url"/>
               <ordered value="false"/>
               <rules value="open"/>
@@ -55101,6 +56544,14 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/elementdefinition-question"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -55125,6 +56576,14 @@ Some reporting work flows require that the original narrative of a final documen
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/elementdefinition-allowedUnits"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -57539,6 +58998,38 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <min value="0"/>
               <max value="*"/>
             </base>
+            <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="rim"/>
               <map value="ControlAct[moodCode=EVN]"/>
@@ -59590,6 +61081,38 @@ For example, an activity may be initiated by one user for other users or involve
               <min value="0"/>
               <max value="*"/>
             </base>
+            <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="rim"/>
               <map value="ControlAct[isNormalAct() and subsumes(CACT, classCode) and moodCode=EVN]"/>
@@ -60769,12 +62292,44 @@ practitioner: ./id"/>
               <max value="*"/>
             </base>
             <constraint>
+              <key value="dom-2"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
+              <expression value="contained.contained.empty()"/>
+              <xpath value="not(parent::f:contained and f:contained)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-1"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
+              <expression value="contained.text.empty()"/>
+              <xpath value="not(parent::f:contained and f:text)"/>
+            </constraint>
+            <constraint>
+              <key value="dom-4"/>
+              <severity value="error"/>
+              <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
+              <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+              <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+            </constraint>
+            <constraint>
+              <key value="dom-3"/>
+              <severity value="error"/>
+              <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
+            </constraint>
+            <constraint>
               <key value="que-2"/>
               <severity value="error"/>
               <human value="The link ids for groups and questions must be unique within the questionnaire"/>
               <expression value="descendents().linkId.isDistinct()"/>
               <xpath value="count(descendant::f:linkId/@value)=count(distinct-values(descendant::f:linkId/@value))"/>
             </constraint>
+            <mapping>
+              <identity value="rim"/>
+              <map value="Entity. Role, or Act"/>
+            </mapping>
             <mapping>
               <identity value="rim"/>
               <map value="Observation[moodCode=DEF]"/>
@@ -60928,6 +62483,14 @@ practitioner: ./id"/>
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/cqif-basic-library"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -61338,7 +62901,7 @@ practitioner: ./id"/>
           </element>
           <element id="Questionnaire:cqif-questionnaire.item.extension">
             <path value="Questionnaire.item.extension"/>
-            <slicing id="90">
+            <slicing id="96">
               <discriminator value="url"/>
               <ordered value="false"/>
               <rules value="open"/>
@@ -61374,6 +62937,14 @@ practitioner: ./id"/>
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/cqif-basic-condition"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -61399,6 +62970,14 @@ practitioner: ./id"/>
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/cqif-basic-initialValue"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>
@@ -61424,6 +63003,14 @@ practitioner: ./id"/>
               <code value="Extension"/>
               <profile value="http://hl7.org/fhir/StructureDefinition/cqif-basic-calculatedValue"/>
             </type>
+            <condition value="ele-1"/>
+            <constraint>
+              <key value="ele-1"/>
+              <severity value="error"/>
+              <human value="All FHIR elements must have a @value or children"/>
+              <expression value="children().count() &gt; id.count()"/>
+              <xpath value="@value|f:*|h:div"/>
+            </constraint>
             <constraint>
               <key value="ext-1"/>
               <severity value="error"/>

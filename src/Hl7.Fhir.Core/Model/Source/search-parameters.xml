@@ -2248,12 +2248,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-patientidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-patient-identifier" />
     <resource>
       <SearchParameter>
-        <id value="EnrollmentRequest-patientidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-patientidentifier" />
-        <name value="patientidentifier" />
+        <id value="EnrollmentRequest-patient-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-patient-identifier" />
+        <name value="patient-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -2268,7 +2268,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="patientidentifier" />
+        <code value="patient-identifier" />
         <base value="EnrollmentRequest" />
         <type value="token" />
         <description value="The party to be enrolled" />
@@ -2279,12 +2279,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-patientreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-patient-reference" />
     <resource>
       <SearchParameter>
-        <id value="EnrollmentRequest-patientreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-patientreference" />
-        <name value="patientreference" />
+        <id value="EnrollmentRequest-patient-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-patient-reference" />
+        <name value="patient-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -2299,7 +2299,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="patientreference" />
+        <code value="patient-reference" />
         <base value="EnrollmentRequest" />
         <type value="reference" />
         <description value="The party to be enrolled" />
@@ -2311,12 +2311,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-subjectidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-subject-identifier" />
     <resource>
       <SearchParameter>
-        <id value="EnrollmentRequest-subjectidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-subjectidentifier" />
-        <name value="subjectidentifier" />
+        <id value="EnrollmentRequest-subject-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-subject-identifier" />
+        <name value="subject-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -2331,7 +2331,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="subjectidentifier" />
+        <code value="subject-identifier" />
         <base value="EnrollmentRequest" />
         <type value="token" />
         <description value="The party to be enrolled" />
@@ -2342,12 +2342,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-subjectreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-subject-reference" />
     <resource>
       <SearchParameter>
-        <id value="EnrollmentRequest-subjectreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-subjectreference" />
-        <name value="subjectreference" />
+        <id value="EnrollmentRequest-subject-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/EnrollmentRequest-subject-reference" />
+        <name value="subject-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -2362,7 +2362,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="subjectreference" />
+        <code value="subject-reference" />
         <base value="EnrollmentRequest" />
         <type value="reference" />
         <description value="The party to be enrolled" />
@@ -9227,12 +9227,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-organizationidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-organization-identifier" />
     <resource>
       <SearchParameter>
-        <id value="PaymentNotice-organizationidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-organizationidentifier" />
-        <name value="organizationidentifier" />
+        <id value="PaymentNotice-organization-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-organization-identifier" />
+        <name value="organization-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -9247,7 +9247,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationidentifier" />
+        <code value="organization-identifier" />
         <base value="PaymentNotice" />
         <type value="token" />
         <description value="The organization who generated this resource" />
@@ -9258,12 +9258,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-organizationreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-organization-reference" />
     <resource>
       <SearchParameter>
-        <id value="PaymentNotice-organizationreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-organizationreference" />
-        <name value="organizationreference" />
+        <id value="PaymentNotice-organization-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-organization-reference" />
+        <name value="organization-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -9278,7 +9278,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationreference" />
+        <code value="organization-reference" />
         <base value="PaymentNotice" />
         <type value="reference" />
         <description value="The organization who generated this resource" />
@@ -9290,12 +9290,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-paymentstatus" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-payment-status" />
     <resource>
       <SearchParameter>
-        <id value="PaymentNotice-paymentstatus" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-paymentstatus" />
-        <name value="paymentstatus" />
+        <id value="PaymentNotice-payment-status" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-payment-status" />
+        <name value="payment-status" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -9310,7 +9310,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="paymentstatus" />
+        <code value="payment-status" />
         <base value="PaymentNotice" />
         <type value="token" />
         <description value="The type of payment notice" />
@@ -9321,12 +9321,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-provideridentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-provider-identifier" />
     <resource>
       <SearchParameter>
-        <id value="PaymentNotice-provideridentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-provideridentifier" />
-        <name value="provideridentifier" />
+        <id value="PaymentNotice-provider-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-provider-identifier" />
+        <name value="provider-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -9341,7 +9341,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="provideridentifier" />
+        <code value="provider-identifier" />
         <base value="PaymentNotice" />
         <type value="token" />
         <description value="The reference to the provider" />
@@ -9352,12 +9352,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-providerreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-provider-reference" />
     <resource>
       <SearchParameter>
-        <id value="PaymentNotice-providerreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-providerreference" />
-        <name value="providerreference" />
+        <id value="PaymentNotice-provider-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-provider-reference" />
+        <name value="provider-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -9372,7 +9372,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="providerreference" />
+        <code value="provider-reference" />
         <base value="PaymentNotice" />
         <type value="reference" />
         <description value="The reference to the provider" />
@@ -9384,12 +9384,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-requestidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-request-identifier" />
     <resource>
       <SearchParameter>
-        <id value="PaymentNotice-requestidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-requestidentifier" />
-        <name value="requestidentifier" />
+        <id value="PaymentNotice-request-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-request-identifier" />
+        <name value="request-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -9404,7 +9404,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestidentifier" />
+        <code value="request-identifier" />
         <base value="PaymentNotice" />
         <type value="token" />
         <description value="The Claim" />
@@ -9415,12 +9415,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-requestreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-request-reference" />
     <resource>
       <SearchParameter>
-        <id value="PaymentNotice-requestreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-requestreference" />
-        <name value="requestreference" />
+        <id value="PaymentNotice-request-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-request-reference" />
+        <name value="request-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -9435,7 +9435,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestreference" />
+        <code value="request-reference" />
         <base value="PaymentNotice" />
         <type value="reference" />
         <description value="The Claim" />
@@ -9555,12 +9555,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-responseidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-response-identifier" />
     <resource>
       <SearchParameter>
-        <id value="PaymentNotice-responseidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-responseidentifier" />
-        <name value="responseidentifier" />
+        <id value="PaymentNotice-response-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-response-identifier" />
+        <name value="response-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -9575,7 +9575,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="responseidentifier" />
+        <code value="response-identifier" />
         <base value="PaymentNotice" />
         <type value="token" />
         <description value="The ClaimResponse" />
@@ -9586,12 +9586,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-responsereference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentNotice-response-reference" />
     <resource>
       <SearchParameter>
-        <id value="PaymentNotice-responsereference" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-responsereference" />
-        <name value="responsereference" />
+        <id value="PaymentNotice-response-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentNotice-response-reference" />
+        <name value="response-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -9606,7 +9606,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="responsereference" />
+        <code value="response-reference" />
         <base value="PaymentNotice" />
         <type value="reference" />
         <description value="The ClaimResponse" />
@@ -22820,12 +22820,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-organizationidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-organization-identifier" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityResponse-organizationidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-organizationidentifier" />
-        <name value="organizationidentifier" />
+        <id value="EligibilityResponse-organization-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-organization-identifier" />
+        <name value="organization-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -22840,7 +22840,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationidentifier" />
+        <code value="organization-identifier" />
         <base value="EligibilityResponse" />
         <type value="token" />
         <description value="The organization which generated this resource" />
@@ -22851,12 +22851,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-organizationreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-organization-reference" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityResponse-organizationreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-organizationreference" />
-        <name value="organizationreference" />
+        <id value="EligibilityResponse-organization-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-organization-reference" />
+        <name value="organization-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -22871,7 +22871,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationreference" />
+        <code value="organization-reference" />
         <base value="EligibilityResponse" />
         <type value="reference" />
         <description value="The organization which generated this resource" />
@@ -22914,12 +22914,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-requestidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-request-identifier" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityResponse-requestidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-requestidentifier" />
-        <name value="requestidentifier" />
+        <id value="EligibilityResponse-request-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-request-identifier" />
+        <name value="request-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -22934,7 +22934,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestidentifier" />
+        <code value="request-identifier" />
         <base value="EligibilityResponse" />
         <type value="token" />
         <description value="The EligibilityRequest reference" />
@@ -22945,12 +22945,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-requestorganizationidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-request-organization-identifier" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityResponse-requestorganizationidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-requestorganizationidentifier" />
-        <name value="requestorganizationidentifier" />
+        <id value="EligibilityResponse-request-organization-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-request-organization-identifier" />
+        <name value="request-organization-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -22965,7 +22965,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestorganizationidentifier" />
+        <code value="request-organization-identifier" />
         <base value="EligibilityResponse" />
         <type value="token" />
         <description value="The EligibilityRequest organization" />
@@ -22976,12 +22976,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-requestorganizationreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-request-organization-reference" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityResponse-requestorganizationreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-requestorganizationreference" />
-        <name value="requestorganizationreference" />
+        <id value="EligibilityResponse-request-organization-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-request-organization-reference" />
+        <name value="request-organization-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -22996,7 +22996,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestorganizationreference" />
+        <code value="request-organization-reference" />
         <base value="EligibilityResponse" />
         <type value="reference" />
         <description value="The EligibilityRequest organization" />
@@ -23008,12 +23008,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-requestprovideridentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-request-provider-identifier" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityResponse-requestprovideridentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-requestprovideridentifier" />
-        <name value="requestprovideridentifier" />
+        <id value="EligibilityResponse-request-provider-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-request-provider-identifier" />
+        <name value="request-provider-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -23028,7 +23028,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestprovideridentifier" />
+        <code value="request-provider-identifier" />
         <base value="EligibilityResponse" />
         <type value="token" />
         <description value="The EligibilityRequest provider" />
@@ -23039,12 +23039,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-requestproviderreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-request-provider-reference" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityResponse-requestproviderreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-requestproviderreference" />
-        <name value="requestproviderreference" />
+        <id value="EligibilityResponse-request-provider-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-request-provider-reference" />
+        <name value="request-provider-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -23059,7 +23059,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestproviderreference" />
+        <code value="request-provider-reference" />
         <base value="EligibilityResponse" />
         <type value="reference" />
         <description value="The EligibilityRequest provider" />
@@ -23071,12 +23071,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-requestreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-request-reference" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityResponse-requestreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-requestreference" />
-        <name value="requestreference" />
+        <id value="EligibilityResponse-request-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityResponse-request-reference" />
+        <name value="request-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -23091,7 +23091,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestreference" />
+        <code value="request-reference" />
         <base value="EligibilityResponse" />
         <type value="reference" />
         <description value="The EligibilityRequest reference" />
@@ -23297,9 +23297,9 @@
         <code value="code" />
         <base value="DeviceUseRequest" />
         <type value="token" />
-        <description value="What’s being requested/ordered" />
-        <expression value="DeviceUseRequest.code" />
-        <xpath value="f:DeviceUseRequest/f:code" />
+        <description value="Code for what is being requested/ordered" />
+        <expression value="DeviceUseRequest.device.as(CodeableConcept)" />
+        <xpath value="f:DeviceUseRequest/f:deviceCodeableConcept" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -23441,6 +23441,38 @@
         <target value="TestScript" />
         <target value="ValueSet" />
         <target value="VisionPrescription" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DeviceUseRequest-device" />
+    <resource>
+      <SearchParameter>
+        <id value="DeviceUseRequest-device" />
+        <url value="http://hl7.org/fhir/SearchParameter/DeviceUseRequest-device" />
+        <name value="device" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Orders and Observations)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/orders/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="device" />
+        <base value="DeviceUseRequest" />
+        <type value="reference" />
+        <description value="Reference to resource that is being requested/ordered" />
+        <expression value="DeviceUseRequest.device.as(Reference)" />
+        <xpath value="f:DeviceUseRequest/f:deviceReference" />
+        <xpathUsage value="normal" />
+        <target value="Device" />
       </SearchParameter>
     </resource>
   </entry>
@@ -25851,6 +25883,7 @@
         <xpath value="f:Observation/f:related/f:target" />
         <xpathUsage value="normal" />
         <target value="Observation" />
+        <target value="Sequence" />
         <target value="QuestionnaireResponse" />
       </SearchParameter>
     </resource>
@@ -26481,7 +26514,7 @@
         <code value="identifier" />
         <base value="EnrollmentResponse" />
         <type value="token" />
-        <description value="The business identifier of the Explanation of Benefit" />
+        <description value="The business identifier of the EnrollmentResponse" />
         <expression value="EnrollmentResponse.identifier" />
         <xpath value="f:EnrollmentResponse/f:identifier" />
         <xpathUsage value="normal" />
@@ -27349,6 +27382,37 @@
     </resource>
   </entry>
   <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/TestScript-date" />
+    <resource>
+      <SearchParameter>
+        <id value="TestScript-date" />
+        <url value="http://hl7.org/fhir/SearchParameter/TestScript-date" />
+        <name value="date" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (FHIR Infrastructure)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/fiwg/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="date" />
+        <base value="TestScript" />
+        <type value="date" />
+        <description value="Date for this version of the TestScript" />
+        <expression value="TestScript.date" />
+        <xpath value="f:TestScript/f:date" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/TestScript-description" />
     <resource>
       <SearchParameter>
@@ -27442,6 +27506,37 @@
     </resource>
   </entry>
   <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/TestScript-publisher" />
+    <resource>
+      <SearchParameter>
+        <id value="TestScript-publisher" />
+        <url value="http://hl7.org/fhir/SearchParameter/TestScript-publisher" />
+        <name value="publisher" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (FHIR Infrastructure)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/fiwg/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="publisher" />
+        <base value="TestScript" />
+        <type value="string" />
+        <description value="Name of the publisher (Organization or individual)" />
+        <expression value="TestScript.publisher" />
+        <xpath value="f:TestScript/f:publisher" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/TestScript-testscript-capability" />
     <resource>
       <SearchParameter>
@@ -27473,68 +27568,6 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/TestScript-testscript-setup-capability" />
-    <resource>
-      <SearchParameter>
-        <id value="TestScript-testscript-setup-capability" />
-        <url value="http://hl7.org/fhir/SearchParameter/TestScript-testscript-setup-capability" />
-        <name value="testscript-setup-capability" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (FHIR Infrastructure)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/fiwg/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="testscript-setup-capability" />
-        <base value="TestScript" />
-        <type value="string" />
-        <description value="TestScript setup required and validated capability" />
-        <expression value="TestScript.setup.metadata.capability.description" />
-        <xpath value="f:TestScript/f:setup/f:metadata/f:capability/f:description" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/TestScript-testscript-test-capability" />
-    <resource>
-      <SearchParameter>
-        <id value="TestScript-testscript-test-capability" />
-        <url value="http://hl7.org/fhir/SearchParameter/TestScript-testscript-test-capability" />
-        <name value="testscript-test-capability" />
-        <!-- Removed date -->
-        <publisher value="Health Level Seven International (FHIR Infrastructure)" />
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-        </contact>
-        <contact>
-          <telecom>
-            <system value="other" />
-            <value value="http://www.hl7.org/Special/committees/fiwg/index.cfm" />
-          </telecom>
-        </contact>
-        <code value="testscript-test-capability" />
-        <base value="TestScript" />
-        <type value="string" />
-        <description value="TestScript test required and validated capability" />
-        <expression value="TestScript.test.metadata.capability.description" />
-        <xpath value="f:TestScript/f:test/f:metadata/f:capability/f:description" />
-        <xpathUsage value="normal" />
-      </SearchParameter>
-    </resource>
-  </entry>
-  <entry>
     <fullUrl value="http://hl7.org/fhir/SearchParameter/TestScript-url" />
     <resource>
       <SearchParameter>
@@ -27561,6 +27594,37 @@
         <description value="Absolute URL used to reference this TestScript" />
         <expression value="TestScript.url" />
         <xpath value="f:TestScript/f:url" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/TestScript-use-context" />
+    <resource>
+      <SearchParameter>
+        <id value="TestScript-use-context" />
+        <url value="http://hl7.org/fhir/SearchParameter/TestScript-use-context" />
+        <name value="use-context" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (FHIR Infrastructure)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/fiwg/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="use-context" />
+        <base value="TestScript" />
+        <type value="token" />
+        <description value="Content intends to support these contexts" />
+        <expression value="TestScript.useContext" />
+        <xpath value="f:TestScript/f:useContext" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -27958,12 +28022,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ClaimResponse-organizationidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ClaimResponse-organization-identifier" />
     <resource>
       <SearchParameter>
-        <id value="ClaimResponse-organizationidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/ClaimResponse-organizationidentifier" />
-        <name value="organizationidentifier" />
+        <id value="ClaimResponse-organization-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/ClaimResponse-organization-identifier" />
+        <name value="organization-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -27978,7 +28042,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationidentifier" />
+        <code value="organization-identifier" />
         <base value="ClaimResponse" />
         <type value="token" />
         <description value="The organization who generated this resource" />
@@ -27989,12 +28053,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ClaimResponse-organizationreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ClaimResponse-organization-reference" />
     <resource>
       <SearchParameter>
-        <id value="ClaimResponse-organizationreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/ClaimResponse-organizationreference" />
-        <name value="organizationreference" />
+        <id value="ClaimResponse-organization-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/ClaimResponse-organization-reference" />
+        <name value="organization-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28009,7 +28073,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationreference" />
+        <code value="organization-reference" />
         <base value="ClaimResponse" />
         <type value="reference" />
         <description value="The organization who generated this resource" />
@@ -28083,12 +28147,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ClaimResponse-requestidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ClaimResponse-request-identifier" />
     <resource>
       <SearchParameter>
-        <id value="ClaimResponse-requestidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/ClaimResponse-requestidentifier" />
-        <name value="requestidentifier" />
+        <id value="ClaimResponse-request-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/ClaimResponse-request-identifier" />
+        <name value="request-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28103,7 +28167,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestidentifier" />
+        <code value="request-identifier" />
         <base value="ClaimResponse" />
         <type value="token" />
         <description value="The claim reference" />
@@ -28114,12 +28178,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ClaimResponse-requestreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ClaimResponse-request-reference" />
     <resource>
       <SearchParameter>
-        <id value="ClaimResponse-requestreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/ClaimResponse-requestreference" />
-        <name value="requestreference" />
+        <id value="ClaimResponse-request-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/ClaimResponse-request-reference" />
+        <name value="request-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28134,7 +28198,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestreference" />
+        <code value="request-reference" />
         <base value="ClaimResponse" />
         <type value="reference" />
         <description value="The claim reference" />
@@ -28177,12 +28241,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-facilityidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-facility-identifier" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityRequest-facilityidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-facilityidentifier" />
-        <name value="facilityidentifier" />
+        <id value="EligibilityRequest-facility-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-facility-identifier" />
+        <name value="facility-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28197,7 +28261,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="facilityidentifier" />
+        <code value="facility-identifier" />
         <base value="EligibilityRequest" />
         <type value="token" />
         <description value="Facility responsible for the goods and services" />
@@ -28208,12 +28272,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-facilityreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-facility-reference" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityRequest-facilityreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-facilityreference" />
-        <name value="facilityreference" />
+        <id value="EligibilityRequest-facility-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-facility-reference" />
+        <name value="facility-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28228,7 +28292,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="facilityreference" />
+        <code value="facility-reference" />
         <base value="EligibilityRequest" />
         <type value="reference" />
         <description value="Facility responsible for the goods and services" />
@@ -28271,12 +28335,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-organizationidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-organization-identifier" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityRequest-organizationidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-organizationidentifier" />
-        <name value="organizationidentifier" />
+        <id value="EligibilityRequest-organization-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-organization-identifier" />
+        <name value="organization-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28291,7 +28355,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationidentifier" />
+        <code value="organization-identifier" />
         <base value="EligibilityRequest" />
         <type value="token" />
         <description value="The reference to the providing organization" />
@@ -28302,12 +28366,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-organizationreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-organization-reference" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityRequest-organizationreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-organizationreference" />
-        <name value="organizationreference" />
+        <id value="EligibilityRequest-organization-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-organization-reference" />
+        <name value="organization-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28322,7 +28386,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationreference" />
+        <code value="organization-reference" />
         <base value="EligibilityRequest" />
         <type value="reference" />
         <description value="The reference to the providing organization" />
@@ -28334,12 +28398,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-patientidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-patient-identifier" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityRequest-patientidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-patientidentifier" />
-        <name value="patientidentifier" />
+        <id value="EligibilityRequest-patient-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-patient-identifier" />
+        <name value="patient-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28354,7 +28418,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="patientidentifier" />
+        <code value="patient-identifier" />
         <base value="EligibilityRequest" />
         <type value="token" />
         <description value="The reference to the patient" />
@@ -28365,12 +28429,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-patientreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-patient-reference" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityRequest-patientreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-patientreference" />
-        <name value="patientreference" />
+        <id value="EligibilityRequest-patient-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-patient-reference" />
+        <name value="patient-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28385,7 +28449,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="patientreference" />
+        <code value="patient-reference" />
         <base value="EligibilityRequest" />
         <type value="reference" />
         <description value="The reference to the patient" />
@@ -28397,12 +28461,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-provideridentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-provider-identifier" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityRequest-provideridentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-provideridentifier" />
-        <name value="provideridentifier" />
+        <id value="EligibilityRequest-provider-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-provider-identifier" />
+        <name value="provider-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28417,7 +28481,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="provideridentifier" />
+        <code value="provider-identifier" />
         <base value="EligibilityRequest" />
         <type value="token" />
         <description value="The reference to the provider" />
@@ -28428,12 +28492,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-providerreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-provider-reference" />
     <resource>
       <SearchParameter>
-        <id value="EligibilityRequest-providerreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-providerreference" />
-        <name value="providerreference" />
+        <id value="EligibilityRequest-provider-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/EligibilityRequest-provider-reference" />
+        <name value="provider-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28448,7 +28512,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="providerreference" />
+        <code value="provider-reference" />
         <base value="EligibilityRequest" />
         <type value="reference" />
         <description value="The reference to the provider" />
@@ -28522,12 +28586,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessRequest-organizationidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessRequest-organization-identifier" />
     <resource>
       <SearchParameter>
-        <id value="ProcessRequest-organizationidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/ProcessRequest-organizationidentifier" />
-        <name value="organizationidentifier" />
+        <id value="ProcessRequest-organization-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/ProcessRequest-organization-identifier" />
+        <name value="organization-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28542,7 +28606,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationidentifier" />
+        <code value="organization-identifier" />
         <base value="ProcessRequest" />
         <type value="token" />
         <description value="The organization who generated this request" />
@@ -28553,12 +28617,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessRequest-organizationreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessRequest-organization-reference" />
     <resource>
       <SearchParameter>
-        <id value="ProcessRequest-organizationreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/ProcessRequest-organizationreference" />
-        <name value="organizationreference" />
+        <id value="ProcessRequest-organization-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/ProcessRequest-organization-reference" />
+        <name value="organization-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28573,7 +28637,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationreference" />
+        <code value="organization-reference" />
         <base value="ProcessRequest" />
         <type value="reference" />
         <description value="The organization who generated this request" />
@@ -28585,12 +28649,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessRequest-provideridentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessRequest-provider-identifier" />
     <resource>
       <SearchParameter>
-        <id value="ProcessRequest-provideridentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/ProcessRequest-provideridentifier" />
-        <name value="provideridentifier" />
+        <id value="ProcessRequest-provider-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/ProcessRequest-provider-identifier" />
+        <name value="provider-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28605,7 +28669,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="provideridentifier" />
+        <code value="provider-identifier" />
         <base value="ProcessRequest" />
         <type value="token" />
         <description value="The provider who regenerated this request" />
@@ -28616,12 +28680,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessRequest-providerreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessRequest-provider-reference" />
     <resource>
       <SearchParameter>
-        <id value="ProcessRequest-providerreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/ProcessRequest-providerreference" />
-        <name value="providerreference" />
+        <id value="ProcessRequest-provider-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/ProcessRequest-provider-reference" />
+        <name value="provider-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -28636,7 +28700,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="providerreference" />
+        <code value="provider-reference" />
         <base value="ProcessRequest" />
         <type value="reference" />
         <description value="The provider who regenerated this request" />
@@ -31522,12 +31586,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-organizationidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-organization-identifier" />
     <resource>
       <SearchParameter>
-        <id value="PaymentReconciliation-organizationidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-organizationidentifier" />
-        <name value="organizationidentifier" />
+        <id value="PaymentReconciliation-organization-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-organization-identifier" />
+        <name value="organization-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -31542,7 +31606,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationidentifier" />
+        <code value="organization-identifier" />
         <base value="PaymentReconciliation" />
         <type value="token" />
         <description value="The organization who generated this resource" />
@@ -31553,12 +31617,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-organizationreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-organization-reference" />
     <resource>
       <SearchParameter>
-        <id value="PaymentReconciliation-organizationreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-organizationreference" />
-        <name value="organizationreference" />
+        <id value="PaymentReconciliation-organization-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-organization-reference" />
+        <name value="organization-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -31573,7 +31637,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationreference" />
+        <code value="organization-reference" />
         <base value="PaymentReconciliation" />
         <type value="reference" />
         <description value="The organization who generated this resource" />
@@ -31616,12 +31680,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-requestidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-request-identifier" />
     <resource>
       <SearchParameter>
-        <id value="PaymentReconciliation-requestidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-requestidentifier" />
-        <name value="requestidentifier" />
+        <id value="PaymentReconciliation-request-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-request-identifier" />
+        <name value="request-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -31636,7 +31700,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestidentifier" />
+        <code value="request-identifier" />
         <base value="PaymentReconciliation" />
         <type value="token" />
         <description value="The reference to the claim" />
@@ -31647,12 +31711,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-requestorganizationidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-request-organization-identifier" />
     <resource>
       <SearchParameter>
-        <id value="PaymentReconciliation-requestorganizationidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-requestorganizationidentifier" />
-        <name value="requestorganizationidentifier" />
+        <id value="PaymentReconciliation-request-organization-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-request-organization-identifier" />
+        <name value="request-organization-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -31667,7 +31731,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestorganizationidentifier" />
+        <code value="request-organization-identifier" />
         <base value="PaymentReconciliation" />
         <type value="token" />
         <description value="The organization who generated this resource" />
@@ -31678,12 +31742,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-requestorganizationreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-request-organization-reference" />
     <resource>
       <SearchParameter>
-        <id value="PaymentReconciliation-requestorganizationreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-requestorganizationreference" />
-        <name value="requestorganizationreference" />
+        <id value="PaymentReconciliation-request-organization-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-request-organization-reference" />
+        <name value="request-organization-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -31698,7 +31762,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestorganizationreference" />
+        <code value="request-organization-reference" />
         <base value="PaymentReconciliation" />
         <type value="reference" />
         <description value="The organization who generated this resource" />
@@ -31710,12 +31774,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-requestprovideridentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-request-provider-identifier" />
     <resource>
       <SearchParameter>
-        <id value="PaymentReconciliation-requestprovideridentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-requestprovideridentifier" />
-        <name value="requestprovideridentifier" />
+        <id value="PaymentReconciliation-request-provider-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-request-provider-identifier" />
+        <name value="request-provider-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -31730,7 +31794,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestprovideridentifier" />
+        <code value="request-provider-identifier" />
         <base value="PaymentReconciliation" />
         <type value="token" />
         <description value="The reference to the provider who sumbitted the claim" />
@@ -31741,12 +31805,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-requestproviderreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-request-provider-reference" />
     <resource>
       <SearchParameter>
-        <id value="PaymentReconciliation-requestproviderreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-requestproviderreference" />
-        <name value="requestproviderreference" />
+        <id value="PaymentReconciliation-request-provider-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-request-provider-reference" />
+        <name value="request-provider-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -31761,7 +31825,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestproviderreference" />
+        <code value="request-provider-reference" />
         <base value="PaymentReconciliation" />
         <type value="reference" />
         <description value="The reference to the provider who sumbitted the claim" />
@@ -31773,12 +31837,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-requestreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-request-reference" />
     <resource>
       <SearchParameter>
-        <id value="PaymentReconciliation-requestreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-requestreference" />
-        <name value="requestreference" />
+        <id value="PaymentReconciliation-request-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/PaymentReconciliation-request-reference" />
+        <name value="request-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -31793,7 +31857,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestreference" />
+        <code value="request-reference" />
         <base value="PaymentReconciliation" />
         <type value="reference" />
         <description value="The reference to the claim" />
@@ -33477,8 +33541,8 @@
         <base value="Bundle" />
         <type value="reference" />
         <description value="The first resource in the bundle, if the bundle type is &quot;document&quot; - this is a composition, and this parameter provides access to searches its contents" />
-        <expression value="Bundle.entry.resource[0]" />
-        <xpath value="f:Bundle/f:entry/f:resource[0]" />
+        <expression value="Bundle.entry[0].resource" />
+        <xpath value="f:Bundle/f:entry[0]/f:resource" />
         <xpathUsage value="normal" />
         <target value="Composition" />
       </SearchParameter>
@@ -33509,8 +33573,8 @@
         <base value="Bundle" />
         <type value="reference" />
         <description value="The first resource in the bundle, if the bundle type is &quot;message&quot; - this is a message header, and this parameter provides access to search its contents" />
-        <expression value="Bundle.entry.resource[0]" />
-        <xpath value="f:Bundle/f:entry/f:resource[0]" />
+        <expression value="Bundle.entry[0].resource" />
+        <xpath value="f:Bundle/f:entry[0]/f:resource" />
         <xpathUsage value="normal" />
         <target value="MessageHeader" />
       </SearchParameter>
@@ -34514,12 +34578,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-beneficiaryidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-beneficiary-identifier" />
     <resource>
       <SearchParameter>
-        <id value="Coverage-beneficiaryidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/Coverage-beneficiaryidentifier" />
-        <name value="beneficiaryidentifier" />
+        <id value="Coverage-beneficiary-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/Coverage-beneficiary-identifier" />
+        <name value="beneficiary-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -34534,7 +34598,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="beneficiaryidentifier" />
+        <code value="beneficiary-identifier" />
         <base value="Coverage" />
         <type value="token" />
         <description value="Covered party" />
@@ -34545,12 +34609,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-beneficiaryreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-beneficiary-reference" />
     <resource>
       <SearchParameter>
-        <id value="Coverage-beneficiaryreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/Coverage-beneficiaryreference" />
-        <name value="beneficiaryreference" />
+        <id value="Coverage-beneficiary-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/Coverage-beneficiary-reference" />
+        <name value="beneficiary-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -34565,7 +34629,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="beneficiaryreference" />
+        <code value="beneficiary-reference" />
         <base value="Coverage" />
         <type value="reference" />
         <description value="Covered party" />
@@ -34599,7 +34663,7 @@
         </contact>
         <code value="dependent" />
         <base value="Coverage" />
-        <type value="token" />
+        <type value="number" />
         <description value="Dependent number" />
         <expression value="Coverage.dependent" />
         <xpath value="f:Coverage/f:dependent" />
@@ -34670,12 +34734,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-issueridentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-issuer-identifier" />
     <resource>
       <SearchParameter>
-        <id value="Coverage-issueridentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/Coverage-issueridentifier" />
-        <name value="issueridentifier" />
+        <id value="Coverage-issuer-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/Coverage-issuer-identifier" />
+        <name value="issuer-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -34690,7 +34754,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="issueridentifier" />
+        <code value="issuer-identifier" />
         <base value="Coverage" />
         <type value="token" />
         <description value="The identity of the insurer" />
@@ -34701,12 +34765,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-issuerreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-issuer-reference" />
     <resource>
       <SearchParameter>
-        <id value="Coverage-issuerreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/Coverage-issuerreference" />
-        <name value="issuerreference" />
+        <id value="Coverage-issuer-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/Coverage-issuer-reference" />
+        <name value="issuer-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -34721,7 +34785,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="issuerreference" />
+        <code value="issuer-reference" />
         <base value="Coverage" />
         <type value="reference" />
         <description value="The identity of the insurer" />
@@ -34766,12 +34830,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-planholderidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-planholder-identifier" />
     <resource>
       <SearchParameter>
-        <id value="Coverage-planholderidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/Coverage-planholderidentifier" />
-        <name value="planholderidentifier" />
+        <id value="Coverage-planholder-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/Coverage-planholder-identifier" />
+        <name value="planholder-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -34786,7 +34850,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="planholderidentifier" />
+        <code value="planholder-identifier" />
         <base value="Coverage" />
         <type value="token" />
         <description value="Reference to the planholder" />
@@ -34797,12 +34861,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-planholderreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-planholder-reference" />
     <resource>
       <SearchParameter>
-        <id value="Coverage-planholderreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/Coverage-planholderreference" />
-        <name value="planholderreference" />
+        <id value="Coverage-planholder-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/Coverage-planholder-reference" />
+        <name value="planholder-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -34817,7 +34881,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="planholderreference" />
+        <code value="planholder-reference" />
         <base value="Coverage" />
         <type value="reference" />
         <description value="Reference to the planholder" />
@@ -34852,10 +34916,41 @@
         </contact>
         <code value="sequence" />
         <base value="Coverage" />
-        <type value="token" />
+        <type value="number" />
         <description value="Sequence number" />
         <expression value="Coverage.sequence" />
         <xpath value="f:Coverage/f:sequence" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Coverage-subgroup" />
+    <resource>
+      <SearchParameter>
+        <id value="Coverage-subgroup" />
+        <url value="http://hl7.org/fhir/SearchParameter/Coverage-subgroup" />
+        <name value="subgroup" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (Financial Management)" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="subgroup" />
+        <base value="Coverage" />
+        <type value="token" />
+        <description value="Sub-group identifier" />
+        <expression value="Coverage.subGroup" />
+        <xpath value="f:Coverage/f:subGroup" />
         <xpathUsage value="normal" />
       </SearchParameter>
     </resource>
@@ -35420,12 +35515,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-organizationidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-organization-identifier" />
     <resource>
       <SearchParameter>
-        <id value="ProcessResponse-organizationidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-organizationidentifier" />
-        <name value="organizationidentifier" />
+        <id value="ProcessResponse-organization-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-organization-identifier" />
+        <name value="organization-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -35440,7 +35535,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationidentifier" />
+        <code value="organization-identifier" />
         <base value="ProcessResponse" />
         <type value="token" />
         <description value="The organization who generated this resource" />
@@ -35451,12 +35546,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-organizationreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-organization-reference" />
     <resource>
       <SearchParameter>
-        <id value="ProcessResponse-organizationreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-organizationreference" />
-        <name value="organizationreference" />
+        <id value="ProcessResponse-organization-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-organization-reference" />
+        <name value="organization-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -35471,7 +35566,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationreference" />
+        <code value="organization-reference" />
         <base value="ProcessResponse" />
         <type value="reference" />
         <description value="The organization who generated this resource" />
@@ -35483,12 +35578,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-requestidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-request-identifier" />
     <resource>
       <SearchParameter>
-        <id value="ProcessResponse-requestidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-requestidentifier" />
-        <name value="requestidentifier" />
+        <id value="ProcessResponse-request-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-request-identifier" />
+        <name value="request-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -35503,7 +35598,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestidentifier" />
+        <code value="request-identifier" />
         <base value="ProcessResponse" />
         <type value="token" />
         <description value="The reference to the claim" />
@@ -35514,12 +35609,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-requestorganizationidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-request-organization-identifier" />
     <resource>
       <SearchParameter>
-        <id value="ProcessResponse-requestorganizationidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-requestorganizationidentifier" />
-        <name value="requestorganizationidentifier" />
+        <id value="ProcessResponse-request-organization-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-request-organization-identifier" />
+        <name value="request-organization-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -35534,7 +35629,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestorganizationidentifier" />
+        <code value="request-organization-identifier" />
         <base value="ProcessResponse" />
         <type value="token" />
         <description value="The Organization who is responsible the request transaction" />
@@ -35545,12 +35640,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-requestorganizationreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-request-organization-reference" />
     <resource>
       <SearchParameter>
-        <id value="ProcessResponse-requestorganizationreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-requestorganizationreference" />
-        <name value="requestorganizationreference" />
+        <id value="ProcessResponse-request-organization-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-request-organization-reference" />
+        <name value="request-organization-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -35565,7 +35660,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestorganizationreference" />
+        <code value="request-organization-reference" />
         <base value="ProcessResponse" />
         <type value="reference" />
         <description value="The Organization who is responsible the request transaction" />
@@ -35577,12 +35672,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-requestprovideridentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-request-provide-ridentifier" />
     <resource>
       <SearchParameter>
-        <id value="ProcessResponse-requestprovideridentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-requestprovideridentifier" />
-        <name value="requestprovideridentifier" />
+        <id value="ProcessResponse-request-provide-ridentifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-request-provide-ridentifier" />
+        <name value="request-provide-ridentifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -35597,7 +35692,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestprovideridentifier" />
+        <code value="request-provide-ridentifier" />
         <base value="ProcessResponse" />
         <type value="token" />
         <description value="The Provider who is responsible the request transaction" />
@@ -35608,12 +35703,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-requestproviderreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-request-provider-reference" />
     <resource>
       <SearchParameter>
-        <id value="ProcessResponse-requestproviderreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-requestproviderreference" />
-        <name value="requestproviderreference" />
+        <id value="ProcessResponse-request-provider-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-request-provider-reference" />
+        <name value="request-provider-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -35628,7 +35723,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestproviderreference" />
+        <code value="request-provider-reference" />
         <base value="ProcessResponse" />
         <type value="reference" />
         <description value="The Provider who is responsible the request transaction" />
@@ -35640,12 +35735,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-requestreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/ProcessResponse-request-reference" />
     <resource>
       <SearchParameter>
-        <id value="ProcessResponse-requestreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-requestreference" />
-        <name value="requestreference" />
+        <id value="ProcessResponse-request-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/ProcessResponse-request-reference" />
+        <name value="request-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -35660,7 +35755,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="requestreference" />
+        <code value="request-reference" />
         <base value="ProcessResponse" />
         <type value="reference" />
         <description value="The reference to the claim" />
@@ -37377,12 +37472,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-facilityidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-facility-identifier" />
     <resource>
       <SearchParameter>
-        <id value="Claim-facilityidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/Claim-facilityidentifier" />
-        <name value="facilityidentifier" />
+        <id value="Claim-facility-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/Claim-facility-identifier" />
+        <name value="facility-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -37397,7 +37492,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="facilityidentifier" />
+        <code value="facility-identifier" />
         <base value="Claim" />
         <type value="token" />
         <description value="Facility responsible for the goods and services" />
@@ -37408,12 +37503,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-facilityreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-facility-reference" />
     <resource>
       <SearchParameter>
-        <id value="Claim-facilityreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/Claim-facilityreference" />
-        <name value="facilityreference" />
+        <id value="Claim-facility-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/Claim-facility-reference" />
+        <name value="facility-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -37428,7 +37523,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="facilityreference" />
+        <code value="facility-reference" />
         <base value="Claim" />
         <type value="reference" />
         <description value="Facility responsible for the goods and services" />
@@ -37471,12 +37566,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-insureridentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-insurer-identifier" />
     <resource>
       <SearchParameter>
-        <id value="Claim-insureridentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/Claim-insureridentifier" />
-        <name value="insureridentifier" />
+        <id value="Claim-insurer-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/Claim-insurer-identifier" />
+        <name value="insurer-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -37491,7 +37586,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="insureridentifier" />
+        <code value="insurer-identifier" />
         <base value="Claim" />
         <type value="token" />
         <description value="The target payor/insurer for the Claim" />
@@ -37502,12 +37597,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-insurerreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-insurer-reference" />
     <resource>
       <SearchParameter>
-        <id value="Claim-insurerreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/Claim-insurerreference" />
-        <name value="insurerreference" />
+        <id value="Claim-insurer-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/Claim-insurer-reference" />
+        <name value="insurer-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -37522,7 +37617,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="insurerreference" />
+        <code value="insurer-reference" />
         <base value="Claim" />
         <type value="reference" />
         <description value="The target payor/insurer for the Claim" />
@@ -37534,12 +37629,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-organizationidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-organization-identifier" />
     <resource>
       <SearchParameter>
-        <id value="Claim-organizationidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/Claim-organizationidentifier" />
-        <name value="organizationidentifier" />
+        <id value="Claim-organization-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/Claim-organization-identifier" />
+        <name value="organization-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -37554,7 +37649,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationidentifier" />
+        <code value="organization-identifier" />
         <base value="Claim" />
         <type value="token" />
         <description value="The reference to the providing organization" />
@@ -37565,12 +37660,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-organizationreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-organization-reference" />
     <resource>
       <SearchParameter>
-        <id value="Claim-organizationreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/Claim-organizationreference" />
-        <name value="organizationreference" />
+        <id value="Claim-organization-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/Claim-organization-reference" />
+        <name value="organization-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -37585,7 +37680,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="organizationreference" />
+        <code value="organization-reference" />
         <base value="Claim" />
         <type value="reference" />
         <description value="The reference to the providing organization" />
@@ -37597,12 +37692,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-patientidentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-patient-identifier" />
     <resource>
       <SearchParameter>
-        <id value="Claim-patientidentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/Claim-patientidentifier" />
-        <name value="patientidentifier" />
+        <id value="Claim-patient-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/Claim-patient-identifier" />
+        <name value="patient-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -37617,7 +37712,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="patientidentifier" />
+        <code value="patient-identifier" />
         <base value="Claim" />
         <type value="token" />
         <description value="Patient receiving the services" />
@@ -37628,12 +37723,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-patientreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-patient-reference" />
     <resource>
       <SearchParameter>
-        <id value="Claim-patientreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/Claim-patientreference" />
-        <name value="patientreference" />
+        <id value="Claim-patient-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/Claim-patient-reference" />
+        <name value="patient-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -37648,7 +37743,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="patientreference" />
+        <code value="patient-reference" />
         <base value="Claim" />
         <type value="reference" />
         <description value="Patient receiving the services" />
@@ -37691,12 +37786,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-provideridentifier" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-provider-identifier" />
     <resource>
       <SearchParameter>
-        <id value="Claim-provideridentifier" />
-        <url value="http://hl7.org/fhir/SearchParameter/Claim-provideridentifier" />
-        <name value="provideridentifier" />
+        <id value="Claim-provider-identifier" />
+        <url value="http://hl7.org/fhir/SearchParameter/Claim-provider-identifier" />
+        <name value="provider-identifier" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -37711,7 +37806,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="provideridentifier" />
+        <code value="provider-identifier" />
         <base value="Claim" />
         <type value="token" />
         <description value="Provider responsible for the Claim" />
@@ -37722,12 +37817,12 @@
     </resource>
   </entry>
   <entry>
-    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-providerreference" />
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/Claim-provider-reference" />
     <resource>
       <SearchParameter>
-        <id value="Claim-providerreference" />
-        <url value="http://hl7.org/fhir/SearchParameter/Claim-providerreference" />
-        <name value="providerreference" />
+        <id value="Claim-provider-reference" />
+        <url value="http://hl7.org/fhir/SearchParameter/Claim-provider-reference" />
+        <name value="provider-reference" />
         <!-- Removed date -->
         <publisher value="Health Level Seven International (Financial Management)" />
         <contact>
@@ -37742,7 +37837,7 @@
             <value value="http://www.hl7.org/Special/committees/fm/index.cfm" />
           </telecom>
         </contact>
-        <code value="providerreference" />
+        <code value="provider-reference" />
         <base value="Claim" />
         <type value="reference" />
         <description value="Provider responsible for the Claim" />

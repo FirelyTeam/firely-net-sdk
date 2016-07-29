@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Rest
 
         internal static bool IsBinaryResponse(string responseUri, string contentType)
         {
-            if (!string.IsNullOrEmpty(contentType) && (contentType.ToLower() == "application/xml+fhir" || contentType.ToLower() == "application/json+fhir"))
+            if (!string.IsNullOrEmpty(contentType) && (ContentType.XML_CONTENT_HEADERS.Contains(contentType.ToLower()) || ContentType.XML_CONTENT_HEADERS.Contains(contentType.ToLower())))
                 return false;
 
             if (ResourceIdentity.IsRestResourceIdentity(responseUri))
