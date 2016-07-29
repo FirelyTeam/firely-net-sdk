@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
                 get { return AltIdElement != null ? AltIdElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       AltIdElement = null; 
                     else
                       AltIdElement = new Hl7.Fhir.Model.FhirString(value);
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       NameElement = null; 
                     else
                       NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
                 get { return RequestorElement != null ? RequestorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       RequestorElement = null; 
                     else
                       RequestorElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
                 get { return PolicyElement != null ? PolicyElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       PolicyElement = null; 
                     else
                       PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
                 get { return AddressElement != null ? AddressElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       AddressElement = null; 
                     else
                       AddressElement = new Hl7.Fhir.Model.FhirString(value);
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       TypeElement = null; 
                     else
                       TypeElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType>(value);
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
                 get { return SiteElement != null ? SiteElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       SiteElement = null; 
                     else
                       SiteElement = new Hl7.Fhir.Model.FhirString(value);
@@ -816,7 +816,7 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       NameElement = null; 
                     else
                       NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -848,7 +848,7 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DescriptionElement = null; 
                     else
                       DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -880,7 +880,7 @@ namespace Hl7.Fhir.Model
                 get { return QueryElement != null ? QueryElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       QueryElement = null; 
                     else
                       QueryElement = new Hl7.Fhir.Model.Base64Binary(value);
@@ -1005,7 +1005,7 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       TypeElement = null; 
                     else
                       TypeElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1038,7 +1038,7 @@ namespace Hl7.Fhir.Model
                 get { return ValueElement != null ? ValueElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       ValueElement = null; 
                     else
                       ValueElement = new Hl7.Fhir.Model.Base64Binary(value);
@@ -1145,7 +1145,7 @@ namespace Hl7.Fhir.Model
             get { return ActionElement != null ? ActionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ActionElement = null; 
                 else
                   ActionElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction>(value);
@@ -1178,7 +1178,7 @@ namespace Hl7.Fhir.Model
             get { return RecordedElement != null ? RecordedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   RecordedElement = null; 
                 else
                   RecordedElement = new Hl7.Fhir.Model.Instant(value);
@@ -1210,7 +1210,7 @@ namespace Hl7.Fhir.Model
             get { return OutcomeElement != null ? OutcomeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   OutcomeElement = null; 
                 else
                   OutcomeElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>(value);
@@ -1242,7 +1242,7 @@ namespace Hl7.Fhir.Model
             get { return OutcomeDescElement != null ? OutcomeDescElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   OutcomeDescElement = null; 
                 else
                   OutcomeDescElement = new Hl7.Fhir.Model.FhirString(value);

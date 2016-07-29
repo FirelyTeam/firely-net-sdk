@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
             get { return ClinicalStatusElement != null ? ClinicalStatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ClinicalStatusElement = null; 
                 else
                   ClinicalStatusElement = new Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes>(value);
@@ -366,7 +366,7 @@ namespace Hl7.Fhir.Model
             get { return VerificationStatusElement != null ? VerificationStatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   VerificationStatusElement = null; 
                 else
                   VerificationStatusElement = new Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus>(value);
@@ -509,7 +509,7 @@ namespace Hl7.Fhir.Model
             get { return DateRecordedElement != null ? DateRecordedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateRecordedElement = null; 
                 else
                   DateRecordedElement = new Hl7.Fhir.Model.Date(value);

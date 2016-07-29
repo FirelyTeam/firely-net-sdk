@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       TextElement = null; 
                     else
                       TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       TypeElement = null; 
                     else
                       TypeElement = new Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>(value);
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
             /// Resource that is related to this one
             /// </summary>
             [FhirElement("target", Order=50)]
-            [References("Observation","QuestionnaireResponse")]
+            [References("Observation","QuestionnaireResponse","Sequence")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Target
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.ObservationStatus>(value);
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
             get { return IssuedElement != null ? IssuedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   IssuedElement = null; 
                 else
                   IssuedElement = new Hl7.Fhir.Model.Instant(value);
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Model
             get { return CommentElement != null ? CommentElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CommentElement = null; 
                 else
                   CommentElement = new Hl7.Fhir.Model.FhirString(value);

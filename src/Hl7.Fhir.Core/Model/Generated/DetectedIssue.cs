@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DateElement = null; 
                     else
                       DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
             get { return SeverityElement != null ? SeverityElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   SeverityElement = null; 
                 else
                   SeverityElement = new Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>(value);
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Model
             get { return DetailElement != null ? DetailElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DetailElement = null; 
                 else
                   DetailElement = new Hl7.Fhir.Model.FhirString(value);
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
             get { return ReferenceElement != null ? ReferenceElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ReferenceElement = null; 
                 else
                   ReferenceElement = new Hl7.Fhir.Model.FhirUri(value);

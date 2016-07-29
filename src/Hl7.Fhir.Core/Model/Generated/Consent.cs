@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       TypeElement = null; 
                     else
                       TypeElement = new Code<Hl7.Fhir.Model.Consent.ConsentExceptType>(value);
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
                 get { return MeaningElement != null ? MeaningElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       MeaningElement = null; 
                     else
                       MeaningElement = new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
@@ -588,7 +588,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Consent.ConsentStatus>(value);
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model
             get { return DateTimeElement != null ? DateTimeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateTimeElement = null; 
                 else
                   DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model
             get { return PolicyElement != null ? PolicyElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PolicyElement = null; 
                 else
                   PolicyElement = new Hl7.Fhir.Model.FhirUri(value);

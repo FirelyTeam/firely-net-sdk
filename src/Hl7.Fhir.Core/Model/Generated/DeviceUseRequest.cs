@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.RequestStatus>(value);
@@ -174,16 +174,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Device requested
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=160)]
+        [FhirElement("device", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Code
+        public Hl7.Fhir.Model.Element Device
         {
-            get { return _Code; }
-            set { _Code = value; OnPropertyChanged("Code"); }
+            get { return _Device; }
+            set { _Device = value; OnPropertyChanged("Device"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Code;
+        private Hl7.Fhir.Model.Element _Device;
         
         /// <summary>
         /// Focus of request
@@ -252,7 +253,7 @@ namespace Hl7.Fhir.Model
             get { return AuthoredElement != null ? AuthoredElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   AuthoredElement = null; 
                 else
                   AuthoredElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -388,7 +389,7 @@ namespace Hl7.Fhir.Model
                 if(Requisition != null) dest.Requisition = (Hl7.Fhir.Model.Identifier)Requisition.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)StatusElement.DeepCopy();
                 if(Stage != null) dest.Stage = (Hl7.Fhir.Model.CodeableConcept)Stage.DeepCopy();
-                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                if(Device != null) dest.Device = (Hl7.Fhir.Model.Element)Device.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
@@ -425,7 +426,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Requisition, otherT.Requisition)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Stage, otherT.Stage)) return false;
-            if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+            if( !DeepComparable.Matches(Device, otherT.Device)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Context, otherT.Context)) return false;
             if( !DeepComparable.Matches(Occurrence, otherT.Occurrence)) return false;
@@ -455,7 +456,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Requisition, otherT.Requisition)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Stage, otherT.Stage)) return false;
-            if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+            if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
             if( !DeepComparable.IsExactly(Occurrence, otherT.Occurrence)) return false;

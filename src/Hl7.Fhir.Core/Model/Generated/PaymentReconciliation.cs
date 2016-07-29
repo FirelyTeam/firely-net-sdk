@@ -124,16 +124,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Claim Response
             /// </summary>
-            [FhirElement("responce", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("response", Order=60, Choice=ChoiceType.DatatypeChoice)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Responce
+            public Hl7.Fhir.Model.Element Response
             {
-                get { return _Responce; }
-                set { _Responce = value; OnPropertyChanged("Responce"); }
+                get { return _Response; }
+                set { _Response = value; OnPropertyChanged("Response"); }
             }
             
-            private Hl7.Fhir.Model.Element _Responce;
+            private Hl7.Fhir.Model.Element _Response;
             
             /// <summary>
             /// Submitter
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DateElement = null; 
                     else
                       DateElement = new Hl7.Fhir.Model.Date(value);
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
                     if(Request != null) dest.Request = (Hl7.Fhir.Model.Element)Request.DeepCopy();
-                    if(Responce != null) dest.Responce = (Hl7.Fhir.Model.Element)Responce.DeepCopy();
+                    if(Response != null) dest.Response = (Hl7.Fhir.Model.Element)Response.DeepCopy();
                     if(Submitter != null) dest.Submitter = (Hl7.Fhir.Model.Element)Submitter.DeepCopy();
                     if(Payee != null) dest.Payee = (Hl7.Fhir.Model.Element)Payee.DeepCopy();
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.Date)DateElement.DeepCopy();
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(Request, otherT.Request)) return false;
-                if( !DeepComparable.Matches(Responce, otherT.Responce)) return false;
+                if( !DeepComparable.Matches(Response, otherT.Response)) return false;
                 if( !DeepComparable.Matches(Submitter, otherT.Submitter)) return false;
                 if( !DeepComparable.Matches(Payee, otherT.Payee)) return false;
                 if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(Request, otherT.Request)) return false;
-                if( !DeepComparable.IsExactly(Responce, otherT.Responce)) return false;
+                if( !DeepComparable.IsExactly(Response, otherT.Response)) return false;
                 if( !DeepComparable.IsExactly(Submitter, otherT.Submitter)) return false;
                 if( !DeepComparable.IsExactly(Payee, otherT.Payee)) return false;
                 if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       TextElement = null; 
                     else
                       TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.PaymentReconciliation.PaymentReconciliationStatus>(value);
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model
             get { return OutcomeElement != null ? OutcomeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   OutcomeElement = null; 
                 else
                   OutcomeElement = new Code<Hl7.Fhir.Model.ClaimProcessingCodes>(value);
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
             get { return DispositionElement != null ? DispositionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DispositionElement = null; 
                 else
                   DispositionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
             get { return CreatedElement != null ? CreatedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CreatedElement = null; 
                 else
                   CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);

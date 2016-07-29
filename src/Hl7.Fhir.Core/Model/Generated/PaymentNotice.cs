@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.PaymentNotice.PaymentNoticeStatus>(value);
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
             get { return CreatedElement != null ? CreatedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CreatedElement = null; 
                 else
                   CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
             get { return StatusDateElement != null ? StatusDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   StatusDateElement = null; 
                 else
                   StatusDateElement = new Hl7.Fhir.Model.Date(value);

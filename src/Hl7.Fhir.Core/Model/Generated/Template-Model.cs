@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Tue, 19 Jul 2016 19:13:47 GMT for FHIR v1.5.0
+// Model Generated on Fri, 29 Jul 2016 23:08:14 GMT for FHIR v1.5.0
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): CompartmentDefinition.resource.code
@@ -22,7 +22,7 @@
 	// Used in model class (resource): CodeSystem.filter.operator
 	// Used in model class (resource): ValueSet.compose.include.filter.op
 
-// Generated Shared Enumeration: ActionSelectionBehavior
+// Generated Shared Enumeration: PlanActionSelectionBehavior
 	// Used in model class (resource): GuidanceResponse.action.selectionBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.selectionBehavior
 
@@ -34,7 +34,7 @@
 	// Used in model class (resource): Practitioner.gender
 	// Used in model class (resource): RelatedPerson.gender
 
-// Generated Shared Enumeration: ActionGroupingBehavior
+// Generated Shared Enumeration: PlanActionGroupingBehavior
 	// Used in model class (resource): GuidanceResponse.action.groupingBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.groupingBehavior
 
@@ -42,7 +42,7 @@
 	// Used in model class (resource): Observation.status
 	// Used in model class (resource): RiskAssessment.status
 
-// Generated Shared Enumeration: ActionPrecheckBehavior
+// Generated Shared Enumeration: PlanActionPrecheckBehavior
 	// Used in model class (resource): GuidanceResponse.action.precheckBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.precheckBehavior
 
@@ -68,14 +68,13 @@
 	// Used in model class (resource): OperationDefinition.parameter.searchType
 	// Used in model class (resource): SearchParameter.type
 
-// Generated Shared Enumeration: ActionCardinalityBehavior
+// Generated Shared Enumeration: PlanActionCardinalityBehavior
 	// Used in model class (resource): GuidanceResponse.action.cardinalityBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.cardinalityBehavior
 
-// Generated Shared Enumeration: ParticipantType
+// Generated Shared Enumeration: PlanActionParticipantType
 	// Used in model class (resource): ActivityDefinition.participantType
 	// Used in model class (resource): PlanDefinition.actionDefinition.participantType
-	// Used in model class (type): ActionDefinition.participantType
 
 // Generated Shared Enumeration: ConformanceResourceStatus
 	// Used in model class (resource): CodeSystem.status
@@ -97,18 +96,16 @@
 	// Used in model class (resource): HealthcareService.availableTime.daysOfWeek
 	// Used in model class (resource): PractitionerRole.availableTime.daysOfWeek
 
-// Generated Shared Enumeration: ModuleMetadataStatus
+// Generated Shared Enumeration: LibraryStatus
 	// Used in model class (resource): ActivityDefinition.status
 	// Used in model class (resource): DecisionSupportServiceModule.status
 	// Used in model class (resource): Library.status
 	// Used in model class (resource): Measure.status
 	// Used in model class (resource): PlanDefinition.status
-	// Used in model class (type): ModuleMetadata.status
 
-// Generated Shared Enumeration: ActionRelationshipType
+// Generated Shared Enumeration: PlanActionRelationshipType
 	// Used in model class (resource): GuidanceResponse.action.relatedAction.relationship
 	// Used in model class (resource): PlanDefinition.actionDefinition.relatedAction.relationship
-	// Used in model class (type): ActionDefinition.relatedAction.relationship
 
 // Generated Shared Enumeration: DocumentReferenceStatus
 	// Used in model class (resource): DocumentManifest.status
@@ -123,14 +120,13 @@
 	// Used in model class (resource): MedicationAdministration.status
 	// Used in model class (resource): MedicationAdministration.eventHistory.status
 
-// Generated Shared Enumeration: ActionRequiredBehavior
+// Generated Shared Enumeration: PlanActionRequiredBehavior
 	// Used in model class (resource): GuidanceResponse.action.requiredBehavior
 	// Used in model class (resource): PlanDefinition.actionDefinition.requiredBehavior
 
-// Generated Shared Enumeration: ActionRelationshipAnchor
+// Generated Shared Enumeration: PlanActionRelationshipAnchor
 	// Used in model class (resource): GuidanceResponse.action.relatedAction.anchor
 	// Used in model class (resource): PlanDefinition.actionDefinition.relatedAction.anchor
-	// Used in model class (type): ActionDefinition.relatedAction.anchor
 
 // Generated Shared Enumeration: FHIRAllTypes
 	// Used in model class (resource): OperationDefinition.parameter.type

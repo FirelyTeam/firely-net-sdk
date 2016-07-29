@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Slot.SlotStatus>(value);
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
             get { return StartElement != null ? StartElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StartElement = null; 
                 else
                   StartElement = new Hl7.Fhir.Model.Instant(value);
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
             get { return EndElement != null ? EndElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   EndElement = null; 
                 else
                   EndElement = new Hl7.Fhir.Model.Instant(value);
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model
             get { return OverbookedElement != null ? OverbookedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   OverbookedElement = null; 
                 else
                   OverbookedElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model
             get { return CommentElement != null ? CommentElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CommentElement = null; 
                 else
                   CommentElement = new Hl7.Fhir.Model.FhirString(value);

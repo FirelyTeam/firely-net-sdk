@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
                 get { return SequenceElement != null ? SequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       SequenceElement = null; 
                     else
                       SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model
                 get { return SequenceElement != null ? SequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       SequenceElement = null; 
                     else
                       SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DateElement = null; 
                     else
                       DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
                 get { return PreAuthRefElement != null ? PreAuthRefElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       PreAuthRefElement = null; 
                     else
                       PreAuthRefElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DateElement = null; 
                     else
                       DateElement = new Hl7.Fhir.Model.Date(value);
@@ -915,7 +915,7 @@ namespace Hl7.Fhir.Model
                 get { return SequenceElement != null ? SequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       SequenceElement = null; 
                     else
                       SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -962,7 +962,7 @@ namespace Hl7.Fhir.Model
                 get { return DiagnosisLinkIdElement != null ? DiagnosisLinkIdElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DiagnosisLinkIdElement = null; 
                     else
                       DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
@@ -1115,7 +1115,7 @@ namespace Hl7.Fhir.Model
                 get { return FactorElement != null ? FactorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       FactorElement = null; 
                     else
                       FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1147,7 +1147,7 @@ namespace Hl7.Fhir.Model
                 get { return PointsElement != null ? PointsElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       PointsElement = null; 
                     else
                       PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1235,7 +1235,7 @@ namespace Hl7.Fhir.Model
                 get { return NoteNumberElement != null ? NoteNumberElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       NoteNumberElement = null; 
                     else
                       NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
@@ -1437,7 +1437,7 @@ namespace Hl7.Fhir.Model
                 get { return ResponsibleElement != null ? ResponsibleElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       ResponsibleElement = null; 
                     else
                       ResponsibleElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1595,7 +1595,7 @@ namespace Hl7.Fhir.Model
                 get { return ValueElement != null ? ValueElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       ValueElement = null; 
                     else
                       ValueElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1688,7 +1688,7 @@ namespace Hl7.Fhir.Model
                 get { return SequenceElement != null ? SequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       SequenceElement = null; 
                     else
                       SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -1827,7 +1827,7 @@ namespace Hl7.Fhir.Model
                 get { return FactorElement != null ? FactorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       FactorElement = null; 
                     else
                       FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1859,7 +1859,7 @@ namespace Hl7.Fhir.Model
                 get { return PointsElement != null ? PointsElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       PointsElement = null; 
                     else
                       PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1920,7 +1920,7 @@ namespace Hl7.Fhir.Model
                 get { return NoteNumberElement != null ? NoteNumberElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       NoteNumberElement = null; 
                     else
                       NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
@@ -2077,7 +2077,7 @@ namespace Hl7.Fhir.Model
                 get { return SequenceElement != null ? SequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       SequenceElement = null; 
                     else
                       SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -2216,7 +2216,7 @@ namespace Hl7.Fhir.Model
                 get { return FactorElement != null ? FactorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       FactorElement = null; 
                     else
                       FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -2248,7 +2248,7 @@ namespace Hl7.Fhir.Model
                 get { return PointsElement != null ? PointsElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       PointsElement = null; 
                     else
                       PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -2309,7 +2309,7 @@ namespace Hl7.Fhir.Model
                 get { return NoteNumberElement != null ? NoteNumberElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       NoteNumberElement = null; 
                     else
                       NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
@@ -2448,7 +2448,7 @@ namespace Hl7.Fhir.Model
                 get { return InitialElement != null ? InitialElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       InitialElement = null; 
                     else
                       InitialElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -2480,7 +2480,7 @@ namespace Hl7.Fhir.Model
                 get { return PriorDateElement != null ? PriorDateElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       PriorDateElement = null; 
                     else
                       PriorDateElement = new Hl7.Fhir.Model.Date(value);
@@ -2583,7 +2583,7 @@ namespace Hl7.Fhir.Model
                 get { return SequenceLinkIdElement != null ? SequenceLinkIdElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       SequenceLinkIdElement = null; 
                     else
                       SequenceLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
@@ -2682,7 +2682,7 @@ namespace Hl7.Fhir.Model
                 get { return NoteNumberElement != null ? NoteNumberElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       NoteNumberElement = null; 
                     else
                       NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
@@ -2884,7 +2884,7 @@ namespace Hl7.Fhir.Model
                 get { return NoteNumberElement != null ? NoteNumberElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       NoteNumberElement = null; 
                     else
                       NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
@@ -3026,7 +3026,7 @@ namespace Hl7.Fhir.Model
                 get { return ExtractionDateElement != null ? ExtractionDateElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       ExtractionDateElement = null; 
                     else
                       ExtractionDateElement = new Hl7.Fhir.Model.Date(value);
@@ -3154,7 +3154,7 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DateElement = null; 
                     else
                       DateElement = new Hl7.Fhir.Model.Date(value);
@@ -3278,7 +3278,7 @@ namespace Hl7.Fhir.Model
                 get { return NumberElement != null ? NumberElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       NumberElement = null; 
                     else
                       NumberElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -3323,7 +3323,7 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       TextElement = null; 
                     else
                       TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -3455,7 +3455,7 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       NameElement = null; 
                     else
                       NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -3487,7 +3487,7 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DescriptionElement = null; 
                     else
                       DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -3751,7 +3751,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.ExplanationOfBenefit.ExplanationOfBenefitStatus>(value);
@@ -3879,7 +3879,7 @@ namespace Hl7.Fhir.Model
             get { return CreatedElement != null ? CreatedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CreatedElement = null; 
                 else
                   CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -3937,7 +3937,7 @@ namespace Hl7.Fhir.Model
             get { return DispositionElement != null ? DispositionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DispositionElement = null; 
                 else
                   DispositionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -4137,7 +4137,7 @@ namespace Hl7.Fhir.Model
             get { return PrecedenceElement != null ? PrecedenceElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   PrecedenceElement = null; 
                 else
                   PrecedenceElement = new Hl7.Fhir.Model.PositiveInt(value);

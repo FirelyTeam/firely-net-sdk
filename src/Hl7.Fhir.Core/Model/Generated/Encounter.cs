@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/encounter-status)
             /// </summary>
-            [EnumLiteral("in-progress"), Description("in Progress")]
+            [EnumLiteral("in-progress"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// MISSING DESCRIPTION
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       StatusElement = null; 
                     else
                       StatusElement = new Code<Hl7.Fhir.Model.Encounter.EncounterStatus>(value);
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       StatusElement = null; 
                     else
                       StatusElement = new Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus>(value);
@@ -725,7 +725,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Encounter.EncounterStatus>(value);

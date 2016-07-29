@@ -41,6 +41,9 @@ using System.ComponentModel;
 //
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// A resource with narrative, extensions, and contained resources
+    /// </summary>
     [FhirType("Account", IsResource=true)]
     [DataContract]
     public partial class Account : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
@@ -50,6 +53,33 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Account"; } }
         
+        /// <summary>
+        /// Indicates whether the account is available to be used.
+        /// (url: http://hl7.org/fhir/ValueSet/account-status)
+        /// </summary>
+        [FhirEnumeration("AccountStatus")]
+        public enum AccountStatus
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/account-status)
+            /// </summary>
+            [EnumLiteral("active"), Description("Active")]
+            Active,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/account-status)
+            /// </summary>
+            [EnumLiteral("inactive"), Description("Inactive")]
+            Inactive,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/account-status)
+            /// </summary>
+            [EnumLiteral("entered-in-error"), Description("Entered in error")]
+            EnteredInError,
+        }
+
         /// <summary>
         /// Account number
         /// </summary>
@@ -88,7 +118,7 @@ namespace Hl7.Fhir.Model
             get { return NameElement != null ? NameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -114,13 +144,13 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("status", InSummary=true, Order=120)]
         [DataMember]
-        public Hl7.Fhir.Model.Code StatusElement
+        public Code<Hl7.Fhir.Model.Account.AccountStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Hl7.Fhir.Model.Code _StatusElement;
+        private Code<Hl7.Fhir.Model.Account.AccountStatus> _StatusElement;
         
         /// <summary>
         /// active | inactive | entered-in-error
@@ -128,15 +158,15 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Status
+        public Hl7.Fhir.Model.Account.AccountStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Hl7.Fhir.Model.Code(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.Account.AccountStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -260,7 +290,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -278,7 +308,7 @@ namespace Hl7.Fhir.Model
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Hl7.Fhir.Model.Code)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Account.AccountStatus>)StatusElement.DeepCopy();
                 if(Active != null) dest.Active = (Hl7.Fhir.Model.Period)Active.DeepCopy();
                 if(Currency != null) dest.Currency = (Hl7.Fhir.Model.Coding)Currency.DeepCopy();
                 if(Balance != null) dest.Balance = (Money)Balance.DeepCopy();

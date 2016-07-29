@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
             get { return ActiveElement != null ? ActiveElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ActiveElement = null; 
                 else
                   ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
             get { return CommentElement != null ? CommentElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CommentElement = null; 
                 else
                   CommentElement = new Hl7.Fhir.Model.FhirString(value);

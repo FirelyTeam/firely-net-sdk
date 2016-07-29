@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
                 get { return CauseElement != null ? CauseElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       CauseElement = null; 
                     else
                       CauseElement = new Hl7.Fhir.Model.FhirString(value);
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionStatus>(value);
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -409,7 +409,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
             get { return ProtocolElement != null ? ProtocolElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ProtocolElement = null; 
                 else
                   ProtocolElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
             get { return SummaryElement != null ? SummaryElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   SummaryElement = null; 
                 else
                   SummaryElement = new Hl7.Fhir.Model.FhirString(value);

@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       TextElement = null; 
                     else
                       TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
                 get { return NumberOfRepeatsAllowedElement != null ? NumberOfRepeatsAllowedElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       NumberOfRepeatsAllowedElement = null; 
                     else
                       NumberOfRepeatsAllowedElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
                 get { return AllowedElement != null ? AllowedElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       AllowedElement = null; 
                     else
                       AllowedElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -625,7 +625,7 @@ namespace Hl7.Fhir.Model
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       StatusElement = null; 
                     else
                       StatusElement = new Code<Hl7.Fhir.Model.MedicationOrder.MedicationOrderStatus>(value);
@@ -671,7 +671,7 @@ namespace Hl7.Fhir.Model
                 get { return DateTimeElement != null ? DateTimeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DateTimeElement = null; 
                     else
                       DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.MedicationOrder.MedicationOrderStatus>(value);
@@ -875,7 +875,7 @@ namespace Hl7.Fhir.Model
             get { return DateWrittenElement != null ? DateWrittenElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateWrittenElement = null; 
                 else
                   DateWrittenElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -964,7 +964,7 @@ namespace Hl7.Fhir.Model
             get { return CategoryElement != null ? CategoryElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CategoryElement = null; 
                 else
                   CategoryElement = new Hl7.Fhir.Model.Code(value);

@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
                 get { return LabelElement != null ? LabelElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       LabelElement = null; 
                     else
                       LabelElement = new Hl7.Fhir.Model.FhirString(value);
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
                 get { return TitleElement != null ? TitleElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       TitleElement = null; 
                     else
                       TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DescriptionElement = null; 
                     else
                       DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
                 get { return TextEquivalentElement != null ? TextEquivalentElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       TextEquivalentElement = null; 
                     else
                       TextEquivalentElement = new Hl7.Fhir.Model.FhirString(value);
@@ -290,13 +290,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("participantType", Order=150)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Code<Hl7.Fhir.Model.ParticipantType>> ParticipantTypeElement
+            public List<Code<Hl7.Fhir.Model.PlanActionParticipantType>> ParticipantTypeElement
             {
-                get { if(_ParticipantTypeElement==null) _ParticipantTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ParticipantType>>(); return _ParticipantTypeElement; }
+                get { if(_ParticipantTypeElement==null) _ParticipantTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.PlanActionParticipantType>>(); return _ParticipantTypeElement; }
                 set { _ParticipantTypeElement = value; OnPropertyChanged("ParticipantTypeElement"); }
             }
             
-            private List<Code<Hl7.Fhir.Model.ParticipantType>> _ParticipantTypeElement;
+            private List<Code<Hl7.Fhir.Model.PlanActionParticipantType>> _ParticipantTypeElement;
             
             /// <summary>
             /// patient | practitioner | related-person
@@ -304,15 +304,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public IEnumerable<Hl7.Fhir.Model.ParticipantType?> ParticipantType
+            public IEnumerable<Hl7.Fhir.Model.PlanActionParticipantType?> ParticipantType
             {
                 get { return ParticipantTypeElement != null ? ParticipantTypeElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       ParticipantTypeElement = null; 
                     else
-                      ParticipantTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ParticipantType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ParticipantType>(elem)));
+                      ParticipantTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.PlanActionParticipantType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.PlanActionParticipantType>(elem)));
                     OnPropertyChanged("ParticipantType");
                 }
             }
@@ -335,13 +335,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("groupingBehavior", Order=170)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
+            public Code<Hl7.Fhir.Model.PlanActionGroupingBehavior> GroupingBehaviorElement
             {
                 get { return _GroupingBehaviorElement; }
                 set { _GroupingBehaviorElement = value; OnPropertyChanged("GroupingBehaviorElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.ActionGroupingBehavior> _GroupingBehaviorElement;
+            private Code<Hl7.Fhir.Model.PlanActionGroupingBehavior> _GroupingBehaviorElement;
             
             /// <summary>
             /// visual-group | logical-group | sentence-group
@@ -349,15 +349,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ActionGroupingBehavior? GroupingBehavior
+            public Hl7.Fhir.Model.PlanActionGroupingBehavior? GroupingBehavior
             {
                 get { return GroupingBehaviorElement != null ? GroupingBehaviorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       GroupingBehaviorElement = null; 
                     else
-                      GroupingBehaviorElement = new Code<Hl7.Fhir.Model.ActionGroupingBehavior>(value);
+                      GroupingBehaviorElement = new Code<Hl7.Fhir.Model.PlanActionGroupingBehavior>(value);
                     OnPropertyChanged("GroupingBehavior");
                 }
             }
@@ -367,13 +367,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("selectionBehavior", Order=180)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
+            public Code<Hl7.Fhir.Model.PlanActionSelectionBehavior> SelectionBehaviorElement
             {
                 get { return _SelectionBehaviorElement; }
                 set { _SelectionBehaviorElement = value; OnPropertyChanged("SelectionBehaviorElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.ActionSelectionBehavior> _SelectionBehaviorElement;
+            private Code<Hl7.Fhir.Model.PlanActionSelectionBehavior> _SelectionBehaviorElement;
             
             /// <summary>
             /// any | all | all-or-none | exactly-one | at-most-one | one-or-more
@@ -381,15 +381,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ActionSelectionBehavior? SelectionBehavior
+            public Hl7.Fhir.Model.PlanActionSelectionBehavior? SelectionBehavior
             {
                 get { return SelectionBehaviorElement != null ? SelectionBehaviorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       SelectionBehaviorElement = null; 
                     else
-                      SelectionBehaviorElement = new Code<Hl7.Fhir.Model.ActionSelectionBehavior>(value);
+                      SelectionBehaviorElement = new Code<Hl7.Fhir.Model.PlanActionSelectionBehavior>(value);
                     OnPropertyChanged("SelectionBehavior");
                 }
             }
@@ -399,13 +399,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("requiredBehavior", Order=190)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
+            public Code<Hl7.Fhir.Model.PlanActionRequiredBehavior> RequiredBehaviorElement
             {
                 get { return _RequiredBehaviorElement; }
                 set { _RequiredBehaviorElement = value; OnPropertyChanged("RequiredBehaviorElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.ActionRequiredBehavior> _RequiredBehaviorElement;
+            private Code<Hl7.Fhir.Model.PlanActionRequiredBehavior> _RequiredBehaviorElement;
             
             /// <summary>
             /// must | could | must-unless-documented
@@ -413,15 +413,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ActionRequiredBehavior? RequiredBehavior
+            public Hl7.Fhir.Model.PlanActionRequiredBehavior? RequiredBehavior
             {
                 get { return RequiredBehaviorElement != null ? RequiredBehaviorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       RequiredBehaviorElement = null; 
                     else
-                      RequiredBehaviorElement = new Code<Hl7.Fhir.Model.ActionRequiredBehavior>(value);
+                      RequiredBehaviorElement = new Code<Hl7.Fhir.Model.PlanActionRequiredBehavior>(value);
                     OnPropertyChanged("RequiredBehavior");
                 }
             }
@@ -431,13 +431,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("precheckBehavior", Order=200)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
+            public Code<Hl7.Fhir.Model.PlanActionPrecheckBehavior> PrecheckBehaviorElement
             {
                 get { return _PrecheckBehaviorElement; }
                 set { _PrecheckBehaviorElement = value; OnPropertyChanged("PrecheckBehaviorElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.ActionPrecheckBehavior> _PrecheckBehaviorElement;
+            private Code<Hl7.Fhir.Model.PlanActionPrecheckBehavior> _PrecheckBehaviorElement;
             
             /// <summary>
             /// yes | no
@@ -445,15 +445,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ActionPrecheckBehavior? PrecheckBehavior
+            public Hl7.Fhir.Model.PlanActionPrecheckBehavior? PrecheckBehavior
             {
                 get { return PrecheckBehaviorElement != null ? PrecheckBehaviorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       PrecheckBehaviorElement = null; 
                     else
-                      PrecheckBehaviorElement = new Code<Hl7.Fhir.Model.ActionPrecheckBehavior>(value);
+                      PrecheckBehaviorElement = new Code<Hl7.Fhir.Model.PlanActionPrecheckBehavior>(value);
                     OnPropertyChanged("PrecheckBehavior");
                 }
             }
@@ -463,13 +463,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("cardinalityBehavior", Order=210)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
+            public Code<Hl7.Fhir.Model.PlanActionCardinalityBehavior> CardinalityBehaviorElement
             {
                 get { return _CardinalityBehaviorElement; }
                 set { _CardinalityBehaviorElement = value; OnPropertyChanged("CardinalityBehaviorElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.ActionCardinalityBehavior> _CardinalityBehaviorElement;
+            private Code<Hl7.Fhir.Model.PlanActionCardinalityBehavior> _CardinalityBehaviorElement;
             
             /// <summary>
             /// single | multiple
@@ -477,15 +477,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ActionCardinalityBehavior? CardinalityBehavior
+            public Hl7.Fhir.Model.PlanActionCardinalityBehavior? CardinalityBehavior
             {
                 get { return CardinalityBehaviorElement != null ? CardinalityBehaviorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       CardinalityBehaviorElement = null; 
                     else
-                      CardinalityBehaviorElement = new Code<Hl7.Fhir.Model.ActionCardinalityBehavior>(value);
+                      CardinalityBehaviorElement = new Code<Hl7.Fhir.Model.PlanActionCardinalityBehavior>(value);
                     OnPropertyChanged("CardinalityBehavior");
                 }
             }
@@ -564,13 +564,13 @@ namespace Hl7.Fhir.Model
                     if(Condition != null) dest.Condition = (Hl7.Fhir.Model.PlanDefinition.ConditionComponent)Condition.DeepCopy();
                     if(RelatedAction != null) dest.RelatedAction = new List<Hl7.Fhir.Model.PlanDefinition.RelatedActionComponent>(RelatedAction.DeepCopy());
                     if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
-                    if(ParticipantTypeElement != null) dest.ParticipantTypeElement = new List<Code<Hl7.Fhir.Model.ParticipantType>>(ParticipantTypeElement.DeepCopy());
+                    if(ParticipantTypeElement != null) dest.ParticipantTypeElement = new List<Code<Hl7.Fhir.Model.PlanActionParticipantType>>(ParticipantTypeElement.DeepCopy());
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
-                    if(GroupingBehaviorElement != null) dest.GroupingBehaviorElement = (Code<Hl7.Fhir.Model.ActionGroupingBehavior>)GroupingBehaviorElement.DeepCopy();
-                    if(SelectionBehaviorElement != null) dest.SelectionBehaviorElement = (Code<Hl7.Fhir.Model.ActionSelectionBehavior>)SelectionBehaviorElement.DeepCopy();
-                    if(RequiredBehaviorElement != null) dest.RequiredBehaviorElement = (Code<Hl7.Fhir.Model.ActionRequiredBehavior>)RequiredBehaviorElement.DeepCopy();
-                    if(PrecheckBehaviorElement != null) dest.PrecheckBehaviorElement = (Code<Hl7.Fhir.Model.ActionPrecheckBehavior>)PrecheckBehaviorElement.DeepCopy();
-                    if(CardinalityBehaviorElement != null) dest.CardinalityBehaviorElement = (Code<Hl7.Fhir.Model.ActionCardinalityBehavior>)CardinalityBehaviorElement.DeepCopy();
+                    if(GroupingBehaviorElement != null) dest.GroupingBehaviorElement = (Code<Hl7.Fhir.Model.PlanActionGroupingBehavior>)GroupingBehaviorElement.DeepCopy();
+                    if(SelectionBehaviorElement != null) dest.SelectionBehaviorElement = (Code<Hl7.Fhir.Model.PlanActionSelectionBehavior>)SelectionBehaviorElement.DeepCopy();
+                    if(RequiredBehaviorElement != null) dest.RequiredBehaviorElement = (Code<Hl7.Fhir.Model.PlanActionRequiredBehavior>)RequiredBehaviorElement.DeepCopy();
+                    if(PrecheckBehaviorElement != null) dest.PrecheckBehaviorElement = (Code<Hl7.Fhir.Model.PlanActionPrecheckBehavior>)PrecheckBehaviorElement.DeepCopy();
+                    if(CardinalityBehaviorElement != null) dest.CardinalityBehaviorElement = (Code<Hl7.Fhir.Model.PlanActionCardinalityBehavior>)CardinalityBehaviorElement.DeepCopy();
                     if(ActivityDefinition != null) dest.ActivityDefinition = (Hl7.Fhir.Model.ResourceReference)ActivityDefinition.DeepCopy();
                     if(Transform != null) dest.Transform = (Hl7.Fhir.Model.ResourceReference)Transform.DeepCopy();
                     if(DynamicValue != null) dest.DynamicValue = new List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent>(DynamicValue.DeepCopy());
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DescriptionElement = null; 
                     else
                       DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
                 get { return LanguageElement != null ? LanguageElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       LanguageElement = null; 
                     else
                       LanguageElement = new Hl7.Fhir.Model.FhirString(value);
@@ -748,7 +748,7 @@ namespace Hl7.Fhir.Model
                 get { return ExpressionElement != null ? ExpressionElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       ExpressionElement = null; 
                     else
                       ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -833,13 +833,13 @@ namespace Hl7.Fhir.Model
             [FhirElement("relationship", Order=50)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.ActionRelationshipType> RelationshipElement
+            public Code<Hl7.Fhir.Model.PlanActionRelationshipType> RelationshipElement
             {
                 get { return _RelationshipElement; }
                 set { _RelationshipElement = value; OnPropertyChanged("RelationshipElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.ActionRelationshipType> _RelationshipElement;
+            private Code<Hl7.Fhir.Model.PlanActionRelationshipType> _RelationshipElement;
             
             /// <summary>
             /// before | after | concurrent
@@ -847,15 +847,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ActionRelationshipType? Relationship
+            public Hl7.Fhir.Model.PlanActionRelationshipType? Relationship
             {
                 get { return RelationshipElement != null ? RelationshipElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       RelationshipElement = null; 
                     else
-                      RelationshipElement = new Code<Hl7.Fhir.Model.ActionRelationshipType>(value);
+                      RelationshipElement = new Code<Hl7.Fhir.Model.PlanActionRelationshipType>(value);
                     OnPropertyChanged("Relationship");
                 }
             }
@@ -879,13 +879,13 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("anchor", Order=70)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.ActionRelationshipAnchor> AnchorElement
+            public Code<Hl7.Fhir.Model.PlanActionRelationshipAnchor> AnchorElement
             {
                 get { return _AnchorElement; }
                 set { _AnchorElement = value; OnPropertyChanged("AnchorElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.ActionRelationshipAnchor> _AnchorElement;
+            private Code<Hl7.Fhir.Model.PlanActionRelationshipAnchor> _AnchorElement;
             
             /// <summary>
             /// start | end
@@ -893,15 +893,15 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.ActionRelationshipAnchor? Anchor
+            public Hl7.Fhir.Model.PlanActionRelationshipAnchor? Anchor
             {
                 get { return AnchorElement != null ? AnchorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       AnchorElement = null; 
                     else
-                      AnchorElement = new Code<Hl7.Fhir.Model.ActionRelationshipAnchor>(value);
+                      AnchorElement = new Code<Hl7.Fhir.Model.PlanActionRelationshipAnchor>(value);
                     OnPropertyChanged("Anchor");
                 }
             }
@@ -914,9 +914,9 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(ActionIdentifier != null) dest.ActionIdentifier = (Hl7.Fhir.Model.Identifier)ActionIdentifier.DeepCopy();
-                    if(RelationshipElement != null) dest.RelationshipElement = (Code<Hl7.Fhir.Model.ActionRelationshipType>)RelationshipElement.DeepCopy();
+                    if(RelationshipElement != null) dest.RelationshipElement = (Code<Hl7.Fhir.Model.PlanActionRelationshipType>)RelationshipElement.DeepCopy();
                     if(Offset != null) dest.Offset = (Hl7.Fhir.Model.Element)Offset.DeepCopy();
-                    if(AnchorElement != null) dest.AnchorElement = (Code<Hl7.Fhir.Model.ActionRelationshipAnchor>)AnchorElement.DeepCopy();
+                    if(AnchorElement != null) dest.AnchorElement = (Code<Hl7.Fhir.Model.PlanActionRelationshipAnchor>)AnchorElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -990,7 +990,7 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DescriptionElement = null; 
                     else
                       DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1022,7 +1022,7 @@ namespace Hl7.Fhir.Model
                 get { return PathElement != null ? PathElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       PathElement = null; 
                     else
                       PathElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1054,7 +1054,7 @@ namespace Hl7.Fhir.Model
                 get { return LanguageElement != null ? LanguageElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       LanguageElement = null; 
                     else
                       LanguageElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1086,7 +1086,7 @@ namespace Hl7.Fhir.Model
                 get { return ExpressionElement != null ? ExpressionElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       ExpressionElement = null; 
                     else
                       ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1171,7 +1171,7 @@ namespace Hl7.Fhir.Model
             get { return UrlElement != null ? UrlElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UrlElement = null; 
                 else
                   UrlElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -1217,7 +1217,7 @@ namespace Hl7.Fhir.Model
             get { return VersionElement != null ? VersionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   VersionElement = null; 
                 else
                   VersionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1249,7 +1249,7 @@ namespace Hl7.Fhir.Model
             get { return NameElement != null ? NameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1281,7 +1281,7 @@ namespace Hl7.Fhir.Model
             get { return TitleElement != null ? TitleElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TitleElement = null; 
                 else
                   TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1308,13 +1308,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.ModuleMetadataStatus> StatusElement
+        public Code<Hl7.Fhir.Model.LibraryStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.ModuleMetadataStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.LibraryStatus> _StatusElement;
         
         /// <summary>
         /// draft | active | inactive
@@ -1322,15 +1322,15 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ModuleMetadataStatus? Status
+        public Hl7.Fhir.Model.LibraryStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.ModuleMetadataStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.LibraryStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -1359,7 +1359,7 @@ namespace Hl7.Fhir.Model
             get { return ExperimentalElement != null ? ExperimentalElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ExperimentalElement = null; 
                 else
                   ExperimentalElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1391,7 +1391,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1423,7 +1423,7 @@ namespace Hl7.Fhir.Model
             get { return PurposeElement != null ? PurposeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PurposeElement = null; 
                 else
                   PurposeElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1455,7 +1455,7 @@ namespace Hl7.Fhir.Model
             get { return UsageElement != null ? UsageElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UsageElement = null; 
                 else
                   UsageElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1487,7 +1487,7 @@ namespace Hl7.Fhir.Model
             get { return PublicationDateElement != null ? PublicationDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PublicationDateElement = null; 
                 else
                   PublicationDateElement = new Hl7.Fhir.Model.Date(value);
@@ -1519,7 +1519,7 @@ namespace Hl7.Fhir.Model
             get { return LastReviewDateElement != null ? LastReviewDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   LastReviewDateElement = null; 
                 else
                   LastReviewDateElement = new Hl7.Fhir.Model.Date(value);
@@ -1606,7 +1606,7 @@ namespace Hl7.Fhir.Model
             get { return PublisherElement != null ? PublisherElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PublisherElement = null; 
                 else
                   PublisherElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1652,7 +1652,7 @@ namespace Hl7.Fhir.Model
             get { return CopyrightElement != null ? CopyrightElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CopyrightElement = null; 
                 else
                   CopyrightElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1716,7 +1716,7 @@ namespace Hl7.Fhir.Model
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ModuleMetadataStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.LibraryStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.FhirString)PurposeElement.DeepCopy();

@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
                 get { return MeasureScoreElement != null ? MeasureScoreElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       MeasureScoreElement = null; 
                     else
                       MeasureScoreElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       TypeElement = null; 
                     else
                       TypeElement = new Hl7.Fhir.Model.Code(value);
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
                 get { return CountElement != null ? CountElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       CountElement = null; 
                     else
                       CountElement = new Hl7.Fhir.Model.Integer(value);
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
                 get { return ValueElement != null ? ValueElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       ValueElement = null; 
                     else
                       ValueElement = new Hl7.Fhir.Model.FhirString(value);
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
                 get { return MeasureScoreElement != null ? MeasureScoreElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       MeasureScoreElement = null; 
                     else
                       MeasureScoreElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       TypeElement = null; 
                     else
                       TypeElement = new Hl7.Fhir.Model.Code(value);
@@ -676,7 +676,7 @@ namespace Hl7.Fhir.Model
                 get { return CountElement != null ? CountElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       CountElement = null; 
                     else
                       CountElement = new Hl7.Fhir.Model.Integer(value);
@@ -862,7 +862,7 @@ namespace Hl7.Fhir.Model
                 get { return ValueElement != null ? ValueElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       ValueElement = null; 
                     else
                       ValueElement = new Hl7.Fhir.Model.FhirString(value);
@@ -894,7 +894,7 @@ namespace Hl7.Fhir.Model
                 get { return CountElement != null ? CountElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       CountElement = null; 
                     else
                       CountElement = new Hl7.Fhir.Model.Integer(value);
@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Model
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   TypeElement = null; 
                 else
                   TypeElement = new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType>(value);
@@ -1067,7 +1067,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus>(value);
@@ -1099,7 +1099,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);

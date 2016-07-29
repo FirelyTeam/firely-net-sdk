@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Endpoint.EndpointStatus>(value);
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
             get { return NameElement != null ? NameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
             get { return AddressElement != null ? AddressElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   AddressElement = null; 
                 else
                   AddressElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model
             get { return PayloadFormatElement != null ? PayloadFormatElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PayloadFormatElement = null; 
                 else
                   PayloadFormatElement = new Hl7.Fhir.Model.FhirString(value);
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
             get { return HeaderElement != null ? HeaderElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   HeaderElement = null; 
                 else
                   HeaderElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
             get { return PublicKeyElement != null ? PublicKeyElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PublicKeyElement = null; 
                 else
                   PublicKeyElement = new Hl7.Fhir.Model.FhirString(value);

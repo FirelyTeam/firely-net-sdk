@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
                 get { return EyeElement != null ? EyeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       EyeElement = null; 
                     else
                       EyeElement = new Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>(value);
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
                 get { return SphereElement != null ? SphereElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       SphereElement = null; 
                     else
                       SphereElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
                 get { return CylinderElement != null ? CylinderElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       CylinderElement = null; 
                     else
                       CylinderElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
                 get { return AxisElement != null ? AxisElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       AxisElement = null; 
                     else
                       AxisElement = new Hl7.Fhir.Model.Integer(value);
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
                 get { return PrismElement != null ? PrismElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       PrismElement = null; 
                     else
                       PrismElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model
                 get { return BaseElement != null ? BaseElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       BaseElement = null; 
                     else
                       BaseElement = new Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>(value);
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model
                 get { return AddElement != null ? AddElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       AddElement = null; 
                     else
                       AddElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
                 get { return PowerElement != null ? PowerElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       PowerElement = null; 
                     else
                       PowerElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
                 get { return BackCurveElement != null ? BackCurveElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       BackCurveElement = null; 
                     else
                       BackCurveElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
                 get { return DiameterElement != null ? DiameterElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       DiameterElement = null; 
                     else
                       DiameterElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
                 get { return ColorElement != null ? ColorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       ColorElement = null; 
                     else
                       ColorElement = new Hl7.Fhir.Model.FhirString(value);
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
                 get { return BrandElement != null ? BrandElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       BrandElement = null; 
                     else
                       BrandElement = new Hl7.Fhir.Model.FhirString(value);
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
                 get { return NotesElement != null ? NotesElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       NotesElement = null; 
                     else
                       NotesElement = new Hl7.Fhir.Model.FhirString(value);
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
             get { return DateWrittenElement != null ? DateWrittenElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateWrittenElement = null; 
                 else
                   DateWrittenElement = new Hl7.Fhir.Model.FhirDateTime(value);

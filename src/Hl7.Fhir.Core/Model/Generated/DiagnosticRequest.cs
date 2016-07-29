@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.RequestStatus>(value);
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// proposal | plan | orig. order | encoded +
+        /// proposal | plan | original-order | reflex-order
         /// </summary>
         [FhirElement("stage", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
             get { return AuthoredElement != null ? AuthoredElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   AuthoredElement = null; 
                 else
                   AuthoredElement = new Hl7.Fhir.Model.FhirDateTime(value);

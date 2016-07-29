@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
                 get { return SeverityElement != null ? SeverityElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       SeverityElement = null; 
                     else
                       SeverityElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>(value);
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       CodeElement = null; 
                     else
                       CodeElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueType>(value);
@@ -379,7 +379,7 @@ namespace Hl7.Fhir.Model
                 get { return DiagnosticsElement != null ? DiagnosticsElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DiagnosticsElement = null; 
                     else
                       DiagnosticsElement = new Hl7.Fhir.Model.FhirString(value);
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
                 get { return LocationElement != null ? LocationElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       LocationElement = null; 
                     else
                       LocationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
                 get { return ExpressionElement != null ? ExpressionElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       ExpressionElement = null; 
                     else
                       ExpressionElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));

@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
                 get { return LinkIdElement != null ? LinkIdElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       LinkIdElement = null; 
                     else
                       LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       TextElement = null; 
                     else
                       TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>(value);
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
             get { return AuthoredElement != null ? AuthoredElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   AuthoredElement = null; 
                 else
                   AuthoredElement = new Hl7.Fhir.Model.FhirDateTime(value);

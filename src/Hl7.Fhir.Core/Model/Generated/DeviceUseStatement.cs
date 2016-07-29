@@ -41,6 +41,9 @@ using System.ComponentModel;
 //
 namespace Hl7.Fhir.Model
 {
+    /// <summary>
+    /// A resource with narrative, extensions, and contained resources
+    /// </summary>
     [FhirType("DeviceUseStatement", IsResource=true)]
     [DataContract]
     public partial class DeviceUseStatement : Hl7.Fhir.Model.DomainResource, System.ComponentModel.INotifyPropertyChanged
@@ -145,7 +148,7 @@ namespace Hl7.Fhir.Model
             get { return NotesElement != null ? NotesElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NotesElement = null; 
                 else
                   NotesElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -177,7 +180,7 @@ namespace Hl7.Fhir.Model
             get { return RecordedOnElement != null ? RecordedOnElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   RecordedOnElement = null; 
                 else
                   RecordedOnElement = new Hl7.Fhir.Model.FhirDateTime(value);

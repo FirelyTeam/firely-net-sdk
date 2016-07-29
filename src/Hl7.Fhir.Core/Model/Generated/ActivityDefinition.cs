@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DescriptionElement = null; 
                     else
                       DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
                 get { return PathElement != null ? PathElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       PathElement = null; 
                     else
                       PathElement = new Hl7.Fhir.Model.FhirString(value);
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
                 get { return LanguageElement != null ? LanguageElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       LanguageElement = null; 
                     else
                       LanguageElement = new Hl7.Fhir.Model.FhirString(value);
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
                 get { return ExpressionElement != null ? ExpressionElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       ExpressionElement = null; 
                     else
                       ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
             get { return UrlElement != null ? UrlElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UrlElement = null; 
                 else
                   UrlElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model
             get { return VersionElement != null ? VersionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   VersionElement = null; 
                 else
                   VersionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
             get { return NameElement != null ? NameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
             get { return TitleElement != null ? TitleElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TitleElement = null; 
                 else
                   TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -476,13 +476,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.ModuleMetadataStatus> StatusElement
+        public Code<Hl7.Fhir.Model.LibraryStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.ModuleMetadataStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.LibraryStatus> _StatusElement;
         
         /// <summary>
         /// draft | active | inactive
@@ -490,15 +490,15 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ModuleMetadataStatus? Status
+        public Hl7.Fhir.Model.LibraryStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.ModuleMetadataStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.LibraryStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
             get { return ExperimentalElement != null ? ExperimentalElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ExperimentalElement = null; 
                 else
                   ExperimentalElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Model
             get { return PurposeElement != null ? PurposeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PurposeElement = null; 
                 else
                   PurposeElement = new Hl7.Fhir.Model.FhirString(value);
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
             get { return UsageElement != null ? UsageElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UsageElement = null; 
                 else
                   UsageElement = new Hl7.Fhir.Model.FhirString(value);
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
             get { return PublicationDateElement != null ? PublicationDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PublicationDateElement = null; 
                 else
                   PublicationDateElement = new Hl7.Fhir.Model.Date(value);
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model
             get { return LastReviewDateElement != null ? LastReviewDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   LastReviewDateElement = null; 
                 else
                   LastReviewDateElement = new Hl7.Fhir.Model.Date(value);
@@ -774,7 +774,7 @@ namespace Hl7.Fhir.Model
             get { return PublisherElement != null ? PublisherElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PublisherElement = null; 
                 else
                   PublisherElement = new Hl7.Fhir.Model.FhirString(value);
@@ -820,7 +820,7 @@ namespace Hl7.Fhir.Model
             get { return CopyrightElement != null ? CopyrightElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CopyrightElement = null; 
                 else
                   CopyrightElement = new Hl7.Fhir.Model.FhirString(value);
@@ -881,7 +881,7 @@ namespace Hl7.Fhir.Model
             get { return CategoryElement != null ? CategoryElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   CategoryElement = null; 
                 else
                   CategoryElement = new Code<Hl7.Fhir.Model.ActivityDefinition.ActivityDefinitionCategory>(value);
@@ -936,13 +936,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("participantType", Order=340)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Code<Hl7.Fhir.Model.ParticipantType>> ParticipantTypeElement
+        public List<Code<Hl7.Fhir.Model.PlanActionParticipantType>> ParticipantTypeElement
         {
-            get { if(_ParticipantTypeElement==null) _ParticipantTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ParticipantType>>(); return _ParticipantTypeElement; }
+            get { if(_ParticipantTypeElement==null) _ParticipantTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.PlanActionParticipantType>>(); return _ParticipantTypeElement; }
             set { _ParticipantTypeElement = value; OnPropertyChanged("ParticipantTypeElement"); }
         }
         
-        private List<Code<Hl7.Fhir.Model.ParticipantType>> _ParticipantTypeElement;
+        private List<Code<Hl7.Fhir.Model.PlanActionParticipantType>> _ParticipantTypeElement;
         
         /// <summary>
         /// patient | practitioner | related-person
@@ -950,15 +950,15 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IEnumerable<Hl7.Fhir.Model.ParticipantType?> ParticipantType
+        public IEnumerable<Hl7.Fhir.Model.PlanActionParticipantType?> ParticipantType
         {
             get { return ParticipantTypeElement != null ? ParticipantTypeElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ParticipantTypeElement = null; 
                 else
-                  ParticipantTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ParticipantType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ParticipantType>(elem)));
+                  ParticipantTypeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.PlanActionParticipantType>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.PlanActionParticipantType>(elem)));
                 OnPropertyChanged("ParticipantType");
             }
         }
@@ -1030,7 +1030,7 @@ namespace Hl7.Fhir.Model
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ModuleMetadataStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.LibraryStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.FhirString)PurposeElement.DeepCopy();
@@ -1050,7 +1050,7 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
-                if(ParticipantTypeElement != null) dest.ParticipantTypeElement = new List<Code<Hl7.Fhir.Model.ParticipantType>>(ParticipantTypeElement.DeepCopy());
+                if(ParticipantTypeElement != null) dest.ParticipantTypeElement = new List<Code<Hl7.Fhir.Model.PlanActionParticipantType>>(ParticipantTypeElement.DeepCopy());
                 if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.SimpleQuantity)Quantity.DeepCopy();
                 if(Transform != null) dest.Transform = (Hl7.Fhir.Model.ResourceReference)Transform.DeepCopy();

@@ -115,11 +115,11 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The status of the knowledge module
+    /// The status of the knowledge asset
     /// (url: http://hl7.org/fhir/ValueSet/module-metadata-status)
     /// </summary>
-    [FhirEnumeration("ModuleMetadataStatus")]
-    public enum ModuleMetadataStatus
+    [FhirEnumeration("LibraryStatus")]
+    public enum LibraryStatus
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -145,8 +145,8 @@ namespace Hl7.Fhir.Model
     /// The type of participant for the action
     /// (url: http://hl7.org/fhir/ValueSet/action-participant-type)
     /// </summary>
-    [FhirEnumeration("ParticipantType")]
-    public enum ParticipantType
+    [FhirEnumeration("PlanActionParticipantType")]
+    public enum PlanActionParticipantType
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -1102,8 +1102,8 @@ namespace Hl7.Fhir.Model
     /// Defines the types of relationships between actions
     /// (url: http://hl7.org/fhir/ValueSet/action-relationship-type)
     /// </summary>
-    [FhirEnumeration("ActionRelationshipType")]
-    public enum ActionRelationshipType
+    [FhirEnumeration("PlanActionRelationshipType")]
+    public enum PlanActionRelationshipType
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -1129,8 +1129,8 @@ namespace Hl7.Fhir.Model
     /// Defines possible anchors for the relationship between actions
     /// (url: http://hl7.org/fhir/ValueSet/action-relationship-anchor)
     /// </summary>
-    [FhirEnumeration("ActionRelationshipAnchor")]
-    public enum ActionRelationshipAnchor
+    [FhirEnumeration("PlanActionRelationshipAnchor")]
+    public enum PlanActionRelationshipAnchor
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -1150,8 +1150,8 @@ namespace Hl7.Fhir.Model
     /// Defines organization behavior of a group
     /// (url: http://hl7.org/fhir/ValueSet/action-grouping-behavior)
     /// </summary>
-    [FhirEnumeration("ActionGroupingBehavior")]
-    public enum ActionGroupingBehavior
+    [FhirEnumeration("PlanActionGroupingBehavior")]
+    public enum PlanActionGroupingBehavior
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -1177,8 +1177,8 @@ namespace Hl7.Fhir.Model
     /// Defines selection behavior of a group
     /// (url: http://hl7.org/fhir/ValueSet/action-selection-behavior)
     /// </summary>
-    [FhirEnumeration("ActionSelectionBehavior")]
-    public enum ActionSelectionBehavior
+    [FhirEnumeration("PlanActionSelectionBehavior")]
+    public enum PlanActionSelectionBehavior
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -1222,8 +1222,8 @@ namespace Hl7.Fhir.Model
     /// Defines requiredness behavior for selecting an action or an action group
     /// (url: http://hl7.org/fhir/ValueSet/action-required-behavior)
     /// </summary>
-    [FhirEnumeration("ActionRequiredBehavior")]
-    public enum ActionRequiredBehavior
+    [FhirEnumeration("PlanActionRequiredBehavior")]
+    public enum PlanActionRequiredBehavior
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -1249,8 +1249,8 @@ namespace Hl7.Fhir.Model
     /// Defines selection frequency behavior for an action or group
     /// (url: http://hl7.org/fhir/ValueSet/action-precheck-behavior)
     /// </summary>
-    [FhirEnumeration("ActionPrecheckBehavior")]
-    public enum ActionPrecheckBehavior
+    [FhirEnumeration("PlanActionPrecheckBehavior")]
+    public enum PlanActionPrecheckBehavior
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -1270,8 +1270,8 @@ namespace Hl7.Fhir.Model
     /// Defines behavior for an action or a group for how many times that item may be repeated
     /// (url: http://hl7.org/fhir/ValueSet/action-cardinality-behavior)
     /// </summary>
-    [FhirEnumeration("ActionCardinalityBehavior")]
-    public enum ActionCardinalityBehavior
+    [FhirEnumeration("PlanActionCardinalityBehavior")]
+    public enum PlanActionCardinalityBehavior
     {
         /// <summary>
         /// MISSING DESCRIPTION<br/>
@@ -1460,12 +1460,6 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)
         /// </summary>
-        [EnumLiteral("ActionDefinition"), Description("ActionDefinition")]
-        ActionDefinition,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/data-types)
-        /// </summary>
         [EnumLiteral("Address"), Description("Address")]
         Address,
         /// <summary>
@@ -1582,12 +1576,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Meta"), Description("Meta")]
         Meta,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/data-types)
-        /// </summary>
-        [EnumLiteral("ModuleMetadata"), Description("ModuleMetadata")]
-        ModuleMetadata,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/data-types)

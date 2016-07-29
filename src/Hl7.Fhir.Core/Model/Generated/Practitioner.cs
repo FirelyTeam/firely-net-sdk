@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
             get { return ActiveElement != null ? ActiveElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ActiveElement = null; 
                 else
                   ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
             get { return GenderElement != null ? GenderElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   GenderElement = null; 
                 else
                   GenderElement = new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Model
             get { return BirthDateElement != null ? BirthDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   BirthDateElement = null; 
                 else
                   BirthDateElement = new Hl7.Fhir.Model.Date(value);

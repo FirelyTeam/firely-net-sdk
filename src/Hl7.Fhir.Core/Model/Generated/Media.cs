@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   TypeElement = null; 
                 else
                   TypeElement = new Code<Hl7.Fhir.Model.Media.DigitalMediaType>(value);
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
             get { return DeviceNameElement != null ? DeviceNameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DeviceNameElement = null; 
                 else
                   DeviceNameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
             get { return HeightElement != null ? HeightElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   HeightElement = null; 
                 else
                   HeightElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
             get { return WidthElement != null ? WidthElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   WidthElement = null; 
                 else
                   WidthElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
             get { return FramesElement != null ? FramesElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   FramesElement = null; 
                 else
                   FramesElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
             get { return DurationElement != null ? DurationElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   DurationElement = null; 
                 else
                   DurationElement = new Hl7.Fhir.Model.UnsignedInt(value);

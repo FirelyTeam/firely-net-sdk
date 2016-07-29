@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.CommunicationRequest.CommunicationRequestStatus>(value);
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
             get { return RequestedOnElement != null ? RequestedOnElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   RequestedOnElement = null; 
                 else
                   RequestedOnElement = new Hl7.Fhir.Model.FhirDateTime(value);

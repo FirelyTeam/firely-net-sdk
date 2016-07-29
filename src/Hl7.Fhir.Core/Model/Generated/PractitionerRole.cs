@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
                 get { return DaysOfWeekElement != null ? DaysOfWeekElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DaysOfWeekElement = null; 
                     else
                       DaysOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
                 get { return AllDayElement != null ? AllDayElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       AllDayElement = null; 
                     else
                       AllDayElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
                 get { return AvailableStartTimeElement != null ? AvailableStartTimeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       AvailableStartTimeElement = null; 
                     else
                       AvailableStartTimeElement = new Hl7.Fhir.Model.Time(value);
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
                 get { return AvailableEndTimeElement != null ? AvailableEndTimeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       AvailableEndTimeElement = null; 
                     else
                       AvailableEndTimeElement = new Hl7.Fhir.Model.Time(value);
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DescriptionElement = null; 
                     else
                       DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
             get { return ActiveElement != null ? ActiveElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ActiveElement = null; 
                 else
                   ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -553,7 +553,7 @@ namespace Hl7.Fhir.Model
             get { return AvailabilityExceptionsElement != null ? AvailabilityExceptionsElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   AvailabilityExceptionsElement = null; 
                 else
                   AvailabilityExceptionsElement = new Hl7.Fhir.Model.FhirString(value);

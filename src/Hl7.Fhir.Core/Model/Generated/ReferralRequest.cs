@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.ReferralRequest.ReferralStatus>(value);
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
             get { return CategoryElement != null ? CategoryElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   CategoryElement = null; 
                 else
                   CategoryElement = new Code<Hl7.Fhir.Model.ReferralRequest.ReferralCategory>(value);
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
             get { return AuthoredElement != null ? AuthoredElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   AuthoredElement = null; 
                 else
                   AuthoredElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);

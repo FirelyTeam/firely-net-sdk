@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
             get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ContentTypeElement = null; 
                 else
                   ContentTypeElement = new Hl7.Fhir.Model.Code(value);
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual content
         /// </summary>
-        [FhirElement("content", InSummary=true, Order=60)]
+        [FhirElement("content", Order=60)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.Base64Binary ContentElement
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
             get { return ContentElement != null ? ContentElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ContentElement = null; 
                 else
                   ContentElement = new Hl7.Fhir.Model.Base64Binary(value);

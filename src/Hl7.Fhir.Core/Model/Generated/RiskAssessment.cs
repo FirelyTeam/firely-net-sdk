@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
                 get { return RelativeRiskElement != null ? RelativeRiskElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       RelativeRiskElement = null; 
                     else
                       RelativeRiskElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
                 get { return RationaleElement != null ? RationaleElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       RationaleElement = null; 
                     else
                       RationaleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.ObservationStatus>(value);
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
             get { return MitigationElement != null ? MitigationElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   MitigationElement = null; 
                 else
                   MitigationElement = new Hl7.Fhir.Model.FhirString(value);

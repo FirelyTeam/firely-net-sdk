@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
             get { return UrlElement != null ? UrlElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UrlElement = null; 
                 else
                   UrlElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
             get { return VersionElement != null ? VersionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   VersionElement = null; 
                 else
                   VersionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
             get { return NameElement != null ? NameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
             get { return TitleElement != null ? TitleElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TitleElement = null; 
                 else
                   TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -215,13 +215,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.ModuleMetadataStatus> StatusElement
+        public Code<Hl7.Fhir.Model.LibraryStatus> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.ModuleMetadataStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.LibraryStatus> _StatusElement;
         
         /// <summary>
         /// draft | active | inactive
@@ -229,15 +229,15 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.ModuleMetadataStatus? Status
+        public Hl7.Fhir.Model.LibraryStatus? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.ModuleMetadataStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.LibraryStatus>(value);
                 OnPropertyChanged("Status");
             }
         }
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
             get { return ExperimentalElement != null ? ExperimentalElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ExperimentalElement = null; 
                 else
                   ExperimentalElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model
             get { return PurposeElement != null ? PurposeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PurposeElement = null; 
                 else
                   PurposeElement = new Hl7.Fhir.Model.FhirString(value);
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
             get { return UsageElement != null ? UsageElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UsageElement = null; 
                 else
                   UsageElement = new Hl7.Fhir.Model.FhirString(value);
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
             get { return PublicationDateElement != null ? PublicationDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PublicationDateElement = null; 
                 else
                   PublicationDateElement = new Hl7.Fhir.Model.Date(value);
@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Model
             get { return LastReviewDateElement != null ? LastReviewDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   LastReviewDateElement = null; 
                 else
                   LastReviewDateElement = new Hl7.Fhir.Model.Date(value);
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
             get { return PublisherElement != null ? PublisherElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PublisherElement = null; 
                 else
                   PublisherElement = new Hl7.Fhir.Model.FhirString(value);
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model
             get { return CopyrightElement != null ? CopyrightElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CopyrightElement = null; 
                 else
                   CopyrightElement = new Hl7.Fhir.Model.FhirString(value);
@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Model
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.ModuleMetadataStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.LibraryStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.FhirString)PurposeElement.DeepCopy();

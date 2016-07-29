@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
                 get { return DeletedElement != null ? DeletedElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       DeletedElement = null; 
                     else
                       DeletedElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       DateElement = null; 
                     else
                       DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.List.ListStatus>(value);
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
             get { return ModeElement != null ? ModeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ModeElement = null; 
                 else
                   ModeElement = new Code<Hl7.Fhir.Model.ListMode>(value);
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
             get { return TitleElement != null ? TitleElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TitleElement = null; 
                 else
                   TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -409,7 +409,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);

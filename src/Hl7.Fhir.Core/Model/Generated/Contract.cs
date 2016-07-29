@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
                 get { return EffectiveTimeElement != null ? EffectiveTimeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       EffectiveTimeElement = null; 
                     else
                       EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
                 get { return FactorElement != null ? FactorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       FactorElement = null; 
                     else
                       FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
                 get { return PointsElement != null ? PointsElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       PointsElement = null; 
                     else
                       PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Model
                 get { return IssuedElement != null ? IssuedElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       IssuedElement = null; 
                     else
                       IssuedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       TextElement = null; 
                     else
                       TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -896,7 +896,7 @@ namespace Hl7.Fhir.Model
                 get { return EffectiveTimeElement != null ? EffectiveTimeElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (value == null)
                       EffectiveTimeElement = null; 
                     else
                       EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -954,7 +954,7 @@ namespace Hl7.Fhir.Model
                 get { return FactorElement != null ? FactorElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       FactorElement = null; 
                     else
                       FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -986,7 +986,7 @@ namespace Hl7.Fhir.Model
                 get { return PointsElement != null ? PointsElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                if (!value.HasValue)
                       PointsElement = null; 
                     else
                       PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -1307,7 +1307,7 @@ namespace Hl7.Fhir.Model
             get { return IssuedElement != null ? IssuedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   IssuedElement = null; 
                 else
                   IssuedElement = new Hl7.Fhir.Model.FhirDateTime(value);

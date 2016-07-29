@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
             get { return StartElement != null ? StartElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StartElement = null; 
                 else
                   StartElement = new Hl7.Fhir.Model.Instant(value);
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
             get { return EndElement != null ? EndElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   EndElement = null; 
                 else
                   EndElement = new Hl7.Fhir.Model.Instant(value);
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
             get { return ParticipantStatusElement != null ? ParticipantStatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ParticipantStatusElement = null; 
                 else
                   ParticipantStatusElement = new Code<Hl7.Fhir.Model.ParticipationStatus>(value);
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
             get { return CommentElement != null ? CommentElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CommentElement = null; 
                 else
                   CommentElement = new Hl7.Fhir.Model.FhirString(value);
