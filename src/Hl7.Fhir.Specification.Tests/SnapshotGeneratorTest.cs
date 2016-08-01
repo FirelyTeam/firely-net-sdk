@@ -59,16 +59,29 @@ namespace Hl7.Fhir.Specification.Tests
 		}
 
 		[TestMethod]
-		//[Ignore]
+		// [Ignore] // For debugging purposes
 		public void GenerateSingleSnapshot()
 		{
-			var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/uslab-obsratio");
+			var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
 			Assert.IsNotNull(sd);
 
             DumpReferences(sd);
 
 			generateSnapshotAndCompare(sd, _testSource);
 		}
+
+        [TestMethod]
+        // [Ignore] // TODO; Not supported yet...
+        public void GenerateDerivedProfileSnapshot()
+        {
+            // cqif-guidanceartifact profile is derived from cqif-knowledgemodule
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            Assert.IsNotNull(sd);
+
+            DumpReferences(sd);
+
+            generateSnapshotAndCompare(sd, _testSource);
+        }
 
         // [WMR 20160722] For debugging purposes
         [Conditional("DEBUG")]
@@ -112,8 +125,8 @@ namespace Hl7.Fhir.Specification.Tests
 			@"http://hl7.org/fhir/StructureDefinition/qicore-patient",
             @"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire",
 
-			// TODO: Profiles on profiles
-			@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact",    // Derived from cqif-knowledgemodule
+			// Profiles on (sliced) profiles
+			// @"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact",    // Derived from cqif-knowledgemodule
 
 			// Differential defines constraint on MedicationOrder.reason[x]
 			// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?

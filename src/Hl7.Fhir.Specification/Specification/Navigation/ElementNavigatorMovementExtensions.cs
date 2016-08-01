@@ -45,6 +45,39 @@ namespace Hl7.Fhir.Specification.Navigation
             return false;           
         }
 
+        // [WMR 20160801] NEW; move to last direct child element with same path as current element
+        // Returns true if the cursor has moved at least a single element, false otherwise
+        public static bool MoveToLastSlice(this BaseElementNavigator nav)
+        {
+            var bm = nav.Bookmark();
+
+            // if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
+            if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node is not set."); }
+            if (nav.Current.Base == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
+
+            var basePath = nav.Current.Base.Path;
+            if (string.IsNullOrEmpty(basePath)) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
+
+            var result = false;
+            while (nav.MoveToNext())
+            {
+                var baseComp = nav.Current.Base;
+                if (baseComp != null && baseComp.Path == basePath)
+                {
+                    // Match, advance cursor
+                    bm = nav.Bookmark();
+                    result = true;
+                }
+                else
+                {
+                    // Mismatch, back up to previous element and exit
+                    nav.ReturnToBookmark(bm);
+                    break;
+                }
+            }
+            return result;
+        }
+
         public static bool MoveToPrevious(this BaseElementNavigator nav, string name)
         {
             var bm = nav.Bookmark();

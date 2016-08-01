@@ -86,7 +86,6 @@ namespace Hl7.Fhir.Specification.Navigation
                 searchPos++;
             return searchPos;
         }
-     
 
         public override bool MoveToPrevious()
         {

@@ -122,8 +122,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Debug.WriteLine("Matches for children of " + snapNav.Path + (snapNav.Current != null && snapNav.Current.Name != null ? " '" + snapNav.Current.Name + "'" : null));
                 // matches.DumpMatches(snapNav, diffNav);
 
-                Bookmark lastSnapSlice = Bookmark.Empty;
-
                 foreach (var match in matches)
                 {
                     if (!snapNav.ReturnToBookmark(match.BaseBookmark))
@@ -136,19 +134,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // Add a slice element
                         // [WMR 20160720] NEW
 
-                        // Ensure that we have a valid bookmark to the last slice element in the snapshot
-                        // i.e. should have been initialized by the previous match with Action = Slice | Add
-                        if (lastSnapSlice.IsEmpty)
-                        {
-                            throw Error.InvalidOperation("Cannot add slice; slice introduction bookmark is null.");
-                        }
+                        // Add new slice after the last existing slice in base profile
+                        snapNav.MoveToLastSlice();
+                        var lastSlice = snapNav.Bookmark();
 
                         // Duplicate the matched snapshot element after the last slice
                         // Matched base element always points to the slicing introduction element
                         // Create base slice element by copying the base slicing introduction element
                         // TODO: Handle sliced base
                         snapNav.ReturnToBookmark(match.BaseBookmark);
-                        snapNav.DuplicateAfter(lastSnapSlice);
+
+                        snapNav.DuplicateAfter(lastSlice);
                         // Important: explicitly clear the slicing node in the copy!
                         snapNav.Current.Slicing = null;
                         markChange(snapNav.Current);
@@ -156,23 +152,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // Merge differential
                         mergeElement(snapNav, diffNav);
 
-                        // Update last slice bookmark to the newly added slice
-                        lastSnapSlice = snapNav.Bookmark();
-
                     }
                     else if (match.Action == ElementMatcher.MatchAction.Merge)
                     {
                         mergeElement(snapNav, diffNav);
-
-                        // [WMR 20160720] NEW - Clear bookmark to last slice
-                        lastSnapSlice = Bookmark.Empty;
                     }
                     else if (match.Action == ElementMatcher.MatchAction.Slice)
                     {
                         makeSlice(snapNav, diffNav);
-
-                        // [WMR 20160720] NEW - Initialize bookmark to last slice
-                        lastSnapSlice = snapNav.Bookmark();
                     }
                 }
             }
@@ -209,7 +196,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // accept constraints on children, need to select a single type first...
                     if (snap.Current.Type.Count > 1)
                     {
-                        throw new NotSupportedException("Differential has a constraint on a choice element '{0}', but does so without using a type slice".FormatWith(diff.Path));
+                        throw Error.InvalidOperation("Differential has a constraint on a choice element '{0}', but does so without using a type slice", diff.Path);
                     }
 
                     ExpandElement(snap, _resolver, _settings);
