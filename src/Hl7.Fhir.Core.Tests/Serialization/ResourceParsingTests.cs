@@ -100,17 +100,29 @@ namespace Hl7.Fhir.Tests.Serialization
             string xml = File.ReadAllText(@"TestData\TestPatient.xml");
             var pser = new FhirXmlParser();
 
+            // Assume that we can happily read the patient gender when enums are enforced
             var p = pser.Parse<Patient>(xml);
 
             Assert.IsNotNull(p.Gender);
             Assert.AreEqual("male", p.GenderElement.ObjectValue);
+            Assert.AreEqual(AdministrativeGender.Male, p.Gender.Value);
+
+            // Verify that if we relax the restriction that everything still works
+            pser.Settings.AllowUnrecognizedEnums = true;
+            p = pser.Parse<Patient>(xml);
+
+            Assert.IsNotNull(p.Gender);
+            Assert.AreEqual("male", p.GenderElement.ObjectValue);
+            Assert.AreEqual(AdministrativeGender.Male, p.Gender.Value);
 
 
             // Now, pollute the data with an incorrect administrative gender
+            // and verify that the system throws the format exception
             var xml2 = xml.Replace("\"male\"", "\"superman\"");
 
             try
             {
+                pser.Settings.AllowUnrecognizedEnums = false;
                 p = pser.Parse<Patient>(xml2);
                 Assert.Fail();
             }

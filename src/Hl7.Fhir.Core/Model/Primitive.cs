@@ -16,6 +16,7 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public object ObjectValue { get; set; }
 
+        [NotMapped]
         public override string TypeName
         {
             get { return "Primitive"; }
