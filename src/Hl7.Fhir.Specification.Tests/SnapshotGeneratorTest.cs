@@ -62,8 +62,9 @@ namespace Hl7.Fhir.Specification.Tests
 		// [Ignore] // For debugging purposes
 		public void GenerateSingleSnapshot()
 		{
-			var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
-			Assert.IsNotNull(sd);
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
+            Assert.IsNotNull(sd);
 
             DumpReferences(sd);
 
@@ -75,7 +76,8 @@ namespace Hl7.Fhir.Specification.Tests
         public void GenerateDerivedProfileSnapshot()
         {
             // cqif-guidanceartifact profile is derived from cqif-knowledgemodule
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
             Assert.IsNotNull(sd);
 
             DumpReferences(sd);

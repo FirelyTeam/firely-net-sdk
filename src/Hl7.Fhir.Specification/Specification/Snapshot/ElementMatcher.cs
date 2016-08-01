@@ -156,7 +156,12 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             bool baseIsSliced = snapNav.Current.Slicing != null;
             var nextDiffChildName = nextChildName(diffNav);
-            bool diffIsExtension = diffNav.Current.IsExtension();
+
+            // [WMR 20160801] Only emit slicing introduction for actual extension elements (with extension profile url)
+            // Do not emit slicing introduction for abstract Extension base element definition (inherited from external profiles)
+            // bool diffIsExtension = diffNav.Current.IsExtension();
+            bool diffIsExtension = diffNav.Current.IsMappedExtension();
+
             bool diffIsSliced = diffIsExtension || nextDiffChildName == diffNav.PathName;
 
             // [WMR 20160720] New logic
@@ -228,8 +233,13 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // For the first entries with explicit slicing information (or implicit if this is an extension),
             // generate a match between the base's unsliced element and the first entry in the diff
-            if (diffNav.Current.Slicing != null || diffNav.Current.IsExtension() )
-            {
+
+            // [WMR 20160801] Only emit slicing introduction if the differential element is a concrete extension definition
+            // This way, we prevent expanding generic ".extension" elements inherited from base profiles
+            // if (diffNav.Current.Slicing != null || diffNav.Current.IsMappedExtension())
+
+            if (diffNav.Current.Slicing != null || diffNav.Current.IsExtension())
+                {
                 // Differential has information for the slicing entry
                 result.Add(new MatchInfo()
                 {
@@ -238,7 +248,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                     Action = MatchAction.Slice
                 });
 
-                if(!diffNav.Current.IsExtension())
+                // [WMR 20160801] Fixed; If differentail contains an explicit extension slicing introduction, then skip it
+                // if (!diffNav.Current.IsExtension())
+                if (!diffNav.Current.IsExtension() || diffNav.Current.Slicing != null)
                 {
                     if (!diffNav.MoveToNext())
                         throw Error.InvalidOperation("Differential has a slicing entry {0}, but no first actual slice", diffNav.Path);
@@ -306,12 +318,12 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Returns true when match is found, matchingOrLastSlice points to match in base (merge here)
         // Returns false otherwise, matchingOrLastSlice points to last slice in base (add afterwards)
         // Maintain snapNav current position
-        private static bool FindBaseSlice(ElementNavigator snapNav, ElementNavigator diffNav, out Bookmark matchingOrLastSlice)
+        private static bool FindBaseSlice(ElementNavigator snapNav, ElementNavigator diffNav, out Bookmark matchingSlice)
         {
             var slicing = snapNav.Current.Slicing;
             Debug.Assert(slicing != null);
 
-            var slicingIntro = matchingOrLastSlice = snapNav.Bookmark();
+            var slicingIntro = matchingSlice = snapNav.Bookmark();
             var result = false;
 
             // url, type@profile, @type + @profile
@@ -327,10 +339,13 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 while (snapNav.MoveToNext(snapNav.PathName))
                 {
-                    matchingOrLastSlice = snapNav.Bookmark();
                     var baseSliceId = snapNav.Current.Type.FirstOrDefault().Profile;
                     result = baseSliceId.SequenceEqual(diffSliceId);
-                    if (result) { break; }
+                    if (result)
+                    {
+                        matchingSlice = snapNav.Bookmark();
+                        break;
+                    }
                 };
             }
             // TODO: Support other discriminators
