@@ -131,22 +131,16 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     if (match.Action == ElementMatcher.MatchAction.Add)
                     {
-                        // Add a slice element
-                        // [WMR 20160720] NEW
-
                         // Add new slice after the last existing slice in base profile
                         snapNav.MoveToLastSlice();
                         var lastSlice = snapNav.Bookmark();
 
-                        // Duplicate the matched snapshot element after the last slice
-                        // Matched base element always points to the slicing introduction element
-                        // Create base slice element by copying the base slicing introduction element
-                        // TODO: Handle sliced base
+                        // Initialize slice by duplicating base slice entry
                         snapNav.ReturnToBookmark(match.BaseBookmark);
-
                         snapNav.DuplicateAfter(lastSlice);
                         // Important: explicitly clear the slicing node in the copy!
                         snapNav.Current.Slicing = null;
+
                         markChange(snapNav.Current);
 
                         // Merge differential
@@ -420,13 +414,23 @@ namespace Hl7.Fhir.Specification.Snapshot
         private static ElementDefinition createExtensionSlicingEntry()
         {
             // Create a pre-fab extension slice, filled with sensible defaults
-            var slicingDiff = new ElementDefinition();
-            slicingDiff.Slicing = new ElementDefinition.SlicingComponent();
-            slicingDiff.Slicing.Discriminator = new[] { "url" };
-            slicingDiff.Slicing.Ordered = false;
-            slicingDiff.Slicing.Rules = ElementDefinition.SlicingRules.Open;
 
-            return slicingDiff;
+            //var slicingDiff = new ElementDefinition();
+            //slicingDiff.Slicing = new ElementDefinition.SlicingComponent();
+            //slicingDiff.Slicing.Discriminator = new[] { "url" };
+            //slicingDiff.Slicing.Ordered = false;
+            //slicingDiff.Slicing.Rules = ElementDefinition.SlicingRules.Open;
+            // return slicingDiff;
+
+            return new ElementDefinition()
+            {
+                Slicing = new ElementDefinition.SlicingComponent()
+                {
+                    Discriminator = new[] { "url" },
+                    Ordered = false,
+                    Rules = ElementDefinition.SlicingRules.Open
+                }
+            };
         }
 
 

@@ -64,7 +64,9 @@ namespace Hl7.Fhir.Specification.Tests
 		{
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder");
+
             Assert.IsNotNull(sd);
 
             DumpReferences(sd);
@@ -73,7 +75,7 @@ namespace Hl7.Fhir.Specification.Tests
 		}
 
         [TestMethod]
-        // [Ignore] // TODO; Not supported yet...
+        // [Ignore] // For debugging purposes
         public void GenerateDerivedProfileSnapshot()
         {
             // cqif-guidanceartifact profile is derived from cqif-knowledgemodule
@@ -127,7 +129,7 @@ namespace Hl7.Fhir.Specification.Tests
 		{
 			// Differential defines constraint on MedicationOrder.reason[x]
 			// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
-			@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
+			// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
 		};
 
 		[TestMethod]
