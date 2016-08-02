@@ -256,7 +256,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     // cf. ExpandElement
 
-#if HANDLE_COMPLEX_REFERENCES
                     // [WMR 20160721] NEW: Handle type profiles with name references
                     // e.g. profile "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent"
                     // Extension element "cause" => "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-cause"
@@ -264,14 +263,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // This means: 
                     // - First inherit child element constraints from extension definition, element with name "certainty"
                     // - Then override inherited constraints by explicit element constraints in profile differential
-                    var pos = primaryDiffTypeProfile.IndexOf('#');
-                    string baseNameRef = null;
-                    if (pos > 0)
+
+                    string profileUrl, elementName;
+                    var isComplex = IsComplexProfileReference(primaryDiffTypeProfile, out profileUrl, out elementName);
+                    if (isComplex)
                     {
-                        baseNameRef = primaryDiffTypeProfile.Substring(pos + 1);
-                        primaryDiffTypeProfile = primaryDiffTypeProfile.Substring(0, pos);
+                        primaryDiffTypeProfile = profileUrl;
                     }
-#endif
 
                     var baseType = _resolver.GetStructureDefinition(primaryDiffTypeProfile);
 
@@ -281,32 +279,26 @@ namespace Hl7.Fhir.Specification.Snapshot
                         {
                             // Clone and rebase
                             baseType = (StructureDefinition)baseType.DeepCopy();
-#if HANDLE_COMPLEX_REFERENCES
+
                             var rebasePath = diff.Path;
-                            if (baseNameRef != null && pos > 0)
+                            if (isComplex)
                             {
                                 rebasePath = ElementNavigator.GetParentPath(rebasePath);
                             }
                             baseType.Snapshot.Rebase(rebasePath);
-#else
-                                baseType.Snapshot.Rebase(diff.Path);
-#endif
 
                             generateBaseElements(baseType.Snapshot.Element);
                             var baseNav = new ElementNavigator(baseType.Snapshot.Element);
 
-#if HANDLE_COMPLEX_REFERENCES
-                            // [WMR 20160721] NEW - Handle type profiles with name references
-                            // sourceNav.MoveToFirstChild();
-                            if (baseNameRef == null)
+                            if (elementName == null)
                             {
                                 baseNav.MoveToFirstChild();
                             }
                             else
                             {
-                                if (!baseNav.JumpToNameReference(baseNameRef))
+                                if (!baseNav.JumpToNameReference(elementName))
                                 {
-                                    throw Error.InvalidOperation("Found type profile with invalid name reference '{0}' - the base profile does not contain an element with name '{1}'".FormatWith(primaryDiffTypeProfile, baseNameRef));
+                                    throw Error.InvalidOperation("Found type profile with invalid name reference '{0}' - the base profile does not contain an element with name '{1}'".FormatWith(primaryDiffTypeProfile, elementName));
                                 }
                             }
 
@@ -321,13 +313,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 // Only merge the profile root element; no need to expand children
                                 (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
                             }
-#else
-                                baseNav.MoveToFirstChild();
 
-                                // [WMR 20160720] Changed, use SnapshotGeneratorSettings
-                                // (new ElementDefnMerger(_markChanges)).Merge(snap.Current, baseNav.Current);
-                                (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
-#endif
 
                         }
                         else if (!_settings.IgnoreMissingTypeProfiles)
@@ -515,5 +501,25 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
         }
+
+        // [WMR 20160802] NEW
+
+        // Determines if the specified type profile url is of the form 'baseProfileUrl#elementName'
+        // If so, then extract separate components and return true
+        internal static bool IsComplexProfileReference(string url, out string profileUrl, out string elementName)
+        {
+            if (url == null) { throw new ArgumentNullException(nameof(url)); }
+            var pos = url.IndexOf('#');
+            if (pos > 0 && pos < url.Length)
+            {
+                profileUrl = url.Substring(0, pos);
+                elementName = url.Substring(pos + 1);
+                return true;
+            }
+            profileUrl = url;
+            elementName = null;
+            return false;
+        }
+
     }
 }

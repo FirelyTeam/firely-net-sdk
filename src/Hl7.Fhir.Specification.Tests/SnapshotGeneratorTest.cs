@@ -63,7 +63,8 @@ namespace Hl7.Fhir.Specification.Tests
 		public void GenerateSingleSnapshot()
 		{
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
             Assert.IsNotNull(sd);
 
             DumpReferences(sd);
@@ -78,6 +79,10 @@ namespace Hl7.Fhir.Specification.Tests
             // cqif-guidanceartifact profile is derived from cqif-knowledgemodule
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
             var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-patient");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-encounter");
+
             Assert.IsNotNull(sd);
 
             DumpReferences(sd);
@@ -97,12 +102,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             // FhirClient client = new FhirClient("http://fhir2.healthintersections.com.au/open/");
             // var folderPath = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\snapshot-test\download");
-            // if (Directory.Exists(folderPath)) { Directory.CreateDirectory(folderPath); }
+            // if (!Directory.Exists(folderPath)) { Directory.CreateDirectory(folderPath); }
 
             foreach (var profile in profiles)
             {
                 Debug.WriteLine(profile);
 
+                // How to determine the original filename?
                 //try
                 //{
                 //    var xml = client.Get(profile);
@@ -119,17 +125,6 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20160721] Following profiles are not yet handled (TODO)
         private readonly string[] skippedProfiles =
 		{
-			// TODO: Snapshot expansion does not yet support sliced base profiles.
-			// (Due to complex extensions)
-			@"http://hl7.org/fhir/StructureDefinition/qicore-adverseevent",
-			@"http://hl7.org/fhir/StructureDefinition/qicore-encounter",
-			@"http://hl7.org/fhir/StructureDefinition/qicore-goal",
-			@"http://hl7.org/fhir/StructureDefinition/qicore-patient",
-            @"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire",
-
-			// Profiles on (sliced) profiles
-			// @"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact",    // Derived from cqif-knowledgemodule
-
 			// Differential defines constraint on MedicationOrder.reason[x]
 			// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
 			@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",

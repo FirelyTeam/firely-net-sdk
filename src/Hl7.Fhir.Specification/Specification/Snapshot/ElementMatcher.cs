@@ -329,29 +329,44 @@ namespace Hl7.Fhir.Specification.Snapshot
             // url, type@profile, @type + @profile
             if (IsTypeProfileDiscriminator(slicing.Discriminator))
             {
-                // Slice on Element.Type.Profile
-                var diffSliceId = diffNav.Current.Type.FirstOrDefault().Profile;
-                if (diffSliceId == null)
+                // [WMR 20160802] Handle complex extension constraints
+                // e.g. sdc-questionnaire, Path = 'Questionnaire.group.question.extension.extension', name = 'question'
+                // Type.Profile = 'http://hl7.org/fhir/StructureDefinition/questionnaire-enableWhen#question'
+                // snapNav has already expanded target extension definition 'questionnaire-enableWhen'
+                // => Match to base profile on child element with name 'question'
+
+                var diffProfiles = diffNav.Current.Type.FirstOrDefault().Profile.ToArray();
+                if (diffProfiles == null || diffProfiles.Length == 0)
                 {
-                    throw Error.NotSupported("Differential is reslicing on url, but resliced element has no type profile, path = '{0}'.", diffNav.Path);
+                    throw Error.InvalidOperation("Differential is reslicing on url, but resliced element has no type profile (path = '{0}').", diffNav.Path);
                 }
-
-
+                if (diffProfiles.Length > 1)
+                {
+                    throw Error.NotSupported("Reslicing on complex discriminator is not supported (path = '{0}').", diffNav.Path);
+                }
+                var diffProfile = diffProfiles.FirstOrDefault();
+                string profileUrl, elementName;
+                var isComplex = SnapshotGenerator.IsComplexProfileReference(diffProfile, out profileUrl, out elementName);
                 while (snapNav.MoveToNext(snapNav.PathName))
                 {
-                    var baseSliceId = snapNav.Current.Type.FirstOrDefault().Profile;
-                    result = baseSliceId.SequenceEqual(diffSliceId);
+                    var baseProfiles = snapNav.Current.Type.FirstOrDefault().Profile;
+                    result = isComplex
+                        // Match on element name
+                        ? snapNav.Current.Name == elementName
+                        // Match on profile(s)
+                        : baseProfiles.SequenceEqual(diffProfiles);
                     if (result)
                     {
                         matchingSlice = snapNav.Bookmark();
                         break;
                     }
-                };
+                }
+
             }
             // TODO: Support other discriminators
             else
             {
-                throw Error.NotSupported("Unsupported slicing discriminator '{0}', path = '{1}'.", string.Join("|", slicing.Discriminator), snapNav.Path);
+                throw Error.NotSupported("Reslicing on discriminator '{0}' is not supported yet (path = '{1}').", string.Join("|", slicing.Discriminator), snapNav.Path);
             }
 
             snapNav.ReturnToBookmark(slicingIntro);
@@ -360,8 +375,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 #endif
 
-        // [WMR 20160801]
-        // Determine if the specified discriminator(s) match on type/profile
+                // [WMR 20160801]
+                // Determine if the specified discriminator(s) match on type/profile
         private static bool IsTypeProfileDiscriminator(IEnumerable<string> discriminators)
         {
             if (discriminators != null)
