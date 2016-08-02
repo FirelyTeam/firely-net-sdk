@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     DiffBookmark = diffNav.Bookmark(),
                     Action = MatchAction.Add
                 });
-            } while (moveToNextTypeSlice(diffNav, snapNav.PathName));
+            } while (diffNav.MoveToNextTypeSlice(snapNav.PathName));
 
             return result;
         }
@@ -427,20 +427,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             return result;
-        }
-
-        // [WMR 20160720] NEW
-        private static bool moveToNextTypeSlice(BaseElementNavigator nav, string name)
-        {
-            var bm = nav.Bookmark();
-
-            while (nav.MoveToNext())
-            {
-                if (NamedNavigation.IsRenamedChoiceElement(name, nav.PathName)) return true;
-            }
-
-            nav.ReturnToBookmark(bm);
-            return false;
         }
 
     }

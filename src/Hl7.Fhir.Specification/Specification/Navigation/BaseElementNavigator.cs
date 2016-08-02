@@ -108,5 +108,12 @@ namespace Hl7.Fhir.Specification.Navigation
 
         // Singleton
         public static readonly Bookmark Empty = new Bookmark();
+
+        // [WMR 20160802] NEW
+        internal static Bookmark FromElement(ElementDefinition element)
+        {
+            if (element == null) throw Error.ArgumentNull(nameof(element));
+            return new Bookmark() { data = element };
+        }
     }
 }
