@@ -110,6 +110,30 @@ namespace Hl7.Fhir.Specification.Snapshot
             structure.Snapshot = new StructureDefinition.SnapshotComponent() { Element = snapNav.ToListOfElements() };
         }
 
+        // [WMR 20160802] NEW - TODO
+        // For partial expansion of a single (complex) element
+
+        /// <summary>Given a list of element definitions, expand the definition of a single element.</summary>
+        /// <param name="elements">A list of <see cref="ElementDefinition"/> instances, taken from snapshot or differential.</param>
+        /// <param name="element">The single element to expand. Should be part of <paramref name="elements"/>.</param>
+        /// <returns>A new, expanded list of <see cref="ElementDefinition"/> instances.</returns>
+        /// <exception cref="ArgumentException">The specified element is not contained in the list.</exception>
+        public IList<ElementDefinition> ExpandElement(IList<ElementDefinition> elements, ElementDefinition element)
+        {
+            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+
+            var nav = new ElementNavigator(elements);
+            if (!nav.MoveTo(element))
+            {
+                throw Error.Argument(nameof(element), "The specified element is not contained in the list.");
+            }
+
+            expandElement(nav, _resolver, _settings);
+
+            return nav.Elements;
+        }
+
         private void merge(ElementNavigator snapNav, ElementNavigator diffNav)
         {
             var snapPos = snapNav.Bookmark();
@@ -193,7 +217,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         throw Error.InvalidOperation("Differential has a constraint on a choice element '{0}', but does so without using a type slice", diff.Path);
                     }
 
-                    ExpandElement(snap, _resolver, _settings);
+                    expandElement(snap, _resolver, _settings);
 
                     if (!snap.HasChildren)
                     {
@@ -434,7 +458,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
 
-        internal static bool ExpandElement(ElementNavigator nav, ArtifactResolver resolver, SnapshotGeneratorSettings settings)
+        internal static bool expandElement(ElementNavigator nav, ArtifactResolver resolver, SnapshotGeneratorSettings settings)
         {
             if (resolver == null) throw Error.ArgumentNull("source");
             if (nav.Current == null) throw Error.ArgumentNull("Navigator is not positioned on an element");

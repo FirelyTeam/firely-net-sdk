@@ -23,45 +23,45 @@ using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-	[TestClass]
+    [TestClass]
 #if PORTABLE45
 	public class PortableSnapshotGeneratorTest
 #else
-	public class SnapshotGeneratorTest
+    public class SnapshotGeneratorTest
 #endif
-	{
-		private ArtifactResolver _testSource;
-		private readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
-		{
-			MarkChanges = false,
-			ExpandTypeProfiles = true,
-			// Throw on unresolved profile references; must include in TestData folder
-			IgnoreMissingTypeProfiles = false
-		};
+    {
+        private ArtifactResolver _testSource;
+        private readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
+        {
+            MarkChanges = false,
+            ExpandTypeProfiles = true,
+            // Throw on unresolved profile references; must include in TestData folder
+            IgnoreMissingTypeProfiles = false
+        };
 
-		[TestInitialize]
-		public void Setup()
-		{
-			_testSource = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/snapshot-test")));
-		}
+        [TestInitialize]
+        public void Setup()
+        {
+            _testSource = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/snapshot-test")));
+        }
 
-		// [WMR 20160718] Generate snapshot for extension definition fails with exception:
-		// System.ArgumentException: structure is not a constraint or extension
+        // [WMR 20160718] Generate snapshot for extension definition fails with exception:
+        // System.ArgumentException: structure is not a constraint or extension
 
-		[TestMethod]
-		//[Ignore]
-		public void GenerateExtensionSnapshot()
-		{
-			var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
-			Assert.IsNotNull(sd);
+        [TestMethod]
+        //[Ignore]
+        public void GenerateExtensionSnapshot()
+        {
+            var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
+            Assert.IsNotNull(sd);
 
-			generateSnapshotAndCompare(sd, _testSource);
-		}
+            generateSnapshotAndCompare(sd, _testSource);
+        }
 
-		[TestMethod]
-		// [Ignore] // For debugging purposes
-		public void GenerateSingleSnapshot()
-		{
+        [TestMethod]
+        // [Ignore] // For debugging purposes
+        public void GenerateSingleSnapshot()
+        {
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
@@ -71,8 +71,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             DumpReferences(sd);
 
-			generateSnapshotAndCompare(sd, _testSource);
-		}
+            generateSnapshotAndCompare(sd, _testSource);
+        }
 
         [TestMethod]
         // [Ignore] // For debugging purposes
@@ -126,134 +126,204 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20160721] Following profiles are not yet handled (TODO)
         private readonly string[] skippedProfiles =
-		{
+        {
 			// Differential defines constraint on MedicationOrder.reason[x]
 			// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
 			// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
 		};
 
-		[TestMethod]
-		// [Ignore]
-		public void GenerateSnapshot()
-		{
+        [TestMethod]
+        // [Ignore]
+        public void GenerateSnapshot()
+        {
             var start = DateTime.Now;
             int count = 0;
 
-			foreach (var original in findConstraintStrucDefs()
-				// [WMR 20160721] Skip invalid profiles
-				.Where(sd => !skippedProfiles.Contains(sd.Url))
-			)
-			{
-				// nothing to test, original does not have a snapshot
-				if (original.Snapshot == null) continue;        
+            foreach (var original in findConstraintStrucDefs()
+                // [WMR 20160721] Skip invalid profiles
+                .Where(sd => !skippedProfiles.Contains(sd.Url))
+            )
+            {
+                // nothing to test, original does not have a snapshot
+                if (original.Snapshot == null) continue;
 
-				Debug.WriteLine("Generating Snapshot for " + original.Url);
+                Debug.WriteLine("Generating Snapshot for " + original.Url);
 
-				generateSnapshotAndCompare(original, _testSource);
+                generateSnapshotAndCompare(original, _testSource);
                 count++;
             }
 
             var duration = DateTime.Now.Subtract(start).TotalMilliseconds;
             var avg = duration / count;
             Debug.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
-		}
+        }
 
-		private void generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
-		{
-			// var generator = new SnapshotGenerator(source, markChanges: false);        
-			var generator = new SnapshotGenerator(source, _settings);
+        private void generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
+        {
+            // var generator = new SnapshotGenerator(source, markChanges: false);        
+            var generator = new SnapshotGenerator(source, _settings);
 
-			var expanded = (StructureDefinition)original.DeepCopy();
-			Assert.IsTrue(original.IsExactly(expanded));
+            var expanded = (StructureDefinition)original.DeepCopy();
+            Assert.IsTrue(original.IsExactly(expanded));
 
-			generator.Generate(expanded);
+            generator.Generate(expanded);
 
-			var areEqual = original.IsExactly(expanded);
+            var areEqual = original.IsExactly(expanded);
 
-			if (!areEqual)
-			{
-				var tempPath = Path.GetTempPath();
-				File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), FhirSerializer.SerializeResourceToXml(original));
-				File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
-			}
+            if (!areEqual)
+            {
+                var tempPath = Path.GetTempPath();
+                File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), FhirSerializer.SerializeResourceToXml(original));
+                File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
+            }
 
-			Assert.IsTrue(areEqual);
-		}
-   
-		private IEnumerable<StructureDefinition> findConstraintStrucDefs()
-		{
-			var testSDs = _testSource.ListConformanceResources().Where(ci => ci.Type == ResourceType.StructureDefinition);
+            Assert.IsTrue(areEqual);
+        }
 
-			foreach (var sdInfo in testSDs)
-			{
-				// [WMR 20160721] Select all profiles in profiles-others.xml
-				var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
-				if (fileName == "profiles-others")
-				{
-					var sd = _testSource.GetStructureDefinition(sdInfo.Url);
+        private IEnumerable<StructureDefinition> findConstraintStrucDefs()
+        {
+            var testSDs = _testSource.ListConformanceResources().Where(ci => ci.Type == ResourceType.StructureDefinition);
 
-					if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
-						"but could not get structure definition by that url later on!").FormatWith(sdInfo.Url, sdInfo.Origin));
+            foreach (var sdInfo in testSDs)
+            {
+                // [WMR 20160721] Select all profiles in profiles-others.xml
+                var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
+                if (fileName == "profiles-others")
+                {
+                    var sd = _testSource.GetStructureDefinition(sdInfo.Url);
 
-					if (sd.IsConstraint || sd.IsExtension)
-						yield return sd;
-				}
-			}
-		}
+                    if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
+                        "but could not get structure definition by that url later on!").FormatWith(sdInfo.Url, sdInfo.Origin));
 
-		[TestMethod]
-		public void MakeDifferentialTree()
-		{
-			var e = new List<ElementDefinition>();
+                    if (sd.IsConstraint || sd.IsExtension)
+                        yield return sd;
+                }
+            }
+        }
 
-			e.Add(new ElementDefinition() { Path = "A.B.C1" });
-			e.Add(new ElementDefinition() { Path = "A.B.C1" });
-			e.Add(new ElementDefinition() { Path = "A.B.C2" });
-			e.Add(new ElementDefinition() { Path = "A.B" });
-			e.Add(new ElementDefinition() { Path = "A.B.C1.D" });
-			e.Add(new ElementDefinition() { Path = "A.D.F" });
+        [TestMethod]
+        public void MakeDifferentialTree()
+        {
+            var e = new List<ElementDefinition>();
 
-			var tree = new DifferentialTreeConstructor(e).MakeTree();
-			Assert.IsNotNull(tree);
+            e.Add(new ElementDefinition() { Path = "A.B.C1" });
+            e.Add(new ElementDefinition() { Path = "A.B.C1" });
+            e.Add(new ElementDefinition() { Path = "A.B.C2" });
+            e.Add(new ElementDefinition() { Path = "A.B" });
+            e.Add(new ElementDefinition() { Path = "A.B.C1.D" });
+            e.Add(new ElementDefinition() { Path = "A.D.F" });
 
-			var nav = new ElementNavigator(tree);
-			Assert.AreEqual(10, nav.Count);
+            var tree = new DifferentialTreeConstructor(e).MakeTree();
+            Assert.IsNotNull(tree);
 
-			Assert.IsTrue(nav.MoveToChild("A"));
-			Assert.IsTrue(nav.MoveToChild("B"));
-			Assert.IsTrue(nav.MoveToChild("C1"));
-			Assert.IsTrue(nav.MoveToNext("C1"));
-			Assert.IsTrue(nav.MoveToNext("C2"));
+            var nav = new ElementNavigator(tree);
+            Assert.AreEqual(10, nav.Count);
 
-			Assert.IsTrue(nav.MoveToParent());  // 1st A.B
-			Assert.IsTrue(nav.MoveToNext() && nav.Path == "A.B");  // (now) 2nd A.B
-			Assert.IsTrue(nav.MoveToChild("C1"));
-			Assert.IsTrue(nav.MoveToChild("D"));
+            Assert.IsTrue(nav.MoveToChild("A"));
+            Assert.IsTrue(nav.MoveToChild("B"));
+            Assert.IsTrue(nav.MoveToChild("C1"));
+            Assert.IsTrue(nav.MoveToNext("C1"));
+            Assert.IsTrue(nav.MoveToNext("C2"));
 
-			Assert.IsTrue(nav.MoveToParent());  // A.B.C1
-			Assert.IsTrue(nav.MoveToParent());  // A.B (2nd)
-			Assert.IsTrue(nav.MoveToNext() && nav.Path == "A.D");
-			Assert.IsTrue(nav.MoveToChild("F"));
-		}
+            Assert.IsTrue(nav.MoveToParent());  // 1st A.B
+            Assert.IsTrue(nav.MoveToNext() && nav.Path == "A.B");  // (now) 2nd A.B
+            Assert.IsTrue(nav.MoveToChild("C1"));
+            Assert.IsTrue(nav.MoveToChild("D"));
 
-	 
-		[TestMethod]
-		public void TestExpandChild()
-		{            
-			var qStructDef = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Questionnaire");
-			Assert.IsNotNull(qStructDef);
-			Assert.IsNotNull(qStructDef.Snapshot);
+            Assert.IsTrue(nav.MoveToParent());  // A.B.C1
+            Assert.IsTrue(nav.MoveToParent());  // A.B (2nd)
+            Assert.IsTrue(nav.MoveToNext() && nav.Path == "A.D");
+            Assert.IsTrue(nav.MoveToChild("F"));
+        }
 
-			var nav = new ElementNavigator(qStructDef.Snapshot.Element);
-			
-			nav.JumpToFirst("Questionnaire.telecom");
-			Assert.IsTrue(SnapshotGenerator.ExpandElement(nav,_testSource, SnapshotGeneratorSettings.Default));
-			Assert.IsTrue(nav.MoveToChild("period"), "Did not move into complex datatype ContactPoint");
 
-			nav.JumpToFirst("Questionnaire.group");
-			Assert.IsTrue(SnapshotGenerator.ExpandElement(nav,_testSource, SnapshotGeneratorSettings.Default));
-			Assert.IsTrue(nav.MoveToChild("title"), "Did not move into internally defined backbone element Group");
-		}
+        [TestMethod]
+        public void TestExpandChild()
+        {
+            var qStructDef = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            Assert.IsNotNull(qStructDef);
+            Assert.IsNotNull(qStructDef.Snapshot);
 
-	}
+            var nav = new ElementNavigator(qStructDef.Snapshot.Element);
+
+            nav.JumpToFirst("Questionnaire.telecom");
+            Assert.IsTrue(SnapshotGenerator.expandElement(nav, _testSource, SnapshotGeneratorSettings.Default));
+            Assert.IsTrue(nav.MoveToChild("period"), "Did not move into complex datatype ContactPoint");
+
+            nav.JumpToFirst("Questionnaire.group");
+            Assert.IsTrue(SnapshotGenerator.expandElement(nav, _testSource, SnapshotGeneratorSettings.Default));
+            Assert.IsTrue(nav.MoveToChild("title"), "Did not move into internally defined backbone element Group");
+        }
+
+        // [WMR 20160802] NEW - Expand a single element
+
+        [TestMethod]
+        public void TestExpandElement_PatientIdentifier()
+        {
+            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.identifier");
+        }
+
+        [TestMethod]
+        public void TestExpandElement_PatientName()
+        {
+            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.name");
+        }
+
+        private void TestExpandElement(string srcProfileUrl, string expandElemPath)
+        {
+            const string Indent = "  ";
+
+            // Prepare...
+            var sd = _testSource.GetStructureDefinition(srcProfileUrl);
+            Assert.IsNotNull(sd);
+            Assert.IsNotNull(sd.Snapshot);
+
+            var elems = sd.Snapshot.Element;
+            Assert.IsNotNull(elems);
+
+            Debug.WriteLine("Input:");
+            Debug.WriteLine(string.Join(Environment.NewLine, elems.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => Indent + e.Path)));
+
+            var elem = elems.FirstOrDefault(e => e.Path == expandElemPath);
+            Assert.IsNotNull(elem);
+            Assert.IsNotNull(elem.Type);
+            var elemType = elem.Type.First();
+            Assert.IsNotNull(elemType);
+
+            var elemTypeCode = elemType.Code.Value;
+            Assert.IsNotNull(elemTypeCode);
+            var elemProfile = elemType.Profile.FirstOrDefault();
+            var sdType = elemProfile != null
+                ? _testSource.GetStructureDefinition(elemProfile)
+                : _testSource.GetStructureDefinitionForCoreType(elemTypeCode);
+
+            Assert.IsNotNull(sd);
+            Assert.IsNotNull(sd.Snapshot);
+
+            Debug.WriteLine("\r\nType:");
+            Debug.WriteLine(string.Join(Environment.NewLine, sdType.Snapshot.Element.Select(e => Indent + e.Path)));
+
+            // Test...
+            var generator = new SnapshotGenerator(_testSource, _settings);
+            var result = generator.ExpandElement(elems, elem);
+
+            // Verify results
+            Debug.WriteLine("\r\nOutput:");
+            Debug.WriteLine(string.Join(Environment.NewLine, result.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => Indent + e.Path)));
+
+            sdType.Snapshot.Rebase(expandElemPath);
+            var typeElems = sdType.Snapshot.Element;
+
+            Assert.IsTrue(result.Count == elems.Count + typeElems.Count - 1);
+            Assert.IsTrue(result.Where(e => e.Path.StartsWith(expandElemPath)).Count() == typeElems.Count);
+
+            var startPos = result.IndexOf(elem);
+            for (int i = 0; i < typeElems.Count; i++)
+            {
+                var path = typeElems[i].Path;
+                Assert.IsTrue(result[startPos + i].Path.EndsWith(path, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
+    }
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
+using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -135,6 +136,24 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             // MoveNext method performs parameter validation
             return MoveToNext(nav, name) || MoveToPrevious(nav,name);
+        }
+
+        // [WMR 20160802] NEW - Move to the specified ElementDefinition
+        public static bool MoveTo(this BaseElementNavigator nav, ElementDefinition element)
+        {
+            if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+
+            var matches = nav.Find(element.Path);
+            foreach (var match in matches)
+            {
+                if (Object.ReferenceEquals(match.data, element))
+                {
+                    nav.ReturnToBookmark(match);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public static bool JumpToFirst(this BaseElementNavigator nav, string path)
