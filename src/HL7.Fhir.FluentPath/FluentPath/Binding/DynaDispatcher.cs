@@ -10,37 +10,15 @@ namespace Hl7.Fhir.FluentPath.Binding
 {
     internal class DynaDispatcher
     {
-        public DynaDispatcher(string name)
+        public DynaDispatcher(string name, SymbolTable scope)
         {
+            _scope = scope;
             _name = name;
         }
 
-        public DynaDispatcher(string name, IEnumerable<CallBinding> bindings)
-        {
-            _name = name;
-            _candidates.AddRange(bindings);
-        }
 
-        private List<CallBinding> _candidates = new List<CallBinding>();
         private string _name;
-
-        public DynaDispatcher Add<A, R>(Func<A, R> f)
-        {
-            _candidates.Add(CallBinding.Create(_name, f));
-            return this;
-        }
-
-        public DynaDispatcher Add<F, A, R>(Func<F, A, R> f)
-        {
-            _candidates.Add(CallBinding.Create(_name, f));
-            return this;
-        }
-
-        public DynaDispatcher Add<F, A, B, R>(Func<F, A, B, R> f)
-        {
-            _candidates.Add(CallBinding.Create(_name, f));
-            return this;
-        }
+        private SymbolTable _scope;
 
         public Invokee MakeDispatcher()
         {
@@ -53,24 +31,27 @@ namespace Hl7.Fhir.FluentPath.Binding
             List<object> actualArgs = new List<object>();
             actualArgs.AddRange(args.Select(a => a(context, InvokeeFactory.EmptyArgs)));
 
-            foreach(var entry in _candidates)
+            var entry = _scope.DynamicGet(_name, actualArgs);
+
+            if (entry != null)
             {
-                if (entry.DynamicMatches(_name,actualArgs))
+                try
                 {
-                    try
-                    {
-                        return entry.Function(context, args);
-                    }
-                    catch (TargetInvocationException tie)
-                    {
-                        // Unwrap the very non-informative T.I.E, and throw the nested exception instead
-                        throw tie.InnerException;
-                    }
+                    // The Get() here should never fail, since we already know there's a (dynamic) matching candidate
+                    // Need to clean up this duplicate logic later
+                    return entry(context, args);
+                }
+                catch (TargetInvocationException tie)
+                {
+                    // Unwrap the very non-informative T.I.E, and throw the nested exception instead
+                    throw tie.InnerException;
                 }
             }
-
-            //TODO: Make error reporting better
-            throw Error.Argument(noMatchError(actualArgs));
+            else
+            {
+                //TODO: Make error reporting better
+                throw Error.Argument(noMatchError(actualArgs));
+            }
         }
 
 

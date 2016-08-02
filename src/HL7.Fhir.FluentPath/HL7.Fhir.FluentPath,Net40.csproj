@@ -46,9 +46,11 @@
   <ItemGroup>
     <Compile Include="ElementsModel\ITypeNameProvider.cs" />
     <Compile Include="FluentPath\BaseEvaluationContext.cs" />
-    <Compile Include="FluentPath\Binding\BindingTable.cs" />
+    <Compile Include="FluentPath\Binding\SymbolTableInit.cs" />
+    <Compile Include="FluentPath\Binding\CallSignature.cs" />
     <Compile Include="FluentPath\Binding\DynaDispatcher.cs" />
     <Compile Include="FluentPath\Binding\Invokee.cs" />
+    <Compile Include="FluentPath\Binding\SymbolTable.cs" />
     <Compile Include="FluentPath\Binding\Typecasts.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionVisitor.cs" />
     <Compile Include="ElementsModel\NavigatorExtensions.cs" />
@@ -66,7 +68,6 @@
     <Compile Include="FluentPath\IValueProviderListExtensions.cs" />
     <Compile Include="FluentPath\TypeInfo.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
-    <Compile Include="FluentPath\Binding\CallBinding.cs" />
     <Compile Include="FluentPath\Parser\Operators.cs" />
     <Compile Include="FluentPath\Parser\Lexer.cs" />
     <Compile Include="FluentPath\IEvaluationContext.cs" />

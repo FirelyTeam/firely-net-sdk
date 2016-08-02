@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Support;
+﻿using Hl7.Fhir.FluentPath.Binding;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
         }
         public TypeInfo ExpressionType { get; protected set; }
 
-        public abstract T Accept<T>(ExpressionVisitor<T> visitor);
+        public abstract T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope);
 
         public override bool Equals(object obj)
         {
@@ -70,9 +71,9 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
         public object Value { get; private set; }
 
-        public override T Accept<T>(ExpressionVisitor<T> visitor)
+        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope)
         {
-            return visitor.VisitConstant(this);
+            return visitor.VisitConstant(this, scope);
         }
 
         public override bool Equals(object obj)
@@ -114,9 +115,9 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
         public IEnumerable<Expression> Arguments { get; private set; }
 
-        public override T Accept<T>(ExpressionVisitor<T> visitor)
+        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope)
         {
-            return visitor.VisitFunctionCall(this);
+            return visitor.VisitFunctionCall(this, scope);
         }
 
         public override bool Equals(object obj)
@@ -278,9 +279,9 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
         public IEnumerable<Expression> Contents { get; private set;  }
 
-        public override T Accept<T>(ExpressionVisitor<T> visitor)
+        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope)
         {
-            return visitor.VisitNewNodeListInit(this);
+            return visitor.VisitNewNodeListInit(this, scope);
         }
         public override bool Equals(object obj)
         {
@@ -313,9 +314,9 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
         public string Name { get; private set; }
 
-        public override T Accept<T>(ExpressionVisitor<T> visitor)
+        public override T Accept<T>(ExpressionVisitor<T> visitor, SymbolTable scope)
         {
-            return visitor.VisitVariableRef(this);
+            return visitor.VisitVariableRef(this, scope);
         }
         public override bool Equals(object obj)
         {

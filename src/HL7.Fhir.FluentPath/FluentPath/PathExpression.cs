@@ -41,17 +41,32 @@ namespace Hl7.Fhir.FluentPath
 
         public static Invokee Compile(string expression)
         {
+            var scope = new SymbolTable().AddStandardFP();
+
+            return Compile(expression, scope);
+        }
+
+
+        public static Invokee Compile(string expression, SymbolTable scope)
+        {
             //var cacheName = expression.Replace(" ", "");
 
             //if (_cache.ContainsKey(cacheName))
             //    return _cache[cacheName];  
             
-            return Compile(Parse(expression));
+            return Parse(expression).Compile(scope);
+        }
+
+        public static Invokee Compile(this Expression expression, SymbolTable scope)
+        {
+            return expression.ToEvaluator(scope);
         }
 
         public static Invokee Compile(this Expression expression)
         {
-            return expression.ToEvaluator();
+            var scope = new SymbolTable().AddStandardFP();
+
+            return Compile(expression,scope);
         }
 
 

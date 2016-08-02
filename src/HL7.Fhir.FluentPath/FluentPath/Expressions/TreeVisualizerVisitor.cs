@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Support;
+﻿using Hl7.Fhir.FluentPath.Binding;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,23 +13,23 @@ namespace Hl7.Fhir.FluentPath.Expressions
         private StringBuilder _result = new StringBuilder();
         private int _indent = 0;
 
-        public override StringBuilder VisitConstant(ConstantExpression expression)
+        public override StringBuilder VisitConstant(ConstantExpression expression, SymbolTable scope)
         {
             append("const {0}".FormatWith(expression.Value));
             appendType(expression);
             return _result;
         }
 
-        public override StringBuilder VisitFunctionCall(FunctionCallExpression expression)
+        public override StringBuilder VisitFunctionCall(FunctionCallExpression expression, SymbolTable scope)
         {
             append("func {0}".FormatWith(expression.FunctionName));
             appendType(expression);
 
             incr();
-            expression.Focus.Accept(this);
+            expression.Focus.Accept(this, scope);
 
             foreach (var arg in expression.Arguments)
-                arg.Accept(this);
+                arg.Accept(this, scope);
             decr();
 
             return _result;
@@ -46,20 +47,20 @@ namespace Hl7.Fhir.FluentPath.Expressions
         //    return _result;
         //}
 
-        public override StringBuilder VisitNewNodeListInit(NewNodeListInitExpression expression)
+        public override StringBuilder VisitNewNodeListInit(NewNodeListInitExpression expression, SymbolTable scope)
         {
             append("new NodeSet");
             appendType(expression);
 
             incr();
             foreach (var element in expression.Contents)
-                element.Accept(this);
+                element.Accept(this, scope);
             decr();
 
             return _result;
         }
 
-        public override StringBuilder VisitVariableRef(VariableRefExpression expression)
+        public override StringBuilder VisitVariableRef(VariableRefExpression expression, SymbolTable scope)
         {
             append("var {0}".FormatWith(expression.Name));
             appendType(expression);
@@ -108,7 +109,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
         public static string Dump(this Expression expr)
         {
             var dumper = new TreeVisualizerVisitor();
-            return expr.Accept(dumper).ToString();
+            return expr.Accept(dumper, new SymbolTable()).ToString();
         }
     }
 

@@ -127,18 +127,14 @@ public class FluentPathTests
         return true;
     }
 
-    // @SuppressWarnings("deprecation")
-    private void testBoolean(Resource resource, String expression, boolean value)
-    {
-        var nav = new ModelNavigator(resource);
-        Assert.IsTrue(PathExpression.IsBoolean(expression, value, FhirValueList.Create(nav)));
-    }
 
     // @SuppressWarnings("deprecation")
     private void testBoolean(Resource resource, Base focus, String focusType, String expression, boolean value)
     {
-        var context = BaseEvaluationContext.Root(resource==null ? ModelNavigator.CreateInput(focus) : ModelNavigator.CreateInput(resource));
-        context.SetThis(ModelNavigator.CreateInput(focus));
+        var context = BaseEvaluationContext.Root(ModelNavigator.CreateInput(focus));
+
+        if (resource != null)
+            context.SetResource(ModelNavigator.CreateInput(resource));
 
         Assert.IsTrue(PathExpression.IsBoolean(expression, value, context));
     }

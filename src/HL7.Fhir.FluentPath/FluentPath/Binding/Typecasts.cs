@@ -107,6 +107,11 @@ namespace Hl7.Fhir.FluentPath.Binding
             return getImplicitCast(from.GetType(),to) != null;
         }
 
+        public static bool CanCastTo(Type from, Type to)
+        {
+            return getImplicitCast(from, to) != null;
+        }
+
 
         public static T CastTo<T>(object source)
         {

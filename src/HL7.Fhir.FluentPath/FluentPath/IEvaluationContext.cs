@@ -61,6 +61,12 @@ namespace Hl7.Fhir.FluentPath
 
     public static class IEvaluationContextExtensions
     {
+        public static IEnumerable<IValueProvider> GetThis(this IEvaluationContext ctx)
+        {
+            return ctx.ResolveValue("builtin.this");
+        }
+
+
         public static void SetThis(this IEvaluationContext ctx, IEnumerable<IValueProvider> value)
         {
             ctx.SetValue("builtin.this", value);
@@ -74,6 +80,16 @@ namespace Hl7.Fhir.FluentPath
         public static IEnumerable<IValueProvider> GetOriginalContext(this IEvaluationContext ctx)
         {
             return ctx.ResolveValue("context");
+        }
+
+        public static IEnumerable<IValueProvider> GetResource(this IEvaluationContext ctx)
+        {
+            return ctx.ResolveValue("resource");
+        }
+
+        public static void SetResource(this IEvaluationContext ctx, IEnumerable<IValueProvider> value)
+        {
+            ctx.SetValue("resource", value);
         }
 
         public static IEvaluationContext Nest(this IEvaluationContext ctx, IEnumerable<IValueProvider> input)

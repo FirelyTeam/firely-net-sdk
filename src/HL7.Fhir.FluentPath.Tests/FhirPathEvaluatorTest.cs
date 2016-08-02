@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         public void TestLogicalShortcut()
         {
             isTrue(@"true or (1/0 = 0)");
-            isTrue(@"(false and (1/0 = 0)) = false");
+            isTrue(@"(false and (1/0 = 0)) = false");            
         }
 
 
@@ -251,6 +251,8 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"Patient.contained[0].name.iif(empty(), 'unnamed', 'named') = 'named'");
 
             isTrue(@"Patient.name.iif({}, 'named', 'unnamed') = 'unnamed'");
+
+            isTrue(@"Patient.name[0].family.iif(length()-8 != 0, 5/(length()-8), 'no result') = 'no result'");
         }
 
         [TestMethod, TestCategory("FhirPath")]
@@ -466,6 +468,8 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue("Patient.name.family.substring(0,6) = 'Donald'");
             isTrue("Patient.name.family.substring(2,6) = 'nald'");
             isTrue("Patient.name.family.substring(2,4) = 'nald'");
+
+            isTrue("Patient.name.family.substring(2,length()-3) = 'nal'");
 
             isTrue("Patient.name.family.substring(-1,8).empty()");
             isTrue("Patient.name.family.substring(999,1).empty()");

@@ -82,13 +82,23 @@ namespace Hl7.Fhir.FluentPath.Parser
         public static readonly Parser<Expression> Term =
             Literal
             .Or(FunctionInvocation(AxisExpression.This))
-            .XOr(Lexer.ExternalConstant.Select(n => (Expression)new VariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
+            .XOr(Lexer.ExternalConstant.Select(n => BuildVariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
             .XOr(BracketExpr)
             .XOr(EmptyList)
             .XOr(Lexer.Axis.Select(a => new AxisExpression(a)))
             .Token()
             .Named("Term");
 
+
+        public static Expression BuildVariableRefExpression(string name)
+        {
+            if (name.StartsWith("ext-"))
+                return new FunctionCallExpression(AxisExpression.This, "builtin.coreexturl", TypeInfo.String, new ConstantExpression(name.Substring(4)));
+            else if (name.StartsWith("vs-"))
+                return new FunctionCallExpression(AxisExpression.This, "builtin.corevsurl", TypeInfo.String, new ConstantExpression(name.Substring(3)));
+            else
+                return new VariableRefExpression(name);
+        }
 
         public static readonly Parser<string> TypeSpecifier =
             //Lexer.QualifiedIdentifier.Select(qi => TypeInfo.ByName(qi)).Token();

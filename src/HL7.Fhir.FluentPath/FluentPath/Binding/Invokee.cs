@@ -57,7 +57,6 @@ namespace Hl7.Fhir.FluentPath.Binding
             return evaluator.Predicate(BaseEvaluationContext.Root(input));
         }
 
-
         public static bool IsBoolean(this Invokee evaluator, bool value, IEvaluationContext context)
         {
             var result = evaluator.Select(context).BooleanEval();
@@ -79,7 +78,7 @@ namespace Hl7.Fhir.FluentPath.Binding
         public static Invokee NullProp(this Invokee source)
         {
             return (ctx, args) =>
-            {               
+            {
                 foreach (var arg in args)
                 {
                     var argValue = arg(ctx, InvokeeFactory.EmptyArgs);
@@ -91,13 +90,29 @@ namespace Hl7.Fhir.FluentPath.Binding
         }
 
 
+        public static IEnumerable<IValueProvider> GetThis(IEvaluationContext context, IEnumerable<Invokee> args)
+        {
+            return context.GetThis();
+        }
+
+        public static IEnumerable<IValueProvider> GetContext(IEvaluationContext context, IEnumerable<Invokee> arguments)
+        {
+            return context.GetOriginalContext();
+        }
+
+        public static IEnumerable<IValueProvider> GetResource(IEvaluationContext context, IEnumerable<Invokee> arguments)
+        {
+            return context.GetResource();
+        }
+
+
         public static Invokee Trace()
         {
             return (ctx, args) =>
             {
                 var focus = args.First()(ctx, InvokeeFactory.EmptyArgs);
                 var argValue = Typecasts.CastTo<string>(args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs));
-                ctx.Trace(argValue,focus);
+                ctx.Trace(argValue, focus);
                 return focus;
             };
         }
@@ -110,7 +125,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             };
         }
 
-        public static Invokee Wrap<A,R>(Func<A,R> func)
+        public static Invokee Wrap<A, R>(Func<A, R> func)
         {
             return (ctx, args) =>
             {
@@ -119,13 +134,13 @@ namespace Hl7.Fhir.FluentPath.Binding
             };
         }
 
-        public static Invokee Wrap<A,B,R>(Func<A,B,R> func)
+        public static Invokee Wrap<A, B, R>(Func<A, B, R> func)
         {
             return (ctx, args) =>
             {
                 var focus = Typecasts.CastTo<A>(args.First()(ctx, InvokeeFactory.EmptyArgs));
                 var argA = Typecasts.CastTo<B>(args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs));
-                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(focus,argA));
+                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(focus, argA));
             };
         }
 
@@ -136,7 +151,7 @@ namespace Hl7.Fhir.FluentPath.Binding
                 var focus = Typecasts.CastTo<A>(args.First()(ctx, InvokeeFactory.EmptyArgs));
                 var argA = Typecasts.CastTo<B>(args.Skip(1).First()(ctx, InvokeeFactory.EmptyArgs));
                 var argB = Typecasts.CastTo<C>(args.Skip(2).First()(ctx, InvokeeFactory.EmptyArgs));
-                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(focus, argA, argB)); 
+                return Typecasts.CastTo<IEnumerable<IValueProvider>>(func(focus, argA, argB));
             };
         }
 
@@ -175,18 +190,16 @@ namespace Hl7.Fhir.FluentPath.Binding
             return (_, __) => value;
         }
 
-        public static Invokee ResolveValue(string name)
-        {
-            return (ctx, __) => ctx.ResolveValue(name);
-        }
-
         public static Invokee Invoke(string functionName, IEnumerable<Invokee> arguments, Invokee invokee)
         {
+            Func<IEvaluationContext, IEnumerable<IValueProvider>> boundFunc = (ctx) => invokee(ctx, arguments);
+
             return (ctx, _) =>
             {
                 try
                 {
-                    return invokee(ctx, arguments);
+                    return boundFunc(ctx);
+                    //return invokee(ctx, arguments);
                 }
                 catch (Exception e)
                 {
