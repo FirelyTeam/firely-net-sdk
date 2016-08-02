@@ -26,7 +26,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             MarkChanges = false,
-            ExpandTypeProfiles = false
+            ExpandTypeProfiles = true,
+            IgnoreMissingTypeProfiles = false
         };
 
         /// <summary>
