@@ -59,73 +59,85 @@ namespace Hl7.Fhir.Specification.Tests
 		}
 
 		[TestMethod]
-		//[Ignore]
+		// [Ignore] // For debugging purposes
 		public void GenerateSingleSnapshot()
 		{
-			var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/uslab-obsratio");
+			// var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
+			// var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
+			// var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
+			var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder");
+
 			Assert.IsNotNull(sd);
 
-            DumpReferences(sd);
+			DumpReferences(sd);
 
 			generateSnapshotAndCompare(sd, _testSource);
 		}
 
-        // [WMR 20160722] For debugging purposes
-        [Conditional("DEBUG")]
-        public void DumpReferences(StructureDefinition sd)
-        {
-            Debug.WriteLine("References for StructureDefinition '{0}' ('{1}')".FormatWith(sd.Name, sd.Url));
-            Debug.WriteLine("Base = '{0}'".FormatWith(sd.Base));
-
-            var profiles = sd.Snapshot.Element.SelectMany(e => e.Type).SelectMany(t => t.Profile);
-            profiles = profiles.OrderBy(p => p).Distinct();
-
-            // FhirClient client = new FhirClient("http://fhir2.healthintersections.com.au/open/");
-            // var folderPath = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\snapshot-test\download");
-            // if (Directory.Exists(folderPath)) { Directory.CreateDirectory(folderPath); }
-
-            foreach (var profile in profiles)
-            {
-                Debug.WriteLine(profile);
-
-                //try
-                //{
-                //    var xml = client.Get(profile);
-                //    var filePath = Path.Combine()
-                //    File.WriteAllText(folderPath, )
-                //}
-                //catch (Exception ex)
-                //{
-                //    Debug.WriteLine(ex.Message);
-                //}
-            }
-        }
-
-        // [WMR 20160721] Following profiles are not yet handled (TODO)
-        private readonly string[] skippedProfiles =
+		[TestMethod]
+		// [Ignore] // For debugging purposes
+		public void GenerateDerivedProfileSnapshot()
 		{
-			// TODO: Snapshot expansion does not yet support sliced base profiles.
-			// (Due to complex extensions)
-			@"http://hl7.org/fhir/StructureDefinition/qicore-adverseevent",
-			@"http://hl7.org/fhir/StructureDefinition/qicore-encounter",
-			@"http://hl7.org/fhir/StructureDefinition/qicore-goal",
-			@"http://hl7.org/fhir/StructureDefinition/qicore-patient",
-            @"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire",
+			// cqif-guidanceartifact profile is derived from cqif-knowledgemodule
+			// var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+			var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
+			// var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
+			// var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-patient");
+			// var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-encounter");
 
-			// TODO: Profiles on profiles
-			@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact",    // Derived from cqif-knowledgemodule
+			Assert.IsNotNull(sd);
 
+			DumpReferences(sd);
+
+			generateSnapshotAndCompare(sd, _testSource);
+		}
+
+		// [WMR 20160722] For debugging purposes
+		[Conditional("DEBUG")]
+		public void DumpReferences(StructureDefinition sd)
+		{
+			Debug.WriteLine("References for StructureDefinition '{0}' ('{1}')".FormatWith(sd.Name, sd.Url));
+			Debug.WriteLine("Base = '{0}'".FormatWith(sd.Base));
+
+			var profiles = sd.Snapshot.Element.SelectMany(e => e.Type).SelectMany(t => t.Profile);
+			profiles = profiles.OrderBy(p => p).Distinct();
+
+			// FhirClient client = new FhirClient("http://fhir2.healthintersections.com.au/open/");
+			// var folderPath = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\snapshot-test\download");
+			// if (!Directory.Exists(folderPath)) { Directory.CreateDirectory(folderPath); }
+
+			foreach (var profile in profiles)
+			{
+				Debug.WriteLine(profile);
+
+				// How to determine the original filename?
+				//try
+				//{
+				//    var xml = client.Get(profile);
+				//    var filePath = Path.Combine()
+				//    File.WriteAllText(folderPath, )
+				//}
+				//catch (Exception ex)
+				//{
+				//    Debug.WriteLine(ex.Message);
+				//}
+			}
+		}
+
+		// [WMR 20160721] Following profiles are not yet handled (TODO)
+		private readonly string[] skippedProfiles =
+		{
 			// Differential defines constraint on MedicationOrder.reason[x]
 			// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
-			@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
+			// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
 		};
 
 		[TestMethod]
 		// [Ignore]
 		public void GenerateSnapshot()
 		{
-            var start = DateTime.Now;
-            int count = 0;
+			var start = DateTime.Now;
+			int count = 0;
 
 			foreach (var original in findConstraintStrucDefs()
 				// [WMR 20160721] Skip invalid profiles
@@ -133,17 +145,17 @@ namespace Hl7.Fhir.Specification.Tests
 			)
 			{
 				// nothing to test, original does not have a snapshot
-				if (original.Snapshot == null) continue;        
+				if (original.Snapshot == null) continue;
 
 				Debug.WriteLine("Generating Snapshot for " + original.Url);
 
 				generateSnapshotAndCompare(original, _testSource);
-                count++;
-            }
+				count++;
+			}
 
-            var duration = DateTime.Now.Subtract(start).TotalMilliseconds;
-            var avg = duration / count;
-            Debug.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
+			var duration = DateTime.Now.Subtract(start).TotalMilliseconds;
+			var avg = duration / count;
+			Debug.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
 		}
 
 		private void generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
@@ -167,7 +179,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 			Assert.IsTrue(areEqual);
 		}
-   
+
 		private IEnumerable<StructureDefinition> findConstraintStrucDefs()
 		{
 			var testSDs = _testSource.ListConformanceResources().Where(ci => ci.Type == ResourceType.StructureDefinition);
@@ -224,24 +236,131 @@ namespace Hl7.Fhir.Specification.Tests
 			Assert.IsTrue(nav.MoveToChild("F"));
 		}
 
-	 
+
 		[TestMethod]
 		public void TestExpandChild()
-		{            
+		{
 			var qStructDef = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Questionnaire");
 			Assert.IsNotNull(qStructDef);
 			Assert.IsNotNull(qStructDef.Snapshot);
 
 			var nav = new ElementNavigator(qStructDef.Snapshot.Element);
-			
+
 			nav.JumpToFirst("Questionnaire.telecom");
-			Assert.IsTrue(SnapshotGenerator.ExpandElement(nav,_testSource, SnapshotGeneratorSettings.Default));
+			Assert.IsTrue(SnapshotGenerator.expandElement(nav, _testSource, SnapshotGeneratorSettings.Default));
 			Assert.IsTrue(nav.MoveToChild("period"), "Did not move into complex datatype ContactPoint");
 
 			nav.JumpToFirst("Questionnaire.group");
-			Assert.IsTrue(SnapshotGenerator.ExpandElement(nav,_testSource, SnapshotGeneratorSettings.Default));
+			Assert.IsTrue(SnapshotGenerator.expandElement(nav, _testSource, SnapshotGeneratorSettings.Default));
 			Assert.IsTrue(nav.MoveToChild("title"), "Did not move into internally defined backbone element Group");
 		}
 
-	}
+		// [WMR 20160802] NEW - Expand a single element
+
+		[TestMethod]
+		public void TestExpandElement_PatientIdentifier()
+		{
+			TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.identifier");
+		}
+
+		[TestMethod]
+		public void TestExpandElement_PatientName()
+		{
+			TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.name");
+		}
+
+        [TestMethod]
+        public void TestExpandElement_QuestionnaireGroupGroup()
+        {
+            // Validate name reference expansion
+            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.group");
+        }
+
+        [TestMethod]
+        public void TestExpandElement_QuestionnaireGroupQuestionGroup()
+        {
+            // Validate name reference expansion
+            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.question.group");
+        }
+
+        private void TestExpandElement(string srcProfileUrl, string expandElemPath)
+		{
+			const string Indent = "  ";
+
+			// Prepare...
+			var sd = _testSource.GetStructureDefinition(srcProfileUrl);
+			Assert.IsNotNull(sd);
+			Assert.IsNotNull(sd.Snapshot);
+
+			var elems = sd.Snapshot.Element;
+			Assert.IsNotNull(elems);
+
+			Debug.WriteLine("Input:");
+			Debug.WriteLine(string.Join(Environment.NewLine, elems.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => Indent + e.Path)));
+
+			var elem = elems.FirstOrDefault(e => e.Path == expandElemPath);
+			Assert.IsNotNull(elem);
+
+			// Test...
+			var generator = new SnapshotGenerator(_testSource, _settings);
+			var result = generator.ExpandElement(elems, elem);
+
+			// Verify results
+			Debug.WriteLine("\r\nOutput:");
+			Debug.WriteLine(string.Join(Environment.NewLine, result.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => Indent + e.Path)));
+
+            Assert.IsNotNull(elem.Type);
+            var elemType = elem.Type.FirstOrDefault();
+            var nameRef = elem.NameReference;
+            if (elemType != null)
+            {
+                // Validate type profile expansion
+                var elemTypeCode = elemType.Code.Value;
+                Assert.IsNotNull(elemTypeCode);
+                var elemProfile = elemType.Profile.FirstOrDefault();
+                var sdType = elemProfile != null
+                    ? _testSource.GetStructureDefinition(elemProfile)
+                    : _testSource.GetStructureDefinitionForCoreType(elemTypeCode);
+
+                Assert.IsNotNull(sdType);
+                Assert.IsNotNull(sdType.Snapshot);
+
+                Debug.WriteLine("\r\nType:");
+                Debug.WriteLine(string.Join(Environment.NewLine, sdType.Snapshot.Element.Select(e => Indent + e.Path)));
+
+                sdType.Snapshot.Rebase(expandElemPath);
+                var typeElems = sdType.Snapshot.Element;
+
+                Assert.IsTrue(result.Count == elems.Count + typeElems.Count - 1);
+                Assert.IsTrue(result.Where(e => e.Path.StartsWith(expandElemPath)).Count() == typeElems.Count);
+
+                var startPos = result.IndexOf(elem);
+                for (int i = 0; i < typeElems.Count; i++)
+                {
+                    var path = typeElems[i].Path;
+                    Assert.IsTrue(result[startPos + i].Path.EndsWith(path, StringComparison.OrdinalIgnoreCase));
+                }
+            }
+            else if (nameRef != null)
+            {
+                // Validate name reference expansion
+                var nav = new ElementNavigator(elems);
+                Assert.IsTrue(nav.JumpToNameReference(nameRef));
+                var prefix = nav.Path;
+                Assert.IsTrue(nav.MoveToFirstChild());
+                var pos = result.IndexOf(elem);
+
+                Debug.WriteLine("\r\nName Reference:");
+                do
+                {
+                    Debug.WriteLine(Indent + nav.Path);
+                    var srcPath = nav.Path.Substring(prefix.Length);
+                    var tgtPath = result[++pos].Path.Substring(expandElemPath.Length);
+                    Assert.AreEqual(srcPath, tgtPath);
+                } while (nav.MoveToNext());
+            }
+
+        }
+
+    }
 }
