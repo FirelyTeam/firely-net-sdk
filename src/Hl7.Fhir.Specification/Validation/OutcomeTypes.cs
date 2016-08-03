@@ -33,12 +33,13 @@ namespace Hl7.Fhir.Validation
     /// <summary>
     /// The groups under which all validation results are grouped
     /// </summary>
-    public enum Group { 
-        
-        Cardinality, Constraint, 
+    public enum Group
+    {
+
+        Cardinality, Constraint,
         Profile, Hierarchy,
         Structure, Element, Primitive, Attribute,
         Reference, Coding, Value, Slice
     }
-    
+
 }

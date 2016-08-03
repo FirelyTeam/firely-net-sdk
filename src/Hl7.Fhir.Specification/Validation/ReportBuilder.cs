@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright (c) 2014, Furore (info@furore.com) and contributors
+* Copyright (c) 2016, Furore (info@furore.com) and contributors
 * See the file CONTRIBUTORS for details.
 *
 * This file is licensed under the BSD 3-Clause license
@@ -10,11 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.XPath;
-using Hl7.Fhir.Specification.Model;
 
 namespace Hl7.Fhir.Validation
 {
-    public delegate void OutcomeLogger(Outcome outcome);
+   // public delegate void OutcomeLogger(Outcome outcome);
+
     public class ReportBuilder
     {
         private int nesting = 0;
@@ -50,12 +50,12 @@ namespace Hl7.Fhir.Validation
 
         public Outcome Log(Group group, Status status, Vector vector)
         {
-            return new Outcome(group, status, vector, null, this.nesting);
+            return new Outcome(group, status, vector, message: null, nesting: this.nesting);
         }
 
         public Outcome Log(Group group, Status status)
         {
-            return new Outcome(group, status, null, null, this.nesting);
+            return new Outcome(group, status, vector: null, message: null, nesting: this.nesting);
         }
 
         public Outcome Log(Group group, Status status, Vector vector, string message, params object[] args)

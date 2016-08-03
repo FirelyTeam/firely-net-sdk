@@ -97,6 +97,11 @@
     <Compile Include="Specification\Source\ConformanceArtifactScanner.cs" />
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\OutcomeTypes.cs" />
+    <Compile Include="Validation\Outcome.cs" />
+    <Compile Include="Validation\Report.cs" />
+    <Compile Include="Validation\ReportBuilder.cs" />
+    <Compile Include="Validation\Vector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
