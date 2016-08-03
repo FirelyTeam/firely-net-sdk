@@ -40,8 +40,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>
         /// EXPERIMENTAL!
         /// Enable this setting in order to merge custom element type profiles.
-        /// If disabled (default), the snapshot generator ignores custom type profiles and merges constraints from the base profile.
-        /// If enabled, the snapshot generator first merges constraints from custom type profiles before merging constraints from the base profile.
+        /// If enabled (default), the snapshot generator first merges constraints from custom type profiles before merging constraints from the base profile.
+        /// If disabled, the snapshot generator ignores custom type profiles and merges constraints from the base profile.
         /// </summary>
         /// <remarks>See GForge #9791</remarks>
         public bool ExpandTypeProfiles { get; set; }

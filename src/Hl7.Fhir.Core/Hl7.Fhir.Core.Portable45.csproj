@@ -628,6 +628,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Support\NullExtensions.cs" />
+    <Compile Include="Support\ResourceReferenceNotFoundException.cs" />
     <Compile Include="Support\XmlNs.cs" />
     <Compile Include="Support\ReflectionHelper.cs" />
     <Compile Include="Serialization\RepeatingElementReader.cs" />
