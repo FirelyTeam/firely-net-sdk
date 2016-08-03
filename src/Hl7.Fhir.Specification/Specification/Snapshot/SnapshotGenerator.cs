@@ -115,8 +115,19 @@ namespace Hl7.Fhir.Specification.Snapshot
         // For partial expansion of a single (complex) element
 
         /// <summary>Given a list of element definitions, expand the definition of a single element.</summary>
+        /// <param name="elements">A <see cref="StructureDefinition.SnapshotComponent"/> or <see cref="StructureDefinition.DifferentialComponent"/> instance.</param>
+        /// <param name="element">The element to expand. Should be part of <paramref name="elements"/>.</param>
+        /// <returns>A new, expanded list of <see cref="ElementDefinition"/> instances.</returns>
+        /// <exception cref="ArgumentException">The specified element is not contained in the list.</exception>
+        public IList<ElementDefinition> ExpandElement(IElementList elements, ElementDefinition element)
+        {
+            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
+            return ExpandElement(elements.Element, element);
+        }
+
+        /// <summary>Given a list of element definitions, expand the definition of a single element.</summary>
         /// <param name="elements">A list of <see cref="ElementDefinition"/> instances, taken from snapshot or differential.</param>
-        /// <param name="element">The single element to expand. Should be part of <paramref name="elements"/>.</param>
+        /// <param name="element">The element to expand. Should be part of <paramref name="elements"/>.</param>
         /// <returns>A new, expanded list of <see cref="ElementDefinition"/> instances.</returns>
         /// <exception cref="ArgumentException">The specified element is not contained in the list.</exception>
         public IList<ElementDefinition> ExpandElement(IList<ElementDefinition> elements, ElementDefinition element)
