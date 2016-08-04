@@ -17,6 +17,32 @@ namespace Hl7.Fhir.FluentPath.Functions
 {
     internal static class CollectionOperators
     {
+        public static bool? BooleanEval(this IEnumerable<IValueProvider> focus)
+        {
+            if (!focus.Any()) return null;
+
+            if (focus.Count() == 1 && focus.Single().Value is bool)
+            {
+                return (bool)focus.Single().Value;
+            }
+
+            // Otherwise, we have "some" content, which we'll consider "true"
+            else
+                return true;
+        }
+
+
+        public static bool Not(this IEnumerable<IValueProvider> focus)
+        {
+            return !(focus.BooleanEval().Value);
+        }
+
+        public static IEnumerable<IValueProvider> DistinctUnion(this IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b)
+        {
+            var result = a.Union(b, new EqualityOperators.ValueProviderEqualityComparer());
+            return result;
+        }
+
         public static IEnumerable<IValueProvider> Item(this IEnumerable<IValueProvider> focus, int index)
         {
             return focus.Skip(index).Take(1);
@@ -52,39 +78,50 @@ namespace Hl7.Fhir.FluentPath.Functions
             return focus.All(fitem => other.Contains(fitem));
         }
 
-        public static IEnumerable<IValueProvider> Trace(this IEnumerable<IValueProvider> focus, string name)
+        public static IEnumerable<IValueProvider> Navigate(this IEnumerable<IValueProvider> elements, string name)
         {
-            System.Diagnostics.Trace.WriteLine("=== Trace {0} ===".FormatWith(name));
+            return elements.SelectMany(e => e.Navigate(name));
+        }
 
-            if (focus == null)
-                System.Diagnostics.Trace.WriteLine("(null)");
+        public static IEnumerable<IValueProvider> Navigate(this IValueProvider element, string name)
+        {
+            if(!(element is IElementNavigator))
+                return FhirValueList.Empty;
 
-            else if (focus is IEnumerable<IValueProvider>)
+            var nav = (IElementNavigator)element;
+
+            if (char.IsUpper(name[0]))
             {
-                System.Diagnostics.Trace.WriteLine("Collection:".FormatWith(name));
-                foreach (var element in (IEnumerable<IValueProvider>)focus)
+
+                if (!char.IsUpper(nav.Name[0]))
+                    throw Error.InvalidOperation("Resource type name may only appear at the root of a document");
+
+                // If we are at a resource, we should match a path that is possibly not rooted in the resource
+                // (e.g. doing "name.family" on a Patient is equivalent to "Patient.name.family")        
+                if (nav is ITypeNameProvider)
                 {
-                    if (element.Value != null)
-                        System.Diagnostics.Trace.WriteLine("   " + element.Value.ToString());
+                    if (((ITypeNameProvider)nav).TypeName == name)
+                    {
+                        return new List<IElementNavigator>() { nav };
+                    }
+                    else
+                    {
+                        return Enumerable.Empty<IElementNavigator>();
+                    }
                 }
-            }
-            else if (focus is IValueProvider)
-            {
-                var element = (IValueProvider)focus;
-                System.Diagnostics.Trace.WriteLine("Value:".FormatWith(name));
-
-                if (element.Value != null)
+                else
                 {
-                    System.Diagnostics.Trace.WriteLine(element.Value.ToString());
+                    throw Error.InvalidOperation("Cannot verify whether the root object is of type '{0}'. ".FormatWith(name) +
+                        "You could try leaving out the resource name of the expression.");
                 }
             }
             else
-                System.Diagnostics.Trace.WriteLine(focus.ToString());
-
-            System.Diagnostics.Trace.WriteLine(Environment.NewLine);
-
-            return focus;
+            {
+                return nav.GetChildrenByName(name);
+            }
         }
+
+     
 
     }
 }

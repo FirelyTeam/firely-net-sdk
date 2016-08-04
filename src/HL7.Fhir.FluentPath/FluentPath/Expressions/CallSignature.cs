@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.FluentPath.Expressions
 {
-    public class CallSignature
+    internal class CallSignature
     {
         public string Name { get; private set; }
 

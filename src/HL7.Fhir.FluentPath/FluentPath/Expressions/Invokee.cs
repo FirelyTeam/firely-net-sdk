@@ -6,52 +6,19 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.FluentPath.Functions;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Hl7.Fhir.FluentPath.PathExpression;
 
 namespace Hl7.Fhir.FluentPath.Expressions
 {
-    public delegate IEnumerable<IValueProvider> Invokee(Closure context, IEnumerable<Invokee> arguments);
+    internal delegate IEnumerable<IValueProvider> Invokee(Closure context, IEnumerable<Invokee> arguments);
 
-    public static class InvokeeFactory
+    internal static class InvokeeFactory
     {
-        public static IEnumerable<IValueProvider> Select(this Invokee evaluator, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource)
-        {
-            return evaluator(Closure.Root(input, resource), InvokeeFactory.EmptyArgs);
-        }
-
-        public static object Scalar(this Invokee evaluator, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource)
-        {
-            var result = evaluator.Select(input, resource);
-            if (result.Any())
-                return evaluator.Select(input, resource).Single().Value;
-            else
-                return null;
-        }
-
-        // For predicates, Empty is considered true
-        public static bool Predicate(this Invokee evaluator, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource)
-        {
-            var result = evaluator.Select(input, resource).BooleanEval();
-
-            if (result == null)
-                return true;
-            else
-                return result.Value;
-        }
-
-        public static bool IsBoolean(this Invokee evaluator, bool value, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource)
-        {
-            var result = evaluator.Select(input, resource).BooleanEval();
-
-            if (result == null)
-                return false;
-            else
-                return result.Value == value;
-        }
-
         public static readonly IEnumerable<Invokee> EmptyArgs = Enumerable.Empty<Invokee>();
     
 
@@ -152,6 +119,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
             return (ctx, args) =>
             {
                 // Ignore focus
+                // NOT GOOD, arguments need to be evaluated in the context of the focus to give "$that" meaning.
                 var left = args.Skip(1).First();
                 var right = args.Skip(2).First();
 

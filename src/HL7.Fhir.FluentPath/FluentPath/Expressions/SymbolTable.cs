@@ -37,8 +37,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
             return cnt;
         }
 
-
-        public Invokee First()
+        internal Invokee First()
         {
             if (_entries.Any())
                 return _entries.First().Body;
@@ -67,7 +66,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
         private List<TableEntry> _entries = new List<TableEntry>();
 
-        public void Add(CallSignature signature, Invokee body)
+        internal void Add(CallSignature signature, Invokee body)
         {
             _entries.Add(new TableEntry(signature, body));
         }
@@ -84,7 +83,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
         }
 
 
-        public Invokee Get(string name, IEnumerable<Type> argumentTypes)
+        internal Invokee Get(string name, IEnumerable<Type> argumentTypes)
         {
             TableEntry entry = _entries.SingleOrDefault(e => e.Signature.Matches(name, argumentTypes));
 
@@ -93,7 +92,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
             return entry != null ? entry.Body : null;
         }
 
-        public Invokee DynamicGet(string name, IEnumerable<object> args)
+        internal Invokee DynamicGet(string name, IEnumerable<object> args)
         {
             TableEntry entry = _entries.FirstOrDefault(e => e.Signature.DynamicMatches(name, args));
 
@@ -106,7 +105,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
     public static class SymbolTableExtensions
     {
-        public static Invokee Get(this SymbolTable table, CallSignature signature)
+        internal static Invokee Get(this SymbolTable table, CallSignature signature)
         {
             return table.Get(signature.Name, signature.ArgumentTypes);
         }

@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Tests.FhirPath
     public class FhirPathTest
 #endif
     {
-        public IElementNavigator getTestData()
+        public IValueProvider getTestData()
         {
             var tpXml = System.IO.File.ReadAllText("TestData\\fp-test-patient.xml");
             // var tree = TreeConstructor.FromXml(tpXml);
@@ -103,9 +103,9 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var values = getTestData();
 
-            var r = values.EnumerateChildrenByName("Patient");
+            var r = values.Navigate("Patient");
 
-            var result = values.EnumerateChildrenByName("Patient").EnumerateChildrenByName("identifier").EnumerateChildrenByName("use");
+            var result = values.Navigate("Patient").Navigate("identifier").Navigate("use");
             Assert.AreEqual(3, result.Count()); 
             Assert.AreEqual("usual", result.First().Value);
         }
@@ -115,9 +115,9 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             var values = getTestData();
 
-            var result = values.EnumerateChildrenByName("Patient").EnumerateChildrenByName("identifier").ChildrenValues("use");
+            var result = values.Navigate("Patient").Navigate("identifier").Navigate("use");
             Assert.AreEqual(3, result.Count());
-            Assert.AreEqual("usual", (string)result.First());
+            Assert.AreEqual("usual", (string)result.First().Value);
         }
 
         [TestMethod, TestCategory("FhirPath")]

@@ -1,4 +1,11 @@
-﻿using Hl7.Fhir.Support;
+﻿/* 
+ * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+using Hl7.Fhir.Support;
 using FP = Hl7.Fhir.FluentPath.Expressions;
 using System.Linq.Expressions;
 using System;
@@ -94,7 +101,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
     }
 
-    public static class EvaluatorExpressionExtensions
+    internal static class EvaluatorExpressionExtensions
     {
         public static Invokee ToEvaluator(this FP.Expression expr, SymbolTable scope)
         {

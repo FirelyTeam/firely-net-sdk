@@ -1,4 +1,11 @@
-﻿using Hl7.Fhir.Support;
+﻿/* 
+ * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FluentPath.Expressions
 {
-    internal class TreeVisualizerVisitor : ExpressionVisitor<StringBuilder>
+    public class TreeVisualizerVisitor : ExpressionVisitor<StringBuilder>
     {
         private StringBuilder _result = new StringBuilder();
         private int _indent = 0;

@@ -16,7 +16,7 @@ using System.Xml;
 
 namespace Hl7.Fhir.FluentPath.Functions
 {
-    public static class ConversionOperators
+    internal static class ConversionOperators
     {
         private static T getValue<T>(this IValueProvider val, string name)
         {

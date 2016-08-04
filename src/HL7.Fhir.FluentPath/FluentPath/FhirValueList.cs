@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public static class FhirValueList
+    internal static class FhirValueList
     {
         public static IEnumerable<IValueProvider> Create(params object[] values)
         {

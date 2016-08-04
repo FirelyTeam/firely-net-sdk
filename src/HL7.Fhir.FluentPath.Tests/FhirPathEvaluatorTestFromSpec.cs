@@ -250,16 +250,6 @@ public class FluentPathTests
     {
         var expression = testLine.Element("expression");
         var output = testLine.Elements("output");
-
-        //if (output.Count == 1 && (output[0] as XmlElement).GetAttribute("type") == "boolean"
-        //    && ((output[0] as XmlElement).InnerText == "true" || (output[0] as XmlElement).InnerText == "false"))
-        //{
-        //    if ((output[0] as XmlElement).InnerText == "true")
-        //        testBoolean(resource, expression, true);
-        //    else
-        //        testBoolean(resource, expression, false);
-        //}
-
         bool hasInvalid;
         string invalid = expression.TryGetAttribute("invalid", out hasInvalid);
 

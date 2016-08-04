@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.FluentPath.Expressions
 {
-    public class Closure
+    internal class Closure
     {
         public Closure()
         {

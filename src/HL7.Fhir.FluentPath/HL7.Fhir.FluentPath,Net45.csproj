@@ -70,12 +70,12 @@
     <Compile Include="FluentPath\Functions\LogicOperators.cs" />
     <Compile Include="FluentPath\Functions\StringOperators.cs" />
     <Compile Include="FluentPath\Functions\TypeOperators.cs" />
+    <Compile Include="FluentPath\Functions\UtilityOperators.cs" />
     <Compile Include="FluentPath\TypeInfo.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
     <Compile Include="FluentPath\Parser\Operators.cs" />
     <Compile Include="FluentPath\Parser\Lexer.cs" />
     <Compile Include="FluentPath\Expressions\ClosureExtensions.cs" />
-    <Compile Include="FluentPath\IElementNavigatorExtensions.cs" />
     <Compile Include="FluentPath\FhirValueList.cs" />
     <Compile Include="FluentPath\IValueProviderListExtensions.cs" />
     <Compile Include="FluentPath\PartialDateTime.cs" />

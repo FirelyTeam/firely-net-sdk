@@ -1,6 +1,6 @@
 ﻿namespace Hl7.Fhir.FluentPath
 {
-    public interface INavigator<T>
+    public interface INavigator<out T>
         where T : INavigator<T>
     {
         bool MoveToNext();

@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.FluentPath.Expressions
 { 
-    public static class ClosureExtensions
+    internal static class ClosureExtensions
     {
         public static IEnumerable<IValueProvider> GetThis(this Closure ctx)
         {

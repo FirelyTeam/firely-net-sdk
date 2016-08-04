@@ -64,8 +64,8 @@ namespace Hl7.Fhir.FluentPath.Functions
             else if (l == null && r == null)
             {
                 // Compare complex types (extensions on primitives are not compared, but handled (=ignored) above
-                var childrenL = left.Children();
-                var childrenR = right.Children();
+                var childrenL = left.childrenOrEmpty();
+                var childrenR = right.childrenOrEmpty();
 
                 return childrenL.IsEqualTo(childrenR);    // NOTE: Assumes null will never be returned when any() children exist
             }
@@ -127,8 +127,8 @@ namespace Hl7.Fhir.FluentPath.Functions
             {
                 // Compare complex types (extensions on primitives are not compared, but handled (=ignored) above
 
-                var childrenL = left.Children();
-                var childrenR = right.Children();
+                var childrenL = left.childrenOrEmpty();
+                var childrenR = right.childrenOrEmpty();
 
                 return childrenL.IsEquivalentTo(childrenR);    // NOTE: Assumes null will never be returned when any() children exist
             }
@@ -140,14 +140,16 @@ namespace Hl7.Fhir.FluentPath.Functions
         }
 
 
-        //public static IEnumerable<IValueProvider> IsEquivalentTo(this IEnumerable<IValueProvider> left, IEnumerable<IValueProvider> right)
-        //{
-        //    if (!left.Any() && !right.Any()) return FhirValueList.Create(true);
-        //    if (left.Count() != right.Count()) return FhirValueList.Create(false);
 
-        //    return FhirValueList.Create(left.All((IValueProvider l) => right.Any(r => l.IsEquivalentTo(r))));
-        //}
+        private static IEnumerable<IValueProvider> childrenOrEmpty(this IValueProvider focus)
+        {
+            if (focus is IElementNavigator)
+            {
+                return ((IElementNavigator)focus).Children();
+            }
 
+            return FhirValueList.Empty;
+        }
 
         public static bool IsEquivalentTo(this string a, string b)
         {

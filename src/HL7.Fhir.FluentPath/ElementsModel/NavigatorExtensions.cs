@@ -6,7 +6,7 @@ namespace Hl7.Fhir.FluentPath
 {
     public static class NavigatorExtensions
     {
-        public static IEnumerable<T> EnumerateChildren<T>(this T navigator) where T : INavigator<T>
+        public static IEnumerable<T> Children<T>(this T navigator) where T : INavigator<T>
         {
             var nav = navigator.Clone();
             if (nav.MoveToFirstChild())
@@ -57,24 +57,24 @@ namespace Hl7.Fhir.FluentPath
 
         public static IEnumerable<string> GetChildNames<T>(this T navigator)where T : INavigator<T>, INameProvider
         {
-            return navigator.EnumerateChildren().Select(c => c.Name).Distinct();
+            return navigator.Children().Select(c => c.Name).Distinct();
         }
 
         public static IEnumerable<T> GetChildrenByName<T>(this T navigator, string name)where T : INavigator<T>, INameProvider
         {
-            return navigator.EnumerateChildren().Where(c => c.Name == name);
+            return navigator.Children().Where(c => c.Name == name);
         }
 
         public static IEnumerable<T> GetChildrenByName<T>(this IEnumerable<T> navigators, string name) where T : INavigator<T>, INameProvider
         {
-            return navigators.SelectMany(n => n.EnumerateChildren().Where(c => c.Name == name));
+            return navigators.SelectMany(n => n.Children().Where(c => c.Name == name));
         }
 
 
         public static IEnumerable<T> Descendants<T>(this T element) where T: INavigator<T>
         {
             //TODO: Don't think this is performant with these nested yields
-            foreach (var child in element.EnumerateChildren())
+            foreach (var child in element.Children())
             {
                 yield return child;
                 foreach (var grandchild in child.Descendants()) yield return grandchild;

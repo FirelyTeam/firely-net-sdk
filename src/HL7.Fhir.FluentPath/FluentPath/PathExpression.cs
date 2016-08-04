@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hl7.Fhir.FluentPath.Functions;
 
 namespace Hl7.Fhir.FluentPath
 {
@@ -28,9 +29,6 @@ namespace Hl7.Fhir.FluentPath
 
             if (parse.WasSuccessful)
             {
-                //    _cache.TryAdd(cacheName, compilation.Value);
-
-              //  Console.WriteLine( parse.Value.Dump());
                 return parse.Value;
             }
             else
@@ -39,31 +37,34 @@ namespace Hl7.Fhir.FluentPath
             }
         }
 
+        public delegate IEnumerable<IValueProvider> CompiledExpression(IEnumerable<IValueProvider> focus, IEnumerable<IValueProvider> containerResource);
 
-        public static Invokee Compile(string expression)
+        public static CompiledExpression Compile(this Expression expression, SymbolTable scope)
+        {
+            Invokee inv = expression.ToEvaluator(scope);
+
+            return (IEnumerable<IValueProvider> focus, IEnumerable<IValueProvider> containerResource) =>
+                {
+                    var closure = Closure.Root(focus, containerResource);
+                    return inv(closure, InvokeeFactory.EmptyArgs);
+                };
+        }
+
+
+        public static CompiledExpression Compile(string expression, SymbolTable scope)
+        {
+            return Parse(expression).Compile(scope);
+        }
+
+
+        public static CompiledExpression Compile(string expression)
         {
             var scope = new SymbolTable().AddStandardFP();
 
             return Compile(expression, scope);
         }
 
-
-        public static Invokee Compile(string expression, SymbolTable scope)
-        {
-            //var cacheName = expression.Replace(" ", "");
-
-            //if (_cache.ContainsKey(cacheName))
-            //    return _cache[cacheName];  
-
-            return Parse(expression).Compile(scope);
-        }
-
-        public static Invokee Compile(this Expression expression, SymbolTable scope)
-        {
-            return expression.ToEvaluator(scope);
-        }
-
-        public static Invokee Compile(this Expression expression)
+        public static CompiledExpression Compile(this Expression expression)
         {
             var scope = new SymbolTable().AddStandardFP();
 
@@ -71,10 +72,40 @@ namespace Hl7.Fhir.FluentPath
         }
 
 
+        public static object Scalar(this CompiledExpression evaluator, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource)
+        {
+            var result = evaluator(input, resource);
+            if (result.Any())
+                return evaluator(input, resource).Single().Value;
+            else
+                return null;
+        }
+
+        // For predicates, Empty is considered true
+        public static bool Predicate(this CompiledExpression evaluator, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource)
+        {
+            var result = evaluator(input, resource).BooleanEval();
+
+            if (result == null)
+                return true;
+            else
+                return result.Value;
+        }
+
+        public static bool IsBoolean(this CompiledExpression evaluator, bool value, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource)
+        {
+            var result = evaluator(input, resource).BooleanEval();
+
+            if (result == null)
+                return false;
+            else
+                return result.Value == value;
+        }
+
         public static IEnumerable<IValueProvider> Select(string expression, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource=null)
         {
             var evaluator = Compile(expression);
-            return evaluator.Select(input, resource);
+            return evaluator(input, resource);
         }
 
         public static object Scalar(string expression, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource = null)
@@ -95,23 +126,4 @@ namespace Hl7.Fhir.FluentPath
             return evaluator.IsBoolean(value, input, resource);
         }
     }
-
-    //public static class PathExpressionLinq
-    //{
-    //    public static IEnumerable<IValueProvider> FluentPathSelect<T>(this IValueProvider instance, string expression) 
-    //    {
-    //        return PathExpression.Select(expression, FhirValueList.Create(instance));
-    //    }
-
-    //    public static IEnumerable<IValueProvider> FluentPathSelect<T>(this IEnumerable<IValueProvider> input, string expression)
-    //    {
-    //        return PathExpression.Select(expression, input);
-    //    }
-
-
-    //    public static IEnumerable<IValueProvider> FluentPathIsTrue<T>(this IValueProvider instance, string expression)
-    //    {
-    //        return PathExpression.Select(expression, instance);
-    //    }
-    //}
 }

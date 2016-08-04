@@ -65,7 +65,7 @@
     <Compile Include="FluentPath\Functions\LogicOperators.cs" />
     <Compile Include="FluentPath\Functions\StringOperators.cs" />
     <Compile Include="FluentPath\Functions\TypeOperators.cs" />
-    <Compile Include="FluentPath\IElementNavigatorExtensions.cs" />
+    <Compile Include="FluentPath\Functions\UtilityOperators.cs" />
     <Compile Include="FluentPath\IValueProviderListExtensions.cs" />
     <Compile Include="FluentPath\TypeInfo.cs" />
     <Compile Include="FluentPath\Parser\Grammar.cs" />
