@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -155,6 +155,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Attachment> _Image;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as BodySite;

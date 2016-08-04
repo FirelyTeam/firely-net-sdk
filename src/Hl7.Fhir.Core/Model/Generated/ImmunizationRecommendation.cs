@@ -85,10 +85,10 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DateElement = null; 
+                    if (value == null)
+                        DateElement = null; 
                     else
-                      DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Date");
                 }
             }
@@ -131,10 +131,10 @@ namespace Hl7.Fhir.Model
                 get { return DoseNumberElement != null ? DoseNumberElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DoseNumberElement = null; 
+                    if (!value.HasValue)
+                        DoseNumberElement = null; 
                     else
-                      DoseNumberElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        DoseNumberElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("DoseNumber");
                 }
             }
@@ -321,10 +321,10 @@ namespace Hl7.Fhir.Model
                 get { return ValueElement != null ? ValueElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ValueElement = null; 
+                    if (value == null)
+                        ValueElement = null; 
                     else
-                      ValueElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        ValueElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Value");
                 }
             }
@@ -407,10 +407,10 @@ namespace Hl7.Fhir.Model
                 get { return DoseSequenceElement != null ? DoseSequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DoseSequenceElement = null; 
+                    if (!value.HasValue)
+                        DoseSequenceElement = null; 
                     else
-                      DoseSequenceElement = new Hl7.Fhir.Model.Integer(value);
+                        DoseSequenceElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("DoseSequence");
                 }
             }
@@ -439,10 +439,10 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -485,10 +485,10 @@ namespace Hl7.Fhir.Model
                 get { return SeriesElement != null ? SeriesElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SeriesElement = null; 
+                    if (value == null)
+                        SeriesElement = null; 
                     else
-                      SeriesElement = new Hl7.Fhir.Model.FhirString(value);
+                        SeriesElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Series");
                 }
             }
@@ -589,6 +589,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent> _Recommendation;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ImmunizationRecommendation;

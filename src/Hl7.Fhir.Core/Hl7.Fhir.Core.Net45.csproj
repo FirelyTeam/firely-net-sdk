@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016,1591</NoWarn>
     <DocumentationFile>bin\Debug\Net45\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
+    <LangVersion>5</LangVersion>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -665,7 +666,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Model\Generated\TemplateFileManagerV2.1.ttinclude" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

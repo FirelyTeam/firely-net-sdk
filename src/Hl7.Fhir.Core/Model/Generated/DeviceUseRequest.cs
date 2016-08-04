@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestStatus>(value);
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
             get { return NotesElement != null ? NotesElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NotesElement = null; 
                 else
                   NotesElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Model
             get { return OrderedOnElement != null ? OrderedOnElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   OrderedOnElement = null; 
                 else
                   OrderedOnElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model
             get { return RecordedOnElement != null ? RecordedOnElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   RecordedOnElement = null; 
                 else
                   RecordedOnElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
             get { return PriorityElement != null ? PriorityElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   PriorityElement = null; 
                 else
                   PriorityElement = new Code<Hl7.Fhir.Model.DeviceUseRequest.DeviceUseRequestPriority>(value);
@@ -430,6 +430,7 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DeviceUseRequest;

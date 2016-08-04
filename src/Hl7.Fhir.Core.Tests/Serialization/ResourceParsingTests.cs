@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var parser = new FhirXmlParser();
 
             try
-            {                
+            {
                 parser.Parse<Resource>(xml);
                 Assert.Fail("Should have failed on unknown member");
             }
@@ -139,6 +139,8 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
 #if !PORTABLE45
+        // This test doesn't work on the portable framework due to the 
+        // JSON parser on mobile doesn't handle the large decimal values
         [TestMethod]
         public void EdgecaseRoundtrip()
         {

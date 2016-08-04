@@ -205,10 +205,10 @@ namespace Hl7.Fhir.Model
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      StatusElement = null; 
+                    if (!value.HasValue)
+                        StatusElement = null; 
                     else
-                      StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
+                        StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
                     OnPropertyChanged("Status");
                 }
             }
@@ -251,10 +251,10 @@ namespace Hl7.Fhir.Model
                 get { return DateTimeElement != null ? DateTimeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DateTimeElement = null; 
+                    if (value == null)
+                        DateTimeElement = null; 
                     else
-                      DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("DateTime");
                 }
             }
@@ -399,10 +399,10 @@ namespace Hl7.Fhir.Model
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      StatusElement = null; 
+                    if (!value.HasValue)
+                        StatusElement = null; 
                     else
-                      StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
+                        StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
                     OnPropertyChanged("Status");
                 }
             }
@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model
             get { return PriorityElement != null ? PriorityElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   PriorityElement = null; 
                 else
                   PriorityElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority>(value);
@@ -684,6 +684,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DiagnosticOrder;

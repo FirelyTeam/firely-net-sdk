@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
             get { return NotesElement != null ? NotesElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NotesElement = null; 
                 else
                   NotesElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
             get { return RecordedOnElement != null ? RecordedOnElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   RecordedOnElement = null; 
                 else
                   RecordedOnElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -214,6 +214,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Element _Timing;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DeviceUseStatement;

@@ -211,10 +211,10 @@ namespace Hl7.Fhir.Model
                 get { return InstructionElement != null ? InstructionElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      InstructionElement = null; 
+                    if (value == null)
+                        InstructionElement = null; 
                     else
-                      InstructionElement = new Hl7.Fhir.Model.FhirString(value);
+                        InstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Instruction");
                 }
             }
@@ -482,10 +482,10 @@ namespace Hl7.Fhir.Model
                 get { return ProductNameElement != null ? ProductNameElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ProductNameElement = null; 
+                    if (value == null)
+                        ProductNameElement = null; 
                     else
-                      ProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+                        ProductNameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("ProductName");
                 }
             }
@@ -541,10 +541,10 @@ namespace Hl7.Fhir.Model
                 get { return InstructionElement != null ? InstructionElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      InstructionElement = null; 
+                    if (value == null)
+                        InstructionElement = null; 
                     else
-                      InstructionElement = new Hl7.Fhir.Model.FhirString(value);
+                        InstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Instruction");
                 }
             }
@@ -649,10 +649,10 @@ namespace Hl7.Fhir.Model
                 get { return BaseFormulaProductNameElement != null ? BaseFormulaProductNameElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      BaseFormulaProductNameElement = null; 
+                    if (value == null)
+                        BaseFormulaProductNameElement = null; 
                     else
-                      BaseFormulaProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+                        BaseFormulaProductNameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("BaseFormulaProductName");
                 }
             }
@@ -694,10 +694,10 @@ namespace Hl7.Fhir.Model
                 get { return AdditiveProductNameElement != null ? AdditiveProductNameElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      AdditiveProductNameElement = null; 
+                    if (value == null)
+                        AdditiveProductNameElement = null; 
                     else
-                      AdditiveProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+                        AdditiveProductNameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("AdditiveProductName");
                 }
             }
@@ -779,10 +779,10 @@ namespace Hl7.Fhir.Model
                 get { return AdministrationInstructionElement != null ? AdministrationInstructionElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      AdministrationInstructionElement = null; 
+                    if (value == null)
+                        AdministrationInstructionElement = null; 
                     else
-                      AdministrationInstructionElement = new Hl7.Fhir.Model.FhirString(value);
+                        AdministrationInstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("AdministrationInstruction");
                 }
             }
@@ -1034,7 +1034,7 @@ namespace Hl7.Fhir.Model
             get { return DateTimeElement != null ? DateTimeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateTimeElement = null; 
                 else
                   DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1066,7 +1066,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus>(value);
@@ -1157,6 +1157,16 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent _EnteralFormula;
         
+
+        public static ElementDefinition.ConstraintComponent NutritionOrder_NOR_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("oralDiet or supplement or enteralFormula"))},
+            Key = "nor-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Nutrition Order SHALL contain either Oral Diet , Supplement, or Enteral Formula class",
+            Xpath = "exists(f:oralDiet) or exists(f:supplement) or exists(f:enteralFormula)"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as NutritionOrder;

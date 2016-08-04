@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -263,6 +263,16 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Detail;
         
+
+        public static ElementDefinition.ConstraintComponent Order_ORD_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("code.empty() or schedule.empty()"))},
+            Key = "ord-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Provide a code or a schedule, but not both",
+            Xpath = "exists(f:code) != exists(f:schedule)"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Order;

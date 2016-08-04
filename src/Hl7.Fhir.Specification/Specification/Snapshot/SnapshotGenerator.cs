@@ -73,8 +73,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         public SnapshotGenerator(ArtifactResolver resolver, SnapshotGeneratorSettings settings)
         {
-            if (resolver == null) throw Error.ArgumentNull(nameof(resolver));
-            if (settings == null) throw Error.ArgumentNull(nameof(settings));
+            if (resolver == null) throw Error.ArgumentNull("resolver");
+            if (settings == null) throw Error.ArgumentNull("settings");
             _resolver = resolver;
             _settings = settings;
         }

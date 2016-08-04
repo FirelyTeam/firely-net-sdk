@@ -74,5 +74,32 @@ namespace Hl7.Fhir.Model
                 return sb.ToString();
             }
         }
+
+        public override string ToString()
+        {
+            if (this._TextElement != null && !String.IsNullOrEmpty(this._TextElement.Value))
+                return "Text = \"" + this._TextElement.Value + "\"";
+
+            StringBuilder sb = new StringBuilder();
+            if (this._GivenElement != null)
+            {
+                foreach (var item in this._GivenElement)
+                {
+                    if (sb.Length > 0)
+                        sb.Append(" ");
+                    sb.Append(item);
+                }
+            }
+            if (this._FamilyElement != null)
+            {
+                foreach (var item in this._FamilyElement)
+                {
+                    if (sb.Length > 0)
+                        sb.Append(" ");
+                    sb.Append(item);
+                }
+            }
+            return sb.ToString();
+        }
     }
 }

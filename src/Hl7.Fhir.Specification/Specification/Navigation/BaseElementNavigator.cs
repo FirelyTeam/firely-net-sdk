@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Specification.Navigation
         internal object data;
 
         // [WMR 20160720] NEW
-        public bool IsEmpty => data == null;
+        public bool IsEmpty { get { return data == null; } }
 
         // Singleton
         public static readonly Bookmark Empty = new Bookmark();

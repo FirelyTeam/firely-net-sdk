@@ -194,10 +194,10 @@ namespace Hl7.Fhir.Model
                 get { return EffectiveTimeElement != null ? EffectiveTimeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      EffectiveTimeElement = null; 
+                    if (value == null)
+                        EffectiveTimeElement = null; 
                     else
-                      EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("EffectiveTime");
                 }
             }
@@ -252,10 +252,10 @@ namespace Hl7.Fhir.Model
                 get { return FactorElement != null ? FactorElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      FactorElement = null; 
+                    if (!value.HasValue)
+                        FactorElement = null; 
                     else
-                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Factor");
                 }
             }
@@ -284,10 +284,10 @@ namespace Hl7.Fhir.Model
                 get { return PointsElement != null ? PointsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      PointsElement = null; 
+                    if (!value.HasValue)
+                        PointsElement = null; 
                     else
-                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Points");
                 }
             }
@@ -431,10 +431,10 @@ namespace Hl7.Fhir.Model
                 get { return SignatureElement != null ? SignatureElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SignatureElement = null; 
+                    if (value == null)
+                        SignatureElement = null; 
                     else
-                      SignatureElement = new Hl7.Fhir.Model.FhirString(value);
+                        SignatureElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Signature");
                 }
             }
@@ -533,10 +533,10 @@ namespace Hl7.Fhir.Model
                 get { return IssuedElement != null ? IssuedElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      IssuedElement = null; 
+                    if (value == null)
+                        IssuedElement = null; 
                     else
-                      IssuedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        IssuedElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Issued");
                 }
             }
@@ -660,10 +660,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -914,10 +914,10 @@ namespace Hl7.Fhir.Model
                 get { return EffectiveTimeElement != null ? EffectiveTimeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      EffectiveTimeElement = null; 
+                    if (value == null)
+                        EffectiveTimeElement = null; 
                     else
-                      EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        EffectiveTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("EffectiveTime");
                 }
             }
@@ -972,10 +972,10 @@ namespace Hl7.Fhir.Model
                 get { return FactorElement != null ? FactorElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      FactorElement = null; 
+                    if (!value.HasValue)
+                        FactorElement = null; 
                     else
-                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Factor");
                 }
             }
@@ -1004,10 +1004,10 @@ namespace Hl7.Fhir.Model
                 get { return PointsElement != null ? PointsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      PointsElement = null; 
+                    if (!value.HasValue)
+                        PointsElement = null; 
                     else
-                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Points");
                 }
             }
@@ -1325,7 +1325,7 @@ namespace Hl7.Fhir.Model
             get { return IssuedElement != null ? IssuedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   IssuedElement = null; 
                 else
                   IssuedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1558,6 +1558,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Contract.ComputableLanguageComponent> _Rule;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Contract;

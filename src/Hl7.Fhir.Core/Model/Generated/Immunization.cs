@@ -166,10 +166,10 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DateElement = null; 
+                    if (value == null)
+                        DateElement = null; 
                     else
-                      DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Date");
                 }
             }
@@ -212,10 +212,10 @@ namespace Hl7.Fhir.Model
                 get { return ReportedElement != null ? ReportedElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ReportedElement = null; 
+                    if (!value.HasValue)
+                        ReportedElement = null; 
                     else
-                      ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Reported");
                 }
             }
@@ -302,10 +302,10 @@ namespace Hl7.Fhir.Model
                 get { return DoseSequenceElement != null ? DoseSequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DoseSequenceElement = null; 
+                    if (!value.HasValue)
+                        DoseSequenceElement = null; 
                     else
-                      DoseSequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        DoseSequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("DoseSequence");
                 }
             }
@@ -334,10 +334,10 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -380,10 +380,10 @@ namespace Hl7.Fhir.Model
                 get { return SeriesElement != null ? SeriesElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SeriesElement = null; 
+                    if (value == null)
+                        SeriesElement = null; 
                     else
-                      SeriesElement = new Hl7.Fhir.Model.FhirString(value);
+                        SeriesElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Series");
                 }
             }
@@ -412,10 +412,10 @@ namespace Hl7.Fhir.Model
                 get { return SeriesDosesElement != null ? SeriesDosesElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SeriesDosesElement = null; 
+                    if (!value.HasValue)
+                        SeriesDosesElement = null; 
                     else
-                      SeriesDosesElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        SeriesDosesElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("SeriesDoses");
                 }
             }
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.MedicationAdministrationStatus>(value);
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -659,7 +659,7 @@ namespace Hl7.Fhir.Model
             get { return WasNotGivenElement != null ? WasNotGivenElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   WasNotGivenElement = null; 
                 else
                   WasNotGivenElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -692,7 +692,7 @@ namespace Hl7.Fhir.Model
             get { return ReportedElement != null ? ReportedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ReportedElement = null; 
                 else
                   ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Model
             get { return LotNumberElement != null ? LotNumberElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   LotNumberElement = null; 
                 else
                   LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
@@ -826,7 +826,7 @@ namespace Hl7.Fhir.Model
             get { return ExpirationDateElement != null ? ExpirationDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ExpirationDateElement = null; 
                 else
                   ExpirationDateElement = new Hl7.Fhir.Model.Date(value);
@@ -928,6 +928,25 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> _VaccinationProtocol;
         
+
+        public static ElementDefinition.ConstraintComponent Immunization_IMM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(wasNotGiven = 'true') or explanation.reasonNotGiven.empty()"))},
+            Key = "imm-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If immunization was administered (wasNotGiven=false) then explanation.reasonNotGiven SHALL be absent.",
+            Xpath = "not(f:wasNotGiven/@value=false() and exists(f:explanation/f:reasonNotGiven))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Immunization_IMM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(wasNotGiven = 'true').not() or (reaction.empty() and explanation.reason.empty())"))},
+            Key = "imm-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If immunization was not administred (wasNotGiven=true) then there SHALL be no reaction nor explanation.reason present",
+            Xpath = "not(f:wasNotGiven/@value=true() and (count(f:reaction) > 0 or exists(f:explanation/f:reason)))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Immunization;

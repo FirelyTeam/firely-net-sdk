@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
             get { return CreatedElement != null ? CreatedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CreatedElement = null; 
                 else
                   CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
             get { return SourceElement != null ? SourceElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   SourceElement = null; 
                 else
                   SourceElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.DocumentReferenceStatus>(value);
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -441,6 +441,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.DocumentManifest.RelatedComponent> _Related;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DocumentManifest;

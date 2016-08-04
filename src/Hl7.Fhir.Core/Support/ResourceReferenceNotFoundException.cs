@@ -26,8 +26,8 @@ namespace Hl7.Fhir.Support
 
         public ResourceReferenceNotFoundException(string url, string message)
         {
-            if (string.IsNullOrEmpty(url)) throw new ArgumentNullException(nameof(url));
-            if (string.IsNullOrEmpty(message)) throw new ArgumentNullException(nameof(message));
+            if (string.IsNullOrEmpty(url)) throw new ArgumentNullException("url");
+            if (string.IsNullOrEmpty(message)) throw new ArgumentNullException("message");
             _message = message;
             _url = url;
         }
