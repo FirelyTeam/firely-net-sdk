@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -44,6 +45,7 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public partial class HumanName
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         [NotMapped]
         private string DebuggerDisplay
         {
@@ -71,6 +73,16 @@ namespace Hl7.Fhir.Model
                         sb.Append(item);
                     }
                 }
+                if (this._PrefixElement != null)
+                {
+                    foreach (var item in this._PrefixElement)
+                        sb.AppendFormat(", {0}", item.Value);
+                }
+                if (this._UseElement != null && this._UseElement.Value.HasValue)
+                {
+                    sb.AppendFormat(" ({0})", this._UseElement.Value.Value);
+                }
+
                 return sb.ToString();
             }
         }

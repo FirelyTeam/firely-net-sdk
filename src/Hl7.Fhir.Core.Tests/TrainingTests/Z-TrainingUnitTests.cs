@@ -19,6 +19,7 @@ namespace FHIR.Server.Tests
             pat.Name = new System.Collections.Generic.List<HumanName>();
             pat.Name.Add(new HumanName().WithGiven("Brian").AndFamily("Postlethwaite"));
             pat.Name[0].Use = HumanName.NameUse.Usual;
+            pat.Name[0].Prefix = new string[] { "Mr" };
             DateTime nativeBirthTime = new DateTime(2016, 6, 16, 15, 23, 0);
             pat.BirthDate = nativeBirthTime.ToFhirDate();
 
@@ -28,6 +29,34 @@ namespace FHIR.Server.Tests
             pat.BirthDateElement.AddExtension(
                 "http://hl7.org/fhir/StructureDefinition/patient-birthTime",
                 new FhirDateTime(nativeBirthTime));
+
+            // Use a CodeableConcept
+            pat.MaritalStatus = new CodeableConcept(
+                "http://hl7.org/fhir/ValueSet/marital-status", "M", "Married", "Married");
+            pat.MaritalStatus.Coding.Add(new Coding("https://example.org/govt-status-codes", "2", "Legally Married"));
+
+            // Add an address to the patient
+            pat.Address.Add(new Address()
+            {
+                Line = new string[] { "5 Smart Street" },
+                City = "Melbourne",
+                State = "Victoria",
+                Country = "Australia",
+                PostalCode = "3000"
+            });
+            pat.Address.Add(new Address()
+            {
+                Line = new string[] { "21 Main Street" },
+                City = "Moonee Ponds",
+                State = "Victoria",
+                Country = "Australia",
+                PostalCode = "3039"
+            });
+
+            // Telecom
+            pat.Telecom.Add(new ContactPoint(ContactPoint.ContactPointSystem.Email,
+                ContactPoint.ContactPointUse.Home, "555 123456"));
+            pat.Telecom[0].Period = new Period() { Start = "2015", End = "2017" };
         }
 
         /// <summary>
@@ -43,8 +72,6 @@ namespace FHIR.Server.Tests
 
             // Read the value of the extention from the Patient resource
             Coding result = pat.GetExtension("http://hl7.org.au/fhir/StructureDefinition/indigenous-status").Value as Coding;
-
-
         }
 
         [TestMethod, TestCategory("Training")]
@@ -120,9 +147,11 @@ namespace FHIR.Server.Tests
             }
         }
 
+        [TestMethod, TestCategory("Training")]
         public void TestParameters()
         {
             Parameters p = new Parameters();
+            p.Add("match.concept", new Coding("http://example.org/coding", "1", "some test to display"));
             Coding result = p.GetSingleValue<Coding>("match.concept");
         }
     }
