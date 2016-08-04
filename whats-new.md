@@ -5,29 +5,35 @@ title: What's new?
 ### In 0.90.5 (released 20160804)
 
 * Enhancement: Portable45 target includes support for validation, and no longer depends on Silverlight 5 SDK. Thanks Tilo!
-* Enhancement: Support for serialization where _summary=data (and automatically adds the Subsetted flag - temporarily adds the Tag then removes after serialization, if it wasn't there already)
+* Enhancement: Support for serialization where `_summary=data` (and automatically adds the Subsetted flag - temporarily adds the Tag then removes after serialization, if it wasn't there already)
 * Enhancement: Added Debugger Displays for commonly used types
 * Enhancement: Debugger Display for BundleEntries to show the HttpMethod and FullURL
 * Enhancement: Additional method in ModelInfo (Thanks Marten)
 
-    public static bool IsKnownResource(FhirDefinedType type)
+```c#
+public static bool IsKnownResource(FhirDefinedType type)
+```
 
 * Enhancement: You can (and should) now create an instance of a FhirXmlParser or FhirJsonParser instead of using the static methods on FhirParser, so you can set error policies per instance. 
 * Enhancement: Introduced ParserSettings to configure parser on a per-instance basis
 
-	FhirXmlParser parser = new FhirXmlParser(new ParserSettings { AcceptUnknownMembers = true });
-    var patient = parser.Parse<Patient>(xmlWithPatientData);
+```c#
+FhirXmlParser parser = new FhirXmlParser(new ParserSettings { AcceptUnknownMembers = true });
+var patient = parser.Parse<Patient>(xmlWithPatientData);
+```
 
 * Enhancement: Introduced a setting to allow parser to parse (and serialize) unrecognized enumeration values. Use `Code<T>.ObjectValue` to get to get/set the string as it was encountered in the stream. The FhirClient now has a `ParserSettings` property to manage the parser used by the `FhirClient`.
 * Enhancement: By popular demand: re-introduced `FhirClient.Refresh()`
 * Enhancement: Snapshot generator now supports all DSTU2 features (re-slicing limited to extensions)
 
-    ArtifactResolver source = ArtifactResolver.CreateCachedDefault();
-    var settings = new SnapshotGeneratorSettings { IgnoreMissingTypeProfiles = true };
-    StructureDefinition profile;
+```c#
+ArtifactResolver source = ArtifactResolver.CreateCachedDefault();
+var settings = new SnapshotGeneratorSettings { IgnoreMissingTypeProfiles = true };
+StructureDefinition profile;
 
-    var generator = new SnapshotGenerator(source, _settings);
-    generator.Generate(profile);
+var generator = new SnapshotGenerator(source, _settings);
+generator.Generate(profile);
+```
 
 * Fix: Status 500 from a FHIR server with an HTML error message results in a FhirOperationException, not a FormatException. Thanks Tilo!
 * Fix: `Code<T>` did not correctly implement `IsExactly()` and `Matches()`
@@ -39,11 +45,13 @@ title: What's new?
 
 * Enhancement: Additional Extension methods for converting native types to/from FHIR types
 
-    public static DateTime? ToDateTime(this Model.FhirDateTime me)
-    public static DateTime? ToDateTime(this Model.Date me)
-    public static string ToFhirDate(this System.DateTime me)
-    public static string ToFhirDateTime(this System.DateTime me)
-    public static string ToFhirId(this System.Guid me)
+```
+public static DateTime? ToDateTime(this Model.FhirDateTime me)
+public static DateTime? ToDateTime(this Model.Date me)
+public static string ToFhirDate(this System.DateTime me)
+public static string ToFhirDateTime(this System.DateTime me)
+public static string ToFhirId(this System.Guid me)
+```
 
 * Enhancement: Added the `SnapshotGenerator` class to turn differential representations of a StructureDefinition into a snapshot. Note: we're still working with the Java and HAPI people to get the snapshots 100% compatible. 
 * Breaking change: All `BackboneElement` derived classes are now named as found on [BackboneElement](http://hl7.org/fhir/backboneelement.html#summary) page in the specification, under the specializations heading.
