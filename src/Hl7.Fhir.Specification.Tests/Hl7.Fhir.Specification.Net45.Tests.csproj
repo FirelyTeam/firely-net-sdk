@@ -225,6 +225,9 @@
     <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-recipienttype.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-structure.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-systemuserlanguage.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -232,6 +235,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-systemusertype.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-trigger.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\extension-cqif-basic-inputparameters.xml">
@@ -328,6 +334,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\extension-elementdefinition-question.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extension-encounter-reasoncancelled.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\extension-encounter-relatedcondition.xml">
@@ -444,6 +453,9 @@
     <Content Include="TestData\snapshot-test\extension-geneticsvariationid.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\snapshot-test\extension-goal-reasonrejected.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\snapshot-test\extension-goal-target.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -451,6 +463,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\extension-imagingstudy-radiationduration.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extension-iso21090-preferred.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\extension-lipid-report-ldl-chol-calculated.xml">
@@ -462,6 +477,9 @@
     <Content Include="TestData\snapshot-test\extension-maxdecimalplaces.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\snapshot-test\extension-maxvalue.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\snapshot-test\extension-medication-isactiveingredient.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -471,7 +489,19 @@
     <Content Include="TestData\snapshot-test\extension-minlength.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\snapshot-test\extension-minvalue.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\snapshot-test\extension-observation-bodyposition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extension-patient-birthtime.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extension-patient-cadavericdonor.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extension-patient-clinicaltrial.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\extension-patient-disability.xml">
@@ -558,10 +588,22 @@
     <Content Include="TestData\snapshot-test\extension-qicore-adverseevent-type.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\snapshot-test\extension-qicore-patient-militaryservice.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\snapshot-test\extension-qicore-procedurerequest-appropriatenessscore.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\extension-questionnaire-category.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extension-questionnaire-choiceorientation.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extension-questionnaire-defaultvalue.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extension-questionnaire-dereference.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\extension-questionnaire-enablewhen.xml">
@@ -579,10 +621,19 @@
     <Content Include="TestData\snapshot-test\extension-questionnaire-label.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\snapshot-test\extension-questionnaire-maxlength.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\snapshot-test\extension-questionnaire-maxoccurs.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\extension-questionnaire-minoccurs.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extension-questionnaire-questioncontrol.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extension-questionnaire-readonly.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\extension-questionnaire-security.xml">

@@ -26,7 +26,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             MarkChanges = false,
-            ExpandTypeProfiles = false
+            ExpandTypeProfiles = true,
+            IgnoreMissingTypeProfiles = false
         };
 
         /// <summary>
@@ -39,8 +40,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>
         /// EXPERIMENTAL!
         /// Enable this setting in order to merge custom element type profiles.
-        /// If disabled (default), the snapshot generator ignores custom type profiles and merges constraints from the base profile.
-        /// If enabled, the snapshot generator first merges constraints from custom type profiles before merging constraints from the base profile.
+        /// If enabled (default), the snapshot generator first merges constraints from custom type profiles before merging constraints from the base profile.
+        /// If disabled, the snapshot generator ignores custom type profiles and merges constraints from the base profile.
         /// </summary>
         /// <remarks>See GForge #9791</remarks>
         public bool ExpandTypeProfiles { get; set; }
@@ -110,6 +111,41 @@ namespace Hl7.Fhir.Specification.Snapshot
             structure.Snapshot = new StructureDefinition.SnapshotComponent() { Element = snapNav.ToListOfElements() };
         }
 
+        // [WMR 20160802] NEW - TODO
+        // For partial expansion of a single (complex) element
+
+        /// <summary>Given a list of element definitions, expand the definition of a single element.</summary>
+        /// <param name="elements">A <see cref="StructureDefinition.SnapshotComponent"/> or <see cref="StructureDefinition.DifferentialComponent"/> instance.</param>
+        /// <param name="element">The element to expand. Should be part of <paramref name="elements"/>.</param>
+        /// <returns>A new, expanded list of <see cref="ElementDefinition"/> instances.</returns>
+        /// <exception cref="ArgumentException">The specified element is not contained in the list.</exception>
+        public IList<ElementDefinition> ExpandElement(IElementList elements, ElementDefinition element)
+        {
+            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
+            return ExpandElement(elements.Element, element);
+        }
+
+        /// <summary>Given a list of element definitions, expand the definition of a single element.</summary>
+        /// <param name="elements">A list of <see cref="ElementDefinition"/> instances, taken from snapshot or differential.</param>
+        /// <param name="element">The element to expand. Should be part of <paramref name="elements"/>.</param>
+        /// <returns>A new, expanded list of <see cref="ElementDefinition"/> instances.</returns>
+        /// <exception cref="ArgumentException">The specified element is not contained in the list.</exception>
+        public IList<ElementDefinition> ExpandElement(IList<ElementDefinition> elements, ElementDefinition element)
+        {
+            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+
+            var nav = new ElementNavigator(elements);
+            if (!nav.MoveTo(element))
+            {
+                throw Error.Argument(nameof(element), "The specified element is not contained in the list.");
+            }
+
+            expandElement(nav, _resolver, _settings);
+
+            return nav.Elements;
+        }
+
         private void merge(ElementNavigator snapNav, ElementNavigator diffNav)
         {
             var snapPos = snapNav.Bookmark();
@@ -122,8 +158,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Debug.WriteLine("Matches for children of " + snapNav.Path + (snapNav.Current != null && snapNav.Current.Name != null ? " '" + snapNav.Current.Name + "'" : null));
                 // matches.DumpMatches(snapNav, diffNav);
 
-                Bookmark lastSnapSlice = Bookmark.Empty;
-
                 foreach (var match in matches)
                 {
                     if (!snapNav.ReturnToBookmark(match.BaseBookmark))
@@ -133,46 +167,29 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     if (match.Action == ElementMatcher.MatchAction.Add)
                     {
-                        // Add a slice element
-                        // [WMR 20160720] NEW
+                        // Add new slice after the last existing slice in base profile
+                        snapNav.MoveToLastSlice();
+                        var lastSlice = snapNav.Bookmark();
 
-                        // Ensure that we have a valid bookmark to the last slice element in the snapshot
-                        // i.e. should have been initialized by the previous match with Action = Slice | Add
-                        if (lastSnapSlice.IsEmpty)
-                        {
-                            throw Error.InvalidOperation("Cannot add slice; slice introduction bookmark is null.");
-                        }
-
-                        // Duplicate the matched snapshot element after the last slice
-                        // Matched base element always points to the slicing introduction element
-                        // Create base slice element by copying the base slicing introduction element
-                        // TODO: Handle sliced base
+                        // Initialize slice by duplicating base slice entry
                         snapNav.ReturnToBookmark(match.BaseBookmark);
-                        snapNav.DuplicateAfter(lastSnapSlice);
+                        snapNav.DuplicateAfter(lastSlice);
                         // Important: explicitly clear the slicing node in the copy!
                         snapNav.Current.Slicing = null;
+
                         markChange(snapNav.Current);
 
                         // Merge differential
                         mergeElement(snapNav, diffNav);
 
-                        // Update last slice bookmark to the newly added slice
-                        lastSnapSlice = snapNav.Bookmark();
-
                     }
                     else if (match.Action == ElementMatcher.MatchAction.Merge)
                     {
                         mergeElement(snapNav, diffNav);
-
-                        // [WMR 20160720] NEW - Clear bookmark to last slice
-                        lastSnapSlice = Bookmark.Empty;
                     }
                     else if (match.Action == ElementMatcher.MatchAction.Slice)
                     {
                         makeSlice(snapNav, diffNav);
-
-                        // [WMR 20160720] NEW - Initialize bookmark to last slice
-                        lastSnapSlice = snapNav.Bookmark();
                     }
                 }
             }
@@ -209,10 +226,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // accept constraints on children, need to select a single type first...
                     if (snap.Current.Type.Count > 1)
                     {
-                        throw new NotSupportedException("Differential has a constraint on a choice element '{0}', but does so without using a type slice".FormatWith(diff.Path));
+                        throw Error.InvalidOperation("Differential has a constraint on a choice element '{0}', but does so without using a type slice", diff.Path);
                     }
 
-                    ExpandElement(snap, _resolver, _settings);
+                    expandElement(snap, _resolver, _settings);
 
                     if (!snap.HasChildren)
                     {
@@ -269,7 +286,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     // cf. ExpandElement
 
-#if HANDLE_COMPLEX_REFERENCES
                     // [WMR 20160721] NEW: Handle type profiles with name references
                     // e.g. profile "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent"
                     // Extension element "cause" => "http://hl7.org/fhir/StructureDefinition/qicore-adverseevent-cause"
@@ -277,14 +293,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // This means: 
                     // - First inherit child element constraints from extension definition, element with name "certainty"
                     // - Then override inherited constraints by explicit element constraints in profile differential
-                    var pos = primaryDiffTypeProfile.IndexOf('#');
-                    string baseNameRef = null;
-                    if (pos > 0)
+
+                    string profileUrl, elementName;
+                    var isComplex = IsComplexProfileReference(primaryDiffTypeProfile, out profileUrl, out elementName);
+                    if (isComplex)
                     {
-                        baseNameRef = primaryDiffTypeProfile.Substring(pos + 1);
-                        primaryDiffTypeProfile = primaryDiffTypeProfile.Substring(0, pos);
+                        primaryDiffTypeProfile = profileUrl;
                     }
-#endif
 
                     var baseType = _resolver.GetStructureDefinition(primaryDiffTypeProfile);
 
@@ -294,32 +309,26 @@ namespace Hl7.Fhir.Specification.Snapshot
                         {
                             // Clone and rebase
                             baseType = (StructureDefinition)baseType.DeepCopy();
-#if HANDLE_COMPLEX_REFERENCES
+
                             var rebasePath = diff.Path;
-                            if (baseNameRef != null && pos > 0)
+                            if (isComplex)
                             {
                                 rebasePath = ElementNavigator.GetParentPath(rebasePath);
                             }
                             baseType.Snapshot.Rebase(rebasePath);
-#else
-                                baseType.Snapshot.Rebase(diff.Path);
-#endif
 
                             generateBaseElements(baseType.Snapshot.Element);
                             var baseNav = new ElementNavigator(baseType.Snapshot.Element);
 
-#if HANDLE_COMPLEX_REFERENCES
-                            // [WMR 20160721] NEW - Handle type profiles with name references
-                            // sourceNav.MoveToFirstChild();
-                            if (baseNameRef == null)
+                            if (elementName == null)
                             {
                                 baseNav.MoveToFirstChild();
                             }
                             else
                             {
-                                if (!baseNav.JumpToNameReference(baseNameRef))
+                                if (!baseNav.JumpToNameReference(elementName))
                                 {
-                                    throw Error.InvalidOperation("Found type profile with invalid name reference '{0}' - the base profile does not contain an element with name '{1}'".FormatWith(primaryDiffTypeProfile, baseNameRef));
+                                    throw Error.InvalidOperation("Found type profile with invalid name reference '{0}' - the base profile does not contain an element with name '{1}'".FormatWith(primaryDiffTypeProfile, elementName));
                                 }
                             }
 
@@ -334,13 +343,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 // Only merge the profile root element; no need to expand children
                                 (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
                             }
-#else
-                                baseNav.MoveToFirstChild();
 
-                                // [WMR 20160720] Changed, use SnapshotGeneratorSettings
-                                // (new ElementDefnMerger(_markChanges)).Merge(snap.Current, baseNav.Current);
-                                (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
-#endif
 
                         }
                         else if (!_settings.IgnoreMissingTypeProfiles)
@@ -447,17 +450,27 @@ namespace Hl7.Fhir.Specification.Snapshot
         private static ElementDefinition createExtensionSlicingEntry()
         {
             // Create a pre-fab extension slice, filled with sensible defaults
-            var slicingDiff = new ElementDefinition();
-            slicingDiff.Slicing = new ElementDefinition.SlicingComponent();
-            slicingDiff.Slicing.Discriminator = new[] { "url" };
-            slicingDiff.Slicing.Ordered = false;
-            slicingDiff.Slicing.Rules = ElementDefinition.SlicingRules.Open;
 
-            return slicingDiff;
+            //var slicingDiff = new ElementDefinition();
+            //slicingDiff.Slicing = new ElementDefinition.SlicingComponent();
+            //slicingDiff.Slicing.Discriminator = new[] { "url" };
+            //slicingDiff.Slicing.Ordered = false;
+            //slicingDiff.Slicing.Rules = ElementDefinition.SlicingRules.Open;
+            // return slicingDiff;
+
+            return new ElementDefinition()
+            {
+                Slicing = new ElementDefinition.SlicingComponent()
+                {
+                    Discriminator = new[] { "url" },
+                    Ordered = false,
+                    Rules = ElementDefinition.SlicingRules.Open
+                }
+            };
         }
 
 
-        internal static bool ExpandElement(ElementNavigator nav, ArtifactResolver resolver, SnapshotGeneratorSettings settings)
+        internal static bool expandElement(ElementNavigator nav, ArtifactResolver resolver, SnapshotGeneratorSettings settings)
         {
             if (resolver == null) throw Error.ArgumentNull("source");
             if (nav.Current == null) throw Error.ArgumentNull("Navigator is not positioned on an element");
@@ -528,5 +541,25 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
         }
+
+        // [WMR 20160802] NEW
+
+        // Determines if the specified type profile url is of the form 'baseProfileUrl#elementName'
+        // If so, then extract separate components and return true
+        internal static bool IsComplexProfileReference(string url, out string profileUrl, out string elementName)
+        {
+            if (url == null) { throw new ArgumentNullException(nameof(url)); }
+            var pos = url.IndexOf('#');
+            if (pos > 0 && pos < url.Length)
+            {
+                profileUrl = url.Substring(0, pos);
+                elementName = url.Substring(pos + 1);
+                return true;
+            }
+            profileUrl = url;
+            elementName = null;
+            return false;
+        }
+
     }
 }
