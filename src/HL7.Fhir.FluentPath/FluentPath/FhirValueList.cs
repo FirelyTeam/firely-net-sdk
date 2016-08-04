@@ -8,6 +8,7 @@
 
 using System.Linq;
 using System.Collections.Generic;
+using Furore.MetaModel;
 
 namespace Hl7.Fhir.FluentPath
 {

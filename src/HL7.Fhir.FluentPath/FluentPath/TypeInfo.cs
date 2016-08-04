@@ -5,6 +5,7 @@ using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.Support;
 using System.Text;
 using System.Threading.Tasks;
+using Furore.MetaModel;
 
 namespace Hl7.Fhir.FluentPath
 {

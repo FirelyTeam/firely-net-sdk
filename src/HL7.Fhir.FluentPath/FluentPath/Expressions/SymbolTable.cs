@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.FluentPath.Functions;
 using System.Text.RegularExpressions;
+using Furore.MetaModel;
 
 namespace Hl7.Fhir.FluentPath.Expressions
 {

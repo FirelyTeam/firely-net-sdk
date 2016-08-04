@@ -149,7 +149,8 @@ namespace Hl7.Fhir.FluentPath
         public static PartialDateTime FromDateTime(DateTime dt)
         {
 
-#if PORTABLE45
+#if NETSTANDARD
+            // todo: check equivalence
             return new PartialDateTime { _value = XmlConvert.ToString(dt) };
 #else
             return new PartialDateTime { _value = XmlConvert.ToString(dt, XmlDateTimeSerializationMode.RoundtripKind) };

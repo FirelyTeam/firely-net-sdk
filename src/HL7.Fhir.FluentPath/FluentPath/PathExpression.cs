@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Furore.MetaModel;
 using Hl7.Fhir.FluentPath.Functions;
 
 namespace Hl7.Fhir.FluentPath

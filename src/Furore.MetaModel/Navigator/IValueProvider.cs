@@ -1,4 +1,4 @@
-﻿namespace Hl7.Fhir.FluentPath
+﻿namespace Furore.MetaModel
 {
     public interface IValueProvider
     {

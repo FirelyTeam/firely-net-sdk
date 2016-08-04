@@ -6,13 +6,14 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.FluentPath;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Hl7.Fhir.FluentPath;
+using Furore.MetaModel;
 
 namespace Hl7.Fhir.FluentPath.Functions
 {
@@ -155,8 +156,13 @@ namespace Hl7.Fhir.FluentPath.Functions
         {
             if (b == null) return false;
 
-            return String.Compare(a, b, CultureInfo.InvariantCulture,
+#if NETSTANDARD
+            // todo: check equivalence
+            return String.Compare(a, b) == 0;
+#else
+            return String.Compare(a, b, CultureInfo.InvariantCulture, 
                 CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols) == 0;
+#endif
         }
 
         public static bool IsEquivalentTo(this decimal a, decimal b)

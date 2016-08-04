@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Furore.MetaModel;
 
 namespace Hl7.Fhir.FluentPath.Functions
 {
@@ -44,7 +45,7 @@ namespace Hl7.Fhir.FluentPath.Functions
             if (find == String.Empty)
             {
                 // weird, but as specified:  "abc".replace("","x") = "xaxbxc"
-                return replace + String.Join(replace, me.AsEnumerable());
+                return replace + String.Join(replace, me.ToCharArray());
             }
             else
                 return me.Replace(find, replace);

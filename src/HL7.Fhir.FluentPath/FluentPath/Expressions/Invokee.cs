@@ -11,7 +11,7 @@ using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Hl7.Fhir.FluentPath.PathExpression;
+using Furore.MetaModel;
 
 namespace Hl7.Fhir.FluentPath.Expressions
 {
@@ -128,12 +128,12 @@ namespace Hl7.Fhir.FluentPath.Expressions
             };
         }
 
-        public static Invokee Return(Hl7.Fhir.FluentPath.IValueProvider value)
+        public static Invokee Return(IValueProvider value)
         {
-            return (_, __) => (new[] { (Hl7.Fhir.FluentPath.IValueProvider)value });
+            return (_, __) => (new[] { ( IValueProvider)value });
         }
 
-        public static Invokee Return(IEnumerable<Hl7.Fhir.FluentPath.IValueProvider> value)
+        public static Invokee Return(IEnumerable<IValueProvider> value)
         {
             return (_, __) => value;
         }

@@ -7,10 +7,11 @@
  */
 
 
-using Hl7.Fhir.FluentPath.Functions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Furore.MetaModel;
+using Hl7.Fhir.FluentPath.Functions;
 
 namespace Hl7.Fhir.FluentPath
 {

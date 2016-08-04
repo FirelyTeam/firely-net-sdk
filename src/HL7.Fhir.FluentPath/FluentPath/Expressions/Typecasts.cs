@@ -5,11 +5,14 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
-using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
+using Hl7.Fhir.Support;
+using Furore.MetaModel;
+using Hl7.Fhir.FluentPath.Support;
 
 namespace Hl7.Fhir.FluentPath.Expressions
 {
@@ -65,9 +68,12 @@ namespace Hl7.Fhir.FluentPath.Expressions
         private static Cast getImplicitCast(Type from, Type to)
         {
             if (to == typeof(object)) return id;
-            if (to.IsAssignableFrom(from)) return id;
+
+            //if (to.IsAssignableFrom(from)) return id;
+            if (to.CanBeTreatedAsType(from)) return id;
+
             //if (to == typeof(bool)) return any2bool;
-            if (to == typeof(IValueProvider) && (!typeof(IEnumerable<IValueProvider>).IsAssignableFrom(from))) return any2ValueProvider;
+            if (to == typeof(IValueProvider) && (!typeof(IEnumerable<IValueProvider>).CanBeTreatedAsType(from))) return any2ValueProvider;
             if (to == typeof(IEnumerable<IValueProvider>)) return any2List;
              
             if (from == typeof(long) && (to == typeof(decimal) || to == typeof(decimal?))) return makeNativeCast(typeof(decimal));
@@ -79,7 +85,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
         {
             if (instance == null) return null;
 
-            if (typeof(IEnumerable<IValueProvider>).IsAssignableFrom(to)) return instance;
+            if (typeof(IEnumerable<IValueProvider>).CanBeTreatedAsType(to)) return instance;
 
             if (instance is IEnumerable<IValueProvider>)
             {
@@ -89,7 +95,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
                     instance = list.Single();
             }
 
-            if (typeof(IValueProvider).IsAssignableFrom(to)) return instance;
+            if (typeof(IValueProvider).CanBeTreatedAsType(to)) return instance;
 
             if (instance is IValueProvider)
             {
@@ -130,7 +136,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
         {
             if (source != null)
             {
-                if (to.IsAssignableFrom(source.GetType())) return source;  // for efficiency
+                if (to.CanBeTreatedAsType(source.GetType())) return source;  // for efficiency
 
                 source = Unbox(source, to);
 
@@ -160,19 +166,21 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
         public static bool IsNullable(this Type t)
         {
-           if (!t.IsValueType) return true; // ref-type
+           if (!t.IsAValueType()) return true; // ref-type
            if (Nullable.GetUnderlyingType(t) != null) return true; // Nullable<T>
            return false; // value-type
         }
 
         public static string ReadableFluentPathName(Type t)
         {
-            if (typeof(IEnumerable<IValueProvider>).IsAssignableFrom(t))
+            if (typeof(IEnumerable<IValueProvider>).CanBeTreatedAsType(t))
                 return "collection";
-            else if (typeof(IValueProvider).IsAssignableFrom(t))
+            else if (typeof(IValueProvider).CanBeTreatedAsType(t))
                 return "any single value";
             else
                 return t.Name;
         }
+
     }
+
 }

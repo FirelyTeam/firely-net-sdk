@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace Hl7.Fhir.FluentPath
+namespace Furore.MetaModel
 {
     public static class NavigatorExtensions
     {
