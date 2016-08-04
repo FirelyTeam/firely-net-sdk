@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.3-beta",
+  "version": "1.4.1-beta2",
 
   "dependencies": {
     
@@ -12,6 +12,9 @@
       }
     },
     "net40": {
+
+    },
+    "net45" : {
 
     }
 

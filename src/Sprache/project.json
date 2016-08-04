@@ -1,7 +1,7 @@
 {
   // Sprache
 
-  "version": "2.1.0-*",
+  "version": "2.1.1-beta1",
 
   "buildOptions": {
     "debugType": "portable"
@@ -14,6 +14,8 @@
       }
     },
 
-    "net40": {}
+    "net40": {},
+    "net45": {}
+
   }
 }
