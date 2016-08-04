@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <exception cref="ArgumentException">The specified element is not contained in the list.</exception>
         public IList<ElementDefinition> ExpandElement(IElementList elements, ElementDefinition element)
         {
-            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
+            if (elements == null) { throw Error.ArgumentNull("elements"); }
             return ExpandElement(elements.Element, element);
         }
 
@@ -132,13 +132,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <exception cref="ArgumentException">The specified element is not contained in the list.</exception>
         public IList<ElementDefinition> ExpandElement(IList<ElementDefinition> elements, ElementDefinition element)
         {
-            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
-            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
+            if (elements == null) { throw Error.ArgumentNull("elements"); }
+            if (element == null) { throw Error.ArgumentNull("element"); }
 
             var nav = new ElementNavigator(elements);
             if (!nav.MoveTo(element))
             {
-                throw Error.Argument(nameof(element), "The specified element is not contained in the list.");
+                throw Error.Argument("element", "The specified element is not contained in the list.");
             }
 
             expandElement(nav, _resolver, _settings);
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // If so, then extract separate components and return true
         internal static bool IsComplexProfileReference(string url, out string profileUrl, out string elementName)
         {
-            if (url == null) { throw new ArgumentNullException(nameof(url)); }
+            if (url == null) { throw new ArgumentNullException("url"); }
             var pos = url.IndexOf('#');
             if (pos > 0 && pos < url.Length)
             {

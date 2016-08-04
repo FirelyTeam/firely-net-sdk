@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Specification.Navigation
         // [WMR 20160802] NEW
         internal static Bookmark FromElement(ElementDefinition element)
         {
-            if (element == null) throw Error.ArgumentNull(nameof(element));
+            if (element == null) throw Error.ArgumentNull("element");
             return new Bookmark() { data = element };
         }
     }
