@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.FluentPath.Binding
+namespace Hl7.Fhir.FluentPath.Expressions
 {
     internal class DynaDispatcher
     {
@@ -20,16 +20,18 @@ namespace Hl7.Fhir.FluentPath.Binding
         private string _name;
         private SymbolTable _scope;
 
-        public Invokee MakeDispatcher()
+        public IEnumerable<IValueProvider> Dispatcher(Closure context, IEnumerable<Invokee> args)
         {
-            Invokee v = invokeNested;
-            return v.NullProp();
-        }
+            var actualArgs = new List<IEnumerable<IValueProvider>>();
 
-        private IEnumerable<IValueProvider> invokeNested(IEvaluationContext context, IEnumerable<Invokee> args)
-        {
-            List<object> actualArgs = new List<object>();
-            actualArgs.AddRange(args.Select(a => a(context, InvokeeFactory.EmptyArgs)));
+            var focus = args.First()(context, InvokeeFactory.EmptyArgs);
+            if (!focus.Any()) return FhirValueList.Empty;
+
+            actualArgs.Add(focus);
+            var newCtx = context.Nest(focus);
+
+            actualArgs.AddRange(args.Skip(1).Select(a => a(newCtx, InvokeeFactory.EmptyArgs)));
+            if (actualArgs.Any(aa=>!aa.Any())) return FhirValueList.Empty;
 
             var entry = _scope.DynamicGet(_name, actualArgs);
 

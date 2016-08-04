@@ -14,7 +14,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.FluentPath.Functions;
 using System.Text.RegularExpressions;
 
-namespace Hl7.Fhir.FluentPath.Binding
+namespace Hl7.Fhir.FluentPath.Expressions
 {
     public static class SymbolTableInit
     {
@@ -24,6 +24,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             t.Add("empty", (IEnumerable<object> f) => !f.Any());
             t.Add("exists", (IEnumerable<object> f) => f.Any());
             t.Add("count", (IEnumerable<object> f) => f.Count());
+            t.Add("trace", (IEnumerable<IValueProvider> f, string name) => f.Trace(name));
 
             t.Add("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.DistinctUnion(r));
             t.Add("binary.contains", (object f, IEnumerable<IValueProvider> a, IValueProvider b) => a.Contains(b));
@@ -143,7 +144,7 @@ namespace Hl7.Fhir.FluentPath.Binding
             t.Add(new CallSignature("all", typeof(bool), typeof(object), typeof(Invokee)), runAll);
             t.Add(new CallSignature("any", typeof(bool), typeof(object), typeof(Invokee)), runAny);
             t.Add(new CallSignature("repeat", typeof(IEnumerable<IValueProvider>), typeof(object), typeof(Invokee)), runRepeat);
-            t.Add(new CallSignature("trace", typeof(IEnumerable<IValueProvider>), typeof(object), typeof(string)), InvokeeFactory.Trace());
+            
 
             t.AddVar("sct", "http://snomed.info/sct");
             t.AddVar("loinc", "http://loinc.org");
@@ -167,34 +168,40 @@ namespace Hl7.Fhir.FluentPath.Binding
         }
 
 
-        private static IEnumerable<IValueProvider> runWhere(IEvaluationContext ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IValueProvider> runWhere(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
             foreach (IValueProvider element in focus)
             {
-                var newContext = ctx.Nest(FhirValueList.Create(element));
+                var newFocus = FhirValueList.Create(element);
+                var newContext = ctx.Nest(newFocus);
+                newContext.SetThis(newFocus);
+
                 if (lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval() == true)
                     yield return element;
             }
         }
 
-        private static IEnumerable<IValueProvider> runSelect(IEvaluationContext ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IValueProvider> runSelect(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
             foreach (IValueProvider element in focus)
             {
-                var newContext = ctx.Nest(FhirValueList.Create(element));
+                var newFocus = FhirValueList.Create(element);
+                var newContext = ctx.Nest(newFocus);
+                newContext.SetThis(newFocus);
+
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs);
                 foreach (var resultElement in result)       // implement SelectMany()
                     yield return resultElement;
             }
         }
 
-        private static IEnumerable<IValueProvider> runRepeat(IEvaluationContext ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IValueProvider> runRepeat(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
@@ -209,7 +216,11 @@ namespace Hl7.Fhir.FluentPath.Binding
 
                 foreach (IValueProvider element in current)
                 {
-                    var newContext = ctx.Nest(FhirValueList.Create(element));
+                    var newFocus = FhirValueList.Create(element);
+                    var newContext = ctx.Nest(newFocus);
+                    newContext.SetThis(newFocus);
+
+
                     newNodes.AddRange(lambda(newContext, InvokeeFactory.EmptyArgs));
                 }
 
@@ -219,14 +230,16 @@ namespace Hl7.Fhir.FluentPath.Binding
             return fullResult;
         }
 
-        private static IEnumerable<IValueProvider> runAll(IEvaluationContext ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IValueProvider> runAll(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
             foreach (IValueProvider element in focus)
             {
-                var newContext = ctx.Nest(FhirValueList.Create(element));
+                var newFocus = FhirValueList.Create(element);
+                var newContext = ctx.Nest(newFocus);
+                newContext.SetThis(newFocus);
 
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
                 if (result == null) return FhirValueList.Empty;
@@ -236,14 +249,18 @@ namespace Hl7.Fhir.FluentPath.Binding
             return FhirValueList.Create(true);
         }
 
-        private static IEnumerable<IValueProvider> runAny(IEvaluationContext ctx, IEnumerable<Invokee> arguments)
+        private static IEnumerable<IValueProvider> runAny(Closure ctx, IEnumerable<Invokee> arguments)
         {
             var focus = arguments.First()(ctx, InvokeeFactory.EmptyArgs);
             var lambda = arguments.Skip(1).First();
 
             foreach (IValueProvider element in focus)
             {
-                var newContext = ctx.Nest(FhirValueList.Create(element));
+                var newFocus = FhirValueList.Create(element);
+                var newContext = ctx.Nest(newFocus);
+                newContext.SetThis(newFocus);
+
+
                 var result = lambda(newContext, InvokeeFactory.EmptyArgs).BooleanEval();
 
                 //if (result == null) return FhirValueList.Empty; -> otherwise this would not be where().exists()
@@ -253,6 +270,5 @@ namespace Hl7.Fhir.FluentPath.Binding
 
             return FhirValueList.Create(false);
         }
-
     }
 }

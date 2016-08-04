@@ -68,7 +68,6 @@
     <Compile Include="CastTests.cs" />
     <Compile Include="FhirPathEvaluatorTestFromSpec.cs" />
     <Compile Include="FhirPathTest.cs" />
-    <Compile Include="TestEvaluationContext.cs" />
     <Compile Include="FhirPathEvaluatorTest.cs" />
     <Compile Include="FhirPathGrammarTest.cs" />
     <Compile Include="FhirPathLexerTest.cs" />

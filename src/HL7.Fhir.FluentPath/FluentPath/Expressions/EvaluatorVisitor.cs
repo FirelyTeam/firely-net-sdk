@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.FluentPath.Binding;
 
 namespace Hl7.Fhir.FluentPath.Expressions
 {
@@ -20,7 +18,8 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
         public override Invokee VisitFunctionCall(FP.FunctionCallExpression expression, SymbolTable scope)
         {
-            var arguments = new List<Invokee>() { expression.Focus.ToEvaluator(scope) };
+            var focus = expression.Focus.ToEvaluator(scope);
+            var arguments = new List<Invokee>() { focus };
             arguments.AddRange(expression.Arguments.Select(arg => arg.ToEvaluator(scope)));
 
             // We have no real type information, so just pass object as the type
@@ -44,6 +43,10 @@ namespace Hl7.Fhir.FluentPath.Expressions
             if(expression.Name == "builtin.this")
                 return InvokeeFactory.GetThis;
 
+            // HACK, for now, $this is special, and we handle in run-time, not compile time...
+            if (expression.Name == "builtin.that")
+                return InvokeeFactory.GetThat;
+
             // HACK, for now, %context is special, and we handle in run-time, not compile time...
             if (expression.Name == "context")
                 return InvokeeFactory.GetContext;
@@ -54,7 +57,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
 
             // Variables are still functions without arguments. For now variables are treated separately here,
-            //Functions are handles elsewhere.
+            //Functions are handled elsewhere.
             return resolve(scope, expression.Name, Enumerable.Empty<Type>());
         }
 
@@ -67,7 +70,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
             if (count > 1)
             {
                 // If we have multiple candidates, delay resolution to runtime
-                return (new DynaDispatcher(name, candidateTable).MakeDispatcher());
+                return (new DynaDispatcher(name, candidateTable).Dispatcher);
             }
             else if(count == 1)
             {

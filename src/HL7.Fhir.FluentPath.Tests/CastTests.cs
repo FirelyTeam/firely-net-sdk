@@ -14,7 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.FluentPath.Binding;
+using Hl7.Fhir.FluentPath.Expressions;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {

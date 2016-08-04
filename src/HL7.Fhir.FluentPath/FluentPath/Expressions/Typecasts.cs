@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Hl7.Fhir.FluentPath.Binding
+namespace Hl7.Fhir.FluentPath.Expressions
 {
     internal static class Typecasts
     {

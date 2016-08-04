@@ -17,7 +17,6 @@ using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.FluentPath.Expressions;
 using System.Diagnostics;
 using dstu2::Hl7.Fhir.Model;
-using Hl7.Fhir.FluentPath.Binding;
 using Hl7.Fhir.Support;
 using System.Xml.Linq;
 
@@ -141,12 +140,12 @@ namespace Hl7.Fhir.Tests.FhirPath
                         new XElement("output", new XAttribute("type", "boolean"), new XText("true")));
             xdoc.Elements().First().Add(testXml);
 
-            Assert.IsTrue(PathExpression.Compile(expr).IsBoolean(true,testInput));
+            Assert.IsTrue(PathExpression.IsBoolean(expr, true,testInput));
         }
 
         private void isTrue(string expr, IEnumerable<IValueProvider> input)
         {
-            Assert.IsTrue(PathExpression.Compile(expr).IsBoolean(true,input));
+            Assert.IsTrue(PathExpression.IsBoolean(expr, true,input));
         }
 
         [TestMethod, TestCategory("FhirPath")]
@@ -465,6 +464,8 @@ namespace Hl7.Fhir.Tests.FhirPath
         [TestMethod, TestCategory("FhirPath")]
         public void TestSubstring()
         {
+            isTrue("Patient.name.family");
+
             isTrue("Patient.name.family.substring(0,6) = 'Donald'");
             isTrue("Patient.name.family.substring(2,6) = 'nald'");
             isTrue("Patient.name.family.substring(2,4) = 'nald'");

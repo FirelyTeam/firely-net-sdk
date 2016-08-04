@@ -14,7 +14,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.FluentPath.Functions;
 using System.Text.RegularExpressions;
 
-namespace Hl7.Fhir.FluentPath.Binding
+namespace Hl7.Fhir.FluentPath.Expressions
 {
 
     public class SymbolTable
@@ -111,34 +111,29 @@ namespace Hl7.Fhir.FluentPath.Binding
             return table.Get(signature.Name, signature.ArgumentTypes);
         }
 
-        public static void Add<R>(this SymbolTable table, string name, Func<R> func, bool doNullProp=false)
+        public static void Add<R>(this SymbolTable table, string name, Func<R> func)
         {
-            table.Add(new CallSignature(name, typeof(R)), 
-                    doNullProp == false ? InvokeeFactory.Wrap(func) : InvokeeFactory.Wrap(func).NullProp());
+            table.Add(new CallSignature(name, typeof(R)), InvokeeFactory.Wrap(func));
         }
 
         public static void Add<A,R>(this SymbolTable table, string name, Func<A,R> func, bool doNullProp = false)
         {
-            table.Add(new CallSignature(name, typeof(R), typeof(A)), 
-                doNullProp == false ? InvokeeFactory.Wrap(func) : InvokeeFactory.Wrap(func).NullProp());
+            table.Add(new CallSignature(name, typeof(R), typeof(A)), InvokeeFactory.Wrap(func, doNullProp));
         }
 
         public static void Add<A,B,R>(this SymbolTable table, string name, Func<A,B,R> func, bool doNullProp = false)
         {
-            table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B)), 
-                    doNullProp == false ? InvokeeFactory.Wrap(func) : InvokeeFactory.Wrap(func).NullProp());
+            table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B)), InvokeeFactory.Wrap(func, doNullProp));
         }
 
         public static void Add<A, B, C, R>(this SymbolTable table, string name, Func<A, B,C, R> func, bool doNullProp = false)
         {
-            table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C)),
-                doNullProp == false ? InvokeeFactory.Wrap(func) : InvokeeFactory.Wrap(func).NullProp());
+            table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C)), InvokeeFactory.Wrap(func, doNullProp));
         }
 
         public static void Add<A, B, C, D, R>(this SymbolTable table, string name, Func<A,B,C,D,R> func, bool doNullProp = false)
         {
-            table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C), typeof(D)),
-                doNullProp == false ? InvokeeFactory.Wrap(func) : InvokeeFactory.Wrap(func).NullProp());
+            table.Add(new CallSignature(name, typeof(R), typeof(A), typeof(B), typeof(C), typeof(D)), InvokeeFactory.Wrap(func, doNullProp));
         }
 
         public static void AddLogic(this SymbolTable table, string name, Func<Func<bool?>, Func<bool?>, bool?> func)

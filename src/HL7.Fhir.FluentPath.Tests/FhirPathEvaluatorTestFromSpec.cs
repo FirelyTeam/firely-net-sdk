@@ -24,7 +24,6 @@ using System.IO;
 using Hl7.Fhir.Tests.FhirPath;
 using System.Xml;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.FluentPath.Binding;
 using System.Xml.Linq;
 using Hl7.Fhir.FluentPath.Functions;
 
@@ -107,7 +106,7 @@ public class FluentPathTests
         var npoco = new ModelNavigator(resource);
         //       FhirPathEvaluatorTest.Render(npoco);
 
-        IEnumerable<IValueProvider> actual = PathExpression.Compile(expression).Select(FhirValueList.Create(npoco));
+        IEnumerable<IValueProvider> actual = PathExpression.Select(expression, FhirValueList.Create(npoco));
         Assert.AreEqual(expected.Count(), actual.Count());
 
         expected.Zip(actual, compare).Count();
@@ -131,12 +130,10 @@ public class FluentPathTests
     // @SuppressWarnings("deprecation")
     private void testBoolean(Resource resource, Base focus, String focusType, String expression, boolean value)
     {
-        var context = BaseEvaluationContext.Root(ModelNavigator.CreateInput(focus));
+        var input = ModelNavigator.CreateInput(focus);
+        var container = resource != null ? ModelNavigator.CreateInput(resource) : null;
 
-        if (resource != null)
-            context.SetResource(ModelNavigator.CreateInput(resource));
-
-        Assert.IsTrue(PathExpression.IsBoolean(expression, value, context));
+        Assert.IsTrue(PathExpression.IsBoolean(expression, value, input, container));
     }
 
 

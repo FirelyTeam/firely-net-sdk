@@ -45,19 +45,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ElementsModel\ITypeNameProvider.cs" />
-    <Compile Include="FluentPath\BaseEvaluationContext.cs" />
-    <Compile Include="FluentPath\Binding\SymbolTableInit.cs" />
-    <Compile Include="FluentPath\Binding\CallSignature.cs" />
-    <Compile Include="FluentPath\Binding\DynaDispatcher.cs" />
-    <Compile Include="FluentPath\Binding\Invokee.cs" />
-    <Compile Include="FluentPath\Binding\SymbolTable.cs" />
-    <Compile Include="FluentPath\Binding\Typecasts.cs" />
+    <Compile Include="FluentPath\Expressions\Closure.cs" />
+    <Compile Include="FluentPath\Expressions\CallSignature.cs" />
+    <Compile Include="FluentPath\Expressions\ClosureExtensions.cs" />
+    <Compile Include="FluentPath\Expressions\DynaDispatcher.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionVisitor.cs" />
     <Compile Include="ElementsModel\NavigatorExtensions.cs" />
     <Compile Include="ElementsModel\INavigator.cs" />
     <Compile Include="ElementsModel\IValueProvider.cs" />
     <Compile Include="ElementsModel\INameProvider.cs" />
     <Compile Include="ElementsModel\IElementNavigator.cs" />
+    <Compile Include="FluentPath\Expressions\Invokee.cs" />
+    <Compile Include="FluentPath\Expressions\SymbolTable.cs" />
+    <Compile Include="FluentPath\Expressions\SymbolTableInit.cs" />
+    <Compile Include="FluentPath\Expressions\Typecasts.cs" />
     <Compile Include="FluentPath\Functions\CollectionOperators.cs" />
     <Compile Include="FluentPath\Functions\ConversionOperators.cs" />
     <Compile Include="FluentPath\Functions\EqualityOperators.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="FluentPath\Parser\Grammar.cs" />
     <Compile Include="FluentPath\Parser\Operators.cs" />
     <Compile Include="FluentPath\Parser\Lexer.cs" />
-    <Compile Include="FluentPath\IEvaluationContext.cs" />
     <Compile Include="FluentPath\FhirValueList.cs" />
     <Compile Include="FluentPath\Expressions\ExpressionNode.cs" />
     <Compile Include="FluentPath\PartialDateTime.cs" />

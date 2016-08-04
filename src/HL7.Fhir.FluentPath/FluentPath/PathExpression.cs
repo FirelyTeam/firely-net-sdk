@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Hl7.Fhir.FluentPath.Binding;
 
 namespace Hl7.Fhir.FluentPath
 {
@@ -29,7 +28,9 @@ namespace Hl7.Fhir.FluentPath
 
             if (parse.WasSuccessful)
             {
-            //    _cache.TryAdd(cacheName, compilation.Value);
+                //    _cache.TryAdd(cacheName, compilation.Value);
+
+              //  Console.WriteLine( parse.Value.Dump());
                 return parse.Value;
             }
             else
@@ -53,7 +54,7 @@ namespace Hl7.Fhir.FluentPath
 
             //if (_cache.ContainsKey(cacheName))
             //    return _cache[cacheName];  
-            
+
             return Parse(expression).Compile(scope);
         }
 
@@ -70,52 +71,28 @@ namespace Hl7.Fhir.FluentPath
         }
 
 
-        public static IEnumerable<IValueProvider> Select(string expression, IEnumerable<IValueProvider> input)
+        public static IEnumerable<IValueProvider> Select(string expression, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource=null)
         {
             var evaluator = Compile(expression);
-            return evaluator.Select(input);
+            return evaluator.Select(input, resource);
         }
 
-        public static IEnumerable<IValueProvider> Select(string expression, IEvaluationContext context)
+        public static object Scalar(string expression, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource = null)
         {
             var evaluator = Compile(expression);
-            return evaluator.Select(context);
+            return evaluator.Scalar(input, resource);
         }
 
-        public static object Scalar(string expression, IEnumerable<IValueProvider> input)
+        public static bool Predicate(string expression, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource = null)
         {
             var evaluator = Compile(expression);
-            return evaluator.Scalar(input);
+            return evaluator.Predicate(input, resource);
         }
 
-        public static object Scalar(string expression, IEvaluationContext context)
+        public static bool IsBoolean(string expression, bool value, IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource = null)
         {
             var evaluator = Compile(expression);
-            return evaluator.Scalar(context);
-        }
-
-        public static bool IsBoolean(string expression, bool value, IEnumerable<IValueProvider> input)
-        {
-            var evaluator = Compile(expression);
-            return evaluator.IsBoolean(value, input);
-        }
-
-        public static bool IsBoolean(string expression, bool value, IEvaluationContext context)
-        {
-            var evaluator = Compile(expression);
-            return evaluator.IsBoolean(value, context);
-        }
-
-        public static bool Predicate(string expression, IEnumerable<IValueProvider> input)
-        {
-            var evaluator = Compile(expression);
-            return evaluator.Predicate(input);
-        }
-
-        public static bool Predicate(string expression, IEvaluationContext context)
-        {
-            var evaluator = Compile(expression);
-            return evaluator.Predicate(context);
+            return evaluator.IsBoolean(value, input, resource);
         }
     }
 

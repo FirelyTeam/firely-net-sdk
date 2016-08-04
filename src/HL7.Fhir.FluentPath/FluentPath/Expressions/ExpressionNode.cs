@@ -1,5 +1,4 @@
-﻿using Hl7.Fhir.FluentPath.Binding;
-using Hl7.Fhir.Support;
+﻿using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -177,7 +176,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
         {
         }
 
-        public BinaryExpression(string op, Expression left, Expression right) : base(AxisExpression.This, BIN_PREFIX + op, TypeInfo.Any, left, right)
+        public BinaryExpression(string op, Expression left, Expression right) : base(AxisExpression.That, BIN_PREFIX + op, TypeInfo.Any, left, right)
         {
         }
         public string Op
@@ -215,7 +214,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
         {
         }
 
-        public UnaryExpression(string op, Expression operand) : base(AxisExpression.This, URY_PREFIX + op, TypeInfo.Any, operand)
+        public UnaryExpression(string op, Expression operand) : base(AxisExpression.That, URY_PREFIX + op, TypeInfo.Any, operand)
         {
         }
         public string Op
@@ -353,41 +352,6 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
 
         public static readonly AxisExpression This = new AxisExpression("this");
+        public static readonly AxisExpression That = new AxisExpression("that");
     }
-
-    //public class TypeBinaryExpression : Expression
-    //{
-    //    public TypeBinaryExpression(string op, Expression expression, string type) : base(TypeInfo.Any)
-    //    {
-    //        Expression = expression;
-    //        Type = TypeInfo.ByName(type);
-    //        Op = op;
-    //    }
-
-    //    public string Op { get; private set; }
-    //    public Expression Expression { get; private set; }
-
-    //    public TypeInfo Type { get; private set; }
-
-    //    public override T Accept<T>(ExpressionVisitor<T> visitor)
-    //    {
-    //        return visitor.VisitTypeBinaryExpression(this);
-    //    }
-
-    //    public override bool Equals(object obj)
-    //    {
-    //        if (base.Equals(obj) && obj is TypeBinaryExpression)
-    //        {
-    //            var f = (TypeBinaryExpression)obj;
-    //            return Object.Equals(Expression, f.Expression) && Type == f.Type;
-    //        }
-    //        else
-    //            return false;
-    //    }
-
-    //    public override int GetHashCode()
-    //    {
-    //        return base.GetHashCode() ^ Expression.GetHashCode() ^ Type.GetHashCode();
-    //    }
-    //}
 }

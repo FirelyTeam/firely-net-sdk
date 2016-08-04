@@ -81,7 +81,7 @@ namespace Hl7.Fhir.FluentPath.Parser
 
         public static readonly Parser<Expression> Term =
             Literal
-            .Or(FunctionInvocation(AxisExpression.This))
+            .Or(FunctionInvocation(AxisExpression.That))
             .XOr(Lexer.ExternalConstant.Select(n => BuildVariableRefExpression(n))) //Was .XOr(Lexer.ExternalConstant.Select(v => Eval.ExternalConstant(v)))
             .XOr(BracketExpr)
             .XOr(EmptyList)
@@ -93,9 +93,9 @@ namespace Hl7.Fhir.FluentPath.Parser
         public static Expression BuildVariableRefExpression(string name)
         {
             if (name.StartsWith("ext-"))
-                return new FunctionCallExpression(AxisExpression.This, "builtin.coreexturl", TypeInfo.String, new ConstantExpression(name.Substring(4)));
+                return new FunctionCallExpression(AxisExpression.That, "builtin.coreexturl", TypeInfo.String, new ConstantExpression(name.Substring(4)));
             else if (name.StartsWith("vs-"))
-                return new FunctionCallExpression(AxisExpression.This, "builtin.corevsurl", TypeInfo.String, new ConstantExpression(name.Substring(3)));
+                return new FunctionCallExpression(AxisExpression.That, "builtin.corevsurl", TypeInfo.String, new ConstantExpression(name.Substring(3)));
             else
                 return new VariableRefExpression(name);
         }

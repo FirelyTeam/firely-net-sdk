@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hl7.Fhir.FluentPath.Binding
+namespace Hl7.Fhir.FluentPath.Expressions
 {
     public class CallSignature
     {
