@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Specification.Tests
 		[TestInitialize]
 		public void Setup()
 		{
-			_testSource = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/snapshot-test")));
+			_testSource = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/snapshot-test", includeSubdirectories: true)));
 		}
 
 		// [WMR 20160718] Generate snapshot for extension definition fails with exception:
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Specification.Tests
 		}
 
 		[TestMethod]
-		// [Ignore] // For debugging purposes
+		[Ignore] // For debugging purposes
 		public void GenerateSingleSnapshot()
 		{
 			// var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Specification.Tests
 		}
 
 		[TestMethod]
-		// [Ignore] // For debugging purposes
+		[Ignore] // For debugging purposes
 		public void GenerateDerivedProfileSnapshot()
 		{
 			// cqif-guidanceartifact profile is derived from cqif-knowledgemodule
@@ -158,7 +158,25 @@ namespace Hl7.Fhir.Specification.Tests
 			Debug.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
 		}
 
-		private void generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
+#if false
+        private void forDoc()
+        {
+            FhirXmlParser parser = new FhirXmlParser(new ParserSettings { AcceptUnknownMembers = true });
+            IFhirReader xmlWithPatientData = null;
+            var patient = parser.Parse<Patient>(xmlWithPatientData);
+
+            // -----
+
+            ArtifactResolver source = ArtifactResolver.CreateCachedDefault();
+            var settings = new SnapshotGeneratorSettings { IgnoreMissingTypeProfiles = true };
+            StructureDefinition profile = null;
+
+            var generator = new SnapshotGenerator(source, _settings);
+            generator.Generate(profile);
+        }
+#endif
+
+        private void generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
 		{
 			// var generator = new SnapshotGenerator(source, markChanges: false);        
 			var generator = new SnapshotGenerator(source, _settings);
