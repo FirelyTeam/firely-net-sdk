@@ -34,12 +34,7 @@ namespace Hl7.Fhir.Validation
 
         public static SpecificationProvider CreateOffline(params IArtifactSource[] sources)
         {
-            ArtifactResolver resolver = new ArtifactResolver();
-            foreach (IArtifactSource s in sources) resolver.AddSource(s);
-            resolver.AddSource(new CoreZipArtifactSource());
-            resolver.AddSource(new FileArtifactSource(true));
-            
-            IArtifactSource cache = new CachedArtifactSource(resolver);
+            IArtifactSource cache = ArtifactResolver.CreateOffline();
             return new SpecificationProvider(cache);
         }
 

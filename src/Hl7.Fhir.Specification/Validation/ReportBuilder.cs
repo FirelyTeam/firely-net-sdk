@@ -4,6 +4,7 @@
 *
 * This file is licensed under the BSD 3-Clause license
 */
+using Hl7.Fhir.Specification.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ using System.Xml.XPath;
 
 namespace Hl7.Fhir.Validation
 {
-   // public delegate void OutcomeLogger(Outcome outcome);
+    public delegate void OutcomeLogger(Outcome outcome);
 
     public class ReportBuilder
     {

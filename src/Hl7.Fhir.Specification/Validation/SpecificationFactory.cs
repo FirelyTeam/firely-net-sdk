@@ -15,7 +15,7 @@ using System.Xml;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Profiling;
 using Hl7.Fhir.Specification.Model;
-using Hl7.Fhir.Specification.IO;
+using Hl7.Fhir.Validation;
 
 namespace Hl7.Fhir.Profiling
 {

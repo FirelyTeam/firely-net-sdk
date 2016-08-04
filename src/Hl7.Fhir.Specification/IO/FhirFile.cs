@@ -12,12 +12,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.XPath;
-using Hl7.Fhir.Specification.Model;
-using Hl7.Fhir.Specification.Expansion;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System.IO;
+using Hl7.Fhir.Specification.Snapshot;
 
 namespace Hl7.Fhir.IO
 {
@@ -67,12 +66,13 @@ namespace Hl7.Fhir.IO
 
         public static void ExpandProfileFile(string inputfile, string outputfile)
         {
-            var source = new CachedArtifactSource(ArtifactResolver.CreateOffline());
-            var expander = new ProfileExpander(source);
+            var source = ArtifactResolver.CreateOffline();
+            //var source = new CachedArtifactSource(ArtifactResolver.CreateOffline());
+            var expander = new SnapshotGenerator(source);
             
             string xml = File.ReadAllText(inputfile);
-            var diff = (Profile)FhirParser.ParseResourceFromXml(xml);
-            expander.Expand(diff);
+            var diff = (new FhirXmlParser()).Parse<StructureDefinition>(xml);
+            expander.Generate(diff);
             xml = FhirSerializer.SerializeResourceToXml(diff);
             File.WriteAllText(outputfile, xml);
         }

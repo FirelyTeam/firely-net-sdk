@@ -5,6 +5,7 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
+using Hl7.Fhir.Validation;
 using System;
 using System.Runtime.Serialization;
 using System.Security;

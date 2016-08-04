@@ -78,12 +78,30 @@
     <Compile Include="..\Hl7.Fhir.Core\Support\StringExtensions.cs">
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="IO\FhirFile.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
+    <Compile Include="Specification\Model\Cardinality.cs" />
+    <Compile Include="Specification\Model\Constraint.cs" />
+    <Compile Include="Specification\Model\Element.cs" />
+    <Compile Include="Specification\Model\Path.cs" />
+    <Compile Include="Specification\Model\Slicing.cs" />
+    <Compile Include="Specification\Model\SpecificationWorkspace.cs" />
+    <Compile Include="Specification\Model\Structure.cs" />
+    <Compile Include="Specification\Model\StructureFactory.cs" />
+    <Compile Include="Specification\Model\TypeRef.cs" />
+    <Compile Include="Specification\Model\UriHelper.cs" />
+    <Compile Include="Specification\Model\ValueSet.cs" />
+    <Compile Include="Specification\Model\Vector.cs" />
+    <Compile Include="Specification\Model\XPathNavigatorExtensions.cs" />
     <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorModificationExtensions.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorMovementExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
+    <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
+    <Compile Include="Specification\Snapshot\ElementDefnMerger.cs" />
+    <Compile Include="Specification\Snapshot\ElementMatcher.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGenerator.cs" />
     <Compile Include="Specification\Source\MultiArtifactSource.cs" />
     <Compile Include="Specification\Source\ArtifactResolver.cs" />
     <Compile Include="Specification\Source\CachedArtifactSource.cs" />
@@ -101,7 +119,13 @@
     <Compile Include="Validation\Outcome.cs" />
     <Compile Include="Validation\Report.cs" />
     <Compile Include="Validation\ReportBuilder.cs" />
-    <Compile Include="Validation\Vector.cs" />
+    <Compile Include="XPath\CustomXsltFunction.cs" />
+    <Compile Include="XPath\FhirNamespaceManager.cs" />
+    <Compile Include="XPath\JsonReaderExtensions.cs" />
+    <Compile Include="XPath\JsonXPathNavigator.cs" />
+    <Compile Include="XPath\JTokenExtensions.cs" />
+    <Compile Include="XPath\NavigatorState.cs" />
+    <Compile Include="XPath\XPath2Context.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
