@@ -40,12 +40,14 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using Hl7.Fhir.Support;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Model
 {
     /// <summary>
     /// This is the Parameters partial class that adds all the specific functionality of a Parameters to the model
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay(@"\{Count={_Parameter != null ? _Parameter.Count : 0}}")]
     public partial class Parameters
     {   
         /// <summary>
@@ -162,5 +164,20 @@ namespace Hl7.Fhir.Model
                 return null;
             return p.Value as T;
         }
+
+        [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        public partial class ParameterComponent
+        {
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            [NotMapped]
+            private string DebuggerDisplay
+            {
+                get
+                {
+                    return String.Format("Name=\"{0}\" Value.Type={1}", this.Name, this.Value);
+                }
+            }
+        }
+
     }
 }

@@ -195,10 +195,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeElement = null; 
+                    if (!value.HasValue)
+                        CodeElement = null; 
                     else
-                      CodeElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanRelationship>(value);
+                        CodeElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanRelationship>(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -563,10 +563,10 @@ namespace Hl7.Fhir.Model
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      StatusElement = null; 
+                    if (!value.HasValue)
+                        StatusElement = null; 
                     else
-                      StatusElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>(value);
+                        StatusElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>(value);
                     OnPropertyChanged("Status");
                 }
             }
@@ -609,10 +609,10 @@ namespace Hl7.Fhir.Model
                 get { return ProhibitedElement != null ? ProhibitedElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ProhibitedElement = null; 
+                    if (!value.HasValue)
+                        ProhibitedElement = null; 
                     else
-                      ProhibitedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        ProhibitedElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Prohibited");
                 }
             }
@@ -724,10 +724,10 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -871,7 +871,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus>(value);
@@ -945,7 +945,7 @@ namespace Hl7.Fhir.Model
             get { return ModifiedElement != null ? ModifiedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ModifiedElement = null; 
                 else
                   ModifiedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -991,7 +991,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1099,6 +1099,16 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Annotation _Note;
         
+
+        public static ElementDefinition.ConstraintComponent CarePlan_CPL_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("detail.empty() or reference.empty()"))},
+            Key = "cpl-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Provide a reference or detail, not both",
+            Xpath = "not(exists(f:detail)) or not(exists(f:reference))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CarePlan;

@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
             get { return TimeElement != null ? TimeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TimeElement = null; 
                 else
                   TimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
             get { return TextElement != null ? TextElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TextElement = null; 
                 else
                   TextElement = new Hl7.Fhir.Model.FhirString(value);

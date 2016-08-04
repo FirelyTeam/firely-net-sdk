@@ -124,10 +124,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus>(value);
@@ -590,7 +590,7 @@ namespace Hl7.Fhir.Model
             get { return WhenPreparedElement != null ? WhenPreparedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   WhenPreparedElement = null; 
                 else
                   WhenPreparedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
             get { return WhenHandedOverElement != null ? WhenHandedOverElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   WhenHandedOverElement = null; 
                 else
                   WhenHandedOverElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -683,7 +683,7 @@ namespace Hl7.Fhir.Model
             get { return NoteElement != null ? NoteElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NoteElement = null; 
                 else
                   NoteElement = new Hl7.Fhir.Model.FhirString(value);
@@ -718,6 +718,16 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.MedicationDispense.SubstitutionComponent _Substitution;
         
+
+        public static ElementDefinition.ConstraintComponent MedicationDispense_MDD_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("whenHandedOver.empty() or whenPrepared.empty() or whenHandedOver >= whenPrepared"))},
+            Key = "mdd-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "whenHandedOver cannot be before whenPrepared",
+            Xpath = "not(exists(f:whenHandedOver/@value)) or not(exists(f:whenPrepared/@value)) or ( f:whenHandedOver/@value >= f:whenPrepared/@value)"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MedicationDispense;

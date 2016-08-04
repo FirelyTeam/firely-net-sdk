@@ -5,6 +5,7 @@ using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Diagnostics;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -44,6 +45,7 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
     public partial class HumanName
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         [NotMapped]
         private string DebuggerDisplay
         {
@@ -71,8 +73,45 @@ namespace Hl7.Fhir.Model
                         sb.Append(item);
                     }
                 }
+                if (this._PrefixElement != null)
+                {
+                    foreach (var item in this._PrefixElement)
+                        sb.AppendFormat(", {0}", item.Value);
+                }
+                if (this._UseElement != null && this._UseElement.Value.HasValue)
+                {
+                    sb.AppendFormat(" ({0})", this._UseElement.Value.Value);
+                }
+
                 return sb.ToString();
             }
+        }
+
+        public override string ToString()
+        {
+            if (this._TextElement != null && !String.IsNullOrEmpty(this._TextElement.Value))
+                return "Text = \"" + this._TextElement.Value + "\"";
+
+            StringBuilder sb = new StringBuilder();
+            if (this._GivenElement != null)
+            {
+                foreach (var item in this._GivenElement)
+                {
+                    if (sb.Length > 0)
+                        sb.Append(" ");
+                    sb.Append(item);
+                }
+            }
+            if (this._FamilyElement != null)
+            {
+                foreach (var item in this._FamilyElement)
+                {
+                    if (sb.Length > 0)
+                        sb.Append(" ");
+                    sb.Append(item);
+                }
+            }
+            return sb.ToString();
         }
     }
 }

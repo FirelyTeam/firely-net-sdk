@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
             get { return DateRecordedElement != null ? DateRecordedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateRecordedElement = null; 
                 else
                   DateRecordedElement = new Hl7.Fhir.Model.Date(value);
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
             get { return ClinicalStatusElement != null ? ClinicalStatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ClinicalStatusElement = null; 
                 else
                   ClinicalStatusElement = new Hl7.Fhir.Model.Code(value);
@@ -435,7 +435,7 @@ namespace Hl7.Fhir.Model
             get { return VerificationStatusElement != null ? VerificationStatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   VerificationStatusElement = null; 
                 else
                   VerificationStatusElement = new Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus>(value);
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
             get { return NotesElement != null ? NotesElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NotesElement = null; 
                 else
                   NotesElement = new Hl7.Fhir.Model.FhirString(value);
@@ -557,6 +557,25 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
+        public static ElementDefinition.ConstraintComponent Condition_CON_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("summary or assessment"))},
+            Key = "con-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Stage SHALL have summary or assessment",
+            Xpath = "exists(f:summary) or exists(f:assessment)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Condition_CON_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("code or detail"))},
+            Key = "con-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "evidence SHALL have code or details",
+            Xpath = "exists(f:code) or exists(f:detail)"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Condition;

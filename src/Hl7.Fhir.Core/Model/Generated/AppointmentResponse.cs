@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
             get { return StartElement != null ? StartElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StartElement = null; 
                 else
                   StartElement = new Hl7.Fhir.Model.Instant(value);
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
             get { return EndElement != null ? EndElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   EndElement = null; 
                 else
                   EndElement = new Hl7.Fhir.Model.Instant(value);
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
             get { return ParticipantStatus_Element != null ? ParticipantStatus_Element.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ParticipantStatus_Element = null; 
                 else
                   ParticipantStatus_Element = new Code<Hl7.Fhir.Model.AppointmentResponse.ParticipantStatus>(value);
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
             get { return CommentElement != null ? CommentElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CommentElement = null; 
                 else
                   CommentElement = new Hl7.Fhir.Model.FhirString(value);
@@ -284,6 +284,16 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
+        public static ElementDefinition.ConstraintComponent AppointmentResponse_APR_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("participantType or actor"))},
+            Key = "apr-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Either the participantType or actor must be specified",
+            Xpath = "(exists(f:participantType) or exists(f:actor))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AppointmentResponse;

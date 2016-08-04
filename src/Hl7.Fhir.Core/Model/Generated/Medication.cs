@@ -264,10 +264,10 @@ namespace Hl7.Fhir.Model
                 get { return LotNumberElement != null ? LotNumberElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      LotNumberElement = null; 
+                    if (value == null)
+                        LotNumberElement = null; 
                     else
-                      LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
+                        LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("LotNumber");
                 }
             }
@@ -296,10 +296,10 @@ namespace Hl7.Fhir.Model
                 get { return ExpirationDateElement != null ? ExpirationDateElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ExpirationDateElement = null; 
+                    if (value == null)
+                        ExpirationDateElement = null; 
                     else
-                      ExpirationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        ExpirationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("ExpirationDate");
                 }
             }
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
             get { return IsBrandElement != null ? IsBrandElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   IsBrandElement = null; 
                 else
                   IsBrandElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -599,6 +599,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Medication.PackageComponent _Package;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Medication;

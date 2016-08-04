@@ -165,10 +165,10 @@ namespace Hl7.Fhir.Model
                 get { return GenderElement != null ? GenderElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      GenderElement = null; 
+                    if (!value.HasValue)
+                        GenderElement = null; 
                     else
-                      GenderElement = new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
+                        GenderElement = new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
                     OnPropertyChanged("Gender");
                 }
             }
@@ -404,10 +404,10 @@ namespace Hl7.Fhir.Model
                 get { return PreferredElement != null ? PreferredElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      PreferredElement = null; 
+                    if (!value.HasValue)
+                        PreferredElement = null; 
                     else
-                      PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Preferred");
                 }
             }
@@ -506,10 +506,10 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TypeElement = null; 
+                    if (!value.HasValue)
+                        TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
             get { return ActiveElement != null ? ActiveElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ActiveElement = null; 
                 else
                   ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -659,7 +659,7 @@ namespace Hl7.Fhir.Model
             get { return GenderElement != null ? GenderElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   GenderElement = null; 
                 else
                   GenderElement = new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
@@ -691,7 +691,7 @@ namespace Hl7.Fhir.Model
             get { return BirthDateElement != null ? BirthDateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   BirthDateElement = null; 
                 else
                   BirthDateElement = new Hl7.Fhir.Model.Date(value);
@@ -852,6 +852,16 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Patient.LinkComponent> _Link;
         
+
+        public static ElementDefinition.ConstraintComponent Patient_PAT_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("name or telecom or address or organization"))},
+            Key = "pat-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "SHALL at least contain a contact's details or a reference to an organization",
+            Xpath = "f:name or f:telecom or f:address or f:organization"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Patient;

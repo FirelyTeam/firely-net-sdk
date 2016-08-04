@@ -84,10 +84,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.MedicationAdministrationStatus>(value);
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
             get { return WasNotGivenElement != null ? WasNotGivenElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   WasNotGivenElement = null; 
                 else
                   WasNotGivenElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
             get { return NoteElement != null ? NoteElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NoteElement = null; 
                 else
                   NoteElement = new Hl7.Fhir.Model.FhirString(value);
@@ -472,6 +472,34 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.MedicationAdministration.DosageComponent _Dosage;
         
+
+        public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("reasonGiven.empty() or wasNotGiven = 'false'"))},
+            Key = "mad-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Reason given is only permitted if wasNotGiven is false",
+            Xpath = "not(exists(f:reasonGiven) and f:wasNotGiven/@value=true())"
+        };
+
+        public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("reasonNotGiven.empty() or wasNotGiven = 'true'"))},
+            Key = "mad-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Reason not given is only permitted if wasNotGiven is true",
+            Xpath = "not(exists(f:reasonNotGiven) and f:wasNotGiven/@value=false())"
+        };
+
+        public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("quantity or rate[x]"))},
+            Key = "mad-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "SHALL have at least one of dosage.quantity and dosage.rate[x]",
+            Xpath = "exists(f:quantity) or exists(f:rateRatio) or exists(f:rateRange)"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MedicationAdministration;

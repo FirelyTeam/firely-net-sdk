@@ -111,10 +111,10 @@ namespace Hl7.Fhir.Model
                 get { return LinkIdElement != null ? LinkIdElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      LinkIdElement = null; 
+                    if (value == null)
+                        LinkIdElement = null; 
                     else
-                      LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
+                        LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("LinkId");
                 }
             }
@@ -143,10 +143,10 @@ namespace Hl7.Fhir.Model
                 get { return TitleElement != null ? TitleElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TitleElement = null; 
+                    if (value == null)
+                        TitleElement = null; 
                     else
-                      TitleElement = new Hl7.Fhir.Model.FhirString(value);
+                        TitleElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Title");
                 }
             }
@@ -175,10 +175,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -315,10 +315,10 @@ namespace Hl7.Fhir.Model
                 get { return LinkIdElement != null ? LinkIdElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      LinkIdElement = null; 
+                    if (value == null)
+                        LinkIdElement = null; 
                     else
-                      LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
+                        LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("LinkId");
                 }
             }
@@ -347,10 +347,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -553,7 +553,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus>(value);
@@ -613,7 +613,7 @@ namespace Hl7.Fhir.Model
             get { return AuthoredElement != null ? AuthoredElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   AuthoredElement = null; 
                 else
                   AuthoredElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -662,6 +662,16 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.QuestionnaireResponse.GroupComponent _Group;
         
+
+        public static ElementDefinition.ConstraintComponent QuestionnaireResponse_QRS_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("group.empty() or question.empty()"))},
+            Key = "qrs-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Groups may either contain questions or groups but not both",
+            Xpath = "not(exists(f:group) and exists(f:question))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as QuestionnaireResponse;

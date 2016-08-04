@@ -97,10 +97,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
             get { return DispositionElement != null ? DispositionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DispositionElement = null; 
                 else
                   DispositionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
             get { return CreatedElement != null ? CreatedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CreatedElement = null; 
                 else
                   CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -366,6 +366,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Coding> _Error;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ProcessResponse;

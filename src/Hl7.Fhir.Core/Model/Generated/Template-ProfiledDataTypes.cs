@@ -1,6 +1,6 @@
 ﻿
 //
-// Model Generated on Mon, 04 Jan 2016 10:22:43 GMT for FHIR v1.0.2
+// Model Generated on Wed, 03 Aug 2016 23:40:43 GMT for FHIR v1.0.2
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -26,9 +26,9 @@
 
 // Generated helper templates
 // Generated items
-// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Age.cs
-// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Distance.cs
-// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Count.cs
-// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Duration.cs
-// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\SimpleQuantity.cs
-// C:\src\FHIR\fhir-net-api-DSTU2 - Merge\src\Hl7.Fhir.Core\Model\Generated\Money.cs
+// Hl7.Fhir.Core\Model\Generated\Age.cs
+// Hl7.Fhir.Core\Model\Generated\Distance.cs
+// Hl7.Fhir.Core\Model\Generated\Count.cs
+// Hl7.Fhir.Core\Model\Generated\Duration.cs
+// Hl7.Fhir.Core\Model\Generated\SimpleQuantity.cs
+// Hl7.Fhir.Core\Model\Generated\Money.cs

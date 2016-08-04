@@ -147,10 +147,10 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -247,10 +247,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeSystemElement != null ? CodeSystemElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeSystemElement = null; 
+                    if (value == null)
+                        CodeSystemElement = null; 
                     else
-                      CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                        CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("CodeSystem");
                 }
             }
@@ -279,10 +279,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeElement = null; 
+                    if (value == null)
+                        CodeElement = null; 
                     else
-                      CodeElement = new Hl7.Fhir.Model.Code(value);
+                        CodeElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -382,10 +382,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeSystemElement != null ? CodeSystemElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeSystemElement = null; 
+                    if (value == null)
+                        CodeSystemElement = null; 
                     else
-                      CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                        CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("CodeSystem");
                 }
             }
@@ -414,10 +414,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeElement = null; 
+                    if (value == null)
+                        CodeElement = null; 
                     else
-                      CodeElement = new Hl7.Fhir.Model.Code(value);
+                        CodeElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -447,10 +447,10 @@ namespace Hl7.Fhir.Model
                 get { return EquivalenceElement != null ? EquivalenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      EquivalenceElement = null; 
+                    if (!value.HasValue)
+                        EquivalenceElement = null; 
                     else
-                      EquivalenceElement = new Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence>(value);
+                        EquivalenceElement = new Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence>(value);
                     OnPropertyChanged("Equivalence");
                 }
             }
@@ -479,10 +479,10 @@ namespace Hl7.Fhir.Model
                 get { return CommentsElement != null ? CommentsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CommentsElement = null; 
+                    if (value == null)
+                        CommentsElement = null; 
                     else
-                      CommentsElement = new Hl7.Fhir.Model.FhirString(value);
+                        CommentsElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Comments");
                 }
             }
@@ -606,10 +606,10 @@ namespace Hl7.Fhir.Model
                 get { return ElementElement != null ? ElementElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ElementElement = null; 
+                    if (value == null)
+                        ElementElement = null; 
                     else
-                      ElementElement = new Hl7.Fhir.Model.FhirUri(value);
+                        ElementElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Element");
                 }
             }
@@ -639,10 +639,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeSystemElement != null ? CodeSystemElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeSystemElement = null; 
+                    if (value == null)
+                        CodeSystemElement = null; 
                     else
-                      CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                        CodeSystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("CodeSystem");
                 }
             }
@@ -672,10 +672,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeElement = null; 
+                    if (value == null)
+                        CodeElement = null; 
                     else
-                      CodeElement = new Hl7.Fhir.Model.FhirString(value);
+                        CodeElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model
             get { return UrlElement != null ? UrlElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UrlElement = null; 
                 else
                   UrlElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -799,7 +799,7 @@ namespace Hl7.Fhir.Model
             get { return VersionElement != null ? VersionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   VersionElement = null; 
                 else
                   VersionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -831,7 +831,7 @@ namespace Hl7.Fhir.Model
             get { return NameElement != null ? NameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -864,7 +864,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.ConformanceResourceStatus>(value);
@@ -896,7 +896,7 @@ namespace Hl7.Fhir.Model
             get { return ExperimentalElement != null ? ExperimentalElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ExperimentalElement = null; 
                 else
                   ExperimentalElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -928,7 +928,7 @@ namespace Hl7.Fhir.Model
             get { return PublisherElement != null ? PublisherElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PublisherElement = null; 
                 else
                   PublisherElement = new Hl7.Fhir.Model.FhirString(value);
@@ -974,7 +974,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1052,7 +1052,7 @@ namespace Hl7.Fhir.Model
             get { return RequirementsElement != null ? RequirementsElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   RequirementsElement = null; 
                 else
                   RequirementsElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1084,7 +1084,7 @@ namespace Hl7.Fhir.Model
             get { return CopyrightElement != null ? CopyrightElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CopyrightElement = null; 
                 else
                   CopyrightElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1136,6 +1136,16 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ConceptMap.SourceElementComponent> _Element;
         
+
+        public static ElementDefinition.ConstraintComponent ConceptMap_CMD_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("comments or ((equivalence != 'narrower') and (equivalence != 'inexact'))"))},
+            Key = "cmd-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the map is narrower or inexact, there SHALL be some comments",
+            Xpath = "exists(f:comments) or ((f:equivalence/@value != 'narrower') and (f:equivalence/@value != 'inexact'))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ConceptMap;
