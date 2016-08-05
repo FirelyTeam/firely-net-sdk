@@ -15,9 +15,9 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
-    public class ElementNavigator : BaseElementNavigator
+    public class ElementDefinitionNavigator
     {
-        public ElementNavigator(IList<ElementDefinition> elements)
+        public ElementDefinitionNavigator(IList<ElementDefinition> elements)
         {
             if (elements == null) throw Error.ArgumentNull("elements");
 
@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Navigation
             OrdinalPosition = null;
         }
 
-        public ElementNavigator(ElementNavigator other)
+        public ElementDefinitionNavigator(ElementDefinitionNavigator other)
         {
             if (other == null) throw Error.ArgumentNull("other");
 
@@ -34,28 +34,59 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
+        /// <summary>
+        /// Get the name of the current node, based on the last part of the part
+        /// </summary>
+        /// <returns>The name or String.Empty if the navigator is not located on a node</returns>
+        public string PathName
+        {
+            get { return Current != null ? Current.GetNameFromPath() : String.Empty; }
+        }
+
+        /// <summary>
+        /// Get the parent path of the current node
+        /// </summary>
+        /// <returns>The name or String.Empty if the navigator is not located on a node</returns>
+        public string ParentPath
+        {
+            get { return Current != null ? Current.GetParentNameFromPath() : String.Empty; }
+        }
+
+
+        /// <summary>
+        /// Get the full path of the current node
+        /// </summary>
+        /// <returns>The path or String.Empty if the navigator is not located on a node</returns>
+        public string Path
+        {
+            get { return Current != null ? Current.Path : String.Empty; }
+        }
+
+
+
+
         internal int? OrdinalPosition { get; private set; }
 
         public IList<ElementDefinition> Elements { get; private set; }
 
-        public override ElementDefinition Current
+        public ElementDefinition Current
         {
             get { return OrdinalPosition != null ? Elements[OrdinalPosition.Value] : null; }
         }
 
-        public override int Count
+        public int Count
         {
             get { return Elements.Count; }
         }
 
 
-//----------------------------------
-//
-// Basic relative movement methods
-// 
-//----------------------------------
+        //----------------------------------
+        //
+        // Basic relative movement methods
+        // 
+        //----------------------------------
 
-        public override bool MoveToNext()
+        public bool MoveToNext()
         {
             if (OrdinalPosition == null) return false;
 
@@ -67,7 +98,7 @@ namespace Hl7.Fhir.Specification.Navigation
             {
                 var searchPath = Elements[searchPos].Path;
 
-                if (IsDirectChildPath(ParentPath,searchPath))
+                if (IsDirectChildPath(ParentPath, searchPath))
                 {
                     OrdinalPosition = searchPos;
                     return true;
@@ -87,7 +118,7 @@ namespace Hl7.Fhir.Specification.Navigation
             return searchPos;
         }
 
-        public override bool MoveToPrevious()
+        public bool MoveToPrevious()
         {
             if (OrdinalPosition == null) return false;
 
@@ -121,12 +152,12 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-        public override bool HasChildren
+        public bool HasChildren
         {
-            get 
+            get
             {
                 // Special case, at document root
-                if (OrdinalPosition == null && Count > 0) 
+                if (OrdinalPosition == null && Count > 0)
                     return true;
 
                 var childPos = OrdinalPosition.Value + 1;
@@ -136,7 +167,7 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-        public override bool MoveToFirstChild()
+        public bool MoveToFirstChild()
         {
             if (!HasChildren) return false;
 
@@ -146,7 +177,7 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-        public override bool MoveToParent()
+        public bool MoveToParent()
         {
             if (OrdinalPosition == null)
                 return false;
@@ -172,7 +203,7 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-        public override void Reset()
+        public void Reset()
         {
             OrdinalPosition = null;
         }
@@ -180,7 +211,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public bool JumpToNameReference(string nameReference)
         {
-            if(Count == 0) return false;
+            if (Count == 0) return false;
 
             for (int pos = 0; pos < Count; pos++)
             {
@@ -202,23 +233,23 @@ namespace Hl7.Fhir.Specification.Navigation
         //----------------------------------
 
 
-        public override Bookmark Bookmark()
+        public Bookmark Bookmark()
         {
             return new Bookmark() { data = Current };
         }
 
 
-        public override bool IsAtBookmark(Bookmark bookmark)
+        public bool IsAtBookmark(Bookmark bookmark)
         {
             if (bookmark.data == null)
-                 return OrdinalPosition == null;
+                return OrdinalPosition == null;
 
             var elem = bookmark.data as ElementDefinition;
 
             return this.Current == elem;
         }
 
-        public override bool ReturnToBookmark(Bookmark bookmark)
+        public bool ReturnToBookmark(Bookmark bookmark)
         {
             if (bookmark.data == null)
             {
@@ -244,21 +275,21 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-   
 
-//----------------------------------
-//
-// Methods that alter the list of elements
-// 
-//----------------------------------
-        
+
+        //----------------------------------
+        //
+        // Methods that alter the list of elements
+        // 
+        //----------------------------------
+
         /// <summary>
         /// Inserts the element passed in as a sibling to the element the navigator is currently on. 
         /// The navigator will move to the inserted element.
         /// </summary>
         /// <param name="sibling"></param>
         /// <returns></returns>
-        public override bool InsertBefore(ElementDefinition sibling)
+        public bool InsertBefore(ElementDefinition sibling)
         {
             if (!canInsertSiblingHere()) return false;
 
@@ -292,7 +323,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// </summary>
         /// <param name="sibling"></param>
         /// <returns></returns>
-        public override bool InsertAfter(ElementDefinition sibling)
+        public bool InsertAfter(ElementDefinition sibling)
         {
             if (!canInsertSiblingHere()) return false;
 
@@ -321,9 +352,9 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <param name="child"></param>
         /// <returns></returns>
         /// <remarks>You can only insert a child for an element does not have children yet.</remarks>
-        public override bool InsertFirstChild(ElementDefinition child)
+        public bool InsertFirstChild(ElementDefinition child)
         {
-            if(Count == 0)
+            if (Count == 0)
             {
                 // Special case, insert a new root
                 Elements.Add(child);
@@ -331,12 +362,12 @@ namespace Hl7.Fhir.Specification.Navigation
                 OrdinalPosition = 0;
                 return true;
             }
-            else if(HasChildren)
+            else if (HasChildren)
                 return false;       // Cannot insert another child, there's already one.
             else
             {
                 var newSiblingPath = Path + "." + child.GetNameFromPath();
-                
+
                 if (OrdinalPosition == Count - 1) // At last position
                     Elements.Add(child);
                 else
@@ -368,7 +399,7 @@ namespace Hl7.Fhir.Specification.Navigation
             if (!ReturnToBookmark(target)) return false;
             var dest = positionAfter();
 
-            var source = Elements.Skip(start).Take(end-start).ToList();
+            var source = Elements.Skip(start).Take(end - start).ToList();
 
             foreach (var elem in source.Reverse<ElementDefinition>())
                 Elements.Insert(dest, (ElementDefinition)elem.DeepCopy());
@@ -376,8 +407,8 @@ namespace Hl7.Fhir.Specification.Navigation
             OrdinalPosition = dest;
             return true;
         }
-    
-        public override bool Delete()
+
+        public bool Delete()
         {
             if (OrdinalPosition == null) return false;
 
@@ -469,5 +500,5 @@ namespace Hl7.Fhir.Specification.Navigation
             return output.ToString();
         }
 
-    } 
+    }
 }

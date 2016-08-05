@@ -100,11 +100,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
             generateBaseElements(snapshot.Element);
-            var snapNav = new ElementNavigator(snapshot.Element);
+            var snapNav = new ElementDefinitionNavigator(snapshot.Element);
 
             // Fill out the gaps (mostly missing parents) in the differential representation
             var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
-            var diffNav = new ElementNavigator(fullDifferential);
+            var diffNav = new ElementDefinitionNavigator(fullDifferential);
 
             merge(snapNav, diffNav);
            
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
             if (element == null) { throw Error.ArgumentNull(nameof(element)); }
 
-            var nav = new ElementNavigator(elements);
+            var nav = new ElementDefinitionNavigator(elements);
             if (!nav.MoveTo(element))
             {
                 throw Error.Argument(nameof(element), "The specified element is not contained in the list.");
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return nav.Elements;
         }
 
-        private void merge(ElementNavigator snapNav, ElementNavigator diffNav)
+        private void merge(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             var snapPos = snapNav.Bookmark();
             var diffPos = diffNav.Bookmark();
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
 
-        private void mergeElement(ElementNavigator snap, ElementNavigator diff)
+        private void mergeElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             if (_settings.ExpandTypeProfiles)
             {
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Following logic is configurable
         // By default, use strategy (A): ignore custom type profile, merge from base
         // If ExpandTypeProfiles is enabled, then first merge custom type profile before merging base
-        private void ExpandTypeProfiles(ElementNavigator snap, ElementNavigator diff)
+        private void ExpandTypeProfiles(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             // [WMR 20160721] Note that we also try to resolve and expand extension definitions!
             var primaryDiffType = diff.Current.Type.FirstOrDefault();
@@ -313,12 +313,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                             var rebasePath = diff.Path;
                             if (isComplex)
                             {
-                                rebasePath = ElementNavigator.GetParentPath(rebasePath);
+                                rebasePath = ElementDefinitionNavigator.GetParentPath(rebasePath);
                             }
                             baseType.Snapshot.Rebase(rebasePath);
 
                             generateBaseElements(baseType.Snapshot.Element);
-                            var baseNav = new ElementNavigator(baseType.Snapshot.Element);
+                            var baseNav = new ElementDefinitionNavigator(baseType.Snapshot.Element);
 
                             if (elementName == null)
                             {
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // [WMR 20160720] NEW
-        private void fixExtensionUrl(ElementNavigator nav)
+        private void fixExtensionUrl(ElementDefinitionNavigator nav)
         {
             var extElem = nav.Current;
             if (extElem.IsExtension() && nav.HasChildren)
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        private void makeSlice(ElementNavigator snap, ElementNavigator diff)
+        private void makeSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             // diff is now located at the first repeat of a slice, which is normally the slice entry (Extension slices need
             // not have a slicing entry)
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
 
-        internal static bool expandElement(ElementNavigator nav, ArtifactResolver resolver, SnapshotGeneratorSettings settings)
+        internal static bool expandElement(ElementDefinitionNavigator nav, ArtifactResolver resolver, SnapshotGeneratorSettings settings)
         {
             if (resolver == null) throw Error.ArgumentNull("source");
             if (nav.Current == null) throw Error.ArgumentNull("Navigator is not positioned on an element");
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             if (!String.IsNullOrEmpty(defn.NameReference))
             {
-                var sourceNav = new ElementNavigator(nav);
+                var sourceNav = new ElementDefinitionNavigator(nav);
                 var success = sourceNav.JumpToNameReference(defn.NameReference);
 
                 if (!success)
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     if (coreType.Snapshot == null) throw Error.NotSupported("Found definition of base type '{0}', but is does not contain a snapshot representation".FormatWith(defn.Type[0].Code));
 
                     generateBaseElements(coreType.Snapshot.Element);
-                    var sourceNav = new ElementNavigator(coreType.Snapshot.Element);
+                    var sourceNav = new ElementDefinitionNavigator(coreType.Snapshot.Element);
                     sourceNav.MoveToFirstChild();
                     nav.CopyChildren(sourceNav);
                 }

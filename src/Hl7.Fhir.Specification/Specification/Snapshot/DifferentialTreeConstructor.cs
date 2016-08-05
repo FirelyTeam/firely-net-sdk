@@ -59,14 +59,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Else, I am fine, proceed
                     index++;
                 }
-                else if (ElementNavigator.IsSibling(thisPath, prevPath) || ElementNavigator.IsDirectChildPath(prevPath, thisPath))
+                else if (ElementDefinitionNavigator.IsSibling(thisPath, prevPath) || ElementDefinitionNavigator.IsDirectChildPath(prevPath, thisPath))
                 {
                     // The previous path is a sibling, or my direct parent, so everything is alright, proceed to next node
                     index++;
                 }
                 else
                 {
-                    var parentPath = ElementNavigator.GetParentPath(thisPath);
+                    var parentPath = ElementDefinitionNavigator.GetParentPath(thisPath);
 
                     if (prevPath == String.Empty || !prevPath.StartsWith(parentPath + "."))
                     {

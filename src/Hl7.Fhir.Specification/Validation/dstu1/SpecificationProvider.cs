@@ -15,15 +15,15 @@ namespace Hl7.Fhir.Validation
     public class SpecificationProvider
     {
         public IArtifactSource source;
-        SpecificationHarvester harvester;
-        StructureLoader loader;
+        //SpecificationHarvester harvester;
+        //StructureLoader loader;
         
 
         public SpecificationProvider(IArtifactSource source)
         {
             this.source = source;
-            this.loader = new StructureLoader(source);
-            this.harvester = new SpecificationHarvester();
+            //this.loader = new StructureLoader(source);
+            //this.harvester = new SpecificationHarvester();
         }
 
         public static SpecificationProvider CreateDefault()
@@ -41,20 +41,22 @@ namespace Hl7.Fhir.Validation
         
         private T Resolve<T>(Uri uri) where T : Model.Resource
         {
-            loader.LocateStructure(uri);
-            Model.Resource resource = source.ReadResourceArtifact(uri);
-            return (T)resource;
+            //loader.LocateStructure(uri);
+            //Model.Resource resource = source.ReadResourceArtifact(uri);
+            //return (T)resource;
+
+            throw new NotImplementedException();
         }
         
 
         public Structure GetStructure(Uri uri)
         {
-            Model.Profile.ProfileStructureComponent component = loader.LocateStructure(uri);
-            if (component != null)
-            {
-                Structure structure = harvester.HarvestStructure(component, uri);
-                return structure;
-            }
+            //Model.Profile.ProfileStructureComponent component = loader.LocateStructure(uri);
+            //if (component != null)
+            //{
+            //    Structure structure = harvester.HarvestStructure(component, uri);
+            //    return structure;
+            //}
             return null;
         }
          
@@ -105,13 +107,13 @@ namespace Hl7.Fhir.Validation
         
         public ValueSet GetValueSet(Uri uri)
         {
-            var valueset = source.ReadResourceArtifact(uri) as Model.ValueSet;
+            //var valueset = source.LoadConformanceResourceByUrl(uri.ToString()) as Model.ValueSet;
            
-            if (valueset != null)
-            {
-                ValueSet target = harvester.HarvestValueSet(valueset, uri);
-                return target;
-            }
+            //if (valueset != null)
+            //{
+            //    ValueSet target = harvester.HarvestValueSet(valueset, uri);
+            //    return target;
+            //}
             return null;
             
         }

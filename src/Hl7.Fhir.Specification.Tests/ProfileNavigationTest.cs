@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsTrue(nav.JumpToFirst("A.D"));
 
-            var nav2 = new ElementNavigator(nav);
+            var nav2 = new ElementDefinitionNavigator(nav);
 
             // Delete A.D in nav
             Assert.IsTrue(nav.Delete()); 
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Specification.Tests
             e.Add(new ElementDefinition() { Path = "X.Y2" });
             e.Add(new ElementDefinition() { Path = "X.Y2.Z1" });
             e.Add(new ElementDefinition() { Path = "X.Y2.Z2" });
-            var source = new ElementNavigator(e);
+            var source = new ElementDefinitionNavigator(e);
 
             Assert.IsTrue(dest.JumpToFirst("A.D"));
             var dstPos = dest.OrdinalPosition;
@@ -486,10 +486,10 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        private static ElementNavigator createTestNav()
+        private static ElementDefinitionNavigator createTestNav()
         {
             var struc = createTestStructure();
-            return new ElementNavigator(struc.Snapshot.Element);
+            return new ElementDefinitionNavigator(struc.Snapshot.Element);
         }
 
         private static StructureDefinition createTestStructure()

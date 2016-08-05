@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Specification.Tests
 			var tree = new DifferentialTreeConstructor(e).MakeTree();
 			Assert.IsNotNull(tree);
 
-			var nav = new ElementNavigator(tree);
+			var nav = new ElementDefinitionNavigator(tree);
 			Assert.AreEqual(10, nav.Count);
 
 			Assert.IsTrue(nav.MoveToChild("A"));
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Specification.Tests
 			Assert.IsNotNull(qStructDef);
 			Assert.IsNotNull(qStructDef.Snapshot);
 
-			var nav = new ElementNavigator(qStructDef.Snapshot.Element);
+			var nav = new ElementDefinitionNavigator(qStructDef.Snapshot.Element);
 
 			nav.JumpToFirst("Questionnaire.telecom");
 			Assert.IsTrue(SnapshotGenerator.expandElement(nav, _testSource, SnapshotGeneratorSettings.Default));
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Specification.Tests
             else if (nameRef != null)
             {
                 // Validate name reference expansion
-                var nav = new ElementNavigator(elems);
+                var nav = new ElementDefinitionNavigator(elems);
                 Assert.IsTrue(nav.JumpToNameReference(nameRef));
                 var prefix = nav.Path;
                 Assert.IsTrue(nav.MoveToFirstChild());

@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Specification.Snapshot
     {
         // [WMR 20160719] Add conditional compilation attribute
         [Conditional("DEBUG")]
-        public static void DumpMatches(this IEnumerable<ElementMatcher.MatchInfo> matches, ElementNavigator snapNav, ElementNavigator diffNav)
+        public static void DumpMatches(this IEnumerable<ElementMatcher.MatchInfo> matches, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             var sbm = snapNav.Bookmark();
             var dbm = diffNav.Bookmark();
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// of one of snap's elements.  (NO NEED, it just has to match direct children, not deeper)
         /// This function assumes the differential is not sparse: it must have parent nodes for all child constraint paths.
         /// </remarks>
-        public List<MatchInfo> Match(ElementNavigator snapNav, ElementNavigator diffNav)
+        public List<MatchInfo> Match(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             if (!snapNav.HasChildren) throw Error.Argument("snapNav", "Cannot match base to diff: element '{0}' in snap has no children".FormatWith(snapNav.Path));
             if (!diffNav.HasChildren) throw Error.Argument("diffNav", "Cannot match base to diff: element '{0}' in diff has no children".FormatWith(diffNav.Path));
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="snapNav"></param>
         /// <param name="diffNav"></param>
         /// <returns></returns>
-        private static List<MatchInfo> constructMatch(ElementNavigator snapNav, ElementNavigator diffNav)
+        private static List<MatchInfo> constructMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             // [WMR 20160802] snapNav and diffNav point to matching elements
             // Determine the associated action (Add, Merge, Slice)
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         }
 
-        private static List<MatchInfo> constructSliceMatch(ElementNavigator snapNav, ElementNavigator diffNav)
+        private static List<MatchInfo> constructSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             var result = new List<MatchInfo>();
 
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Returns true when match is found, matchingSlice points to match in base (merge here)
         // Returns false otherwise, matchingSlice points to current node in base
         // Maintain snapNav current position
-        private static bool FindBaseSlice(ElementNavigator snapNav, ElementNavigator diffNav, out Bookmark matchingSlice)
+        private static bool FindBaseSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, out Bookmark matchingSlice)
         {
             var slicing = snapNav.Current.Slicing;
             Debug.Assert(slicing != null);
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Difference with regular slices:
         // - Don't need to handle extensions
         // - Match renamed elements, i.e. value[x] => valueBoolean
-        private static List<MatchInfo> constructTypeSliceMatch(ElementNavigator snapNav, ElementNavigator diffNav)
+        private static List<MatchInfo> constructTypeSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             var result = new List<MatchInfo>();
 
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         /// <param name="snapNav"></param>
         /// <returns></returns>
-        private List<string> listChoiceElements(ElementNavigator snapNav)
+        private List<string> listChoiceElements(ElementDefinitionNavigator snapNav)
         {
             var bm = snapNav.Bookmark();
             var result = new List<string>();
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
-        private static string nextChildName(ElementNavigator nav)
+        private static string nextChildName(ElementDefinitionNavigator nav)
         {
             string result = null;
 

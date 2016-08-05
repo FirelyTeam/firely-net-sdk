@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Model
             this.System = system;
         }
 
-        private bool ConceptContains(List<Hl7.Fhir.Model.ValueSet.ValueSetDefineConceptComponent> concepts, string value)
+        private bool ConceptContains(List<Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent> concepts, string value)
         {
             if (concepts != null)
             foreach(var concept in concepts)
@@ -37,26 +37,26 @@ namespace Hl7.Fhir.Specification.Model
             return false;
         }
 
-        private bool ComposeContains(Hl7.Fhir.Model.ValueSet.ValueSetComposeComponent compose, string value)
+        private bool ComposeContains(Hl7.Fhir.Model.ValueSet.ConceptDefinitionComponent compose, string value)
         {
-            foreach(var conceptset in compose.Include)
-            {
-                if (conceptset.Code.Contains(value)) return true;
-            }
+            //foreach(var conceptset in compose.Include)
+            //{
+            //    if (conceptset.Code.Contains(value)) return true;
+            //}
             return false;
         }
 
         public bool Contains(string code)
         {
-            if (valueset.Define != null)
-            {
-                if (ConceptContains(valueset.Define.Concept, code)) return true;
+            //if (valueset.Define != null)
+            //{
+            //    if (ConceptContains(valueset.Define.Concept, code)) return true;
                 
-            }
-            if (valueset.Compose != null)
-            {
-                if (ComposeContains(valueset.Compose, code)) return true;
-            }
+            //}
+            //if (valueset.Compose != null)
+            //{
+            //    if (ComposeContains(valueset.Compose, code)) return true;
+            //}
             return false;
         }
 
