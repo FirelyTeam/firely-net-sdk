@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Support
 
         public ResourceReferenceNotFoundException(string url, string message) : base(message)
         {
-            if (string.IsNullOrEmpty(url)) throw new ArgumentNullException(nameof(url));
+            if (string.IsNullOrEmpty(url)) throw new ArgumentNullException("url");
             _url = url;
         }
 
