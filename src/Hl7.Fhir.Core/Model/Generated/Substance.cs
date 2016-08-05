@@ -97,10 +97,10 @@ namespace Hl7.Fhir.Model
                 get { return ExpiryElement != null ? ExpiryElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ExpiryElement = null; 
+                    if (value == null)
+                        ExpiryElement = null; 
                     else
-                      ExpiryElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        ExpiryElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Expiry");
                 }
             }
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -352,6 +352,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Substance.IngredientComponent> _Ingredient;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Substance;

@@ -85,10 +85,10 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -202,6 +202,25 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Parameters.ParameterComponent> _Parameter;
         
+
+        public static ElementDefinition.ConstraintComponent Parameters_INV_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("value[x] xor resource"))},
+            Key = "inv-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A parameter must have a value or a resource, but not both",
+            Xpath = "exists(f:value) or exists(f:resource) and not(exists(f:value) and exists(f:resource))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Parameters_INV_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("value[x] xor resource"))},
+            Key = "inv-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A part must have a value or a resource, but not both",
+            Xpath = "exists(f:value) or exists(f:resource) and not(exists(f:value) and exists(f:resource))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Parameters;

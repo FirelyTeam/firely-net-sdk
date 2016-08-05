@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="elementdefinition-question"/>
+  <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-question"/>
+  <name value="Prompt for element phrased as question"/>
+  <status value="draft"/>
+  <publisher value="Health Level Seven, Inc. - FHIR Core WG"/>
+  <contact>
+    <telecom>
+      <system value="other"/>
+      <value value="http://hl7.org/special/committees/FHIR"/>
+    </telecom>
+  </contact>
+  <date value="2015-02-28"/>
+  <description value="The default/suggested phrasing to use when prompting a human to capture the data element in question form (e.g. In a survey)."/>
+  <fhirVersion value="1.0.2"/>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM"/>
+  </mapping>
+  <kind value="datatype"/>
+  <constrainedType value="Extension"/>
+  <abstract value="false"/>
+  <contextType value="datatype"/>
+  <context value="ElementDefinition"/>
+  <base value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+  <snapshot>
+    <element>
+      <path value="Extension"/>
+      <short value="Prompt for element phrased as question"/>
+      <definition value="The default/suggested phrasing to use when prompting a human to capture the data element in question form (e.g. In a survey)."/>
+      <comments value="Question and label serve similar purposes in they both can be used to prompt for capturing a data element.  Whether the question form or label form should be used will depend on the type of instrument being used to capture the information.  The ordering is in order of preference.  I.e. Most preferred question form is listed first.  Note that this is for alternate phrasings of the question.  Language translations are handled using the ISO 21090 string translation extensions."/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A (MIF-level)"/>
+      </mapping>
+    </element>
+    <element>
+      <path value="Extension.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="id"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element>
+      <path value="Extension.extension"/>
+      <name value="extension"/>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="Extension.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element>
+      <path value="Extension.url"/>
+      <representation value="xmlAttr"/>
+      <short value="identifies the meaning of the extension"/>
+      <definition value="Source of the definition for the extension code - a logical name or a URL."/>
+      <comments value="The definition may point directly to a computable or human-readable definition of the extensibility codes, or it may be a logical URI as declared in some other specification. The definition should be version specific.  This will ideally be the URI for the Resource Profile defining the extension, with the code for the extension after a #."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.url"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://hl7.org/fhir/StructureDefinition/elementdefinition-question"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element>
+      <path value="Extension.valueString"/>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - may be a resource or one of a constrained set of the data types (see Extensibility in the spec for list)."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+  </snapshot>
+  <differential>
+    <element>
+      <path value="Extension"/>
+      <short value="Prompt for element phrased as question"/>
+      <definition value="The default/suggested phrasing to use when prompting a human to capture the data element in question form (e.g. In a survey)."/>
+      <comments value="Question and label serve similar purposes in they both can be used to prompt for capturing a data element.  Whether the question form or label form should be used will depend on the type of instrument being used to capture the information.  The ordering is in order of preference.  I.e. Most preferred question form is listed first.  Note that this is for alternate phrasings of the question.  Language translations are handled using the ISO 21090 string translation extensions."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A (MIF-level)"/>
+      </mapping>
+    </element>
+    <element>
+      <path value="Extension.extension"/>
+      <name value="extension"/>
+      <max value="0"/>
+    </element>
+    <element>
+      <path value="Extension.url"/>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://hl7.org/fhir/StructureDefinition/elementdefinition-question"/>
+    </element>
+    <element>
+      <path value="Extension.value[x]"/>
+      <min value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

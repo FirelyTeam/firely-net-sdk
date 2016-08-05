@@ -34,13 +34,25 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Model
 {
     public partial class ModelInfo
     {
+        [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public class SearchParamDefinition
         {
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            [NotMapped]
+            private string DebuggerDisplay
+            {
+                get
+                {
+                    return String.Format("{0} {1} {2} ({3})", Resource, Name, Type, Expression);
+                }
+            }
+
             public string Resource { get; set; }
             public string Name { get; set; }
             public string Description { get; set; }

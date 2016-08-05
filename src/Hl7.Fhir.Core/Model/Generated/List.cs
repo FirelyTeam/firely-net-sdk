@@ -124,10 +124,10 @@ namespace Hl7.Fhir.Model
                 get { return DeletedElement != null ? DeletedElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DeletedElement = null; 
+                    if (!value.HasValue)
+                        DeletedElement = null; 
                     else
-                      DeletedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        DeletedElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Deleted");
                 }
             }
@@ -156,10 +156,10 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DateElement = null; 
+                    if (value == null)
+                        DateElement = null; 
                     else
-                      DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Date");
                 }
             }
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
             get { return TitleElement != null ? TitleElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TitleElement = null; 
                 else
                   TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.List.ListStatus>(value);
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
             get { return ModeElement != null ? ModeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ModeElement = null; 
                 else
                   ModeElement = new Code<Hl7.Fhir.Model.ListMode>(value);
@@ -468,7 +468,7 @@ namespace Hl7.Fhir.Model
             get { return NoteElement != null ? NoteElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NoteElement = null; 
                 else
                   NoteElement = new Hl7.Fhir.Model.FhirString(value);
@@ -503,6 +503,25 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.CodeableConcept _EmptyReason;
         
+
+        public static ElementDefinition.ConstraintComponent List_LST_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("mode = 'changes' or entry.deleted.empty()"))},
+            Key = "lst-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "The deleted flag can only be used if the mode of the list is \"changes\"",
+            Xpath = "(f:mode/@value = 'changes') or not(exists(f:entry/f:deleted))"
+        };
+
+        public static ElementDefinition.ConstraintComponent List_LST_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("emptyReason.empty() or entry.empty()"))},
+            Key = "lst-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A list can only have an emptyReason if it is empty",
+            Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as List;

@@ -272,10 +272,10 @@ namespace Hl7.Fhir.Model
                 get { return SequenceElement != null ? SequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SequenceElement = null; 
+                    if (!value.HasValue)
+                        SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -373,10 +373,10 @@ namespace Hl7.Fhir.Model
                 get { return SequenceElement != null ? SequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SequenceElement = null; 
+                    if (!value.HasValue)
+                        SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -406,10 +406,10 @@ namespace Hl7.Fhir.Model
                 get { return FocalElement != null ? FocalElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      FocalElement = null; 
+                    if (!value.HasValue)
+                        FocalElement = null; 
                     else
-                      FocalElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        FocalElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Focal");
                 }
             }
@@ -453,10 +453,10 @@ namespace Hl7.Fhir.Model
                 get { return BusinessArrangementElement != null ? BusinessArrangementElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      BusinessArrangementElement = null; 
+                    if (value == null)
+                        BusinessArrangementElement = null; 
                     else
-                      BusinessArrangementElement = new Hl7.Fhir.Model.FhirString(value);
+                        BusinessArrangementElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("BusinessArrangement");
                 }
             }
@@ -500,10 +500,10 @@ namespace Hl7.Fhir.Model
                 get { return PreAuthRefElement != null ? PreAuthRefElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
-                      PreAuthRefElement = null; 
+                    if (value == null)
+                        PreAuthRefElement = null; 
                     else
-                      PreAuthRefElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                        PreAuthRefElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
                     OnPropertyChanged("PreAuthRef");
                 }
             }
@@ -632,10 +632,10 @@ namespace Hl7.Fhir.Model
                 get { return SequenceElement != null ? SequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SequenceElement = null; 
+                    if (!value.HasValue)
+                        SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -693,10 +693,10 @@ namespace Hl7.Fhir.Model
                 get { return DiagnosisLinkIdElement != null ? DiagnosisLinkIdElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
-                      DiagnosisLinkIdElement = null; 
+                    if (value == null)
+                        DiagnosisLinkIdElement = null; 
                     else
-                      DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
+                        DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
                     OnPropertyChanged("DiagnosisLinkId");
                 }
             }
@@ -739,10 +739,10 @@ namespace Hl7.Fhir.Model
                 get { return ServiceDateElement != null ? ServiceDateElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ServiceDateElement = null; 
+                    if (value == null)
+                        ServiceDateElement = null; 
                     else
-                      ServiceDateElement = new Hl7.Fhir.Model.Date(value);
+                        ServiceDateElement = new Hl7.Fhir.Model.Date(value);
                     OnPropertyChanged("ServiceDate");
                 }
             }
@@ -797,10 +797,10 @@ namespace Hl7.Fhir.Model
                 get { return FactorElement != null ? FactorElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      FactorElement = null; 
+                    if (!value.HasValue)
+                        FactorElement = null; 
                     else
-                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Factor");
                 }
             }
@@ -829,10 +829,10 @@ namespace Hl7.Fhir.Model
                 get { return PointsElement != null ? PointsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      PointsElement = null; 
+                    if (!value.HasValue)
+                        PointsElement = null; 
                     else
-                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Points");
                 }
             }
@@ -1055,10 +1055,10 @@ namespace Hl7.Fhir.Model
                 get { return SequenceElement != null ? SequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SequenceElement = null; 
+                    if (!value.HasValue)
+                        SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -1141,10 +1141,10 @@ namespace Hl7.Fhir.Model
                 get { return FactorElement != null ? FactorElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      FactorElement = null; 
+                    if (!value.HasValue)
+                        FactorElement = null; 
                     else
-                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Factor");
                 }
             }
@@ -1173,10 +1173,10 @@ namespace Hl7.Fhir.Model
                 get { return PointsElement != null ? PointsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      PointsElement = null; 
+                    if (!value.HasValue)
+                        PointsElement = null; 
                     else
-                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Points");
                 }
             }
@@ -1324,10 +1324,10 @@ namespace Hl7.Fhir.Model
                 get { return SequenceElement != null ? SequenceElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SequenceElement = null; 
+                    if (!value.HasValue)
+                        SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -1410,10 +1410,10 @@ namespace Hl7.Fhir.Model
                 get { return FactorElement != null ? FactorElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      FactorElement = null; 
+                    if (!value.HasValue)
+                        FactorElement = null; 
                     else
-                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Factor");
                 }
             }
@@ -1442,10 +1442,10 @@ namespace Hl7.Fhir.Model
                 get { return PointsElement != null ? PointsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      PointsElement = null; 
+                    if (!value.HasValue)
+                        PointsElement = null; 
                     else
-                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Points");
                 }
             }
@@ -1575,10 +1575,10 @@ namespace Hl7.Fhir.Model
                 get { return InitialElement != null ? InitialElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      InitialElement = null; 
+                    if (!value.HasValue)
+                        InitialElement = null; 
                     else
-                      InitialElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        InitialElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Initial");
                 }
             }
@@ -1607,10 +1607,10 @@ namespace Hl7.Fhir.Model
                 get { return PriorDateElement != null ? PriorDateElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      PriorDateElement = null; 
+                    if (value == null)
+                        PriorDateElement = null; 
                     else
-                      PriorDateElement = new Hl7.Fhir.Model.Date(value);
+                        PriorDateElement = new Hl7.Fhir.Model.Date(value);
                     OnPropertyChanged("PriorDate");
                 }
             }
@@ -1736,10 +1736,10 @@ namespace Hl7.Fhir.Model
                 get { return ExtractionDateElement != null ? ExtractionDateElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ExtractionDateElement = null; 
+                    if (value == null)
+                        ExtractionDateElement = null; 
                     else
-                      ExtractionDateElement = new Hl7.Fhir.Model.Date(value);
+                        ExtractionDateElement = new Hl7.Fhir.Model.Date(value);
                     OnPropertyChanged("ExtractionDate");
                 }
             }
@@ -1819,7 +1819,7 @@ namespace Hl7.Fhir.Model
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   TypeElement = null; 
                 else
                   TypeElement = new Code<Hl7.Fhir.Model.Claim.ClaimType>(value);
@@ -1891,7 +1891,7 @@ namespace Hl7.Fhir.Model
             get { return CreatedElement != null ? CreatedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CreatedElement = null; 
                 else
                   CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -1965,7 +1965,7 @@ namespace Hl7.Fhir.Model
             get { return Use_Element != null ? Use_Element.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   Use_Element = null; 
                 else
                   Use_Element = new Code<Hl7.Fhir.Model.Claim.Use>(value);
@@ -2177,7 +2177,7 @@ namespace Hl7.Fhir.Model
             get { return SchoolElement != null ? SchoolElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   SchoolElement = null; 
                 else
                   SchoolElement = new Hl7.Fhir.Model.FhirString(value);
@@ -2209,7 +2209,7 @@ namespace Hl7.Fhir.Model
             get { return AccidentElement != null ? AccidentElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   AccidentElement = null; 
                 else
                   AccidentElement = new Hl7.Fhir.Model.Date(value);
@@ -2286,6 +2286,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Claim.MissingTeethComponent> _MissingTeeth;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Claim;

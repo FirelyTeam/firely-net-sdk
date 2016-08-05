@@ -117,10 +117,10 @@ namespace Hl7.Fhir.Model
                 get { return NumberElement != null ? NumberElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      NumberElement = null; 
+                    if (!value.HasValue)
+                        NumberElement = null; 
                     else
-                      NumberElement = new Hl7.Fhir.Model.UnsignedInt(value);
+                        NumberElement = new Hl7.Fhir.Model.UnsignedInt(value);
                     OnPropertyChanged("Number");
                 }
             }
@@ -164,10 +164,10 @@ namespace Hl7.Fhir.Model
                 get { return UidElement != null ? UidElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      UidElement = null; 
+                    if (value == null)
+                        UidElement = null; 
                     else
-                      UidElement = new Hl7.Fhir.Model.Oid(value);
+                        UidElement = new Hl7.Fhir.Model.Oid(value);
                     OnPropertyChanged("Uid");
                 }
             }
@@ -196,10 +196,10 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -229,10 +229,10 @@ namespace Hl7.Fhir.Model
                 get { return NumberOfInstancesElement != null ? NumberOfInstancesElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      NumberOfInstancesElement = null; 
+                    if (!value.HasValue)
+                        NumberOfInstancesElement = null; 
                     else
-                      NumberOfInstancesElement = new Hl7.Fhir.Model.UnsignedInt(value);
+                        NumberOfInstancesElement = new Hl7.Fhir.Model.UnsignedInt(value);
                     OnPropertyChanged("NumberOfInstances");
                 }
             }
@@ -261,10 +261,10 @@ namespace Hl7.Fhir.Model
                 get { return AvailabilityElement != null ? AvailabilityElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      AvailabilityElement = null; 
+                    if (!value.HasValue)
+                        AvailabilityElement = null; 
                     else
-                      AvailabilityElement = new Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>(value);
+                        AvailabilityElement = new Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>(value);
                     OnPropertyChanged("Availability");
                 }
             }
@@ -293,10 +293,10 @@ namespace Hl7.Fhir.Model
                 get { return UrlElement != null ? UrlElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      UrlElement = null; 
+                    if (value == null)
+                        UrlElement = null; 
                     else
-                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                        UrlElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Url");
                 }
             }
@@ -351,10 +351,10 @@ namespace Hl7.Fhir.Model
                 get { return StartedElement != null ? StartedElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      StartedElement = null; 
+                    if (value == null)
+                        StartedElement = null; 
                     else
-                      StartedElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        StartedElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Started");
                 }
             }
@@ -478,10 +478,10 @@ namespace Hl7.Fhir.Model
                 get { return NumberElement != null ? NumberElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      NumberElement = null; 
+                    if (!value.HasValue)
+                        NumberElement = null; 
                     else
-                      NumberElement = new Hl7.Fhir.Model.UnsignedInt(value);
+                        NumberElement = new Hl7.Fhir.Model.UnsignedInt(value);
                     OnPropertyChanged("Number");
                 }
             }
@@ -511,10 +511,10 @@ namespace Hl7.Fhir.Model
                 get { return UidElement != null ? UidElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      UidElement = null; 
+                    if (value == null)
+                        UidElement = null; 
                     else
-                      UidElement = new Hl7.Fhir.Model.Oid(value);
+                        UidElement = new Hl7.Fhir.Model.Oid(value);
                     OnPropertyChanged("Uid");
                 }
             }
@@ -544,10 +544,10 @@ namespace Hl7.Fhir.Model
                 get { return SopClassElement != null ? SopClassElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SopClassElement = null; 
+                    if (value == null)
+                        SopClassElement = null; 
                     else
-                      SopClassElement = new Hl7.Fhir.Model.Oid(value);
+                        SopClassElement = new Hl7.Fhir.Model.Oid(value);
                     OnPropertyChanged("SopClass");
                 }
             }
@@ -576,10 +576,10 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TypeElement = null; 
+                    if (value == null)
+                        TypeElement = null; 
                     else
-                      TypeElement = new Hl7.Fhir.Model.FhirString(value);
+                        TypeElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -608,10 +608,10 @@ namespace Hl7.Fhir.Model
                 get { return TitleElement != null ? TitleElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TitleElement = null; 
+                    if (value == null)
+                        TitleElement = null; 
                     else
-                      TitleElement = new Hl7.Fhir.Model.FhirString(value);
+                        TitleElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Title");
                 }
             }
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
             get { return StartedElement != null ? StartedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   StartedElement = null; 
                 else
                   StartedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -761,7 +761,7 @@ namespace Hl7.Fhir.Model
             get { return UidElement != null ? UidElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UidElement = null; 
                 else
                   UidElement = new Hl7.Fhir.Model.Oid(value);
@@ -863,7 +863,7 @@ namespace Hl7.Fhir.Model
             get { return AvailabilityElement != null ? AvailabilityElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   AvailabilityElement = null; 
                 else
                   AvailabilityElement = new Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>(value);
@@ -895,7 +895,7 @@ namespace Hl7.Fhir.Model
             get { return UrlElement != null ? UrlElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UrlElement = null; 
                 else
                   UrlElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -928,7 +928,7 @@ namespace Hl7.Fhir.Model
             get { return NumberOfSeriesElement != null ? NumberOfSeriesElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   NumberOfSeriesElement = null; 
                 else
                   NumberOfSeriesElement = new Hl7.Fhir.Model.UnsignedInt(value);
@@ -961,7 +961,7 @@ namespace Hl7.Fhir.Model
             get { return NumberOfInstancesElement != null ? NumberOfInstancesElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   NumberOfInstancesElement = null; 
                 else
                   NumberOfInstancesElement = new Hl7.Fhir.Model.UnsignedInt(value);
@@ -1022,7 +1022,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1044,6 +1044,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ImagingStudy.SeriesComponent> _Series;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ImagingStudy;

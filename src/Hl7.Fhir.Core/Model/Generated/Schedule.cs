@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             get { return CommentElement != null ? CommentElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CommentElement = null; 
                 else
                   CommentElement = new Hl7.Fhir.Model.FhirString(value);
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Schedule;

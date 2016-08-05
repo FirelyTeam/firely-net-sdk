@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Rest
                 else if (SEARCH_CONTAINED_TYPE_CONTAINER.Equals(value)) ContainedType = ContainedResult.Container;
                 else throw Error.Format("Invalid {0}: '{1}' is not a recognized containedType value".FormatWith(name, value), null);
             }
-            else if (name == SEARCH_PARAM_ELEMENTS)
+            else if (name== SEARCH_PARAM_ELEMENTS)
             {
                 if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(name), null);
                 Elements.AddRange(value.Split(','));

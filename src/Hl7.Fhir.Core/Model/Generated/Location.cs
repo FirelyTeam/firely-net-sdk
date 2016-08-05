@@ -133,10 +133,10 @@ namespace Hl7.Fhir.Model
                 get { return LongitudeElement != null ? LongitudeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      LongitudeElement = null; 
+                    if (!value.HasValue)
+                        LongitudeElement = null; 
                     else
-                      LongitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        LongitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Longitude");
                 }
             }
@@ -166,10 +166,10 @@ namespace Hl7.Fhir.Model
                 get { return LatitudeElement != null ? LatitudeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      LatitudeElement = null; 
+                    if (!value.HasValue)
+                        LatitudeElement = null; 
                     else
-                      LatitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        LatitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Latitude");
                 }
             }
@@ -198,10 +198,10 @@ namespace Hl7.Fhir.Model
                 get { return AltitudeElement != null ? AltitudeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      AltitudeElement = null; 
+                    if (!value.HasValue)
+                        AltitudeElement = null; 
                     else
-                      AltitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        AltitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Altitude");
                 }
             }
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Location.LocationStatus>(value);
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
             get { return NameElement != null ? NameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
             get { return ModeElement != null ? ModeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ModeElement = null; 
                 else
                   ModeElement = new Code<Hl7.Fhir.Model.Location.LocationMode>(value);
@@ -492,6 +492,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _PartOf;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Location;

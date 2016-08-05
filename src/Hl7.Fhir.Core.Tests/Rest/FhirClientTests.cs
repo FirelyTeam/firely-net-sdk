@@ -31,6 +31,7 @@ namespace Hl7.Fhir.Tests.Rest
     {
         //public static Uri testEndpoint = new Uri("http://spark-dstu2.furore.com/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
+        //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
         public static Uri testEndpoint = new Uri("http://fhir2.healthintersections.com.au/open");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
@@ -83,7 +84,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             entry = client.Conformance(SummaryType.True);
 
-            Assert.IsNull(entry.Text);
+            Assert.IsNull(entry.Text); // DSTU2 has this property as not include as part of the summary (that would be with SummaryType.Text)
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
             Assert.AreEqual(Conformance.RestfulConformanceMode.Server, entry.Rest[0].Mode.Value);
@@ -422,7 +423,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
             catch
             {
-                Assert.AreEqual("410",client.LastResult.Status);
+                Assert.AreEqual("410", client.LastResult.Status);
             }
         }
 
@@ -754,13 +755,12 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(bodyText.Contains("<Patient"));
 
             calledBefore = false;
-            client.Create(pat);
+            client.Update(pat); // create cannot be called with an ID (which was retrieved)
             Assert.IsTrue(calledBefore);
             Assert.IsNotNull(bodyOut);
 
             bodyText = HttpToEntryExtensions.DecodeBody(body, Encoding.UTF8);
             Assert.IsTrue(bodyText.Contains("<Patient"));
-
         }
 
         [TestMethod]
@@ -828,7 +828,7 @@ namespace Hl7.Fhir.Tests.Rest
                 if (!fe.Message.Contains("a valid FHIR xml/json body type was expected") && !fe.Message.Contains("not recognized as either xml or json"))
                     Assert.Fail("Failed to recognize invalid body contents");
             }
-        }
+            }
 
 
         [TestMethod]
@@ -973,7 +973,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             client = new FhirClient(testEndpointDSTU12);
             client.ParserSettings.AllowUnrecognizedEnums = true;
-
+                       
             try
             {
                 p = client.Conformance();

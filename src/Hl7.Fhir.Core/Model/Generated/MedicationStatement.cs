@@ -117,10 +117,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
             get { return DateAssertedElement != null ? DateAssertedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateAssertedElement = null; 
                 else
                   DateAssertedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatus>(value);
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
             get { return WasNotTakenElement != null ? WasNotTakenElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   WasNotTakenElement = null; 
                 else
                   WasNotTakenElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -507,7 +507,7 @@ namespace Hl7.Fhir.Model
             get { return NoteElement != null ? NoteElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NoteElement = null; 
                 else
                   NoteElement = new Hl7.Fhir.Model.FhirString(value);
@@ -559,6 +559,25 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.MedicationStatement.DosageComponent> _Dosage;
         
+
+        public static ElementDefinition.ConstraintComponent MedicationStatement_MST_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("reasonForUse[x].empty() or wasNotTaken = false"))},
+            Key = "mst-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Reason for use is only permitted if wasNotTaken is false",
+            Xpath = "not(exists(*[starts-with(local-name(.), 'reasonForUse')]) and f:wasNotTaken/@value=true())"
+        };
+
+        public static ElementDefinition.ConstraintComponent MedicationStatement_MST_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("reasonNotTaken.empty() or wasNotTaken = true"))},
+            Key = "mst-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Reason not taken is only permitted if wasNotTaken is true",
+            Xpath = "not(exists(f:reasonNotTaken) and f:wasNotTaken/@value=false())"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MedicationStatement;
