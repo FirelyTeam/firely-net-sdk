@@ -55,32 +55,53 @@ namespace Hl7.Fhir.Specification.Tests
 			var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
 			Assert.IsNotNull(sd);
 
-			generateSnapshotAndCompare(sd, _testSource);
-		}
+            // dumpReferences(sd);
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            DumpBasePaths(expanded);
+        }
 
 		[TestMethod]
-		[Ignore] // For debugging purposes
+		// [Ignore] // For debugging purposes
 		public void GenerateSingleSnapshot()
 		{
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder");
-            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
-            var sd = _testSource.GetStructureDefinition(@"http://example.org/StructureDefinition/MyBasic");
-
-            // _settings.IgnoreMissingTypeProfiles = true;
-            // var sd = _testSource.GetStructureDefinition(@"http://example.org/StructureDefinition/NewBasic");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
 
             Assert.IsNotNull(sd);
 
-			dumpReferences(sd);
+            // dumpReferences(sd);
 
-			generateSnapshotAndCompare(sd, _testSource);
-		}
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
 
-		[TestMethod]
-		[Ignore] // For debugging purposes
+            DumpBasePaths(expanded);
+        }
+
+        [TestMethod]
+        // [Ignore] // For debugging purposes
+        public void GenerateSingleSnapshotNormalizeBase()
+        {
+            var sd = _testSource.GetStructureDefinition(@"http://example.org/StructureDefinition/MyBasic");
+            Assert.IsNotNull(sd);
+
+            // dumpReferences(sd);
+            _settings.RewriteElementBase = true;
+            _settings.NormalizeElementBase = true;
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            DumpBasePaths(expanded);
+        }
+
+        [TestMethod]
+		// [Ignore] // For debugging purposes
 		public void GenerateDerivedProfileSnapshot()
 		{
 			// cqif-guidanceartifact profile is derived from cqif-knowledgemodule
@@ -92,10 +113,13 @@ namespace Hl7.Fhir.Specification.Tests
 
 			Assert.IsNotNull(sd);
 
-			dumpReferences(sd);
+            // dumpReferences(sd);
 
-			generateSnapshotAndCompare(sd, _testSource);
-		}
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            DumpBasePaths(expanded);
+        }
 
         // [WMR 20160721] Following profiles are not yet handled (TODO)
         private readonly string[] skippedProfiles =
@@ -149,30 +173,44 @@ namespace Hl7.Fhir.Specification.Tests
         }
 #endif
 
-        private void generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
+        private StructureDefinition generateSnapshot(StructureDefinition original, ArtifactResolver source)
+        {
+            // var generator = new SnapshotGenerator(source, markChanges: false);        
+            var generator = new SnapshotGenerator(source, _settings);
+
+            var expanded = (StructureDefinition)original.DeepCopy();
+            Assert.IsTrue(original.IsExactly(expanded));
+
+            generator.Generate(expanded);
+
+            return expanded;
+        }
+
+        private bool generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
 		{
-			// var generator = new SnapshotGenerator(source, markChanges: false);        
-			var generator = new SnapshotGenerator(source, _settings);
-
-			var expanded = (StructureDefinition)original.DeepCopy();
-			Assert.IsTrue(original.IsExactly(expanded));
-
-			generator.Generate(expanded);
-
-			var areEqual = original.IsExactly(expanded);
-
-			// [WMR 20160803] Always save output to separate file, convenient for debugging
-			// if (!areEqual)
-			// {
-			var tempPath = Path.GetTempPath();
-			File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), FhirSerializer.SerializeResourceToXml(original));
-			File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
-			// }
-
-			Assert.IsTrue(areEqual);
+            StructureDefinition expanded;
+            return generateSnapshotAndCompare(original, source, out expanded);
 		}
 
-		private IEnumerable<StructureDefinition> findConstraintStrucDefs()
+        private bool generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source, out StructureDefinition expanded)
+        {
+            expanded = generateSnapshot(original, source);
+
+            var areEqual = original.IsExactly(expanded);
+
+            // [WMR 20160803] Always save output to separate file, convenient for debugging
+            // if (!areEqual)
+            // {
+                var tempPath = Path.GetTempPath();
+                File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), FhirSerializer.SerializeResourceToXml(original));
+                File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
+            // }
+
+            return areEqual;
+        }
+
+
+        private IEnumerable<StructureDefinition> findConstraintStrucDefs()
 		{
 			var testSDs = _testSource.ListConformanceResources().Where(ci => ci.Type == ResourceType.StructureDefinition);
 
@@ -238,13 +276,15 @@ namespace Hl7.Fhir.Specification.Tests
 
 			var nav = new ElementNavigator(qStructDef.Snapshot.Element);
 
-			nav.JumpToFirst("Questionnaire.telecom");
-			Assert.IsTrue(SnapshotGenerator.expandElement(nav, _testSource, SnapshotGeneratorSettings.Default));
+            var generator = new SnapshotGenerator(_testSource, SnapshotGeneratorSettings.Default);
+
+            nav.JumpToFirst("Questionnaire.telecom");
+			Assert.IsTrue(generator.expandElement(nav));
 			Assert.IsTrue(nav.MoveToChild("period"), "Did not move into complex datatype ContactPoint");
 
 			nav.JumpToFirst("Questionnaire.group");
-			Assert.IsTrue(SnapshotGenerator.expandElement(nav, _testSource, SnapshotGeneratorSettings.Default));
-			Assert.IsTrue(nav.MoveToChild("title"), "Did not move into internally defined backbone element Group");
+            Assert.IsTrue(generator.expandElement(nav));
+            Assert.IsTrue(nav.MoveToChild("title"), "Did not move into internally defined backbone element Group");
 		}
 
 		// [WMR 20160802] NEW - Expand a single element

@@ -91,6 +91,12 @@ namespace Hl7.Fhir.Specification.Navigation
             return elem.Path.EndsWith(".extension") || elem.Path.EndsWith(".modifierExtension");
         }
 
+        // [WMR 20160805] New
+        public static bool IsRootElement(this ElementDefinition elem)
+        {
+            return !string.IsNullOrEmpty(elem.Path) && !elem.Path.Contains('.');
+        }
+
         // [WMR 20160801] NEW
         /// <summary>Returns the first type profile url, or <c>null</c></summary>
         public static string PrimaryProfile(this ElementDefinition elem)

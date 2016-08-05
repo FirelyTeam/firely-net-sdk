@@ -1,4 +1,6 @@
-﻿/* 
+﻿#define BASE_PATH
+
+/* 
  * Copyright (c) 2014, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -19,11 +21,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 {
     public class SnapshotGeneratorSettings
     {
+        /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             MarkChanges = false,
             ExpandTypeProfiles = true,
-            IgnoreMissingTypeProfiles = false
+            IgnoreMissingTypeProfiles = false,
+            RewriteElementBase = false,
+            NormalizeElementBase = false    // true in STU3
         };
 
         /// <summary>
@@ -48,6 +53,24 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// If disabled (default), throw an exception for unknown or invalid element type profiles.
         /// </summary>
         public bool IgnoreMissingTypeProfiles { get; set; }
+
+        /// <summary>
+        /// Enable this setting to rewrite all ElementDefinition.Base components by tracking the base hierarchy.
+        /// If disable (default), the snapshot inherits existing Base components present in base resource.
+        /// </summary>
+        /// <remarks>
+        /// This setting is useful to correct errors in the core profile definitions.
+        /// </remarks>
+        public bool RewriteElementBase { get; set; }
+
+        /// <summary>
+        /// EXPERIMENTAL!
+        /// Enable this setting to normalize the ElementDefinition.Base component of inherited elements.
+        /// </summary>
+        /// <example>
+        /// Path = 'Patient.name.given' => Base.Path = 'HumanName.given' (derived from parent element type = 'HumanName')
+        /// </example>
+        public bool NormalizeElementBase { get; set; }
 
     }
 
@@ -130,7 +153,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 throw Error.Argument("element", "The specified element is not contained in the list.");
             }
 
-            expandElement(nav, _resolver, _settings);
+            expandElement(nav);
 
             return nav.Elements;
         }
@@ -218,7 +241,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         throw Error.InvalidOperation("Differential has a constraint on a choice element '{0}', but does so without using a type slice", diff.Path);
                     }
 
-                    expandElement(snap, _resolver, _settings);
+                    expandElement(snap);
 
                     if (!snap.HasChildren)
                     {
@@ -439,14 +462,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         private static ElementDefinition createExtensionSlicingEntry()
         {
             // Create a pre-fab extension slice, filled with sensible defaults
-
-            //var slicingDiff = new ElementDefinition();
-            //slicingDiff.Slicing = new ElementDefinition.SlicingComponent();
-            //slicingDiff.Slicing.Discriminator = new[] { "url" };
-            //slicingDiff.Slicing.Ordered = false;
-            //slicingDiff.Slicing.Rules = ElementDefinition.SlicingRules.Open;
-            // return slicingDiff;
-
             return new ElementDefinition()
             {
                 Slicing = new ElementDefinition.SlicingComponent()
@@ -459,9 +474,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
 
-        internal static bool expandElement(ElementNavigator nav, ArtifactResolver resolver, SnapshotGeneratorSettings settings)
+        // internal static bool expandElement(ElementNavigator nav, ArtifactResolver resolver, SnapshotGeneratorSettings settings)
+        internal bool expandElement(ElementNavigator nav)
         {
-            if (resolver == null) throw Error.ArgumentNull("source");
+            // if (resolver == null) throw Error.ArgumentNull("source");
             if (nav.Current == null) throw Error.ArgumentNull("Navigator is not positioned on an element");
 
             if (nav.HasChildren) return true;     // already has children, we're not doing anything extra
@@ -489,17 +505,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var primaryType = defn.Type[0];
                     var typeProfile = primaryType.Profile.FirstOrDefault();
                     StructureDefinition coreType = null;
-                    if (!defn.IsExtension() && !defn.IsReference() && !string.IsNullOrEmpty(typeProfile) && settings.ExpandTypeProfiles)
+                    if (!defn.IsExtension() && !defn.IsReference() && !string.IsNullOrEmpty(typeProfile) && _settings.ExpandTypeProfiles)
                     {
-                        coreType = resolver.GetStructureDefinition(typeProfile);
-                        if ((coreType == null || coreType.Snapshot == null) && settings.IgnoreMissingTypeProfiles)
+                        coreType = _resolver.GetStructureDefinition(typeProfile);
+                        if ((coreType == null || coreType.Snapshot == null) && _settings.IgnoreMissingTypeProfiles)
                         {
-                            coreType = resolver.GetStructureDefinitionForCoreType(primaryType.Code.Value);
+                            coreType = _resolver.GetStructureDefinitionForCoreType(primaryType.Code.Value);
                         }
                     }
                     else
                     {
-                        coreType = resolver.GetStructureDefinitionForCoreType(primaryType.Code.Value);
+                        coreType = _resolver.GetStructureDefinitionForCoreType(primaryType.Code.Value);
                     }
 
                     if (coreType == null) throw Error.NotSupported("Trying to navigate down a node that has a declared base type of '{0}', which is unknown".FormatWith(defn.Type[0].Code));
@@ -515,20 +531,76 @@ namespace Hl7.Fhir.Specification.Snapshot
             return true;
         }
 
-        private static void generateBaseElements(IEnumerable<ElementDefinition> elements)
+        private void generateBaseElements(IEnumerable<ElementDefinition> elements)
         {
-            foreach(var element in elements)
+            // [WMR 20160805] WRONG...
+            // Base path should be derived from the original profile that introduces the element definition
+            // e.g. Patient.id => Base.path = "Resource.id"
+            // Issue: in DSTU2, core resource definitions (in profiles-resources.xml) don't specify ANY base components
+            // Suggestion: core resource definitions should specify Base component for all elements inherited from (Domain)Resource
+            // For now, we could hard-code the elements derived from (Domain)Resource
+
+            // Inspect root element to determine base type (Element/Resource/DomainResource)
+            var rootElem = elements.FirstOrDefault();
+            var primaryTypeCode = GetPrimaryTypeCode(rootElem);
+            var baseTypeDefs = getBaseTypeDefs(primaryTypeCode);
+
+            foreach (var element in elements)
             {
-                if (element.Base == null)
+                if (_settings.RewriteElementBase || element.Base == null)
                 {
+                    var baseElem = element;
+                    if (_settings.NormalizeElementBase)
+                    {
+                        var elemName = element.GetNameFromPath();
+                        baseElem = baseTypeDefs.SelectMany(sd => sd.Snapshot.Element).FirstOrDefault(e => e.GetNameFromPath() == elemName) ?? element;
+                    }
+
                     element.Base = new ElementDefinition.BaseComponent()
                     {
-                        MaxElement = (FhirString)element.MaxElement.DeepCopy(),
-                        MinElement = (Integer)element.MinElement.DeepCopy(),
-                        PathElement = (FhirString)element.PathElement.DeepCopy()
+                        MaxElement = (FhirString)baseElem.MaxElement.DeepCopy(),
+                        MinElement = (Integer)baseElem.MinElement.DeepCopy(),
+                        PathElement = (FhirString)baseElem.PathElement.DeepCopy()
                     };
+
+                    //element.Base = new ElementDefinition.BaseComponent()
+                    //{
+                    //    MaxElement = (FhirString)element.MaxElement.DeepCopy(),
+                    //    MinElement = (Integer)element.MinElement.DeepCopy(),
+                    //    PathElement = (FhirString)element.PathElement.DeepCopy()
+                    //};
+
                 }
             }
+        }
+
+        private StructureDefinition[] getBaseTypeDefs(FHIRDefinedType? type)
+        {
+            var result = new Stack<StructureDefinition>();
+            while (type.HasValue)
+            {
+                var sd = _resolver.GetStructureDefinitionForCoreType(type.Value);
+                if (sd == null)
+                {
+                    throw Error.InvalidOperation("Cannot resolve core profile for type '{0}'".FormatWith(type.Value));
+                }
+                result.Push(sd);
+                type = GetPrimaryTypeCode(sd.Snapshot.Element.FirstOrDefault());
+            }
+            return result.ToArray();
+        }
+
+        private FHIRDefinedType? GetPrimaryTypeCode(ElementDefinition elem)
+        {
+            if (elem != null && elem.Type != null)
+            {
+                var type = elem.Type.FirstOrDefault();
+                if (type != null)
+                {
+                    return type.Code;
+                }
+            }
+            return null;
         }
 
         // [WMR 20160802] NEW
