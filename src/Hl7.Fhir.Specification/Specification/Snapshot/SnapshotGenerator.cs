@@ -106,12 +106,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
             var diffNav = new ElementNavigator(fullDifferential);
 
+            // [WMR 20160803] Also merge global information, e.g. StructureDefinition.mapping components ???
+
             merge(snapNav, diffNav);
            
             structure.Snapshot = new StructureDefinition.SnapshotComponent() { Element = snapNav.ToListOfElements() };
         }
 
-        // [WMR 20160802] NEW - TODO
+        // [WMR 20160802] NEW
         // For partial expansion of a single (complex) element
 
         /// <summary>Given a list of element definitions, expand the definition of a single element.</summary>
