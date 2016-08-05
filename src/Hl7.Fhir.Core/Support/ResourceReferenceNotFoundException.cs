@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Support
 {
@@ -14,7 +9,6 @@ namespace Hl7.Fhir.Support
     /// </summary>
     public class ResourceReferenceNotFoundException : Exception
     {
-        private readonly string _message;
         private readonly string _url;
 
         private const string defaultMessage = "Resource reference not found for url '{0}'";
@@ -24,11 +18,9 @@ namespace Hl7.Fhir.Support
             //
         }
 
-        public ResourceReferenceNotFoundException(string url, string message)
+        public ResourceReferenceNotFoundException(string url, string message) : base(message)
         {
             if (string.IsNullOrEmpty(url)) throw new ArgumentNullException(nameof(url));
-            if (string.IsNullOrEmpty(message)) throw new ArgumentNullException(nameof(message));
-            _message = message;
             _url = url;
         }
 

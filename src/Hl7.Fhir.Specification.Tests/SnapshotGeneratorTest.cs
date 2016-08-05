@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Specification.Tests
 		}
 
 		[TestMethod]
-		[Ignore] // For debugging purposes
+		// [Ignore] // For debugging purposes
 		public void GenerateSingleSnapshot()
 		{
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.Indent();
                 foreach (var elem in sd.Snapshot.Element)
                 {
-                    Debug.WriteLine("{0} - {1}", );
+                    Debug.WriteLine("{0} - {1}", elem.Path, elem.Base.Path);
                 }
                 Debug.Unindent();
             }

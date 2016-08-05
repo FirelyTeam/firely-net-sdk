@@ -1,6 +1,4 @@
-﻿#define HANDLE_COMPLEX_REFERENCES
-
-/* 
+﻿/* 
  * Copyright (c) 2014, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -10,9 +8,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
@@ -60,15 +56,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         public const string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
         
         private ArtifactResolver _resolver;
-
-        // [WMR 20160720] Changed, use SnapshotGeneratorSettings
-        // private bool _markChanges;
-
-        //public SnapshotGenerator(ArtifactResolver resolver, bool markChanges=false)
-        //{
-        //    _resolver = resolver;
-        //    _markChanges = markChanges;
-        //}
 
         private SnapshotGeneratorSettings _settings;
 
