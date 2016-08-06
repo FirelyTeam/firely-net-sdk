@@ -28,12 +28,7 @@
 
 */
 
-
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model
@@ -51,5 +46,66 @@ namespace Hl7.Fhir.Model
             return Regex.IsMatch(value, "^" + Date.PATTERN + "$", RegexOptions.Singleline);
         }
 
+        public static bool operator >(Date a, Date b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return String.Compare(a.Value, b.Value) > 0;
+        }
+
+        public static bool operator >=(Date a, Date b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return String.Compare(a.Value, b.Value) >= 0;
+        }
+
+        public static bool operator <(Date a, Date b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return String.Compare(a.Value, b.Value) < 0;
+        }
+
+        public static bool operator <=(Date a, Date b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return String.Compare(a.Value, b.Value) <= 0;
+        }
+
+        /// <summary>
+        /// If you use this operator, you should check that a modifierExtension isn't changing the meaning
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator ==(Date a, Date b)
+        {
+            if (object.ReferenceEquals(a, null) && object.ReferenceEquals(b, null))
+                return true;
+            if (object.ReferenceEquals(a, null) || object.ReferenceEquals(b, null))
+                return false;
+            return String.Compare(a.Value, b.Value) == 0;
+        }
+
+        /// <summary>
+        /// If you use this operator, you should check that a modifierExtension isn't changing the meaning
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator !=(Date a, Date b)
+        {
+            return !(a == b);
+        }
     }
 }
