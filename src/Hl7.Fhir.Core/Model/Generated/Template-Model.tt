@@ -498,7 +498,7 @@ if(!abstractType) {
         }
     }
 
-#><# if (resourceName != "DomainResource") { #>
+#><# if (resourceName != "DomainResource2") { #>
 
 <#
             foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", nsR))
@@ -520,6 +520,22 @@ if(!abstractType) {
 <#            }
 #>
 <#}#>
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+<#
+            foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", nsR))
+            {
+                string expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value", nsR).Value;
+                string key = node.SelectSingleNode("fhir:key/@value", nsR).Value;
+                string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
+                string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
+                string xpath = node.SelectSingleNode("fhir:xpath/@value", nsR).Value;
+#>            InvariantConstraints.Add(<#= resourceName + "_" + key.Replace("-", "_").ToUpper() #>);
+<#            }
+#>        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as <#= resourceName #>;

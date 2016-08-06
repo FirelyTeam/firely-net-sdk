@@ -1167,6 +1167,13 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:oralDiet) or exists(f:supplement) or exists(f:enteralFormula)"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(NutritionOrder_NOR_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as NutritionOrder;

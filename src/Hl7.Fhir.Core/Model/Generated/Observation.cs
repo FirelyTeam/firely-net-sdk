@@ -871,6 +871,15 @@ namespace Hl7.Fhir.Model
             Xpath = "(exists(f:low) or exists(f:high)or exists(f:text))"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Observation_OBS_6);
+            InvariantConstraints.Add(Observation_OBS_7);
+            InvariantConstraints.Add(Observation_OBS_3);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Observation;

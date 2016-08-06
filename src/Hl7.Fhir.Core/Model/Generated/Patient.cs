@@ -862,6 +862,13 @@ namespace Hl7.Fhir.Model
             Xpath = "f:name or f:telecom or f:address or f:organization"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Patient_PAT_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Patient;

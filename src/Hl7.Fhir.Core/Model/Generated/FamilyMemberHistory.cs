@@ -451,6 +451,13 @@ namespace Hl7.Fhir.Model
             Xpath = "not (*[starts-with(local-name(.), 'age')] and *[starts-with(local-name(.), 'birth')])"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(FamilyMemberHistory_FHS_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as FamilyMemberHistory;

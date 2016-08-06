@@ -62,8 +62,65 @@ namespace Hl7.Fhir.Model
             {
                 UserData["@@@RESOURCEBASE@@@"] = value;
             }
-        }        
+        }
 
+        /// <summary>
+        /// The List of invariants to be validated for the resource
+        /// </summary>
+        [NotMapped]
+        public List<ElementDefinition.ConstraintComponent> InvariantConstraints;
+
+        public virtual void AddDefaultConstraints()
+        {
+        }
+
+        /// <summary>
+        /// Perform the Invariant based validation for this rule
+        /// </summary>
+        /// <param name="invariantRule"></param>
+        /// <param name="model"></param>
+        /// <param name="result">The OperationOutcome that will have the validation results appended</param>
+        /// <returns></returns>
+        protected static bool ValidateInvariant(ElementDefinition.ConstraintComponent invariantRule, Hl7.FluentPath.IElementNavigator model, OperationOutcome result)
+        {
+            string expression = invariantRule.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
+            try
+            {
+                // No FluentPath extension
+                if (string.IsNullOrEmpty(expression))
+                {
+                    result.Issue.Add(new OperationOutcome.IssueComponent()
+                    {
+                        Code = OperationOutcome.IssueType.Invariant,
+                        Severity = OperationOutcome.IssueSeverity.Warning,
+                        Details = new CodeableConcept(null, invariantRule.Key, "Unable to validate without a fluentpath expression"),
+                        Diagnostics = expression
+                    });
+                    return true;
+                }
+                if (Hl7.FluentPath.PathExpression.Predicate(expression, Hl7.FluentPath.FluentValueList.Create(model)))
+                    return true;
+                result.Issue.Add(new OperationOutcome.IssueComponent()
+                {
+                    Code = OperationOutcome.IssueType.Invariant,
+                    Severity = OperationOutcome.IssueSeverity.Error,
+                    Details = new CodeableConcept(null, invariantRule.Key, invariantRule.Human),
+                    Diagnostics = expression
+                });
+                return false;
+            }
+            catch (Exception ex)
+            {
+                result.Issue.Add(new OperationOutcome.IssueComponent()
+                {
+                    Code = OperationOutcome.IssueType.Invariant,
+                    Severity = OperationOutcome.IssueSeverity.Fatal,
+                    Details = new CodeableConcept(null, invariantRule.Key, "FATAL: Unable to process the invariant rule: " + invariantRule.Key + " " + expression),
+                    Diagnostics = String.Format("FluentPath: {0}\r\nError: {1}", expression, ex.Message)
+                });
+                return false;
+            }
+        }
 
         /// <summary>
         /// Returns the entire URI of the location that this resource was retrieved from

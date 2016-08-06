@@ -1319,6 +1319,24 @@ namespace Hl7.Fhir.Model
             Xpath = "count(f:element) = count(f:element[exists(f:definition) and exists(f:min) and exists(f:max)])"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(StructureDefinition_SDF_11);
+            InvariantConstraints.Add(StructureDefinition_SDF_5);
+            InvariantConstraints.Add(StructureDefinition_SDF_12);
+            InvariantConstraints.Add(StructureDefinition_SDF_4);
+            InvariantConstraints.Add(StructureDefinition_SDF_7);
+            InvariantConstraints.Add(StructureDefinition_SDF_6);
+            InvariantConstraints.Add(StructureDefinition_SDF_1);
+            InvariantConstraints.Add(StructureDefinition_SDF_8);
+            InvariantConstraints.Add(StructureDefinition_SDF_9);
+            InvariantConstraints.Add(StructureDefinition_SDF_10);
+            InvariantConstraints.Add(StructureDefinition_SDF_2);
+            InvariantConstraints.Add(StructureDefinition_SDF_3);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as StructureDefinition;

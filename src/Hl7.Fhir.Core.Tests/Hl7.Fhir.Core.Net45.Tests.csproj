@@ -114,6 +114,7 @@
     <Compile Include="Serialization\RoundtripTest.cs" />
     <Compile Include="Serialization\SerializationTests.cs" />
     <Compile Include="TrainingTests\Z-TrainingUnitTests.cs" />
+    <Compile Include="Validation\AllResourceInvariantsTest.cs" />
     <Compile Include="Validation\ValidatePatient.cs" />
     <Compile Include="Validation\ValidationTests.cs" />
     <Compile Include="XmlAssert.cs" />

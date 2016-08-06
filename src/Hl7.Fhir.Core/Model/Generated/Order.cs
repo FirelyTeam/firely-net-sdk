@@ -273,6 +273,13 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:code) != exists(f:schedule)"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Order_ORD_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Order;

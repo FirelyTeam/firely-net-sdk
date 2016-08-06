@@ -947,6 +947,14 @@ namespace Hl7.Fhir.Model
             Xpath = "not(f:wasNotGiven/@value=true() and (count(f:reaction) > 0 or exists(f:explanation/f:reason)))"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Immunization_IMM_2);
+            InvariantConstraints.Add(Immunization_IMM_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Immunization;

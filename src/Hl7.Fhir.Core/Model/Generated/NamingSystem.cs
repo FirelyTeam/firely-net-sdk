@@ -741,6 +741,15 @@ namespace Hl7.Fhir.Model
             Xpath = "not(f:kind/@value='root' and f:uniqueId/f:type/@value=('uuid', 'ruid'))"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(NamingSystem_NSD_2);
+            InvariantConstraints.Add(NamingSystem_NSD_3);
+            InvariantConstraints.Add(NamingSystem_NSD_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as NamingSystem;

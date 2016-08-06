@@ -985,6 +985,16 @@ namespace Hl7.Fhir.Model
             Xpath = "not(f:options and f:option)"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Questionnaire_QUE_3);
+            InvariantConstraints.Add(Questionnaire_QUE_2);
+            InvariantConstraints.Add(Questionnaire_QUE_1);
+            InvariantConstraints.Add(Questionnaire_QUE_4);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Questionnaire;

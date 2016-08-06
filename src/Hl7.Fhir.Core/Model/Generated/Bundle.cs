@@ -1198,6 +1198,19 @@ namespace Hl7.Fhir.Model
             Xpath = "(not(exists(f:fullUrl)) and not(exists(f:resource))) or (exists(f:fullUrl) and exists(f:resource))"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Bundle_BDL_2);
+            InvariantConstraints.Add(Bundle_BDL_1);
+            InvariantConstraints.Add(Bundle_BDL_7);
+            InvariantConstraints.Add(Bundle_BDL_3);
+            InvariantConstraints.Add(Bundle_BDL_4);
+            InvariantConstraints.Add(Bundle_BDL_5);
+            InvariantConstraints.Add(Bundle_BDL_6);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Bundle;

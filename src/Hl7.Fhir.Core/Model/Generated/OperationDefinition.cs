@@ -1181,6 +1181,13 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:type) or exists(f:part)"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(OperationDefinition_OPD_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as OperationDefinition;

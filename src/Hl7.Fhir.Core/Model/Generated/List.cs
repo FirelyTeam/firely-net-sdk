@@ -522,6 +522,14 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(List_LST_2);
+            InvariantConstraints.Add(List_LST_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as List;

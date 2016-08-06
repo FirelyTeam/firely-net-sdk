@@ -2443,6 +2443,22 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:system) or not(exists(f:code))"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(ValueSet_VSD_7);
+            InvariantConstraints.Add(ValueSet_VSD_5);
+            InvariantConstraints.Add(ValueSet_VSD_2);
+            InvariantConstraints.Add(ValueSet_VSD_8);
+            InvariantConstraints.Add(ValueSet_VSD_3);
+            InvariantConstraints.Add(ValueSet_VSD_1);
+            InvariantConstraints.Add(ValueSet_VSD_11);
+            InvariantConstraints.Add(ValueSet_VSD_9);
+            InvariantConstraints.Add(ValueSet_VSD_6);
+            InvariantConstraints.Add(ValueSet_VSD_10);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ValueSet;

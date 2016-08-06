@@ -53,6 +53,9 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hl7.FluentPath">
+      <HintPath>..\packages\Hl7.FluentPath.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -68,6 +71,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FluentPath\ElementNavigator.cs" />
+    <Compile Include="FluentPath\NavigatorPOCO.cs" />
     <Compile Include="Introspection\EnumUtility.cs" />
     <Compile Include="Model\IValue.cs" />
     <Compile Include="Model\Time.cs" />

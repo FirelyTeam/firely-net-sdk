@@ -367,6 +367,12 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Coding> _Error;
         
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ProcessResponse;

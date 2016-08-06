@@ -3555,6 +3555,26 @@ namespace Hl7.Fhir.Model
             Xpath = "f:sourceId or (f:targetId or f:url or (f:params and f:resource)) and (count(f:targetId) + count(f:url) + count(f:params) =1) or (f:type/f:code/@value='conformance' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(TestScript_INV_5);
+            InvariantConstraints.Add(TestScript_INV_4);
+            InvariantConstraints.Add(TestScript_INV_6);
+            InvariantConstraints.Add(TestScript_INV_1);
+            InvariantConstraints.Add(TestScript_INV_10);
+            InvariantConstraints.Add(TestScript_INV_13);
+            InvariantConstraints.Add(TestScript_INV_8);
+            InvariantConstraints.Add(TestScript_INV_7);
+            InvariantConstraints.Add(TestScript_INV_2);
+            InvariantConstraints.Add(TestScript_INV_11);
+            InvariantConstraints.Add(TestScript_INV_14);
+            InvariantConstraints.Add(TestScript_INV_9);
+            InvariantConstraints.Add(TestScript_INV_3);
+            InvariantConstraints.Add(TestScript_INV_12);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as TestScript;

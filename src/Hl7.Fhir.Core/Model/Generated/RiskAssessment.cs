@@ -416,6 +416,14 @@ namespace Hl7.Fhir.Model
             Xpath = "@value <= 100"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(RiskAssessment_RAS_1);
+            InvariantConstraints.Add(RiskAssessment_RAS_2);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as RiskAssessment;

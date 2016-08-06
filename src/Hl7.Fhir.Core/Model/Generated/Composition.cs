@@ -946,6 +946,14 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:text) or exists(f:entry) or exists(f:section)"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            InvariantConstraints.Add(Composition_CMP_2);
+            InvariantConstraints.Add(Composition_CMP_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Composition;
