@@ -153,7 +153,11 @@ namespace Hl7.Fhir.Rest
 
         internal static bool IsBinaryResponse(string responseUri, string contentType)
         {
-            if (!string.IsNullOrEmpty(contentType) && (ContentType.XML_CONTENT_HEADERS.Contains(contentType.ToLower()) || ContentType.XML_CONTENT_HEADERS.Contains(contentType.ToLower())))
+            if (!string.IsNullOrEmpty(contentType) 
+                && (ContentType.XML_CONTENT_HEADERS.Contains(contentType.ToLower()) 
+                    || ContentType.JSON_CONTENT_HEADERS.Contains(contentType.ToLower())
+                )
+                )
                 return false;
 
             if (ResourceIdentity.IsRestResourceIdentity(responseUri))
