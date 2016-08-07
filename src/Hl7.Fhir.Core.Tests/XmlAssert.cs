@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Tests
                     counter = 0;
                 }
 
-                areSame(context + "." + ex.Name.LocalName + String.Format("[{0}]", counter), ex, ac);
+                areSame(filename, context + "." + ex.Name.LocalName + String.Format("[{0}]", counter), ex, ac);
                 counter++;
             }
         }

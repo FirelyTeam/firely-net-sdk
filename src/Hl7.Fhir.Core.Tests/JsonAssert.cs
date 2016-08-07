@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Tests
             AreSame(filename, exp, act, errors);
         }
 
-        private static void areSame(string filename, JToken left, JToken right, List<string> errors)
+        private static void areSame(string filename, JToken expected, JToken actual, List<string> errors)
         {
             if ((expected.Type == JTokenType.Integer && actual.Type == JTokenType.Float) ||
                 (expected.Type == JTokenType.Float && actual.Type == JTokenType.Integer))
@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Tests
                 if (leftVal.ToString() != rightVal.ToString())
                 {
                     errors.Add(String.Format("Error comparing values in: {0}:{1}, {2} - {3}",
-                                filename, left.Path, leftVal.ToString(), rightVal.ToString()));
+                                filename, expected.Path, leftVal.ToString(), rightVal.ToString()));
                 }
                 // Assert.AreEqual(leftVal.ToString(), rightVal.ToString());
                 // Bug in json.net, will sometimes convert to integer instead of float
@@ -103,9 +103,8 @@ namespace Hl7.Fhir.Tests
                 if (lValue.TrimStart().StartsWith("<div"))
                 {
                     // Don't check the narrative, namespaces are not correctly generated in DSTU2
-
-                    //var leftDoc = SerializationUtil.XDocumentFromXmlText(lValue);
-                    //var rightDoc = SerializationUtil.XDocumentFromXmlText(rValue);
+                    var leftDoc = SerializationUtil.XDocumentFromXmlText(lValue);
+                    var rightDoc = SerializationUtil.XDocumentFromXmlText(rValue);
 
                     XmlAssert.AreSame(filename, leftDoc, rightDoc);
                 }
@@ -127,7 +126,7 @@ namespace Hl7.Fhir.Tests
                                 String.Format("Error comparing Timestamp values in: {0}, {1} - {2}",
                                 filename, lValue, rValue));
                             errors.Add(String.Format("Error comparing Timestamp values in: {0}:{1}, {2} - {3}",
-                                        filename, left.Path, lValue, rValue));
+                                        filename, expected.Path, lValue, rValue));
                         }
 
                     }
@@ -137,10 +136,10 @@ namespace Hl7.Fhir.Tests
                         {
                             System.Diagnostics.Trace.WriteLine(
                                 String.Format("Error comparing values in: {0}:{3}, {1} - {2}",
-                                filename, lValue, rValue, left.Path));
+                                filename, lValue, rValue, expected.Path));
                             // Assert.AreEqual(lValue, rValue, "Error comparing values in:" + filename);
                             errors.Add(String.Format("Error comparing values in: {0}:{1}, {2} - {3}",
-                                        filename, left.Path, lValue, rValue));
+                                        filename, expected.Path, lValue, rValue));
                         }
                     }
 
