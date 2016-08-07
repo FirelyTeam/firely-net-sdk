@@ -418,8 +418,8 @@ namespace Hl7.Fhir.Model
 
         public override void AddDefaultConstraints()
         {
-            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
-                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            base.AddDefaultConstraints();
+
             InvariantConstraints.Add(RiskAssessment_RAS_1);
             InvariantConstraints.Add(RiskAssessment_RAS_2);
         }

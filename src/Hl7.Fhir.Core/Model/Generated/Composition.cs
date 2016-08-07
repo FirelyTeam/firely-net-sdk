@@ -948,8 +948,8 @@ namespace Hl7.Fhir.Model
 
         public override void AddDefaultConstraints()
         {
-            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
-                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            base.AddDefaultConstraints();
+
             InvariantConstraints.Add(Composition_CMP_2);
             InvariantConstraints.Add(Composition_CMP_1);
         }

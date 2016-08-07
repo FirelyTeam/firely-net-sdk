@@ -72,6 +72,8 @@ namespace Hl7.Fhir.Model
 
         public virtual void AddDefaultConstraints()
         {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
         }
 
         /// <summary>
@@ -81,7 +83,7 @@ namespace Hl7.Fhir.Model
         /// <param name="model"></param>
         /// <param name="result">The OperationOutcome that will have the validation results appended</param>
         /// <returns></returns>
-        protected static bool ValidateInvariant(ElementDefinition.ConstraintComponent invariantRule, Hl7.FluentPath.IElementNavigator model, OperationOutcome result)
+        protected static bool ValidateInvariantRule(ElementDefinition.ConstraintComponent invariantRule, Hl7.FluentPath.IElementNavigator model, OperationOutcome result)
         {
             string expression = invariantRule.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
             try
@@ -98,7 +100,8 @@ namespace Hl7.Fhir.Model
                     });
                     return true;
                 }
-                if (Hl7.FluentPath.PathExpression.Predicate(expression, Hl7.FluentPath.FluentValueList.Create(model)))
+                var resourceModel = Hl7.FluentPath.FluentValueList.Create(model);
+                if (Hl7.FluentPath.PathExpression.Predicate(expression, resourceModel, resourceModel))
                     return true;
                 result.Issue.Add(new OperationOutcome.IssueComponent()
                 {
@@ -159,16 +162,50 @@ namespace Hl7.Fhir.Model
             // if (Id != null && !new Uri(Id,UriKind.RelativeOrAbsolute).IsAbsoluteUri)
             //    result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry id must be an absolute URI"));
 
-            if(Meta != null)
+            if (Meta != null)
             {
                 // if (!String.IsNullOrEmpty(this.Meta.VersionId) && !new Uri(Id,UriKind.RelativeOrAbsolute).IsAbsoluteUri)
                 //     result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry selflink must be an absolute URI"));
 
                 if (Meta.Tag != null && validationContext.ValidateRecursively())
-                    DotNetAttributeValidation.TryValidate(Meta.Tag,result,true);
+                    DotNetAttributeValidation.TryValidate(Meta.Tag, result, true);
             }
 
+            // and process all the invariants from the resource
+            ValidateInvariants(result);
+
             return result;
+        }
+
+        public void ValidateInvariants(List<ValidationResult> result)
+        {
+            OperationOutcome results = new OperationOutcome();
+            ValidateInvariants(results);
+            foreach (var item in results.Issue)
+            {
+                if (item.Severity == OperationOutcome.IssueSeverity.Error
+                    || item.Severity == OperationOutcome.IssueSeverity.Fatal)
+                    result.Add(new ValidationResult(item.Details.Coding[0].Code + ": " + item.Details.Text));
+            }
+        }
+
+        public void ValidateInvariants(OperationOutcome result)
+        {
+            if (InvariantConstraints != null && InvariantConstraints.Count > 0)
+            {
+                var sw = System.Diagnostics.Stopwatch.StartNew();
+                // Need to serialize to XML until the object model processor exists
+                // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
+                // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
+                var tree = new FluentPath.ModelNavigator(this);
+                foreach (var invariantRule in InvariantConstraints)
+                {
+                    ValidateInvariantRule(invariantRule, tree, result);
+                }
+
+                sw.Stop();
+                // System.Diagnostics.Trace.WriteLine(String.Format("Validation of {0} execution took {1}", ResourceType.ToString(), sw.Elapsed.TotalSeconds));
+            }
         }
 
         [NotMapped]

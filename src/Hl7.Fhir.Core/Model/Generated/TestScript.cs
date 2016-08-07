@@ -3557,8 +3557,8 @@ namespace Hl7.Fhir.Model
 
         public override void AddDefaultConstraints()
         {
-            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
-                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            base.AddDefaultConstraints();
+
             InvariantConstraints.Add(TestScript_INV_5);
             InvariantConstraints.Add(TestScript_INV_4);
             InvariantConstraints.Add(TestScript_INV_6);

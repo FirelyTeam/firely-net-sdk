@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent DomainResource_DOM_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("contained.all(\"#\"+id in **.reference)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("contained.where(('#'+id in %resource.descendants().reference).not()).empty()"))},
             Key = "dom-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
@@ -147,8 +147,8 @@ namespace Hl7.Fhir.Model
 
         public override void AddDefaultConstraints()
         {
-            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
-                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+            base.AddDefaultConstraints();
+
             InvariantConstraints.Add(DomainResource_DOM_4);
             InvariantConstraints.Add(DomainResource_DOM_3);
             InvariantConstraints.Add(DomainResource_DOM_2);

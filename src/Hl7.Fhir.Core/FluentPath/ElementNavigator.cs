@@ -79,7 +79,7 @@ namespace Hl7.Fhir.FluentPath
                 if (_string != null) return _string;
 
                 if (_pocoElement is FhirDateTime)
-                    return ((FhirDateTime)_pocoElement).ToDateTimeOffset();
+                    return Hl7.FluentPath.PartialDateTime.FromDateTime(((FhirDateTime)_pocoElement).ToDateTimeOffset());
                 else if (_pocoElement is Hl7.Fhir.Model.Time)
                     return Hl7.FluentPath.Time.Parse(((Hl7.Fhir.Model.Time)_pocoElement).Value);
                 else if ((_pocoElement is Hl7.Fhir.Model.Date))

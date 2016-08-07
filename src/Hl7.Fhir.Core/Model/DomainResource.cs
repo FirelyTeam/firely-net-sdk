@@ -54,30 +54,6 @@ namespace Hl7.Fhir.Model
                     result.Add(new ValidationResult("Resource has contained resources with nested contained resources"));
             }
 
-            // and process all the invariants from the resource
-            if (InvariantConstraints != null && InvariantConstraints.Count > 0)
-            {
-                var sw = System.Diagnostics.Stopwatch.StartNew();
-                // Need to serialize to XML until the object model processor exists
-                // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
-                // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
-                var tree = new FluentPath.ModelNavigator(this);
-                OperationOutcome results = new OperationOutcome();
-                foreach (var invariantRule in InvariantConstraints)
-                {
-                    ValidateInvariant(invariantRule, tree, results);
-                }
-                foreach (var item in results.Issue)
-                {
-                    if (item.Severity == OperationOutcome.IssueSeverity.Error
-                        || item.Severity == OperationOutcome.IssueSeverity.Fatal)
-                        result.Add(new ValidationResult(item.Details.Coding[0].Code + ": " + item.Details.Text));
-                }
-
-                sw.Stop();
-                System.Diagnostics.Trace.WriteLine(String.Format("Validation of {0} execution took {1}", ResourceType.ToString(), sw.Elapsed.TotalSeconds));
-            }
-
             return result;
         }
     }

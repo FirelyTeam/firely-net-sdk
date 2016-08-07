@@ -1213,7 +1213,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_11 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("constrainedType.empty() or snapshot.empty() or snapshot.element.first().path = constrainedType"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("constrainedType.empty() or (snapshot.element.first().path = constrainedType)"))},
             Key = "sdf-11",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If there's a constrained type, its content must match the path name in the first element of a snapshot",
@@ -1321,9 +1321,9 @@ namespace Hl7.Fhir.Model
 
         public override void AddDefaultConstraints()
         {
-            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
-                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
-            InvariantConstraints.Add(StructureDefinition_SDF_11);
+            base.AddDefaultConstraints();
+
+            // InvariantConstraints.Add(StructureDefinition_SDF_11);
             InvariantConstraints.Add(StructureDefinition_SDF_5);
             InvariantConstraints.Add(StructureDefinition_SDF_12);
             InvariantConstraints.Add(StructureDefinition_SDF_4);
