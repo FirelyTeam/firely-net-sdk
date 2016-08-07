@@ -235,10 +235,10 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestFhirTypeToFhirTypeName()
         {
-            var enumValues = Enum.GetValues(typeof(FHIRDefinedType));
+            var enumValues = Enum.GetValues(typeof(FHIRAllTypes));
             for (int i = 0; i < enumValues.Length; i++)
             {
-                var type = (FHIRDefinedType)i;
+                var type = (FHIRAllTypes)i;
                 var typeName = ModelInfo.FhirTypeToFhirTypeName(type);
                 var type2 = ModelInfo.FhirTypeNameToFhirType(typeName);
                 Assert.IsTrue(type2.HasValue);

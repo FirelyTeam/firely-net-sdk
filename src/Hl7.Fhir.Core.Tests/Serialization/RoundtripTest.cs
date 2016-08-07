@@ -38,14 +38,14 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var t = new FhirXmlParser().Parse<TestScript>(original);
             var outputXml = FhirSerializer.SerializeResourceToXml(t);
-            XmlAssert.AreSame(original, outputXml);
+            XmlAssert.AreSame(exampleXml, original, outputXml);
 
             var outputJson = FhirSerializer.SerializeResourceToJson(t);
             var t2 = new FhirJsonParser().Parse<TestScript>(outputJson);
 //            Assert.IsTrue(t.IsExactly(t2));
 
             var outputXml2 = FhirSerializer.SerializeResourceToXml(t2);
-            XmlAssert.AreSame(original, outputXml2);
+            XmlAssert.AreSame(exampleXml, original, outputXml2);
         }
         [TestMethod]
         [TestCategory("LongRunner")]
