@@ -2382,7 +2382,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_8 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("concept.code*.distinct()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("descendants().concept.code.isDistinct()"))},
             Key = "vsd-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Codes must be unique",
@@ -2391,7 +2391,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("concept.code*.distinct()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("descendants().concept.code.isDistinct()"))},
             Key = "vsd-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Within a code system definition, all the codes SHALL be unique",

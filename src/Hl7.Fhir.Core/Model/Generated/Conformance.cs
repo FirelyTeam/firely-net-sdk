@@ -3652,7 +3652,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Conformance_CNF_7 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("document.select(profile|mode).distinct()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("document.select(profile|mode).isDistinct()"))},
             Key = "cnf-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "The set of documents must be unique by the combination of profile & mode",
@@ -3661,7 +3661,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Conformance_CNF_8 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("rest.select(mode).distinct()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("rest.select(mode).isDistinct()"))},
             Key = "cnf-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "There can only be one REST declaration per mode",
@@ -3670,7 +3670,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Conformance_CNF_9 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("resource.select(type).distinct()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("resource.select(type).isDistinct()"))},
             Key = "cnf-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A given resource can only be described once per RESTful mode",
@@ -3679,7 +3679,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Conformance_CNF_12 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("searchParam.select(name).distinct()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("searchParam.select(name).isDistinct()"))},
             Key = "cnf-12",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Search parameter names must be unique in the context of a resource",

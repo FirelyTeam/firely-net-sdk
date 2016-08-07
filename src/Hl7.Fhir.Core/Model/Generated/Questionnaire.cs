@@ -960,7 +960,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("**.linkId.distinct()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("descendants().linkId.isDistinct()"))},
             Key = "que-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "The link ids for groups and questions must be unique within the questionnaire",

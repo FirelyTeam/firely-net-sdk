@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Observation_OBS_7 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("component.where(code = $context.code).empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("component.where(code = %context.code).empty()"))},
             Key = "obs-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Component code SHALL not be same as observation code",

@@ -1155,7 +1155,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_7 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("entry.where(fullUrl).select(fullUrl|resource.meta.versionId).distinct()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("entry.where(fullUrl).select(fullUrl|resource.meta.versionId).isDistinct()"))},
             Key = "bdl-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId",
