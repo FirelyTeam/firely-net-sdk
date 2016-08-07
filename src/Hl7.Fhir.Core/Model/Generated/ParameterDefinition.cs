@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
             get { return NameElement != null ? NameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.Code(value);
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
             get { return UseElement != null ? UseElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   UseElement = null; 
                 else
                   UseElement = new Code<Hl7.Fhir.Model.OperationParameterUse>(value);
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
             get { return MinElement != null ? MinElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   MinElement = null; 
                 else
                   MinElement = new Hl7.Fhir.Model.Integer(value);
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
             get { return MaxElement != null ? MaxElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   MaxElement = null; 
                 else
                   MaxElement = new Hl7.Fhir.Model.FhirString(value);
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
             get { return DocumentationElement != null ? DocumentationElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DocumentationElement = null; 
                 else
                   DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   TypeElement = null; 
                 else
                   TypeElement = new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
@@ -259,6 +259,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _Profile;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ParameterDefinition;
@@ -317,7 +318,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }

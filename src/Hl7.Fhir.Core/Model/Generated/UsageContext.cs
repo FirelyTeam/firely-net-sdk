@@ -163,6 +163,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.CodeableConcept> _Jurisdiction;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as UsageContext;
@@ -224,7 +225,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }

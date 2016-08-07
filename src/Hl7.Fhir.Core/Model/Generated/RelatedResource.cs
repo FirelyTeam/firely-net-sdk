@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   TypeElement = null; 
                 else
                   TypeElement = new Code<Hl7.Fhir.Model.RelatedResource.RelatedResourceType>(value);
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
             get { return DisplayElement != null ? DisplayElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DisplayElement = null; 
                 else
                   DisplayElement = new Hl7.Fhir.Model.FhirString(value);
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
             get { return CitationElement != null ? CitationElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CitationElement = null; 
                 else
                   CitationElement = new Hl7.Fhir.Model.FhirString(value);
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
             get { return UrlElement != null ? UrlElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UrlElement = null; 
                 else
                   UrlElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -264,6 +264,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _Resource;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as RelatedResource;
@@ -319,7 +320,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }

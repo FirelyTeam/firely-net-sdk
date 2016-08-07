@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   TypeElement = null; 
                 else
                   TypeElement = new Code<Hl7.Fhir.Model.Contributor.ContributorType>(value);
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
             get { return NameElement != null ? NameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -164,6 +164,7 @@ namespace Hl7.Fhir.Model
         
         private List<ContactDetail> _Contact;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Contributor;
@@ -210,7 +211,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }

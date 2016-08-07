@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
                 get { return PathElement != null ? PathElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                    if (value == null)
                       PathElement = null; 
                     else
                       PathElement = new Hl7.Fhir.Model.FhirString(value);
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
                 get { return ValueCodeElement != null ? ValueCodeElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
+                    if (value == null)
                       ValueCodeElement = null; 
                     else
                       ValueCodeElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem=>new Hl7.Fhir.Model.Code(elem)));
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
                 get { return PathElement != null ? PathElement.Value : null; }
                 set
                 {
-                    if(value == null)
+                    if (value == null)
                       PathElement = null; 
                     else
                       PathElement = new Hl7.Fhir.Model.FhirString(value);
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   TypeElement = null; 
                 else
                   TypeElement = new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
             get { return MustSupportElement != null ? MustSupportElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   MustSupportElement = null; 
                 else
                   MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -432,6 +432,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent> _DateFilter;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DataRequirement;
@@ -484,7 +485,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }
