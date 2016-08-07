@@ -474,9 +474,54 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> _Condition;
         
 
+        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "age.exists() or estimatedAge.empty()",
+            Key = "fhs-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Can only have estimatedAge is age[x] is present",
+            Xpath = "exists(*[starts-with(local-name(.), 'age')]) or not(exists(f:estimatedAge))"
+        };
+
         public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("age[x].empty() or born[x].empty()"))},
+            Expression = "age.empty() or born.empty()",
             Key = "fhs-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Can have age[x] or born[x], but not both",

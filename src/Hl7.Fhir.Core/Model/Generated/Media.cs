@@ -356,9 +356,45 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Attachment _Content;
         
 
+        public static ElementDefinition.ConstraintComponent Media_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Media_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Media_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Media_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
         public static ElementDefinition.ConstraintComponent Media_MDA_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("height.empty() or type != 'audio'"))},
+            Expression = "height.empty() or type != 'audio'",
             Key = "mda-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Height can only be used for a photo or video",
@@ -367,29 +403,29 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Media_MDA_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("width.empty() or type != 'audio'"))},
+            Expression = "width.empty() or type != 'audio'",
             Key = "mda-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Width can only be used for a photo or video",
             Xpath = "not(f:type/@value='audio') or not(f:width)"
         };
 
-        public static ElementDefinition.ConstraintComponent Media_MDA_4 = new ElementDefinition.ConstraintComponent()
-        {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("duration.empty() or type != 'photo'"))},
-            Key = "mda-4",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Duration can only be used for an audio or a video",
-            Xpath = "not(f:type/@value='photo') or not(f:duration)"
-        };
-
         public static ElementDefinition.ConstraintComponent Media_MDA_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("frames.empty() or type = 'photo'"))},
+            Expression = "frames.empty() or type = 'photo'",
             Key = "mda-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Frames can only be used for a photo",
             Xpath = "(f:type/@value='photo') or not(f:frames)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Media_MDA_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "duration.empty() or type != 'photo'",
+            Key = "mda-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Duration can only be used for an audio or a video",
+            Xpath = "not(f:type/@value='photo') or not(f:duration)"
         };
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)

@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       IdentityElement = null; 
                     else
-                      IdentityElement = new Hl7.Fhir.Model.Id(value);
+                        IdentityElement = new Hl7.Fhir.Model.Id(value);
                     OnPropertyChanged("Identity");
                 }
             }
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       UriElement = null; 
                     else
-                      UriElement = new Hl7.Fhir.Model.FhirUri(value);
+                        UriElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Uri");
                 }
             }
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       CommentElement = null; 
                     else
-                      CommentElement = new Hl7.Fhir.Model.FhirString(value);
+                        CommentElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Comment");
                 }
             }
@@ -746,6 +746,61 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ElementDefinition> _Element;
         
+
+        public static ElementDefinition.ConstraintComponent DataElement_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent DataElement_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent DataElement_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent DataElement_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent DataElement_DAE_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "base.empty()",
+            Key = "dae-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "No base allowed",
+            Xpath = "not(exists(f:base))"
+        };
+
+        public static ElementDefinition.ConstraintComponent DataElement_DAE_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "slicing.empty()",
+            Key = "dae-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "No slicing allowed",
+            Xpath = "not(exists(f:slicing))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DataElement;

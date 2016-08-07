@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       ImportElement = null; 
                     else
-                      ImportElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                        ImportElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
                     OnPropertyChanged("Import");
                 }
             }
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       SystemElement = null; 
                     else
-                      SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                        SystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("System");
                 }
             }
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       VersionElement = null; 
                     else
-                      VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                        VersionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Version");
                 }
             }
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       CodeElement = null; 
                     else
-                      CodeElement = new Hl7.Fhir.Model.Code(value);
+                        CodeElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DisplayElement = null; 
                     else
-                      DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+                        DisplayElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Display");
                 }
             }
@@ -594,7 +594,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       LanguageElement = null; 
                     else
-                      LanguageElement = new Hl7.Fhir.Model.Code(value);
+                        LanguageElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Language");
                 }
             }
@@ -640,7 +640,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       ValueElement = null; 
                     else
-                      ValueElement = new Hl7.Fhir.Model.FhirString(value);
+                        ValueElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Value");
                 }
             }
@@ -730,7 +730,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       PropertyElement = null; 
                     else
-                      PropertyElement = new Hl7.Fhir.Model.Code(value);
+                        PropertyElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Property");
                 }
             }
@@ -763,7 +763,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       OpElement = null; 
                     else
-                      OpElement = new Code<Hl7.Fhir.Model.FilterOperator>(value);
+                        OpElement = new Code<Hl7.Fhir.Model.FilterOperator>(value);
                     OnPropertyChanged("Op");
                 }
             }
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       ValueElement = null; 
                     else
-                      ValueElement = new Hl7.Fhir.Model.Code(value);
+                        ValueElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Value");
                 }
             }
@@ -886,7 +886,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       IdentifierElement = null; 
                     else
-                      IdentifierElement = new Hl7.Fhir.Model.FhirUri(value);
+                        IdentifierElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Identifier");
                 }
             }
@@ -919,7 +919,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       TimestampElement = null; 
                     else
-                      TimestampElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        TimestampElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Timestamp");
                 }
             }
@@ -951,7 +951,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       TotalElement = null; 
                     else
-                      TotalElement = new Hl7.Fhir.Model.Integer(value);
+                        TotalElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("Total");
                 }
             }
@@ -983,7 +983,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       OffsetElement = null; 
                     else
-                      OffsetElement = new Hl7.Fhir.Model.Integer(value);
+                        OffsetElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("Offset");
                 }
             }
@@ -1110,7 +1110,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -1210,7 +1210,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       SystemElement = null; 
                     else
-                      SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                        SystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("System");
                 }
             }
@@ -1242,7 +1242,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       AbstractElement = null; 
                     else
-                      AbstractElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        AbstractElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Abstract");
                 }
             }
@@ -1274,7 +1274,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       VersionElement = null; 
                     else
-                      VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                        VersionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Version");
                 }
             }
@@ -1306,7 +1306,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       CodeElement = null; 
                     else
-                      CodeElement = new Hl7.Fhir.Model.Code(value);
+                        CodeElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -1338,7 +1338,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DisplayElement = null; 
                     else
-                      DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+                        DisplayElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Display");
                 }
             }
@@ -1863,6 +1863,106 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ValueSet.ExpansionComponent _Expansion;
         
+
+        public static ElementDefinition.ConstraintComponent ValueSet_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ValueSet_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ValueSet_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent ValueSet_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent ValueSet_VSD_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "compose.import.count() != 1 or compose.include.exists() or compose.exclude.exists()",
+            Key = "vsd-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A value set with only one import SHALL also have an include and/or an exclude",
+            Xpath = "not(exists(f:compose)) or (count(f:compose/f:import)!=1 or exists(f:compose/f:include) or exists(f:compose/f:exclude))"
+        };
+
+        public static ElementDefinition.ConstraintComponent ValueSet_VSD_5 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "compose.exists() or expansion.exists()",
+            Key = "vsd-5",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Value set SHALL contain at least one of a a compose, or an expansion element",
+            Xpath = "exists(f:compose) or exists(f:expansion)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ValueSet_VSD_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "include.exists() or import.exists()",
+            Key = "vsd-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A value set composition SHALL have an include or an import",
+            Xpath = "exists(f:include) or exists(f:import)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ValueSet_VSD_11 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "concept.empty() or filter.empty()",
+            Key = "vsd-11",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Cannot have both concept and filter",
+            Xpath = "not(exists(f:concept)) or not(exists(f:filter))"
+        };
+
+        public static ElementDefinition.ConstraintComponent ValueSet_VSD_6 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "code.exists() or display.exists()",
+            Key = "vsd-6",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "SHALL have a code or a display",
+            Xpath = "exists(f:code) or exists(f:display)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ValueSet_VSD_9 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "code.exists() or abstract = true",
+            Key = "vsd-9",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Must have a code if not abstract",
+            Xpath = "exists(f:code) or (f:abstract/@value = true())"
+        };
+
+        public static ElementDefinition.ConstraintComponent ValueSet_VSD_10 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "code.empty() or system.exists()",
+            Key = "vsd-10",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Must have a system if a code is present",
+            Xpath = "exists(f:system) or not(exists(f:code))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ValueSet;

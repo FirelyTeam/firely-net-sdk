@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       CodeElement = null; 
                     else
-                      CodeElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanRelationship>(value);
+                        CodeElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanRelationship>(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       StatusElement = null; 
                     else
-                      StatusElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>(value);
+                        StatusElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>(value);
                     OnPropertyChanged("Status");
                 }
             }
@@ -561,7 +561,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       ProhibitedElement = null; 
                     else
-                      ProhibitedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        ProhibitedElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Prohibited");
                 }
             }
@@ -676,7 +676,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -1051,6 +1051,52 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Annotation _Note;
         
+
+        public static ElementDefinition.ConstraintComponent CarePlan_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent CarePlan_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent CarePlan_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent CarePlan_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent CarePlan_CTM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "detail.empty() or reference.empty()",
+            Key = "ctm-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Provide a reference or detail, not both",
+            Xpath = "not(exists(f:detail)) or not(exists(f:reference))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CarePlan;

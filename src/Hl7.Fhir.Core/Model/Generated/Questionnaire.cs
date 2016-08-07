@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       LinkIdElement = null; 
                     else
-                      LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
+                        LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("LinkId");
                 }
             }
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       PrefixElement = null; 
                     else
-                      PrefixElement = new Hl7.Fhir.Model.FhirString(value);
+                        PrefixElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Prefix");
                 }
             }
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       RequiredElement = null; 
                     else
-                      RequiredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        RequiredElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Required");
                 }
             }
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       RepeatsElement = null; 
                     else
-                      RepeatsElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        RepeatsElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Repeats");
                 }
             }
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       ReadOnlyElement = null; 
                     else
-                      ReadOnlyElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        ReadOnlyElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("ReadOnly");
                 }
             }
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       MaxLengthElement = null; 
                     else
-                      MaxLengthElement = new Hl7.Fhir.Model.Integer(value);
+                        MaxLengthElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("MaxLength");
                 }
             }
@@ -663,7 +663,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       QuestionElement = null; 
                     else
-                      QuestionElement = new Hl7.Fhir.Model.FhirString(value);
+                        QuestionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Question");
                 }
             }
@@ -695,7 +695,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       HasAnswerElement = null; 
                     else
-                      HasAnswerElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        HasAnswerElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("HasAnswer");
                 }
             }
@@ -1126,6 +1126,133 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Questionnaire.ItemComponent> _Item;
         
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "descendents().linkId.isDistinct()",
+            Key = "que-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "The link ids for groups and questions must be unique within the questionnaire",
+            Xpath = "count(descendant::f:linkId/@value)=count(distinct-values(descendant::f:linkId/@value))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_9 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "type!='display' or readOnly.empty()",
+            Key = "que-9",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Read-only can't be specified for \"display\" items",
+            Xpath = "not(f:type/@value='display' and f:readOnly)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_8 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "(type!='group' and type!='display') or initial.empty()",
+            Key = "que-8",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Default values can't be specified for groups or display items",
+            Xpath = "not(f:type/@value=('group', 'display') and f:*[starts-with(local-name(.), 'initial')])"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_6 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "type!='display' or (required.empty() and repeats.empty())",
+            Key = "que-6",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Required and repeat aren't permitted for display items",
+            Xpath = "not(f:type/@value='display' and (f:required or f:repeats))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_5 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "(type ='choice' or type = 'open-choice') or (options.empty() and option.empty())",
+            Key = "que-5",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Only 'choice' items can have options",
+            Xpath = "f:type/@value=('choice','open-choice') or not(f:option or f:options)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "option.empty() or options.empty()",
+            Key = "que-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A question cannot have both option and options",
+            Xpath = "not(f:options and f:option)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "type!='display' or concept.empty()",
+            Key = "que-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Display items cannot have a \"concept\" asserted",
+            Xpath = "not(f:type/@value='display' and f:concept)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_10 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "(type in ('boolean' | 'decimal' | 'integer' | 'string' | 'text' | 'url')) or maxLength.empty()",
+            Key = "que-10",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Maximum length can only be declared for simple question types",
+            Xpath = "f:type/@value=('boolean', 'decimal', 'integer', 'open-choice', 'string', 'text', 'url') or not(f:maxLength)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "(type='group' implies item.empty().not()) and (type.trace('type')='display' implies item.trace('item').empty())",
+            Key = "que-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Group items must have nested items, display items cannot have nested items",
+            Xpath = "not((f:type/@value='group' and not(f:item)) or (f:type/@value='display' and f:item))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Questionnaire_QUE_7 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "hasAnswer.exists() xor answer.exists()",
+            Key = "que-7",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "enableWhen must contain either an 'answer' or an 'answered' element",
+            Xpath = "count(*[starts-with(local-name(.), 'answer')]|answered) = 1"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Questionnaire;

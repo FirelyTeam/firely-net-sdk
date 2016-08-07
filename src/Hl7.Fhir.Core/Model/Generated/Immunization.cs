@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DateElement = null; 
                     else
-                      DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Date");
                 }
             }
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       ReportedElement = null; 
                     else
-                      ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Reported");
                 }
             }
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       DoseSequenceElement = null; 
                     else
-                      DoseSequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        DoseSequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("DoseSequence");
                 }
             }
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       SeriesElement = null; 
                     else
-                      SeriesElement = new Hl7.Fhir.Model.FhirString(value);
+                        SeriesElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Series");
                 }
             }
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       SeriesDosesElement = null; 
                     else
-                      SeriesDosesElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        SeriesDosesElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("SeriesDoses");
                 }
             }
@@ -927,6 +927,61 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Immunization.VaccinationProtocolComponent> _VaccinationProtocol;
         
+
+        public static ElementDefinition.ConstraintComponent Immunization_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Immunization_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Immunization_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Immunization_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Immunization_IMM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "(wasNotGiven = true) or explanation.reasonNotGiven.empty()",
+            Key = "imm-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If immunization was administered (wasNotGiven=false) then explanation.reasonNotGiven SHALL be absent.",
+            Xpath = "not(f:wasNotGiven/@value=false() and exists(f:explanation/f:reasonNotGiven))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Immunization_IMM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "(wasNotGiven = true).not() or (reaction.empty() and explanation.reason.empty())",
+            Key = "imm-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If immunization was not administered (wasNotGiven=true) then there SHALL be no reaction nor explanation.reason present",
+            Xpath = "not(f:wasNotGiven/@value=true() and (count(f:reaction) > 0 or exists(f:explanation/f:reason)))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Immunization;

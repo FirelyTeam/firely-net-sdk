@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       AltIdElement = null; 
                     else
-                      AltIdElement = new Hl7.Fhir.Model.FhirString(value);
+                        AltIdElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("AltId");
                 }
             }
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       RequestorElement = null; 
                     else
-                      RequestorElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        RequestorElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Requestor");
                 }
             }
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       PolicyElement = null; 
                     else
-                      PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
+                        PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
                     OnPropertyChanged("Policy");
                 }
             }
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       AddressElement = null; 
                     else
-                      AddressElement = new Hl7.Fhir.Model.FhirString(value);
+                        AddressElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Address");
                 }
             }
@@ -536,7 +536,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       SiteElement = null; 
                     else
-                      SiteElement = new Hl7.Fhir.Model.FhirString(value);
+                        SiteElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Site");
                 }
             }
@@ -819,7 +819,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -851,7 +851,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       QueryElement = null; 
                     else
-                      QueryElement = new Hl7.Fhir.Model.Base64Binary(value);
+                        QueryElement = new Hl7.Fhir.Model.Base64Binary(value);
                     OnPropertyChanged("Query");
                 }
             }
@@ -1008,7 +1008,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       TypeElement = null; 
                     else
-                      TypeElement = new Hl7.Fhir.Model.FhirString(value);
+                        TypeElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -1041,7 +1041,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       ValueElement = null; 
                     else
-                      ValueElement = new Hl7.Fhir.Model.Base64Binary(value);
+                        ValueElement = new Hl7.Fhir.Model.Base64Binary(value);
                     OnPropertyChanged("Value");
                 }
             }
@@ -1306,6 +1306,52 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.AuditEvent.EntityComponent> _Entity;
         
+
+        public static ElementDefinition.ConstraintComponent AuditEvent_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent AuditEvent_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent AuditEvent_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent AuditEvent_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent AuditEvent_SEV_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "name.empty() or query.empty()",
+            Key = "sev-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Either a name or a query (NOT both)",
+            Xpath = "not(exists(f:name)) or not(exists(f:query))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AuditEvent;

@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       ValueElement = null; 
                     else
-                      ValueElement = new Hl7.Fhir.Model.FhirString(value);
+                        ValueElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Value");
                 }
             }
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       PreferredElement = null; 
                     else
-                      PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Preferred");
                 }
             }
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       CommentElement = null; 
                     else
-                      CommentElement = new Hl7.Fhir.Model.FhirString(value);
+                        CommentElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Comment");
                 }
             }
@@ -729,6 +729,70 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _ReplacedBy;
         
+
+        public static ElementDefinition.ConstraintComponent NamingSystem_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent NamingSystem_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent NamingSystem_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent NamingSystem_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "kind != 'root' or uniqueId.type = 'uuid'",
+            Key = "nsd-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Root systems cannot have uuid identifiers",
+            Xpath = "not(f:kind/@value='root' and f:uniqueId/f:type/@value='uuid')"
+        };
+
+        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "replacedBy.empty() or status = 'retired'",
+            Key = "nsd-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Can only have replacedBy if naming system is retired",
+            Xpath = "not(f:replacedBy) or f:status/@value='retired'"
+        };
+
+        public static ElementDefinition.ConstraintComponent NamingSystem_NSD_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "uniqueId.where(preferred = true).select(type).isDistinct()",
+            Key = "nsd-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Can't have more than one preferred identifier for a type",
+            Xpath = "not(exists(for $type in distinct-values(f:uniqueId/f:type/@value) return if (count(f:uniqueId[f:type/@value=$type and f:preferred/@value=true()])>1) then $type else ()))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as NamingSystem;

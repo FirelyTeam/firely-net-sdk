@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.Code(value);
+                        NameElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       UseElement = null; 
                     else
-                      UseElement = new Code<Hl7.Fhir.Model.OperationParameterUse>(value);
+                        UseElement = new Code<Hl7.Fhir.Model.OperationParameterUse>(value);
                     OnPropertyChanged("Use");
                 }
             }
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       MinElement = null; 
                     else
-                      MinElement = new Hl7.Fhir.Model.Integer(value);
+                        MinElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("Min");
                 }
             }
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       MaxElement = null; 
                     else
-                      MaxElement = new Hl7.Fhir.Model.FhirString(value);
+                        MaxElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Max");
                 }
             }
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DocumentationElement = null; 
                     else
-                      DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
+                        DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Documentation");
                 }
             }
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       SearchTypeElement = null; 
                     else
-                      SearchTypeElement = new Code<Hl7.Fhir.Model.SearchParamType>(value);
+                        SearchTypeElement = new Code<Hl7.Fhir.Model.SearchParamType>(value);
                     OnPropertyChanged("SearchType");
                 }
             }
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       StrengthElement = null; 
                     else
-                      StrengthElement = new Code<Hl7.Fhir.Model.BindingStrength>(value);
+                        StrengthElement = new Code<Hl7.Fhir.Model.BindingStrength>(value);
                     OnPropertyChanged("Strength");
                 }
             }
@@ -1160,6 +1160,61 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> _Parameter;
         
+
+        public static ElementDefinition.ConstraintComponent OperationDefinition_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent OperationDefinition_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent OperationDefinition_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent OperationDefinition_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "type.exists() or part.exists()",
+            Key = "opd-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Either a type must be provided, or parts",
+            Xpath = "exists(f:type) or exists(f:part)"
+        };
+
+        public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "searchType implies type = 'string'",
+            Key = "opd-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A search type can only be specified for parameters of type string",
+            Xpath = "not(exists(f:searchType)) or (f:type/@value = 'string')"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as OperationDefinition;

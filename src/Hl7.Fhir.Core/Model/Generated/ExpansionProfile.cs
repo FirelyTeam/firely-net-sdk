@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       SystemElement = null; 
                     else
-                      SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                        SystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("System");
                 }
             }
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       VersionElement = null; 
                     else
-                      VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                        VersionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Version");
                 }
             }
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       SystemElement = null; 
                     else
-                      SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+                        SystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("System");
                 }
             }
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       VersionElement = null; 
                     else
-                      VersionElement = new Hl7.Fhir.Model.FhirString(value);
+                        VersionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Version");
                 }
             }
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       LanguageElement = null; 
                     else
-                      LanguageElement = new Hl7.Fhir.Model.Code(value);
+                        LanguageElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Language");
                 }
             }
@@ -944,7 +944,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       LanguageElement = null; 
                     else
-                      LanguageElement = new Hl7.Fhir.Model.Code(value);
+                        LanguageElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Language");
                 }
             }
@@ -1556,6 +1556,79 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
+        public static ElementDefinition.ConstraintComponent ExpansionProfile_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ExpansionProfile_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ExpansionProfile_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent ExpansionProfile_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent ExpansionProfile_EXP_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "include.empty() or exclude.empty()",
+            Key = "exp-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "SHALL NOT have include and exclude",
+            Xpath = "not(exists(f:include)) or not(exists(f:exclude))"
+        };
+
+        public static ElementDefinition.ConstraintComponent ExpansionProfile_EXP_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "include.empty() or exclude.empty()",
+            Key = "exp-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "SHALL NOT have include and exclude",
+            Xpath = "not(exists(f:include)) or not(exists(f:exclude))"
+        };
+
+        public static ElementDefinition.ConstraintComponent ExpansionProfile_EXP_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "language.empty().not() or use.empty().not()",
+            Key = "exp-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "SHALL have at least one of language or use",
+            Xpath = "exists(f:language) or exists(f:use)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ExpansionProfile_EXP_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "language.empty().not() or use.empty().not()",
+            Key = "exp-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "SHALL have at least one of language or use",
+            Xpath = "exists(f:language) or exists(f:use)"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ExpansionProfile;

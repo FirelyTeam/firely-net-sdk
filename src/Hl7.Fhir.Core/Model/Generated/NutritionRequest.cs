@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       InstructionElement = null; 
                     else
-                      InstructionElement = new Hl7.Fhir.Model.FhirString(value);
+                        InstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Instruction");
                 }
             }
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       ProductNameElement = null; 
                     else
-                      ProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+                        ProductNameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("ProductName");
                 }
             }
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       InstructionElement = null; 
                     else
-                      InstructionElement = new Hl7.Fhir.Model.FhirString(value);
+                        InstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Instruction");
                 }
             }
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       BaseFormulaProductNameElement = null; 
                     else
-                      BaseFormulaProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+                        BaseFormulaProductNameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("BaseFormulaProductName");
                 }
             }
@@ -703,7 +703,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       AdditiveProductNameElement = null; 
                     else
-                      AdditiveProductNameElement = new Hl7.Fhir.Model.FhirString(value);
+                        AdditiveProductNameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("AdditiveProductName");
                 }
             }
@@ -788,7 +788,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       AdministrationInstructionElement = null; 
                     else
-                      AdministrationInstructionElement = new Hl7.Fhir.Model.FhirString(value);
+                        AdministrationInstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("AdministrationInstruction");
                 }
             }
@@ -1163,6 +1163,52 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.NutritionRequest.EnteralFormulaComponent _EnteralFormula;
         
+
+        public static ElementDefinition.ConstraintComponent NutritionRequest_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent NutritionRequest_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent NutritionRequest_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent NutritionRequest_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent NutritionRequest_NOR_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "oralDiet.exists() or supplement.exists() or enteralFormula.exists()",
+            Key = "nor-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Nutrition Order SHALL contain either Oral Diet , Supplement, or Enteral Formula class",
+            Xpath = "exists(f:oralDiet) or exists(f:supplement) or exists(f:enteralFormula)"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as NutritionRequest;

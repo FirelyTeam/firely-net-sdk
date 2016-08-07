@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       GenderElement = null; 
                     else
-                      GenderElement = new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
+                        GenderElement = new Code<Hl7.Fhir.Model.AdministrativeGender>(value);
                     OnPropertyChanged("Gender");
                 }
             }
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       PreferredElement = null; 
                     else
-                      PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        PreferredElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Preferred");
                 }
             }
@@ -509,7 +509,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -852,6 +852,52 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Patient.LinkComponent> _Link;
         
+
+        public static ElementDefinition.ConstraintComponent Patient_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Patient_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Patient_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Patient_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Patient_PAT_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "name.exists() or telecom.exists() or address.exists() or organization.exists()",
+            Key = "pat-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "SHALL at least contain a contact's details or a reference to an organization",
+            Xpath = "exists(f:name) or exists(f:telecom) or exists(f:address) or exists(f:organization)"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Patient;

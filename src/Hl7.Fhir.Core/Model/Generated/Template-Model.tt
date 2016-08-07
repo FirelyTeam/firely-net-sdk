@@ -498,19 +498,19 @@ if(!abstractType) {
         }
     }
 
-#><# if (resourceName != "DomainResource") { #>
+#><# if (true) { #>
 
 <#
             foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", nsR))
             {
-                string expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value", nsR).Value;
+                string expression = node.SelectSingleNode("fhir:expression/@value", nsR).Value;
                 string key = node.SelectSingleNode("fhir:key/@value", nsR).Value;
                 string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
                 string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
                 string xpath = node.SelectSingleNode("fhir:xpath/@value", nsR).Value;
 #>        public static ElementDefinition.ConstraintComponent <#= resourceName + "_" + key.Replace("-", "_").ToUpper() #> = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("<#= expression.Replace("\"", "\\\"") #>"))},
+            Expression = "<#= expression.Replace("\"", "\\\"") #>",
             Key = "<#= key #>",
             Severity = <#= severity == "Error" ? "ElementDefinition.ConstraintSeverity.Error" : "ElementDefinition.ConstraintSeverity.Warning" #>,
             Human = "<#= human.Replace("\"", "\\\"") #>",

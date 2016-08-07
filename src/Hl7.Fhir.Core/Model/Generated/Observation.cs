@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -810,6 +810,70 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Observation.ComponentComponent> _Component;
         
+
+        public static ElementDefinition.ConstraintComponent Observation_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Observation_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Observation_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Observation_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Observation_OBS_7 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "value.empty() or code!=component.code",
+            Key = "obs-7",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If code is the same as a component code then the value element associated with the code SHALL NOT be present",
+            Xpath = "not(exists(f:value)) or not(count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Observation_OBS_6 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "dataAbsentReason.empty() or value.empty()",
+            Key = "obs-6",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "dataAbsentReason SHALL only be present if Observation.value[x] is not present",
+            Xpath = "not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), 'value')])))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Observation_OBS_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "low.exists() or high.exists() or text.exists()",
+            Key = "obs-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Must have at least a low or a high or text",
+            Xpath = "(exists(f:low) or exists(f:high)or exists(f:text))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Observation;

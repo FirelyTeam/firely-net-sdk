@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       IdentityElement = null; 
                     else
-                      IdentityElement = new Hl7.Fhir.Model.Id(value);
+                        IdentityElement = new Hl7.Fhir.Model.Id(value);
                     OnPropertyChanged("Identity");
                 }
             }
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       UriElement = null; 
                     else
-                      UriElement = new Hl7.Fhir.Model.FhirUri(value);
+                        UriElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Uri");
                 }
             }
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       CommentsElement = null; 
                     else
-                      CommentsElement = new Hl7.Fhir.Model.FhirString(value);
+                        CommentsElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Comments");
                 }
             }
@@ -1226,6 +1226,196 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.StructureDefinition.DifferentialComponent _Differential;
         
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_16 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "snapshot.element.id.trace('ids').isDistinct()",
+            Key = "sdf-16",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "All element definitions must have unique ids (snapshot)",
+            Xpath = "count(*/f:element)=count(*/f:element/@id)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_9 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "children().element.first().label.empty() and children().element.first().code.empty() and children().element.first().requirements.empty()",
+            Key = "sdf-9",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "In any snapshot or differential, no label, code or requirements on the an element without a \".\" in the path (e.g. the first element)",
+            Xpath = "not(exists(f:snapshot/f:element[not(contains(f:path/@value, '.')) and (f:label or f:code or f:requirements)])) and not(exists(f:differential/f:element[not(contains(f:path/@value, '.')) and (f:label or f:code or f:requirements)]))"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_17 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "differential.element.id.trace('ids').isDistinct()",
+            Key = "sdf-17",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "All element definitions must have unique ids (diff)",
+            Xpath = "count(*/f:element)=count(*/f:element/@id)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_12 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "snapshot.exists() implies (snapshot.element.base.exists() = baseDefinition.exists())",
+            Key = "sdf-12",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "element.base cannot appear if there is no base on the structure definition",
+            Xpath = "f:baseDefinition or not(exists(f:snapshot/f:element/f:base) or exists(f:differential/f:element/f:base))"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_11 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "snapshot.empty() or snapshot.element.first().path = type",
+            Key = "sdf-11",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If there's a type, its content must match the path name in the first element of a snapshot",
+            Xpath = "not(exists(f:snapshot)) or (f:type/@value = f:snapshot/f:element[1]/f:path/@value)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_14 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "snapshot.element.all(id) and differential.element.all(id)",
+            Key = "sdf-14",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "All element definitions must have an id",
+            Xpath = "count(*/f:element)=count(*/f:element/@id)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "derivation = 'constraint' or snapshot.element.select(path).distinct()",
+            Key = "sdf-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Element paths must be unique unless the structure is a constraint",
+            Xpath = "(f:derivation/@value = 'constraint') or (count(f:snapshot/f:element) = count(distinct-values(f:snapshot/f:element/f:path/@value)))"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_7 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "(derivation = 'constraint') or (url = 'http://hl7.org/fhir/StructureDefinition/'+id)",
+            Key = "sdf-7",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the structure describes a base Resource or Type, the URL has to start with \"http://hl7.org/fhir/StructureDefinition/\" and the tail must match the id",
+            Xpath = "(f:derivation/@value = 'constraint') or f:url/@value=concat('http://hl7.org/fhir/StructureDefinition/', f:id/@value)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_6 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "snapshot.exists() or differential.exists()",
+            Key = "sdf-6",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A structure must have either a differential, or a snapshot (or both)",
+            Xpath = "exists(f:snapshot) or exists(f:differential)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_5 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "type != 'Extension' or derivation = 'specialization' or (context.exists() and contextType.exists())",
+            Key = "sdf-5",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the structure defines an extension then the structure must have context information",
+            Xpath = "not(f:type/@value = 'extension') or (f:derivation/@value = 'constraint') or (exists(f:context) and exists(f:contextType))"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "abstract = true or baseDefinition.exists()",
+            Key = "sdf-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the structure is not abstract, then there SHALL be a baseDefinition",
+            Xpath = "(f:abstract/@value=true()) or exists(f:baseDefinition)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "name.exists() or uri.exists()",
+            Key = "sdf-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Must have at a name or a uri (or both)",
+            Xpath = "exists(f:uri) or exists(f:name)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_15 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "element.first().type.empty()",
+            Key = "sdf-15",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "The first element in a snapshot has no type",
+            Xpath = "not(f:element[1]/f:type)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "element.first().path = %resource.type and element.tail().all(path.startsWith(%resource.type&'.'))",
+            Key = "sdf-8",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "In any snapshot, all the elements must be in the specified type",
+            Xpath = "f:element[1]/f:path/@value=parent::f:StructureDefinition/f:type/@value and count(f:element[position()!=1])=count(f:element[position()!=1][starts-with(f:path/@value, concat(ancestor::f:StructureDefinition/f:type/@value, '.'))])"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "element.all(definition and min and max)",
+            Key = "sdf-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Each element definition in a snapshot must have a formal definition and cardinalities",
+            Xpath = "count(f:element) = count(f:element[exists(f:definition) and exists(f:min) and exists(f:max)])"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_15A = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "element.first().path.contains('.').not() implies element.first().type.empty()",
+            Key = "sdf-15a",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the first element in a differential has no \".\" in the path, it has no type",
+            Xpath = "not(f:element[1][not(contains(f:path/@value, '.'))]/f:type)"
+        };
+
+        public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8A = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "element.first().path.startsWith(%resource.type) and element.tail().all(path.startsWith(%resource.type&'.'))",
+            Key = "sdf-8a",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "In any differential, all the elements must be in the specified type",
+            Xpath = "count(f:element)=count(f:element[f:path/@value=ancestor::f:StructureDefinition/f:type/@value or starts-with(f:path/@value, concat(ancestor::f:StructureDefinition/f:type/@value, '.'))])"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as StructureDefinition;

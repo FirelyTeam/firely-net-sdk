@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DateElement = null; 
                     else
-                      DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Date");
                 }
             }
@@ -715,7 +715,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       PreAuthRefElement = null; 
                     else
-                      PreAuthRefElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                        PreAuthRefElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
                     OnPropertyChanged("PreAuthRef");
                 }
             }
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DateElement = null; 
                     else
-                      DateElement = new Hl7.Fhir.Model.Date(value);
+                        DateElement = new Hl7.Fhir.Model.Date(value);
                     OnPropertyChanged("Date");
                 }
             }
@@ -918,7 +918,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -965,7 +965,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DiagnosisLinkIdElement = null; 
                     else
-                      DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
+                        DiagnosisLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
                     OnPropertyChanged("DiagnosisLinkId");
                 }
             }
@@ -1118,7 +1118,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       FactorElement = null; 
                     else
-                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Factor");
                 }
             }
@@ -1150,7 +1150,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       PointsElement = null; 
                     else
-                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Points");
                 }
             }
@@ -1238,7 +1238,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NoteNumberElement = null; 
                     else
-                      NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
+                        NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
                     OnPropertyChanged("NoteNumber");
                 }
             }
@@ -1440,7 +1440,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       ResponsibleElement = null; 
                     else
-                      ResponsibleElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        ResponsibleElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Responsible");
                 }
             }
@@ -1598,7 +1598,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       ValueElement = null; 
                     else
-                      ValueElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        ValueElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Value");
                 }
             }
@@ -1691,7 +1691,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -1830,7 +1830,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       FactorElement = null; 
                     else
-                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Factor");
                 }
             }
@@ -1862,7 +1862,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       PointsElement = null; 
                     else
-                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Points");
                 }
             }
@@ -1923,7 +1923,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NoteNumberElement = null; 
                     else
-                      NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
+                        NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
                     OnPropertyChanged("NoteNumber");
                 }
             }
@@ -2080,7 +2080,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       SequenceElement = null; 
                     else
-                      SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Sequence");
                 }
             }
@@ -2219,7 +2219,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       FactorElement = null; 
                     else
-                      FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Factor");
                 }
             }
@@ -2251,7 +2251,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       PointsElement = null; 
                     else
-                      PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        PointsElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Points");
                 }
             }
@@ -2312,7 +2312,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NoteNumberElement = null; 
                     else
-                      NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
+                        NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
                     OnPropertyChanged("NoteNumber");
                 }
             }
@@ -2451,7 +2451,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       InitialElement = null; 
                     else
-                      InitialElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        InitialElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Initial");
                 }
             }
@@ -2483,7 +2483,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       PriorDateElement = null; 
                     else
-                      PriorDateElement = new Hl7.Fhir.Model.Date(value);
+                        PriorDateElement = new Hl7.Fhir.Model.Date(value);
                     OnPropertyChanged("PriorDate");
                 }
             }
@@ -2586,7 +2586,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       SequenceLinkIdElement = null; 
                     else
-                      SequenceLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
+                        SequenceLinkIdElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
                     OnPropertyChanged("SequenceLinkId");
                 }
             }
@@ -2685,7 +2685,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NoteNumberElement = null; 
                     else
-                      NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
+                        NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
                     OnPropertyChanged("NoteNumber");
                 }
             }
@@ -2887,7 +2887,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NoteNumberElement = null; 
                     else
-                      NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
+                        NoteNumberElement = new List<Hl7.Fhir.Model.PositiveInt>(value.Select(elem=>new Hl7.Fhir.Model.PositiveInt(elem)));
                     OnPropertyChanged("NoteNumber");
                 }
             }
@@ -3029,7 +3029,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       ExtractionDateElement = null; 
                     else
-                      ExtractionDateElement = new Hl7.Fhir.Model.Date(value);
+                        ExtractionDateElement = new Hl7.Fhir.Model.Date(value);
                     OnPropertyChanged("ExtractionDate");
                 }
             }
@@ -3157,7 +3157,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DateElement = null; 
                     else
-                      DateElement = new Hl7.Fhir.Model.Date(value);
+                        DateElement = new Hl7.Fhir.Model.Date(value);
                     OnPropertyChanged("Date");
                 }
             }
@@ -3281,7 +3281,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       NumberElement = null; 
                     else
-                      NumberElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        NumberElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Number");
                 }
             }
@@ -3326,7 +3326,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -3458,7 +3458,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       NameElement = null; 
                     else
-                      NameElement = new Hl7.Fhir.Model.FhirString(value);
+                        NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
                 }
             }
@@ -3490,7 +3490,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -4333,6 +4333,43 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ExplanationOfBenefit.BenefitBalanceComponent> _BenefitBalance;
         
+
+        public static ElementDefinition.ConstraintComponent ExplanationOfBenefit_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ExplanationOfBenefit_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ExplanationOfBenefit_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent ExplanationOfBenefit_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ExplanationOfBenefit;

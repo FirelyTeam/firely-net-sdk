@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DaysOfWeekElement = null; 
                     else
-                      DaysOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
+                        DaysOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
                     OnPropertyChanged("DaysOfWeek");
                 }
             }
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                       AllDayElement = null; 
                     else
-                      AllDayElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        AllDayElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("AllDay");
                 }
             }
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       AvailableStartTimeElement = null; 
                     else
-                      AvailableStartTimeElement = new Hl7.Fhir.Model.Time(value);
+                        AvailableStartTimeElement = new Hl7.Fhir.Model.Time(value);
                     OnPropertyChanged("AvailableStartTime");
                 }
             }
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       AvailableEndTimeElement = null; 
                     else
-                      AvailableEndTimeElement = new Hl7.Fhir.Model.Time(value);
+                        AvailableEndTimeElement = new Hl7.Fhir.Model.Time(value);
                     OnPropertyChanged("AvailableEndTime");
                 }
             }
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       DescriptionElement = null; 
                     else
-                      DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
                 }
             }
@@ -576,6 +576,43 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
         
+
+        public static ElementDefinition.ConstraintComponent PractitionerRole_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent PractitionerRole_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent PractitionerRole_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent PractitionerRole_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as PractitionerRole;

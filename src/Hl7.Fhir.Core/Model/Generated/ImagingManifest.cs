@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       UidElement = null; 
                     else
-                      UidElement = new Hl7.Fhir.Model.Oid(value);
+                        UidElement = new Hl7.Fhir.Model.Oid(value);
                     OnPropertyChanged("Uid");
                 }
             }
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       UrlElement = null; 
                     else
-                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                        UrlElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Url");
                 }
             }
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       UidElement = null; 
                     else
-                      UidElement = new Hl7.Fhir.Model.Oid(value);
+                        UidElement = new Hl7.Fhir.Model.Oid(value);
                     OnPropertyChanged("Uid");
                 }
             }
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       UrlElement = null; 
                     else
-                      UrlElement = new Hl7.Fhir.Model.FhirUri(value);
+                        UrlElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Url");
                 }
             }
@@ -543,7 +543,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       SopClassElement = null; 
                     else
-                      SopClassElement = new Hl7.Fhir.Model.Oid(value);
+                        SopClassElement = new Hl7.Fhir.Model.Oid(value);
                     OnPropertyChanged("SopClass");
                 }
             }
@@ -576,7 +576,7 @@ namespace Hl7.Fhir.Model
                 if (value == null)
                       UidElement = null; 
                     else
-                      UidElement = new Hl7.Fhir.Model.Oid(value);
+                        UidElement = new Hl7.Fhir.Model.Oid(value);
                     OnPropertyChanged("Uid");
                 }
             }
@@ -781,6 +781,43 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ImagingManifest.StudyComponent> _Study;
         
+
+        public static ElementDefinition.ConstraintComponent ImagingManifest_DOM_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.contained.empty()",
+            Key = "dom-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
+            Xpath = "not(parent::f:contained and f:contained)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ImagingManifest_DOM_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.text.empty()",
+            Key = "dom-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL NOT contain any narrative",
+            Xpath = "not(parent::f:contained and f:text)"
+        };
+
+        public static ElementDefinition.ConstraintComponent ImagingManifest_DOM_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
+            Key = "dom-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
+            Xpath = "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+        };
+
+        public static ElementDefinition.ConstraintComponent ImagingManifest_DOM_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Key = "dom-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
+            Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ImagingManifest;
