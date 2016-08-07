@@ -48,7 +48,9 @@ namespace Hl7.Fhir.Rest
         public Bundle Search<TResource>(SearchParams q)
             where TResource : Resource
         {
-            return Search(q, ModelInfo.GetResourceNameForType(typeof(TResource)));
+            // [WMR 20160421] GetResourceNameForType is obsolete
+            // return Search(q, ModelInfo.GetResourceNameForType(typeof(TResource)));
+            return Search(q, ModelInfo.GetFhirTypeNameForType(typeof(TResource)));
         }
 
         /// <summary>
@@ -66,7 +68,9 @@ namespace Hl7.Fhir.Rest
         public Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null, SummaryType summary = SummaryType.False)
             where TResource : Resource, new()
         {
-            return Search(ModelInfo.GetResourceNameForType(typeof(TResource)), criteria, includes, pageSize, summary);
+            // [WMR 20160421] GetResourceNameForType is obsolete
+            // return Search(ModelInfo.GetResourceNameForType(typeof(TResource)), criteria, includes, pageSize, summary);
+            return Search(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), criteria, includes, pageSize, summary);
         }
 
 

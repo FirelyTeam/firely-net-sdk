@@ -135,7 +135,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <returns></returns>
         private T mergePrimitiveAttribute<T>(T snap, T diff, bool allowAppend = false) where T : Primitive
         {
-            if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
+            // [WMR 20160718] Handle snap == null
+            // if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
+            if (!diff.IsNullOrEmpty() && (snap == null || !diff.IsExactly(snap)))
             {
                 var result = (T)diff.DeepCopy();
 
@@ -144,7 +146,19 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var diffText = diff.ObjectValue as string;
 
                     if (diffText.StartsWith("..."))
-                        diffText = (snap.ObjectValue as string) + "\r\n" + diffText.Substring(3);
+                    {
+                        // [WMR 20160719] Handle snap == null
+                        // diffText = (snap.ObjectValue as string) + "\r\n" + diffText.Substring(3);
+                        var prefix = snap != null ? snap.ObjectValue as string : null;
+                        if (string.IsNullOrEmpty(prefix))
+                        {
+                            diffText = diffText.Substring(3);
+                        }
+                        else
+                        {
+                            diffText = prefix + "\r\n" + diffText.Substring(3);
+                        }
+                    }
 
                     result.ObjectValue = diffText;
                 }
@@ -160,7 +174,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             //TODO: The next != null should be IsNullOrEmpty(), but we don't have that yet for complex types
 
-            if (diff != null && !diff.IsExactly(snap))
+            // [WMR 20160718] Handle snap == null
+            // if (diff != null && !diff.IsExactly(snap))
+            if (diff != null && (snap == null || !diff.IsExactly(snap)))
             {
                 var result = (T)diff.DeepCopy();
                 markChange(result);

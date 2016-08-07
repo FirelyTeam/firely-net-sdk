@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
             get { return TextElement != null ? TextElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TextElement = null; 
                 else
                   TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -97,6 +97,7 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CodeableConcept;
@@ -140,7 +141,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }

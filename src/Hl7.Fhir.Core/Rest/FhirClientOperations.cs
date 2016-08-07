@@ -74,6 +74,57 @@ namespace Hl7.Fhir.Rest
             public const string VALIDATE_CODE = "validate-code";
         }
 
+
+        public static OperationOutcome ValidateCreate(this FhirClient client, DomainResource resource, FhirUri profile = null)
+        {
+            if (resource == null) throw Error.ArgumentNull("resource");
+
+            var par = new Parameters().Add("resource", resource).Add("mode", new Code("create"));
+            if (profile != null) par.Add("profile", profile);
+
+            return expect<OperationOutcome>(client.TypeOperation(Operation.VALIDATE_RESOURCE, resource.TypeName, par));
+        }
+
+        public static OperationOutcome ValidateUpdate(this FhirClient client, DomainResource resource, string id, FhirUri profile = null)
+        {
+            if (id == null) throw Error.ArgumentNull("id");
+            if (resource == null) throw Error.ArgumentNull("resource");
+
+            var par = new Parameters().Add("resource", resource).Add("mode", new Code("update"));
+            if (profile != null) par.Add("profile", profile);
+
+            var loc = ResourceIdentity.Build(resource.TypeName, id);
+            return expect<OperationOutcome>(client.InstanceOperation(loc, Operation.VALIDATE_RESOURCE, par));
+        }
+
+        public static OperationOutcome ValidateDelete(this FhirClient client, ResourceIdentity location)
+        {
+            if (location == null) throw Error.ArgumentNull("location");
+
+            var par = new Parameters().Add("mode", new Code("delete"));
+
+            return expect<OperationOutcome>(client.InstanceOperation(location.WithoutVersion().MakeRelative(), Operation.VALIDATE_RESOURCE, par));
+        }
+
+        public static OperationOutcome ValidateResource(this FhirClient client, DomainResource resource, string id = null, FhirUri profile = null)
+        {
+            if (resource == null) throw Error.ArgumentNull("resource");
+
+            var par = new Parameters().Add("resource", resource);
+            if (profile != null) par.Add("profile", profile);
+
+            if (id == null)
+            {
+                return expect<OperationOutcome>(client.TypeOperation(Operation.VALIDATE_RESOURCE, resource.TypeName, par));
+            }
+            else
+            {
+                var loc = ResourceIdentity.Build(resource.TypeName, id);
+                return expect<OperationOutcome>(client.InstanceOperation(loc, Operation.VALIDATE_RESOURCE, par));
+            }
+        }
+
+
         public static Bundle FetchPatientRecord(this FhirClient client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
         {
             var par = new Parameters();
@@ -231,54 +282,6 @@ namespace Hl7.Fhir.Rest
             return DeleteMeta(client, new Uri(location, UriKind.RelativeOrAbsolute), meta);
         }
 
-        public static OperationOutcome ValidateCreate(this FhirClient client, DomainResource resource, FhirUri profile = null)
-        {
-            if (resource == null) throw Error.ArgumentNull("resource");
-
-            var par = new Parameters().Add("resource", resource).Add("mode", new FhirString("create"));
-            if (profile != null) par.Add("profile", profile);
-
-            return expect<OperationOutcome>(client.TypeOperation(Operation.VALIDATE_RESOURCE, "Resource", par));
-        }
-
-        public static OperationOutcome ValidateUpdate(this FhirClient client, DomainResource resource, string id, FhirUri profile = null)
-        {
-            if (id == null) throw Error.ArgumentNull("id");
-            if (resource == null) throw Error.ArgumentNull("resource");
-
-            var par = new Parameters().Add("resource", resource).Add("mode", new FhirString("update"));
-            if (profile != null) par.Add("profile", profile);
-
-            var loc = ResourceIdentity.Build("Resource",id);
-            return expect<OperationOutcome>(client.InstanceOperation(loc, Operation.VALIDATE_RESOURCE, par));
-        }
-
-        public static OperationOutcome ValidateDelete(this FhirClient client, ResourceIdentity location)
-        {
-            if (location == null) throw Error.ArgumentNull("location");
-
-            var par = new Parameters().Add("mode", new FhirString("delete"));
-
-            return expect<OperationOutcome>(client.InstanceOperation(location.WithoutVersion().MakeRelative(), Operation.VALIDATE_RESOURCE, par));
-        }
-
-        public static OperationOutcome ValidateResource(this FhirClient client, DomainResource resource, string id=null, FhirUri profile=null)
-        {
-            if (resource == null) throw Error.ArgumentNull("resource");
-
-            var par = new Parameters().Add("resource", resource);
-            if (profile != null) par.Add("profile", profile);
-
-            if (id == null)
-            {
-                return expect<OperationOutcome>(client.TypeOperation(Operation.VALIDATE_RESOURCE, resource.TypeName, par));
-            }
-            else
-            {
-                var loc = ResourceIdentity.Build("Resource", id);
-                return expect<OperationOutcome>(client.InstanceOperation(loc, Operation.VALIDATE_RESOURCE, par));
-            }
-        }
 
         public static Parameters Validate(this FhirClient client, String valueSetId, FhirUri system, Code code, FhirString display = null)
         {

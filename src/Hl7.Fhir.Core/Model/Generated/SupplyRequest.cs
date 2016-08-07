@@ -340,6 +340,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.SupplyRequest.WhenComponent _When;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as SupplyRequest;

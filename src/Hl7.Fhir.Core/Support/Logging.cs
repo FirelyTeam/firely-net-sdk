@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-
+using System.IO;
 
 namespace Hl7.Fhir.Support
 {
@@ -40,8 +40,7 @@ namespace Hl7.Fhir.Support
         /// <summary>
         /// Creates an <see cref="ArgumentException"/> with the provided properties.
         /// </summary>
-        /// <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
-        /// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+        /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <returns>The logged <see cref="Exception"/>.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification="Utility method that might become useful for future usecases")]
         internal static ArgumentException Argument(string message)
@@ -53,8 +52,7 @@ namespace Hl7.Fhir.Support
         /// Creates an <see cref="ArgumentException"/> with the provided properties.
         /// </summary>
         /// <param name="parameterName">The name of the parameter that caused the current exception.</param>
-        /// <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
-        /// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+        /// /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <returns>The logged <see cref="Exception"/>.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
         internal static ArgumentException Argument(string parameterName, string message)
@@ -173,5 +171,17 @@ namespace Hl7.Fhir.Support
         {
             return new NotImplementedException();
         }
+
+        // [WMR 20160721] NEW - To signal unresolved resource references
+        internal static ResourceReferenceNotFoundException ResourceReferenceNotFoundException(string url)
+        {
+            return new ResourceReferenceNotFoundException(url);
+        }
+
+        internal static ResourceReferenceNotFoundException ResourceReferenceNotFoundException(string url, string messageFormat, params object[] messageArgs)
+        {
+            return new ResourceReferenceNotFoundException(url, Error.formatMessage(messageFormat, messageArgs));
+        }
+
     }
 }

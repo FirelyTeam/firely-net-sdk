@@ -355,6 +355,43 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Attachment _Content;
         
+
+        public static ElementDefinition.ConstraintComponent Media_MDA_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("height.empty() or type != 'audio'"))},
+            Key = "mda-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Height can only be used for a photo or video",
+            Xpath = "not(f:type/@value='audio') or not(f:height)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Media_MDA_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("width.empty() or type != 'audio'"))},
+            Key = "mda-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Width can only be used for a photo or video",
+            Xpath = "not(f:type/@value='audio') or not(f:width)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Media_MDA_4 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("duration.empty() or type != 'photo'"))},
+            Key = "mda-4",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Duration can only be used for an audio or a video",
+            Xpath = "not(f:type/@value='photo') or not(f:duration)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Media_MDA_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("frames.empty() or type = 'photo'"))},
+            Key = "mda-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Frames can only be used for a photo",
+            Xpath = "(f:type/@value='photo') or not(f:frames)"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Media;

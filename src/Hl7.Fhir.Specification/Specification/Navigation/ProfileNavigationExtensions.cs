@@ -17,7 +17,7 @@ using System.Text;
 namespace Hl7.Fhir.Specification.Navigation
 {
     public static class ProfileNavigationExtensions
-    {      
+    {
         /// <summary>
         /// Rewrites the Path's of the elements in a structure so they are based on the given path: the root
         /// of the given structure will become the given path, it's children will be relocated below that path
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
                     newPaths.Add(newPath);
 
-                    if(nav.HasChildren) 
+                    if (nav.HasChildren)
                         rebaseChildren(nav, newPath, newPaths);
                 }
                 while (nav.MoveToNext());
@@ -89,6 +89,34 @@ namespace Hl7.Fhir.Specification.Navigation
         public static bool IsExtension(this ElementDefinition elem)
         {
             return elem.Path.EndsWith(".extension") || elem.Path.EndsWith(".modifierExtension");
+        }
+
+        // [WMR 20160801] NEW
+        /// <summary>Returns the first type profile url, or <c>null</c></summary>
+        public static string PrimaryProfile(this ElementDefinition elem)
+        {
+            if (elem.IsExtension() && elem.Type != null)
+            {
+                var primaryType = elem.Type.FirstOrDefault();
+                if (primaryType != null && primaryType.Profile != null)
+                {
+                    return primaryType.Profile.FirstOrDefault();
+                }
+            }
+            return null;
+        }
+
+        /// <summary>Returns <c>true</c> if the element represents an extension with a custom extension profile url, or <c>false</c> otherwise.</summary>
+        public static bool IsMappedExtension(this ElementDefinition elem)
+        {
+            return elem.IsExtension() && elem.PrimaryProfile() != null;
+        }
+
+        // [WMR 20160720] NEW
+        public static bool IsReference(this ElementDefinition elem)
+        {
+            var primaryType = elem.Type.FirstOrDefault();
+            return primaryType != null && primaryType.Code.HasValue && ModelInfo.IsReference(primaryType.Code.Value);
         }
 
         public static bool IsChoice(this ElementDefinition defn)

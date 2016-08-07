@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Rest
         private const string USERDATA_BODY = "$body";
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
 
-        internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body)
+        internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body, ParserSettings parserSettings)
         {
             var result = new Bundle.EntryComponent();
 
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Rest
                 else
                 {
                     var bodyText = DecodeBody(body, charEncoding);
-                    var resource = parseResource(bodyText, contentType);
+                    var resource = parseResource(bodyText, contentType, parserSettings);
                     result.Resource = resource;
 
                     if (result.Response.Location != null)
@@ -127,22 +127,25 @@ namespace Hl7.Fhir.Rest
             return result;
         }      
 
-        private static Resource parseResource(string bodyText, string contentType)
+        private static Resource parseResource(string bodyText, string contentType, ParserSettings settings)
         {           
             Resource result= null;
 
             var fhirType = ContentType.GetResourceFormatFromContentType(contentType);
 
             if (fhirType == ResourceFormat.Unknown)
-                throw new FormatException("Endpoint returned a body with contentType '{0}', while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint? Body reads: {1}".FormatWith(contentType, bodyText));
+                throw new UnsupportedBodyTypeException(
+                    "Endpoint returned a body with contentType '{0}', while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint?"
+                        .FormatWith(contentType), contentType, bodyText);
 
-            if (!FhirParser.ProbeIsJson(bodyText) && !FhirParser.ProbeIsXml(bodyText))
-                throw new FormatException("Endpoint said it returned '{0}', but the body is not recognized as either xml or json: \"" + bodyText + "\"");
+            if (!SerializationUtil.ProbeIsJson(bodyText) && !SerializationUtil.ProbeIsXml(bodyText))
+                throw new UnsupportedBodyTypeException(
+                        "Endpoint said it returned '{0}', but the body is not recognized as either xml or json.".FormatWith(contentType), contentType, bodyText);
 
             if (fhirType == ResourceFormat.Json)
-                result = (Resource)FhirParser.ParseFromJson(bodyText);
+                result = new FhirJsonParser(settings).Parse<Resource>(bodyText);
             else
-                result = (Resource)FhirParser.ParseFromXml(bodyText);
+                result = new FhirXmlParser(settings).Parse<Resource>(bodyText);
 
             return result;
         }
@@ -172,7 +175,13 @@ namespace Hl7.Fhir.Rest
             if (body == null) return null;
             if (enc == null) enc = Encoding.UTF8;
 
-            return (new StreamReader(new MemoryStream(body), enc, true)).ReadToEnd();
+            // [WMR 20160421] Explicit disposal
+            // return (new StreamReader(new MemoryStream(body), enc, true)).ReadToEnd();
+            using (var stream = new MemoryStream(body))
+            using (var reader = new StreamReader(stream, enc, true))
+            {
+                return reader.ReadToEnd();
+            }
         }
 
         private static Binary makeBinaryResource(byte[] data, string contentType)
@@ -198,10 +207,15 @@ namespace Hl7.Fhir.Rest
 
         public static byte[] GetBody(this Bundle.ResponseComponent interaction)
         {
-            if (interaction.UserData.ContainsKey(USERDATA_BODY))
-                return (byte[])interaction.UserData[USERDATA_BODY];
-            else
-                return null;
+            // [WMR 20160421] Optimization
+            //if (interaction.UserData.ContainsKey(USERDATA_BODY))
+            //    return (byte[])interaction.UserData[USERDATA_BODY];
+            //else
+            //    return null;
+            object result;
+            interaction.UserData.TryGetValue(USERDATA_BODY, out result);
+            return (byte[])result;
+
         }
 
         internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)
@@ -237,6 +251,19 @@ namespace Hl7.Fhir.Rest
         public static IEnumerable<string> GetHeader(this Bundle.ResponseComponent interaction, string header)
         {
             return interaction.GetHeaders().Where(h => h.Item1 == header).Select(h => h.Item2);
+        }
+    }
+
+
+    public class UnsupportedBodyTypeException : Exception
+    {
+        public string BodyType { get; set; }
+
+        public string Body { get; set; }
+        public UnsupportedBodyTypeException(string message, string mimeType, string body) : base(message)
+        {
+            BodyType = mimeType;
+            Body = body;
         }
     }
 }

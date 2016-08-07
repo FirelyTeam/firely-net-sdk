@@ -778,6 +778,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.EligibilityResponse.ErrorsComponent> _Error;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as EligibilityResponse;

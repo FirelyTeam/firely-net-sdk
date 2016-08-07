@@ -38,7 +38,8 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class FhirDecimal
+    [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")]
+    public partial class FhirDecimal : INullableValue<decimal>
     {
         public static bool IsValidValue(string value)
         {

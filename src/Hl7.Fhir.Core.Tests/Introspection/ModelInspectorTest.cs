@@ -77,23 +77,6 @@ namespace Hl7.Fhir.Tests.Introspection
 
 
         [TestMethod]
-        public void TestEnumTypeResolving()
-        {
-            var inspector = new ModelInspector();
-
-            inspector.ImportEnum(typeof(SomeEnum));
-            inspector.ImportEnum(typeof(ActResource.SomeOtherEnum));
-
-            var result = inspector.FindEnumMappingByType(typeof(SomeEnum));
-            Assert.IsNotNull(result);
-            Assert.AreEqual(typeof(SomeEnum), result.EnumType);
-
-            result = inspector.FindEnumMappingByType(typeof(ActResource.SomeOtherEnum));
-            Assert.IsNotNull(result);
-            Assert.AreEqual(typeof(ActResource.SomeOtherEnum), result.EnumType);
-        }
-
-        [TestMethod]
         public void TestAssemblyInspection()
         {
             var inspector = new ModelInspector();
@@ -106,9 +89,6 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("HumanName"));
             Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("code"));
             Assert.IsNotNull(inspector.FindClassMappingForFhirDataType("boolean"));
-
-            // Verify presence of nested enumerations
-            Assert.IsNotNull(inspector.FindEnumMappingByType(typeof(Address.AddressUse)));
 
             // Should have skipped abstract classes
             Assert.IsNull(inspector.FindClassMappingForResource("ComplexElement"));

@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
             get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ContentTypeElement = null; 
                 else
                   ContentTypeElement = new Hl7.Fhir.Model.Code(value);
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             get { return LanguageElement != null ? LanguageElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   LanguageElement = null; 
                 else
                   LanguageElement = new Hl7.Fhir.Model.Code(value);
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
             get { return DataElement != null ? DataElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DataElement = null; 
                 else
                   DataElement = new Hl7.Fhir.Model.Base64Binary(value);
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
             get { return UrlElement != null ? UrlElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   UrlElement = null; 
                 else
                   UrlElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
             get { return SizeElement != null ? SizeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   SizeElement = null; 
                 else
                   SizeElement = new Hl7.Fhir.Model.UnsignedInt(value);
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
             get { return HashElement != null ? HashElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   HashElement = null; 
                 else
                   HashElement = new Hl7.Fhir.Model.Base64Binary(value);
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
             get { return TitleElement != null ? TitleElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TitleElement = null; 
                 else
                   TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
             get { return CreationElement != null ? CreationElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CreationElement = null; 
                 else
                   CreationElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -307,6 +307,7 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Attachment;
@@ -368,7 +369,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }

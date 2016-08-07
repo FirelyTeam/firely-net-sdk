@@ -473,6 +473,16 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> _Condition;
         
+
+        public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("age[x].empty() or born[x].empty()"))},
+            Key = "fhs-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Can have age[x] or born[x], but not both",
+            Xpath = "not (*[starts-with(local-name(.), 'age')] and *[starts-with(local-name(.), 'birth')])"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as FamilyMemberHistory;

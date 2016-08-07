@@ -478,7 +478,7 @@ if (!abstractType){
 <#}#>
                 set
                 {
-                    if(value == null)
+                    if (<#= !pd.IsMultiCard() && pd.NativeType.EndsWith("?") ? "!value.HasValue" : "value == null" #>)
                       <#= pd.Name #> = null; 
                     else
                       <#= pd.Name #> = new <#= pd.IsMultiCard() ? "List<" + pd.PropType + ">(value.Select(elem=>new "+pd.PropType+"(elem)))" : pd.PropType.Replace("Hl7.Fhir.Model.Code<", "Code<") + "(value)" #>;
@@ -618,7 +618,7 @@ if (!abstractType){
 <#}#>
             set
             {
-                if(value == null)
+                if (<#= !pd.IsMultiCard() && pd.NativeType.EndsWith("?") ? "!value.HasValue" : "value == null" #>)
                   <#= pd.Name #> = null; 
                 else
                   <#= pd.Name #> = new <#= pd.IsMultiCard() ? "List<" + pd.PropType + ">(value.Select(elem=>new "+pd.PropType+"(elem)))" : pd.PropType.Replace("Hl7.Fhir.Model.Code<", "Code<") + "(value)" #>;
@@ -631,6 +631,9 @@ if (!abstractType){
     }
 
 #>
+
+<# if(!isPrimitive)
+{ #>
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as <#= resourceName #>;
@@ -715,7 +718,8 @@ if (!abstractType){
             
             return true;
         }
-        
+    
+<# } #>    
     }
     
 }

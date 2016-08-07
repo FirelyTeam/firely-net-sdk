@@ -624,6 +624,7 @@
     <Compile Include="Model\IExtendable.cs" />
     <Compile Include="Model\Initializers.cs" />
     <Compile Include="Model\Instant.cs" />
+    <Compile Include="Model\IValue.cs" />
     <Compile Include="Model\Markdown.cs" />
     <Compile Include="Model\ModelInfo.cs" />
     <Compile Include="Model\Oid.cs" />
@@ -631,6 +632,7 @@
     <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\PositiveInt.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
+    <Compile Include="Model\Time.cs" />
     <Compile Include="Model\UnsignedInt.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />
@@ -670,7 +672,6 @@
     <Compile Include="Serialization\DefaultModelFactory.cs" />
     <Compile Include="Serialization\DispatchingWriter.cs" />
     <Compile Include="Serialization\DispatchingReader.cs" />
-    <Compile Include="Introspection\EnumMapping.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Serialization\FhirParser.cs" />
     <Compile Include="Serialization\FhirSerializer.cs" />
@@ -678,6 +679,7 @@
     <Compile Include="Serialization\IFhirWriter.cs" />
     <Compile Include="Serialization\JsonTreeRewriter.cs" />
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
+    <Compile Include="Serialization\ParserSettings.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
     <Compile Include="Serialization\XmlDomFhirReader.cs" />
@@ -685,7 +687,7 @@
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Support\DateExtensions.cs" />
-    <Compile Include="Support\EnumExtensions.cs" />
+    <Compile Include="Introspection\EnumUtility.cs" />
     <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\Logging.cs" />
@@ -698,13 +700,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Support\NullExtensions.cs" />
+    <Compile Include="Support\ResourceReferenceNotFoundException.cs" />
     <Compile Include="Support\XmlNs.cs" />
     <Compile Include="Support\ReflectionHelper.cs" />
     <Compile Include="Serialization\RepeatingElementReader.cs" />
     <Compile Include="Serialization\ResourceReader.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
     <Compile Include="Support\StringExtensions.cs" />
     <Compile Include="Validation\AllowedTypesAttribute.cs" />

@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Serialization
         public DispatchingWriter(IFhirWriter data)
         {
             _writer = data;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
         }
 
         internal void Serialize(PropertyMapping prop, object instance, Rest.SummaryType summary, ComplexTypeWriter.SerializationMode mode)

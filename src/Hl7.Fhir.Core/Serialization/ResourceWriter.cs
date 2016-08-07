@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Serialization
         public ResourceWriter(IFhirWriter writer)
         {
             _writer = writer;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
         }
 
         public void Serialize(object instance, Rest.SummaryType summary, bool contained = false, string root = null)

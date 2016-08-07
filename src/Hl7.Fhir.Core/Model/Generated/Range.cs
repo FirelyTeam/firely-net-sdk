@@ -77,6 +77,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.SimpleQuantity _High;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Range;
@@ -120,7 +121,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }

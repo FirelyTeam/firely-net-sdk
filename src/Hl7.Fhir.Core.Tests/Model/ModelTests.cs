@@ -37,6 +37,16 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual("value", xr.Element("child").Value);
         }
 
+        [TestMethod]
+        public void OperationOutcomeLocation()
+        {
+            OperationOutcome oo = new OperationOutcome();
+            oo.Issue.Add(new OperationOutcome.IssueComponent()
+            {
+                Location = new string[] { "yes" }
+            });
+            Assert.AreEqual(1, oo.Issue[0].Location.Count());
+        }
 
         [TestMethod]
         public void DateTimeHandling()
@@ -221,6 +231,87 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(ModelInfo.IsReference("Reference"));
             Assert.IsFalse(ModelInfo.IsReference("Patient"));
         }
+
+        [TestMethod]
+        public void TestFhirTypeToFhirTypeName()
+        {
+            var enumValues = Enum.GetValues(typeof(FHIRDefinedType));
+            for (int i = 0; i < enumValues.Length; i++)
+            {
+                var type = (FHIRDefinedType)i;
+                var typeName = ModelInfo.FhirTypeToFhirTypeName(type);
+                var type2 = ModelInfo.FhirTypeNameToFhirType(typeName);
+                Assert.IsTrue(type2.HasValue);
+                Assert.AreEqual(type, type2, String.Format("Failed: '{0}' != '{1}' ?!", type, type2));
+                var typeName2 = ModelInfo.FhirTypeToFhirTypeName(type2.Value);
+                Assert.AreEqual(typeName, typeName2, String.Format("Failed: '{0}' != '{1}' ?!", typeName, typeName2));
+		    }
+		}
+
+        [TestMethod]
+        public void TestStringValueInterface()
+        {
+            IStringValue sv = new FhirString("test");
+            Assert.IsNotNull(sv);
+            sv.Value = "string";
+            Assert.AreEqual(sv.Value, "string");
+
+            sv = new FhirUri("test");
+            Assert.IsNotNull(sv);
+            sv.Value = "http://example.org";
+            Assert.AreEqual(sv.Value, "http://example.org");
+
+            sv = new Uuid("test");
+            Assert.IsNotNull(sv);
+            sv.Value = "550e8400-e29b-41d4-a716-446655440000";
+            Assert.AreEqual(sv.Value, "550e8400-e29b-41d4-a716-446655440000");
+
+            sv = new Oid("test");
+            Assert.IsNotNull(sv);
+            sv.Value = "2.16.840.1.113883";
+            Assert.AreEqual(sv.Value, "2.16.840.1.113883");
+
+            sv = new Markdown("test");
+            Assert.IsNotNull(sv);
+            sv.Value = "Hello World!";
+            Assert.AreEqual(sv.Value, "Hello World!");
+
+            sv = new Date();
+            Assert.IsNotNull(sv);
+            sv.Value = "20161201";
+            Assert.AreEqual(sv.Value, "20161201");
+
+            sv = new Time();
+            Assert.IsNotNull(sv);
+            sv.Value = "23:59:00";
+            Assert.AreEqual(sv.Value, "23:59:00");
+
+            sv = new FhirDateTime(DateTime.Now);
+            Assert.IsNotNull(sv);
+            sv.Value = "20161201 23:59:00";
+            Assert.AreEqual(sv.Value, "20161201 23:59:00");
+
+    }
+
+        [TestMethod]
+        public void TestIntegerValueInterface()
+        {
+            INullableIntegerValue iv = new Integer(null);
+            Assert.IsNotNull(iv);
+            iv.Value = 12345;
+            Assert.AreEqual(iv.Value, 12345);
+
+            iv = new UnsignedInt(0);
+            Assert.IsNotNull(iv);
+            iv.Value = 12345;
+            Assert.AreEqual(iv.Value, 12345);
+
+            iv = new PositiveInt(1);
+            Assert.IsNotNull(iv);
+            iv.Value = 12345;
+            Assert.AreEqual(iv.Value, 12345);
+}
+
 
     }
 }

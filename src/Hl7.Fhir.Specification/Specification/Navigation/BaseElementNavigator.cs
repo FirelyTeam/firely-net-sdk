@@ -100,6 +100,20 @@ namespace Hl7.Fhir.Specification.Navigation
 
     public struct Bookmark
     {
-        public object data;
+        // [WMR 20160720] Changed to internal, for encapsulation
+        internal object data;
+
+        // [WMR 20160720] NEW
+        public bool IsEmpty { get { return data == null; } }
+
+        // Singleton
+        public static readonly Bookmark Empty = new Bookmark();
+
+        // [WMR 20160802] NEW
+        internal static Bookmark FromElement(ElementDefinition element)
+        {
+            if (element == null) throw Error.ArgumentNull("element");
+            return new Bookmark() { data = element };
+        }
     }
 }

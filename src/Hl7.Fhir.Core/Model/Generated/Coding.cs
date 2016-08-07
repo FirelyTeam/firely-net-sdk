@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
             get { return SystemElement != null ? SystemElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   SystemElement = null; 
                 else
                   SystemElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             get { return VersionElement != null ? VersionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   VersionElement = null; 
                 else
                   VersionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
             get { return CodeElement != null ? CodeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CodeElement = null; 
                 else
                   CodeElement = new Hl7.Fhir.Model.Code(value);
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
             get { return DisplayElement != null ? DisplayElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DisplayElement = null; 
                 else
                   DisplayElement = new Hl7.Fhir.Model.FhirString(value);
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
             get { return UserSelectedElement != null ? UserSelectedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   UserSelectedElement = null; 
                 else
                   UserSelectedElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -211,6 +211,7 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Coding;
@@ -263,7 +264,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }

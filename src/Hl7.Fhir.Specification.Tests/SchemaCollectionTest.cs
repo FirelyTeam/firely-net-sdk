@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestSchemaCollectionValidation()
         {
             var s = File.ReadAllText(@"TestData\TestPatient.xml");
-            var doc = FhirParser.XDocumentFromXml(s);
+            var doc = SerializationUtil.XDocumentFromXmlText(s);
 
             string message = null;
 

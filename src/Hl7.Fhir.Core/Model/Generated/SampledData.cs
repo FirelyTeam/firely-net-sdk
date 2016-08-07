@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
             get { return PeriodElement != null ? PeriodElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   PeriodElement = null; 
                 else
                   PeriodElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
             get { return FactorElement != null ? FactorElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   FactorElement = null; 
                 else
                   FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
             get { return LowerLimitElement != null ? LowerLimitElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   LowerLimitElement = null; 
                 else
                   LowerLimitElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
             get { return UpperLimitElement != null ? UpperLimitElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   UpperLimitElement = null; 
                 else
                   UpperLimitElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
             get { return DimensionsElement != null ? DimensionsElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   DimensionsElement = null; 
                 else
                   DimensionsElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
             get { return DataElement != null ? DataElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DataElement = null; 
                 else
                   DataElement = new Hl7.Fhir.Model.FhirString(value);
@@ -260,6 +260,7 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as SampledData;
@@ -318,7 +319,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }

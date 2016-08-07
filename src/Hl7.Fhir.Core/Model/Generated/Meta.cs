@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
             get { return VersionIdElement != null ? VersionIdElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   VersionIdElement = null; 
                 else
                   VersionIdElement = new Hl7.Fhir.Model.Id(value);
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             get { return LastUpdatedElement != null ? LastUpdatedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   LastUpdatedElement = null; 
                 else
                   LastUpdatedElement = new Hl7.Fhir.Model.Instant(value);
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
             get { return ProfileElement != null ? ProfileElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ProfileElement = null; 
                 else
                   ProfileElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
@@ -176,6 +176,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Coding> _Tag;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Meta;
@@ -228,7 +229,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }

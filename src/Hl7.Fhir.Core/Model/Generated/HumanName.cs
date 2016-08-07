@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
             get { return UseElement != null ? UseElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   UseElement = null; 
                 else
                   UseElement = new Code<Hl7.Fhir.Model.HumanName.NameUse>(value);
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
             get { return TextElement != null ? TextElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TextElement = null; 
                 else
                   TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
             get { return FamilyElement != null ? FamilyElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   FamilyElement = null; 
                 else
                   FamilyElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
             get { return GivenElement != null ? GivenElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   GivenElement = null; 
                 else
                   GivenElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
             get { return PrefixElement != null ? PrefixElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PrefixElement = null; 
                 else
                   PrefixElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
             get { return SuffixElement != null ? SuffixElement.Select(elem => elem.Value) : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   SuffixElement = null; 
                 else
                   SuffixElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
@@ -311,6 +311,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Period _Period;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as HumanName;
@@ -369,7 +370,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }

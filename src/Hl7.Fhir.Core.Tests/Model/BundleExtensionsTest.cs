@@ -43,7 +43,6 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(1, b.FindEntry("https://some.org/fhir/Patient/4").Count());
         }
 
-
         [TestMethod]
         public void ResourceListFiltering()
         {
@@ -73,6 +72,35 @@ namespace Hl7.Fhir.Tests.Model
 
             result = testBundle.FindEntry(new Uri("urn:oid:1.2.3.4.5"));
             Assert.AreEqual(1, result.Count());
+        }
+
+        [TestMethod]
+        public void AddSearchEntry()
+        {
+            var testBundle = new Bundle();
+            testBundle.AddSearchEntry(new Patient { Id = "5678" }, "http://server1.com/fhir/Patient/5678", Bundle.SearchEntryMode.Match);
+
+            var firstEntry = testBundle.FindEntry("http://server1.com/fhir/Patient/5678").First();
+            
+            Assert.AreEqual(Bundle.SearchEntryMode.Match, firstEntry.Search.Mode);
+            Assert.AreEqual("5678", firstEntry.Resource.Id);
+
+            testBundle.AddSearchEntry(
+                new Patient { Id = "5679" },
+                "http://server1.com/fhir/Patient/5679",
+                Bundle.SearchEntryMode.Include,
+                new decimal(0.1));
+
+            var secondEntry = testBundle.FindEntry("http://server1.com/fhir/Patient/5679").First();
+            Assert.AreEqual(Bundle.SearchEntryMode.Include, secondEntry.Search.Mode);
+            Assert.AreEqual("5679", secondEntry.Resource.Id);
+            Assert.AreEqual((Decimal)0.1, secondEntry.Search.Score);
+
+            // Retest that the first one can still be located
+            firstEntry = testBundle.FindEntry("http://server1.com/fhir/Patient/5678").First();
+
+            Assert.AreEqual(Bundle.SearchEntryMode.Match, firstEntry.Search.Mode);
+            Assert.AreEqual("5678", firstEntry.Resource.Id);
         }
     }
 }

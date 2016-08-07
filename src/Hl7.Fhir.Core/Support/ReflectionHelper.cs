@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Support
 #if PORTABLE45
             var memInfo = type.GetTypeInfo().GetDeclaredField(enumVal.ToString());
 #else
-            var memInfo = type.GetMember(enumVal.ToString())[0];
+            var memInfo = type.GetField(enumVal.ToString());
 #endif
             var attributes = memInfo.GetCustomAttributes(typeof(T), false);
             return (attributes.Count() > 0) ? (T)attributes.First() : null;

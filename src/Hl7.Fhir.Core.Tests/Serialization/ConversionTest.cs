@@ -73,6 +73,23 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
+        public void TestStringToEnum()
+        {
+            Assert.AreEqual(AdministrativeGender.Other, PrimitiveTypeConverter.ConvertTo<AdministrativeGender>("other"));
+
+            try
+            {
+                PrimitiveTypeConverter.ConvertTo<AdministrativeGender>("otherX");
+                Assert.Fail();
+            }
+            catch(NotSupportedException)
+            {
+                // succeeds
+            }
+        }
+
+
+        [TestMethod]
         public void TestStringToInstant()
         {
             var result = PrimitiveTypeConverter.ConvertTo<DateTimeOffset>("2011-03-04T14:45:33Z");

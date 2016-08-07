@@ -26,11 +26,17 @@ namespace Hl7.Fhir.Serialization
         private IFhirReader _current;
         private ModelInspector _inspector;
 
-        public RepeatingElementReader(IFhirReader reader)
+        public ParserSettings Settings { get; private set; }
+
+        public RepeatingElementReader(IFhirReader reader, ParserSettings settings)
         {
             _current = reader;
-            _inspector = SerializationConfig.Inspector;
+            _inspector = BaseFhirParser.Inspector;
+
+            Settings = settings;
         }
+
+        
 
         public IList Deserialize(PropertyMapping prop, string memberName, IList existing=null)
         {
@@ -40,7 +46,7 @@ namespace Hl7.Fhir.Serialization
 
             if (result == null) result = ReflectionHelper.CreateGenericList(prop.ElementType);
 
-            var reader = new DispatchingReader(_current, arrayMode: true);                 
+            var reader = new DispatchingReader(_current, Settings, arrayMode: true);                 
             result.Add(reader.Deserialize(prop, memberName));
 
             return result;

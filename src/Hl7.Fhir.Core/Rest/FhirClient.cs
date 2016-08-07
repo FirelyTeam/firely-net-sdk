@@ -6,21 +6,14 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Hl7.Fhir;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using System.Net;
-using System.IO;
-using Newtonsoft.Json;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Rest;
-using System.Threading;
-using Hl7.Fhir.Introspection;
-using System.Threading.Tasks;
 
 
 namespace Hl7.Fhir.Rest
@@ -140,6 +133,13 @@ namespace Hl7.Fhir.Rest
             get { return _requester.LastResult != null ? _requester.LastResult.Response : null; }
         }
 
+        public ParserSettings ParserSettings
+        {
+            get { return _requester.ParserSettings;  }
+            set { _requester.ParserSettings = value;  }
+        }
+
+
         public byte[] LastBody { get { return LastResult != null ? LastResult.GetBody() : null; } }
         public string LastBodyAsText { get { return LastResult != null ? LastResult.GetBodyAsText() : null; } }
         public Resource LastBodyAsResource { get { return _requester.LastResult != null ? _requester.LastResult.Resource : null; } }
@@ -222,6 +222,21 @@ namespace Hl7.Fhir.Rest
             return Read<TResource>(new Uri(location, UriKind.RelativeOrAbsolute), ifNoneMatch, ifModifiedSince);
         }
 
+
+        /// <summary>
+        /// Refreshes the data in the resource passed as an argument by re-reading it from the server
+        /// </summary>
+        /// <typeparam name="TResource"></typeparam>
+        /// <param name="current">The resource for which you want to get the most recent version.</param>
+        /// <returns>A new instance of the resource, containing the most up-to-date data</returns>
+        /// <remarks>This function will not overwrite the argument with new data, rather it will return a new instance
+        /// which will have the newest data, leaving the argument intact.</remarks>
+        public TResource Refresh<TResource>(TResource current) where TResource : Resource
+        {
+            if (current == null) throw Error.ArgumentNull("current");
+
+            return Read<TResource>(ResourceIdentity.Build(current.TypeName, current.Id));
+        }
 
         /// <summary>
         /// Update (or create) a resource
@@ -487,7 +502,10 @@ namespace Hl7.Fhir.Rest
         {
             if (operationName == null) throw Error.ArgumentNull("operationName");
 
-            var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
+            // [WMR 20160421] GetResourceNameForType is obsolete
+            // var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
+            var typeName = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+
             return TypeOperation(operationName, typeName, parameters, useGet: useGet);
         }
 
@@ -764,12 +782,12 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Called just before the Http call is done
         /// </summary>
-        public event BeforeRequestEventHandler OnBeforeRequest;
+        public event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
 
         /// <summary>
         /// Called just after the response was received
         /// </summary>
-        public event AfterResponseEventHandler OnAfterResponse;
+        public event EventHandler<AfterResponseEventArgs> OnAfterResponse;
 
         /// <summary>
         /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
@@ -1375,7 +1393,7 @@ namespace Hl7.Fhir.Rest
     }
 
 
-    public delegate void BeforeRequestEventHandler(object sender, BeforeRequestEventArgs e);
+
 
     public class BeforeRequestEventArgs : EventArgs
     {
@@ -1388,8 +1406,6 @@ namespace Hl7.Fhir.Rest
         public HttpWebRequest RawRequest { get; internal set; }
         public byte[] Body { get; internal set; }
     }
-
-    public delegate void AfterResponseEventHandler(object sender, AfterResponseEventArgs e);
 
     public class AfterResponseEventArgs : EventArgs
     {

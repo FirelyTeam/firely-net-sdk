@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
             get { return ReferenceElement != null ? ReferenceElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ReferenceElement = null; 
                 else
                   ReferenceElement = new Hl7.Fhir.Model.FhirString(value);
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             get { return DisplayElement != null ? DisplayElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DisplayElement = null; 
                 else
                   DisplayElement = new Hl7.Fhir.Model.FhirString(value);
@@ -115,6 +115,7 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ResourceReference;
@@ -158,7 +159,8 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+    
+    
     }
     
 }
