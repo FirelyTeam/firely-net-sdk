@@ -129,7 +129,7 @@ namespace Hl7.Fhir.FluentPath
         public override string ToString()
         {
             return _value;
-        }
+        } 
 
         public static PartialDateTime Now()
         {

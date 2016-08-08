@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Furore.MetaModel;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.FluentPath.Functions
 {
     internal static class UtilityOperators
     {
-        static Action<string> WriteLine;
+        static Action<string> WriteLine = (string s) => Debug.WriteLine(s);
          
         public static IEnumerable<IValueProvider> Extension(this IEnumerable<IValueProvider> focus, string url)
         {

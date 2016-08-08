@@ -3,8 +3,8 @@
   "title": "FluentPath",
   "version": "1.4.1-beta2",
   "dependencies": {
-    "Sprache": "2.1.0",
-    "Furore.MetaModel": "1.4.1-beta"
+    "Sprache": "2.1.1-beta1",
+    "Furore.MetaModel": "1.4.1-beta2"
   },
   "frameworks": {
     "net40": {
