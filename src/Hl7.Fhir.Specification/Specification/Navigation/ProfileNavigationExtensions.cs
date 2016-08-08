@@ -7,12 +7,9 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -98,24 +95,56 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         // [WMR 20160801] NEW
-        /// <summary>Returns the first type profile url, or <c>null</c></summary>
-        public static string PrimaryProfile(this ElementDefinition elem)
+
+        /// <summary>Enumerates the type profile references of the primary element type.</summary>
+        public static IEnumerable<string> PrimaryTypeProfiles(this ElementDefinition elem)
         {
-            if (elem.IsExtension() && elem.Type != null)
+            if (elem.Type != null)
             {
                 var primaryType = elem.Type.FirstOrDefault();
-                if (primaryType != null && primaryType.Profile != null)
+                if (primaryType != null)
                 {
-                    return primaryType.Profile.FirstOrDefault();
+                    return primaryType.Profile;
+                }
+            }
+            return Enumerable.Empty<string>();
+        }
+
+
+        /// <summary>Returns the first type profile reference of the primary element type, if it exists, or <c>null</c></summary>
+        public static string PrimaryTypeProfile(this ElementDefinition elem)
+        {
+            return elem.PrimaryTypeProfiles().FirstOrDefault();
+            //if (elem.Type != null)
+            //{
+            //    var primaryType = elem.Type.FirstOrDefault();
+            //    if (primaryType != null && primaryType.Profile != null)
+            //    {
+            //        return primaryType.Profile.FirstOrDefault();
+            //    }
+            //}
+            //return null;
+        }
+
+        /// <summary>Returns the type code of the primary element type, or <c>null</c>.</summary>
+        public static FHIRDefinedType? PrimaryTypeCode(this ElementDefinition elem)
+        {
+            if (elem.Type != null)
+            {
+                var type = elem.Type.FirstOrDefault();
+                if (type != null)
+                {
+                    return type.Code;
                 }
             }
             return null;
         }
 
+
         /// <summary>Returns <c>true</c> if the element represents an extension with a custom extension profile url, or <c>false</c> otherwise.</summary>
         public static bool IsMappedExtension(this ElementDefinition elem)
         {
-            return elem.IsExtension() && elem.PrimaryProfile() != null;
+            return elem.IsExtension() && elem.PrimaryTypeProfile() != null;
         }
 
         // [WMR 20160720] NEW
@@ -140,7 +169,8 @@ namespace Hl7.Fhir.Specification.Navigation
         public static string GetParentNameFromPath(this ElementDefinition element)
         {
             return ElementNavigator.GetParentPath(element.Path);
-        }      
+        }
+
     }
 }
     

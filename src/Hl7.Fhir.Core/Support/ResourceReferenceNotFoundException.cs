@@ -11,7 +11,8 @@ namespace Hl7.Fhir.Support
     {
         private readonly string _url;
 
-        private const string defaultMessage = "Resource reference not found for url '{0}'";
+        // private const string defaultMessage = "Resource reference not found for url '{0}'";
+        private const string defaultMessage = "Unresolved resource reference. Cannot find the resource with url '{0}'.";
 
         public ResourceReferenceNotFoundException(string url) : this(url, defaultMessage.FormatWith(url))
         {
@@ -24,6 +25,7 @@ namespace Hl7.Fhir.Support
             _url = url;
         }
 
+        /// <summary>Returns the url of the unresolved resource reference.</summary>
         public string Url { get { return _url; } }
     }
 }

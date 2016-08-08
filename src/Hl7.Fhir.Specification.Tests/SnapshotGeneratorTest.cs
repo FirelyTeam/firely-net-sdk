@@ -13,7 +13,6 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 using System.IO;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using System.Collections.Generic;
 using Hl7.Fhir.Specification.Source;
@@ -36,7 +35,7 @@ namespace Hl7.Fhir.Specification.Tests
 			MarkChanges = false,
 			ExpandTypeProfiles = true,
 			// Throw on unresolved profile references; must include in TestData folder
-			IgnoreMissingTypeProfiles = false
+			IgnoreUnresolvedTypeProfiles = false
 		};
 
 		[TestInitialize]
@@ -60,7 +59,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
-            DumpBasePaths(expanded);
+            dumpBasePaths(expanded);
         }
 
 		[TestMethod]
@@ -80,7 +79,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
-            DumpBasePaths(expanded);
+            dumpBasePaths(expanded);
         }
 
         [TestMethod]
@@ -97,7 +96,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
-            DumpBasePaths(expanded);
+            dumpBasePaths(expanded);
         }
 
         [TestMethod]
@@ -118,7 +117,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
-            DumpBasePaths(expanded);
+            dumpBasePaths(expanded);
         }
 
         // [WMR 20160721] Following profiles are not yet handled (TODO)
@@ -403,13 +402,13 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine("References for StructureDefinition '{0}' ('{1}')".FormatWith(sd.Name, sd.Url));
                 Debug.WriteLine("Base = '{0}'".FormatWith(sd.Base));
 
-                var profiles = sd.Snapshot.Element.SelectMany(e => e.Type).SelectMany(t => t.Profile);
-                profiles = profiles.OrderBy(p => p).Distinct();
-
                 // FhirClient client = new FhirClient("http://fhir2.healthintersections.com.au/open/");
                 // var folderPath = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\snapshot-test\download");
                 // if (!Directory.Exists(folderPath)) { Directory.CreateDirectory(folderPath); }
 
+                var profiles = sd.Snapshot.DistinctTypeProfiles();
+
+                Debug.Indent();
                 foreach (var profile in profiles)
                 {
                     Debug.WriteLine(profile);
@@ -426,12 +425,12 @@ namespace Hl7.Fhir.Specification.Tests
                     //    Debug.WriteLine(ex.Message);
                     //}
                 }
+                Debug.Unindent();
             }
-
         }
 
         [Conditional("DEBUG")]
-        private void DumpBasePaths(StructureDefinition sd)
+        private void dumpBasePaths(StructureDefinition sd)
         {
             if (sd != null && sd.Snapshot != null)
             {
