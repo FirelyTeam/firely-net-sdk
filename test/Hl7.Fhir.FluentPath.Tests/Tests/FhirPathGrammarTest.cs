@@ -7,20 +7,20 @@
  */
 
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.FluentPath;
-using Sprache;
 using System.Linq;
+using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.FluentPath.Parser;
 using Hl7.Fhir.FluentPath.Expressions;
+using Sprache;
+
+using Xunit;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
-    [TestClass]
     public class FhirPathExpressionTest
     {
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Gramm_Literal()
         {
             var parser = Grammar.Literal.End();
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "A23identifier");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Gramm_Invocation()
         {
             var parser = Grammar.InvocationExpression.End();
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "doSomething(");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Gramm_Term()
         {
             var parser = Grammar.Term.End();
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 
         private static readonly Expression patientName = new ChildExpression(new ChildExpression(AxisExpression.This, "Patient"), "name");
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Gramm_Expression_Invocation()
         {
             var parser = Grammar.InvocationExpression.End();
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             //AssertParser.FailsMatch(parser, "Patient .name");
         }
         
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Gramm_Expression_Indexer()
         {
             var parser = Grammar.InvocationExpression.End();
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Gramm_Expression_Polarity()
         {
             var parser = Grammar.PolarityExpression.End();
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Gramm_Mul()
         {
             var parser = Grammar.MulExpression.End();
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             // AssertParser.FailsMatch(parser, "5div6");    oops
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Gramm_Add()
         {
             var parser = Grammar.AddExpression.End();
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Gramm_Type()
         {
             var parser = Grammar.TypeExpression.End();
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             return new BinaryExpression(op, new ConstantExpression(left), new ConstantExpression(right));
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Gramm_InEq()
         {
             var parser = Grammar.Expression.End();
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
    
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Gramm_Eq()
         {
             var parser = Grammar.Expression.End();
@@ -211,8 +211,8 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.SucceedsWith(parser, expr,
                     v =>
                         {
-                            Assert.AreEqual(v.Value, value);
-                            Assert.AreEqual(v.ExpressionType, expected);
+                            Assert.Equal(v.Value, value);
+                            Assert.Equal(v.ExpressionType, expected);
                         });
         }
 

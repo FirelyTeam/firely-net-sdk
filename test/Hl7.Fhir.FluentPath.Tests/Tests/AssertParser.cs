@@ -1,9 +1,9 @@
-﻿using Sprache;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.FluentPath;
+using Sprache;
+using Xunit;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
@@ -14,14 +14,14 @@ namespace Hl7.Fhir.Tests.FhirPath
         {
             SucceedsWith(parser, input, t =>
             {
-                Assert.AreEqual(1, t.Count());
-                Assert.AreEqual(expectedResult, t.Single());
+                Assert.Equal(1, t.Count());
+                Assert.Equal(expectedResult, t.Single());
             });
         }
 
         public static void SucceedsWithMany<T>(Parser<IEnumerable<T>> parser, string input, IEnumerable<T> expectedResult)
         {
-            SucceedsWith(parser, input, t => Assert.IsTrue(t.SequenceEqual(expectedResult)));
+            SucceedsWith(parser, input, t => Assert.True(t.SequenceEqual(expectedResult)));
         }
 
         public static void SucceedsWithAll(Parser<IEnumerable<char>> parser, string input)
@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             parser.TryParse(input)
                 .IfFailure(f =>
                 {
-                    Assert.Fail("Parsing of \"{0}\" failed unexpectedly. {1}", input, f);
+                    throw new Exception($"Parsing of \"{input}\" failed unexpectedly. {f}");
                     return f;
                 })
                 .IfSuccess(s =>
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 
         public static void FailsAt<T>(Parser<T> parser, string input, int position)
         {
-            FailsWith(parser, input, f => Assert.AreEqual(position, f.Remainder.Position));
+            FailsWith(parser, input, f => Assert.Equal(position, f.Remainder.Position));
         }
 
         public static void FailsWith<T>(Parser<T> parser, string input, Action<IResult<T>> resultAssertion)
@@ -59,7 +59,9 @@ namespace Hl7.Fhir.Tests.FhirPath
             parser.TryParse(input)
                 .IfSuccess(s =>
                 {
-                    Assert.Fail("Expected failure but succeeded with {0}.", s.Value);
+                    // todo: Assert.Fail does not exist in XUnit
+                    // Assert.Fail("Expected failure but succeeded with {0}.", s.Value);
+                    throw new Exception($"Expected failure but succeeded with {s.Value}");
                     return s;
                 })
                 .IfFailure(f =>
@@ -73,12 +75,12 @@ namespace Hl7.Fhir.Tests.FhirPath
 
         public static void SucceedsMatch<T>(Parser<T> parser, string input)
         {
-            SucceedsWith<T>(parser, input, result => Assert.AreEqual(input, result));
+            SucceedsWith<T>(parser, input, result => Assert.Equal(input, (IEnumerable<char>)result));
         }
 
         public static void SucceedsMatch<T>(Parser<T> parser, string input, T match)
         {
-            SucceedsWith<T>(parser, input, result => Assert.AreEqual(match, result));
+            SucceedsWith<T>(parser, input, result => Assert.Equal(match, result));
         }
 
         public static void FailsMatch<T>(Parser<T> parser, string input)
@@ -88,7 +90,7 @@ namespace Hl7.Fhir.Tests.FhirPath
 
         public static void FailsMatch<T>(Parser<T> parser, string input, T match)
         {
-            SucceedsWith<T>(parser, input, result => Assert.AreNotEqual(match, result));
+            SucceedsWith<T>(parser, input, result => Assert.NotEqual(match, result));
         }
     }
 

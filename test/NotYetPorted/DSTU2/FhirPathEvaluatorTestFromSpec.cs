@@ -6,26 +6,30 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-extern alias dstu2;
+// extern alias dstu2;
 
-using dstu2::Hl7.Fhir.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+// using dstu2::Hl7.Fhir.Model;
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.FluentPath;
 
 
 using boolean = System.Boolean;
-using DecimalType = dstu2::Hl7.Fhir.Model.FhirDecimal; // System.Decimal;
-using UriType = dstu2::Hl7.Fhir.Model.FhirUri;
-using dstu2::Hl7.Fhir.Serialization;
+using DecimalType = Hl7.Fhir.Model.FhirDecimal; // System.Decimal;
+using UriType = Hl7.Fhir.Model.FhirUri;
+using Hl7.Fhir.Serialization;
 using System.IO;
 using Hl7.Fhir.Tests.FhirPath;
 using System.Xml;
 using Hl7.Fhir.Support;
 using System.Xml.Linq;
 using Hl7.Fhir.FluentPath.Functions;
+using Hl7.Fhir.Model;
+using Xunit;
+using Furore.MetaModel;
 
 static class ConverterExtensions
 {
@@ -107,7 +111,7 @@ public class FluentPathTests
         //       FhirPathEvaluatorTest.Render(npoco);
 
         IEnumerable<IValueProvider> actual = PathExpression.Select(expression, FhirValueList.Create(npoco));
-        Assert.AreEqual(expected.Count(), actual.Count());
+        Assert.Equal(expected.Count(), actual.Count());
 
         expected.Zip(actual, compare).Count();
     }
@@ -116,12 +120,12 @@ public class FluentPathTests
     {
         var type = expected.Attribute("type").Value;        
         var tp = (ITypeNameProvider)actual;
-        Assert.AreEqual(type, tp.TypeName, "incorrect output type");
+        Assert.True(type == tp.TypeName, "incorrect output type");
 
         if (expected.IsEmpty) return true;      // we are not checking the value
 
         var value = expected.Value;
-        Assert.AreEqual(value, actual.ToStringRepresentation(), "incorrect output value");
+        Assert.True(value.Equals(actual.ToStringRepresentation()), "incorrect output value");
 
         return true;
     }
@@ -133,7 +137,7 @@ public class FluentPathTests
         var input = ModelNavigator.CreateInput(focus);
         var container = resource != null ? ModelNavigator.CreateInput(resource) : null;
 
-        Assert.IsTrue(PathExpression.IsBoolean(expression, value, input, container));
+        Assert.True(PathExpression.IsBoolean(expression, value, input, container));
     }
 
 
@@ -148,19 +152,19 @@ public class FluentPathTests
         try
         {
             PathExpression.Select(expression, FhirValueList.Create(new ModelNavigator(resource)));
-            Assert.Fail();
+            throw new Exception();
         }
         catch(FormatException)
         {
-            if (type != ErrorType.Syntax) Assert.Fail();
+            if (type != ErrorType.Syntax) throw new Exception();
         }
         catch (InvalidCastException)
         {
-            if (type != ErrorType.Semantics) Assert.Fail();
+            if (type != ErrorType.Semantics) throw new Exception();
         }
         catch (InvalidOperationException)
         {
-            if (type != ErrorType.Semantics) Assert.Fail();
+            if (type != ErrorType.Semantics) throw new Exception();
         }
     }
 
@@ -170,7 +174,7 @@ public class FluentPathTests
     int numFailed = 0;
     int totalTests = 0;
 
-    [TestMethod, TestCategory("FhirPathFromSpec")]
+    [Fact, Trait("Area", "FhirPathFromSpec")]
     public void TestPublishedTests()
     {
         var files = Directory.EnumerateFiles(@"C:\git\fluentpath\tests\dstu2", "*.xml", SearchOption.TopDirectoryOnly);
@@ -186,7 +190,9 @@ public class FluentPathTests
 
         if (numFailed > 0)
         {
-            Assert.Fail("There were {0} unsuccessful tests (out of a total of {1})".FormatWith(numFailed, totalTests));
+            // todo: mh
+            // Assert.Fail("There were {0} unsuccessful tests (out of a total of {1})".FormatWith(numFailed, totalTests));
+            throw new Exception("There were {0} unsuccessful tests (out of a total of {1})".FormatWith(numFailed, totalTests));
         }
 
     }
@@ -273,7 +279,7 @@ public class FluentPathTests
         }
     }
 
-    [TestMethod, TestCategory("FhirPathFromSpec")]
+    [Fact, Trait("Area", "FhirPathFromSpec")]
     public void testTyping()
     {
         ElementDefinition ed = new ElementDefinition();
@@ -282,7 +288,7 @@ public class FluentPathTests
         testBoolean(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSetUri", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
     }
 
-    [TestMethod, TestCategory("FhirPathFromSpec")]
+    [Fact, Trait("Area", "FhirPathFromSpec")]
     public void testDecimalRA()
     {
         RiskAssessment r = new RiskAssessment();
@@ -304,7 +310,7 @@ public class FluentPathTests
         testBoolean(r, r.getPrediction()[0], "RiskAssessment.prediction", "probability.as(decimal) <= 100", true);
     }
 
-    /*  [TestMethod, TestCategory("FhirPathFromSpec")]
+    /*  [Fact, Trait("Area", "FhirPathFromSpec")]
       public void testQuestionnaire()  {
         Questionnaire q = (Questionnaire)FhirParser.ParseResourceFromJson(File.ReadAllText("C:/work/org.hl7.fhir/build - DSTU2.0/publish/questionnaire-example-gcs.json"));
         for (QuestionnaireItemComponent qi : q.getItem()) {
@@ -317,7 +323,7 @@ public class FluentPathTests
       }
     */
 
-    [TestMethod, TestCategory("FhirPathFromSpec")]
+    [Fact, Trait("Area", "FhirPathFromSpec")]
     public void testExtensionDefinitions()
     {
         Bundle b = (Bundle)FhirParser.ParseResourceFromXml(File.ReadAllText("TestData\\extension-definitions.xml"));

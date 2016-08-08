@@ -7,9 +7,8 @@
  */
 
 // To introduce the DSTU2 FHIR specification
-extern alias dstu2;
+// extern alias dstu2;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,44 +18,44 @@ using System.Diagnostics;
 using dstu2::Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Xml.Linq;
+using Furore.MetaModel;
+using Hl7.Fhir.Model;
+using Xunit;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
-    [TestClass]
-#if PORTABLE45
-	public class PortableFhirPathEvaluatorTest
-#else
-    public class FhirPathEvaluatorTest
-#endif
+    public class PatientFixture : IDisposable
     {
-        static IEnumerable<IValueProvider> testInput;
-        static IEnumerable<IValueProvider> questionnaire;
-        static int counter = 0;
-        static XDocument xdoc;
+        public IEnumerable<IValueProvider> TestInput;
+        public IEnumerable<IValueProvider> Questionnaire;
+        public int counter = 0;
+        public XDocument Xdoc;
 
-        [ClassInitialize]
-        public static void Setup(TestContext context)
+        public PatientFixture()
         {
             var parser = new dstu2::Hl7.Fhir.Serialization.FhirXmlParser();
 
             var tpXml = System.IO.File.ReadAllText("TestData\\fp-test-patient.xml");
             var patient = parser.Parse<Patient>(tpXml);
-            testInput = FhirValueList.Create(new ModelNavigator(patient));
-           
+            TestInput = FhirValueList.Create(new ModelNavigator(patient));
+
             tpXml = System.IO.File.ReadAllText("TestData\\questionnaire-example.xml");
             var quest = parser.Parse<Questionnaire>(tpXml);
-            questionnaire = FhirValueList.Create(new ModelNavigator(quest));
+            Questionnaire = FhirValueList.Create(new ModelNavigator(quest));
 
-            xdoc = new XDocument(new XElement("group", new XAttribute("name", "CSharpTests")));
+            Xdoc = new XDocument(new XElement("group", new XAttribute("name", "CSharpTests")));
         }
 
-        [ClassCleanup]
-        public static void Cleanup()
+        public void Dispose()
         {
-            xdoc.Save(@"c:\temp\csharp-tests.xml");
+            Xdoc.Save(@"c:\temp\csharp-tests.xml");
         }
+    }
 
-        [TestMethod, TestCategory("FhirPath")]
+    public class FhirPathEvaluatorTest : IClassFixture<PatientFixture>
+    {
+
+        [Fact]
         public void TestTreeVisualizerVisitor()
         {
             var expr = PathExpression.Parse("doSomething('ha!', 4, {}, $this, somethingElse(true))");
@@ -64,35 +63,35 @@ namespace Hl7.Fhir.Tests.FhirPath
             Debug.WriteLine(result);
         }
 
-        [TestMethod, TestCategory("FhirPath")]
-        public void TestExistence()
+        [Fact]
+        public void TestExistence(PatientFixture fixture)
         {
             isTrue(@"{}.empty()");
             isTrue(@"1.empty().not()");
             isTrue(@"1.exists()");
             isTrue(@"Patient.identifier.exists()");
             isTrue(@"Patient.dientifeir.exists().not()");
-            Assert.AreEqual(3L, PathExpression.Scalar(@"identifier.count()", testInput));
-            Assert.AreEqual(3L, PathExpression.Scalar(@"Patient.identifier.count()", testInput));
-            Assert.AreEqual(3L, PathExpression.Scalar(@"Patient.identifier.value.count()", testInput));
+            Assert.Equal(3L, PathExpression.Scalar(@"identifier.count()", fixture.TestInput));
+            Assert.Equal(3L, PathExpression.Scalar(@"Patient.identifier.count()", fixture.TestInput));
+            Assert.Equal(3L, PathExpression.Scalar(@"Patient.identifier.value.count()", fixture.TestInput));
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestNullPropagation()
         {
             isTrue(@"({}.substring(0)).empty()");
             isTrue(@"('hello'.substring({})).empty()");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestDynaBinding()
         {
             var input = FhirValueList.Create(new ConstantValue("Hello world!"), new ConstantValue(4));
-            Assert.AreEqual("ello", PathExpression.Scalar(@"$this[0].substring(1,%context[1])", input));
+            Assert.Equal("ello", PathExpression.Scalar(@"$this[0].substring(1,%context[1])", input));
         }
 
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestSubsetting()
         {
             isTrue(@"Patient.identifier[1] != Patient.identifier.first()");
@@ -107,16 +106,18 @@ namespace Hl7.Fhir.Tests.FhirPath
             try
             {
                 isTrue(@"Patient.identifier.single()");
-                Assert.Fail();
+                // todo: mh
+                // Assert.Fail();
+                throw new Exception();
             }
             catch (InvalidOperationException io)
             {
-                Assert.IsTrue(io.Message.Contains("contains more than one element"));
+                Assert.True(io.Message.Contains("contains more than one element"));
             }
         }
 
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestGreaterThan()
         {
             isTrue(@"4.5 > 0");
@@ -140,15 +141,15 @@ namespace Hl7.Fhir.Tests.FhirPath
                         new XElement("output", new XAttribute("type", "boolean"), new XText("true")));
             xdoc.Elements().First().Add(testXml);
 
-            Assert.IsTrue(PathExpression.IsBoolean(expr, true,testInput));
+            Assert.True(PathExpression.IsBoolean(expr, true,testInput));
         }
 
         private void isTrue(string expr, IEnumerable<IValueProvider> input)
         {
-            Assert.IsTrue(PathExpression.IsBoolean(expr, true,input));
+            Assert.True(PathExpression.IsBoolean(expr, true,input));
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestMath()
         {
             isTrue(@"-4.5 + 4.5 = 0");
@@ -178,7 +179,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void Test3VLBoolean()
         {
             isTrue(@"true and true");
@@ -222,7 +223,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"({} implies {}).empty()");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestLogicalShortcut()
         {
             isTrue(@"true or (1/0 = 0)");
@@ -230,7 +231,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestConversions()
         {
             isTrue(@"(4.1).toString() = '4.1'");
@@ -240,7 +241,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"@2014-12-14.toString() = '2014-12-14'");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestIIf()
         {
             isTrue(@"Patient.name.iif(exists(), 'named', 'unnamed') = 'named'");
@@ -254,7 +255,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"Patient.name[0].family.iif(length()-8 != 0, 5/(length()-8), 'no result') = 'no result'");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestExtension()
         {
             isTrue(@"Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime').exists()");
@@ -262,7 +263,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime1').empty()");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestEquality()
         {
             isTrue(@"4 = 4");
@@ -288,7 +289,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"@T13:45:02+00:00 != @T13:45:02+01:00");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestCollectionFunctions()
         {
             isTrue(@"Patient.identifier.use.distinct() = ('usual' | 'official')");
@@ -304,7 +305,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"{}.subsetOf(%context.Patient.identifier)");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestCollectionOperators()
         {
             isTrue(@"Patient.identifier.last() in Patient.identifier");
@@ -320,7 +321,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestEquivalence()
         {
             isTrue("@2012-04-15 ~ @2012-04-15T10:00:00");
@@ -364,7 +365,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestWhere()
         {
             isTrue("Patient.identifier.where(use = ('offic' + 'ial')).count() = 2");
@@ -373,7 +374,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"{}.where($this = 'hi').count()=0");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestAll()
         {
             isTrue(@"Patient.identifier.skip(1).all(use = 'official')");
@@ -381,7 +382,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"Patient.identifier.skip(1).all({}).empty()");   // empty results still count as "empty"
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestAny()
         {
             isTrue(@"Patient.identifier.any(use = 'official')");
@@ -389,8 +390,8 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"Patient.contained.skip(1).group.group.any(concept.code = 'COMORBIDITY')");       // really need to filter on Questionnare (as('Questionnaire'))
         }
 
-        [TestMethod, TestCategory("FhirPath")]
-        public void TestRepeat()
+        [Fact]
+        public void TestRepeat(PatientFixture fixture)
         {
             isTrue(@"Patient.contained.skip(1).repeat(group).count() = 4");       // really need to filter on Questionnare (as('Questionnaire'))
             isTrue(@"Patient.contained.skip(1).repeat(group|question).count() = 11");       // really need to filter on Questionnare (as('Questionnaire'))
@@ -401,12 +402,12 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue(@"Patient.contained.skip(1).repeat(group).any(concept.code = 'CARDIAL') = false");       // really need to filter on Questionnare (as('Questionnaire'))
             isTrue(@"Patient.contained.skip(1).repeat(group|question).any(concept.code = 'CARDIAL')");       // really need to filter on Questionnare (as('Questionnaire'))
 
-            isTrue(@"Questionnaire.descendants().linkId.distinct()", questionnaire);
-            isTrue(@"Questionnaire.repeat(group | question).concept.count()", questionnaire);
+            isTrue(@"Questionnaire.descendants().linkId.distinct()", fixture.Questionnaire);
+            isTrue(@"Questionnaire.repeat(group | question).concept.count()", fixture.Questionnaire);
         }
 
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestExpression()
         {
             isTrue(@"(Patient.identifier.where( use = ( 'offic' + 'ial')) = 
@@ -442,11 +443,11 @@ namespace Hl7.Fhir.Tests.FhirPath
 
         }
 
-        [TestMethod, TestCategory("FhirPath")]
-        public void TestExpressionTodayFunction()
+        [Fact]
+        public void TestExpressionTodayFunction(PatientFixture fixture)
         {
             // Check that date comes in
-            Assert.AreEqual(PartialDateTime.Today(), PathExpression.Scalar("today()", testInput));
+            Assert.Equal(PartialDateTime.Today(), PathExpression.Scalar("today()", fixture.TestInput));
 
             // Check greater than
             isTrue("today() < @" + PartialDateTime.FromDateTime(DateTime.Today.AddDays(1)));
@@ -461,7 +462,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             isTrue("now() >= @" + PartialDateTime.Now());
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestSubstring()
         {
             isTrue("Patient.name.family");
@@ -482,14 +483,15 @@ namespace Hl7.Fhir.Tests.FhirPath
             {
                 // TODO: Improve exception on this one
                 isTrue("Patient.identifier.use.substring(0,10)");
-                Assert.Fail();
+                // todo: mh: Assert.Fail();
+                throw new Exception();
             }
             catch (InvalidOperationException)
             {
             }
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void TestStringOps()
         {
             isTrue("Patient.name.family.startsWith('')");

@@ -7,17 +7,16 @@
  */
 
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.FluentPath;
 using Sprache;
 using Hl7.Fhir.FluentPath.Parser;
+using Xunit;
 
 namespace Hl7.Fhir.Tests.FhirPath
 {
-    [TestClass]
     public class FhirPathLexerTest
     {
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_QualifiedIdentifier()
         {
             var parser = Lexer.QualifiedIdentifier.End();
@@ -35,7 +34,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_Const()
         {
             var parser = Lexer.ExternalConstant.End();
@@ -55,7 +54,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "%*");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_Identifier()
         {
             var parser = Lexer.Identifier.End();
@@ -74,7 +73,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.SucceedsMatch(parser, s, PartialDateTime.Parse(s.Substring(1)));
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_DateTime()
         {
             var parser = Lexer.DateTime.End();
@@ -100,7 +99,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.SucceedsMatch(parser, s, Time.Parse(s.Substring(1)));
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_Time()
         {
             var parser = Lexer.Time.End();
@@ -121,7 +120,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "@T12:34:34+48:30");
         }
 
-            [TestMethod, TestCategory("FhirPath")]
+            [Fact]
         public void FhirPath_Lex_Id()
         {
             var parser = Lexer.Id.End();
@@ -148,7 +147,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "2A");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_QuotedIdentifier()
         {
             var parser = Lexer.QuotedIdentifier.End();
@@ -165,7 +164,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_Unicode()
         {
             var parser = Lexer.Unicode.End();
@@ -183,7 +182,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "ugggg");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_Escape()
         {
             var parser = Lexer.Escape.End();
@@ -210,7 +209,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.SucceedsMatch(parser, s, s.Substring(1, s.Length - 2));
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_String()
         {
             var parser = Lexer.String.End();            
@@ -231,7 +230,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, @"""mixed quotes'");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_Bool()
         {
             var parser = Lexer.Bool.End();
@@ -251,7 +250,7 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_Int()
         {
             var parser = Lexer.IntegerNumber.End();
@@ -271,7 +270,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "-3");      // use unary '-' operator to make negative
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_Decimal()
         {
             var parser = Lexer.DecimalNumber.End();
@@ -292,7 +291,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             AssertParser.FailsMatch(parser, "0.314+E01");
         }
 
-        [TestMethod, TestCategory("FhirPath")]
+        [Fact]
         public void FhirPath_Lex_Mul()
         {
             var parser = Lexer.MulOperator.End();

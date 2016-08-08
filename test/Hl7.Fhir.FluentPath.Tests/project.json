@@ -1,0 +1,26 @@
+﻿{
+  "version": "1.0.0-*",
+  "testRunner": "xunit",
+  "dependencies": {
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Sprache": { "target": "project" },
+    "Furore.MetaModel": { "target": "project" },
+    "HL7.Fhir.FluentPath": { "target": "project" },
+    "Hl7.Fhir.DSTU2": "0.90.4"
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": "net45",
+      "dependencies": {
+
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+
+        }
+
+      }
+    }
+  }
+}
