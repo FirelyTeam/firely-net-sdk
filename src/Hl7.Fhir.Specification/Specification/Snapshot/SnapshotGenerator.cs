@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             MarkChanges = false,
             ExpandTypeProfiles = true,
-            IgnoreUnresolvedTypeProfiles = false,
+            IgnoreUnresolvedProfiles = false,
             ExpandExternalProfiles = false,
             RewriteElementBase = false,
             NormalizeElementBase = false    // true in STU3
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Enable this setting to ignore unknown or invalid element type profiles.
         /// If disabled (default), throw an exception for unknown or invalid element type profiles.
         /// </summary>
-        public bool IgnoreUnresolvedTypeProfiles { get; set; }
+        public bool IgnoreUnresolvedProfiles { get; set; }
 
         /// <summary>
         /// EXPERIMENTAL!
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var baseStructure = _resolver.GetStructureDefinition(primaryDiffTypeProfile);
             if (baseStructure == null)
             {
-                if (!_settings.IgnoreUnresolvedTypeProfiles)
+                if (!_settings.IgnoreUnresolvedProfiles)
                 {
                     // throw Error.NotSupported("Trying to navigate down a node that has a declared type profile of '{0}', which is unknown".FormatWith(primaryDiffTypeProfile));
                     throw Error.ResourceReferenceNotFoundException(
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         Debug.Print("Recursively expand external profile with url: '{0}' ...".FormatWith(baseStructure.Url));
                         Generate(baseStructure);
                     }
-                    else if (!_settings.IgnoreUnresolvedTypeProfiles)
+                    else if (!_settings.IgnoreUnresolvedProfiles)
                     {
                         throw Error.NotSupported("Found definition of type profile '{0}', but is does not contain a snapshot representation.".FormatWith(primaryDiffTypeProfile));
                     }
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         //}
                         if (baseStructure == null)
                         {
-                            if (_settings.IgnoreUnresolvedTypeProfiles)
+                            if (_settings.IgnoreUnresolvedProfiles)
                             {
                                 // Ignore unresolved external type profile reference; expand the underlying standard core type
                                 baseStructure = _resolver.GetStructureDefinitionForCoreType(typeCode);

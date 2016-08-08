@@ -115,15 +115,6 @@ namespace Hl7.Fhir.Specification.Navigation
         public static string PrimaryTypeProfile(this ElementDefinition elem)
         {
             return elem.PrimaryTypeProfiles().FirstOrDefault();
-            //if (elem.Type != null)
-            //{
-            //    var primaryType = elem.Type.FirstOrDefault();
-            //    if (primaryType != null && primaryType.Profile != null)
-            //    {
-            //        return primaryType.Profile.FirstOrDefault();
-            //    }
-            //}
-            //return null;
         }
 
         /// <summary>Returns the type code of the primary element type, or <c>null</c>.</summary>

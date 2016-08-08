@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Specification.Tests
 			MarkChanges = false,
 			ExpandTypeProfiles = true,
 			// Throw on unresolved profile references; must include in TestData folder
-			IgnoreUnresolvedTypeProfiles = false
+			IgnoreUnresolvedProfiles = false
 		};
 
 		[TestInitialize]
