@@ -90,6 +90,8 @@ namespace Hl7.Fhir.Tests
             if (actual.EndsWith("+00:00")) actual = actual.Replace("+00:00", "Z");
             if (expected.Contains(".000+")) expected = expected.Replace(".000+", "+");
             if (actual.Contains(".000+")) actual = actual.Replace(".000+", "+");
+            if (expected.Contains(".000Z")) expected = expected.Replace(".000Z", "Z");
+            if (actual.Contains(".000Z")) actual = actual.Replace(".000Z", "Z");
             actual = actual.Replace("\n", "");
             actual = actual.Replace("\r", "");
             actual = actual.Replace(" ", "");

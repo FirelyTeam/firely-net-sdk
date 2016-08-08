@@ -135,6 +135,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
             foreach (string file in files)
             {
+                if (file.Contains(".profile"))
+                    continue;
+                if (file.Contains(".schema"))
+                    continue;
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string ext = Path.GetExtension(file);
                 var toExt = ext == ".xml" ? ".json" : ".xml";
@@ -160,6 +164,10 @@ namespace Hl7.Fhir.Tests.Serialization
 
             foreach (string file in files)
             {
+                if (file.Contains(".profile"))
+                    continue;
+                if (file.Contains(".schema"))
+                    continue;
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string extension = Path.GetExtension(file);
                 string actualFile = Path.Combine(actualPath, exampleName) + extension;
