@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // snapNav has already expanded target extension definition 'questionnaire-enableWhen'
                 // => Match to base profile on child element with name 'question'
 
-                var diffProfiles = diffNav.Current.PrimaryTypeProfiles().ToArray();
+                var diffProfiles = diffNav.Current.Type.FirstOrDefault().Profile.ToArray();
                 if (diffProfiles == null || diffProfiles.Length == 0)
                 {
                     throw Error.InvalidOperation("Differential is reslicing on url, but resliced element has no type profile (path = '{0}').", diffNav.Path);
@@ -299,13 +299,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 var diffProfile = diffProfiles.FirstOrDefault();
-                var profileRef = ProfileReference.FromUrl(diffProfile);
+                string profileUrl, elementName;
+                var isComplex = SnapshotGenerator.IsComplexProfileReference(diffProfile, out profileUrl, out elementName);
                 while (snapNav.MoveToNext(snapNav.PathName))
                 {
-                    var baseProfiles = snapNav.Current.PrimaryTypeProfiles().ToArray();
-                    result = profileRef.IsComplex
+                    var baseProfiles = snapNav.Current.Type.FirstOrDefault().Profile;
+                    result = isComplex
                         // Match on element name
-                        ? snapNav.Current.Name == profileRef.ElementName
+                        ? snapNav.Current.Name == elementName
                         // Match on profile(s)
                         : baseProfiles.SequenceEqual(diffProfiles);
                     if (result)
