@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Validation
             if (should)
             {
                 // RULE 2: Unless there is a profile reference. In that case  there should not be any children, so let's ignore them.
-                bool profile = vector.Element.TypeRefs.Any(t => t.ProfileUri != null);
+                bool profile = vector.Element.TypeRefs.Any(t => t.Profile != null);
                 should = !profile;
             }
 

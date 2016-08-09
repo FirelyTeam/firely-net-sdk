@@ -30,21 +30,6 @@ namespace Hl7.Fhir.Validation
         private SpecificationProvider _provider;
         private Tracker tracker = new Tracker();
         
-        private void trackStructure(Structure structure)
-        {
-            Uri uri = structure.ProfileUri;
-            tracker.MarkResolved(uri);
-        }
-
-        private void trackStructures(IEnumerable<Structure> structures)
-        {
-            var uris = structures.Select(s => s.Uri).Distinct();
-            foreach (Uri u in uris)
-            {
-                tracker.MarkResolved(u);
-            }
-        }
-
         private bool tryAddStructures(Uri uri)
         {
             if (uri == null) return false;
@@ -54,8 +39,7 @@ namespace Hl7.Fhir.Validation
             if (structure != null)
             {
                 specification.Add(structure);
-                tracker.Add(uri, Resolution.Resolved);
-                trackStructure(structure);
+                tracker.MarkResolved(structure.Uri);
                 return true;
             }
             else
@@ -135,13 +119,18 @@ namespace Hl7.Fhir.Validation
         public void Add(IEnumerable<Structure> structures)
         {
             specification.Add(structures);
-            trackStructures(structures);
+
+            // Track all structures in argument
+            var uris = structures.Select(s => s.Uri).Distinct();
+            foreach (var u in uris)
+            {
+                tracker.MarkResolved(u);
+            }
         }
 
         public void Add(IEnumerable<ValueSet> valuesets)
         {
             specification.Add(valuesets);
-
         }
 
         public SpecificationWorkspace ToSpecification()

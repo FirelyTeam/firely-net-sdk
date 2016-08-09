@@ -81,13 +81,13 @@ namespace Hl7.Fhir.Specification.Model
 
         public Structure GetStructureByUri(Uri uri)
         {
-            return Structures.FirstOrDefault(s => UriHelper.Equal(s.Uri, uri));
+            return Structures.FirstOrDefault(s => s.Uri == uri);
         }
 
-        public IEnumerable<Structure> StructuresWithName(Fhir.Model.FHIRDefinedType fhirType)
-        {
-            return Structures.Where(s => s.ConstrainedType == fhirType);
-        }
+        //public IEnumerable<Structure> StructuresWithName(Fhir.Model.FHIRDefinedType fhirType)
+        //{
+        //    return Structures.Where(s => s.ConstrainedType == fhirType);
+        //}
 
         public ValueSet GetValueSetByUri(string uri)
         {
@@ -169,16 +169,16 @@ namespace Hl7.Fhir.Specification.Model
             }
         }
 
-        public Element ParentOf(Element element)
-        {
-            Structure structure = StructureOf(element);
-            return ParentOf(structure, element);
-        }
+        //public Element ParentOf(Element element)
+        //{
+        //    Structure structure = StructureOf(element);
+        //    return ParentOf(structure, element);
+        //}
 
-        public TypeRef FindTypeRef(TypeRef typeref)
-        {
-            return TypeRefs.FirstOrDefault(t => t.Equals(typeref));
-        }
+        //public TypeRef FindTypeRef(TypeRef typeref)
+        //{
+        //    return TypeRefs.FirstOrDefault(t => t.Equals(typeref));
+        //}
 
         public IEnumerable<Structure> Structures
         {
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Specification.Model
             return
                 TypeRefs
                 .Where(t => t.Unresolved)
-                .Select(t => t.Uri)
+                .Select(t => t.Profile)
                 .Distinct();
         }
 

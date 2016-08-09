@@ -31,16 +31,6 @@ namespace Hl7.Fhir.Validation
             return slicing;
         }
 
-        internal void InjectSlice(Element element)
-        {
-            Slicing slicing = GetSlicingForElement(element);
-            if (slicing != null)
-            {
-                element.Discriminator = slicing.Discriminator;
-                element.Slice = ++slicing.Count;
-            }
-        }
-
         private void HarvestBinding(Hl7.Fhir.Model.ElementDefinition source, Element target)
         {
 
@@ -120,9 +110,15 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        private void HarvestSlicing(Hl7.Fhir.Model.ElementDefinition source, Element target)
+        private void HarvestSlicing(Element target)
         {
-            InjectSlice(target);
+            Slicing slicing = GetSlicingForElement(target);
+
+            if (slicing != null)
+            {
+                target.Discriminator = slicing.Discriminator;
+                target.Slice = ++slicing.Count;
+            }
         }
 
         private Representation TransformRepresentation(Hl7.Fhir.Model.ElementDefinition source)
@@ -155,7 +151,7 @@ namespace Hl7.Fhir.Validation
             target.Representation = TransformRepresentation(source);
 
             HarvestElementDefinition(source, target);
-            HarvestSlicing(source, target);
+            HarvestSlicing(target);
         }
 
         private Element HarvestElement(Hl7.Fhir.Model.ElementDefinition source)
@@ -209,35 +205,26 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        private void fixUris(Structure structure, Uri uri)
-        {
-            UriHelper.SetStructureIdentification(structure, uri);
-            List<TypeRef> typerefs = structure.Elements.SelectMany(e => e.TypeRefs).ToList();
-            foreach (TypeRef t in typerefs)
-            {
-                UriHelper.SetTypeRefIdentification(structure, t);
-            }
-        }
+        //private void fixUris(Structure structure, Uri uri)
+        //{
+        //    UriHelper.SetStructureIdentification(structure, uri);
+        //    List<TypeRef> typerefs = structure.Elements.SelectMany(e => e.TypeRefs).ToList();
+        //    foreach (TypeRef t in typerefs)
+        //    {
+        //        UriHelper.SetTypeRefIdentification(structure, t);
+        //    }
+        //}
 
-        public Structure HarvestStructure(Hl7.Fhir.Model.StructureDefinition source, Uri uri)
+        public Structure HarvestStructure(Hl7.Fhir.Model.StructureDefinition source)
         {
             Structure target = new Structure();
             target.Name = source.Name;
             target.ConstrainedType = source.ConstrainedType.Value;
-            target.NameSpacePrefix = FhirNamespaceManager.Fhir;
+            target.Uri = new Uri(source.Url);
             PrepareSlices(source);
             HarvestElements(source, target);
-            fixUris(target, uri);
+            //fixUris(target, uri);
             return target;
-        }
-
-        public Structure HarvestExtensionDefn(Hl7.Fhir.Model.StructureDefinition source, Uri uri)
-        {
-            return HarvestStructure(source, uri);
-        }
-
-
-     
-
+        }   
     }
 }

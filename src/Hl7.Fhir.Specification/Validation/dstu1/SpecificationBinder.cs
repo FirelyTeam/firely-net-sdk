@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Validation
         { 
             foreach (TypeRef typeref in unlinkedTypeRefs)
             {
-                Structure structure = specification.GetStructureByUri(typeref.Uri);
+                Structure structure = specification.GetStructureByUri(typeref.Profile);
                 typeref.Structure = structure;
             }
         }
@@ -98,32 +98,7 @@ namespace Hl7.Fhir.Validation
                     ConstraintCompiler.Compile(c);
             }
         }
-
-        private void _addNameSpace(Element element)
-        {
-            if (element.HasTypeRef)
-            {
-                TypeRef typeref = element.TypeRefs.FirstOrDefault(t => t.Structure != null);
-                if (typeref != null)
-                {
-                    element.NameSpacePrefix = typeref.Structure.NameSpacePrefix;
-                }
-            }
-
-            if (element.NameSpacePrefix == null)
-                element.NameSpacePrefix = FhirNamespaceManager.Fhir;
-        }
-
-        private void _addNameSpaces()
-        {
-            foreach (Element element in specification.Elements.Where(e => e.NameSpacePrefix == null))
-            {
-                _addNameSpace(element);
-            }
-        }
-
-        
-
+      
         private void bind()
         {
             _linkBindings();
@@ -131,7 +106,6 @@ namespace Hl7.Fhir.Validation
             _linkTypeRefs();
             _linkElementRefs();
             _compileConstraints();
-            _addNameSpaces();
             specification.Sealed = true;
         }
 

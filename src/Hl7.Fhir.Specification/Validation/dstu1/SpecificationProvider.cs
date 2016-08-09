@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Validation
 
             if (sd != null)
             {
-                Structure structure = harvester.HarvestStructure(sd, uri);
+                Structure structure = harvester.HarvestStructure(sd);
                 return structure;
             }
 

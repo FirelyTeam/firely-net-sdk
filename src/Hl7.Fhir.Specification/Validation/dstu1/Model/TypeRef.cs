@@ -20,12 +20,14 @@ namespace Hl7.Fhir.Specification.Model
         public TypeRef(FHIRDefinedType code, string profileUri = null)
         {
             this.Code = code;
-            this.ProfileUri = profileUri;
+
+            if(profileUri != null)
+                this.Profile = new Uri(profileUri);
         }
         
         public FHIRDefinedType Code;
-        public string ProfileUri { get; set; }
-        public Uri Uri { get; set; }
+
+        public Uri Profile { get; set; }
         
         public bool Unresolved
         {
@@ -38,9 +40,9 @@ namespace Hl7.Fhir.Specification.Model
         public override string ToString()
         {
             
-            if (ProfileUri != null)
+            if (Profile != null)
             {
-                return string.Format("{0} ({1})", Code, ProfileUri);
+                return string.Format("{0} ({1})", Code, Profile);
             }
             else 
             {
@@ -50,7 +52,7 @@ namespace Hl7.Fhir.Specification.Model
 
         public bool Equals(TypeRef other)
         {
-            return other.Code == this.Code && other.ProfileUri == this.ProfileUri;
+            return other.Code == this.Code && other.Profile == this.Profile;
         }
     }
 }

@@ -81,7 +81,6 @@
     <Compile Include="Validation\dstu1\Model\Structure.cs" />
     <Compile Include="Validation\dstu1\Model\StructureFactory.cs" />
     <Compile Include="Validation\dstu1\Model\TypeRef.cs" />
-    <Compile Include="Validation\dstu1\Model\UriHelper.cs" />
     <Compile Include="Validation\Model\ValueSet.cs" />
     <Compile Include="Validation\dstu1\Model\Vector.cs" />
     <Compile Include="Validation\dstu1\Model\XPathNavigatorExtensions.cs" />

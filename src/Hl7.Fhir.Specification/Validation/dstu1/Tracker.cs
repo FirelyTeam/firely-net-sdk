@@ -32,16 +32,16 @@ namespace Hl7.Fhir.Validation
 
         public void MarkResolved(Uri uri)
         {
-            Add(uri.ToString(), Resolution.Resolved);
+            Add(uri, Resolution.Resolved);
         }
 
-        public void Resolve(IEnumerable<Uri> uris)
-        {
-            foreach(Uri uri in uris)
-            {
-                MarkResolved(uri);
-            }
-        }
+        //public void Resolve(IEnumerable<Uri> uris)
+        //{
+        //    foreach(Uri uri in uris)
+        //    {
+        //        MarkResolved(uri);
+        //    }
+        //}
 
         public bool Knows(string key)
         {

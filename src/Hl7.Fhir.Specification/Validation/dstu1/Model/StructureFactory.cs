@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Model
             element.Name = "extension";
             element.Cardinality = new Cardinality { Min = "0", Max = "*" };
             TypeRef typeref = new TypeRef(Fhir.Model.FHIRDefinedType.Extension);
-            UriHelper.SetTypeRefIdentification(structure, typeref);
+            //UriHelper.SetTypeRefIdentification(structure, typeref);
             element.TypeRefs.Add(typeref);
             structure.Elements.Add(element);
         }
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Specification.Model
         {
             Structure structure = new Structure();
             structure.ConstrainedType = name;
-            UriHelper.SetStructureIdentification(structure, UriHelper.BASEPROFILE);
+            //UriHelper.SetStructureIdentification(structure, UriHelper.BASEPROFILE);
 
             Element element = new Element();
             element.Path = new Path(name.GetLiteral());
@@ -61,7 +61,6 @@ namespace Hl7.Fhir.Specification.Model
         public static Structure XhtmlStructure()
         {
             Structure structure = Primitive(Fhir.Model.FHIRDefinedType.Xhtml, null, FhirNamespaceManager.XHtml);
-            structure.NameSpacePrefix = FhirNamespaceManager.XHtml;
             return structure;
         }
 
@@ -103,16 +102,10 @@ namespace Hl7.Fhir.Specification.Model
                 Primitive(FHIRDefinedType.Code, Hl7.Fhir.Model.Code.IsValidValue),
                 Primitive(FHIRDefinedType.Id, Hl7.Fhir.Model.Id.IsValidValue),
                 Primitive(FHIRDefinedType.Oid, Hl7.Fhir.Model.Oid.IsValidValue),
-                Primitive(FHIRDefinedType.Uuid , Hl7.Fhir.Model.Uuid.IsValidValue)
+                Primitive(FHIRDefinedType.Uuid , Hl7.Fhir.Model.Uuid.IsValidValue),
+                Primitive(FHIRDefinedType.Xhtml, Hl7.Fhir.Model.XHtml.IsValidValue)
             };
 
-            return list;
-        }
-
-        public static List<Structure> NonFhirNamespaces()
-        {
-            List<Structure> list = new List<Structure>();
-            list.Add(XhtmlStructure());
             return list;
         }
     }

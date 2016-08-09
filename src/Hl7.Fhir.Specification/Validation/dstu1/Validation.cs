@@ -47,7 +47,6 @@ namespace Hl7.Fhir.Validation
             SpecificationProvider provider = new SpecificationProvider(Source);
             SpecificationBuilder builder = new SpecificationBuilder(provider);
             builder.Add(StructureFactory.PrimitiveTypes());
-            builder.Add(StructureFactory.NonFhirNamespaces());
             builder.Add(uri);
             if (expand) builder.Expand();
 

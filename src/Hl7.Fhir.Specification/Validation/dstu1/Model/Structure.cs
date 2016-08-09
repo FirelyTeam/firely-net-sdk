@@ -20,7 +20,6 @@ namespace Hl7.Fhir.Specification.Model
         public FHIRDefinedType ConstrainedType { get; set; }
         public string Name { get; set; }
         
-        public Uri ProfileUri { get; set; }
         public Uri Uri { get; set; }
 
         public List<Element> Elements = new List<Element>();
@@ -38,7 +37,5 @@ namespace Hl7.Fhir.Specification.Model
             string name = (Name != null) ? string.Format("{0} ({1})", Name, ConstrainedType.GetLiteral()) : ConstrainedType.GetLiteral();
             return string.Format("{0} ({1} elements)", name, Elements.Count);
         }
-
-        public string NameSpacePrefix { get; set; }
     }
 }
