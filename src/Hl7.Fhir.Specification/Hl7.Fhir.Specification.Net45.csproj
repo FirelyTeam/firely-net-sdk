@@ -72,8 +72,6 @@
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
-    <Compile Include="Specification\Navigation\ElementNavigatorTypeExtensions.cs" />
-    <Compile Include="Specification\Navigation\ProfileReference.cs" />
     <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
     <Compile Include="Specification\Snapshot\ElementMatcher.cs" />
     <Compile Include="Specification\Snapshot\ElementDefnMerger.cs" />
