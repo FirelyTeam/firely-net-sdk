@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Hl7.Fhir.Introspection;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
 namespace Hl7.Fhir.Model
 {
+    [System.Diagnostics.DebuggerDisplay(@"\{{ToString()}}")]
     public partial class OperationOutcome
     {
         [Obsolete("You should now pass in the IssueType. This now defaults to IssueType.Processing")]
@@ -73,6 +76,20 @@ namespace Hl7.Fhir.Model
             }
 
             return text;
+        }
+
+        [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        public partial class IssueComponent
+        {
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            [NotMapped]
+            private string DebuggerDisplay
+            {
+                get
+                {
+                    return String.Format("Code=\"{0}\" {1}", this.Code, _Details.DebuggerDisplay("Details."));
+                }
+            }
         }
     }
 }

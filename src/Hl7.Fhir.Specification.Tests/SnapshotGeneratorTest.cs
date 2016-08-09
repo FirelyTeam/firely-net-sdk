@@ -13,7 +13,6 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 using System.IO;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using System.Collections.Generic;
 using Hl7.Fhir.Specification.Source;
@@ -36,13 +35,13 @@ namespace Hl7.Fhir.Specification.Tests
 			MarkChanges = false,
 			ExpandTypeProfiles = true,
 			// Throw on unresolved profile references; must include in TestData folder
-			IgnoreMissingTypeProfiles = false
+			IgnoreUnresolvedProfiles = false
 		};
 
 		[TestInitialize]
 		public void Setup()
 		{
-			_testSource = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/snapshot-test")));
+			_testSource = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/snapshot-test", includeSubdirectories: true)));
 		}
 
 		// [WMR 20160718] Generate snapshot for extension definition fails with exception:
@@ -55,13 +54,19 @@ namespace Hl7.Fhir.Specification.Tests
 			var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
 			Assert.IsNotNull(sd);
 
-			generateSnapshotAndCompare(sd, _testSource);
-		}
+            // dumpReferences(sd);
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            dumpBasePaths(expanded);
+        }
 
 		[TestMethod]
 		// [Ignore] // For debugging purposes
 		public void GenerateSingleSnapshot()
 		{
+<<<<<<< Updated upstream
 			// var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
 			// var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
 			// var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
@@ -70,11 +75,46 @@ namespace Hl7.Fhir.Specification.Tests
 			Assert.IsNotNull(sd);
 
 			DumpReferences(sd);
+=======
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
 
-			generateSnapshotAndCompare(sd, _testSource);
-		}
+            Assert.IsNotNull(sd);
 
+            // dumpReferences(sd);
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            dumpBasePaths(expanded);
+        }
+
+        [TestMethod]
+        // [Ignore] // For debugging purposes
+        public void GenerateSingleSnapshotNormalizeBase()
+        {
+            var sd = _testSource.GetStructureDefinition(@"http://example.org/StructureDefinition/MyBasic");
+            Assert.IsNotNull(sd);
+
+            // dumpReferences(sd);
+            _settings.RewriteElementBase = true;
+            _settings.NormalizeElementBase = true;
+>>>>>>> Stashed changes
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+<<<<<<< Updated upstream
 		[TestMethod]
+=======
+            dumpBasePaths(expanded);
+        }
+
+        [TestMethod]
+>>>>>>> Stashed changes
 		// [Ignore] // For debugging purposes
 		public void GenerateDerivedProfileSnapshot()
 		{
@@ -87,10 +127,17 @@ namespace Hl7.Fhir.Specification.Tests
 
 			Assert.IsNotNull(sd);
 
+<<<<<<< Updated upstream
 			DumpReferences(sd);
+=======
+            // dumpReferences(sd);
+>>>>>>> Stashed changes
 
-			generateSnapshotAndCompare(sd, _testSource);
-		}
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            dumpBasePaths(expanded);
+        }
 
 		// [WMR 20160722] For debugging purposes
 		[Conditional("DEBUG")]
@@ -158,29 +205,71 @@ namespace Hl7.Fhir.Specification.Tests
 			Debug.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
 		}
 
-		private void generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
-		{
-			// var generator = new SnapshotGenerator(source, markChanges: false);        
-			var generator = new SnapshotGenerator(source, _settings);
+#if false
+        private void forDoc()
+        {
+            FhirXmlParser parser = new FhirXmlParser(new ParserSettings { AcceptUnknownMembers = true });
+            IFhirReader xmlWithPatientData = null;
+            var patient = parser.Parse<Patient>(xmlWithPatientData);
 
-			var expanded = (StructureDefinition)original.DeepCopy();
-			Assert.IsTrue(original.IsExactly(expanded));
+            // -----
 
-			generator.Generate(expanded);
+            ArtifactResolver source = ArtifactResolver.CreateCachedDefault();
+            var settings = new SnapshotGeneratorSettings { IgnoreMissingTypeProfiles = true };
+            StructureDefinition profile = null;
 
-			var areEqual = original.IsExactly(expanded);
+            var generator = new SnapshotGenerator(source, _settings);
+            generator.Generate(profile);
+        }
+#endif
 
+        private StructureDefinition generateSnapshot(StructureDefinition original, ArtifactResolver source)
+        {
+            // var generator = new SnapshotGenerator(source, markChanges: false);        
+            var generator = new SnapshotGenerator(source, _settings);
+
+            var expanded = (StructureDefinition)original.DeepCopy();
+            Assert.IsTrue(original.IsExactly(expanded));
+
+<<<<<<< Updated upstream
 			if (!areEqual)
 			{
 				var tempPath = Path.GetTempPath();
 				File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), FhirSerializer.SerializeResourceToXml(original));
 				File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
 			}
+=======
+            generator.Generate(expanded);
+>>>>>>> Stashed changes
 
-			Assert.IsTrue(areEqual);
+            return expanded;
+        }
+
+        private bool generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
+		{
+            StructureDefinition expanded;
+            return generateSnapshotAndCompare(original, source, out expanded);
 		}
 
-		private IEnumerable<StructureDefinition> findConstraintStrucDefs()
+        private bool generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source, out StructureDefinition expanded)
+        {
+            expanded = generateSnapshot(original, source);
+
+            var areEqual = original.IsExactly(expanded);
+
+            // [WMR 20160803] Always save output to separate file, convenient for debugging
+            // if (!areEqual)
+            // {
+                var tempPath = Path.GetTempPath();
+                File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), FhirSerializer.SerializeResourceToXml(original));
+                File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
+            // }
+
+            return areEqual;
+        }
+
+
+        private IEnumerable<StructureDefinition> findConstraintStrucDefs()
 		{
 			var testSDs = _testSource.ListConformanceResources().Where(ci => ci.Type == ResourceType.StructureDefinition);
 
@@ -246,13 +335,15 @@ namespace Hl7.Fhir.Specification.Tests
 
 			var nav = new ElementNavigator(qStructDef.Snapshot.Element);
 
-			nav.JumpToFirst("Questionnaire.telecom");
-			Assert.IsTrue(SnapshotGenerator.expandElement(nav, _testSource, SnapshotGeneratorSettings.Default));
+            var generator = new SnapshotGenerator(_testSource, SnapshotGeneratorSettings.Default);
+
+            nav.JumpToFirst("Questionnaire.telecom");
+			Assert.IsTrue(generator.expandElement(nav));
 			Assert.IsTrue(nav.MoveToChild("period"), "Did not move into complex datatype ContactPoint");
 
 			nav.JumpToFirst("Questionnaire.group");
-			Assert.IsTrue(SnapshotGenerator.expandElement(nav, _testSource, SnapshotGeneratorSettings.Default));
-			Assert.IsTrue(nav.MoveToChild("title"), "Did not move into internally defined backbone element Group");
+            Assert.IsTrue(generator.expandElement(nav));
+            Assert.IsTrue(nav.MoveToChild("title"), "Did not move into internally defined backbone element Group");
 		}
 
 		// [WMR 20160802] NEW - Expand a single element
@@ -328,6 +419,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine("\r\nType:");
                 Debug.WriteLine(string.Join(Environment.NewLine, sdType.Snapshot.Element.Select(e => Indent + e.Path)));
 
+<<<<<<< Updated upstream
                 sdType.Snapshot.Rebase(expandElemPath);
                 var typeElems = sdType.Snapshot.Element;
 
@@ -336,12 +428,32 @@ namespace Hl7.Fhir.Specification.Tests
 
                 var startPos = result.IndexOf(elem);
                 for (int i = 0; i < typeElems.Count; i++)
+=======
+                // FhirClient client = new FhirClient("http://fhir2.healthintersections.com.au/open/");
+                // var folderPath = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\snapshot-test\download");
+                // if (!Directory.Exists(folderPath)) { Directory.CreateDirectory(folderPath); }
+
+                var profiles = sd.Snapshot.DistinctTypeProfiles();
+
+                Debug.Indent();
+                foreach (var profile in profiles)
+>>>>>>> Stashed changes
                 {
                     var path = typeElems[i].Path;
                     Assert.IsTrue(result[startPos + i].Path.EndsWith(path, StringComparison.OrdinalIgnoreCase));
                 }
+                Debug.Unindent();
             }
+<<<<<<< Updated upstream
             else if (nameRef != null)
+=======
+        }
+
+        [Conditional("DEBUG")]
+        private void dumpBasePaths(StructureDefinition sd)
+        {
+            if (sd != null && sd.Snapshot != null)
+>>>>>>> Stashed changes
             {
                 // Validate name reference expansion
                 var nav = new ElementNavigator(elems);
@@ -353,11 +465,17 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine("\r\nName Reference:");
                 do
                 {
+<<<<<<< Updated upstream
                     Debug.WriteLine(Indent + nav.Path);
                     var srcPath = nav.Path.Substring(prefix.Length);
                     var tgtPath = result[++pos].Path.Substring(expandElemPath.Length);
                     Assert.AreEqual(srcPath, tgtPath);
                 } while (nav.MoveToNext());
+=======
+                    Debug.WriteLine("{0} - {1}", elem.Path, elem.Base.Path);
+                }
+                Debug.Unindent();
+>>>>>>> Stashed changes
             }
 
         }

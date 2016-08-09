@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>(value);
@@ -340,6 +340,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.SupplyRequest.WhenComponent _When;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as SupplyRequest;

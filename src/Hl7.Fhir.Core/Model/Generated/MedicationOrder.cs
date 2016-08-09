@@ -129,10 +129,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -387,10 +387,10 @@ namespace Hl7.Fhir.Model
                 get { return NumberOfRepeatsAllowedElement != null ? NumberOfRepeatsAllowedElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      NumberOfRepeatsAllowedElement = null; 
+                    if (!value.HasValue)
+                        NumberOfRepeatsAllowedElement = null; 
                     else
-                      NumberOfRepeatsAllowedElement = new Hl7.Fhir.Model.PositiveInt(value);
+                        NumberOfRepeatsAllowedElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("NumberOfRepeatsAllowed");
                 }
             }
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
             get { return DateWrittenElement != null ? DateWrittenElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateWrittenElement = null; 
                 else
                   DateWrittenElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -628,7 +628,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.MedicationOrder.MedicationOrderStatus>(value);
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model
             get { return DateEndedElement != null ? DateEndedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateEndedElement = null; 
                 else
                   DateEndedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -761,7 +761,7 @@ namespace Hl7.Fhir.Model
             get { return NoteElement != null ? NoteElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NoteElement = null; 
                 else
                   NoteElement = new Hl7.Fhir.Model.FhirString(value);
@@ -838,6 +838,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.ResourceReference _PriorPrescription;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MedicationOrder;

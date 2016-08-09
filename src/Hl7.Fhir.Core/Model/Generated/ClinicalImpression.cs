@@ -208,10 +208,10 @@ namespace Hl7.Fhir.Model
                 get { return CauseElement != null ? CauseElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CauseElement = null; 
+                    if (value == null)
+                        CauseElement = null; 
                     else
-                      CauseElement = new Hl7.Fhir.Model.FhirString(value);
+                        CauseElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Cause");
                 }
             }
@@ -308,10 +308,10 @@ namespace Hl7.Fhir.Model
                 get { return ReasonElement != null ? ReasonElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ReasonElement = null; 
+                    if (value == null)
+                        ReasonElement = null; 
                     else
-                      ReasonElement = new Hl7.Fhir.Model.FhirString(value);
+                        ReasonElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Reason");
                 }
             }
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.ClinicalImpression.ClinicalImpressionStatus>(value);
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model
             get { return ProtocolElement != null ? ProtocolElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ProtocolElement = null; 
                 else
                   ProtocolElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model
             get { return SummaryElement != null ? SummaryElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   SummaryElement = null; 
                 else
                   SummaryElement = new Hl7.Fhir.Model.FhirString(value);
@@ -676,7 +676,7 @@ namespace Hl7.Fhir.Model
             get { return PrognosisElement != null ? PrognosisElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PrognosisElement = null; 
                 else
                   PrognosisElement = new Hl7.Fhir.Model.FhirString(value);
@@ -714,6 +714,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Action;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ClinicalImpression;

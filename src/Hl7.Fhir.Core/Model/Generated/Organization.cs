@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
             get { return ActiveElement != null ? ActiveElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ActiveElement = null; 
                 else
                   ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
             get { return NameElement != null ? NameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -313,6 +313,34 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Organization.ContactComponent> _Contact;
         
+
+        public static ElementDefinition.ConstraintComponent Organization_ORG_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("identifier or name"))},
+            Key = "org-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "The organization SHALL at least have a name or an id, and possibly more than one",
+            Xpath = "count(f:identifier | f:name) > 0"
+        };
+
+        public static ElementDefinition.ConstraintComponent Organization_ORG_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("telecom.where(use = 'home').empty()"))},
+            Key = "org-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "The telecom of an organization can never be of use 'home'",
+            Xpath = "count(f:use[@value='home']) = 0"
+        };
+
+        public static ElementDefinition.ConstraintComponent Organization_ORG_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("address.where(use = 'home').empty()"))},
+            Key = "org-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "An address of an organization can never be of use 'home'",
+            Xpath = "count(f:use[@value='home']) = 0"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Organization;

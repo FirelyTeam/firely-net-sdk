@@ -112,10 +112,10 @@ namespace Hl7.Fhir.Model
                 get { return RelativeRiskElement != null ? RelativeRiskElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      RelativeRiskElement = null; 
+                    if (!value.HasValue)
+                        RelativeRiskElement = null; 
                     else
-                      RelativeRiskElement = new Hl7.Fhir.Model.FhirDecimal(value);
+                        RelativeRiskElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("RelativeRisk");
                 }
             }
@@ -158,10 +158,10 @@ namespace Hl7.Fhir.Model
                 get { return RationaleElement != null ? RationaleElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      RationaleElement = null; 
+                    if (value == null)
+                        RationaleElement = null; 
                     else
-                      RationaleElement = new Hl7.Fhir.Model.FhirString(value);
+                        RationaleElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Rationale");
                 }
             }
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
             get { return MitigationElement != null ? MitigationElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   MitigationElement = null; 
                 else
                   MitigationElement = new Hl7.Fhir.Model.FhirString(value);
@@ -397,6 +397,25 @@ namespace Hl7.Fhir.Model
             }
         }
         
+
+        public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(low.empty() or ((low.code = \"%\") and (low.system = %ucum))) and (high.empty() or ((high.code = \"%\") and (high.system = %ucum)))"))},
+            Key = "ras-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "low and high must be percentages, if present",
+            Xpath = "(not(f:low) or f:low[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org']) and (not(f:high) or f:high[f:code/@value='%' and f:system/@value='http://unitsofmeasure.org'])"
+        };
+
+        public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("probabilityDecimal <= 100"))},
+            Key = "ras-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Must be <= 100",
+            Xpath = "@value <= 100"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as RiskAssessment;

@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
             get { return GroupElement != null ? GroupElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   GroupElement = null; 
                 else
                   GroupElement = new Hl7.Fhir.Model.FhirString(value);
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
             get { return PlanElement != null ? PlanElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   PlanElement = null; 
                 else
                   PlanElement = new Hl7.Fhir.Model.FhirString(value);
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
             get { return SubPlanElement != null ? SubPlanElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   SubPlanElement = null; 
                 else
                   SubPlanElement = new Hl7.Fhir.Model.FhirString(value);
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
             get { return DependentElement != null ? DependentElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   DependentElement = null; 
                 else
                   DependentElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
             get { return SequenceElement != null ? SequenceElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   SequenceElement = null; 
                 else
                   SequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
@@ -335,6 +335,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Contract;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Coverage;

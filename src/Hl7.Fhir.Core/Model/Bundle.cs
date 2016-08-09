@@ -38,6 +38,7 @@ using System.IO;
 using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Introspection;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Model
 {    
@@ -48,6 +49,7 @@ namespace Hl7.Fhir.Model
         [System.Diagnostics.DebuggerDisplay(@"\{FullUrl={FullUrl}}")]
         public partial class EntryComponent
         {
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             [NotMapped]
             private string DebuggerDisplay
             {

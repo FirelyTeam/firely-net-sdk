@@ -118,10 +118,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeElement = null; 
+                    if (!value.HasValue)
+                        CodeElement = null; 
                     else
-                      CodeElement = new Code<Hl7.Fhir.Model.DocumentReference.DocumentRelationshipType>(value);
+                        CodeElement = new Code<Hl7.Fhir.Model.DocumentReference.DocumentRelationshipType>(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
             get { return CreatedElement != null ? CreatedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CreatedElement = null; 
                 else
                   CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -683,7 +683,7 @@ namespace Hl7.Fhir.Model
             get { return IndexedElement != null ? IndexedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   IndexedElement = null; 
                 else
                   IndexedElement = new Hl7.Fhir.Model.Instant(value);
@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.DocumentReferenceStatus>(value);
@@ -775,7 +775,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -824,6 +824,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.DocumentReference.ContextComponent _Context;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DocumentReference;

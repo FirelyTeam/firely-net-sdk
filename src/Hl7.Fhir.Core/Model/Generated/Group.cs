@@ -159,10 +159,10 @@ namespace Hl7.Fhir.Model
                 get { return ExcludeElement != null ? ExcludeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ExcludeElement = null; 
+                    if (!value.HasValue)
+                        ExcludeElement = null; 
                     else
-                      ExcludeElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        ExcludeElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Exclude");
                 }
             }
@@ -292,10 +292,10 @@ namespace Hl7.Fhir.Model
                 get { return InactiveElement != null ? InactiveElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      InactiveElement = null; 
+                    if (!value.HasValue)
+                        InactiveElement = null; 
                     else
-                      InactiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
+                        InactiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Inactive");
                 }
             }
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
             get { return TypeElement != null ? TypeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   TypeElement = null; 
                 else
                   TypeElement = new Code<Hl7.Fhir.Model.Group.GroupType>(value);
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
             get { return ActualElement != null ? ActualElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ActualElement = null; 
                 else
                   ActualElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Model
             get { return NameElement != null ? NameElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   NameElement = null; 
                 else
                   NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Model
             get { return QuantityElement != null ? QuantityElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   QuantityElement = null; 
                 else
                   QuantityElement = new Hl7.Fhir.Model.UnsignedInt(value);
@@ -535,6 +535,16 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Group.MemberComponent> _Member;
         
+
+        public static ElementDefinition.ConstraintComponent Group_GRP_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("member.empty() or actual"))},
+            Key = "grp-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Can only have members if group is \"actual\"",
+            Xpath = "f:actual/@value=true() or not(exists(f:member))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Group;
