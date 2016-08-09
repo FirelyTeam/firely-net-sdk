@@ -77,7 +77,7 @@
     <Compile Include="ElementsModel\PocoNavigator.cs" />
     <Compile Include="ElementsModel\PartialDateTime.cs" />
     <Compile Include="ElementsModel\Time.cs" />
-    <Compile Include="Introspection\EnumUtility.cs" />
+    <Compile Include="Support\EnumUtility.cs" />
     <Compile Include="Model\IValue.cs" />
     <Compile Include="Model\Time.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />

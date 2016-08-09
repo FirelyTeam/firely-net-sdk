@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Validation
             return report; 
         }
 
-        public static SpecificationProvider GetSpecificationResolver()
+        public static SpecificationProvider GetSpecificationProvider()
         {
             SpecificationProvider provider = SpecificationProvider.CreateOffline();
             return provider;
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Validation
 
         public static SpecificationWorkspace GetSpecification(Uri uri, bool expand)
         {
-            SpecificationProvider provider = GetSpecificationResolver();
+            SpecificationProvider provider = GetSpecificationProvider();
             SpecificationBuilder builder = new SpecificationBuilder(provider);
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());

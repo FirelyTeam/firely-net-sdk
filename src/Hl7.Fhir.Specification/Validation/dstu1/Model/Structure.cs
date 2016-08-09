@@ -4,6 +4,8 @@
 *
 * This file is licensed under the BSD 3-Clause license
 */
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,7 @@ namespace Hl7.Fhir.Specification.Model
 
     public class Structure
     {
-        public string Type { get; set; }
+        public FHIRDefinedType ConstrainedType { get; set; }
         public string Name { get; set; }
         
         public Uri ProfileUri { get; set; }
@@ -33,7 +35,7 @@ namespace Hl7.Fhir.Specification.Model
 
         public override string ToString()
         {
-            string name = (Name != null) ? string.Format("{0} ({1})", Name, Type) : Type;
+            string name = (Name != null) ? string.Format("{0} ({1})", Name, ConstrainedType.GetLiteral()) : ConstrainedType.GetLiteral();
             return string.Format("{0} ({1} elements)", name, Elements.Count);
         }
 

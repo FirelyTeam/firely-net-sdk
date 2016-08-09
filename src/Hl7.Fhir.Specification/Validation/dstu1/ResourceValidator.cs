@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Validation
                 return;
             }
 
-            if (vector.Element.TypeRefs[0].Code == "code")
+            if (vector.Element.TypeRefs[0].Code == Model.FHIRDefinedType.Code)
             {
                 string value = vector.GetValue("@value");
                 bool exists = vector.Element.Binding.Contains(value);
@@ -169,8 +169,8 @@ namespace Hl7.Fhir.Validation
 
         public void ValidateForMissingStructures(Vector vector)
         {
-            IEnumerable<string> missing = vector.Element.TypeRefs.Where(t => t.Structure == null).Select(t => t.Code);
-            foreach (string s in missing)
+            IEnumerable<Model.FHIRDefinedType> missing = vector.Element.TypeRefs.Where(t => t.Structure == null).Select(t => t.Code);
+            foreach (var s in missing)
             {
                 Log(Group.Structure, Status.Skipped, vector, "Profile misses structure [{0}]. Evaluation is skipped.", s);
             }

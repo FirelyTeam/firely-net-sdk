@@ -4,6 +4,7 @@
 *
 * This file is licensed under the BSD 3-Clause license
 */
+using Hl7.Fhir.Introspection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -216,7 +217,7 @@ namespace Hl7.Fhir.Specification.Model
             if (Element.Multi)
             {
                 string code = ExtractTypeFromNode();
-                return (typeref.Code.ToLower() == code.ToLower());
+                return (typeref.Code.GetLiteral().ToLower() == code.ToLower());
             }
             else return true;
         }

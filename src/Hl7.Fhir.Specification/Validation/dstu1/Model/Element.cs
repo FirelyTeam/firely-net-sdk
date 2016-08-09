@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Specification.Model
         {
             get
             {
-                return HasTypeRef && TypeRefs.Exists(t => t.Code == "Extension");
+                return HasTypeRef && TypeRefs.Exists(t => t.Code == FHIRDefinedType.Extension);
             }
         }
         public bool Multi

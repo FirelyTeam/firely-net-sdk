@@ -108,6 +108,7 @@
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\dstu1\ConstraintCompiler.cs" />
+    <Compile Include="Validation\dstu1\SpecificationHarvester.cs" />
     <Compile Include="Validation\Outcome.cs" />
     <Compile Include="Validation\OutcomeTypes.cs" />
     <Compile Include="Validation\Report.cs" />

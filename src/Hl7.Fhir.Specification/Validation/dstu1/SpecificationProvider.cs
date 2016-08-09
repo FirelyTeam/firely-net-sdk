@@ -16,11 +16,12 @@ namespace Hl7.Fhir.Validation
     /// This class provides access to external artifacts provided by the IArtifactSource
     /// Functionally equivalent to the ArtifactResolver class, but also converts the
     /// conformance resources to the internal representation (e.g. a ValueSet to a Validation.ValueSet)
+    /// via the SpecificationHarvester.
     /// </summary>
     public class SpecificationProvider
     {
         public IArtifactSource source;
-        //SpecificationHarvester harvester;
+        SpecificationHarvester harvester;
         //StructureLoader loader;
         
 
@@ -28,7 +29,7 @@ namespace Hl7.Fhir.Validation
         {
             this.source = source;
             //this.loader = new StructureLoader(source);
-            //this.harvester = new SpecificationHarvester();
+            this.harvester = new SpecificationHarvester();
         }
 
         public static SpecificationProvider CreateDefault()
@@ -47,8 +48,8 @@ namespace Hl7.Fhir.Validation
         private T Resolve<T>(Uri uri) where T : Model.Resource
         {
             //loader.LocateStructure(uri);
-            //Model.Resource resource = source.ReadResourceArtifact(uri);
-            //return (T)resource;
+            Model.Resource resource = source.LoadConformanceResourceByUrl(uri.ToString());
+            return (T)resource;
 
             throw new NotImplementedException();
         }
@@ -62,6 +63,15 @@ namespace Hl7.Fhir.Validation
             //    Structure structure = harvester.HarvestStructure(component, uri);
             //    return structure;
             //}
+
+            Model.StructureDefinition sd = source.LoadConformanceResourceByUrl(uri.ToString()) as Model.StructureDefinition;
+
+            if (sd != null)
+            {
+                Structure structure = harvester.HarvestStructure(sd, uri);
+                return structure;
+            }
+
             return null;
         }
          
@@ -112,15 +122,14 @@ namespace Hl7.Fhir.Validation
         
         public ValueSet GetValueSet(Uri uri)
         {
-            //var valueset = source.LoadConformanceResourceByUrl(uri.ToString()) as Model.ValueSet;
-           
-            //if (valueset != null)
-            //{
-            //    ValueSet target = harvester.HarvestValueSet(valueset, uri);
-            //    return target;
-            //}
-            return null;
-            
+            var valueset = source.LoadConformanceResourceByUrl(uri.ToString()) as Model.ValueSet;
+
+            if (valueset != null)
+            {
+                ValueSet target = harvester.HarvestValueSet(valueset, uri);
+                return target;
+            }
+            return null;           
         }
 
         public IEnumerable<ValueSet> GetValueSets(IEnumerable<Uri> uris)

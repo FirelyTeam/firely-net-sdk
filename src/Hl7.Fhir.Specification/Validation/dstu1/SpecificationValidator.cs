@@ -15,7 +15,9 @@ using Hl7.Fhir.Specification.Model;
 
 namespace Hl7.Fhir.Validation
 {
-
+    /// <summary>
+    /// Checks integrity of all conformance data in the SpecificationWorkspace
+    /// </summary>
     public class SpecificationValidator
     {
         private SpecificationWorkspace profile;
@@ -81,17 +83,17 @@ namespace Hl7.Fhir.Validation
             }
 
             // Test if there is a reference at all
-            else if (typeref.Code == null)
-            {
-                Log(Group.Reference, Status.Failed, "Missing a reference to a structure in element [{0}]", element.Name);
-            }
+            //else if (typeref.Code == null)
+            //{
+            //    Log(Group.Reference, Status.Failed, "Missing a reference to a structure in element [{0}]", element.Name);
+            //}
 
             // Test if code is itself valid? If so, the reference valid but the target is missing.
-            else if (Regex.IsMatch(typeref.Code, "[A-Za-z][A-Za-z0-9]*"))
-            {
-                // Collect first to avoid duplicates
-                missingStructureNames.Add(typeref.Code);
-            }
+            //else if (Regex.IsMatch(typeref.Code, "[A-Za-z][A-Za-z0-9]*"))
+            //{
+            //    // Collect first to avoid duplicates
+            //    missingStructureNames.Add(typeref.Code);
+            //}
 
             // The code contains invalid characters
             else

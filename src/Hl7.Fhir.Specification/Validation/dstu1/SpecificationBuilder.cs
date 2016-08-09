@@ -31,13 +31,13 @@ namespace Hl7.Fhir.Validation
         private Tracker tracker = new Tracker();
 
         
-        public void TrackStructure(Structure structure)
+        private void trackStructure(Structure structure)
         {
             Uri uri = structure.ProfileUri;
             tracker.MarkResolved(uri);
         }
 
-        public void TrackStructures(IEnumerable<Structure> structures)
+        private void trackStructures(IEnumerable<Structure> structures)
         {
             var uris = structures.Select(s => s.Uri).Distinct();
             foreach (Uri u in uris)
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        private bool TryAddStructures(Uri uri)
+        private bool tryAddStructures(Uri uri)
         {
             if (uri == null) return false;
             if (tracker.Knows(uri)) return false;
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Validation
             {
                 specification.Add(structure);
                 tracker.Add(uri, Resolution.Resolved);
-                TrackStructure(structure);
+                trackStructure(structure);
                 return true;
             }
             else
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        private IEnumerable<Uri> UnresolvedTypeRefKeys()
+        private IEnumerable<Uri> unresolvedTypeRefKeys()
         {
             IEnumerable<Uri> uris =
                 specification
@@ -78,18 +78,18 @@ namespace Hl7.Fhir.Validation
 
         private bool ExpandTypeRefs()
         {
-            var uris = UnresolvedTypeRefKeys().ToList();
+            var uris = unresolvedTypeRefKeys().ToList();
             // ToList(), because expanding will modify this list.
 
             bool expanded = false;
             foreach (Uri uri in uris)
             {
-                expanded |= TryAddStructures(uri);
+                expanded |= tryAddStructures(uri);
             }
             return expanded;
         }
 
-        private bool TryAddBinding(Uri uri)
+        private bool TryAddValueSet(Uri uri)
         {
             if (tracker.Knows(uri)) return false;
 
@@ -107,26 +107,27 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        private void ExpandBindings()
+        private void expandValueSets()
         {
             IEnumerable<Uri> newbindings = specification.BindingUris.ToList();
             
             foreach (Uri uri in newbindings)
             {
-                TryAddBinding(uri);
+                TryAddValueSet(uri);
             }
         }
 
         public void Expand()
         {
             while (ExpandTypeRefs()) ;
-            ExpandBindings();
+            expandValueSets();
         }
 
         public void Add(Uri uri)
         {
-            TryAddStructures(uri);
+            tryAddStructures(uri);
         }
+
         public void Add(string uri)
         {
             Add(new Uri(uri));
@@ -135,7 +136,7 @@ namespace Hl7.Fhir.Validation
         public void Add(IEnumerable<Structure> structures)
         {
             specification.Add(structures);
-            TrackStructures(structures);
+            trackStructures(structures);
         }
 
         public void Add(IEnumerable<ValueSet> valuesets)

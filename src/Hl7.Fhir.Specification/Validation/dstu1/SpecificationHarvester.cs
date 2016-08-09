@@ -40,12 +40,12 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        private void HarvestBinding(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestBinding(Hl7.Fhir.Model.ElementDefinition source, Element target)
         {
 
             if (source.Binding != null)
             {
-                var reference = source.Binding.Reference;
+                var reference = source.Binding.ValueSet;
 
                 if (reference is Hl7.Fhir.Model.ResourceReference)
                 {
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Validation
 
         }
 
-        private void HarvestFixedValue(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestFixedValue(Hl7.Fhir.Model.ElementDefinition source, Element target)
         {
             target.FixedValue = null;
 
@@ -71,22 +71,22 @@ namespace Hl7.Fhir.Validation
                 target.PatternValue = source.Pattern;
         }
 
-        private void HarvestConstraints(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestConstraints(Hl7.Fhir.Model.ElementDefinition source, Element target)
         {
             if (source.Constraint == null)
                 return;
 
-            foreach (Hl7.Fhir.Model.Profile.ElementDefinitionConstraintComponent c in source.Constraint)
+            foreach (Hl7.Fhir.Model.ElementDefinition.ConstraintComponent c in source.Constraint)
             {
                 Constraint constraint = new Constraint();
-                constraint.Name = c.Name ?? c.Key;
+                constraint.Name = c.Key;
                 constraint.XPath = c.Xpath;
                 constraint.HumanReadable = c.Human;
                 target.Constraints.Add(constraint);
             }
         }
 
-        private void HarvestCardinality(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestCardinality(Hl7.Fhir.Model.ElementDefinition source, Element target)
         {
             Cardinality cardinality = new Cardinality();
             cardinality.Min = source.Min.ToString();
@@ -94,20 +94,21 @@ namespace Hl7.Fhir.Validation
             target.Cardinality = cardinality;
         }
 
-        private void HarvestElementRef(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestElementRef(Hl7.Fhir.Model.ElementDefinition source, Element target)
         {
             target.ElementRefPath = source.NameReference;
         }
 
-        private TypeRef HarvestTypeRef(Hl7.Fhir.Model.Profile.TypeRefComponent type)
+        private TypeRef HarvestTypeRef(Hl7.Fhir.Model.ElementDefinition.TypeRefComponent type)
         {
-            TypeRef typeref = new TypeRef(type.Code, type.Profile);
+            //Note: we are ignoring typerefs with multiple profile references
+            TypeRef typeref = new TypeRef(type.Code.Value, type.Profile.FirstOrDefault());
                 //builder.CreateTypeRef(type.Code, type.Profile);
             // todo: now the typerefs are duplicated. so resolving deduplication must be done else where.
             return typeref;
         }
 
-        private void HarvestTypeRefs(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestTypeRefs(Hl7.Fhir.Model.ElementDefinition source, Element target)
         {
             if (source.Type == null)
                 return;
@@ -118,22 +119,22 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        private void HarvestSlicing(Hl7.Fhir.Model.Profile.ElementComponent source, Element target)
+        private void HarvestSlicing(Hl7.Fhir.Model.ElementDefinition source, Element target)
         {
             InjectSlice(target);
         }
 
-        private Representation TransformRepresentation(Hl7.Fhir.Model.Profile.ElementComponent source)
+        private Representation TransformRepresentation(Hl7.Fhir.Model.ElementDefinition source)
         {
             if (source.Representation == null)
                 return Representation.Element;
 
-            return (source.Representation.Contains(Hl7.Fhir.Model.Profile.PropertyRepresentation.XmlAttr))
+            return (source.Representation.Contains(Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation.XmlAttr))
                 ? Representation.Attribute
                 : Representation.Element;
         }
 
-        private void HarvestElementDefinition(Hl7.Fhir.Model.Profile.ElementDefinitionComponent source, Element target)
+        private void HarvestElementDefinition(Hl7.Fhir.Model.ElementDefinition source, Element target)
         {
             if (source != null)
             {
@@ -146,28 +147,28 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        private void HarvestElement(Hl7.Fhir.Model.Profile.ElementComponent source, Element target)
+        private void HarvestElement(Hl7.Fhir.Model.ElementDefinition source, Element target)
         {
             target.Path = new Path(source.Path);
             target.Name = target.Path.ElementName; //source.Name; 
             target.Representation = TransformRepresentation(source);
 
-            HarvestElementDefinition(source.Definition, target);
+            HarvestElementDefinition(source, target);
             HarvestSlicing(source, target); 
         }
 
-        private Element HarvestElement(Hl7.Fhir.Model.Profile.ElementComponent source)
+        private Element HarvestElement(Hl7.Fhir.Model.ElementDefinition source)
         {
             Element target = new Element();
             HarvestElement(source, target);
             return target;
         }
 
-        private void HarvestElements(Hl7.Fhir.Model.Profile.ProfileStructureComponent source, Structure target)
+        private void HarvestElements(Hl7.Fhir.Model.StructureDefinition source, Structure target)
         {
             if (source.Snapshot == null) throw Error.Argument("source", "Structure must have a differential representation");
             
-            foreach(Hl7.Fhir.Model.Profile.ElementComponent component in source.Snapshot.Element)
+            foreach(Hl7.Fhir.Model.ElementDefinition component in source.Snapshot.Element)
             {
                 if (component.Slicing == null)
                 {
@@ -180,7 +181,7 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        private Slicing PrepareSlice(Hl7.Fhir.Model.Profile.ElementComponent source)
+        private Slicing PrepareSlice(Hl7.Fhir.Model.ElementDefinition source)
         {
             Slicing slicing = new Slicing();
             slicing.Path = new Path(source.Path);
@@ -194,10 +195,10 @@ namespace Hl7.Fhir.Validation
             return slicing;
         }
 
-        public void PrepareSlices(Hl7.Fhir.Model.Profile.ProfileStructureComponent source)
+        public void PrepareSlices(Hl7.Fhir.Model.StructureDefinition source)
         {
             if (source.Snapshot == null) throw Error.Argument("source", "Structure must have a differential representation");
-            foreach (Hl7.Fhir.Model.Profile.ElementComponent e in source.Snapshot.Element)
+            foreach (Hl7.Fhir.Model.ElementDefinition e in source.Snapshot.Element)
             {
                 if (e.Slicing != null)
                 {
@@ -217,11 +218,11 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        public Structure HarvestStructure(Hl7.Fhir.Model.Profile.ProfileStructureComponent source, Uri uri)
+        public Structure HarvestStructure(Hl7.Fhir.Model.StructureDefinition source, Uri uri)
         {
             Structure target = new Structure();
             target.Name = source.Name;
-            target.Type = source.Type;
+            target.ConstrainedType = source.ConstrainedType.Value;
             target.NameSpacePrefix = FhirNamespaceManager.Fhir;
             PrepareSlices(source);
             HarvestElements(source, target);
@@ -229,29 +230,9 @@ namespace Hl7.Fhir.Validation
             return target;
         }
 
-        public Structure HarvestExtensionDefn(Hl7.Fhir.Model.Profile.ProfileExtensionDefnComponent source)
+        public Structure HarvestExtensionDefn(Hl7.Fhir.Model.StructureDefinition source, Uri uri)
         {
-            Structure target = new Structure();
-            target.Name = source.Name;
-            Element element = new Element();
-            element.Name = source.Name;
-
-            //TODO: Add support for complex extensions
-            if (source.Element.Count > 0)
-                throw new NotImplementedException("Complex extensions are not supported by the harvester");
-
-            HarvestElementDefinition(source.Element[0].Definition, element);
-            
-            target.Elements.Add(element);
-            return target;
-        }
-
-        public void HarvestProfileExtensions(Hl7.Fhir.Model.Profile source)
-        {
-            foreach(var defn in source.ExtensionDefn)
-            {
-                HarvestExtensionDefn(defn);
-            }
+            return HarvestStructure(source, uri);
         }
 
         public ValueSet HarvestValueSet(Hl7.Fhir.Model.ValueSet source, Uri system)

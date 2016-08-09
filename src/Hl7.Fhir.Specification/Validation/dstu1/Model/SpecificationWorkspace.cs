@@ -19,8 +19,7 @@ namespace Hl7.Fhir.Specification.Model
     public enum SlicingRules { OpenAtEnd };
     
     /// <summary>
-    /// FHIR Profile. Basis for validation of FHIR Resources.
-    /// Profile should be constructed from a ProfileBuilder
+    /// Container for all conformance resources retrieved and harvested (and I think also bound and resolved)
     /// </summary>
     public class SpecificationWorkspace
     {
@@ -66,7 +65,9 @@ namespace Hl7.Fhir.Specification.Model
 
         public Structure GetStructureByName(string name)
         {
-            return Structures.FirstOrDefault(s => s.Type == name);
+            //TODO: this could go wrong...
+            var fhirType = (FHIRDefinedType)Enum.Parse(typeof(FHIRDefinedType), name);
+            return Structures.FirstOrDefault(s => s.ConstrainedType == fhirType);
         }
 
         public Structure GetStructureByUri(Uri uri)
@@ -74,9 +75,9 @@ namespace Hl7.Fhir.Specification.Model
             return Structures.FirstOrDefault(s => UriHelper.Equal(s.Uri, uri));
         }
 
-        public IEnumerable<Structure> StructuresWithName(string name)
+        public IEnumerable<Structure> StructuresWithName(FHIRDefinedType fhirType)
         {
-            return Structures.Where(s => s.Type == name);
+            return Structures.Where(s => s.ConstrainedType == fhirType);
         }
 
         public ValueSet GetValueSetByUri(Uri uri)

@@ -4,6 +4,8 @@
 *
 * This file is licensed under the BSD 3-Clause license
 */
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +17,13 @@ namespace Hl7.Fhir.Specification.Model
 
     public class TypeRef : IEquatable<TypeRef>
     {
-        public TypeRef(string code, string profileUri = null)
+        public TypeRef(FHIRDefinedType code, string profileUri = null)
         {
             this.Code = code;
             this.ProfileUri = profileUri;
         }
         
-        public string Code;
+        public FHIRDefinedType Code;
         public string ProfileUri { get; set; }
         public Uri Uri { get; set; }
         
@@ -42,7 +44,7 @@ namespace Hl7.Fhir.Specification.Model
             }
             else 
             {
-                return Code;
+                return Code.GetLiteral();
             }
         }
 

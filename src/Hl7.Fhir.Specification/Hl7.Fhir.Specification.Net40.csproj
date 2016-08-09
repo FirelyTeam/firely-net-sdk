@@ -120,6 +120,7 @@
     <Compile Include="Validation\dstu1\SpecificationBinder.cs" />
     <Compile Include="Validation\dstu1\SpecificationBuilder.cs" />
     <Compile Include="Validation\dstu1\SpecificationFactory.cs" />
+    <Compile Include="Validation\dstu1\SpecificationHarvester.cs" />
     <Compile Include="Validation\dstu1\SpecificationProvider.cs" />
     <Compile Include="Validation\dstu1\SpecificationValidator.cs" />
     <Compile Include="Validation\dstu1\Tracker.cs" />

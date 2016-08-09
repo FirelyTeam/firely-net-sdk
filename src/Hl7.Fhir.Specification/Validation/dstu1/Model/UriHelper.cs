@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +10,7 @@ namespace Hl7.Fhir.Specification.Model
 {
     public static class UriHelper
     {
-        public static Uri BASEPROFILE = new Uri("http://hl7.org/fhir/Profile");
+        public static Uri BASEPROFILE = new Uri("http://hl7.org/fhir/StructureDefinition");
         
         public static Uri BaseProfileUriFor(string type)
         {
@@ -36,10 +38,10 @@ namespace Hl7.Fhir.Specification.Model
 
         public static Uri Identify(Structure structure, TypeRef typeref)
         {
-            string name = typeref.Code;
+            string name = typeref.Code.GetLiteral();
             Uri uri;
 
-            if ((name == "ResourceReference"))
+            if ((name == FHIRDefinedType.Reference.GetLiteral()))
             {
                 uri = BaseProfileUriFor(name);
             }
@@ -69,7 +71,7 @@ namespace Hl7.Fhir.Specification.Model
 
         public static Uri Identify(Structure structure)
         {
-            string name = structure.Name ?? structure.Type;
+            string name = structure.Name ?? structure.ConstrainedType.GetLiteral();
             if (IsBaseProfile(structure.ProfileUri))
             {
                 return BaseProfileUriFor(name);
