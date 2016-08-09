@@ -62,3 +62,8 @@ Write-Host -ForegroundColor White "transforming search-parameters.xml ..."
 $xslt.Transform("$srcdir\Hl7.Fhir.Core\Model\Source\search-parameters.xml", "$srcdir\Hl7.Fhir.Core\Model\Source\search-parameters2.xml");
 del "$srcdir\Hl7.Fhir.Core\Model\Source\search-parameters.xml"
 move "$srcdir\Hl7.Fhir.Core\Model\Source\search-parameters2.xml" "$srcdir\Hl7.Fhir.Core\Model\Source\search-parameters.xml"
+
+Write-Host -ForegroundColor White "transforming expansions.xml ..."
+$xslt.Transform("$srcdir\Hl7.Fhir.Core\Model\Source\expansions.xml", "$srcdir\Hl7.Fhir.Core\Model\Source\expansions2.xml");
+del "$srcdir\Hl7.Fhir.Core\Model\Source\expansions.xml"
+move "$srcdir\Hl7.Fhir.Core\Model\Source\expansions2.xml" "$srcdir\Hl7.Fhir.Core\Model\Source\expansions.xml"

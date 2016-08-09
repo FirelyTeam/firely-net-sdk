@@ -3,7 +3,7 @@
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="types"/>
   <meta>
-    <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+    <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
   </meta>
   <type value="collection"/>
   <entry>
@@ -12,7 +12,7 @@
       <StructureDefinition>
         <id value="date"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -28,7 +28,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for date Type: A date or partial date (e.g. just year or year + month). There is no time zone. The format is a union of the schema types gYear, gYearMonth and date.  Dates SHALL be valid dates."/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -142,7 +142,7 @@
       <StructureDefinition>
         <id value="dateTime"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -158,7 +158,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for dateTime Type: A date, date-time or partial date (e.g. just year or year + month).  If hours and minutes are specified, a time zone SHALL be populated. The format is a union of the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored.                 Dates SHALL be valid dates."/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -272,7 +272,7 @@
       <StructureDefinition>
         <id value="code"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -288,7 +288,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for code type: A string which has at least one character and no leading or trailing whitespace and where there is no whitespace other than single spaces in the contents"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -401,7 +401,7 @@
       <StructureDefinition>
         <id value="string"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -417,7 +417,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for string Type: A sequence of Unicode characters"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -529,7 +529,7 @@
       <StructureDefinition>
         <id value="integer"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -545,7 +545,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for integer Type: A whole number"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -665,7 +665,7 @@
       <StructureDefinition>
         <id value="oid"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -681,7 +681,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for oid type: An oid represented as a URI"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -796,7 +796,7 @@
       <StructureDefinition>
         <id value="uri"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -812,7 +812,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for uri Type: String of characters used to identify a name or a resource"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -922,7 +922,7 @@
       <StructureDefinition>
         <id value="uuid"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -938,7 +938,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for uuid type: A UUID, represented as a URI"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -1053,7 +1053,7 @@
       <StructureDefinition>
         <id value="instant"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -1069,7 +1069,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for instant Type: An instant in time - known at least to the second"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -1179,7 +1179,7 @@
       <StructureDefinition>
         <id value="boolean"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -1195,7 +1195,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for boolean Type: Value of &quot;true&quot; or &quot;false&quot;"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -1303,7 +1303,7 @@
       <StructureDefinition>
         <id value="base64Binary"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -1319,7 +1319,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for base64Binary Type: A stream of bytes"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -1429,7 +1429,7 @@
       <StructureDefinition>
         <id value="unsignedInt"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -1445,7 +1445,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for unsignedInt type: An integer with a value that is not negative (e.g. &gt;= 0)"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -1558,7 +1558,7 @@
       <StructureDefinition>
         <id value="markdown"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -1574,7 +1574,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for markdown type: A string that may contain markdown syntax for optional processing by a mark down presentation engine"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -1683,7 +1683,7 @@
       <StructureDefinition>
         <id value="time"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -1699,7 +1699,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for time Type: A time during the day, with no date specified"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -1813,7 +1813,7 @@
       <StructureDefinition>
         <id value="id"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -1829,7 +1829,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for id type: Any combination of letters, numerals, &quot;-&quot; and &quot;.&quot;, with a length limit of 64 characters.  (This might be an integer, an unprefixed OID, UUID or any other identifier pattern that meets these constraints.)  Ids are case-insensitive."/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -1944,7 +1944,7 @@
       <StructureDefinition>
         <id value="positiveInt"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -1960,7 +1960,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for positiveInt type: An integer with a value that is positive (e.g. &gt;0)"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -2073,7 +2073,7 @@
       <StructureDefinition>
         <id value="decimal"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -2089,7 +2089,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for decimal Type: A rational number with implicit precision"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -2205,7 +2205,7 @@
       <StructureDefinition>
         <id value="xhtml"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -2221,7 +2221,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for xhtml Type"/>
         <fhirVersion value="1.5.0"/>
         <kind value="primitive-type"/>
@@ -2333,7 +2333,7 @@
       <StructureDefinition>
         <id value="Reference"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -2440,7 +2440,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Reference Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -2634,7 +2634,7 @@
       <StructureDefinition>
         <id value="Quantity"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -2800,7 +2800,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Quantity Type"/>
         <requirements value="Need to able to capture all sorts of measured values, even if the measured value are not precisely quantified. Values include exact measures such as 3.51g, customary units such as 3 tablets, and currencies such as $100.32USD."/>
         <fhirVersion value="1.5.0"/>
@@ -3170,7 +3170,7 @@
       <StructureDefinition>
         <id value="Period"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -3278,7 +3278,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Period Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -3507,7 +3507,7 @@
       <StructureDefinition>
         <id value="Attachment"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -3727,7 +3727,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Attachment Type"/>
         <requirements value="Many models need to include data defined in other specifications that is complex and opaque to the healthcare model. This includes documents, media recordings, structured data, etc."/>
         <fhirVersion value="1.5.0"/>
@@ -4197,7 +4197,7 @@
       <StructureDefinition>
         <id value="Duration"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -4267,7 +4267,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Duration Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -4546,7 +4546,7 @@
       <StructureDefinition>
         <id value="Count"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -4616,7 +4616,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Count Type"/>
         <requirements value="Need to able to capture all sorts of measured values, even if the measured value are not precisely quantified. Values include exact measures such as 3.51g, customary units such as 3 tablets, and currencies such as $100.32USD."/>
         <fhirVersion value="1.5.0"/>
@@ -4888,7 +4888,7 @@
       <StructureDefinition>
         <id value="Range"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -4996,7 +4996,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Range Type"/>
         <requirements value="Need to be able to specify ranges of values."/>
         <fhirVersion value="1.5.0"/>
@@ -5228,7 +5228,7 @@
       <StructureDefinition>
         <id value="Annotation"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -5376,7 +5376,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Annotation Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -5641,7 +5641,7 @@
       <StructureDefinition>
         <id value="Money"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -5711,7 +5711,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Money Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -5990,7 +5990,7 @@
       <StructureDefinition>
         <id value="Identifier"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -6174,7 +6174,7 @@
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Identifier Type"/>
         <requirements value="Need to be able to identify things with confidence and be sure that the identification is not subject to misinterpretation."/>
         <fhirVersion value="1.5.0"/>
@@ -6629,7 +6629,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="Coding"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -6785,7 +6785,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Coding Type"/>
         <requirements value="References to codes are very common in healthcare models."/>
         <fhirVersion value="1.5.0"/>
@@ -7172,7 +7172,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="Signature"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -7418,7 +7418,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Signature Type"/>
         <requirements value="There are a number of places where content must be signed in healthcare."/>
         <fhirVersion value="1.5.0"/>
@@ -7773,7 +7773,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="SampledData"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -7961,7 +7961,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for SampledData Type"/>
         <requirements value="There is a need for a concise way to handle the data produced by devices that sample a physical state at a high frequency."/>
         <fhirVersion value="1.5.0"/>
@@ -8307,7 +8307,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="Ratio"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -8413,7 +8413,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Ratio Type"/>
         <requirements value="Need to able to capture ratios for some measurements (titers) and some rates (costs)."/>
         <fhirVersion value="1.5.0"/>
@@ -8615,7 +8615,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="Distance"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -8685,7 +8685,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Distance Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -8964,7 +8964,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="Age"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -9034,7 +9034,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Age Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -9313,7 +9313,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="CodeableConcept"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -9415,7 +9415,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for CodeableConcept Type"/>
         <requirements value="This is a common pattern in healthcare - a concept that may be defined by one or more codes from formal definitions including LOINC and SNOMED CT, and/or defined by the provision of text that captures a human sense of the concept."/>
         <fhirVersion value="1.5.0"/>
@@ -9658,7 +9658,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="Extension"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -9759,7 +9759,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Extension Type"/>
         <requirements value="The ability to add extensions in a structured way is what keeps FHIR resources simple."/>
         <fhirVersion value="1.5.0"/>
@@ -10170,7 +10170,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="BackboneElement"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -10253,7 +10253,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for BackboneElement Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -10399,7 +10399,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="Narrative"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -10508,7 +10508,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Narrative Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -10730,7 +10730,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="Element"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -10829,7 +10829,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Element Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -10955,7 +10955,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="Meta"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -11091,7 +11091,11 @@ Where the system is known, a type is unnecessary because the type is always part
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
                   <a href="datatypes.html#Coding">Coding</a>
                 </td>
-                <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">Tags applied to this resource</td>
+                <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">Tags applied to this resource
+                  <br/>
+                  <a href="valueset-common-tags.html" title="Codes that represent various types of tags, commonly workflow-related; e.g. &quot;Needs review by Dr. Jones&quot;">Common Tags</a> (
+                  <a href="terminologies.html#example" title="Instances are not expected or even encouraged to draw from the specified value set.  The value set merely provides examples of the types of concepts intended to be included.">Example</a>)
+                </td>
               </tr>
 
               <tr>
@@ -11115,7 +11119,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Meta Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -11259,6 +11263,9 @@ Where the system is known, a type is unnecessary because the type is always part
             <binding>
               <strength value="example"/>
               <description value="Codes that represent various types of tags, commonly workflow-related; e.g. &quot;Needs review by Dr. Jones&quot;"/>
+              <valueSetReference>
+                <reference value="http://hl7.org/fhir/ValueSet/common-tags"/>
+              </valueSetReference>
             </binding>
           </element>
         </snapshot>
@@ -11351,6 +11358,9 @@ Where the system is known, a type is unnecessary because the type is always part
             <binding>
               <strength value="example"/>
               <description value="Codes that represent various types of tags, commonly workflow-related; e.g. &quot;Needs review by Dr. Jones&quot;"/>
+              <valueSetReference>
+                <reference value="http://hl7.org/fhir/ValueSet/common-tags"/>
+              </valueSetReference>
             </binding>
           </element>
         </differential>
@@ -11363,7 +11373,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="RelatedResource"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -11542,7 +11552,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for RelatedResource Type"/>
         <requirements value="Modules must be able to provide enough information for consumers of the content (and/or interventions or results produced by the content) to be able to determine and understand the justification for and evidence in support of the content."/>
         <fhirVersion value="1.5.0"/>
@@ -11805,7 +11815,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="Address"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -12060,7 +12070,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Address Type"/>
         <requirements value="Need to be able to record postal addresses, along with notes about their use."/>
         <fhirVersion value="1.5.0"/>
@@ -12778,7 +12788,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="TriggerDefinition"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -12981,7 +12991,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for TriggerDefinition Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -13209,7 +13219,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="Contributor"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -13333,7 +13343,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Contributor Type"/>
         <requirements value="Need to track contributor information in the same way across multiple resources."/>
         <fhirVersion value="1.5.0"/>
@@ -13520,7 +13530,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="DataRequirement"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -13582,7 +13592,7 @@ Where the system is known, a type is unnecessary because the type is always part
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">The type of the required data
                   <br/>
-                  <a href="null" title="Either an abstract type, a resource or a data type.">FHIRAllTypes</a> (
+                  <a href="valueset-all-types.html" title="Either an abstract type, a resource or a data type.">FHIRAllTypes</a> (
                   <a href="terminologies.html#required" title="To be conformant, instances of this element SHALL include a code from the specified value set.">Required</a>)
                 </td>
               </tr>
@@ -13895,7 +13905,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for DataRequirement Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -14385,7 +14395,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="ContactDetail"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -14487,7 +14497,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for ContactDetail Type"/>
         <requirements value="Need to track contact information in the same way across multiple resources."/>
         <fhirVersion value="1.5.0"/>
@@ -14640,7 +14650,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="HumanName"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -14837,7 +14847,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for HumanName Type"/>
         <requirements value="Need to be able to record names, along with notes about their use."/>
         <fhirVersion value="1.5.0"/>
@@ -15322,7 +15332,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="ContactPoint"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -15492,7 +15502,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for ContactPoint Type"/>
         <requirements value="Need to track phone, fax, mobile, sms numbers, email addresses, twitter tags, etc."/>
         <fhirVersion value="1.5.0"/>
@@ -15911,7 +15921,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="UsageContext"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -16129,7 +16139,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for UsageContext Type"/>
         <requirements value="Consumers of the module must be able to determine the intended applicability for the module. Ideally, this information would be used programmatically to determine when and how it should be incorporated or exposed."/>
         <fhirVersion value="1.5.0"/>
@@ -16442,7 +16452,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="Timing"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -16894,7 +16904,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for Timing Type"/>
         <requirements value="Need to able to track proposed timing schedules. There are several different ways to do this: one or more specified times, a simple rules like three times a day, or  before/after meals."/>
         <fhirVersion value="1.5.0"/>
@@ -17754,7 +17764,7 @@ Where the system is known, a type is unnecessary because the type is always part
       <StructureDefinition>
         <id value="ElementDefinition"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -18285,7 +18295,7 @@ Where the system is known, a type is unnecessary because the type is always part
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">Name of Data type or Resource
                   <br/>
-                  <a href="null" title="Either a resource or a data type, including logical model types">FHIRDefinedType</a> (
+                  <a href="valueset-defined-types.html" title="Either a resource or a data type, including logical model types">FHIRDefinedType</a> (
                   <a href="terminologies.html#extensible" title="To be conformant, instances of this element SHALL include a code from the specified value set if any of the codes within the value set can apply to the concept being communicated.  If the value set does not cover the concept (based on human review), alternate codings (or, data type allowing, text) may be included instead.">Extensible</a>)
                 </td>
               </tr>
@@ -18930,7 +18940,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAWCAYAAADJqhx8AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYeFzMPbYccAgAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAMElEQVQ4y+3OQREAIBDDwAv+PQcFFN5MIyCzqHMKUGVCpMFLK97heq+gggoq+EiwAVjvMhFGmlEUAAAAAElFTkSuQmCC" alt="." style="background-color: inherit" class="hierarchy"/>
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAWCAYAAADJqhx8AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYeFzI3XJ6V3QAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAANklEQVQ4y+2RsQ0AIAzDav7/2VzQwoCY4iWbZSmo1QGoUgNMghvWaIejPQW/CrrNCylIwcOCDYfLNRcNer4SAAAAAElFTkSuQmCC" alt="." style="background-color: inherit" class="hierarchy"/>
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gYBFzI0BrFQCwAAAERJREFUOMtj/P//PwMlgImBQjDwBrCcOnWKokBgYWBgYDCU+06W5i8MUggvnH/EOVJjAW4AuQHJ+O75LYqikXE0LzAAALePEntTkEoSAAAAAElFTkSuQmCC" alt="." style="background-color: white; background-color: inherit" title="Primitive Data Type" class="hierarchy"/> 
-                  <a href="elementdefinition-definitions.html#ElementDefinition.constraint.expression" title="ElementDefinition.constraint.expression : A [FluentPath](fluentpath.html) expression of constraint that can be executed to see if this constraint is met.">expression</a>
+                  <a href="elementdefinition-definitions.html#ElementDefinition.constraint.expression" title="ElementDefinition.constraint.expression : A [FluentPath](http://hl7.org/fluentpath) expression of constraint that can be executed to see if this constraint is met.">expression</a>
                   <a name="ElementDefinition.constraint.expression"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -19236,7 +19246,7 @@ Where the system is known, a type is unnecessary because the type is always part
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for ElementDefinition Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -21005,7 +21015,7 @@ Where the system is known, a type is unnecessary because the type is always part
           <element id="ElementDefinition.constraint.expression">
             <path value="ElementDefinition.constraint.expression"/>
             <short value="FluentPath expression of constraint"/>
-            <definition value="A [FluentPath](fluentpath.html) expression of constraint that can be executed to see if this constraint is met."/>
+            <definition value="A [FluentPath](http://hl7.org/fluentpath) expression of constraint that can be executed to see if this constraint is met."/>
             <requirements value="Used by validation tooling tests of the validity of the resource."/>
             <min value="0"/>
             <max value="1"/>
@@ -22907,7 +22917,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
           <element id="ElementDefinition.constraint.expression">
             <path value="ElementDefinition.constraint.expression"/>
             <short value="FluentPath expression of constraint"/>
-            <definition value="A [FluentPath](fluentpath.html) expression of constraint that can be executed to see if this constraint is met."/>
+            <definition value="A [FluentPath](http://hl7.org/fluentpath) expression of constraint that can be executed to see if this constraint is met."/>
             <requirements value="Used by validation tooling tests of the validity of the resource."/>
             <min value="0"/>
             <max value="1"/>
@@ -23208,7 +23218,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
       <StructureDefinition>
         <id value="ParameterDefinition"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -23364,7 +23374,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
                   <br/>
-                  <a href="null" title="Either an abstract type, a resource or a data type.">FHIRAllTypes</a> (
+                  <a href="valueset-all-types.html" title="Either an abstract type, a resource or a data type.">FHIRAllTypes</a> (
                   <a href="terminologies.html#required" title="To be conformant, instances of this element SHALL include a code from the specified value set.">Required</a>)
                 </td>
               </tr>
@@ -23409,7 +23419,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Base StructureDefinition for ParameterDefinition Type"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -23695,7 +23705,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
       <StructureDefinition>
         <id value="SimpleQuantity"/>
         <meta>
-          <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+          <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
         </meta>
         <text>
           <status value="generated"/>
@@ -23720,7 +23730,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             <value value="http://hl7.org/fhir"/>
           </telecom>
         </contact>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="A fixed quantity (no comparator)"/>
         <fhirVersion value="1.5.0"/>
         <mapping>

@@ -3,7 +3,7 @@
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="profiles-others"/>
   <meta>
-    <lastUpdated value="2016-07-29T05:44:09.144+00:00"/>
+    <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
   </meta>
   <type value="collection"/>
   <entry>
@@ -92,7 +92,7 @@
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <mapping>
@@ -1990,7 +1990,7 @@
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <mapping>
@@ -2927,7 +2927,7 @@
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -3090,7 +3090,7 @@
           </element>
           <element id="FamilyMemberHistory:familymemberhistory-genetic.extension">
             <path value="FamilyMemberHistory.extension"/>
-            <slicing id="91">
+            <slicing id="88">
               <discriminator value="url"/>
               <ordered value="false"/>
               <rules value="open"/>
@@ -3732,7 +3732,7 @@
         <name value="Shareable ValueSet"/>
         <status value="draft"/>
         <publisher value="HL7"/>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Enforces the minimum information set for the value set metadata required by HL7 and other organisations that share and publish value sets"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -3798,7 +3798,7 @@
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -5840,7 +5840,7 @@
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <mapping>
@@ -6042,7 +6042,7 @@
             <path value="DiagnosticRequest.identifier"/>
             <short value="Identifiers assigned to this order"/>
             <definition value="Identifiers assigned to this order instance by the orderer and/or  the receiver and/or order fulfiller."/>
-            <comments value="The identifier.type element is used to distinguish between the identifiers assigned by the orderer (known as the &#39;Placer&#39; in HL7 v2) and the producer of the observations in response to the order (known as the &#39;Filler&#39; in HL7 v2). For further discussion and examples see the [notes section](DiagnosticRequest.html#4.22.4) below."/>
+            <comments value="The identifier.type element is used to distinguish between the identifiers assigned by the orderer (known as the &#39;Placer&#39; in HL7 v2) and the producer of the observations in response to the order (known as the &#39;Filler&#39; in HL7 v2). For further discussion and examples see the [notes section](diagnosticrequest.html#4.22.4) below."/>
             <min value="0"/>
             <max value="*"/>
             <base>
@@ -6409,7 +6409,7 @@
             <path value="DiagnosticRequest.performer"/>
             <short value="Requested perfomer"/>
             <definition value="The desired perfomer for doing the diagnostic testing."/>
-            <comments value="Use the standard [XXX extension]() for listing alternative  alternative performers and/or roles and/or preference."/>
+            <comments value="Use an [extension] (extensibility.html) or listing alternative alternative performers and/or roles and/or preference."/>
             <min value="0"/>
             <max value="1"/>
             <base>
@@ -6581,7 +6581,7 @@ All Provenances should have some historical version of this Request as their sub
         <name value="Shareable CodeSystem"/>
         <status value="draft"/>
         <publisher value="HL7"/>
-        <date value="2016-07-29T05:44:09+00:00"/>
+        <date value="2016-08-09T09:36:21+00:00"/>
         <description value="Enforces the minimum information set for the value set metadata required by HL7 and other organisations that share and publish value sets"/>
         <fhirVersion value="1.5.0"/>
         <mapping>
@@ -6647,14 +6647,14 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
               <key value="csd-1"/>
               <severity value="error"/>
               <human value="Within a code system definition, all the codes SHALL be unique"/>
-              <expression value="(concept.code | descendents().concept.code).isDistinct()"/>
+              <expression value="(concept.code | descendants().concept.code).isDistinct()"/>
               <xpath value="count(distinct-values(descendant::f:concept/f:code/@value))=count(descendant::f:concept)"/>
             </constraint>
             <mapping>
@@ -8270,7 +8270,7 @@ All Provenances should have some historical version of this Request as their sub
           <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/devicemetricobservation"/>
-        <name value="Device Metric Observation"/>
+        <name value="Device Metric Observation Profile"/>
         <status value="draft"/>
         <publisher value="Health Level Seven International (Health Care Devices)"/>
         <contact>
@@ -8345,7 +8345,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -10086,7 +10086,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -10249,7 +10249,7 @@ All Provenances should have some historical version of this Request as their sub
           </element>
           <element id="Observation:observationforgenetics.extension">
             <path value="Observation.extension"/>
-            <slicing id="92">
+            <slicing id="89">
               <discriminator value="url"/>
               <ordered value="false"/>
               <rules value="open"/>
@@ -12285,7 +12285,7 @@ All Provenances should have some historical version of this Request as their sub
           <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
-          <valueMarkdown value="#### Complete Summary of the Mandatory Requirements1.  One status in `Observation.status`2.  One category in `Observation.category` which must have:    -   a fixed        `Observation.category.coding.system`=**“http://hl7.org/fhir/observation-category”**    -   a fixed `Observation.category.coding.code`=**“vital-signs”**3.  One code in `Observation.code` which must have    -   a fixed `Observation.code.coding.system`=**“http://loinc.org”**    -   a LOINC code in `Observation.code.coding.code` which must be taken            from the [Vital Signs] valueset    -   Other additional codes are allowed - e.g. method specific LOINC        Codes, SNOMED CT concepts, system specific codes. All codes        SHALL have an system value4.  Either one `Observation.valueQuantity` or, if there is no value,    one code in `Observation.DataAbsentReason` (Note: See the comments    in the table for exceptions)    -   Each Observation.valueQuantity must have:        -   One numeric value in `Observation.valueQuantity.value`        -   a fixed            `Observation.valueQuantity.system`=**“http://unitsofmeasure.org”**        -   a UCUM unit code in `Observation.valueQuantity.code` which must be taken            from the [Vital Signs Units] valueset    -   Observation.DataAbsentReason should be taken from the [Observation        Value Absent Reason] Valueset5.  When using a panel code to group component observations (Note: See    the comments regarding blood pressure in the table), one or more    `Observation.component.code` each of which must have:    -   a fixed        `Observation.component.code.coding.system`=**“http://loinc.org”**    -   a LOINC code in `Observation.component.code.coding.code` taken        from the column labeled “LOINC code” in the table6.  Either one `Observation.component.valueQuantity` or, if there is    no value, one code in `Observation.component.DataAbsentReason`    -   Each Observation.component.valueQuantity must have:        -   One numeric value in            `Observation.component.valueQuantity.value`        -   a fixed            `Observation.component.valueQuantity.system`=**“http://unitsofmeasure.org”**        -   a UCUM unit code in            `Observation.component.valueQuantity.code` which must be taken            from the [Vital Signs Units] valueset    -   The `Observation.component.DataAbsentReason.code.coding.code` should be taken from the [Observation        Value Absent Reason] Valueset7.  When using a panel code to group observations, one or more reference    to Observations in `Observation.related.target`(Note: See the    comments for Vital Signs in the table)    -   a fixed `Observation.related.type`=**“has-member”**8.  One patient in `Observation.subject`9.  A date and time in `Observation.effectiveDateTime` or `Observation.effectivePeriod`  [Observation Value Absent Reason]: valueset-observation-valueabsentreason.html  [Vital Signs Units]:valueset-ucum-vitals-common.html  [Vital Signs]:/valueset-observation-vitalsignresult.html"/>
+          <valueMarkdown value="#### Complete Summary of the Mandatory Requirements1.  One status in `Observation.status`2.  One category in `Observation.category` which must have:    -   a fixed        `Observation.category.coding.system`=**“http://hl7.org/fhir/observation-category”**    -   a fixed `Observation.category.coding.code`=**“vital-signs”**3.  One code in `Observation.code` which must have    -   a fixed `Observation.code.coding.system`=**“http://loinc.org”**    -   a LOINC code in `Observation.code.coding.code` which must be taken            from the [Vital Signs] valueset    -   Other additional codes are allowed - e.g. method specific LOINC        Codes, SNOMED CT concepts, system specific codes. All codes        SHALL have an system value4.  Either one `Observation.valueQuantity` or, if there is no value,    one code in `Observation.DataAbsentReason` (Note: See the comments    in the table for exceptions)    -   Each Observation.valueQuantity must have:        -   One numeric value in `Observation.valueQuantity.value`        -   a fixed            `Observation.valueQuantity.system`=**“http://unitsofmeasure.org”**        -   a UCUM unit code in `Observation.valueQuantity.code` which must be taken            from the [Vital Signs Units] valueset    -   Observation.DataAbsentReason should be taken from the [Observation        Value Absent Reason] Valueset5.  When using a panel code to group component observations (Note: See    the comments regarding blood pressure in the table), one or more    `Observation.component.code` each of which must have:    -   a fixed        `Observation.component.code.coding.system`=**“http://loinc.org”**    -   a LOINC code in `Observation.component.code.coding.code` taken        from the column labeled “LOINC code” in the table6.  Either one `Observation.component.valueQuantity` or, if there is    no value, one code in `Observation.component.DataAbsentReason`    -   Each Observation.component.valueQuantity must have:        -   One numeric value in            `Observation.component.valueQuantity.value`        -   a fixed            `Observation.component.valueQuantity.system`=**“http://unitsofmeasure.org”**        -   a UCUM unit code in            `Observation.component.valueQuantity.code` which must be taken            from the [Vital Signs Units] valueset    -   The `Observation.component.DataAbsentReason.code.coding.code` should be taken from the [Observation        Value Absent Reason] Valueset7.  When using a panel code to group observations, one or more reference    to Observations in `Observation.related.target`(Note: See the    comments for Vital Signs in the table)    -   a fixed `Observation.related.type`=**“has-member”**8.  One patient in `Observation.subject`9.  A date and time in `Observation.effectiveDateTime` or `Observation.effectivePeriod`  [Observation Value Absent Reason]: valueset-observation-valueabsentreason.html  [Vital Signs Units]:valueset-ucum-vitals-common.html  [Vital Signs]:valueset-observation-vitalsignresult.html"/>
         </extension>
         <url value="http://hl7.org/fhir/StructureDefinition/vitalsigns"/>
         <name value="Vital Signs Profile"/>
@@ -12364,7 +12364,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -14005,9 +14005,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="N/A"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.low:simplequantity">
+          <element id="Observation:vitalsigns.referenceRange.low">
             <path value="Observation.referenceRange.low"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -14058,7 +14057,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.low:simplequantity.id">
+          <element id="Observation:vitalsigns.referenceRange.low.id">
             <path value="Observation.referenceRange.low.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -14078,7 +14077,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.low:simplequantity.extension">
+          <element id="Observation:vitalsigns.referenceRange.low.extension">
             <path value="Observation.referenceRange.low.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -14100,7 +14099,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.low:simplequantity.value">
+          <element id="Observation:vitalsigns.referenceRange.low.value">
             <path value="Observation.referenceRange.low.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -14127,7 +14126,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.low:simplequantity.comparator">
+          <element id="Observation:vitalsigns.referenceRange.low.comparator">
             <path value="Observation.referenceRange.low.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -14162,7 +14161,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.low:simplequantity.unit">
+          <element id="Observation:vitalsigns.referenceRange.low.unit">
             <path value="Observation.referenceRange.low.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -14188,7 +14187,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.low:simplequantity.system">
+          <element id="Observation:vitalsigns.referenceRange.low.system">
             <path value="Observation.referenceRange.low.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -14216,7 +14215,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.low:simplequantity.code">
+          <element id="Observation:vitalsigns.referenceRange.low.code">
             <path value="Observation.referenceRange.low.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -14243,9 +14242,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.code, MO.currency, PQ.translation.code"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.high:simplequantity">
+          <element id="Observation:vitalsigns.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -14296,7 +14294,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.high:simplequantity.id">
+          <element id="Observation:vitalsigns.referenceRange.high.id">
             <path value="Observation.referenceRange.high.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -14316,7 +14314,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.high:simplequantity.extension">
+          <element id="Observation:vitalsigns.referenceRange.high.extension">
             <path value="Observation.referenceRange.high.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -14338,7 +14336,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.high:simplequantity.value">
+          <element id="Observation:vitalsigns.referenceRange.high.value">
             <path value="Observation.referenceRange.high.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -14365,7 +14363,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.high:simplequantity.comparator">
+          <element id="Observation:vitalsigns.referenceRange.high.comparator">
             <path value="Observation.referenceRange.high.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -14400,7 +14398,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.high:simplequantity.unit">
+          <element id="Observation:vitalsigns.referenceRange.high.unit">
             <path value="Observation.referenceRange.high.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -14426,7 +14424,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.high:simplequantity.system">
+          <element id="Observation:vitalsigns.referenceRange.high.system">
             <path value="Observation.referenceRange.high.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -14454,7 +14452,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:vitalsigns.referenceRange.high:simplequantity.code">
+          <element id="Observation:vitalsigns.referenceRange.high.code">
             <path value="Observation.referenceRange.high.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -15336,7 +15334,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -17026,9 +17024,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="N/A"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.low:simplequantity">
+          <element id="Observation:bodyweight.referenceRange.low">
             <path value="Observation.referenceRange.low"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -17079,7 +17076,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.low:simplequantity.id">
+          <element id="Observation:bodyweight.referenceRange.low.id">
             <path value="Observation.referenceRange.low.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -17099,7 +17096,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.low:simplequantity.extension">
+          <element id="Observation:bodyweight.referenceRange.low.extension">
             <path value="Observation.referenceRange.low.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -17121,7 +17118,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.low:simplequantity.value">
+          <element id="Observation:bodyweight.referenceRange.low.value">
             <path value="Observation.referenceRange.low.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -17148,7 +17145,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.low:simplequantity.comparator">
+          <element id="Observation:bodyweight.referenceRange.low.comparator">
             <path value="Observation.referenceRange.low.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -17183,7 +17180,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.low:simplequantity.unit">
+          <element id="Observation:bodyweight.referenceRange.low.unit">
             <path value="Observation.referenceRange.low.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -17209,7 +17206,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.low:simplequantity.system">
+          <element id="Observation:bodyweight.referenceRange.low.system">
             <path value="Observation.referenceRange.low.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -17237,7 +17234,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.low:simplequantity.code">
+          <element id="Observation:bodyweight.referenceRange.low.code">
             <path value="Observation.referenceRange.low.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -17264,9 +17261,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.code, MO.currency, PQ.translation.code"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.high:simplequantity">
+          <element id="Observation:bodyweight.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -17317,7 +17313,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.high:simplequantity.id">
+          <element id="Observation:bodyweight.referenceRange.high.id">
             <path value="Observation.referenceRange.high.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -17337,7 +17333,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.high:simplequantity.extension">
+          <element id="Observation:bodyweight.referenceRange.high.extension">
             <path value="Observation.referenceRange.high.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -17359,7 +17355,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.high:simplequantity.value">
+          <element id="Observation:bodyweight.referenceRange.high.value">
             <path value="Observation.referenceRange.high.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -17386,7 +17382,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.high:simplequantity.comparator">
+          <element id="Observation:bodyweight.referenceRange.high.comparator">
             <path value="Observation.referenceRange.high.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -17421,7 +17417,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.high:simplequantity.unit">
+          <element id="Observation:bodyweight.referenceRange.high.unit">
             <path value="Observation.referenceRange.high.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -17447,7 +17443,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.high:simplequantity.system">
+          <element id="Observation:bodyweight.referenceRange.high.system">
             <path value="Observation.referenceRange.high.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -17475,7 +17471,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:bodyweight.referenceRange.high:simplequantity.code">
+          <element id="Observation:bodyweight.referenceRange.high.code">
             <path value="Observation.referenceRange.high.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -18153,7 +18149,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -19837,9 +19833,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="N/A"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.low:simplequantity">
+          <element id="Observation:resprate.referenceRange.low">
             <path value="Observation.referenceRange.low"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -19890,7 +19885,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.low:simplequantity.id">
+          <element id="Observation:resprate.referenceRange.low.id">
             <path value="Observation.referenceRange.low.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -19910,7 +19905,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.low:simplequantity.extension">
+          <element id="Observation:resprate.referenceRange.low.extension">
             <path value="Observation.referenceRange.low.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -19932,7 +19927,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.low:simplequantity.value">
+          <element id="Observation:resprate.referenceRange.low.value">
             <path value="Observation.referenceRange.low.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -19959,7 +19954,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.low:simplequantity.comparator">
+          <element id="Observation:resprate.referenceRange.low.comparator">
             <path value="Observation.referenceRange.low.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -19994,7 +19989,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.low:simplequantity.unit">
+          <element id="Observation:resprate.referenceRange.low.unit">
             <path value="Observation.referenceRange.low.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -20020,7 +20015,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.low:simplequantity.system">
+          <element id="Observation:resprate.referenceRange.low.system">
             <path value="Observation.referenceRange.low.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -20048,7 +20043,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.low:simplequantity.code">
+          <element id="Observation:resprate.referenceRange.low.code">
             <path value="Observation.referenceRange.low.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -20075,9 +20070,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.code, MO.currency, PQ.translation.code"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.high:simplequantity">
+          <element id="Observation:resprate.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -20128,7 +20122,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.high:simplequantity.id">
+          <element id="Observation:resprate.referenceRange.high.id">
             <path value="Observation.referenceRange.high.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -20148,7 +20142,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.high:simplequantity.extension">
+          <element id="Observation:resprate.referenceRange.high.extension">
             <path value="Observation.referenceRange.high.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -20170,7 +20164,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.high:simplequantity.value">
+          <element id="Observation:resprate.referenceRange.high.value">
             <path value="Observation.referenceRange.high.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -20197,7 +20191,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.high:simplequantity.comparator">
+          <element id="Observation:resprate.referenceRange.high.comparator">
             <path value="Observation.referenceRange.high.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -20232,7 +20226,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.high:simplequantity.unit">
+          <element id="Observation:resprate.referenceRange.high.unit">
             <path value="Observation.referenceRange.high.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -20258,7 +20252,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.high:simplequantity.system">
+          <element id="Observation:resprate.referenceRange.high.system">
             <path value="Observation.referenceRange.high.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -20286,7 +20280,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:resprate.referenceRange.high:simplequantity.code">
+          <element id="Observation:resprate.referenceRange.high.code">
             <path value="Observation.referenceRange.high.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -20961,7 +20955,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -22645,9 +22639,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="N/A"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.low:simplequantity">
+          <element id="Observation:heartrate.referenceRange.low">
             <path value="Observation.referenceRange.low"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -22698,7 +22691,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.low:simplequantity.id">
+          <element id="Observation:heartrate.referenceRange.low.id">
             <path value="Observation.referenceRange.low.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -22718,7 +22711,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.low:simplequantity.extension">
+          <element id="Observation:heartrate.referenceRange.low.extension">
             <path value="Observation.referenceRange.low.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -22740,7 +22733,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.low:simplequantity.value">
+          <element id="Observation:heartrate.referenceRange.low.value">
             <path value="Observation.referenceRange.low.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -22767,7 +22760,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.low:simplequantity.comparator">
+          <element id="Observation:heartrate.referenceRange.low.comparator">
             <path value="Observation.referenceRange.low.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -22802,7 +22795,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.low:simplequantity.unit">
+          <element id="Observation:heartrate.referenceRange.low.unit">
             <path value="Observation.referenceRange.low.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -22828,7 +22821,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.low:simplequantity.system">
+          <element id="Observation:heartrate.referenceRange.low.system">
             <path value="Observation.referenceRange.low.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -22856,7 +22849,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.low:simplequantity.code">
+          <element id="Observation:heartrate.referenceRange.low.code">
             <path value="Observation.referenceRange.low.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -22883,9 +22876,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.code, MO.currency, PQ.translation.code"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.high:simplequantity">
+          <element id="Observation:heartrate.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -22936,7 +22928,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.high:simplequantity.id">
+          <element id="Observation:heartrate.referenceRange.high.id">
             <path value="Observation.referenceRange.high.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -22956,7 +22948,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.high:simplequantity.extension">
+          <element id="Observation:heartrate.referenceRange.high.extension">
             <path value="Observation.referenceRange.high.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -22978,7 +22970,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.high:simplequantity.value">
+          <element id="Observation:heartrate.referenceRange.high.value">
             <path value="Observation.referenceRange.high.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -23005,7 +22997,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.high:simplequantity.comparator">
+          <element id="Observation:heartrate.referenceRange.high.comparator">
             <path value="Observation.referenceRange.high.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -23040,7 +23032,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.high:simplequantity.unit">
+          <element id="Observation:heartrate.referenceRange.high.unit">
             <path value="Observation.referenceRange.high.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -23066,7 +23058,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.high:simplequantity.system">
+          <element id="Observation:heartrate.referenceRange.high.system">
             <path value="Observation.referenceRange.high.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -23094,7 +23086,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:heartrate.referenceRange.high:simplequantity.code">
+          <element id="Observation:heartrate.referenceRange.high.code">
             <path value="Observation.referenceRange.high.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -23769,7 +23761,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -25459,9 +25451,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="N/A"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.low:simplequantity">
+          <element id="Observation:bodytemp.referenceRange.low">
             <path value="Observation.referenceRange.low"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -25512,7 +25503,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.low:simplequantity.id">
+          <element id="Observation:bodytemp.referenceRange.low.id">
             <path value="Observation.referenceRange.low.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -25532,7 +25523,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.low:simplequantity.extension">
+          <element id="Observation:bodytemp.referenceRange.low.extension">
             <path value="Observation.referenceRange.low.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -25554,7 +25545,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.low:simplequantity.value">
+          <element id="Observation:bodytemp.referenceRange.low.value">
             <path value="Observation.referenceRange.low.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -25581,7 +25572,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.low:simplequantity.comparator">
+          <element id="Observation:bodytemp.referenceRange.low.comparator">
             <path value="Observation.referenceRange.low.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -25616,7 +25607,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.low:simplequantity.unit">
+          <element id="Observation:bodytemp.referenceRange.low.unit">
             <path value="Observation.referenceRange.low.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -25642,7 +25633,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.low:simplequantity.system">
+          <element id="Observation:bodytemp.referenceRange.low.system">
             <path value="Observation.referenceRange.low.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -25670,7 +25661,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.low:simplequantity.code">
+          <element id="Observation:bodytemp.referenceRange.low.code">
             <path value="Observation.referenceRange.low.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -25697,9 +25688,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.code, MO.currency, PQ.translation.code"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.high:simplequantity">
+          <element id="Observation:bodytemp.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -25750,7 +25740,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.high:simplequantity.id">
+          <element id="Observation:bodytemp.referenceRange.high.id">
             <path value="Observation.referenceRange.high.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -25770,7 +25760,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.high:simplequantity.extension">
+          <element id="Observation:bodytemp.referenceRange.high.extension">
             <path value="Observation.referenceRange.high.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -25792,7 +25782,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.high:simplequantity.value">
+          <element id="Observation:bodytemp.referenceRange.high.value">
             <path value="Observation.referenceRange.high.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -25819,7 +25809,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.high:simplequantity.comparator">
+          <element id="Observation:bodytemp.referenceRange.high.comparator">
             <path value="Observation.referenceRange.high.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -25854,7 +25844,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.high:simplequantity.unit">
+          <element id="Observation:bodytemp.referenceRange.high.unit">
             <path value="Observation.referenceRange.high.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -25880,7 +25870,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.high:simplequantity.system">
+          <element id="Observation:bodytemp.referenceRange.high.system">
             <path value="Observation.referenceRange.high.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -25908,7 +25898,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:bodytemp.referenceRange.high:simplequantity.code">
+          <element id="Observation:bodytemp.referenceRange.high.code">
             <path value="Observation.referenceRange.high.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -26586,7 +26576,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -28276,9 +28266,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="N/A"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.low:simplequantity">
+          <element id="Observation:bodyheight.referenceRange.low">
             <path value="Observation.referenceRange.low"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -28329,7 +28318,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.low:simplequantity.id">
+          <element id="Observation:bodyheight.referenceRange.low.id">
             <path value="Observation.referenceRange.low.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -28349,7 +28338,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.low:simplequantity.extension">
+          <element id="Observation:bodyheight.referenceRange.low.extension">
             <path value="Observation.referenceRange.low.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -28371,7 +28360,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.low:simplequantity.value">
+          <element id="Observation:bodyheight.referenceRange.low.value">
             <path value="Observation.referenceRange.low.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -28398,7 +28387,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.low:simplequantity.comparator">
+          <element id="Observation:bodyheight.referenceRange.low.comparator">
             <path value="Observation.referenceRange.low.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -28433,7 +28422,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.low:simplequantity.unit">
+          <element id="Observation:bodyheight.referenceRange.low.unit">
             <path value="Observation.referenceRange.low.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -28459,7 +28448,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.low:simplequantity.system">
+          <element id="Observation:bodyheight.referenceRange.low.system">
             <path value="Observation.referenceRange.low.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -28487,7 +28476,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.low:simplequantity.code">
+          <element id="Observation:bodyheight.referenceRange.low.code">
             <path value="Observation.referenceRange.low.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -28514,9 +28503,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.code, MO.currency, PQ.translation.code"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.high:simplequantity">
+          <element id="Observation:bodyheight.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -28567,7 +28555,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.high:simplequantity.id">
+          <element id="Observation:bodyheight.referenceRange.high.id">
             <path value="Observation.referenceRange.high.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -28587,7 +28575,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.high:simplequantity.extension">
+          <element id="Observation:bodyheight.referenceRange.high.extension">
             <path value="Observation.referenceRange.high.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -28609,7 +28597,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.high:simplequantity.value">
+          <element id="Observation:bodyheight.referenceRange.high.value">
             <path value="Observation.referenceRange.high.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -28636,7 +28624,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.high:simplequantity.comparator">
+          <element id="Observation:bodyheight.referenceRange.high.comparator">
             <path value="Observation.referenceRange.high.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -28671,7 +28659,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.high:simplequantity.unit">
+          <element id="Observation:bodyheight.referenceRange.high.unit">
             <path value="Observation.referenceRange.high.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -28697,7 +28685,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.high:simplequantity.system">
+          <element id="Observation:bodyheight.referenceRange.high.system">
             <path value="Observation.referenceRange.high.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -28725,7 +28713,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:bodyheight.referenceRange.high:simplequantity.code">
+          <element id="Observation:bodyheight.referenceRange.high.code">
             <path value="Observation.referenceRange.high.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -29403,7 +29391,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -31093,9 +31081,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="N/A"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.low:simplequantity">
+          <element id="Observation:headcircum.referenceRange.low">
             <path value="Observation.referenceRange.low"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -31146,7 +31133,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.low:simplequantity.id">
+          <element id="Observation:headcircum.referenceRange.low.id">
             <path value="Observation.referenceRange.low.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -31166,7 +31153,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.low:simplequantity.extension">
+          <element id="Observation:headcircum.referenceRange.low.extension">
             <path value="Observation.referenceRange.low.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -31188,7 +31175,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.low:simplequantity.value">
+          <element id="Observation:headcircum.referenceRange.low.value">
             <path value="Observation.referenceRange.low.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -31215,7 +31202,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.low:simplequantity.comparator">
+          <element id="Observation:headcircum.referenceRange.low.comparator">
             <path value="Observation.referenceRange.low.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -31250,7 +31237,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.low:simplequantity.unit">
+          <element id="Observation:headcircum.referenceRange.low.unit">
             <path value="Observation.referenceRange.low.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -31276,7 +31263,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.low:simplequantity.system">
+          <element id="Observation:headcircum.referenceRange.low.system">
             <path value="Observation.referenceRange.low.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -31304,7 +31291,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.low:simplequantity.code">
+          <element id="Observation:headcircum.referenceRange.low.code">
             <path value="Observation.referenceRange.low.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -31331,9 +31318,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.code, MO.currency, PQ.translation.code"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.high:simplequantity">
+          <element id="Observation:headcircum.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -31384,7 +31370,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.high:simplequantity.id">
+          <element id="Observation:headcircum.referenceRange.high.id">
             <path value="Observation.referenceRange.high.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -31404,7 +31390,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.high:simplequantity.extension">
+          <element id="Observation:headcircum.referenceRange.high.extension">
             <path value="Observation.referenceRange.high.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -31426,7 +31412,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.high:simplequantity.value">
+          <element id="Observation:headcircum.referenceRange.high.value">
             <path value="Observation.referenceRange.high.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -31453,7 +31439,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.high:simplequantity.comparator">
+          <element id="Observation:headcircum.referenceRange.high.comparator">
             <path value="Observation.referenceRange.high.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -31488,7 +31474,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.high:simplequantity.unit">
+          <element id="Observation:headcircum.referenceRange.high.unit">
             <path value="Observation.referenceRange.high.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -31514,7 +31500,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.high:simplequantity.system">
+          <element id="Observation:headcircum.referenceRange.high.system">
             <path value="Observation.referenceRange.high.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -31542,7 +31528,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:headcircum.referenceRange.high:simplequantity.code">
+          <element id="Observation:headcircum.referenceRange.high.code">
             <path value="Observation.referenceRange.high.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -32220,7 +32206,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -33904,9 +33890,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="N/A"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.low:simplequantity">
+          <element id="Observation:oxygensat.referenceRange.low">
             <path value="Observation.referenceRange.low"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -33957,7 +33942,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.low:simplequantity.id">
+          <element id="Observation:oxygensat.referenceRange.low.id">
             <path value="Observation.referenceRange.low.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -33977,7 +33962,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.low:simplequantity.extension">
+          <element id="Observation:oxygensat.referenceRange.low.extension">
             <path value="Observation.referenceRange.low.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -33999,7 +33984,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.low:simplequantity.value">
+          <element id="Observation:oxygensat.referenceRange.low.value">
             <path value="Observation.referenceRange.low.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -34026,7 +34011,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.low:simplequantity.comparator">
+          <element id="Observation:oxygensat.referenceRange.low.comparator">
             <path value="Observation.referenceRange.low.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -34061,7 +34046,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.low:simplequantity.unit">
+          <element id="Observation:oxygensat.referenceRange.low.unit">
             <path value="Observation.referenceRange.low.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -34087,7 +34072,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.low:simplequantity.system">
+          <element id="Observation:oxygensat.referenceRange.low.system">
             <path value="Observation.referenceRange.low.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -34115,7 +34100,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.low:simplequantity.code">
+          <element id="Observation:oxygensat.referenceRange.low.code">
             <path value="Observation.referenceRange.low.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -34142,9 +34127,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.code, MO.currency, PQ.translation.code"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.high:simplequantity">
+          <element id="Observation:oxygensat.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -34195,7 +34179,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.high:simplequantity.id">
+          <element id="Observation:oxygensat.referenceRange.high.id">
             <path value="Observation.referenceRange.high.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -34215,7 +34199,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.high:simplequantity.extension">
+          <element id="Observation:oxygensat.referenceRange.high.extension">
             <path value="Observation.referenceRange.high.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -34237,7 +34221,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.high:simplequantity.value">
+          <element id="Observation:oxygensat.referenceRange.high.value">
             <path value="Observation.referenceRange.high.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -34264,7 +34248,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.high:simplequantity.comparator">
+          <element id="Observation:oxygensat.referenceRange.high.comparator">
             <path value="Observation.referenceRange.high.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -34299,7 +34283,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.high:simplequantity.unit">
+          <element id="Observation:oxygensat.referenceRange.high.unit">
             <path value="Observation.referenceRange.high.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -34325,7 +34309,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.high:simplequantity.system">
+          <element id="Observation:oxygensat.referenceRange.high.system">
             <path value="Observation.referenceRange.high.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -34353,7 +34337,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:oxygensat.referenceRange.high:simplequantity.code">
+          <element id="Observation:oxygensat.referenceRange.high.code">
             <path value="Observation.referenceRange.high.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -35028,7 +35012,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -36712,9 +36696,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="N/A"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.low:simplequantity">
+          <element id="Observation:bmi.referenceRange.low">
             <path value="Observation.referenceRange.low"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -36765,7 +36748,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.low:simplequantity.id">
+          <element id="Observation:bmi.referenceRange.low.id">
             <path value="Observation.referenceRange.low.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -36785,7 +36768,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.low:simplequantity.extension">
+          <element id="Observation:bmi.referenceRange.low.extension">
             <path value="Observation.referenceRange.low.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -36807,7 +36790,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.low:simplequantity.value">
+          <element id="Observation:bmi.referenceRange.low.value">
             <path value="Observation.referenceRange.low.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -36834,7 +36817,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.low:simplequantity.comparator">
+          <element id="Observation:bmi.referenceRange.low.comparator">
             <path value="Observation.referenceRange.low.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -36869,7 +36852,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.low:simplequantity.unit">
+          <element id="Observation:bmi.referenceRange.low.unit">
             <path value="Observation.referenceRange.low.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -36895,7 +36878,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.low:simplequantity.system">
+          <element id="Observation:bmi.referenceRange.low.system">
             <path value="Observation.referenceRange.low.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -36923,7 +36906,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.low:simplequantity.code">
+          <element id="Observation:bmi.referenceRange.low.code">
             <path value="Observation.referenceRange.low.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -36950,9 +36933,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.code, MO.currency, PQ.translation.code"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.high:simplequantity">
+          <element id="Observation:bmi.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -37003,7 +36985,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.high:simplequantity.id">
+          <element id="Observation:bmi.referenceRange.high.id">
             <path value="Observation.referenceRange.high.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -37023,7 +37005,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.high:simplequantity.extension">
+          <element id="Observation:bmi.referenceRange.high.extension">
             <path value="Observation.referenceRange.high.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -37045,7 +37027,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.high:simplequantity.value">
+          <element id="Observation:bmi.referenceRange.high.value">
             <path value="Observation.referenceRange.high.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -37072,7 +37054,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.high:simplequantity.comparator">
+          <element id="Observation:bmi.referenceRange.high.comparator">
             <path value="Observation.referenceRange.high.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -37107,7 +37089,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.high:simplequantity.unit">
+          <element id="Observation:bmi.referenceRange.high.unit">
             <path value="Observation.referenceRange.high.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -37133,7 +37115,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.high:simplequantity.system">
+          <element id="Observation:bmi.referenceRange.high.system">
             <path value="Observation.referenceRange.high.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -37161,7 +37143,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:bmi.referenceRange.high:simplequantity.code">
+          <element id="Observation:bmi.referenceRange.high.code">
             <path value="Observation.referenceRange.high.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -37836,7 +37818,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -39520,9 +39502,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="N/A"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.low:simplequantity">
+          <element id="Observation:mbp.referenceRange.low">
             <path value="Observation.referenceRange.low"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -39573,7 +39554,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.low:simplequantity.id">
+          <element id="Observation:mbp.referenceRange.low.id">
             <path value="Observation.referenceRange.low.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -39593,7 +39574,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.low:simplequantity.extension">
+          <element id="Observation:mbp.referenceRange.low.extension">
             <path value="Observation.referenceRange.low.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -39615,7 +39596,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.low:simplequantity.value">
+          <element id="Observation:mbp.referenceRange.low.value">
             <path value="Observation.referenceRange.low.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -39642,7 +39623,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.low:simplequantity.comparator">
+          <element id="Observation:mbp.referenceRange.low.comparator">
             <path value="Observation.referenceRange.low.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -39677,7 +39658,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.low:simplequantity.unit">
+          <element id="Observation:mbp.referenceRange.low.unit">
             <path value="Observation.referenceRange.low.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -39703,7 +39684,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.low:simplequantity.system">
+          <element id="Observation:mbp.referenceRange.low.system">
             <path value="Observation.referenceRange.low.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -39731,7 +39712,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.low:simplequantity.code">
+          <element id="Observation:mbp.referenceRange.low.code">
             <path value="Observation.referenceRange.low.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -39758,9 +39739,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.code, MO.currency, PQ.translation.code"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.high:simplequantity">
+          <element id="Observation:mbp.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -39811,7 +39791,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.high:simplequantity.id">
+          <element id="Observation:mbp.referenceRange.high.id">
             <path value="Observation.referenceRange.high.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -39831,7 +39811,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.high:simplequantity.extension">
+          <element id="Observation:mbp.referenceRange.high.extension">
             <path value="Observation.referenceRange.high.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -39853,7 +39833,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.high:simplequantity.value">
+          <element id="Observation:mbp.referenceRange.high.value">
             <path value="Observation.referenceRange.high.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -39880,7 +39860,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.high:simplequantity.comparator">
+          <element id="Observation:mbp.referenceRange.high.comparator">
             <path value="Observation.referenceRange.high.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -39915,7 +39895,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.high:simplequantity.unit">
+          <element id="Observation:mbp.referenceRange.high.unit">
             <path value="Observation.referenceRange.high.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -39941,7 +39921,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.high:simplequantity.system">
+          <element id="Observation:mbp.referenceRange.high.system">
             <path value="Observation.referenceRange.high.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -39969,7 +39949,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:mbp.referenceRange.high:simplequantity.code">
+          <element id="Observation:mbp.referenceRange.high.code">
             <path value="Observation.referenceRange.high.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -40644,7 +40624,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -42327,9 +42307,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="N/A"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.low:simplequantity">
+          <element id="Observation:bp.referenceRange.low">
             <path value="Observation.referenceRange.low"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -42380,7 +42359,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.low:simplequantity.id">
+          <element id="Observation:bp.referenceRange.low.id">
             <path value="Observation.referenceRange.low.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -42400,7 +42379,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.low:simplequantity.extension">
+          <element id="Observation:bp.referenceRange.low.extension">
             <path value="Observation.referenceRange.low.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -42422,7 +42401,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.low:simplequantity.value">
+          <element id="Observation:bp.referenceRange.low.value">
             <path value="Observation.referenceRange.low.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -42449,7 +42428,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.low:simplequantity.comparator">
+          <element id="Observation:bp.referenceRange.low.comparator">
             <path value="Observation.referenceRange.low.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -42484,7 +42463,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.low:simplequantity.unit">
+          <element id="Observation:bp.referenceRange.low.unit">
             <path value="Observation.referenceRange.low.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -42510,7 +42489,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.low:simplequantity.system">
+          <element id="Observation:bp.referenceRange.low.system">
             <path value="Observation.referenceRange.low.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -42538,7 +42517,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.low:simplequantity.code">
+          <element id="Observation:bp.referenceRange.low.code">
             <path value="Observation.referenceRange.low.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -42565,9 +42544,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.code, MO.currency, PQ.translation.code"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.high:simplequantity">
+          <element id="Observation:bp.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="The comparator is not used on a SimpleQuantity"/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -42618,7 +42596,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.high:simplequantity.id">
+          <element id="Observation:bp.referenceRange.high.id">
             <path value="Observation.referenceRange.high.id"/>
             <representation value="xmlAttr"/>
             <short value="xml:id (or equivalent in JSON)"/>
@@ -42638,7 +42616,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.high:simplequantity.extension">
+          <element id="Observation:bp.referenceRange.high.extension">
             <path value="Observation.referenceRange.high.extension"/>
             <short value="Additional Content defined by implementations"/>
             <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
@@ -42660,7 +42638,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="n/a"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.high:simplequantity.value">
+          <element id="Observation:bp.referenceRange.high.value">
             <path value="Observation.referenceRange.high.value"/>
             <short value="Numerical value (with implicit precision)"/>
             <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
@@ -42687,7 +42665,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.high:simplequantity.comparator">
+          <element id="Observation:bp.referenceRange.high.comparator">
             <path value="Observation.referenceRange.high.comparator"/>
             <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
             <definition value="Not allowed to be used in this context"/>
@@ -42722,7 +42700,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="IVL properties"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.high:simplequantity.unit">
+          <element id="Observation:bp.referenceRange.high.unit">
             <path value="Observation.referenceRange.high.unit"/>
             <short value="Unit representation"/>
             <definition value="A human-readable form of the unit."/>
@@ -42748,7 +42726,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="PQ.unit"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.high:simplequantity.system">
+          <element id="Observation:bp.referenceRange.high.system">
             <path value="Observation.referenceRange.high.system"/>
             <short value="System that defines coded unit form"/>
             <definition value="The identification of the system that provides the coded form of the unit."/>
@@ -42776,7 +42754,7 @@ All Provenances should have some historical version of this Request as their sub
               <map value="CO.codeSystem, PQ.translation.codeSystem"/>
             </mapping>
           </element>
-          <element id="Observation:bp.referenceRange.high:simplequantity.code">
+          <element id="Observation:bp.referenceRange.high.code">
             <path value="Observation.referenceRange.high.code"/>
             <short value="Coded form of the unit"/>
             <definition value="A computer processable form of the unit in some unit representation system."/>
@@ -44824,7 +44802,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <mapping>
@@ -46037,7 +46015,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -47112,9 +47090,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="value:IVL_PQ.low"/>
             </mapping>
           </element>
-          <element id="Observation:cholesterol.referenceRange.high:simplequantity">
+          <element id="Observation:cholesterol.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="&lt;4.5 mmol/L."/>
             <comments value="Per Australian NHF Recommendations."/>
@@ -47912,7 +47889,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -49517,7 +49494,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -50380,9 +50357,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="N/A"/>
             </mapping>
           </element>
-          <element id="Observation:hdlcholesterol.referenceRange.low:simplequantity">
+          <element id="Observation:hdlcholesterol.referenceRange.low">
             <path value="Observation.referenceRange.low"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="&gt;1.5 mmol/L."/>
             <comments value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
@@ -51158,7 +51134,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
@@ -52049,9 +52025,8 @@ All Provenances should have some historical version of this Request as their sub
               <map value="value:IVL_PQ.low"/>
             </mapping>
           </element>
-          <element id="Observation:ldlcholesterol.referenceRange.high:simplequantity">
+          <element id="Observation:ldlcholesterol.referenceRange.high">
             <path value="Observation.referenceRange.high"/>
-            <name value="SimpleQuantity"/>
             <short value="A fixed quantity (no comparator)"/>
             <definition value="&lt;3.0 mmol/L."/>
             <comments value="Per Australian NHF Recommendations."/>
@@ -52815,7 +52790,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <mapping>
@@ -52964,7 +52939,7 @@ All Provenances should have some historical version of this Request as their sub
           </element>
           <element id="DiagnosticReport:reportforgenetics.extension">
             <path value="DiagnosticReport.extension"/>
-            <slicing id="93">
+            <slicing id="90">
               <discriminator value="url"/>
               <ordered value="false"/>
               <rules value="open"/>
@@ -53903,7 +53878,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <mapping>
@@ -54052,7 +54027,7 @@ All Provenances should have some historical version of this Request as their sub
           </element>
           <element id="DiagnosticReport:hlaresult.extension">
             <path value="DiagnosticReport.extension"/>
-            <slicing id="94">
+            <slicing id="91">
               <discriminator value="url"/>
               <ordered value="false"/>
               <rules value="open"/>
@@ -55021,7 +54996,7 @@ All Provenances should have some historical version of this Request as their sub
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <mapping>
@@ -56510,7 +56485,7 @@ Some reporting work flows require that the original narrative of a final documen
           </element>
           <element id="ElementDefinition:elementdefinition-de.extension">
             <path value="ElementDefinition.extension"/>
-            <slicing id="95">
+            <slicing id="92">
               <discriminator value="url"/>
               <ordered value="false"/>
               <rules value="open"/>
@@ -58399,7 +58374,7 @@ Some reporting work flows require that the original narrative of a final documen
           <element id="ElementDefinition:elementdefinition-de.constraint.expression">
             <path value="ElementDefinition.constraint.expression"/>
             <short value="FluentPath expression of constraint"/>
-            <definition value="A [FluentPath](fluentpath.html) expression of constraint that can be executed to see if this constraint is met."/>
+            <definition value="A [FluentPath](http://hl7.org/fluentpath) expression of constraint that can be executed to see if this constraint is met."/>
             <requirements value="Used by validation tooling tests of the validity of the resource."/>
             <min value="0"/>
             <max value="1"/>
@@ -59023,7 +58998,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <mapping>
@@ -61106,7 +61081,7 @@ For example, an activity may be initiated by one user for other users or involve
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <mapping>
@@ -62316,14 +62291,14 @@ practitioner: ./id"/>
               <key value="dom-3"/>
               <severity value="error"/>
               <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource"/>
-              <expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()"/>
+              <expression value="contained.where((&#39;#&#39;+id in %resource.descendants().reference).not()).empty()"/>
               <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $id))]))"/>
             </constraint>
             <constraint>
               <key value="que-2"/>
               <severity value="error"/>
               <human value="The link ids for groups and questions must be unique within the questionnaire"/>
-              <expression value="descendents().linkId.isDistinct()"/>
+              <expression value="descendants().linkId.isDistinct()"/>
               <xpath value="count(descendant::f:linkId/@value)=count(distinct-values(descendant::f:linkId/@value))"/>
             </constraint>
             <mapping>
@@ -62901,7 +62876,7 @@ practitioner: ./id"/>
           </element>
           <element id="Questionnaire:cqif-questionnaire.item.extension">
             <path value="Questionnaire.item.extension"/>
-            <slicing id="96">
+            <slicing id="93">
               <discriminator value="url"/>
               <ordered value="false"/>
               <rules value="open"/>

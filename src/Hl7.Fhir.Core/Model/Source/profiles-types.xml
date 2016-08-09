@@ -11004,7 +11004,11 @@
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
                   <a href="datatypes.html#Coding">Coding</a>
                 </td>
-                <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">Tags applied to this resource</td>
+                <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">Tags applied to this resource
+                  <br />
+                  <a href="valueset-common-tags.html" title="Codes that represent various types of tags, commonly workflow-related; e.g. &quot;Needs review by Dr. Jones&quot;">Common Tags</a> (
+                  <a href="terminologies.html#example" title="Instances are not expected or even encouraged to draw from the specified value set.  The value set merely provides examples of the types of concepts intended to be included.">Example</a>)
+                </td>
               </tr>
 
               <tr>
@@ -11172,6 +11176,9 @@
             <binding>
               <strength value="example" />
               <description value="Codes that represent various types of tags, commonly workflow-related; e.g. &quot;Needs review by Dr. Jones&quot;" />
+              <valueSetReference>
+                <reference value="http://hl7.org/fhir/ValueSet/common-tags" />
+              </valueSetReference>
             </binding>
           </element>
         </snapshot>
@@ -11264,6 +11271,9 @@
             <binding>
               <strength value="example" />
               <description value="Codes that represent various types of tags, commonly workflow-related; e.g. &quot;Needs review by Dr. Jones&quot;" />
+              <valueSetReference>
+                <reference value="http://hl7.org/fhir/ValueSet/common-tags" />
+              </valueSetReference>
             </binding>
           </element>
         </differential>
@@ -13485,7 +13495,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">The type of the required data
                   <br />
-                  <a href="null" title="Either an abstract type, a resource or a data type.">FHIRAllTypes</a> (
+                  <a href="valueset-all-types.html" title="Either an abstract type, a resource or a data type.">FHIRAllTypes</a> (
                   <a href="terminologies.html#required" title="To be conformant, instances of this element SHALL include a code from the specified value set.">Required</a>)
                 </td>
               </tr>
@@ -18176,7 +18186,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">Name of Data type or Resource
                   <br />
-                  <a href="null" title="Either a resource or a data type, including logical model types">FHIRDefinedType</a> (
+                  <a href="valueset-defined-types.html" title="Either a resource or a data type, including logical model types">FHIRDefinedType</a> (
                   <a href="terminologies.html#extensible" title="To be conformant, instances of this element SHALL include a code from the specified value set if any of the codes within the value set can apply to the concept being communicated.  If the value set does not cover the concept (based on human review), alternate codings (or, data type allowing, text) may be included instead.">Extensible</a>)
                 </td>
               </tr>
@@ -18821,7 +18831,7 @@
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAWCAYAAADJqhx8AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYeFzMPbYccAgAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAMElEQVQ4y+3OQREAIBDDwAv+PQcFFN5MIyCzqHMKUGVCpMFLK97heq+gggoq+EiwAVjvMhFGmlEUAAAAAElFTkSuQmCC" alt="." style="background-color: inherit" class="hierarchy" />
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAWCAYAAADJqhx8AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wYeFzI3XJ6V3QAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAANklEQVQ4y+2RsQ0AIAzDav7/2VzQwoCY4iWbZSmo1QGoUgNMghvWaIejPQW/CrrNCylIwcOCDYfLNRcNer4SAAAAAElFTkSuQmCC" alt="." style="background-color: inherit" class="hierarchy" />
                   <img src="data: image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gYBFzI0BrFQCwAAAERJREFUOMtj/P//PwMlgImBQjDwBrCcOnWKokBgYWBgYDCU+06W5i8MUggvnH/EOVJjAW4AuQHJ+O75LYqikXE0LzAAALePEntTkEoSAAAAAElFTkSuQmCC" alt="." style="background-color: white; background-color: inherit" title="Primitive Data Type" class="hierarchy" /> 
-                  <a href="elementdefinition-definitions.html#ElementDefinition.constraint.expression" title="ElementDefinition.constraint.expression : A [FluentPath](fluentpath.html) expression of constraint that can be executed to see if this constraint is met.">expression</a>
+                  <a href="elementdefinition-definitions.html#ElementDefinition.constraint.expression" title="ElementDefinition.constraint.expression : A [FluentPath](http://hl7.org/fluentpath) expression of constraint that can be executed to see if this constraint is met.">expression</a>
                   <a name="ElementDefinition.constraint.expression"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -20896,7 +20906,7 @@
           <element id="ElementDefinition.constraint.expression">
             <path value="ElementDefinition.constraint.expression" />
             <short value="FluentPath expression of constraint" />
-            <definition value="A [FluentPath](fluentpath.html) expression of constraint that can be executed to see if this constraint is met." />
+            <definition value="A [FluentPath](http://hl7.org/fluentpath) expression of constraint that can be executed to see if this constraint is met." />
             <requirements value="Used by validation tooling tests of the validity of the resource." />
             <min value="0" />
             <max value="1" />
@@ -22794,7 +22804,7 @@
           <element id="ElementDefinition.constraint.expression">
             <path value="ElementDefinition.constraint.expression" />
             <short value="FluentPath expression of constraint" />
-            <definition value="A [FluentPath](fluentpath.html) expression of constraint that can be executed to see if this constraint is met." />
+            <definition value="A [FluentPath](http://hl7.org/fluentpath) expression of constraint that can be executed to see if this constraint is met." />
             <requirements value="Used by validation tooling tests of the validity of the resource." />
             <min value="0" />
             <max value="1" />
@@ -23245,7 +23255,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
                   <br />
-                  <a href="null" title="Either an abstract type, a resource or a data type.">FHIRAllTypes</a> (
+                  <a href="valueset-all-types.html" title="Either an abstract type, a resource or a data type.">FHIRAllTypes</a> (
                   <a href="terminologies.html#required" title="To be conformant, instances of this element SHALL include a code from the specified value set.">Required</a>)
                 </td>
               </tr>
