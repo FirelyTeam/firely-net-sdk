@@ -38,7 +38,7 @@ using Hl7.Fhir.Specification.Model;
 namespace Hl7.Fhir.Validation
 {
   
-    public class ResourceValidator
+    internal class ResourceValidator
     {
 
         private SpecificationWorkspace specification = new SpecificationWorkspace();
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Validation
             if (LogOutcome != null) LogOutcome(outcome);
         }
 
-        public ResourceValidator(SpecificationWorkspace profile)
+        internal ResourceValidator(SpecificationWorkspace profile)
         {
             this.specification = profile;
         }

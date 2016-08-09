@@ -1,10 +1,11 @@
-﻿using Hl7.Fhir.Model;
-/*
+﻿/*
 * Copyright (c) 2014, Furore (info@furore.com) and contributors
 * See the file CONTRIBUTORS for details.
 *
 * This file is licensed under the BSD 3-Clause license
 */
+using Hl7.Fhir.Specification.Validation.Model;
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Hl7.Fhir.Specification.Model
     /// <summary>
     /// Container for all conformance resources retrieved and harvested (and I think also bound and resolved)
     /// </summary>
-    public class SpecificationWorkspace
+    internal class SpecificationWorkspace
     {
         private List<Structure> _structures = new List<Structure>();
         private List<ValueSet> _valueSets = new List<ValueSet>();
@@ -63,10 +64,18 @@ namespace Hl7.Fhir.Specification.Model
             _structures.Add(structure);
         }
 
+
+        internal Report Validate(SpecificationWorkspace specification)
+        {
+            SpecificationValidator pv = new SpecificationValidator(specification);
+            return pv.Validate();
+        }
+
+
         public Structure GetStructureByName(string name)
         {
             //TODO: this could go wrong...
-            var fhirType = (FHIRDefinedType)Enum.Parse(typeof(FHIRDefinedType), name);
+            var fhirType = (Fhir.Model.FHIRDefinedType)Enum.Parse(typeof(Fhir.Model.FHIRDefinedType), name);
             return Structures.FirstOrDefault(s => s.ConstrainedType == fhirType);
         }
 
@@ -75,26 +84,22 @@ namespace Hl7.Fhir.Specification.Model
             return Structures.FirstOrDefault(s => UriHelper.Equal(s.Uri, uri));
         }
 
-        public IEnumerable<Structure> StructuresWithName(FHIRDefinedType fhirType)
+        public IEnumerable<Structure> StructuresWithName(Fhir.Model.FHIRDefinedType fhirType)
         {
             return Structures.Where(s => s.ConstrainedType == fhirType);
         }
 
-        public ValueSet GetValueSetByUri(Uri uri)
+        public ValueSet GetValueSetByUri(string uri)
         {
             foreach(ValueSet valueset in ValueSets)
             {
-                if (valueset.System == uri) return valueset;
+                if (valueset.Uri == uri) return valueset;
                 
             }
             return null;
         }
 
-        public ValueSet GetValueSetByUri(string uri)
-        {
-            return GetValueSetByUri(new Uri(uri));
-        }
-       
+      
         public Element GetElementByPath(Structure structure, string path)
         {
             return structure.Elements.FirstOrDefault(element => element.Path.ToString() == path);
@@ -224,13 +229,13 @@ namespace Hl7.Fhir.Specification.Model
                 .Distinct();
         }
 
-        public IEnumerable<Uri> ValueSetUris
-        {
-            get
-            {
-                return ValueSets.Select(v => v.System);
-            }
-        }
+        //public IEnumerable<Uri> ValueSetUris
+        //{
+        //    get
+        //    {
+        //        return ValueSets.Select(v => v.System);
+        //    }
+        //}
 
         public IEnumerable<Uri> BindingUris
         {

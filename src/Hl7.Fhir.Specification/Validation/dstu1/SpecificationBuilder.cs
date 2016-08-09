@@ -10,26 +10,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Specification.Validation.Model;
+using Hl7.Fhir.Specification.Model;
+using Model = Hl7.Fhir.Model;
 
 
 namespace Hl7.Fhir.Validation
 {
-    using Hl7.Fhir.Specification.Model;
-    using Model = Hl7.Fhir.Model;
     
     
-    public class SpecificationBuilder
+    internal class SpecificationBuilder
     {
         public SpecificationBuilder(SpecificationProvider provider)
         {
-            this.provider = provider;
+            _provider = provider;
         }
 
         private SpecificationWorkspace specification = new SpecificationWorkspace();
-        private SpecificationProvider provider;
+        private SpecificationProvider _provider;
         private Tracker tracker = new Tracker();
-
         
         private void trackStructure(Structure structure)
         {
@@ -51,7 +50,7 @@ namespace Hl7.Fhir.Validation
             if (uri == null) return false;
             if (tracker.Knows(uri)) return false;
             
-            Structure structure = provider.GetStructure(uri);
+            Structure structure = _provider.GetStructure(uri);
             if (structure != null)
             {
                 specification.Add(structure);
@@ -76,7 +75,7 @@ namespace Hl7.Fhir.Validation
             return uris;
         }
 
-        private bool ExpandTypeRefs()
+        private bool expandTypeRefs()
         {
             var uris = unresolvedTypeRefKeys().ToList();
             // ToList(), because expanding will modify this list.
@@ -89,11 +88,11 @@ namespace Hl7.Fhir.Validation
             return expanded;
         }
 
-        private bool TryAddValueSet(Uri uri)
+        private bool tryAddValueSet(Uri uri)
         {
             if (tracker.Knows(uri)) return false;
 
-            ValueSet valueset = provider.GetValueSet(uri);
+            ValueSet valueset = _provider.GetValueSet(uri);
             if (valueset != null)
             {
                 tracker.Add(uri, Resolution.Resolved);
@@ -113,13 +112,13 @@ namespace Hl7.Fhir.Validation
             
             foreach (Uri uri in newbindings)
             {
-                TryAddValueSet(uri);
+                tryAddValueSet(uri);
             }
         }
 
         public void Expand()
         {
-            while (ExpandTypeRefs()) ;
+            while (expandTypeRefs()) ;
             expandValueSets();
         }
 

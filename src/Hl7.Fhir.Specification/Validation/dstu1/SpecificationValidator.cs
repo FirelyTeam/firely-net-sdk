@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Validation
     /// <summary>
     /// Checks integrity of all conformance data in the SpecificationWorkspace
     /// </summary>
-    public class SpecificationValidator
+    internal class SpecificationValidator
     {
         private SpecificationWorkspace profile;
         private List<string> missingStructureNames = new List<string>();

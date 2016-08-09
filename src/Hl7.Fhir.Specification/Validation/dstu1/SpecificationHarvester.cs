@@ -1,4 +1,5 @@
-﻿/*
+﻿
+/*
 * Copyright (c) 2014, Furore (info@furore.com) and contributors
 * See the file CONTRIBUTORS for details.
 *
@@ -103,7 +104,7 @@ namespace Hl7.Fhir.Validation
         {
             //Note: we are ignoring typerefs with multiple profile references
             TypeRef typeref = new TypeRef(type.Code.Value, type.Profile.FirstOrDefault());
-                //builder.CreateTypeRef(type.Code, type.Profile);
+            //builder.CreateTypeRef(type.Code, type.Profile);
             // todo: now the typerefs are duplicated. so resolving deduplication must be done else where.
             return typeref;
         }
@@ -154,7 +155,7 @@ namespace Hl7.Fhir.Validation
             target.Representation = TransformRepresentation(source);
 
             HarvestElementDefinition(source, target);
-            HarvestSlicing(source, target); 
+            HarvestSlicing(source, target);
         }
 
         private Element HarvestElement(Hl7.Fhir.Model.ElementDefinition source)
@@ -167,8 +168,8 @@ namespace Hl7.Fhir.Validation
         private void HarvestElements(Hl7.Fhir.Model.StructureDefinition source, Structure target)
         {
             if (source.Snapshot == null) throw Error.Argument("source", "Structure must have a differential representation");
-            
-            foreach(Hl7.Fhir.Model.ElementDefinition component in source.Snapshot.Element)
+
+            foreach (Hl7.Fhir.Model.ElementDefinition component in source.Snapshot.Element)
             {
                 if (component.Slicing == null)
                 {
@@ -189,7 +190,7 @@ namespace Hl7.Fhir.Validation
             //TODO: Support multiple discriminators
             if (source.Slicing.Discriminator.Count() > 1)
                 throw Error.NotImplemented("Multiple discriminators not yet implemented");
-            
+
             //TODO: Support discriminator-less matching!
             slicing.Discriminator = new Path(source.Slicing.Discriminator.First());
             return slicing;
@@ -235,24 +236,8 @@ namespace Hl7.Fhir.Validation
             return HarvestStructure(source, uri);
         }
 
-        public ValueSet HarvestValueSet(Hl7.Fhir.Model.ValueSet source, Uri system)
-        {
-            ValueSet valueset = new ValueSet(system, source);
-            return valueset;
-            /*
-            // todo: This now only works with "defines". 
-            valueset.System = system.ToString();
 
-            if (source.Define != null)
-            {
-                foreach (var concept in source.Define.Concept)
-                {
-                    valueset.codes.Add(concept.Code);
-                }
-            }
-            return valueset;
-            */
-        }
-             
+     
+
     }
 }

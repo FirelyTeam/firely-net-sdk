@@ -13,33 +13,38 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.XPath;
 using Hl7.Fhir.Specification.Model;
+using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.Specification.Source;
 
 namespace Hl7.Fhir.Validation
 {
-    public static class Validator
+    public class Validator
     {
-        public static Report Validate(this SpecificationWorkspace specification)
+        public Validator()
         {
-            SpecificationValidator pv = new SpecificationValidator(specification);
-            return pv.Validate();
+            Source = ArtifactResolver.CreateCachedDefault();
         }
 
-        public static Report Validate(this SpecificationWorkspace specification, XPathNavigator root)
+
+        public Validator(IArtifactSource source)
         {
-            ResourceValidator validator = new ResourceValidator(specification);
-            Report report = validator.Validate(root);
-            return report; 
+            Source = source;
         }
 
-        public static SpecificationProvider GetSpecificationProvider()
+        public IArtifactSource Source { get; private set; }
+
+        public Report Validate(IElementNavigator root)
         {
-            SpecificationProvider provider = SpecificationProvider.CreateOffline();
-            return provider;
+            SpecificationWorkspace spec = getSpecification(root);
+            ResourceValidator validator = new ResourceValidator(spec);
+            //  Report report = validator.Validate(root);
+            Report report = null;
+            return report;
         }
 
-        public static SpecificationWorkspace GetSpecification(Uri uri, bool expand)
+        private SpecificationWorkspace getSpecification(Uri uri, bool expand)
         {
-            SpecificationProvider provider = GetSpecificationProvider();
+            SpecificationProvider provider = new SpecificationProvider(Source);
             SpecificationBuilder builder = new SpecificationBuilder(provider);
             builder.Add(StructureFactory.PrimitiveTypes());
             builder.Add(StructureFactory.NonFhirNamespaces());
@@ -49,17 +54,11 @@ namespace Hl7.Fhir.Validation
             return builder.ToSpecification();
         }
 
-        public static SpecificationWorkspace GetSpecification(XPathNavigator root, bool expand = true)
+        private SpecificationWorkspace getSpecification(IElementNavigator root, bool expand = true)
         {
-            Uri uri = new Uri("http://hl7.org/fhir/Profile/" + root.Name.ToLower());
-            
-            return GetSpecification(uri, expand);
-        }
+            Uri uri = new Uri("http://hl7.org/fhir/StructureDefinition/" + root.Name.ToLower());
 
-        public static Report Validate(XPathNavigator root)
-        {
-            SpecificationWorkspace spec = GetSpecification(root);
-            return spec.Validate(root);
+            return getSpecification(uri, expand);
         }
 
     }

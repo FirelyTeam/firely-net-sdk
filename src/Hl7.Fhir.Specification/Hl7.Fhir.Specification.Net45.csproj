@@ -82,7 +82,7 @@
     <Compile Include="Validation\dstu1\Model\StructureFactory.cs" />
     <Compile Include="Validation\dstu1\Model\TypeRef.cs" />
     <Compile Include="Validation\dstu1\Model\UriHelper.cs" />
-    <Compile Include="Validation\dstu1\Model\ValueSet.cs" />
+    <Compile Include="Validation\Model\ValueSet.cs" />
     <Compile Include="Validation\dstu1\Model\Vector.cs" />
     <Compile Include="Validation\dstu1\Model\XPathNavigatorExtensions.cs" />
     <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
@@ -116,7 +116,6 @@
     <Compile Include="Validation\dstu1\ResourceValidator.cs" />
     <Compile Include="Validation\dstu1\SpecificationBinder.cs" />
     <Compile Include="Validation\dstu1\SpecificationBuilder.cs" />
-    <Compile Include="Validation\dstu1\SpecificationFactory.cs" />
     <Compile Include="Validation\dstu1\SpecificationProvider.cs" />
     <Compile Include="Validation\dstu1\SpecificationValidator.cs" />
     <Compile Include="Validation\dstu1\Tracker.cs" />
