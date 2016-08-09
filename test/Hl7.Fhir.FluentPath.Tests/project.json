@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "testRunner": "xunit",
   "dependencies": {
@@ -13,15 +13,14 @@
     "netcoreapp1.0": {
       "imports": [ "portable-net45+win8+wp8+wpa81" ],
       "dependencies": {
-
-
         "Microsoft.NETCore.App": {
           "type": "platform",
           "version": "1.0.0"
-
         }
-
       }
     }
+  },
+  "buildOptions": {
+    "define": []
   }
 }

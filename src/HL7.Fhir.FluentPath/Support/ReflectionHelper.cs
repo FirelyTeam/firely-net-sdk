@@ -37,8 +37,11 @@ namespace Hl7.Fhir.FluentPath.Support
 
             // Return the result of the assignability test
 #if NETSTANDARD
-
-            return TypeToCompareWith.GetTypeInfo().IsAssignableFrom(CurrentType.GetTypeInfo());
+            // Written out for debuggin purposes. --mh
+            var compare = TypeToCompareWith.GetTypeInfo();
+            var current = CurrentType.GetTypeInfo();
+            bool assignable = compare.IsAssignableFrom(current);
+            return assignable;
 #else
             return TypeToCompareWith.IsAssignableFrom(CurrentType);
 #endif

@@ -131,7 +131,9 @@ namespace Hl7.Fhir.FluentPath.Tests
         private void checkCast<T>(object source, T value)
         {
             Assert.True(Typecasts.CanCastTo(source, typeof(T)));
-            Assert.Equal(value, Typecasts.CastTo(source, typeof(T)));
+
+            var result = Typecasts.CastTo(source, typeof(T));
+            Assert.Equal(value, result);
         }
 
     }
