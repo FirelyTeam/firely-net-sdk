@@ -148,9 +148,9 @@ namespace Hl7.Fhir.Specification.Tests
             dumpBasePaths(expanded);
         }
 
-        // [WMR 20160721] Following profiles are not yet handled (TODO)
-        private readonly string[] skippedProfiles =
-        {
+		// [WMR 20160721] Following profiles are not yet handled (TODO)
+		private readonly string[] skippedProfiles =
+		{
 			// Differential defines constraint on MedicationOrder.reason[x]
 			// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
 			// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Specification.Tests
             var avg = duration / count;
             Debug.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
         }
-
+        
 #if false
         private void forDoc()
         {
@@ -473,8 +473,6 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
         }
-
-
 
     }
 }
