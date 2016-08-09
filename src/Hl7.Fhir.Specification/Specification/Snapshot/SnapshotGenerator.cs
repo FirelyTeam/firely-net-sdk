@@ -1,7 +1,8 @@
 ﻿#define BASE_PATH
+#define DETECT_RECURSION
 
 /* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -19,76 +20,20 @@ using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
-    public class SnapshotGeneratorSettings
-    {
-        /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
-        public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
-        {
-            MarkChanges = false,
-            ExpandTypeProfiles = true,
-            IgnoreUnresolvedProfiles = false,
-            ExpandExternalProfiles = false,
-            RewriteElementBase = false,
-            NormalizeElementBase = false    // true in STU3
-        };
 
-        /// <summary>
-        /// Mark all elements in the snapshot that are constrained with respect to the base profile.
-        /// The snapshot generator will decorate all changed elements with a special extension
-        /// (canonical url "http://hl7.org/fhir/StructureDefinition/changedByDifferential").
-        /// </summary>
-        public bool MarkChanges { get; set; }
 
-        /// <summary>
-        /// EXPERIMENTAL!
-        /// Enable this setting in order to merge custom element type profiles.
-        /// If enabled (default), the snapshot generator first merges constraints from custom type profiles before merging constraints from the base profile.
-        /// If disabled, the snapshot generator ignores custom type profiles and merges constraints from the base profile.
-        /// </summary>
-        /// <remarks>See GForge #9791</remarks>
-        public bool ExpandTypeProfiles { get; set; }
-
-        /// <summary>
-        /// EXPERIMENTAL!
-        /// Enable this setting to ignore unknown or invalid element type profiles.
-        /// If disabled (default), throw an exception for unknown or invalid element type profiles.
-        /// </summary>
-        public bool IgnoreUnresolvedProfiles { get; set; }
-
-        /// <summary>
-        /// EXPERIMENTAL!
-        /// Enable this setting to automatically expand any required external profiles on demand if necessary.
-        /// If disabled (default), throw an exception for external type profiles without a snapshot component.
-        /// </summary>
-        public bool ExpandExternalProfiles { get; set; }
-
-        /// <summary>
-        /// Enable this setting to rewrite all ElementDefinition.Base components by tracking the base hierarchy.
-        /// If disable (default), the snapshot inherits existing Base components present in base resource.
-        /// </summary>
-        /// <remarks>
-        /// This setting is useful to correct errors in the core profile definitions.
-        /// </remarks>
-        public bool RewriteElementBase { get; set; }
-
-        /// <summary>
-        /// EXPERIMENTAL!
-        /// Enable this setting to normalize the ElementDefinition.Base component of inherited elements.
-        /// </summary>
-        /// <example>
-        /// Path = 'Patient.name.given' => Base.Path = 'HumanName.given' (derived from parent element type = 'HumanName')
-        /// </example>
-        public bool NormalizeElementBase { get; set; }
-
-    }
-
-    public class SnapshotGenerator
+    public sealed class SnapshotGenerator
     {
         // public const string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
         public static readonly string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
 
         private ArtifactResolver _resolver;
         private SnapshotGeneratorSettings _settings;
+#if DETECT_RECURSION
+        // [WMR 20160809] Use a HashSet to memorize element type profile urls that are in the process of being expanded,
+        // in order to detect and prevent endless recursion
+        private HashSet<string> _expandingProfiles;
+#endif
 
         public SnapshotGenerator(ArtifactResolver resolver, SnapshotGeneratorSettings settings)
         {
@@ -100,6 +45,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         public SnapshotGenerator(ArtifactResolver resolver) : this(resolver, SnapshotGeneratorSettings.Default) { }
 
+        private SnapshotGenerator Clone()
+        {
+            return new SnapshotGenerator(_resolver, _settings);
+        }
+
         /// <summary>
         /// (Re-)generate the <see cref="StructureDefinition.Snapshot"/> component of the specified <see cref="StructureDefinition"/> instance.
         /// Expand the <see cref="StructureDefinition.Differential"/> component, merge base profile and type profiles.
@@ -107,10 +57,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="structure">A <see cref="StructureDefinition"/> instance.</param>
         public void Generate(StructureDefinition structure)
         {
-            // [WMR 20160808] TODO: Prevent endless recursion by auto-expansion of external profiles
-            // i.e. check if the specified structure is already in the process of being expanded
-            // Thread safety...?
-
             var expanded = Expand(structure);
             structure.Snapshot = new StructureDefinition.SnapshotComponent() { Element = expanded };
         }
@@ -125,63 +71,82 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (structure == null) throw Error.ArgumentNull("structure");
 
-            // [WMR 20160809] TODO: Detect recursion
-            // Use USERDATA to set a flag, clear afterwards
-            // If specified structure has flag set, then throw recursion error
-            // Important: remove USERDATA in case of exception...!
-
-            var differential = structure.Differential;
-            if (differential == null)
+#if DETECT_RECURSION
+            if (_expandingProfiles != null)
             {
-                throw Error.Argument("structure", "structure does not contain a differential specification");
+                throw Error.InvalidOperation("Recursive calls are not supported. Instead, create a new SnapShotGenerator instance.");
             }
-
-            // [WMR 20160718] Also accept extension definitions (IsConstraint == false)
-            if (!structure.IsConstraint && !structure.IsExtension)
+            _expandingProfiles = new HashSet<string>();
+            List<ElementDefinition> result = null;
+            try
             {
-                throw Error.Argument("structure", "structure is not a constraint or extension");
-            }
+#endif
 
-            if (structure.Base == null)
-            {
-                throw Error.Argument("structure", "structure is a constraint, but no base has been specified");
-            }
-
-            var baseStructure = _resolver.GetStructureDefinition(structure.Base);
-
-            if (baseStructure == null)
-            {
-                // throw Error.InvalidOperation("Could not locate the base StructureDefinition for url " + structure.Base);
-                throw Error.ResourceReferenceNotFoundException(
-                    structure.Base,
-                    "Unresolved profile reference. Cannot locate the base profile with url '{0}'".FormatWith(structure.Base)
-                );
-            }
-            if (baseStructure.Snapshot == null)
-            {
-                if (_settings.ExpandExternalProfiles)
+                var differential = structure.Differential;
+                if (differential == null)
                 {
-                    // Automatically expand external profiles on demand
-                    Debug.Print("Recursively expand base profile with url: '{0}' ...".FormatWith(baseStructure.Url));
-                    Generate(baseStructure);
+                    throw Error.Argument("structure", "structure does not contain a differential specification");
                 }
-                else
+
+                // [WMR 20160718] Also accept extension definitions (IsConstraint == false)
+                if (!structure.IsConstraint && !structure.IsExtension)
                 {
-                    throw Error.InvalidOperation("Snapshot generator required the base at '{0}' to have a snapshot representation", structure.Base);
+                    throw Error.Argument("structure", "structure is not a constraint or extension");
                 }
+
+                if (structure.Base == null)
+                {
+                    throw Error.Argument("structure", "structure is a constraint, but no base has been specified");
+                }
+
+                var baseStructure = _resolver.GetStructureDefinition(structure.Base);
+
+                if (baseStructure == null)
+                {
+                    // throw Error.InvalidOperation("Could not locate the base StructureDefinition for url " + structure.Base);
+                    throw Error.ResourceReferenceNotFoundException(
+                        structure.Base,
+                        "Unresolved profile reference. Cannot locate the base profile with url '{0}'".FormatWith(structure.Base)
+                    );
+                }
+
+                if (baseStructure.Snapshot == null)
+                {
+                    if (_settings.ExpandExternalProfiles)
+                    {
+                        // Automatically expand external profiles on demand
+                        Debug.Print("Recursively expand base profile with url: '{0}' ...".FormatWith(baseStructure.Url));
+                        Clone().Generate(baseStructure);
+                    }
+                    else
+                    {
+                        throw Error.InvalidOperation("Snapshot generator required the base at '{0}' to have a snapshot representation", structure.Base);
+                    }
+                }
+
+                var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
+                generateBaseElements(snapshot.Element);
+                var snapNav = new ElementNavigator(snapshot.Element);
+
+                // Fill out the gaps (mostly missing parents) in the differential representation
+                var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
+                var diffNav = new ElementNavigator(fullDifferential);
+
+                merge(snapNav, diffNav);
+
+                result = snapNav.ToListOfElements();
+
+#if DETECT_RECURSION
             }
+            finally
+            {
+                // On complete expansion, the recursion scratch pad should be empty
+                Debug.Assert(_expandingProfiles.Count == 0 || result == null);
+                _expandingProfiles = null;
+            }
+#endif
+            return result;
 
-            var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
-            generateBaseElements(snapshot.Element);
-            var snapNav = new ElementNavigator(snapshot.Element);
-
-            // Fill out the gaps (mostly missing parents) in the differential representation
-            var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
-            var diffNav = new ElementNavigator(fullDifferential);
-
-            merge(snapNav, diffNav);
-
-            return snapNav.ToListOfElements();
         }
 
         // [WMR 20160802] NEW - TODO
@@ -382,11 +347,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 primaryDiffTypeProfile = profileRef.CanonicalUrl;
             }
-            //var profileUri = new Uri(primaryDiffTypeProfile, UriKind.RelativeOrAbsolute);
-            //if (profileUri.Fragment != null)
-            //{
-            //    primaryDiffTypeProfile = profileUri.GetLeftPart(UriPartial.Path);
-            //}
+
+            // [WMR 20160809] TODO: Prevent recursion
+            // primaryDiffTypeProfile could point to the original StructureDef itself...
+            // Or to a parent element type that references itself
+            // Need to keep a stack of already expanding url's...
 
             var baseStructure = _resolver.GetStructureDefinition(primaryDiffTypeProfile);
             if (baseStructure == null)
@@ -404,13 +369,27 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             else
             {
+
+#if DETECT_RECURSION
+                // Detect endless recursion
+                // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
+                Debug.Assert(_expandingProfiles != null);
+                if (_expandingProfiles.Contains(primaryDiffTypeProfile))
+                {
+                    throw Error.NotSupported("Cannot generate snapshot. Element '{0}' has a recursive dependency to a type profile with url '{1}'.".FormatWith(diff.Path, primaryDiffTypeProfile));
+                }
+                // Write down the current type profile url, so we can detect recursion
+                // Note: no need for try...finally, as any runtime exceptions will abort the expansion anyway
+                _expandingProfiles.Add(primaryDiffTypeProfile);
+#endif
+
                 if (baseStructure.Snapshot == null)
                 {
                     if (_settings.ExpandExternalProfiles)
                     {
                         // Automatically expand external profiles on demand
                         Debug.Print("Recursively expand external profile with url: '{0}' ...".FormatWith(baseStructure.Url));
-                        Generate(baseStructure);
+                        Clone().Generate(baseStructure);
                     }
                     else if (!_settings.IgnoreUnresolvedProfiles)
                     {
@@ -458,6 +437,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                         (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
                     }
                 }
+
+#if DETECT_RECURSION
+                _expandingProfiles.Remove(primaryDiffTypeProfile);
+#endif
+
             }
         }
 
@@ -629,13 +613,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                             throw Error.NotSupported("Unresolved element type. Cannot locate the profile for element type '{0}'.".FormatWith(typeCode));
                         }
                     }
+
                     if (baseStructure.Snapshot == null)
                     {
                         if (_settings.ExpandExternalProfiles)
                         {
                             // Automatically expand external profiles on demand
                             Debug.Print("Recursively expand type profile with url: '{0}' ...".FormatWith(baseStructure.Url));
-                            Generate(baseStructure);
+                            Clone().Generate(baseStructure);
                         }
                         else if (typeProfile != null)
                         {

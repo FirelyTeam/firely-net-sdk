@@ -86,6 +86,11 @@
     <Compile Include="Specification\Navigation\ElementNavigatorTypeExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileReference.cs" />
+    <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
+    <Compile Include="Specification\Snapshot\ElementDefnMerger.cs" />
+    <Compile Include="Specification\Snapshot\ElementMatcher.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGenerator.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
     <Compile Include="Specification\Source\MultiArtifactSource.cs" />
     <Compile Include="Specification\Source\ArtifactResolver.cs" />
     <Compile Include="Specification\Source\CachedArtifactSource.cs" />

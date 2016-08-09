@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Specification.Tests
             MarkChanges = false,
             ExpandTypeProfiles = true,
             // Throw on unresolved profile references; must include in TestData folder
-            IgnoreUnresolvedProfiles = false
+            IgnoreUnresolvedProfiles = false,
         };
 
         [TestInitialize]
@@ -80,6 +80,34 @@ namespace Hl7.Fhir.Specification.Tests
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
             dumpBasePaths(expanded);
+        }
+
+        [TestMethod]
+        // [Ignore] // For debugging purposes
+        public void GenerateRecursiveSnapshot()
+        {
+            // Following structuredefinition has a recursive element type profile
+            // Verify that the snapshot generator detects recursion and aborts with exception
+
+            var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBundle");
+
+            Assert.IsNotNull(sd);
+
+            // dumpReferences(sd);
+
+            StructureDefinition expanded;
+            bool exceptionRaised = false;
+            try
+            {
+                generateSnapshotAndCompare(sd, _testSource, out expanded);
+                dumpBasePaths(expanded);
+            }
+            catch (Exception ex)
+            {
+                Debug.Print(ex.Message);
+                exceptionRaised = ex is NotSupportedException;
+            }
+            Assert.IsTrue(exceptionRaised);
         }
 
         [TestMethod]
