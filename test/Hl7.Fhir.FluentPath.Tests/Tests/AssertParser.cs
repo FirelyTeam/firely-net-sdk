@@ -5,7 +5,7 @@ using Hl7.Fhir.FluentPath;
 using Sprache;
 using Xunit;
 
-namespace Hl7.Fhir.Tests.FhirPath
+namespace Hl7.Fhir.FluentPath.Tests
 {
     // Copied from Sprache.Test
     static class AssertParser
@@ -35,7 +35,6 @@ namespace Hl7.Fhir.Tests.FhirPath
                 .IfFailure(f =>
                 {
                     throw new Exception($"Parsing of \"{input}\" failed unexpectedly. {f}");
-                    return f;
                 })
                 .IfSuccess(s =>
                 {
@@ -61,7 +60,7 @@ namespace Hl7.Fhir.Tests.FhirPath
                 {
                     // todo: Assert.Fail does not exist in XUnit
                     // Assert.Fail("Expected failure but succeeded with {0}.", s.Value);
-                    throw new Exception($"Expected failure but succeeded with {s.Value}");
+                    Test.Fail($"Expected failure but succeeded with {s.Value}");
                     return s;
                 })
                 .IfFailure(f =>

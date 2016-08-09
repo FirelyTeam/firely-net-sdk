@@ -1,15 +1,10 @@
-﻿extern alias dstu2;
-
-using dstu2::Hl7.Fhir.Model;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Furore.MetaModel;
 
-namespace Hl7.Fhir.Tests.FhirPath
+namespace Hl7.Fhir.FluentPath.Tests
 {
     public class ModelNavigator : IElementNavigator
     {

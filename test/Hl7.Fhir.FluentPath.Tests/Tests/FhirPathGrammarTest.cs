@@ -15,7 +15,7 @@ using Sprache;
 
 using Xunit;
 
-namespace Hl7.Fhir.Tests.FhirPath
+namespace Hl7.Fhir.FluentPath.Tests
 {
     public class FhirPathExpressionTest
     {

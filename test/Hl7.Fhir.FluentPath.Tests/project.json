@@ -7,12 +7,13 @@
     "Sprache": { "target": "project" },
     "Furore.MetaModel": { "target": "project" },
     "HL7.Fhir.FluentPath": { "target": "project" },
-    "Hl7.Fhir.DSTU2": "0.90.4"
+    "Hl7.Fhir.DSTU2": "0.90.5"
   },
   "frameworks": {
     "netcoreapp1.0": {
-      "imports": "net45",
+      "imports": [ "portable-net45+win8+wp8+wpa81" ],
       "dependencies": {
+
 
         "Microsoft.NETCore.App": {
           "type": "platform",

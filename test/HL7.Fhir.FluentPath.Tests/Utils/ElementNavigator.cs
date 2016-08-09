@@ -1,26 +1,26 @@
-extern alias dstu2;
-
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using dstu2::Hl7.Fhir.Model;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Furore.MetaModel;
-using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Introspection;
+using System.Reflection;
 
-namespace Hl7.Fhir.Tests.FhirPath
+namespace Hl7.Fhir.FluentPath.Tests
 {
     internal class ElementNavigator : IValueProvider, ITypeNameProvider
     {
-        static dstu2::Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
+        static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {
-            dstu2::Hl7.Fhir.Serialization.ResourceReader rdr = new dstu2::Hl7.Fhir.Serialization.ResourceReader(null, null);
-            dstu2::Hl7.Fhir.Introspection.ModelInspector inspector;
+            ResourceReader rdr = new ResourceReader(null, null);
+            ModelInspector inspector;
             var ti = rdr.GetType().GetField("_inspector", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-            inspector = ti.GetValue(rdr) as dstu2::Hl7.Fhir.Introspection.ModelInspector;
+            inspector = ti.GetValue(rdr) as ModelInspector;
             // inspector = dstu2::Hl7.Fhir.Serialization.SerializationConfig.Inspector;
             return inspector.FindClassMappingByType(elementType);
         }
@@ -58,10 +58,10 @@ namespace Hl7.Fhir.Tests.FhirPath
 
                 if (_pocoElement is FhirDateTime)
                     return ((FhirDateTime)_pocoElement).ToDateTimeOffset();
-                else if (_pocoElement is dstu2.Hl7.Fhir.Model.Time)
-                    return FluentPath.Time.Parse(((dstu2.Hl7.Fhir.Model.Time)_pocoElement).Value);
-                else if ((_pocoElement is dstu2.Hl7.Fhir.Model.Date))
-                    return FluentPath.PartialDateTime.Parse(((dstu2.Hl7.Fhir.Model.Date)_pocoElement).Value);
+                else if (_pocoElement is Hl7.Fhir.Model.Time)
+                    return FluentPath.Time.Parse(((Hl7.Fhir.Model.Time)_pocoElement).Value);
+                else if ((_pocoElement is Hl7.Fhir.Model.Date))
+                    return FluentPath.PartialDateTime.Parse(((Hl7.Fhir.Model.Date)_pocoElement).Value);
                 else if (_pocoElement is Primitive)
                     return ((Primitive)_pocoElement).ObjectValue;
                 else

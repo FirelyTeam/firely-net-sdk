@@ -17,7 +17,7 @@ using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.FluentPath.Expressions;
 using Xunit;
 
-namespace Hl7.Fhir.Tests.FhirPath
+namespace Hl7.Fhir.FluentPath.Tests
 {
     public class CastTests
     {
