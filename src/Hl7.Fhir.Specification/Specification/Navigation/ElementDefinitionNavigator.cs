@@ -12,10 +12,11 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.FluentPath;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
-    public class ElementDefinitionNavigator
+    public class ElementDefinitionNavigator : IElementNavigator
     {
         public ElementDefinitionNavigator(IList<ElementDefinition> elements)
         {
@@ -63,8 +64,6 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-
-
         internal int? OrdinalPosition { get; private set; }
 
         public IList<ElementDefinition> Elements { get; private set; }
@@ -77,6 +76,33 @@ namespace Hl7.Fhir.Specification.Navigation
         public int Count
         {
             get { return Elements.Count; }
+        }
+
+        IElementNavigator INavigator<IElementNavigator>.Clone()
+        {
+            return new ElementDefinitionNavigator(this);
+        }
+
+        string INameProvider.Name
+        {
+            get
+            {
+                return this.PathName;
+            }
+        }
+
+        object IValueProvider.Value
+        {
+            get
+            {
+                return Current;
+            }
+        }
+
+
+        string ITypeNameProvider.TypeName
+        {
+            get { return "ElementDefinition";  }
         }
 
 
@@ -165,7 +191,6 @@ namespace Hl7.Fhir.Specification.Navigation
                 return childPos < Count && IsDirectChildPath(Path, Elements[childPos].Path);
             }
         }
-
 
         public bool MoveToFirstChild()
         {
@@ -499,6 +524,5 @@ namespace Hl7.Fhir.Specification.Navigation
 
             return output.ToString();
         }
-
     }
 }

@@ -12,6 +12,11 @@ namespace Hl7.Fhir.Validation
     using Model = Hl7.Fhir.Model;
     
 
+    /// <summary>
+    /// This class provides access to external artifacts provided by the IArtifactSource
+    /// Functionally equivalent to the ArtifactResolver class, but also converts the
+    /// conformance resources to the internal representation (e.g. a ValueSet to a Validation.ValueSet)
+    /// </summary>
     public class SpecificationProvider
     {
         public IArtifactSource source;

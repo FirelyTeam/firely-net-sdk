@@ -20,6 +20,9 @@ using System.Xml;
 using System.Collections.Generic;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.FluentPath;
+using Hl7.Fhir.Core.ElementModel;
+using static Hl7.Fhir.FluentPath.PathExpression;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -29,7 +32,16 @@ namespace Hl7.Fhir.Specification.Tests
 #else
     public class ProfileNavigationTest
 #endif
-    {      
+    {
+        private ArtifactResolver _source;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            _source = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/validation")));
+        }
+
+
         [TestMethod]
         public void TestChildNavigation()
         {
@@ -486,6 +498,27 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
+        [TestMethod]
+        public void TestNavigationByFhirPath()
+        {
+            StructureDefinition testSD = _source.GetStructureDefinition("http://example.org/fhir/StructureDefinition/human-group");
+            var nav = new ElementDefinitionNavigator(testSD.Snapshot.Element);
+            nav.MoveToFirstChild();
+
+            var path = PathExpression.Compile("name.extension");
+            var result = path.ForNode(nav);
+            Assert.AreEqual(2, result.Count());
+
+            var path2 = PathExpression.Compile("characteristic.\"value[x]\"");
+            result = path2.ForNode(nav);
+            Assert.AreEqual(1, result.Count());
+
+            var ed = result.Single().Value as ElementDefinition;
+            Assert.IsNotNull(ed);            
+            Assert.AreEqual(ed.Short, "Value held by characteristic");
+        }
+
+
         private static ElementDefinitionNavigator createTestNav()
         {
             var struc = createTestStructure();
@@ -511,4 +544,20 @@ namespace Hl7.Fhir.Specification.Tests
             return struc;
         }
     }
+
+    public static class PocoEvaluatorExtensions
+    {
+        public static IEnumerable<IValueProvider> ForPoco(this CompiledExpression ce, Base poco)
+        {
+            var nav = new PocoNavigator(poco);
+
+            return ce(new List<IValueProvider> { nav }, poco is Resource ? new List<IValueProvider> { nav } : null);
+        }
+
+        public static IEnumerable<IValueProvider> ForNode(this CompiledExpression ce, IValueProvider node)
+        {
+            return ce(new List<IValueProvider> { node }, null);
+        }
+    }
+
 }
