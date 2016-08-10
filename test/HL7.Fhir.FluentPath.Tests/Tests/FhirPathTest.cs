@@ -17,8 +17,9 @@ using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.FluentPath.Functions;
 using Xunit;
 using Furore.MetaModel;
+using Hl7.Fhir.Serialization;
 
-namespace Hl7.Fhir.Tests.FhirPath
+namespace Hl7.Fhir.FluentPath.Tests
 {
     public class FhirPathTest
     {
@@ -29,7 +30,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             // var navigator = new TreeNavigator(tree);
             // return navigator;
 
-            var patient = dstu2::Hl7.Fhir.Serialization.FhirParser.ParseFromXml(tpXml) as dstu2::Hl7.Fhir.Model.Resource;
+            var patient = FhirParser.ParseFromXml(tpXml) as Hl7.Fhir.Model.Resource;
             return new ModelNavigator(patient);
         }
 
@@ -53,7 +54,7 @@ namespace Hl7.Fhir.Tests.FhirPath
             Assert.Equal("4", new ConstantValue(4L).ToString());
             Assert.Equal("true", new ConstantValue(true).ToString());
             Assert.Equal("false", new ConstantValue(false).ToString());
-            Assert.IsNotNull(new ConstantValue(DateTimeOffset.Now).ToString());
+            Assert.NotNull(new ConstantValue(DateTimeOffset.Now).ToString());
         }
 
         [Fact]
@@ -69,17 +70,20 @@ namespace Hl7.Fhir.Tests.FhirPath
         }
 
 
+        
+
         [Fact]
         public void CheckTypeDetermination()
         {
             var values = FhirValueList.Create(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now());
             
-            Assert.IsInstanceOfType(values.Item(0).Single().Value, typeof(Int64));
-            Assert.IsInstanceOfType(values.Item(1).Single().Value, typeof(Boolean));
-            Assert.IsInstanceOfType(values.Item(2).Single().Value, typeof(String));
-            Assert.IsInstanceOfType(values.Item(3).Single().Value, typeof(Decimal));
-            Assert.IsInstanceOfType(values.Item(4).Single().Value, typeof(Decimal));
-            Assert.IsInstanceOfType(values.Item(5).Single().Value, typeof(PartialDateTime));
+            
+            Test.IsInstanceOfType(values.Item(0).Single().Value, typeof(Int64));
+            Test.IsInstanceOfType(values.Item(1).Single().Value, typeof(Boolean));
+            Test.IsInstanceOfType(values.Item(2).Single().Value, typeof(String));
+            Test.IsInstanceOfType(values.Item(3).Single().Value, typeof(Decimal));
+            Test.IsInstanceOfType(values.Item(4).Single().Value, typeof(Decimal));
+            Test.IsInstanceOfType(values.Item(5).Single().Value, typeof(PartialDateTime));
         }
 
 

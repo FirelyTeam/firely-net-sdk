@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -22,6 +23,11 @@ namespace Hl7.Fhir.FluentPath.Tests
         public static void Fail(string message)
         {
             throw new Exception("Test failed. "+ message);
+        }
+
+        public static bool IsInstanceOfType(object value, Type expectedType)
+        {
+            return value.GetType().GetTypeInfo().IsAssignableFrom(expectedType);
         }
     }
 }
