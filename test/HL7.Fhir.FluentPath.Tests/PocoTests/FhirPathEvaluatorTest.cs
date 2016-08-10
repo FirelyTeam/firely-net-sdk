@@ -28,6 +28,7 @@ namespace Hl7.Fhir.FluentPath.Tests
     {
         public IEnumerable<IValueProvider> TestInput;
         public IEnumerable<IValueProvider> Questionnaire;
+        public IEnumerable<IValueProvider> UuidProfile;
         public int Counter = 0;
         public XDocument Xdoc; 
 
@@ -42,6 +43,10 @@ namespace Hl7.Fhir.FluentPath.Tests
             tpXml = System.IO.File.ReadAllText("TestData\\questionnaire-example.xml");
             var quest = parser.Parse<Questionnaire>(tpXml);
             Questionnaire = FhirValueList.Create(new ModelNavigator(quest));
+
+            tpXml = System.IO.File.ReadAllText("TestData\\uuid.profile.xml");
+            var uuid = parser.Parse<StructureDefinition>(tpXml);
+            UuidProfile = FhirValueList.Create(new ModelNavigator(uuid));
 
             Xdoc = new XDocument(new XElement("group", new XAttribute("name", "CSharpTests")));
         }
@@ -125,6 +130,13 @@ namespace Hl7.Fhir.FluentPath.Tests
             Assert.Equal("ello", PathExpression.Scalar(@"$this[0].substring(1,%context[1])", input));
         }
 
+
+        [Fact]
+        public void TestSDF11Bug()
+        {
+   //         Assert.True(PathExpression.IsBoolean("snapshot.element.first().path + '' = constrainedType", true, fixture.UuidProfile));
+            Assert.True(PathExpression.IsBoolean("snapshot.element.first().path = constrainedType", true, fixture.UuidProfile));
+        }
 
         [Fact]
         public void TestSubsetting()

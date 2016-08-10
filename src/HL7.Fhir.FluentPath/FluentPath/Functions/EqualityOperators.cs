@@ -28,15 +28,6 @@ namespace Hl7.Fhir.FluentPath.Functions
 
         public static bool IsEqualTo(this IValueProvider left, IValueProvider right)
         {
-            // If the values have names, compare them
-            if (left is INameProvider && right is INameProvider)
-            {
-                var lNP = (INameProvider)left;
-                var rNP = (INameProvider)right;
-
-                if (lNP.Name != rNP.Name) return false;
-            }
-
             var l = left.Value;
             var r = right.Value;
 
@@ -68,13 +59,32 @@ namespace Hl7.Fhir.FluentPath.Functions
                 var childrenL = left.childrenOrEmpty();
                 var childrenR = right.childrenOrEmpty();
 
-                return childrenL.IsEqualTo(childrenR);    // NOTE: Assumes null will never be returned when any() children exist
+                bool allNamesAreEqual = childrenL.Zip(childrenR, (childL, childR) => namesAreEqual(childL, childR)).All(t => t);
+
+                return allNamesAreEqual &&
+                        childrenL.IsEqualTo(childrenR);    // NOTE: Assumes null will never be returned when any() children exist
             }
             else
             {
                 // Else, we're comparing a complex (without a value) to a primitive which (probably) should return false
                 return false;
             }
+        }
+
+
+        private static bool namesAreEqual(IValueProvider left, IValueProvider right, bool useEquivalence = false)
+        {
+            // If the values have names, compare them
+            if (left is INameProvider && right is INameProvider)
+            {
+                var lNP = (INameProvider)left;
+                var rNP = (INameProvider)right;
+
+                if (useEquivalence && lNP.Name == "id") return true;      // don't compare 'id' elements for equivalence
+                if (lNP.Name != rNP.Name) return false;
+            }
+
+            return true;
         }
 
 
@@ -88,17 +98,6 @@ namespace Hl7.Fhir.FluentPath.Functions
 
         public static bool IsEquivalentTo(this IValueProvider left, IValueProvider right)
         {
-            // If the values have names, compare them
-            if (left is INameProvider && right is INameProvider)
-            {
-                var lNP = (INameProvider)left;
-                var rNP = (INameProvider)right;
-
-                if (lNP.Name != rNP.Name) return false;
-
-                if (lNP.Name == "id") return true;      // don't compare 'id' elements
-            }
-
             var l = left.Value;
             var r = right.Value;
 
@@ -131,7 +130,11 @@ namespace Hl7.Fhir.FluentPath.Functions
                 var childrenL = left.childrenOrEmpty();
                 var childrenR = right.childrenOrEmpty();
 
-                return childrenL.IsEquivalentTo(childrenR);    // NOTE: Assumes null will never be returned when any() children exist
+                bool allNamesAreEquivalent = childrenL.Zip(childrenR, 
+                        (childL, childR) => namesAreEqual(childL, childR, useEquivalence:true)).All(t => t);
+
+                return allNamesAreEquivalent &&
+                            childrenL.IsEquivalentTo(childrenR);    // NOTE: Assumes null will never be returned when any() children exist
             }
             else
             {
@@ -160,8 +163,8 @@ namespace Hl7.Fhir.FluentPath.Functions
             b = b.Trim().ToLowerInvariant();
 
             return a == b;
-                //    return String.Compare(a, b, CultureInfo.InvariantCulture,
-                //CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols) == 0;
+            //    return String.Compare(a, b, CultureInfo.InvariantCulture,
+            //CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols) == 0;
         }
 
         public static bool IsEquivalentTo(this decimal a, decimal b)
@@ -197,7 +200,7 @@ namespace Hl7.Fhir.FluentPath.Functions
                 {
                     var childnames = String.Concat(((IElementNavigator)value).GetChildNames());
                     if (!String.IsNullOrEmpty(childnames))
-                        result ^=  childnames.GetHashCode();
+                        result ^= childnames.GetHashCode();
                 }
 
                 return result;
