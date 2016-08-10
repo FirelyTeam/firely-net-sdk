@@ -12,7 +12,7 @@ using Hl7.ElementModel;
 
 namespace Hl7.FluentPath
 {
-    internal static class FhirValueList
+    public static class FhirValueList
     {
         public static IEnumerable<IValueProvider> Create(params object[] values)
         {
