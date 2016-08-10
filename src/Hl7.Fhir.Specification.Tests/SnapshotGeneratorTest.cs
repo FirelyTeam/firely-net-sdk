@@ -148,6 +148,26 @@ namespace Hl7.Fhir.Specification.Tests
             dumpBasePaths(expanded);
         }
 
+        [TestMethod]
+        //[Ignore]
+        public void GeneratePatientWithExtensionsSnapshot()
+        {
+            // Example by Chris Grenz
+            // https://github.com/chrisgrenz/FHIR-Primer/blob/master/profiles/patient-extensions-profile.xml
+            // Manually downgraded from FHIR v1.4.0 to v1.0.2
+
+            // var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/SD/patient-with-extensions");
+            var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
+            Assert.IsNotNull(sd);
+
+            // dumpReferences(sd);
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            dumpBasePaths(expanded);
+        }
+
         // [WMR 20160721] Following profiles are not yet handled (TODO)
         private readonly string[] skippedProfiles =
 		{
