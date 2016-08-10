@@ -58,7 +58,7 @@ namespace Hl7.FluentPath.Tests
                 if (_string != null) return _string;
 
                 if (_pocoElement is FhirDateTime)
-                    return ((FhirDateTime)_pocoElement).ToDateTimeOffset();
+                    return FluentPath.PartialDateTime.FromDateTime(((FhirDateTime)_pocoElement).ToDateTimeOffset());
                 else if (_pocoElement is Hl7.Fhir.Model.Time)
                     return FluentPath.Time.Parse(((Hl7.Fhir.Model.Time)_pocoElement).Value);
                 else if ((_pocoElement is Hl7.Fhir.Model.Date))
