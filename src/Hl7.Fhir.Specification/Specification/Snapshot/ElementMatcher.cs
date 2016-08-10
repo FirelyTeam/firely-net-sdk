@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (baseIsSliced)
                 {
                     // TODO...?
-                    throw Error.NotSupported("Cannot expand snapshot. Reslicing type slices is not yet supported (path = '{0}').", diffNav.Path);
+                    throw Error.NotSupported("Reslicing of type slices is not supported (path = '{0}').", diffNav.Path);
                 }
 
                 // Only a single type slice? Then merge
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 if (diffProfiles.Length > 1)
                 {
-                    throw Error.NotSupported("Cannot expand snapshot. Reslicing on complex discriminator is not supported (path = '{0}').", diffNav.Path);
+                    throw Error.NotSupported("Reslicing on complex discriminator is not supported (path = '{0}').", diffNav.Path);
                 }
 
                 var diffProfile = diffProfiles.FirstOrDefault();
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             else
             {
-                throw Error.NotSupported("Cannot expand snapshot. Reslicing on discriminator '{0}' is not supported yet (path = '{1}').", string.Join("|", slicing.Discriminator), snapNav.Path);
+                throw Error.NotSupported("Reslicing on discriminator '{0}' is not supported yet (path = '{1}').", string.Join("|", slicing.Discriminator), snapNav.Path);
             }
 
             snapNav.ReturnToBookmark(slicingIntro);

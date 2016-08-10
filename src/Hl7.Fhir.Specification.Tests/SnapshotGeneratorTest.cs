@@ -148,8 +148,28 @@ namespace Hl7.Fhir.Specification.Tests
             dumpBasePaths(expanded);
         }
 
-		// [WMR 20160721] Following profiles are not yet handled (TODO)
-		private readonly string[] skippedProfiles =
+        [TestMethod]
+        //[Ignore]
+        public void GeneratePatientWithExtensionsSnapshot()
+        {
+            // Example by Chris Grenz
+            // https://github.com/chrisgrenz/FHIR-Primer/blob/master/profiles/patient-extensions-profile.xml
+            // Manually downgraded from FHIR v1.4.0 to v1.0.2
+
+            // var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/SD/patient-with-extensions");
+            var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
+            Assert.IsNotNull(sd);
+
+            // dumpReferences(sd);
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            dumpBasePaths(expanded);
+        }
+
+        // [WMR 20160721] Following profiles are not yet handled (TODO)
+        private readonly string[] skippedProfiles =
 		{
 			// Differential defines constraint on MedicationOrder.reason[x]
 			// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
@@ -467,7 +487,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.Indent();
                 foreach (var elem in sd.Snapshot.Element)
                 {
-                    Debug.WriteLine("{0} - {1}", elem.Path, elem.Base.Path);
+                    Debug.WriteLine("{0}  <===  {1}", elem.Path, elem.Base.Path);
                 }
                 Debug.Unindent();
             }
