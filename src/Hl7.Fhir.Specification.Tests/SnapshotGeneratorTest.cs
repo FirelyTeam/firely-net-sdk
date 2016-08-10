@@ -148,8 +148,8 @@ namespace Hl7.Fhir.Specification.Tests
             dumpBasePaths(expanded);
         }
 
-		// [WMR 20160721] Following profiles are not yet handled (TODO)
-		private readonly string[] skippedProfiles =
+        // [WMR 20160721] Following profiles are not yet handled (TODO)
+        private readonly string[] skippedProfiles =
 		{
 			// Differential defines constraint on MedicationOrder.reason[x]
 			// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.Indent();
                 foreach (var elem in sd.Snapshot.Element)
                 {
-                    Debug.WriteLine("{0} - {1}", elem.Path, elem.Base.Path);
+                    Debug.WriteLine("{0}  <===  {1}", elem.Path, elem.Base.Path);
                 }
                 Debug.Unindent();
             }
