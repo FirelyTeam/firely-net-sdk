@@ -14,6 +14,7 @@ using Hl7.FluentPath.Support;
 using Hl7.FluentPath.Functions;
 using System.Text.RegularExpressions;
 using Hl7.ElementModel;
+using System.Text;
 
 namespace Hl7.FluentPath.Expressions
 {
@@ -53,8 +54,32 @@ namespace Hl7.FluentPath.Expressions
 
         public SymbolTable Parent { get; private set; }
 
+        [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplayValue()}}")]
         private class TableEntry
         {
+            public string DebuggerDisplayValue()
+            {
+                if (Signature != null)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(Signature.ReturnType.Name);
+                    sb.Append(" ");
+                    sb.Append(Signature.Name);
+                    sb.Append(" (");
+                    bool b = false;
+                    foreach (var item in Signature.ArgumentTypes)
+                    {
+                        if (b)
+                            sb.Append(", ");
+                        sb.Append(item.Name);
+                        b = true;
+                    }
+                    sb.Append(")");
+                    return sb.ToString();
+                }
+                return null;
+            }
+
             public CallSignature Signature { get; private set; }
             public Invokee Body { get; private set; }
 
