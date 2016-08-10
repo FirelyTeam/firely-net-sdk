@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 else
                 {
                     Bookmark matchingSlice;
-                    if (FindBaseSlice(snapNav, diffNav, out matchingSlice))
+                    if (findBaseSlice(snapNav, diffNav, out matchingSlice))
                     {
                         result.Add(new MatchInfo()
                         {
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Returns true when match is found, matchingSlice points to match in base (merge here)
         // Returns false otherwise, matchingSlice points to current node in base
         // Maintain snapNav current position
-        private static bool FindBaseSlice(ElementNavigator snapNav, ElementNavigator diffNav, out Bookmark matchingSlice)
+        private static bool findBaseSlice(ElementNavigator snapNav, ElementNavigator diffNav, out Bookmark matchingSlice)
         {
             var slicing = snapNav.Current.Slicing;
             Debug.Assert(slicing != null);
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // snapNav has already expanded target extension definition 'questionnaire-enableWhen'
                 // => Match to base profile on child element with name 'question'
 
-                var diffProfiles = diffNav.Current.Type.FirstOrDefault().Profile.ToArray();
+                var diffProfiles = diffNav.Current.PrimaryTypeProfiles().ToArray();
                 if (diffProfiles == null || diffProfiles.Length == 0)
                 {
                     throw Error.InvalidOperation("Differential is reslicing on url, but resliced element has no type profile (path = '{0}').", diffNav.Path);
@@ -299,14 +299,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 var diffProfile = diffProfiles.FirstOrDefault();
-                string profileUrl, elementName;
-                var isComplex = SnapshotGenerator.IsComplexProfileReference(diffProfile, out profileUrl, out elementName);
+                var profileRef = ProfileReference.FromUrl(diffProfile);
                 while (snapNav.MoveToNext(snapNav.PathName))
                 {
-                    var baseProfiles = snapNav.Current.Type.FirstOrDefault().Profile;
-                    result = isComplex
+                    var baseProfiles = snapNav.Current.PrimaryTypeProfiles().ToArray();
+                    result = profileRef.IsComplex
                         // Match on element name
-                        ? snapNav.Current.Name == elementName
+                        ? snapNav.Current.Name == profileRef.ElementName
                         // Match on profile(s)
                         : baseProfiles.SequenceEqual(diffProfiles);
                     if (result)
@@ -318,6 +317,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             }
             // TODO: Support other discriminators
+            // http://hl7.org/fhir/profiling.html#discriminator
+
             else
             {
                 throw Error.NotSupported("Cannot expand snapshot. Reslicing on discriminator '{0}' is not supported yet (path = '{1}').", string.Join("|", slicing.Discriminator), snapNav.Path);
