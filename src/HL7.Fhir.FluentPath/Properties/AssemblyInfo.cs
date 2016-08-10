@@ -5,16 +5,16 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Hl7.Fhir.FluentPath")]
+[assembly: AssemblyTitle("Hl7.FluentPath")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Hl7.Fhir.FluentPath")]
+[assembly: AssemblyProduct("Hl7.FluentPath")]
 [assembly: AssemblyCopyright("Copyright © 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 #if DEBUG
-[assembly: InternalsVisibleTo("Hl7.Fhir.FluentPath.Tests")]
+[assembly: InternalsVisibleTo("Hl7.FluentPath.Tests")]
 #endif
 
 // Setting ComVisible to false makes the types in this assembly not visible 

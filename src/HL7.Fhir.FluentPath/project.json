@@ -4,7 +4,7 @@
   "version": "1.4.1-beta3",
   "dependencies": {
     "Sprache": { "target": "project" },
-    "Furore.MetaModel": { "target": "project" }
+    "Hl7.ElementModel": { "target": "project" }
   },
   "frameworks": {
     "net40": {
