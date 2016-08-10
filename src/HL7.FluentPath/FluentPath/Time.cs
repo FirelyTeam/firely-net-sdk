@@ -7,7 +7,6 @@
  */
 
 
-using Hl7.Fhir.Support;
 using System;
 using System.Linq;
 using System.Xml;

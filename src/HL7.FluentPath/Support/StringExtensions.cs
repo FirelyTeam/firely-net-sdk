@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Hl7.Fhir.Support
+namespace Hl7.FluentPath.Support
 {
     internal static class StringExtensions
     {

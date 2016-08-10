@@ -2,6 +2,7 @@
 using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.FluentPath.Support;
 using Hl7.ElementModel;
 
 namespace Hl7.FluentPath.Tests

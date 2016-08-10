@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 
-namespace Hl7.Fhir.Support
+namespace Hl7.FluentPath.Support
 {
     internal static class Message
     {

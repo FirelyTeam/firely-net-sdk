@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Hl7.FluentPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using Hl7.FluentPath.Support;
 using Hl7.ElementModel;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Introspection;
