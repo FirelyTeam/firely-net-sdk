@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.FluentPath.Expressions
+namespace Hl7.FluentPath.Expressions
 {
     public class TreeVisualizerVisitor : ExpressionVisitor<StringBuilder>
     {

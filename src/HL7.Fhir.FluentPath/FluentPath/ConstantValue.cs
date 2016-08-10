@@ -6,14 +6,14 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.FluentPath.Functions;
+using Hl7.FluentPath.Functions;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 
-namespace Hl7.Fhir.FluentPath
+namespace Hl7.FluentPath
 {
     public class ConstantValue : IValueProvider, ITypeNameProvider
     {

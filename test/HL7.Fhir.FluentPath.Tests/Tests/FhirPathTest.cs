@@ -16,7 +16,7 @@ using Sprache;
 using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.FluentPath.Functions;
 using Xunit;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.FluentPath.Tests

@@ -2,7 +2,7 @@
 using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 
 namespace Hl7.Fhir.FluentPath.Tests
 {

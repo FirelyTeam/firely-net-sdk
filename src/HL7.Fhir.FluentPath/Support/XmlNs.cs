@@ -15,7 +15,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Hl7.Fhir.FluentPath.Support
+namespace Hl7.FluentPath.Support
 {
     //public static class XmlNs
     //{

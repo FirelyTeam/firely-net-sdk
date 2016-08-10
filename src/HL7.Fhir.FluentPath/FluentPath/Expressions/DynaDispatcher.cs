@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Hl7.Fhir.Support;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 
-namespace Hl7.Fhir.FluentPath.Expressions
+namespace Hl7.FluentPath.Expressions
 {
     internal class DynaDispatcher
     {

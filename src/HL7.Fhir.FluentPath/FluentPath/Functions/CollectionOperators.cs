@@ -11,10 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 using Hl7.Fhir.Support;
 
-namespace Hl7.Fhir.FluentPath.Functions
+namespace Hl7.FluentPath.Functions
 {
     internal static class CollectionOperators
     {

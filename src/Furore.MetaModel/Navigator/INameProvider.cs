@@ -1,4 +1,4 @@
-﻿namespace Furore.MetaModel
+﻿namespace Hl7.ElementModel
 {
     public interface INameProvider
     {

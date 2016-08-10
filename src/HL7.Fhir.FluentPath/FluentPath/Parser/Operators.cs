@@ -11,7 +11,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 
-namespace Hl7.Fhir.FluentPath.Parser
+namespace Hl7.FluentPath.Parser
 {
     internal partial class Lexer
     {

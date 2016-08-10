@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Hl7.Fhir.FluentPath;
+using Hl7.FluentPath;
 using Hl7.Fhir.Support;
 using System.Text;
 using System.Threading.Tasks;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 
-namespace Hl7.Fhir.FluentPath
+namespace Hl7.FluentPath
 {
     public class TypeInfo
     {

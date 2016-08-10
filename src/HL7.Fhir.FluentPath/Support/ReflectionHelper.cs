@@ -14,7 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Hl7.Fhir.FluentPath.Support
+namespace Hl7.FluentPath.Support
 {
     internal static class ReflectionHelper
     {

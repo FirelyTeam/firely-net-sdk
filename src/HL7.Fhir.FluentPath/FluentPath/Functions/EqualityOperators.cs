@@ -12,10 +12,10 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Hl7.Fhir.FluentPath;
-using Furore.MetaModel;
+using Hl7.FluentPath;
+using Hl7.ElementModel;
 
-namespace Hl7.Fhir.FluentPath.Functions
+namespace Hl7.FluentPath.Functions
 {
     internal static class EqualityOperators
     {

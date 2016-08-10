@@ -12,7 +12,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.FluentPath.Expressions;
 using Xunit;

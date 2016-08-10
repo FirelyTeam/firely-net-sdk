@@ -10,10 +10,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Furore.MetaModel;
-using Hl7.Fhir.FluentPath.Functions;
+using Hl7.ElementModel;
+using Hl7.FluentPath.Functions;
 
-namespace Hl7.Fhir.FluentPath
+namespace Hl7.FluentPath
 {
     internal static class IValueProviderListExtensions
     {

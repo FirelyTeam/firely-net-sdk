@@ -12,9 +12,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Support;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 
-namespace Hl7.Fhir.FluentPath.Expressions
+namespace Hl7.FluentPath.Expressions
 { 
     internal static class ClosureExtensions
     {

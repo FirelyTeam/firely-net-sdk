@@ -24,7 +24,7 @@ using System.Xml.Linq;
 using Hl7.Fhir.FluentPath.Functions;
 using Hl7.Fhir.Model;
 using Xunit;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 using Xunit.Sdk;
 using Xunit.Abstractions;
 

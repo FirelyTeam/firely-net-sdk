@@ -8,9 +8,9 @@
 
 using System.Linq;
 using System.Collections.Generic;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 
-namespace Hl7.Fhir.FluentPath
+namespace Hl7.FluentPath
 {
     internal static class FhirValueList
     {

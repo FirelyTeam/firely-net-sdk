@@ -8,9 +8,9 @@
 
 
 using System.Collections.Generic;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 
-namespace Hl7.Fhir.FluentPath.Expressions
+namespace Hl7.FluentPath.Expressions
 {
     internal class Closure
     {

@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace Hl7.Fhir.FluentPath.Parser
+namespace Hl7.FluentPath.Parser
 {
     internal partial class Lexer
     {
@@ -77,8 +77,8 @@ namespace Hl7.Fhir.FluentPath.Parser
                                             (Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?  #Timezone
                                  ", RegexOptions.IgnorePatternWhitespace);
 
-        public static readonly Parser<Hl7.Fhir.FluentPath.Time> Time =
-            Parse.Regex(TimeRegEx).Select(s => Hl7.Fhir.FluentPath.Time.Parse(s.Substring(1)));
+        public static readonly Parser<Hl7.FluentPath.Time> Time =
+            Parse.Regex(TimeRegEx).Select(s => Hl7.FluentPath.Time.Parse(s.Substring(1)));
 
         // NUMBER
         //   : [0-9]+('.' [0-9]+)?

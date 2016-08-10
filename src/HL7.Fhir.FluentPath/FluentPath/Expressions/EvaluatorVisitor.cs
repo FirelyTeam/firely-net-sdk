@@ -6,7 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 using Hl7.Fhir.Support;
-using FP = Hl7.Fhir.FluentPath.Expressions;
+using FP = Hl7.FluentPath.Expressions;
 using System.Linq.Expressions;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hl7.Fhir.FluentPath.Expressions
+namespace Hl7.FluentPath.Expressions
 {
     internal class EvaluatorVisitor : FP.ExpressionVisitor<Invokee>
     {

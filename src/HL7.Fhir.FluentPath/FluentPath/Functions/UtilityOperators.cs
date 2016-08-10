@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 using System.Diagnostics;
 
-namespace Hl7.Fhir.FluentPath.Functions
+namespace Hl7.FluentPath.Functions
 {
     internal static class UtilityOperators
     {

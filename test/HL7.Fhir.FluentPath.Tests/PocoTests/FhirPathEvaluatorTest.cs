@@ -18,7 +18,7 @@ using System.Diagnostics;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.Xml.Linq;
-using Furore.MetaModel;
+using Hl7.ElementModel;
 using Xunit;
 using System.IO;
 

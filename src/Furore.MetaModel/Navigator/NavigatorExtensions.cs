@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace Furore.MetaModel
+namespace Hl7.ElementModel
 {
     public static class NavigatorExtensions
     {

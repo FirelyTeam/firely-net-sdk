@@ -12,7 +12,7 @@ using System;
 using System.Linq;
 using System.Xml;
 
-namespace Hl7.Fhir.FluentPath
+namespace Hl7.FluentPath
 {
 
     //TODO: Merge with FhirDateTime from Model namespace?s
