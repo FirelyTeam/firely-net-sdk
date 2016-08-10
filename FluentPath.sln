@@ -10,15 +10,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hl7.ElementModel", "src\Furore.MetaModel\Hl7.ElementModel.xproj", "{BC44997B-F239-44AC-B2C1-CC6399656086}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hl7.ElementModel", "src\Hl7.ElementModel\Hl7.ElementModel.xproj", "{BC44997B-F239-44AC-B2C1-CC6399656086}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{275F7317-F838-4D2E-9025-CAC9FA3F9BB8}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sprache", "src\Sprache\Sprache.xproj", "{6565F626-F9B4-48AE-958D-2B0462CA042D}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HL7.FluentPath", "src\HL7.Fhir.FluentPath\HL7.FluentPath.xproj", "{491713CA-6C9B-477B-B650-51A820B45B88}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HL7.FluentPath", "src\HL7.FluentPath\HL7.FluentPath.xproj", "{491713CA-6C9B-477B-B650-51A820B45B88}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hl7.FluentPath.Tests", "test\Hl7.Fhir.FluentPath.Tests\Hl7.FluentPath.Tests.xproj", "{B0429331-1975-48BC-BBFF-BE733C0FDF44}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hl7.FluentPath.Tests", "test\Hl7.FluentPath.Tests\Hl7.FluentPath.Tests.xproj", "{B0429331-1975-48BC-BBFF-BE733C0FDF44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

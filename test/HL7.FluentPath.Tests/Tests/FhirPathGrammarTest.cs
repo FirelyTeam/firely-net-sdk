@@ -8,14 +8,14 @@
 
 using System;
 using System.Linq;
-using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.FluentPath.Parser;
-using Hl7.Fhir.FluentPath.Expressions;
+using Hl7.FluentPath;
+using Hl7.FluentPath.Parser;
+using Hl7.FluentPath.Expressions;
 using Sprache;
 
 using Xunit;
 
-namespace Hl7.Fhir.FluentPath.Tests
+namespace Hl7.FluentPath.Tests
 {
     public class FhirPathExpressionTest
     {

@@ -10,10 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sprache;
-using Hl7.Fhir.FluentPath;
+using Hl7.FluentPath;
 using Xunit;
 
-namespace Hl7.Fhir.FluentPath.Tests
+namespace Hl7.FluentPath.Tests
 {
 
     public class ISODateTimeTest

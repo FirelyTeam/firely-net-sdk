@@ -13,13 +13,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sprache;
-using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.FluentPath.Functions;
+using Hl7.FluentPath;
+using Hl7.FluentPath.Functions;
 using Xunit;
 using Hl7.ElementModel;
 using Hl7.Fhir.Serialization;
 
-namespace Hl7.Fhir.FluentPath.Tests
+namespace Hl7.FluentPath.Tests
 {
     public class FhirPathTest
     {

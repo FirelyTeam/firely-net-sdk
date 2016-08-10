@@ -7,12 +7,12 @@
  */
 
 using System;
-using Hl7.Fhir.FluentPath;
+using Hl7.FluentPath;
 using Sprache;
-using Hl7.Fhir.FluentPath.Parser;
+using Hl7.FluentPath.Parser;
 using Xunit;
 
-namespace Hl7.Fhir.FluentPath.Tests
+namespace Hl7.FluentPath.Tests
 {
     public class FhirPathLexerTest
     {

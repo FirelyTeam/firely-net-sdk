@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.FluentPath;
+using Hl7.FluentPath;
 using Sprache;
 using Xunit;
 
-namespace Hl7.Fhir.FluentPath.Tests
+namespace Hl7.FluentPath.Tests
 {
     // Copied from Sprache.Test
     static class AssertParser

@@ -10,7 +10,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.FluentPath;
+using Hl7.FluentPath;
 
 
 using boolean = System.Boolean;
@@ -21,14 +21,14 @@ using System.IO;
 using System.Xml;
 using Hl7.Fhir.Support;
 using System.Xml.Linq;
-using Hl7.Fhir.FluentPath.Functions;
+using Hl7.FluentPath.Functions;
 using Hl7.Fhir.Model;
 using Xunit;
 using Hl7.ElementModel;
 using Xunit.Sdk;
 using Xunit.Abstractions;
 
-namespace Hl7.Fhir.FluentPath.Tests
+namespace Hl7.FluentPath.Tests
 {
     static class ConverterExtensions
     {

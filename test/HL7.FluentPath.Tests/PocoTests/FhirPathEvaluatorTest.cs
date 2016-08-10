@@ -12,8 +12,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.FluentPath.Expressions;
+using Hl7.FluentPath;
+using Hl7.FluentPath.Expressions;
 using System.Diagnostics;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
@@ -22,7 +22,7 @@ using Hl7.ElementModel;
 using Xunit;
 using System.IO;
 
-namespace Hl7.Fhir.FluentPath.Tests
+namespace Hl7.FluentPath.Tests
 {
     public class PatientFixture : IDisposable
     {
