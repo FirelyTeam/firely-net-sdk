@@ -1,0 +1,64 @@
+﻿{
+  "name": "Hl7.FluentPath",
+
+  "version": "0.3-alpha1",
+  "title": "HL7 FluentPath evaluator",
+  "authors": [ "Ewout Kramer (e.kramer@furore.com) and contributors" ],
+  "description": "This library contains a runtime environment for executing HL7 FluentPath queries and invariants. It is used by the HL7 .NET FHIR API (https://www.nuget.org/packages/Hl7.Fhir.DSTU2) to run validation for the HL7 FHIR object model.",
+  "language": "en-us",
+  "copyright": "(C) 2016 Furore (fhir.furore.com)",
+
+  "packOptions": {
+    "owners": [ "Furore (http://fhir.furore.com). Contains materials (C) HL7 International" ],
+    "summary": ".NET evaluator for the HL7 FluentPath query and knowledge representation language",
+    "projectUrl": "https://github.com/ewoutkramer/fhir-net-fluentpath",
+    "iconUrl": "https://raw.githubusercontent.com/ewoutkramer/fhir-net-fluentpath/master/icon-fhir-32.png",
+    "licenseUrl": "https://raw.githubusercontent.com/ewoutkramer/fhir-net-fluentpath/master/LICENSE",
+    "requireLicenseAcceptance": false,
+    "tags": [ "HL7", "FluentPath", "query language", "CQL", "FHIR" ]
+  },
+
+
+  "dependencies": {
+
+  },
+
+  "frameworks": {
+    "net40": {
+      "frameworkAssemblies": {
+        "System.Xml": "4.0.0.0",
+        "System.Xml.Linq": "4.0.0.0"
+      }
+    },
+    "net45": {
+      "frameworkAssemblies": {
+        "System.Xml": "4.0.0.0",
+        "System.Xml.Linq": "4.0.0.0"
+      }
+    },
+    "netstandard1.0": {
+      "buildOptions": {
+        "define": [ "NETSTANDARD" ]
+      },
+      "dependencies": {
+        "NETStandard.Library": "1.6.0"
+      }
+    }
+  },
+
+  "configurations": {
+    "Debug": {
+      "buildOptions": {
+        "define": [ "DEBUG", "TRACE" ]
+      }
+    },
+    "Release": {
+      "buildOptions": {
+        "define": [ "RELEASE", "TRACE" ],
+        "optimize": true
+      }
+    }
+  }
+}
+
+
