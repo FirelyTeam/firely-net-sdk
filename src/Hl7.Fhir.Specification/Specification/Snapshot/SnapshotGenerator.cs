@@ -1,5 +1,4 @@
-﻿#define BASE_PATH
-#define DETECT_RECURSION
+﻿#define DETECT_RECURSION
 // #define MAX_PATH_DEPTH
 
 /* 
@@ -123,7 +122,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var nav = new ElementNavigator(elements);
             if (!nav.MoveTo(element))
             {
-                throw Error.Argument("element", "The specified element is not contained in the list.");
+                throw Error.Argument("element", "The element to expand is not included in the given element list.");
             }
 
             expandElement(nav);
@@ -306,11 +305,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // throw Error.NotSupported("Trying to navigate down a node that has a declared type profile of '{0}', which is unknown".FormatWith(primaryDiffTypeProfile));
                     throw Error.ResourceReferenceNotFoundException(
                         primaryDiffTypeProfile,
-                        "Unresolved profile reference. Cannot locate the element type profile with url '{0}'".FormatWith(primaryDiffTypeProfile)
+                        "Unresolved profile reference. Cannot locate the type profile for element '{0}'.\r\nProfile url = '{1}'".FormatWith(diff.Path, primaryDiffTypeProfile)
                     );
                 }
                 // Otherwise silently ignore and continue expansion
-                Debug.Print("Warning! Unresolved element type profile reference: '{0}' - Ignore; continue expansion...".FormatWith(primaryDiffTypeProfile));
+                Debug.Print("Warning! Unresolved type profile for element '{0}' with url '{1}' - continue expansion...".FormatWith(diff.Path, primaryDiffTypeProfile));
             }
             else
             {
@@ -331,10 +330,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     else if (!_settings.IgnoreUnresolvedProfiles)
                     {
-                        throw Error.NotSupported("Found definition of type profile '{0}', but is does not contain a snapshot representation.".FormatWith(primaryDiffTypeProfile));
+                        throw Error.NotSupported("Resolved profile for url '{0}' does not contain a snapshot representation.".FormatWith(primaryDiffTypeProfile));
                     }
                     // Otherwise silently ignore and continue expansion
-                    Debug.Print("Warning! External type profile reference: '{0}' has no snapshot - Ignore; continue expansion...".FormatWith(primaryDiffTypeProfile));
+                    Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(primaryDiffTypeProfile));
                 }
                 else
                 {
@@ -504,7 +503,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else
                 {
-                    throw Error.InvalidOperation("Snapshot generator required the base at '{0}' to have a snapshot representation", structure.Base);
+                    throw Error.InvalidOperation("Resolved base profile for url '{0}' does not contain a snapshot representation.", structure.Base);
                 }
             }
 
@@ -525,8 +524,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         // internal static bool expandElement(ElementNavigator nav, ArtifactResolver resolver, SnapshotGeneratorSettings settings)
         internal bool expandElement(ElementNavigator nav)
         {
-            // if (resolver == null) throw Error.ArgumentNull("source");
-            if (nav.Current == null) throw Error.ArgumentNull("Navigator is not positioned on an element");
+            if (nav.Current == null)
+            {
+                throw Error.ArgumentNull("Navigator is not positioned on an element");
+            }
 
             if (nav.HasChildren) return true;     // already has children, we're not doing anything extra
 
@@ -591,7 +592,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         {
                             throw Error.ResourceReferenceNotFoundException(
                                 typeProfile,
-                                "Unresolved profile reference. Cannot locate the element type profile with url '{0}'".FormatWith(typeProfile)
+                                "Unresolved profile reference. Cannot locate the element type profile for url '{0}'".FormatWith(typeProfile)
                             );
                         }
                         else
@@ -614,7 +615,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         }
                         else
                         {
-                            throw Error.NotSupported("Found definition of base type '{0}', but is does not contain a snapshot representation".FormatWith(typeCode));
+                            throw Error.NotSupported("Resolved profile for type '{0}' does not contain a snapshot representation.".FormatWith(typeCode));
                         }
                     }
 
