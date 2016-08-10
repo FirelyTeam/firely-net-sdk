@@ -156,13 +156,12 @@ namespace Hl7.Fhir.FluentPath.Functions
         {
             if (b == null) return false;
 
-#if NETSTANDARD
-            // todo: check equivalence
-            return String.Compare(a, b) == 0;
-#else
-            return String.Compare(a, b, CultureInfo.InvariantCulture, 
-                CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols) == 0;
-#endif
+            a = a.Trim().ToLowerInvariant();
+            b = b.Trim().ToLowerInvariant();
+
+            return a == b;
+                //    return String.Compare(a, b, CultureInfo.InvariantCulture,
+                //CompareOptions.IgnoreNonSpace | CompareOptions.IgnoreCase | CompareOptions.IgnoreSymbols) == 0;
         }
 
         public static bool IsEquivalentTo(this decimal a, decimal b)

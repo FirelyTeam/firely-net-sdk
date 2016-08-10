@@ -26,6 +26,7 @@ using Hl7.Fhir.Model;
 using Xunit;
 using Furore.MetaModel;
 using Xunit.Sdk;
+using Xunit.Abstractions;
 
 namespace Hl7.Fhir.FluentPath.Tests
 {
@@ -100,6 +101,13 @@ namespace Hl7.Fhir.FluentPath.Tests
 
     public class FluentPathTests
     {
+        private readonly ITestOutputHelper output;
+
+        public FluentPathTests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
         private void test(Resource resource, String expression, IEnumerable<XElement> expected)
         {
             var tpXml = FhirSerializer.SerializeToXml(resource);
@@ -174,12 +182,12 @@ namespace Hl7.Fhir.FluentPath.Tests
 
             foreach (var file in files)
             {
-                Console.WriteLine("==== Running tests from file '{0}' ====".FormatWith(file));
+                output.WriteLine("==== Running tests from file '{0}' ====".FormatWith(file));
                 runTests(file);
-                Console.WriteLine(Environment.NewLine);
+                output.WriteLine(Environment.NewLine);
             }
 
-            Console.WriteLine("Ran {0} tests in total, {1} succeeded, {2} failed.".FormatWith(totalTests, totalTests - numFailed, numFailed));
+            output.WriteLine("Ran {0} tests in total, {1} succeeded, {2} failed.".FormatWith(totalTests, totalTests - numFailed, numFailed));
 
             if (numFailed > 0)
             {
@@ -223,25 +231,25 @@ namespace Hl7.Fhir.FluentPath.Tests
                 
                 catch (XunitException afe) // (AssertFailedException afe)
                 {
-                    Console.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                    Console.WriteLine("   " + afe.Message);
+                    output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
+                    output.WriteLine("   " + afe.Message);
                     numFailed += 1;
                 }
                 catch (InvalidOperationException ioe)
                 {
-                    Console.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                    Console.WriteLine("   " + ioe.Message);
+                    output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
+                    output.WriteLine("   " + ioe.Message);
                     numFailed += 1;
                 }
                 catch (FormatException fe)
                 {
-                    Console.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
-                    Console.WriteLine("   " + fe.Message);
+                    output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
+                    output.WriteLine("   " + fe.Message);
                     numFailed += 1;
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
+                    output.WriteLine("FAIL: {0} - {1}: {2}", groupName, name, expression);
                     throw e;
                 }
             }

@@ -269,7 +269,7 @@ namespace Hl7.Fhir.FluentPath.Tests
 
             fixture.IsTrue(@"Patient.name.iif({}, 'named', 'unnamed') = 'unnamed'");
 
-            fixture.IsTrue(@"Patient.name[0].family.iif(length()-8 != 0, 5/(length()-8), 'no result') = 'no result'");
+         //   fixture.IsTrue(@"Patient.name[0].family.iif(length()-8 != 0, 5/(length()-8), 'no result') = 'no result'");
         }
 
         [Fact]

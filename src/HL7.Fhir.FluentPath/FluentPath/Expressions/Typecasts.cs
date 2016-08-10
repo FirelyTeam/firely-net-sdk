@@ -70,10 +70,10 @@ namespace Hl7.Fhir.FluentPath.Expressions
             if (to == typeof(object)) return id;
 
             //if (to.IsAssignableFrom(from)) return id;
-            if (to.CanBeTreatedAsType(from)) return id;
+            if (from.CanBeTreatedAsType(to)) return id;
 
             //if (to == typeof(bool)) return any2bool;
-            if (to == typeof(IValueProvider) && (!typeof(IEnumerable<IValueProvider>).CanBeTreatedAsType(from))) return any2ValueProvider;
+            if (to == typeof(IValueProvider) && (!from.CanBeTreatedAsType(typeof(IEnumerable<IValueProvider>)))) return any2ValueProvider;
             if (to == typeof(IEnumerable<IValueProvider>)) return any2List;
              
             if (from == typeof(long) && (to == typeof(decimal) || to == typeof(decimal?))) return makeNativeCast(typeof(decimal));
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
         {
             if (instance == null) return null;
 
-            if (typeof(IEnumerable<IValueProvider>).CanBeTreatedAsType(to)) return instance;
+            if (to.CanBeTreatedAsType(typeof(IEnumerable<IValueProvider>))) return instance;
 
             if (instance is IEnumerable<IValueProvider>)
             {
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
                     instance = list.Single();
             }
 
-            if (typeof(IValueProvider).CanBeTreatedAsType(to)) return instance;
+            if (to.CanBeTreatedAsType(typeof(IValueProvider))) return instance;
 
             if (instance is IValueProvider)
             {
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.FluentPath.Expressions
         {
             if (source != null)
             {
-                if (to.CanBeTreatedAsType(source.GetType())) return source;  // for efficiency
+                if (source.GetType().CanBeTreatedAsType(to)) return source;  // for efficiency
 
                 source = Unbox(source, to);
 
@@ -173,9 +173,9 @@ namespace Hl7.Fhir.FluentPath.Expressions
 
         public static string ReadableFluentPathName(Type t)
         {
-            if (typeof(IEnumerable<IValueProvider>).CanBeTreatedAsType(t))
+            if (t.CanBeTreatedAsType(typeof(IEnumerable<IValueProvider>)))
                 return "collection";
-            else if (typeof(IValueProvider).CanBeTreatedAsType(t))
+            else if (t.CanBeTreatedAsType(typeof(IValueProvider)))
                 return "any single value";
             else
                 return t.Name;
