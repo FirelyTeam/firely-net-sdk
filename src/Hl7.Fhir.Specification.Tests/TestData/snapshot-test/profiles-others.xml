@@ -3,7 +3,7 @@
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="profiles-others"/>
   <meta>
-    <lastUpdated value="2016-08-09T09:36:21.994+00:00"/>
+    <lastUpdated value="2016-08-11T03:44:00.907+00:00"/>
   </meta>
   <type value="collection"/>
   <entry>
@@ -27,7 +27,7 @@
         </contact>
         <date value="2012-06-24"/>
         <description value="XDSDocumentEntry"/>
-        <fhirVersion value="1.5.0"/>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
@@ -1926,7 +1926,7 @@
         </contact>
         <date value="2012-06-24"/>
         <description value="SubmissionSet"/>
-        <fhirVersion value="1.5.0"/>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
@@ -2868,16 +2868,16 @@
         </contact>
         <date value="2013-10-02"/>
         <description value="Adds additional information to a family member history supporting both the capture of mother/father relationships as well as additional observations necessary to enable genetics-based risk analysis for patients"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -3732,9 +3732,9 @@
         <name value="Shareable ValueSet"/>
         <status value="draft"/>
         <publisher value="HL7"/>
-        <date value="2016-08-09T09:36:21+00:00"/>
+        <date value="2016-08-11T03:44:00+00:00"/>
         <description value="Enforces the minimum information set for the value set metadata required by HL7 and other organisations that share and publish value sets"/>
-        <fhirVersion value="1.5.0"/>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
@@ -5781,7 +5781,7 @@
         </contact>
         <date value="2015-10-20"/>
         <description value="Describes how the DiagnosticRequest resource is used to for genetics"/>
-        <fhirVersion value="1.5.0"/>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
@@ -6581,9 +6581,9 @@ All Provenances should have some historical version of this Request as their sub
         <name value="Shareable CodeSystem"/>
         <status value="draft"/>
         <publisher value="HL7"/>
-        <date value="2016-08-09T09:36:21+00:00"/>
+        <date value="2016-08-11T03:44:00+00:00"/>
         <description value="Enforces the minimum information set for the value set metadata required by HL7 and other organisations that share and publish value sets"/>
-        <fhirVersion value="1.5.0"/>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
@@ -8281,16 +8281,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2014-11-17"/>
         <description value="This profile describes the direct or derived, qualitative or quantitative physiological measurement, setting, or calculation data produced by a medical device or a device component."/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -10022,16 +10022,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2016-03-14"/>
         <description value="Describes how the observation resource is used to report structured genetic test results"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -12300,16 +12300,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2016-03-25"/>
         <description value="Defines constraints and extensions on the Observation resource for use in querying and retrieving Vital Signs information."/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -15270,16 +15270,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2016-03-25"/>
         <description value="FHIR Body Weight Profile"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -18085,16 +18085,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2016-03-25"/>
         <description value="FHIR Respiratory Rate Profile"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -20891,16 +20891,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2016-03-25"/>
         <description value="FHIR Heart Rate Profile"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -23697,16 +23697,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2016-03-25"/>
         <description value="FHIR Body Temperature Profile"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -26512,16 +26512,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2016-03-25"/>
         <description value="FHIR Body Height Profile"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -29327,16 +29327,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2016-03-25"/>
         <description value="FHIR Head Circumference Profile"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -32142,16 +32142,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2016-03-25"/>
         <description value="FHIR Oxygen Saturation Profile"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -34948,16 +34948,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2016-03-25"/>
         <description value="FHIR Body Mass Index (BMI) Profile"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -37754,16 +37754,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2016-03-25"/>
         <description value="FHIR Mean Blood Pressure Profile"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -40560,16 +40560,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2016-03-25"/>
         <description value="FHIR Blood Pressure Profile"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -44736,16 +44736,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2012-05-12"/>
         <description value="Lipid Lab Report"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -45951,16 +45951,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2012-05-12"/>
         <description value="Describes how the lab report is used for a standard Lipid Profile - Cholesterol, Triglyceride and Cholesterol fractions. Uses LOINC codes"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -47825,16 +47825,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2012-05-12"/>
         <description value="Triglyceride Result"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -49430,16 +49430,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2012-05-12"/>
         <description value="HDL Cholesterol Result"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -51070,16 +51070,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2012-05-12"/>
         <description value="LDL Cholesterol Result"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -52724,16 +52724,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2015-10-09"/>
         <description value="Describes how the DiagnosticReport resource is used to report structured genetic test results"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -53812,16 +53812,16 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2015-10-09"/>
         <description value="Describes how the HLA genotyping results"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="w5"/>
@@ -54936,7 +54936,7 @@ All Provenances should have some historical version of this Request as their sub
         </contact>
         <date value="2015-03-17"/>
         <description value="The base Composition is a general resource for compositions or documents about any kind of subject that might be encountered in healthcare including such things as guidelines, medicines, etc. A clinical document is focused on documents related to the provision of care process, where the subject is a patient, a group of patients, or a closely related concept. A clinical document has additional reqiurements around confidentiality that do not apply in the same way to other kinds of documents"/>
-        <fhirVersion value="1.5.0"/>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
@@ -56327,12 +56327,7 @@ Some reporting work flows require that the original narrative of a final documen
         </contact>
         <date value="2015-02-28"/>
         <description value="Identifies how the ElementDefinition data type is used when it appears within a data element"/>
-        <fhirVersion value="1.5.0"/>
-        <mapping>
-          <identity value="rim"/>
-          <uri value="http://hl7.org/v3"/>
-          <name value="RIM Mapping"/>
-        </mapping>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="dex"/>
           <uri value="http://wiki.ihe.net/index.php?title=Data_Element_Exchange"/>
@@ -56342,6 +56337,11 @@ Some reporting work flows require that the original narrative of a final documen
           <identity value="v2"/>
           <uri value="http://hl7.org/v2"/>
           <name value="HL7 v2 Mapping"/>
+        </mapping>
+        <mapping>
+          <identity value="rim"/>
+          <uri value="http://hl7.org/v3"/>
+          <name value="RIM Mapping"/>
         </mapping>
         <mapping>
           <identity value="iso11179"/>
@@ -58928,7 +58928,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
         </contact>
         <date value="2014-12-04"/>
         <description value="Defines the elements to be supported within the AuditEvent resource in order to conform with the Electronic Health Record System Functional Model Record Lifecycle Event standard"/>
-        <fhirVersion value="1.5.0"/>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
@@ -61013,7 +61013,7 @@ For example, an activity may be initiated by one user for other users or involve
         </contact>
         <date value="2014-01-31"/>
         <description value="Defines the elements to be supported within the Provenance resource in order to conform with the Electronic Health Record System Functional Model Record Lifecycle Event standard"/>
-        <fhirVersion value="1.5.0"/>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>
@@ -62229,7 +62229,7 @@ practitioner: ./id"/>
         </contact>
         <date value="2015-05-30"/>
         <description value="A questionnaire with the ability to specify behavior associated with questions or groups of questions"/>
-        <fhirVersion value="1.5.0"/>
+        <fhirVersion value="1.6.0"/>
         <mapping>
           <identity value="rim"/>
           <uri value="http://hl7.org/v3"/>

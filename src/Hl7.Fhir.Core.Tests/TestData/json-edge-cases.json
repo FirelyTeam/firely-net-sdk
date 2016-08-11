@@ -74,8 +74,8 @@
             "valueDecimal": 3.141592653589793
         },
         {
-            "url": "http://example.org/fhir/StructureDefinition/avogadro",
-            "valueDecimal": 6.0221416246424E23
+            "url": "http://example.org/fhir/StructureDefinition/max-decimal-precision",
+            "valueDecimal": 1.00065022141624642
         }
     ],
     "gender": "male",
