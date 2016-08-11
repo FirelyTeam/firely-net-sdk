@@ -36,6 +36,9 @@ namespace Hl7.Fhir.Specification.Tests
             MergeTypeProfiles = true,
             // Throw on unresolved profile references; must include in TestData folder
             IgnoreUnresolvedProfiles = false,
+            ExpandExternalProfiles = false,
+            RewriteElementBase = false,
+            NormalizeElementBase = false
         };
 
         [TestInitialize]
@@ -161,6 +164,40 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            dumpBasePaths(expanded);
+        }
+
+        [TestMethod]
+        //[Ignore]
+        public void GenerateSnapshotExpandExternalProfile()
+        {
+            // Profile MyLocation references extension MyLocationExtension
+            // MyLocationExtension extension profile does not have a snapshot component => expand on demand
+            var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
+            Assert.IsNotNull(sd);
+            Assert.IsNotNull(sd.Snapshot);
+
+            var extensionElements = sd.Differential.Element.Where(e => e.IsExtension());
+            Assert.IsNotNull(extensionElements);
+            Assert.AreEqual(extensionElements.Count(), 2); // Extension slicing entry + first extension definition
+            var extensionElement = extensionElements.Skip(1).FirstOrDefault();
+            var extensionType = extensionElement.Type.FirstOrDefault();
+            Assert.IsNotNull(extensionType);
+            Assert.AreEqual(extensionType.Code, FHIRDefinedType.Extension);
+            Assert.IsNotNull(extensionType.Profile);
+            var extDefUrl = extensionType.Profile.FirstOrDefault();
+            Assert.AreEqual(extDefUrl, @"http://example.org/fhir/StructureDefinition/MyLocationExtension");
+            var ext = _testSource.GetStructureDefinition(extDefUrl);
+            Assert.IsNotNull(ext);
+            Assert.IsNull(ext.Snapshot);
+
+            // dumpReferences(sd);
+
+            _settings.ExpandExternalProfiles = true;
 
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
