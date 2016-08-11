@@ -18,15 +18,15 @@ using Hl7.Fhir.Specification.Source;
 
 namespace Hl7.Fhir.Validation
 {
-    public class Validator
+    public class OldValidator
     {
-        public Validator()
+        public OldValidator()
         {
             Source = ArtifactResolver.CreateCachedDefault();
         }
 
 
-        public Validator(IArtifactSource source)
+        public OldValidator(IArtifactSource source)
         {
             Source = source;
         }

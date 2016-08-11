@@ -68,7 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ElementsModel\ElementNavigator.cs" />
+    <Compile Include="ElementsModel\PocoElementNavigator.cs" />
     <Compile Include="ElementsModel\IElementNavigator.cs" />
     <Compile Include="ElementsModel\INameProvider.cs" />
     <Compile Include="ElementsModel\INavigator.cs" />

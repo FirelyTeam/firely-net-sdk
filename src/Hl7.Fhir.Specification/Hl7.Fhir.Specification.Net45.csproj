@@ -124,7 +124,7 @@
     <Compile Include="Validation\dstu1\SpecificationValidator.cs" />
     <Compile Include="Validation\dstu1\Tracker.cs" />
     <Compile Include="Validation\dstu1\Validation.cs" />
-    <Compile Include="Validation\ValidationException.cs" />
+    <Compile Include="Validation\Validator.cs" />
     <Compile Include="XPath\CustomXsltFunction.cs" />
     <Compile Include="XPath\FhirNamespaceManager.cs" />
     <Compile Include="XPath\JsonReaderExtensions.cs" />
