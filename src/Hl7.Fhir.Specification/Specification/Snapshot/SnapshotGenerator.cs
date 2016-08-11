@@ -332,8 +332,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         throw Error.NotSupported("Resolved profile for url '{0}' does not contain a snapshot representation.".FormatWith(primaryDiffTypeProfile));
                     }
-                    // Otherwise silently ignore and continue expansion
-                    Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(primaryDiffTypeProfile));
+#if DEBUG
+                    else
+                    {
+                        // Otherwise silently ignore and continue expansion
+                        Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(primaryDiffTypeProfile));
+                    }
+#endif
                 }
                 else
                 {
@@ -609,14 +614,30 @@ namespace Hl7.Fhir.Specification.Snapshot
                             Debug.Print("Recursively expand type profile with url: '{0}' ...".FormatWith(baseStructure.Url));
                             Clone().Generate(baseStructure);
                         }
-                        else if (typeProfile != null)
+                        //else if (typeProfile != null)
+                        //{
+                        //    throw Error.NotSupported("Resolved profile for url '{0}' does not contain a snapshot representation.".FormatWith(typeProfile));
+                        //}
+                        //else
+                        //{
+                        //    throw Error.NotSupported("Resolved profile for type '{0}' does not contain a snapshot representation.".FormatWith(typeCode));
+                        //}
+                        else if (!_settings.IgnoreUnresolvedProfiles)
                         {
-                            throw Error.NotSupported("Resolved profile for url '{0}' does not contain a snapshot representation.".FormatWith(typeProfile));
+                            const string fmtMsg = "Resolved profile for {0} '{1}' does not contain a snapshot representation.";
+                            var msg = typeProfile != null
+                                ? fmtMsg.FormatWith("url", typeProfile)
+                                : fmtMsg.FormatWith("type", typeCode);
+                            throw Error.InvalidOperation(msg);
                         }
+#if DEBUG
                         else
                         {
-                            throw Error.NotSupported("Resolved profile for type '{0}' does not contain a snapshot representation.".FormatWith(typeCode));
+                            // Otherwise silently ignore and continue expansion
+                            Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(baseStructure.Url));
                         }
+#endif
+
                     }
 
                     generateBaseElements(baseStructure.Snapshot.Element);

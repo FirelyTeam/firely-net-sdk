@@ -67,8 +67,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Hl7.Fhir.Core\Support\Logging.cs">
-      <Link>Support\Logging.cs</Link>
+    <Compile Include="..\Hl7.Fhir.Core\Support\Error.cs">
+      <Link>Support\Error.cs</Link>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="..\Hl7.Fhir.Core\Support\ReflectionHelper.cs">
