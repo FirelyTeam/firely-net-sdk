@@ -31,7 +31,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
-using Hl7.FluentPath;
+using Hl7.ElementModel;
 
 namespace Hl7.Fhir.FluentPath
 {
@@ -39,11 +39,7 @@ namespace Hl7.Fhir.FluentPath
     {
         static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {
-            Hl7.Fhir.Serialization.ResourceReader rdr = new Hl7.Fhir.Serialization.ResourceReader(null, null);
-            Hl7.Fhir.Introspection.ModelInspector inspector;
-            var ti = rdr.GetType().GetField("_inspector", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-            inspector = ti.GetValue(rdr) as Hl7.Fhir.Introspection.ModelInspector;
-            // inspector = Hl7.Fhir.Serialization.SerializationConfig.Inspector;
+            var inspector = Serialization.BaseFhirParser.Inspector;
             return inspector.FindClassMappingByType(elementType);
         }
 
@@ -84,6 +80,12 @@ namespace Hl7.Fhir.FluentPath
                     return Hl7.FluentPath.Time.Parse(((Hl7.Fhir.Model.Time)_pocoElement).Value);
                 else if ((_pocoElement is Hl7.Fhir.Model.Date))
                     return Hl7.FluentPath.PartialDateTime.Parse(((Hl7.Fhir.Model.Date)_pocoElement).Value);
+                else if (_pocoElement is Hl7.Fhir.Model.Instant)
+                {
+                    if (!((Hl7.Fhir.Model.Instant)_pocoElement).Value.HasValue)
+                        return null;
+                    return Hl7.FluentPath.PartialDateTime.Parse(((Hl7.Fhir.Model.Instant)_pocoElement).Value.Value.ToString("O"));
+                }
                 else if (_pocoElement is Primitive)
                     return ((Primitive)_pocoElement).ObjectValue;
                 else
@@ -134,7 +136,7 @@ namespace Hl7.Fhir.FluentPath
             var mapping = GetMappingForType(_pocoElement.GetType());
 
             if (mapping == null)
-                Console.WriteLine("Unknown type '{0}' encountered", _pocoElement.GetType().Name);
+                System.Diagnostics.Trace.WriteLine(String.Format("Unknown type '{0}' encountered", _pocoElement.GetType().Name));
 
             foreach (var item in mapping.PropertyMappings)
             {

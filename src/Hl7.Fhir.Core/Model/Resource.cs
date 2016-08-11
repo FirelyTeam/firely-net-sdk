@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
         /// <param name="model"></param>
         /// <param name="result">The OperationOutcome that will have the validation results appended</param>
         /// <returns></returns>
-        protected static bool ValidateInvariantRule(ElementDefinition.ConstraintComponent invariantRule, Hl7.FluentPath.IElementNavigator model, OperationOutcome result)
+        protected static bool ValidateInvariantRule(ElementDefinition.ConstraintComponent invariantRule, ElementModel.IElementNavigator model, OperationOutcome result)
         {
             string expression = invariantRule.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
             try
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
                     });
                     return true;
                 }
-                var resourceModel = Hl7.FluentPath.FluentValueList.Create(model);
+                var resourceModel = Hl7.FluentPath.FhirValueList.Create(model);
                 if (Hl7.FluentPath.PathExpression.Predicate(expression, resourceModel, resourceModel))
                     return true;
                 result.Issue.Add(new OperationOutcome.IssueComponent()
