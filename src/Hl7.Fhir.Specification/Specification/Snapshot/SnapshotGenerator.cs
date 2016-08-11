@@ -187,9 +187,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         private void mergeElement(ElementNavigator snap, ElementNavigator diff)
         {
-            if (_settings.ExpandTypeProfiles)
+            if (_settings.MergeTypeProfiles)
             {
-                ExpandTypeProfiles(snap, diff);
+                MergeTypeProfiles(snap, diff);
             }
 
             // [WMR 20160720] Changed, use SnapshotGeneratorSettings
@@ -254,8 +254,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         //
         // Following logic is configurable
         // By default, use strategy (A): ignore custom type profile, merge from base
-        // If ExpandTypeProfiles is enabled, then first merge custom type profile before merging base
-        private void ExpandTypeProfiles(ElementNavigator snap, ElementNavigator diff)
+        // If MergeTypeProfiles is enabled, then first merge custom type profile before merging base
+        private void MergeTypeProfiles(ElementNavigator snap, ElementNavigator diff)
         {
             var primaryDiffType = diff.Current.Type.FirstOrDefault();
             if (primaryDiffType == null || primaryDiffType.Code == FHIRDefinedType.Reference)
@@ -332,8 +332,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         throw Error.NotSupported("Resolved profile for url '{0}' does not contain a snapshot representation.".FormatWith(primaryDiffTypeProfile));
                     }
-                    // Otherwise silently ignore and continue expansion
-                    Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(primaryDiffTypeProfile));
+#if DEBUG
+                    else
+                    {
+                        // Otherwise silently ignore and continue expansion
+                        Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(primaryDiffTypeProfile));
+                    }
+#endif
                 }
                 else
                 {
@@ -562,7 +567,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var typeCode = primaryType.Code.Value;
                     var typeProfile = primaryType.Profile.FirstOrDefault();
                     StructureDefinition baseStructure = null;
-                    if (!defn.IsExtension() && !defn.IsReference() && !string.IsNullOrEmpty(typeProfile) && _settings.ExpandTypeProfiles)
+                    if (!defn.IsExtension() && !defn.IsReference() && !string.IsNullOrEmpty(typeProfile) && _settings.MergeTypeProfiles)
                     {
                         // Try to resolve the custom element type profile reference
                         baseStructure = _resolver.GetStructureDefinition(typeProfile);
@@ -609,14 +614,30 @@ namespace Hl7.Fhir.Specification.Snapshot
                             Debug.Print("Recursively expand type profile with url: '{0}' ...".FormatWith(baseStructure.Url));
                             Clone().Generate(baseStructure);
                         }
-                        else if (typeProfile != null)
+                        //else if (typeProfile != null)
+                        //{
+                        //    throw Error.NotSupported("Resolved profile for url '{0}' does not contain a snapshot representation.".FormatWith(typeProfile));
+                        //}
+                        //else
+                        //{
+                        //    throw Error.NotSupported("Resolved profile for type '{0}' does not contain a snapshot representation.".FormatWith(typeCode));
+                        //}
+                        else if (!_settings.IgnoreUnresolvedProfiles)
                         {
-                            throw Error.NotSupported("Resolved profile for url '{0}' does not contain a snapshot representation.".FormatWith(typeProfile));
+                            const string fmtMsg = "Resolved profile for {0} '{1}' does not contain a snapshot representation.";
+                            var msg = typeProfile != null
+                                ? fmtMsg.FormatWith("url", typeProfile)
+                                : fmtMsg.FormatWith("type", typeCode);
+                            throw Error.InvalidOperation(msg);
                         }
+#if DEBUG
                         else
                         {
-                            throw Error.NotSupported("Resolved profile for type '{0}' does not contain a snapshot representation.".FormatWith(typeCode));
+                            // Otherwise silently ignore and continue expansion
+                            Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(baseStructure.Url));
                         }
+#endif
+
                     }
 
                     generateBaseElements(baseStructure.Snapshot.Element);
