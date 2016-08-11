@@ -89,14 +89,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20160718] Also accept extension definitions (IsConstraint == false)
             if (!structure.IsConstraint && !structure.IsExtension) throw Error.Argument("structure", "structure is not a constraint or extension");
 
-            if(structure.Base == null) throw Error.Argument("structure", "structure is a constraint, but no base has been specified");
+            if(structure.BaseDefinition == null) throw Error.Argument("structure", "structure is a constraint, but no base has been specified");
 
             var differential = structure.Differential;
 
             var baseStructure = _resolver.GetStructureDefinition(structure.BaseDefinition);
 
-            if (baseStructure == null) throw Error.InvalidOperation("Could not locate the base StructureDefinition for url " + structure.Base);
-            if (baseStructure.Snapshot == null) throw Error.InvalidOperation("Snapshot generator required the base at '{0}' to have a snapshot representation", structure.Base);
+            if (baseStructure == null) throw Error.InvalidOperation("Could not locate the base StructureDefinition for url " + structure.BaseDefinition);
+            if (baseStructure.Snapshot == null) throw Error.InvalidOperation("Snapshot generator required the base at '{0}' to have a snapshot representation", structure.BaseDefinition);
 
             var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
             generateBaseElements(snapshot.Element);
@@ -275,11 +275,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             // [WMR 20160721] Note that we also try to resolve and expand extension definitions!
             var primaryDiffType = diff.Current.Type.FirstOrDefault();
-            if (primaryDiffType != null && primaryDiffType.Code != FHIRDefinedType.Reference)
+            if (primaryDiffType != null && primaryDiffType.Code != FHIRAllTypes.Reference.ToString())
             {
-                var primaryDiffTypeProfile = primaryDiffType.Profile.FirstOrDefault();
+                var primaryDiffTypeProfile = primaryDiffType.Profile;
                 var primarySnapType = snap.Current.Type.FirstOrDefault();
-                var primarySnapTypeProfile = primarySnapType != null ? primarySnapType.Profile.FirstOrDefault() : null;
+                var primarySnapTypeProfile = primarySnapType != null ? primarySnapType.Profile : null;
                 if (!string.IsNullOrEmpty(primaryDiffTypeProfile) && primaryDiffTypeProfile != primarySnapTypeProfile)
                 {
                     // Debug.Print("Path = '{0}' - Merge custom type profile '{1}'".FormatWith(diff.Path, primaryTypeProfile));
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var primaryType = extElem.Type.FirstOrDefault();
                 if (primaryType != null)
                 {
-                    var profile = primaryType.Profile.FirstOrDefault();
+                    var profile = primaryType.Profile;
                     if (profile != null)
                     {
                         var snapExtPos = nav.Bookmark();
@@ -499,19 +499,19 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // [WMR 20160720] Handle custom type profiles (GForge #9791)
                     // var coreType = resolver.GetStructureDefinitionForCoreType(defn.Type[0].Code.Value);
                     var primaryType = defn.Type[0];
-                    var typeProfile = primaryType.Profile.FirstOrDefault();
+                    var typeProfile = primaryType.Profile;
                     StructureDefinition coreType = null;
                     if (!defn.IsExtension() && !defn.IsReference() && !string.IsNullOrEmpty(typeProfile) && settings.ExpandTypeProfiles)
                     {
                         coreType = resolver.GetStructureDefinition(typeProfile);
                         if ((coreType == null || coreType.Snapshot == null) && settings.IgnoreMissingTypeProfiles)
                         {
-                            coreType = resolver.GetStructureDefinitionForCoreType(primaryType.Code.Value);
+                            coreType = resolver.GetStructureDefinitionForCoreType(primaryType.Code);
                         }
                     }
                     else
                     {
-                        coreType = resolver.GetStructureDefinitionForCoreType(primaryType.Code.Value);
+                        coreType = resolver.GetStructureDefinitionForCoreType(primaryType.Code);
                     }
 
                     if (coreType == null) throw Error.NotSupported("Trying to navigate down a node that has a declared base type of '{0}', which is unknown".FormatWith(defn.Type[0].Code));

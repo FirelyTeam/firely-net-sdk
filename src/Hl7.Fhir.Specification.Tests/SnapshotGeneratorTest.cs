@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Specification.Tests
 		public void DumpReferences(StructureDefinition sd)
 		{
 			Debug.WriteLine("References for StructureDefinition '{0}' ('{1}')".FormatWith(sd.Name, sd.Url));
-			Debug.WriteLine("Base = '{0}'".FormatWith(sd.Base));
+			Debug.WriteLine("Base = '{0}'".FormatWith(sd.BaseDefinition));
 
 			var profiles = sd.Snapshot.Element.SelectMany(e => e.Type).SelectMany(t => t.Profile);
 			profiles = profiles.OrderBy(p => p).Distinct();
@@ -311,13 +311,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(elem.Type);
             var elemType = elem.Type.FirstOrDefault();
-            var nameRef = elem.NameReference;
+            var nameRef = elem.ContentReference;
             if (elemType != null)
             {
                 // Validate type profile expansion
-                var elemTypeCode = elemType.Code.Value;
+                var elemTypeCode = elemType.Code;
                 Assert.IsNotNull(elemTypeCode);
-                var elemProfile = elemType.Profile.FirstOrDefault();
+                var elemProfile = elemType.Profile;
                 var sdType = elemProfile != null
                     ? _testSource.GetStructureDefinition(elemProfile)
                     : _testSource.GetStructureDefinitionForCoreType(elemTypeCode);

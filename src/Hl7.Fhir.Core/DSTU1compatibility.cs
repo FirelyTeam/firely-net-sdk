@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Hl7.Fhir.Introspection;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +13,30 @@ namespace Hl7.Fhir.Model
     public enum FHIRDefinedType
     {
     }
-    
+
+    public partial class StructureDefinition
+    {
+#if !PORTABLE45
+        [System.ComponentModel.Browsable(false)]
+#endif
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotMapped]
+        [Obsolete("Base was renamed to BaseDefinition", true)]
+        public string Base { get; set; }
+    }
+
+    public partial class ElementDefinition
+    {
+#if !PORTABLE45
+        [System.ComponentModel.Browsable(false)]
+#endif
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotMapped]
+        [Obsolete("NameReference was renamed to ContentReference", true)]
+        public string NameReference { get; set; }
+    }
     #endregion
 
     #region << DSTU1 Compatability >>
@@ -32,6 +57,12 @@ namespace Hl7.Fhir.Model
     [Obsolete("The ResourceEntry class has been made obsolete, please change to the class Bundle.EntryComponent instead", true)]
     public class ResourceEntry<T> : Bundle.EntryComponent where T : Resource
     {
+#if !PORTABLE45
+        [System.ComponentModel.Browsable(false)]
+#endif
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotMapped]
         public new T Resource { get; set; }
     }
 
@@ -42,15 +73,33 @@ namespace Hl7.Fhir.Model
 
     public partial class Flag
     {
+#if !PORTABLE45
+        [System.ComponentModel.Browsable(false)]
+#endif
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotMapped]
         [Obsolete("This property was renamed to 'Code' in DSTU2, and re-typed from string to CodeableConcept. When using un-coded values, just populate the text property of the codeableconcept", true)]
         public CodeableConcept Note { get; set; }
     }
 
     public partial class Observation
     {
+#if !PORTABLE45
+        [System.ComponentModel.Browsable(false)]
+#endif
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotMapped]
         [Obsolete("This property was renamed to 'Code' in DSTU2", true)]
         public CodeableConcept Name { get; set; }
 
+#if !PORTABLE45
+        [System.ComponentModel.Browsable(false)]
+#endif
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        [NotMapped]
         [Obsolete("This property was renamed to 'Effective' in DSTU2", true)]
         public FhirDateTime Applies { get; set; }
     }

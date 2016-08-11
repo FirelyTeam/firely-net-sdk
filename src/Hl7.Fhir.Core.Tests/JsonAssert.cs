@@ -103,46 +103,14 @@ namespace Hl7.Fhir.Tests
                 if (lValue.TrimStart().StartsWith("<div"))
                 {
                     // Don't check the narrative, namespaces are not correctly generated in DSTU2
-                    var leftDoc = SerializationUtil.XDocumentFromXmlText(lValue);
-                    var rightDoc = SerializationUtil.XDocumentFromXmlText(rValue);
+                    //var leftDoc = SerializationUtil.XDocumentFromXmlText(lValue);
+                    //var rightDoc = SerializationUtil.XDocumentFromXmlText(rValue);
 
-                    XmlAssert.AreSame(filename, leftDoc, rightDoc);
+                    //XmlAssert.AreSame(filename, leftDoc, rightDoc);
                 }
                 else
                 {
-                    // Hack for timestamps
-                    if (lValue.EndsWith("+00:00")) lValue = lValue.Replace("+00:00", "Z");
-                    if (rValue.EndsWith("+00:00")) rValue = rValue.Replace("+00:00", "Z");
-                    if (lValue.Contains(".000+")) lValue = lValue.Replace(".000+", "+");
-                    if (rValue.Contains(".000+")) rValue = rValue.Replace(".000+", "+");
-                    if (lValue.Contains(".000Z")) lValue = lValue.Replace(".000Z", "Z");
-                    if (rValue.Contains(".000Z")) rValue = rValue.Replace(".000Z", "Z");
-
-                    if (rValue.EndsWith("Z") && lValue.EndsWith("Z"))
-                    {
-                        if (lValue != rValue)
-                        {
-                            System.Diagnostics.Trace.WriteLine(
-                                String.Format("Error comparing Timestamp values in: {0}, {1} - {2}",
-                                filename, lValue, rValue));
-                            errors.Add(String.Format("Error comparing Timestamp values in: {0}:{1}, {2} - {3}",
-                                        filename, expected.Path, lValue, rValue));
-                        }
-
-                    }
-                    else
-                    {
-                        if (lValue != rValue)
-                        {
-                            System.Diagnostics.Trace.WriteLine(
-                                String.Format("Error comparing values in: {0}:{3}, {1} - {2}",
-                                filename, lValue, rValue, expected.Path));
-                            // Assert.AreEqual(lValue, rValue, "Error comparing values in:" + filename);
-                            errors.Add(String.Format("Error comparing values in: {0}:{1}, {2} - {3}",
-                                        filename, expected.Path, lValue, rValue));
-                        }
-                    }
-
+                    XmlAssert.AssertAreTheSame(expected.Path, lValue, rValue);
                 }
             }
 

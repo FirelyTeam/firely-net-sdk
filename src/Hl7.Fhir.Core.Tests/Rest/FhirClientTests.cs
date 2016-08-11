@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void TestWithParam()
         {
             var client = new FhirClient(testEndpoint);
-            var res = client.Get("ValueSet/patient-contact-relationship/$validate-code?system=http://hl7.org/fhir/patient-contact-relationship&code=emergency");
+            var res = client.Get("ValueSet/v2-0131/$validate-code?system=http://hl7.org/fhir/v2/0131&code=ep");
             Assert.IsNotNull(res);
         }
 

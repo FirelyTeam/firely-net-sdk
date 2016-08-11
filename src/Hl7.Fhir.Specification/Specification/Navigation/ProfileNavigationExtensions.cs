@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Specification.Navigation
                 var primaryType = elem.Type.FirstOrDefault();
                 if (primaryType != null && primaryType.Profile != null)
                 {
-                    return primaryType.Profile.FirstOrDefault();
+                    return primaryType.Profile;
                 }
             }
             return null;
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Specification.Navigation
         public static bool IsReference(this ElementDefinition elem)
         {
             var primaryType = elem.Type.FirstOrDefault();
-            return primaryType != null && primaryType.Code.HasValue && ModelInfo.IsReference(primaryType.Code.Value);
+            return primaryType != null && !string.IsNullOrEmpty(primaryType.Code) && ModelInfo.IsReference(primaryType.Code);
         }
 
         public static bool IsChoice(this ElementDefinition defn)

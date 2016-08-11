@@ -288,17 +288,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // snapNav has already expanded target extension definition 'questionnaire-enableWhen'
                 // => Match to base profile on child element with name 'question'
 
-                var diffProfiles = diffNav.Current.Type.FirstOrDefault().Profile.ToArray();
+                var diffProfiles = diffNav.Current.Type.FirstOrDefault().Profile;
                 if (diffProfiles == null || diffProfiles.Length == 0)
                 {
                     throw Error.InvalidOperation("Differential is reslicing on url, but resliced element has no type profile (path = '{0}').", diffNav.Path);
                 }
-                if (diffProfiles.Length > 1)
-                {
-                    throw Error.NotSupported("Cannot expand snapshot. Reslicing on complex discriminator is not supported (path = '{0}').", diffNav.Path);
-                }
 
-                var diffProfile = diffProfiles.FirstOrDefault();
+                var diffProfile = diffProfiles;
                 string profileUrl, elementName;
                 var isComplex = SnapshotGenerator.IsComplexProfileReference(diffProfile, out profileUrl, out elementName);
                 while (snapNav.MoveToNext(snapNav.PathName))
