@@ -236,10 +236,10 @@ namespace Hl7.Fhir.Model
                 get { return ModeElement != null ? ModeElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
-                      ModeElement = null; 
+                    if (value == null)
+                        ModeElement = null; 
                     else
-                      ModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(elem)));
+                        ModeElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(elem)));
                     OnPropertyChanged("Mode");
                 }
             }
@@ -268,10 +268,10 @@ namespace Hl7.Fhir.Model
                 get { return TimeElement != null ? TimeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TimeElement = null; 
+                    if (value == null)
+                        TimeElement = null; 
                     else
-                      TimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
+                        TimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Time");
                 }
             }
@@ -470,10 +470,10 @@ namespace Hl7.Fhir.Model
                 get { return TitleElement != null ? TitleElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TitleElement = null; 
+                    if (value == null)
+                        TitleElement = null; 
                     else
-                      TitleElement = new Hl7.Fhir.Model.FhirString(value);
+                        TitleElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Title");
                 }
             }
@@ -528,10 +528,10 @@ namespace Hl7.Fhir.Model
                 get { return ModeElement != null ? ModeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ModeElement = null; 
+                    if (!value.HasValue)
+                        ModeElement = null; 
                     else
-                      ModeElement = new Code<Hl7.Fhir.Model.ListMode>(value);
+                        ModeElement = new Code<Hl7.Fhir.Model.ListMode>(value);
                     OnPropertyChanged("Mode");
                 }
             }
@@ -694,7 +694,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model
             get { return TitleElement != null ? TitleElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   TitleElement = null; 
                 else
                   TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Composition.CompositionStatus>(value);
@@ -819,7 +819,7 @@ namespace Hl7.Fhir.Model
             get { return ConfidentialityElement != null ? ConfidentialityElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   ConfidentialityElement = null; 
                 else
                   ConfidentialityElement = new Code<Hl7.Fhir.Model.Composition.v3CodeSystemConfidentiality>(value);
@@ -927,6 +927,25 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Composition.SectionComponent> _Section;
         
+
+        public static ElementDefinition.ConstraintComponent Composition_CMP_2 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("emptyReason.empty() or entry.empty()"))},
+            Key = "cmp-2",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A section can only have an emptyReason if it is empty",
+            Xpath = "not(exists(f:emptyReason) and exists(f:entry))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Composition_CMP_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("text or entry or section"))},
+            Key = "cmp-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A section must at least one of text, entries, or sub-sections",
+            Xpath = "exists(f:text) or exists(f:entry) or exists(f:section)"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Composition;

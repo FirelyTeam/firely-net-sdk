@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.ReferralRequest.ReferralStatus>(value);
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
             get { return DateElement != null ? DateElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateElement = null; 
                 else
                   DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
             get { return DateSentElement != null ? DateSentElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DateSentElement = null; 
                 else
                   DateSentElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
             get { return DescriptionElement != null ? DescriptionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   DescriptionElement = null; 
                 else
                   DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -398,6 +398,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.Period _FulfillmentTime;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as ReferralRequest;

@@ -232,10 +232,10 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
-                      TextElement = new Hl7.Fhir.Model.FhirString(value);
+                        TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
                 }
             }
@@ -327,10 +327,10 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      TypeElement = null; 
+                    if (!value.HasValue)
+                        TypeElement = null; 
                     else
-                      TypeElement = new Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>(value);
+                        TypeElement = new Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>(value);
                     OnPropertyChanged("Type");
                 }
             }
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Observation.ObservationStatus>(value);
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
             get { return IssuedElement != null ? IssuedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   IssuedElement = null; 
                 else
                   IssuedElement = new Hl7.Fhir.Model.Instant(value);
@@ -739,7 +739,7 @@ namespace Hl7.Fhir.Model
             get { return CommentsElement != null ? CommentsElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   CommentsElement = null; 
                 else
                   CommentsElement = new Hl7.Fhir.Model.FhirString(value);
@@ -843,6 +843,34 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Observation.ComponentComponent> _Component;
         
+
+        public static ElementDefinition.ConstraintComponent Observation_OBS_6 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("dataAbsentReason.empty() or value[x].empty()"))},
+            Key = "obs-6",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "dataAbsentReason SHALL only be present if Observation.value[x] is not present",
+            Xpath = "not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), 'value')])))"
+        };
+
+        public static ElementDefinition.ConstraintComponent Observation_OBS_7 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("component.where(code = $context.code).empty()"))},
+            Key = "obs-7",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Component code SHALL not be same as observation code",
+            Xpath = "not(exists(f:component/f:code)) or count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0"
+        };
+
+        public static ElementDefinition.ConstraintComponent Observation_OBS_3 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("low or high or text"))},
+            Key = "obs-3",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Must have at least a low or a high or text",
+            Xpath = "(exists(f:low) or exists(f:high)or exists(f:text))"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Observation;

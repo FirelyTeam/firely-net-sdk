@@ -135,10 +135,10 @@ namespace Hl7.Fhir.Model
                 get { return CommentElement != null ? CommentElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CommentElement = null; 
+                    if (value == null)
+                        CommentElement = null; 
                     else
-                      CommentElement = new Hl7.Fhir.Model.FhirString(value);
+                        CommentElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Comment");
                 }
             }
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>(value);
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
             get { return IssuedElement != null ? IssuedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   IssuedElement = null; 
                 else
                   IssuedElement = new Hl7.Fhir.Model.Instant(value);
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
             get { return ConclusionElement != null ? ConclusionElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ConclusionElement = null; 
                 else
                   ConclusionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -505,6 +505,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.Attachment> _PresentedForm;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DiagnosticReport;

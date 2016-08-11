@@ -301,10 +301,10 @@ namespace Hl7.Fhir.Model
                 get { return SeverityElement != null ? SeverityElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      SeverityElement = null; 
+                    if (!value.HasValue)
+                        SeverityElement = null; 
                     else
-                      SeverityElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>(value);
+                        SeverityElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>(value);
                     OnPropertyChanged("Severity");
                 }
             }
@@ -334,10 +334,10 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      CodeElement = null; 
+                    if (!value.HasValue)
+                        CodeElement = null; 
                     else
-                      CodeElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueType>(value);
+                        CodeElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueType>(value);
                     OnPropertyChanged("Code");
                 }
             }
@@ -379,10 +379,10 @@ namespace Hl7.Fhir.Model
                 get { return DiagnosticsElement != null ? DiagnosticsElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      DiagnosticsElement = null; 
+                    if (value == null)
+                        DiagnosticsElement = null; 
                     else
-                      DiagnosticsElement = new Hl7.Fhir.Model.FhirString(value);
+                        DiagnosticsElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Diagnostics");
                 }
             }
@@ -412,10 +412,10 @@ namespace Hl7.Fhir.Model
                 get { return LocationElement != null ? LocationElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                    if(value == null)
-                      LocationElement = null; 
+                    if (value == null)
+                        LocationElement = null; 
                     else
-                      LocationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                        LocationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
                     OnPropertyChanged("Location");
                 }
             }
@@ -490,6 +490,7 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.OperationOutcome.IssueComponent> _Issue;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as OperationOutcome;

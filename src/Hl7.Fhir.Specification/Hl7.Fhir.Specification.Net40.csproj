@@ -83,11 +83,15 @@
     <Compile Include="Specification\Navigation\ElementDefinitionNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorModificationExtensions.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorMovementExtensions.cs" />
+    <Compile Include="Specification\Navigation\ElementNavigatorTypeExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
+    <Compile Include="Specification\Navigation\ProfileReference.cs" />
     <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
     <Compile Include="Specification\Snapshot\ElementDefnMerger.cs" />
     <Compile Include="Specification\Snapshot\ElementMatcher.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGenerator.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
     <Compile Include="Specification\Source\MultiArtifactSource.cs" />
     <Compile Include="Specification\Source\ArtifactResolver.cs" />
     <Compile Include="Specification\Source\CachedArtifactSource.cs" />
@@ -137,7 +141,9 @@
     <Compile Include="XPath\XPath2Context.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Net40.csproj">

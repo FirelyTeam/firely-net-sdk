@@ -348,10 +348,10 @@ if(!abstractType) {
 <#}#>
                 set
                 {
-                    if(value == null)
-                      <#= pd.Name #> = null; 
+                    if (<#= !pd.IsMultiCard() && pd.NativeType.EndsWith("?") ? "!value.HasValue" : "value == null" #>)
+                        <#= pd.Name #> = null; 
                     else
-                      <#= pd.Name #> = new <#= pd.IsMultiCard() ? "List<" + pd.PropType + ">(value.Select(elem=>new "+pd.PropType+"(elem)))" : pd.PropType.Replace("Hl7.Fhir.Model.Code<", "Code<") + "(value)" #>;
+                        <#= pd.Name #> = new <#= pd.IsMultiCard() ? "List<" + pd.PropType + ">(value.Select(elem=>new "+pd.PropType+"(elem)))" : pd.PropType.Replace("Hl7.Fhir.Model.Code<", "Code<") + "(value)" #>;
                     OnPropertyChanged("<#= pd.NativeName #>");
                 }
             }
@@ -486,7 +486,7 @@ if(!abstractType) {
 <#}#>
             set
             {
-                if(value == null)
+                if (<#= !pd.IsMultiCard() && pd.NativeType.EndsWith("?") ? "!value.HasValue" : "value == null" #>)
                   <#= pd.Name #> = null; 
                 else
                   <#= pd.Name #> = new <#= pd.IsMultiCard() ? "List<" + pd.PropType + ">(value.Select(elem=>new "+pd.PropType+"(elem)))" : pd.PropType.Replace("Hl7.Fhir.Model.Code<", "Code<") + "(value)" #>;
@@ -498,7 +498,28 @@ if(!abstractType) {
         }
     }
 
+#><# if (resourceName != "DomainResource") { #>
+
+<#
+            foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", nsR))
+            {
+                string expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value", nsR).Value;
+                string key = node.SelectSingleNode("fhir:key/@value", nsR).Value;
+                string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
+                string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
+                string xpath = node.SelectSingleNode("fhir:xpath/@value", nsR).Value;
+#>        public static ElementDefinition.ConstraintComponent <#= resourceName + "_" + key.Replace("-", "_").ToUpper() #> = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("<#= expression.Replace("\"", "\\\"") #>"))},
+            Key = "<#= key #>",
+            Severity = <#= severity == "Error" ? "ElementDefinition.ConstraintSeverity.Error" : "ElementDefinition.ConstraintSeverity.Warning" #>,
+            Human = "<#= human.Replace("\"", "\\\"") #>",
+            Xpath = "<#= xpath.Replace("\"", "\\\"") #>"
+        };
+
+<#            }
 #>
+<#}#>
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as <#= resourceName #>;

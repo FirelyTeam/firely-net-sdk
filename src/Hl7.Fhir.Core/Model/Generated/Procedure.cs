@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   StatusElement = null; 
                 else
                   StatusElement = new Code<Hl7.Fhir.Model.Procedure.ProcedureStatus>(value);
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
             get { return NotPerformedElement != null ? NotPerformedElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   NotPerformedElement = null; 
                 else
                   NotPerformedElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -581,6 +581,16 @@ namespace Hl7.Fhir.Model
         
         private List<Hl7.Fhir.Model.ResourceReference> _Used;
         
+
+        public static ElementDefinition.ConstraintComponent Procedure_PRO_1 = new ElementDefinition.ConstraintComponent()
+        {
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("reasonNotPerformed.empty() or notPerformed = 'true'"))},
+            Key = "pro-1",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "Reason not performed is only permitted if notPerformed indicator is true",
+            Xpath = "not(exists(f:reasonNotPerformed)) or f:notPerformed/@value=true()"
+        };
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Procedure;

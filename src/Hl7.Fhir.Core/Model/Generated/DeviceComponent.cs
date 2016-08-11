@@ -185,10 +185,10 @@ namespace Hl7.Fhir.Model
                 get { return ProductionSpecElement != null ? ProductionSpecElement.Value : null; }
                 set
                 {
-                    if(value == null)
-                      ProductionSpecElement = null; 
+                    if (value == null)
+                        ProductionSpecElement = null; 
                     else
-                      ProductionSpecElement = new Hl7.Fhir.Model.FhirString(value);
+                        ProductionSpecElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("ProductionSpec");
                 }
             }
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
             get { return LastSystemChangeElement != null ? LastSystemChangeElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   LastSystemChangeElement = null; 
                 else
                   LastSystemChangeElement = new Hl7.Fhir.Model.Instant(value);
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
             get { return MeasurementPrincipleElement != null ? MeasurementPrincipleElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   MeasurementPrincipleElement = null; 
                 else
                   MeasurementPrincipleElement = new Code<Hl7.Fhir.Model.DeviceComponent.Measmnt_Principle>(value);
@@ -418,6 +418,7 @@ namespace Hl7.Fhir.Model
         
         private Hl7.Fhir.Model.CodeableConcept _LanguageCode;
         
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DeviceComponent;

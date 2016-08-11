@@ -28,6 +28,7 @@
     <DocumentationFile>bin\Debug\Net45\Hl7.Fhir.DSTU2.Specification.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
     <NoWarn>1591</NoWarn>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -84,6 +85,8 @@
     <Compile Include="Validation\Model\ValueSet.cs" />
     <Compile Include="Validation\dstu1\Model\Vector.cs" />
     <Compile Include="Validation\dstu1\Model\XPathNavigatorExtensions.cs" />
+    <Compile Include="Specification\Navigation\ElementNavigatorTypeExtensions.cs" />
+    <Compile Include="Specification\Navigation\ProfileReference.cs" />
     <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
     <Compile Include="Specification\Snapshot\ElementMatcher.cs" />
     <Compile Include="Specification\Snapshot\ElementDefnMerger.cs" />
@@ -93,6 +96,8 @@
     <Compile Include="Specification\Navigation\ElementNavigatorModificationExtensions.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorMovementExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
     <Compile Include="Specification\Source\MultiArtifactSource.cs" />
     <Compile Include="Specification\Source\ArtifactResolver.cs" />
     <Compile Include="Specification\Source\CachedArtifactSource.cs" />

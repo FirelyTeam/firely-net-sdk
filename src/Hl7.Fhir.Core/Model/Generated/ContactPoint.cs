@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
             get { return SystemElement != null ? SystemElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   SystemElement = null; 
                 else
                   SystemElement = new Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem>(value);
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
             get { return ValueElement != null ? ValueElement.Value : null; }
             set
             {
-                if(value == null)
+                if (value == null)
                   ValueElement = null; 
                 else
                   ValueElement = new Hl7.Fhir.Model.FhirString(value);
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
             get { return UseElement != null ? UseElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   UseElement = null; 
                 else
                   UseElement = new Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse>(value);
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
             get { return RankElement != null ? RankElement.Value : null; }
             set
             {
-                if(value == null)
+                if (!value.HasValue)
                   RankElement = null; 
                 else
                   RankElement = new Hl7.Fhir.Model.PositiveInt(value);

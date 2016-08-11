@@ -10,11 +10,7 @@ using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
-using System.Diagnostics;
 using System.IO;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Serialization;
 using System.Reflection;
 using System.Xml;
 using System.Collections.Generic;
@@ -22,7 +18,6 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.Core.ElementModel;
-using static Hl7.Fhir.FluentPath.PathExpression;
 
 namespace Hl7.Fhir.Specification.Tests
 {

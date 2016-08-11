@@ -1,4 +1,6 @@
-﻿/* 
+﻿#define ROOT_ELEMENT_TYPE
+
+/* 
  * Copyright (c) 2014, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -10,11 +12,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 
@@ -79,12 +78,32 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // snap.base should already be there, and is not changed by the diff
 
+            // [WMR 20160805] Special handling for root element
+            // Core resource profiles have root element with type 'DomainResource'
+            // Derived profiles should replace this with the resource name / path of root element
+#if ROOT_ELEMENT_TYPE
+            if (snap.IsRootElement())
+            {
+                var primaryType = snap.Type.FirstOrDefault();
+                if (primaryType == null || primaryType.Code == FHIRDefinedType.DomainResource)
+                {
+                    snap.Type = new List<ElementDefinition.TypeRefComponent>()
+                    {
+                        // Initialize root element type code from element path, e.g. "Patient"
+                        // Note: use ObjectValue in order to handle unknown resource types
+                        new ElementDefinition.TypeRefComponent() { CodeElement = new Code<FHIRDefinedType>() { ObjectValue = snap.Path } }
+                    };
+                }
+            }
+            else
+#endif
             // Type is just overridden
             if (!diff.Type.IsNullOrEmpty() && !diff.IsExactly(snap))
             {
                 snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
                 foreach (var element in snap.Type) markChange(snap);
             }
+            
 
             // ElementDefinition.nameReference cannot be overridden by a derived profile
             // defaultValue and meaningWhenMissing can only be set in a resource/datatype/extension definition and cannot be overridden

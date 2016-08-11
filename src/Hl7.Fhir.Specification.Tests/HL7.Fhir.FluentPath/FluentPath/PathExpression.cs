@@ -19,6 +19,8 @@ using Hl7.Fhir.FluentPath.Functions;
 
 namespace Hl7.Fhir.FluentPath
 {
+    public delegate IEnumerable<IValueProvider> CompiledExpression(IEnumerable<IValueProvider> focus, IEnumerable<IValueProvider> containerResource);
+
     public static class PathExpression
     {
        // private static ConcurrentDictionary<string, Evaluator> _cache = new ConcurrentDictionary<string, Evaluator>();
@@ -36,8 +38,6 @@ namespace Hl7.Fhir.FluentPath
                throw new FormatException("Compilation failed: " + parse.ToString());
             }
         }
-
-        public delegate IEnumerable<IValueProvider> CompiledExpression(IEnumerable<IValueProvider> focus, IEnumerable<IValueProvider> containerResource);
 
         public static CompiledExpression Compile(this Expression expression, SymbolTable scope)
         {
