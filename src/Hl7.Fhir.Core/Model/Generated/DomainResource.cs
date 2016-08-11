@@ -37,7 +37,7 @@ using System.ComponentModel;
 */
 
 //
-// Generated for FHIR v1.5.0
+// Generated for FHIR v1.6.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent DomainResource_DOM_3 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "contained.where(('#'+id in %resource.descendents().reference).not()).empty()",
+            Expression = "contained.where(('#'+id in %resource.descendants().reference).not()).empty()",
             Key = "dom-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
