@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Tests
         private readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
         {
             MarkChanges = false,
-            ExpandTypeProfiles = true,
+            MergeTypeProfiles = true,
             // Throw on unresolved profile references; must include in TestData folder
             IgnoreUnresolvedProfiles = false,
         };

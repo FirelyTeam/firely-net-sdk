@@ -187,9 +187,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         private void mergeElement(ElementNavigator snap, ElementNavigator diff)
         {
-            if (_settings.ExpandTypeProfiles)
+            if (_settings.MergeTypeProfiles)
             {
-                ExpandTypeProfiles(snap, diff);
+                MergeTypeProfiles(snap, diff);
             }
 
             // [WMR 20160720] Changed, use SnapshotGeneratorSettings
@@ -254,8 +254,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         //
         // Following logic is configurable
         // By default, use strategy (A): ignore custom type profile, merge from base
-        // If ExpandTypeProfiles is enabled, then first merge custom type profile before merging base
-        private void ExpandTypeProfiles(ElementNavigator snap, ElementNavigator diff)
+        // If MergeTypeProfiles is enabled, then first merge custom type profile before merging base
+        private void MergeTypeProfiles(ElementNavigator snap, ElementNavigator diff)
         {
             var primaryDiffType = diff.Current.Type.FirstOrDefault();
             if (primaryDiffType == null || primaryDiffType.Code == FHIRDefinedType.Reference)
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var typeCode = primaryType.Code.Value;
                     var typeProfile = primaryType.Profile.FirstOrDefault();
                     StructureDefinition baseStructure = null;
-                    if (!defn.IsExtension() && !defn.IsReference() && !string.IsNullOrEmpty(typeProfile) && _settings.ExpandTypeProfiles)
+                    if (!defn.IsExtension() && !defn.IsReference() && !string.IsNullOrEmpty(typeProfile) && _settings.MergeTypeProfiles)
                     {
                         // Try to resolve the custom element type profile reference
                         baseStructure = _resolver.GetStructureDefinition(typeProfile);

@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             MarkChanges = false,
-            ExpandTypeProfiles = true,
+            MergeTypeProfiles = true,
             IgnoreUnresolvedProfiles = false,
             ExpandExternalProfiles = false,
             RewriteElementBase = false,
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// If disabled, the snapshot generator ignores custom type profiles and merges constraints from the base profile.
         /// </summary>
         /// <remarks>See GForge #9791</remarks>
-        public bool ExpandTypeProfiles { get; set; }
+        public bool MergeTypeProfiles { get; set; }
 
         /// <summary>
         /// EXPERIMENTAL!
