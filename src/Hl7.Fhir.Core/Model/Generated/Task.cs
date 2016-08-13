@@ -899,6 +899,13 @@ namespace Hl7.Fhir.Model
             Xpath = "f:lastModified >= f:created"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(Task_INV_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Task;

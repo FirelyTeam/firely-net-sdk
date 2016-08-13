@@ -249,6 +249,13 @@ namespace Hl7.Fhir.Model
             Xpath = "(exists(f:participantType) or exists(f:actor))"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(AppointmentResponse_APR_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as AppointmentResponse;

@@ -591,6 +591,14 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:code) or exists(f:detail)"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(Condition_CON_1);
+            InvariantConstraints.Add(Condition_CON_2);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Condition;

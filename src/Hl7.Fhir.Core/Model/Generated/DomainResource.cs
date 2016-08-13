@@ -145,6 +145,16 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(DomainResource_DOM_2);
+            InvariantConstraints.Add(DomainResource_DOM_1);
+            InvariantConstraints.Add(DomainResource_DOM_4);
+            InvariantConstraints.Add(DomainResource_DOM_3);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DomainResource;

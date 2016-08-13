@@ -635,6 +635,13 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:reasonNotPerformed)) or f:notPerformed/@value=true()"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(Procedure_PRO_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Procedure;

@@ -1062,6 +1062,13 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:detail)) or not(exists(f:reference))"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(CarePlan_CTM_3);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as CarePlan;

@@ -3721,6 +3721,22 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:chain)) or (f:type/@value = 'reference')"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(Conformance_CNF_8);
+            InvariantConstraints.Add(Conformance_CNF_7);
+            InvariantConstraints.Add(Conformance_CNF_2);
+            InvariantConstraints.Add(Conformance_CNF_3);
+            InvariantConstraints.Add(Conformance_CNF_1);
+            InvariantConstraints.Add(Conformance_CNF_14);
+            InvariantConstraints.Add(Conformance_CNF_15);
+            InvariantConstraints.Add(Conformance_CNF_9);
+            InvariantConstraints.Add(Conformance_CNF_12);
+            InvariantConstraints.Add(Conformance_CNF_13);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as Conformance;

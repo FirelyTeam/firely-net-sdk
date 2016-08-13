@@ -54,6 +54,10 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hl7.FluentPath, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.3-alpha1\lib\netstandard1.0\Hl7.FluentPath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -75,6 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
+    <Compile Include="FluentPath\ElementNavigator.cs" />
+    <Compile Include="FluentPath\NavigatorPOCO.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\PortableDescriptionAttribute.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />

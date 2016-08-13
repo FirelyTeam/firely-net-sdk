@@ -520,6 +520,22 @@ if(!abstractType) {
 <#            }
 #>
 <#}#>
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+<#
+            foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", nsR))
+            {
+                string expression = node.SelectSingleNode("fhir:expression/@value", nsR).Value;
+                string key = node.SelectSingleNode("fhir:key/@value", nsR).Value;
+                string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
+                string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
+                string xpath = node.SelectSingleNode("fhir:xpath/@value", nsR).Value;
+#>            InvariantConstraints.Add(<#= resourceName + "_" + key.Replace("-", "_").ToUpper() #>);
+<#            }
+#>        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as <#= resourceName #>;

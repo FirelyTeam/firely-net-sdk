@@ -694,6 +694,13 @@ namespace Hl7.Fhir.Model
             Xpath = "not(exists(f:xpath)) or exists(f:xpathUsage)"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(SearchParameter_SPD_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as SearchParameter;

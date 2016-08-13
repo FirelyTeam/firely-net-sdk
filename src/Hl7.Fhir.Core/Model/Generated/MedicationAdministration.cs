@@ -665,6 +665,15 @@ namespace Hl7.Fhir.Model
             Xpath = "exists(f:dose) or exists(f:rateRatio) or exists(f:rateRange)"
         };
 
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(MedicationAdministration_MAD_2);
+            InvariantConstraints.Add(MedicationAdministration_MAD_3);
+            InvariantConstraints.Add(MedicationAdministration_MAD_1);
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as MedicationAdministration;
