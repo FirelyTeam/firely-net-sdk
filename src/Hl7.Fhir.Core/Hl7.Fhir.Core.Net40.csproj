@@ -166,7 +166,9 @@
     <Compile Include="Model\Generated\DeviceUseStatement.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\DomainResource.cs" />
+    <Compile Include="Model\Generated\DomainResource.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\ElementDefinition.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>

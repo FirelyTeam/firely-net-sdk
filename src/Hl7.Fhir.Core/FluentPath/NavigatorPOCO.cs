@@ -75,6 +75,20 @@ namespace Hl7.Fhir.FluentPath
         }
 
         /// <summary>
+        /// Returns 
+        /// </summary>
+        public Base FhirValue
+        {
+            get
+            {
+#if DEBUGX
+                Console.WriteLine("    -> Read Value of {0}: {1}", _current.Name, _current.Value);
+#endif
+                return _current.FhirValue;
+            }
+        }
+
+        /// <summary>
         /// Return the FHIR TypeName
         /// </summary>
         public string TypeName

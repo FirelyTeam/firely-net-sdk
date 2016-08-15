@@ -915,8 +915,10 @@ if (!abstractType){
 			if (enums.ContainsValue("Hl7.Fhir.Model." + ResourceBase + "." + result.Name))
 				result.Name += "_";
 
-			result.CardMin = element.SelectSingleNode("fhir:min/@value", nsR).Value;
-			result.CardMax = element.SelectSingleNode("fhir:max/@value", nsR).Value;
+			if (element.SelectSingleNode("fhir:min/@value", nsR) != null)
+				result.CardMin = element.SelectSingleNode("fhir:min/@value", nsR).Value;
+			if (element.SelectSingleNode("fhir:max/@value", nsR) != null)
+				result.CardMax = element.SelectSingleNode("fhir:max/@value", nsR).Value;
 
 			string[] NativeTypes = { "decimal", "dateTime", "time", "integer", "oid", "date", "id", "Code", "code", "instant", "unsignedInt", "positiveInt", "string", "boolean", "uri", "base64Binary", "markdown" };
 			if (NativeTypes.Contains(result.PropType))

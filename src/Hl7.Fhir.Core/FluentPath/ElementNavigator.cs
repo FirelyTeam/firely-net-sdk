@@ -68,6 +68,18 @@ namespace Hl7.Fhir.FluentPath
 
         public string Name { get; private set; }
 
+        /// <summary>
+        /// This is only needed for search data extraction (and debugging)
+        /// to be able to read the values from the selected node (if a coding, so can get the value and system)
+        /// </summary>
+        public Base FhirValue
+        {
+            get
+            {
+                return _pocoElement;
+            }
+        }
+
         public object Value
         {
             get
@@ -135,9 +147,10 @@ namespace Hl7.Fhir.FluentPath
 
             var mapping = GetMappingForType(_pocoElement.GetType());
 
+#if !PORTABLE45
             if (mapping == null)
                 System.Diagnostics.Trace.WriteLine(String.Format("Unknown type '{0}' encountered", _pocoElement.GetType().Name));
-
+#endif
             foreach (var item in mapping.PropertyMappings)
             {
                 // Don't expose "value" as a child, that's our ValueProvider.Value (if we're a primitive)

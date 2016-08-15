@@ -18,20 +18,20 @@ namespace Hl7.Fhir.Tests
 {
     public class XmlAssert
     {
-        public static void AreSame(XDocument expected, XDocument actual)
+        public static void AreSame(string filename, XDocument expected, XDocument actual)
         {
-            areSame(actual.Root.Name.LocalName, expected.Root, actual.Root);
+            areSame(filename, actual.Root.Name.LocalName, expected.Root, actual.Root);
         }
 
-        public static void AreSame(string expected, string actual)
+        public static void AreSame(string filename, string expected, string actual)
         {
             XDocument exp = SerializationUtil.XDocumentFromXmlText(expected);
             XDocument act = SerializationUtil.XDocumentFromXmlText(actual);
 
-            AreSame(exp, act);
+            AreSame(filename, exp, act);
         }
 
-        private static void areSame(string context, XElement expected, XElement actual)
+        private static void areSame(string filename, string context, XElement expected, XElement actual)
         {
             //if (expected.Name.ToString() != actual.Name.ToString())
             //    throw new AssertFailedException(String.Format("Expected element '{0}', actual '{1}' at '{2}'",
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Tests
 
             if (expected.Attributes().Count() != actual.Attributes().Count())
                 throw new AssertFailedException(
-                    String.Format("Number of attributes are not the same in element '{0}'",context));
+                    String.Format("Number of attributes are not the same in element '{0}'", context));
 
             foreach (XAttribute attr in expected.Attributes())
             {
@@ -52,8 +52,8 @@ namespace Hl7.Fhir.Tests
             }
 
             if (expected.Elements().Count() != actual.Elements().Count())
-                    throw new AssertFailedException(
-                        String.Format("Number of child elements are not the same at '{0}'", context));
+                throw new AssertFailedException(
+                    String.Format("Number of child elements are not the same at '{0}'", context));
 
             //int elemNr = 0;
 
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Tests
             string currentName = "";
             int counter = 0;
 
-            for(int elemNr=0; elemNr < expectedList.Count(); elemNr++)
+            for (int elemNr = 0; elemNr < expectedList.Count(); elemNr++)
             {
                 var ex = expectedList[elemNr];
                 var ac = actualList[elemNr];
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Tests
                     counter = 0;
                 }
 
-                areSame(context + "." + ex.Name.LocalName + String.Format("[{0}]", counter), ex, ac);
+                areSame(filename, context + "." + ex.Name.LocalName + String.Format("[{0}]", counter), ex, ac);
                 counter++;
             }
         }
@@ -90,6 +90,8 @@ namespace Hl7.Fhir.Tests
             if (actual.EndsWith("+00:00")) actual = actual.Replace("+00:00", "Z");
             if (expected.Contains(".000+")) expected = expected.Replace(".000+", "+");
             if (actual.Contains(".000+")) actual = actual.Replace(".000+", "+");
+            if (expected.Contains(".000Z")) expected = expected.Replace(".000Z", "Z");
+            if (actual.Contains(".000Z")) actual = actual.Replace(".000Z", "Z");
             actual = actual.Replace("\n", "");
             actual = actual.Replace("\r", "");
             actual = actual.Replace(" ", "");
