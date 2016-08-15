@@ -1,6 +1,4 @@
-﻿#define ROOT_ELEMENT_TYPE
-
-/* 
+﻿/* 
  * Copyright (c) 2014, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -37,7 +35,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if(snap.Path != diff.Path && snap.IsChoice() && diff.Type.Count() == 1)
             {
                 if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.ToString().Capitalize() != diff.Path)
-                    throw Error.InvalidOperation("Path cannot be changed from {0} to {1}, since the type is sliced to {2}"
+                    throw Error.InvalidOperation("Path cannot be changed from '{0}' to '{1}', since the type is sliced to '{2}'"
                             .FormatWith(snap.Path, diff.Path, diff.Type.First().Code));
 
                 snap.PathElement = mergePrimitiveAttribute(snap.PathElement, diff.PathElement);
@@ -81,7 +79,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20160805] Special handling for root element
             // Core resource profiles have root element with type 'DomainResource'
             // Derived profiles should replace this with the resource name / path of root element
-#if ROOT_ELEMENT_TYPE
             if (snap.IsRootElement())
             {
                 var primaryType = snap.Type.FirstOrDefault();
@@ -95,10 +92,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     };
                 }
             }
-            else
-#endif
             // Type is just overridden
-            if (!diff.Type.IsNullOrEmpty() && !diff.IsExactly(snap))
+            else if (!diff.Type.IsNullOrEmpty() && !diff.IsExactly(snap))
             {
                 snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
                 foreach (var element in snap.Type) markChange(snap);
@@ -140,10 +135,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         private void markChange(Element snap)
         {
             if(_markChanges)
+            {
                 snap.SetExtension(SnapshotGenerator.CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
-            snap.UserData
+            }
         }
-        
+
         /// <summary>
         /// Merges two FHIR primitives. Normally this means the diff overrides the snap, but if the diffd is a
         /// string, and it start with ellipsis ('...'), the diff is appended to the snap.

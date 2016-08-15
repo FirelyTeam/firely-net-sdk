@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             catch (Exception ex)
             {
-                Debug.Print(ex.Message);
+                Debug.Print("{0}: {1}".FormatWith(ex.GetType().Name, ex.Message));
                 exceptionRaised = ex is NotSupportedException;
             }
             Assert.IsTrue(exceptionRaised);

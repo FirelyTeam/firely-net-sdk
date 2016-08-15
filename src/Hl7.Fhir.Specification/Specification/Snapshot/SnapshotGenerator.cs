@@ -139,7 +139,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             try
             {
-                var matches = (new ElementMatcher()).Match(snapNav, diffNav);
+                // [WMR 20160815] Optimized
+                // var matches = (new ElementMatcher()).Match(snapNav, diffNav);
+                var matches = ElementMatcher.Match(snapNav, diffNav);
 
                 // Debug.WriteLine("Matches for children of " + snapNav.Path + (snapNav.Current != null && snapNav.Current.Name != null ? " '" + snapNav.Current.Name + "'" : null));
                 // matches.DumpMatches(snapNav, diffNav);
