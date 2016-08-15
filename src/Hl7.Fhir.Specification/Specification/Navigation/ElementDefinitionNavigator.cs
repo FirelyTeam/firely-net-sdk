@@ -18,6 +18,10 @@ namespace Hl7.Fhir.Specification.Navigation
 {
     public class ElementDefinitionNavigator : IElementNavigator
     {
+        internal ElementDefinitionNavigator()
+        {
+        }
+
         public ElementDefinitionNavigator(IList<ElementDefinition> elements)
         {
             if (elements == null) throw Error.ArgumentNull("elements");
@@ -34,6 +38,14 @@ namespace Hl7.Fhir.Specification.Navigation
             OrdinalPosition = other.OrdinalPosition;
         }
 
+        public ElementDefinitionNavigator ShallowCopy()
+        {
+            var result = new ElementDefinitionNavigator();
+            result.Elements = this.Elements;
+            result.OrdinalPosition = this.OrdinalPosition;
+
+            return result;
+        }
 
         /// <summary>
         /// Get the name of the current node, based on the last part of the part
@@ -78,9 +90,12 @@ namespace Hl7.Fhir.Specification.Navigation
             get { return Elements.Count; }
         }
 
+
+
+
         IElementNavigator INavigator<IElementNavigator>.Clone()
         {
-            return new ElementDefinitionNavigator(this);
+            return this.ShallowCopy();
         }
 
         string INameProvider.Name

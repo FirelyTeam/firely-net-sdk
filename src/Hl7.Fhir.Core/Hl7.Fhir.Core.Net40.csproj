@@ -66,7 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
-    <Compile Include="ElementsModel\ElementNavigator.cs" />
     <Compile Include="ElementsModel\IElementNavigator.cs" />
     <Compile Include="ElementsModel\INameProvider.cs" />
     <Compile Include="ElementsModel\INavigator.cs" />
@@ -74,6 +73,7 @@
     <Compile Include="ElementsModel\IValueProvider.cs" />
     <Compile Include="ElementsModel\NavigatorExtensions.cs" />
     <Compile Include="ElementsModel\PartialDateTime.cs" />
+    <Compile Include="ElementsModel\PocoElementNavigator.cs" />
     <Compile Include="ElementsModel\PocoNavigator.cs" />
     <Compile Include="ElementsModel\Time.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />

@@ -6,6 +6,7 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,16 +31,51 @@ namespace Hl7.Fhir.Validation
             DefinitionNavigator = definition;
 
             _instanceChildren = new Lazy<IList<IElementNavigator>>(() => Instance.Children().ToList());
-
         }
 
         public bool Validate()
         {
             // Any node must either have a value, or children, or both (e.g. extensions on primitives)
-            Validate(() => Instance.Value != null || InstanceChildren.Any(), "Element must not be empty", Issue.STRUCT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN);
+            if (!verify(() => Instance.Value != null || InstanceChildren.Any(), "Element must not be empty", Issue.STRUCT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN))
+                return false;
 
             //TODO: Probably better to first start with <type> section, then we have figured out the type in the instance
             //only if that is correct, it makes sense to compare to fixed, min/max values etc.
+            var types = Definition.Type.Select(tr => tr.Code.Value).Distinct();
+            if(!Definition.Type.Any())
+            {
+                throw new NotImplementedException("ElementDefs without <type>");
+                // Can only happen at the "value" element of a FHIR Primitive
+                if(isPrimitiveValuePath(Definition.Path))
+                {
+
+                }
+            }
+
+            if(DefinitionNavigator.HasChildren)
+            {
+                // Handle in-lined constraints on children
+                var matchResult = InstanceToProfileMatcher.Match(DefinitionNavigator, Instance);
+
+                verify(() => !matchResult.UnmatchedInstanceElements.Any(), "Encountered unknown child elements {0}".
+                                FormatWith(String.Join(",", matchResult.UnmatchedInstanceElements.Select(e => "'" + e.Name + "'"))),
+                                Issue.STRUCT_ELEMENT_HAS_UNKNOWN_CHILDREN);
+
+                //TODO: Give warnings for out-of order children
+
+                //TODO: Validate cardinality
+
+                // Recursively validate my children
+                foreach(Match match in matchResult.Matches)
+                {
+                    foreach (IElementNavigator element in match.InstanceElements)
+                    {
+                        var validator = new Validator(match.Definition, element);
+                        validator.Validate();
+                    }
+                }
+            }
+
 
             // Min/max (cardinality) has been validated by parent, we cannot know down here
             ValidateFixed();
@@ -52,6 +88,13 @@ namespace Hl7.Fhir.Validation
             // Validate Constraint
 
             return Report.Success();
+        }
+
+        private static bool isPrimitiveValuePath(string path)
+        {
+            return path.Count(c => c == '.') == 1 &&
+                        path.EndsWith(".value") &&
+                        Char.IsLower(path[0]);
         }
 
 
@@ -78,7 +121,7 @@ namespace Hl7.Fhir.Validation
             if (Definition.MinValue == null) return;
 
             // Min/max are only defined for ordered types
-            if(!Validate(() => Definition.MinValue.GetType().IsOrderedFhirType(),
+            if(!verify(() => Definition.MinValue.GetType().IsOrderedFhirType(),
                 "MinValue was given in ElementDefinition, but type '{0}' is not an ordered type".FormatWith(Definition.MinValue.TypeName),
                 Issue.PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE)) return;
 
@@ -94,7 +137,7 @@ namespace Hl7.Fhir.Validation
 
             var maxLength = Definition.MaxLength.Value;
 
-            if (!Validate(() => maxLength > 0, "MaxLength was given in ElementDefinition, but it has a negative value ({0})".FormatWith(maxLength), 
+            if (!verify(() => maxLength > 0, "MaxLength was given in ElementDefinition, but it has a negative value ({0})".FormatWith(maxLength), 
                 Issue.PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE)) return;
 
             if(Instance.Value != null)
@@ -102,12 +145,12 @@ namespace Hl7.Fhir.Validation
                 //TODO: Is ToString() really the right way to turn (Fhir?) Primitives back into their original representation?
                 //If the source is POCO, hopefully FHIR types have all overloaded ToString() 
                 var serializedValue = Instance.Value.ToString();
-                Validate(() => serializedValue.Length > maxLength, "Value '{0}' is too long (maximum length is {1})".FormatWith(serializedValue, maxLength),
+                verify(() => serializedValue.Length > maxLength, "Value '{0}' is too long (maximum length is {1})".FormatWith(serializedValue, maxLength),
                     Issue.VALUE_ELEMENT_VALUE_TOO_LONG);
             }
         }
 
-        bool Validate(Condition condition, string message, Issue issue, IPositionProvider location = null)                                
+        private bool verify(Condition condition, string message, Issue issue, IPositionProvider location = null)                                
         {
             if (!condition())
             {
@@ -154,11 +197,12 @@ namespace Hl7.Fhir.Validation
 
         // Structural
         public static readonly Issue STRUCT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN = def(100, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Required);
+        public static readonly Issue STRUCT_ELEMENT_HAS_UNKNOWN_CHILDREN = def(101, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Required);
 
         // Value
         public static readonly Issue VALUE_ELEMENT_VALUE_TOO_LONG = def(500, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Value);
 
-        // Profile
+        // Profile problems
         public static readonly Issue PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE = def(1000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_MAX_USES_UNORDERED_TYPE = def(1001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE = def(1010, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
