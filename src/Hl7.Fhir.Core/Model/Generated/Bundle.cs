@@ -1182,7 +1182,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_5 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("resource or request or response"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("entry.all(resource or request or response)"))},
             Key = "bdl-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "must be a resource unless there's a request or response",
@@ -1191,7 +1191,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_6 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("fullUrl.empty() xor resource"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("entry.all(fullUrl.empty() xor resource)"))},
             Key = "bdl-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "The fullUrl element must be present when a resource is present, and not present otherwise",

@@ -969,7 +969,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("group.empty() or question.empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("group.all(group.empty() or question.empty())"))},
             Key = "que-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Groups may either contain questions or groups but not both",
@@ -978,7 +978,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_4 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("option.empty() or options.empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("group.question.all(option.empty() or options.empty())"))},
             Key = "que-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A question must use either option or options, not both",

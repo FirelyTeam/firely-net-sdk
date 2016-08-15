@@ -1174,7 +1174,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("type or part"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("parameter.all(type or part)"))},
             Key = "opd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Either a type must be provided, or parts",

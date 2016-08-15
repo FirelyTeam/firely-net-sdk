@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("type or actor"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("participant.all(type or actor)"))},
             Key = "app-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Either the type or actor on the participant MUST be specified",

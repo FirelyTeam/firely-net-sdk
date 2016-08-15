@@ -1213,7 +1213,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_11 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("constrainedType.empty() or (snapshot.element.first().path = constrainedType)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("constrainedType.empty() or snapshot.empty() or snapshot.element.first().path = constrainedType"))},
             Key = "sdf-11",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If there's a constrained type, its content must match the path name in the first element of a snapshot",
@@ -1303,7 +1303,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("name or uri"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("mapping.all(name or uri)"))},
             Key = "sdf-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have at a name or a uri (or both)",
@@ -1312,7 +1312,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("element.all(definition and min and max)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("snapshot.all(element.all(definition and min and max))"))},
             Key = "sdf-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Each element definition in a snapshot must have a formal definition and cardinalities",

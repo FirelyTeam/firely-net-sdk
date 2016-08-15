@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Order_ORD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("code.empty() or schedule.empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("when.all(code.empty() or schedule.empty())"))},
             Key = "ord-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Provide a code or a schedule, but not both",

@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Parameters_INV_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("value[x] xor resource"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("parameter.all(value[x] xor resource)"))},
             Key = "inv-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A parameter must have a value or a resource, but not both",
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Parameters_INV_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("value[x] xor resource"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("parameter.part.all(value[x] xor resource)"))},
             Key = "inv-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A part must have a value or a resource, but not both",

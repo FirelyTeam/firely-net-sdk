@@ -864,7 +864,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Observation_OBS_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("low or high or text"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("referenceRange.all(low or high or text)"))},
             Key = "obs-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have at least a low or a high or text",

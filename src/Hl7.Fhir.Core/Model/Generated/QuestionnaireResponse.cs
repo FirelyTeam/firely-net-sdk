@@ -665,7 +665,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent QuestionnaireResponse_QRS_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("group.empty() or question.empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("group.all(group.empty() or question.empty())"))},
             Key = "qrs-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Groups may either contain questions or groups but not both",

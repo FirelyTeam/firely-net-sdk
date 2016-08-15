@@ -1139,7 +1139,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ConceptMap_CMD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("comments or ((equivalence != 'narrower') and (equivalence != 'inexact'))"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("element.target.all(comments or ((equivalence != 'narrower') and (equivalence != 'inexact')))"))},
             Key = "cmd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If the map is narrower or inexact, there SHALL be some comments",

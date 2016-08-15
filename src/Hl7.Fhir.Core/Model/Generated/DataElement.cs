@@ -749,7 +749,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent DataElement_DAE_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("base.empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("element.all(base.empty())"))},
             Key = "dae-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "No base allowed",
@@ -758,7 +758,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent DataElement_DAE_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("slicing.empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("element.all(slicing.empty())"))},
             Key = "dae-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "No slicing allowed",

@@ -3670,7 +3670,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Conformance_CNF_9 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("resource.select(type).isDistinct()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("rest.all(resource.select(type).isDistinct())"))},
             Key = "cnf-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A given resource can only be described once per RESTful mode",
@@ -3679,7 +3679,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Conformance_CNF_12 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("searchParam.select(name).isDistinct()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("rest.resource.all(searchParam.select(name).isDistinct())"))},
             Key = "cnf-12",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Search parameter names must be unique in the context of a resource",
@@ -3688,7 +3688,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Conformance_CNF_13 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("chain.empty() or type = 'reference'"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("rest.resource.searchParam.all(chain.empty() or type = 'reference')"))},
             Key = "cnf-13",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Search parameters can only have chain names when the search parameter type is 'reference'",
