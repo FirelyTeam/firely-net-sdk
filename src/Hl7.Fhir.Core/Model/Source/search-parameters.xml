@@ -6117,7 +6117,7 @@
         <base value="CommunicationRequest" />
         <type value="date" />
         <description value="When scheduled" />
-        <expression value="CommunicationRequest.scheduled.as(DateTime)" />
+        <expression value="CommunicationRequest.scheduled.as(dateTime)" />
         <xpath value="f:CommunicationRequest/f:scheduledDateTime" />
         <xpathUsage value="normal" />
       </SearchParameter>
@@ -12267,7 +12267,7 @@
         <base value="DeviceUseRequest" />
         <type value="date" />
         <description value="When service should occur" />
-        <expression value="DeviceUseRequest.occurrence.as(DateTime) | DeviceUseRequest.occurrence.as(Period)" />
+        <expression value="DeviceUseRequest.occurrence.as(dateTime) | DeviceUseRequest.occurrence.as(Period)" />
         <xpath value="f:DeviceUseRequest/f:occurrenceDateTime | f:DeviceUseRequest/f:occurrencePeriod" />
         <xpathUsage value="normal" />
       </SearchParameter>
@@ -13649,7 +13649,7 @@
         <base value="DiagnosticRequest" />
         <type value="date" />
         <description value="When service should occur" />
-        <expression value="DiagnosticRequest.occurrence.as(DateTime) | DiagnosticRequest.occurrence.as(Period)" />
+        <expression value="DiagnosticRequest.occurrence.as(dateTime) | DiagnosticRequest.occurrence.as(Period)" />
         <xpath value="f:DiagnosticRequest/f:occurrenceDateTime | f:DiagnosticRequest/f:occurrencePeriod" />
         <xpathUsage value="normal" />
       </SearchParameter>
@@ -18803,7 +18803,7 @@
         <base value="Goal" />
         <type value="date" />
         <description value="Reach goal on or before" />
-        <expression value="Goal.target.as(Date)" />
+        <expression value="Goal.target.as(date)" />
         <xpath value="f:Goal/f:targetDate" />
         <xpathUsage value="normal" />
       </SearchParameter>
@@ -26351,7 +26351,7 @@
         <base value="Observation" />
         <type value="date" />
         <description value="The value of the observation, if the value is a date or period of time" />
-        <expression value="Observation.value.as(DateTime) | Observation.value.as(Period)" />
+        <expression value="Observation.value.as(dateTime) | Observation.value.as(Period)" />
         <xpath value="f:Observation/f:valueDateTime | f:Observation/f:valuePeriod" />
         <xpathUsage value="normal" />
       </SearchParameter>
@@ -27563,7 +27563,7 @@
         <base value="Patient" />
         <type value="date" />
         <description value="The date of death has been provided and satisfies this search value" />
-        <expression value="Patient.deceased.as(DateTime)" />
+        <expression value="Patient.deceased.as(dateTime)" />
         <xpath value="f:Patient/f:deceasedDateTime" />
         <xpathUsage value="normal" />
       </SearchParameter>
@@ -33837,7 +33837,7 @@
         <base value="RiskAssessment" />
         <type value="date" />
         <description value="When was assessment made?" />
-        <expression value="RiskAssessment.occurrence.as(DateTime)" />
+        <expression value="RiskAssessment.occurrence.as(dateTime)" />
         <xpath value="f:RiskAssessment/f:occurrenceDateTime" />
         <xpathUsage value="normal" />
       </SearchParameter>
