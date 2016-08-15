@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Tests.Model
                 errorCount++;
             }
 
-            Assert.IsTrue(220 >= errorCount, String.Format("Failed Validating, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
+            Assert.IsTrue(216 >= errorCount, String.Format("Failed Validating, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
         }
 
         private static void ExtractValuesForSearchParameterFromFile(Dictionary<string, int> exampleSearchValues, Resource resource)
