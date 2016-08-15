@@ -1559,7 +1559,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ExpansionProfile_EXP_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "include.empty() or exclude.empty()",
+            Expression = "codeSystem.all(include.empty() or exclude.empty())",
             Key = "exp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL NOT have include and exclude",
@@ -1568,7 +1568,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ExpansionProfile_EXP_2 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "include.empty() or exclude.empty()",
+            Expression = "designation.all(include.empty() or exclude.empty())",
             Key = "exp-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL NOT have include and exclude",
@@ -1577,7 +1577,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ExpansionProfile_EXP_3 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "language.empty().not() or use.empty().not()",
+            Expression = "designation.include.designation.all(language.empty().not() or use.empty().not())",
             Key = "exp-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL have at least one of language or use",
@@ -1586,7 +1586,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ExpansionProfile_EXP_4 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "language.empty().not() or use.empty().not()",
+            Expression = "designation.exclude.designation.all(language.empty().not() or use.empty().not())",
             Key = "exp-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL have at least one of language or use",

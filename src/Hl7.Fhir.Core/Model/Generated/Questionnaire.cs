@@ -1138,7 +1138,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_9 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "type!='display' or readOnly.empty()",
+            Expression = "item.all(type!='display' or readOnly.empty())",
             Key = "que-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Read-only can't be specified for \"display\" items",
@@ -1147,7 +1147,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_8 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "(type!='group' and type!='display') or initial.empty()",
+            Expression = "item.all((type!='group' and type!='display') or initial.empty())",
             Key = "que-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Default values can't be specified for groups or display items",
@@ -1156,7 +1156,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_6 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "type!='display' or (required.empty() and repeats.empty())",
+            Expression = "item.all(type!='display' or (required.empty() and repeats.empty()))",
             Key = "que-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Required and repeat aren't permitted for display items",
@@ -1165,7 +1165,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_5 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "(type ='choice' or type = 'open-choice') or (options.empty() and option.empty())",
+            Expression = "item.all((type ='choice' or type = 'open-choice') or (options.empty() and option.empty()))",
             Key = "que-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only 'choice' items can have options",
@@ -1174,7 +1174,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_4 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "option.empty() or options.empty()",
+            Expression = "item.all(option.empty() or options.empty())",
             Key = "que-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A question cannot have both option and options",
@@ -1183,7 +1183,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_3 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "type!='display' or concept.empty()",
+            Expression = "item.all(type!='display' or concept.empty())",
             Key = "que-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Display items cannot have a \"concept\" asserted",
@@ -1192,7 +1192,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_10 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "(type in ('boolean' | 'decimal' | 'integer' | 'string' | 'text' | 'url')) or maxLength.empty()",
+            Expression = "item.all((type in ('boolean' | 'decimal' | 'integer' | 'string' | 'text' | 'url')) or maxLength.empty())",
             Key = "que-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Maximum length can only be declared for simple question types",
@@ -1201,7 +1201,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "(type='group' implies item.empty().not()) and (type.trace('type')='display' implies item.trace('item').empty())",
+            Expression = "item.all((type='group' implies item.empty().not()) and (type.trace('type')='display' implies item.trace('item').empty()))",
             Key = "que-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Group items must have nested items, display items cannot have nested items",
@@ -1210,7 +1210,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Questionnaire_QUE_7 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "hasAnswer.exists() xor answer.exists()",
+            Expression = "item.enableWhen.all(hasAnswer.exists() xor answer.exists())",
             Key = "que-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "enableWhen must contain either an 'answer' or an 'answered' element",

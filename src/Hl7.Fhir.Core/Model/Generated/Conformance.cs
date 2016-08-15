@@ -3642,7 +3642,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Conformance_CNF_7 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "document.select(profile&mode).isDistinct()",
+            Expression = "document.select(profile.reference&mode).isDistinct()",
             Key = "cnf-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "The set of documents must be unique by the combination of profile & mode",
@@ -3696,7 +3696,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Conformance_CNF_9 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "resource.select(type).isDistinct()",
+            Expression = "rest.all(resource.select(type).isDistinct())",
             Key = "cnf-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A given resource can only be described once per RESTful mode",
@@ -3705,7 +3705,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Conformance_CNF_12 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "searchParam.select(name).isDistinct()",
+            Expression = "rest.resource.all(searchParam.select(name).isDistinct())",
             Key = "cnf-12",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Search parameter names must be unique in the context of a resource",
@@ -3714,7 +3714,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Conformance_CNF_13 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "chain.empty() or type = 'reference'",
+            Expression = "rest.resource.searchParam.all(chain.empty() or type = 'reference')",
             Key = "cnf-13",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Search parameters can only have chain names when the search parameter type is 'reference'",

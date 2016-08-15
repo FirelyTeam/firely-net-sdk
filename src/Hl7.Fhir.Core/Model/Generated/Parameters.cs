@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Parameters_INV_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "(part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists()))",
+            Expression = "parameter.all((part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists())))",
             Key = "inv-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A parameter must have only one of (value, resource, part)",

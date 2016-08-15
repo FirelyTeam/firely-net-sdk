@@ -831,7 +831,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Observation_OBS_3 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "low.exists() or high.exists() or text.exists()",
+            Expression = "referenceRange.all(low.exists() or high.exists() or text.exists())",
             Key = "obs-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have at least a low or a high or text",

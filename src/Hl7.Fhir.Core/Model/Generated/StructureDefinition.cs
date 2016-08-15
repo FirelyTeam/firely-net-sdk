@@ -1328,7 +1328,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_2 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "name.exists() or uri.exists()",
+            Expression = "mapping.all(name.exists() or uri.exists())",
             Key = "sdf-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have at a name or a uri (or both)",
@@ -1337,7 +1337,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_15 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "element.first().type.empty()",
+            Expression = "snapshot.all(element.first().type.empty())",
             Key = "sdf-15",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "The first element in a snapshot has no type",
@@ -1346,7 +1346,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "element.first().path = %resource.type and element.tail().all(path.startsWith(%resource.type&'.'))",
+            Expression = "snapshot.all(element.first().path = %resource.type and element.tail().all(path.startsWith(%resource.type&'.')))",
             Key = "sdf-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "In any snapshot, all the elements must be in the specified type",
@@ -1355,7 +1355,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_3 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "element.all(definition and min and max)",
+            Expression = "snapshot.all(element.all(definition and min and max))",
             Key = "sdf-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Each element definition in a snapshot must have a formal definition and cardinalities",
@@ -1364,7 +1364,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_15A = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "element.first().path.contains('.').not() implies element.first().type.empty()",
+            Expression = "differential.all(element.first().path.contains('.').not() implies element.first().type.empty())",
             Key = "sdf-15a",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If the first element in a differential has no \".\" in the path, it has no type",
@@ -1373,7 +1373,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8A = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "element.first().path.startsWith(%resource.type) and element.tail().all(path.startsWith(%resource.type&'.'))",
+            Expression = "differential.all(element.first().path.startsWith(%resource.type) and element.tail().all(path.startsWith(%resource.type&'.')))",
             Key = "sdf-8a",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "In any differential, all the elements must be in the specified type",

@@ -1884,7 +1884,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "include.exists() or import.exists()",
+            Expression = "compose.all(include.exists() or import.exists())",
             Key = "vsd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A value set composition SHALL have an include or an import",
@@ -1893,7 +1893,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_11 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "concept.empty() or filter.empty()",
+            Expression = "compose.include.all(concept.empty() or filter.empty())",
             Key = "vsd-11",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Cannot have both concept and filter",
@@ -1902,7 +1902,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_6 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "code.exists() or display.exists()",
+            Expression = "expansion.contains.all(code.exists() or display.exists())",
             Key = "vsd-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL have a code or a display",
@@ -1911,7 +1911,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_9 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "code.exists() or abstract = true",
+            Expression = "expansion.contains.all(code.exists() or abstract = true)",
             Key = "vsd-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have a code if not abstract",
@@ -1920,7 +1920,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ValueSet_VSD_10 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "code.empty() or system.exists()",
+            Expression = "expansion.contains.all(code.empty() or system.exists())",
             Key = "vsd-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have a system if a code is present",

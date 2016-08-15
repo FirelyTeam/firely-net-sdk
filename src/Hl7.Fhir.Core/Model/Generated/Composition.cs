@@ -890,7 +890,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Composition_CMP_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "text.exists() or entry.exists() or section.exists()",
+            Expression = "section.all(text.exists() or entry.exists() or section.exists())",
             Key = "cmp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A section must at least one of text, entries, or sub-sections",
@@ -899,7 +899,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Composition_CMP_2 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "emptyReason.empty() or entry.empty()",
+            Expression = "section.all(emptyReason.empty() or entry.empty())",
             Key = "cmp-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A section can only have an emptyReason if it is empty",

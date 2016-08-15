@@ -749,7 +749,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent DataElement_DAE_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "base.empty()",
+            Expression = "element.all(base.empty())",
             Key = "dae-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "No base allowed",
@@ -758,7 +758,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent DataElement_DAE_2 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "slicing.empty()",
+            Expression = "element.all(slicing.empty())",
             Key = "dae-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "No slicing allowed",

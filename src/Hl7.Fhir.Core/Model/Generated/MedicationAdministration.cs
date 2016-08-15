@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "dose.exists() or rate.exists()",
+            Expression = "dosage.all(dose.exists() or rate.exists())",
             Key = "mad-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL have at least one of dosage.dose and dosage.rate[x]",

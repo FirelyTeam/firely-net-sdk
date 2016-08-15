@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Organization_ORG_3 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "select(use = 'home').empty()",
+            Expression = "telecom.all(where(use = 'home').empty())",
             Key = "org-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "The telecom of an organization can never be of use 'home'",
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Organization_ORG_2 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "select(use = 'home').empty()",
+            Expression = "address.all(where(use = 'home').empty())",
             Key = "org-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "An address of an organization can never be of use 'home'",

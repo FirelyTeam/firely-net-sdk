@@ -1199,7 +1199,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_8 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "fullUrl.contains('/_history/').not()",
+            Expression = "entry.all(fullUrl.contains('/_history/').not())",
             Key = "bdl-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "fullUrl cannot be a version specific reference",
@@ -1208,7 +1208,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_5 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "resource.exists() or request.exists() or response.exists()",
+            Expression = "entry.all(resource.exists() or request.exists() or response.exists())",
             Key = "bdl-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "must be a resource unless there's a request or response",
@@ -1217,7 +1217,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_6 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "fullUrl.empty() xor resource.exists()",
+            Expression = "entry.all(fullUrl.empty() xor resource.exists())",
             Key = "bdl-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "The fullUrl element must be present when a resource is present, and not present otherwise",

@@ -5815,7 +5815,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_5 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "capability.required.exists() or capability.validated.exists()",
+            Expression = "metadata.all(capability.required.exists() or capability.validated.exists())",
             Key = "inv-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "TestScript metadata capability SHALL contain required or validated or both.",
@@ -5824,7 +5824,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_4 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "headerField.empty() or path.empty()",
+            Expression = "variable.all(headerField.empty() or path.empty())",
             Key = "inv-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Variable cannot contain both headerField and path.",
@@ -5833,7 +5833,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "operation.exists() xor assert.exists()",
+            Expression = "setup.action.all(operation.exists() xor assert.exists())",
             Key = "inv-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Setup action SHALL contain either an operation or assert but not both.",
@@ -5842,7 +5842,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_8 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' |'search' | 'transaction' | 'history'))",
+            Expression = "setup.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' |'search' | 'transaction' | 'history')))",
             Key = "inv-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Setup operation SHALL contain either sourceId or targetId or params or url.",
@@ -5851,7 +5851,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_6 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "contentType.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1",
+            Expression = "setup.action.assert.all(contentType.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
             Key = "inv-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only a single assertion SHALL be present within setup action assert element.",
@@ -5860,7 +5860,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_11 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "compareToSourceId.empty() xor compareToSourcePath.exists()",
+            Expression = "setup.action.assert.all(compareToSourceId.empty() xor compareToSourcePath.exists())",
             Key = "inv-11",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Setup action assert shall contain both compareToSourceId and compareToSourcePath or neither.",
@@ -5869,7 +5869,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_2 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "operation.exists() xor assert.exists()",
+            Expression = "test.action.all(operation.exists() xor assert.exists())",
             Key = "inv-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Test action SHALL contain either an operation or assert but not both.",
@@ -5878,7 +5878,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_9 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' | 'search' | 'transaction' | 'history'))",
+            Expression = "test.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' | 'search' | 'transaction' | 'history')))",
             Key = "inv-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Test operation SHALL contain either sourceId or targetId or params or url.",
@@ -5887,7 +5887,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_7 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "contentType.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1",
+            Expression = "test.action.assert.all(contentType.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + rule.count() + ruleset.count() + validateProfileId.count() <=1)",
             Key = "inv-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only a single assertion SHALL be present within test action assert element.",
@@ -5896,7 +5896,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_12 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "compareToSourceId.empty() xor compareToSourcePath.exists()",
+            Expression = "test.action.assert.all(compareToSourceId.empty() xor compareToSourcePath.exists())",
             Key = "inv-12",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Test action assert shall contain both compareToSourceId and compareToSourcePath or neither.",
@@ -5905,7 +5905,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_3 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "operation.exists()",
+            Expression = "teardown.action.all(operation.exists())",
             Key = "inv-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Teardown action SHALL contain an operation.",
@@ -5914,7 +5914,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_10 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' | 'search' | 'transaction' | 'history'))",
+            Expression = "teardown.action.operation.all(sourceId.exists() or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' | 'search' | 'transaction' | 'history')))",
             Key = "inv-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Teardown operation SHALL contain either sourceId or targetId or params or url.",

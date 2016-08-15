@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Appointment_APP_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "type.exists() or actor.exists()",
+            Expression = "participant.all(type.exists() or actor.exists())",
             Key = "app-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Either the type or actor on the participant MUST be specified",

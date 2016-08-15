@@ -575,7 +575,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Condition_CON_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "summary.exists() or assessment.exists()",
+            Expression = "stage.all(summary.exists() or assessment.exists())",
             Key = "con-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Stage SHALL have summary or assessment",
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Condition_CON_2 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "code.exists() or detail.exists()",
+            Expression = "evidence.all(code.exists() or detail.exists())",
             Key = "con-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "evidence SHALL have code or details",

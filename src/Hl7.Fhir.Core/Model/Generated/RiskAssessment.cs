@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_2 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "probability is decimal implies probability.as(decimal) <= 100",
+            Expression = "prediction.all(probability is decimal implies probability.as(decimal) <= 100)",
             Key = "ras-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must be <= 100",
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "(low.empty() or ((low.code = '%') and (low.system = %ucum))) and (high.empty() or ((high.code = '%') and (high.system = %ucum)))",
+            Expression = "prediction.probability[x].all((low.empty() or ((low.code = '%') and (low.system = %ucum))) and (high.empty() or ((high.code = '%') and (high.system = %ucum))))",
             Key = "ras-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "low and high must be percentages, if present",

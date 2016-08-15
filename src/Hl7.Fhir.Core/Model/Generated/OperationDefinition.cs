@@ -1163,7 +1163,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "type.exists() or part.exists()",
+            Expression = "parameter.all(type.exists() or part.exists())",
             Key = "opd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Either a type must be provided, or parts",
@@ -1172,7 +1172,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent OperationDefinition_OPD_2 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "searchType implies type = 'string'",
+            Expression = "parameter.all(searchType implies type = 'string')",
             Key = "opd-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A search type can only be specified for parameters of type string",

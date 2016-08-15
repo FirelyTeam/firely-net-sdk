@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent CarePlan_CTM_3 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "detail.empty() or reference.empty()",
+            Expression = "activity.all(detail.empty() or reference.empty())",
             Key = "ctm-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Provide a reference or detail, not both",
