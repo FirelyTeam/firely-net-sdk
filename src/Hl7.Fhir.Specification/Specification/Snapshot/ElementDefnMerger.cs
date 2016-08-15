@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if(_markChanges)
                 snap.SetExtension(SnapshotGenerator.CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
+            snap.UserData
         }
         
         /// <summary>
@@ -192,7 +193,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         private T mergeComplexAttribute<T>(T snap, T diff) where T : Element
         {
             //TODO: The next != null should be IsNullOrEmpty(), but we don't have that yet for complex types
-
             // [WMR 20160718] Handle snap == null
             // if (diff != null && !diff.IsExactly(snap))
             if (diff != null && (snap == null || !diff.IsExactly(snap)))
@@ -208,8 +208,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         private List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> elemComparer) where T : Element
         {
             //TODO: The next != null should be IsNullOrEmpty(), but we don't have that yet for complex types
-
-            if (diff != null && !diff.IsExactly(snap))
+            // if (diff != null && !diff.IsExactly(snap))
+            if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
             {
                 var result = snap == null ? new List<T>() : new List<T>((IEnumerable<T>)snap.DeepCopy());
 
