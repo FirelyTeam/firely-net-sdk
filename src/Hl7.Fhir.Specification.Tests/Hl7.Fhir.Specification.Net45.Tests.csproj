@@ -108,619 +108,643 @@
     <Content Include="TestData\SlicingTypeTestProfile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-de-administrative-status.xml">
+    <Content Include="TestData\snapshot-test\ChrisGrenz\extension-structuredefinition-explicit-type-name.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-de-change-description.xml">
+    <Content Include="TestData\snapshot-test\ChrisGrenz\patient-do-not-call-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-de-classification-or-context.xml">
+    <Content Include="TestData\snapshot-test\ChrisGrenz\patient-extensions-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-de-contact-address.xml">
+    <Content Include="TestData\snapshot-test\ChrisGrenz\patient-legal-case-lead-counsel-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-de-document-reference.xml">
+    <Content Include="TestData\snapshot-test\ChrisGrenz\patient-legal-case-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-de-effective-period.xml">
+    <Content Include="TestData\snapshot-test\ChrisGrenz\patient-research-authorization-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-de-is-data-element-concept.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-de-administrative-status.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-de-registry-org.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-de-change-description.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-de-submitter-org.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-de-classification-or-context.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-objectclass.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-de-contact-address.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-objectclassproperty.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-de-document-reference.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-permitted-value-conceptmap.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-de-effective-period.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-11179-permitted-value-valueset.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-de-is-data-element-concept.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-allergyintolerance-duration.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-de-registry-org.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-allergyintolerance-reasonrefuted.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-de-submitter-org.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-allergyintolerance-resolutionage.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-objectclass.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-birthplace.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-objectclassproperty.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-communication-reasonnotperformed.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-permitted-value-conceptmap.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-communicationrequest-reasonrejected.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-11179-permitted-value-valueset.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-condition-criticality.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-allergyintolerance-duration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-codesystem.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-allergyintolerance-reasonrefuted.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-content.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-allergyintolerance-resolutionage.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-contributor.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-birthplace.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-data.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-communication-reasonnotperformed.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-description.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-communicationrequest-reasonrejected.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-effectiveperiod.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-condition-criticality.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-evaluateatdatetime.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-codesystem.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-evaluationmessage.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-content.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-evaluationsupported.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-contributor.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-expression.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-data.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-action.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-description.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-encounterclass.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-effectiveperiod.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-encountertype.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-evaluateatdatetime.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-initiatingorganization.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-evaluationmessage.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-initiatingperson.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-evaluationsupported.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-receivingorganization.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-expression.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-receivingperson.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-action.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-recipientlanguage.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-encounterclass.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-recipienttype.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-encountertype.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-structure.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-initiatingorganization.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-systemuserlanguage.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-initiatingperson.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-systemusertaskcontext.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-receivingorganization.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-systemusertype.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-receivingperson.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-guidance-trigger.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-recipientlanguage.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-inputparameters.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-recipienttype.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-keyword.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-structure.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-lastreviewdate.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-systemuserlanguage.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-library.canonical.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-systemusertaskcontext.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-model.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-systemusertype.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-module.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-guidance-trigger.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-modulestatus.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-inputparameters.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-moduleversion.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-keyword.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-outputparameters.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-lastreviewdate.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-parameter.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-library.canonical.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-publicationdate.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-model.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-publisher.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-module.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-purpose.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-modulestatus.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-qualityofevidence.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-moduleversion.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-relatedresource.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-outputparameters.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-requestdatetime.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-parameter.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-requestid.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-publicationdate.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-responsestatus.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-publisher.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-rightsdeclaration.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-purpose.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-steward.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-qualityofevidence.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-strengthofrecommendation.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-relatedresource.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-title.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-requestdatetime.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-topic.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-requestid.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-usage.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-responsestatus.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-cqif-basic-valueset.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-rightsdeclaration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-deviceuserequest-reasonrejected.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-steward.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-diagnosticorder-precondition.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-strengthofrecommendation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-diagnosticorder-reasonrejected.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-title.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-diagnosticreport-locationperformed.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-topic.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-elementdefinition-allowedunits.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-usage.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-elementdefinition-equivalence.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-cqif-basic-valueset.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-elementdefinition-question.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-deviceuserequest-reasonrejected.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-encounter-reasoncancelled.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-diagnosticorder-precondition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-encounter-relatedcondition.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-diagnosticorder-reasonrejected.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-entryformat.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-diagnosticreport-locationperformed.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-family-member-history-genetics-observation.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-elementdefinition-allowedunits.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-family-member-history-genetics-parent.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-elementdefinition-equivalence.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-familymemberhistory-abatement.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-elementdefinition-question.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-familymemberhistory-severity.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-encounter-reasoncancelled.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-gao-extension-device.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-encounter-relatedcondition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-gao-extension-guideline.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-entryformat.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-gao-extension-item.canonical.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-family-member-history-genetics-observation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-gao-extension-period.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-family-member-history-genetics-parent.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-gao-extension-practitioner.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-familymemberhistory-abatement.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-gao-extension-score.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-familymemberhistory-severity.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-gao-extension-signature.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-gao-extension-device.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsallelename.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-gao-extension-guideline.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsallelicfrequency.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-gao-extension-item.canonical.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsallelicstate.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-gao-extension-period.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsaminoacidchange.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-gao-extension-practitioner.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsaminoacidchangetype.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-gao-extension-score.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsassessedcondition.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-gao-extension-signature.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticschromosome.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsallelename.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticscigar.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsallelicfrequency.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticscopynumberevent.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsallelicstate.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsdnaregionname.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsaminoacidchange.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsdnasequencevariation.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsaminoacidchangetype.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsdnasequencevariationtype.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsassessedcondition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsgene.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticschromosome.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsgenomebuild.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticscigar.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsgenomicsourceclass.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticscopynumberevent.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsgenomicstart.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsdnaregionname.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsgenomicstop.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsdnasequencevariation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsobservedallele.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsdnasequencevariationtype.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsproteinreferencesequenceid.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsgene.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsreadcoverage.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsgenomebuild.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsreferenceallele.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsgenomicsourceclass.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsresult.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsgenomicstart.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsspecies.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsgenomicstop.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticstranscriptreferencesequenceid.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsobservedallele.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-geneticsvariationid.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsproteinreferencesequenceid.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-goal-reasonrejected.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsreadcoverage.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-goal-target.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsreferenceallele.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-imagingstudy-radiationdose.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsresult.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-imagingstudy-radiationduration.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsspecies.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-iso21090-preferred.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticstranscriptreferencesequenceid.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-lipid-report-ldl-chol-calculated.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-geneticsvariationid.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-markup.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-goal-reasonrejected.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-maxdecimalplaces.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-goal-target.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-maxvalue.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-imagingstudy-radiationdose.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-medication-isactiveingredient.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-imagingstudy-radiationduration.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-medicationdispense-validityperiod.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-iso21090-preferred.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-minlength.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-lipid-report-ldl-chol-calculated.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-minvalue.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-markup.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-observation-bodyposition.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-maxdecimalplaces.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-patient-birthtime.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-maxvalue.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-patient-cadavericdonor.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-medication-isactiveingredient.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-patient-clinicaltrial.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-medicationdispense-validityperiod.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-patient-disability.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-minlength.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-patient-mothersmaidenname.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-minvalue.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-patient-nationality.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-observation-bodyposition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-pharmacy-core-dosetype.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-patient-birthtime.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-pharmacy-core-infuseover.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-patient-cadavericdonor.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-pharmacy-core-maxdeliveryrate.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-patient-clinicaltrial.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-pharmacy-core-maxdeliveryvolume.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-patient-disability.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-pharmacy-core-mindoseperperiod.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-patient-mothersmaidenname.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-pharmacy-core-rategoal.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-patient-nationality.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-pharmacy-core-rateincrement.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-pharmacy-core-dosetype.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-pharmacy-core-rateincrementinterval.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-pharmacy-core-infuseover.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-pharmacy-core-refillsremaining.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-pharmacy-core-maxdeliveryrate.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-practitioner-classification.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-pharmacy-core-maxdeliveryvolume.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-practitioner-primaryind.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-pharmacy-core-mindoseperperiod.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-procedure-approachbodysite.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-pharmacy-core-rategoal.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-procedure-incisiondatetime.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-pharmacy-core-rateincrement.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-procedurerequest-approachbodysite.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-pharmacy-core-rateincrementinterval.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-procedurerequest-reasonrefused.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-pharmacy-core-refillsremaining.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-qicore-adverseevent-category.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-practitioner-classification.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-qicore-adverseevent-cause.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-practitioner-primaryind.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-qicore-adverseevent-clinicalstudy.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-procedure-approachbodysite.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-qicore-adverseevent-didnotoccur.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-procedure-incisiondatetime.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-qicore-adverseevent-discoverydatetime.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-procedurerequest-approachbodysite.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-qicore-adverseevent-location.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-procedurerequest-reasonrefused.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-qicore-adverseevent-period.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-qicore-adverseevent-category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-qicore-adverseevent-reaction.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-qicore-adverseevent-cause.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-qicore-adverseevent-severity.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-qicore-adverseevent-clinicalstudy.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-qicore-adverseevent-type.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-qicore-adverseevent-didnotoccur.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-qicore-patient-militaryservice.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-qicore-adverseevent-discoverydatetime.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-qicore-procedurerequest-appropriatenessscore.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-qicore-adverseevent-location.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-category.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-qicore-adverseevent-period.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-choiceorientation.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-qicore-adverseevent-reaction.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-defaultvalue.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-qicore-adverseevent-severity.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-dereference.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-qicore-adverseevent-type.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-enablewhen.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-qicore-patient-militaryservice.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-help.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-qicore-procedurerequest-appropriatenessscore.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-hidden.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-category.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-instruction.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-choiceorientation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-label.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-defaultvalue.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-maxlength.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-dereference.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-maxoccurs.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-enablewhen.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-minoccurs.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-help.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-questioncontrol.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-hidden.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-readonly.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-instruction.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-security.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-label.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-tooltip.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-maxlength.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-trailing.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-maxoccurs.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-questionnaire-units.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-minoccurs.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-referralrequest-reasonrefused.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-questioncontrol.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-regex.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-readonly.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-sdc-questionnaire-endpoint.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-security.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-sdc-questionnaire-optionaldisplay.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-tooltip.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-sdc-questionnaire-provenancesignaturerequred.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-trailing.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-sdc-questionnaire-specialgroup.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-questionnaire-units.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-specimen-sequencenumber.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-referralrequest-reasonrefused.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-string-translation.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-regex.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-style.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-sdc-questionnaire-endpoint.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-stylesensitive.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-sdc-questionnaire-optionaldisplay.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-us-core-county.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-sdc-questionnaire-provenancesignaturerequred.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-us-core-direct.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-sdc-questionnaire-specialgroup.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-us-core-ethnicity.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-specimen-sequencenumber.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-us-core-race.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-string-translation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-us-core-religion.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-style.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-uslab-cc-practitioner.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-stylesensitive.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-uslab-observationkind.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-us-core-county.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-uslab-specimenrejectreason.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-us-core-direct.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-valueset-conceptorder.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-us-core-ethnicity.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-valueset-definition.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-us-core-race.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-valueset-effectivedate.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-us-core-religion.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-valueset-expirationdate.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-uslab-cc-practitioner.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-valueset-label.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-uslab-observationkind.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-valueset-systemname.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-uslab-specimenrejectreason.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\extension-valueset-trusted-expansion.xml">
+    <Content Include="TestData\snapshot-test\extensions\extension-valueset-conceptorder.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extensions\extension-valueset-definition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extensions\extension-valueset-effectivedate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extensions\extension-valueset-expirationdate.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extensions\extension-valueset-label.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extensions\extension-valueset-systemname.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\extensions\extension-valueset-trusted-expansion.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\MyBasic.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\MyBundle.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\profiles-others.xml">
@@ -732,7 +756,6 @@
     <Content Include="TestData\snapshot-test\profiles-types.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\structdef-human-group - Forge.xml" />
     <Content Include="TestData\snapshot-test\structdef-human-group.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
