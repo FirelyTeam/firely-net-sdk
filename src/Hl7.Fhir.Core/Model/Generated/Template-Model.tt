@@ -504,6 +504,12 @@ if(!abstractType) {
             foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", nsR))
             {
                 string expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value", nsR).Value;
+                string parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", nsR).Value;
+                if (parentPath.Contains("."))
+                {
+                    // This expression applied to a backbone element, so need to give it scope
+                    expression = parentPath.Replace(resourceName + ".", "") + ".all(" + expression + ")";
+                }
                 string key = node.SelectSingleNode("fhir:key/@value", nsR).Value;
                 string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
                 string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
@@ -528,6 +534,12 @@ if(!abstractType) {
             foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", nsR))
             {
                 string expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value", nsR).Value;
+                string parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", nsR).Value;
+                if (parentPath.Contains("."))
+                {
+                    // This expression applied to a backbone element, so need to give it scope
+                    expression = parentPath.Replace(resourceName + ".", "") + ".all(" + expression + ")";
+                }
                 string key = node.SelectSingleNode("fhir:key/@value", nsR).Value;
                 string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
                 string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
