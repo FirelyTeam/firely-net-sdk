@@ -99,6 +99,7 @@
     <Compile Include="Model\CodeEnumTests.cs" />
     <Compile Include="Model\DateTimeOperatorTests.cs" />
     <Compile Include="Model\ModelTests.cs" />
+    <Compile Include="Model\ValidateAllExamplesSearchExtractionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JsonAssert.cs" />
     <Compile Include="Rest\FhirClientTests.cs" />
