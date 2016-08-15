@@ -48,18 +48,21 @@ namespace Hl7.Fhir.Specification.Snapshot
         public void OnBeforeExpandType(string profileUrl, string path)
         {
             Debug.Assert(_expandingProfiles != null);
-            if (_expandingProfiles.Contains(profileUrl))
+            if (!_expandingProfiles.Add(profileUrl))
             {
                 throw Error.NotSupported("Recursive profile expansion detected on element '{0}'.\r\nProfile url = '{1}'".FormatWith(path, profileUrl));
             }
-            _expandingProfiles.Add(profileUrl);
         }
 
         /// <summary>Call this method after an element type profile has been expanded.</summary>
         public void OnAfterExpandType(string profileUrl)
         {
             Debug.Assert(_expandingProfiles != null);
-            _expandingProfiles.Remove(profileUrl);
+            if (!_expandingProfiles.Remove(profileUrl))
+            {
+                // Shouldn't happen... indicates an error in the snapshot expansion logic
+                throw Error.InvalidOperation("Invalid operation. The specified profile with url '{0}' is not registered with the snapshot recursion checker.".FormatWith(profileUrl));
+            }
         }
     }
 }

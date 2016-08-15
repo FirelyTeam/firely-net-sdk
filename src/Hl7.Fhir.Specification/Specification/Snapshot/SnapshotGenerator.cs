@@ -43,10 +43,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         public SnapshotGenerator(ArtifactResolver resolver) : this(resolver, SnapshotGeneratorSettings.Default) { }
 
-        private SnapshotGenerator Clone()
-        {
-            return new SnapshotGenerator(_resolver, _settings);
-        }
+        //private SnapshotGenerator Clone()
+        //{
+        //    return new SnapshotGenerator(_resolver, _settings);
+        //}
 
         /// <summary>
         /// (Re-)generate the <see cref="StructureDefinition.Snapshot"/> component of the specified <see cref="StructureDefinition"/> instance.
@@ -55,8 +55,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="structure">A <see cref="StructureDefinition"/> instance.</param>
         public void Generate(StructureDefinition structure)
         {
-            var expanded = Expand(structure);
-            structure.Snapshot = new StructureDefinition.SnapshotComponent() { Element = expanded };
+            structure.Snapshot = new StructureDefinition.SnapshotComponent()
+            {
+                Element = Expand(structure)
+            };
         }
 
         /// <summary>
@@ -320,27 +322,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 _recursionChecker.OnBeforeExpandType(primaryDiffTypeProfile, diff.Path);
 #endif
 
-                if (baseStructure.Snapshot == null)
-                {
-                    if (_settings.ExpandExternalProfiles)
-                    {
-                        // Automatically expand external profiles on demand
-                        Debug.Print("Recursively expand external profile with url: '{0}' ...".FormatWith(baseStructure.Url));
-                        Clone().Generate(baseStructure);
-                    }
-                    else if (!_settings.IgnoreUnresolvedProfiles)
-                    {
-                        throw Error.NotSupported("Resolved profile for url '{0}' does not contain a snapshot representation.".FormatWith(primaryDiffTypeProfile));
-                    }
-#if DEBUG
-                    else
-                    {
-                        // Otherwise silently ignore and continue expansion
-                        Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(primaryDiffTypeProfile));
-                    }
-#endif
-                }
-                else
+                if (ensureSnapshot(baseStructure))
                 {
                     // Clone and rebase
                     baseStructure = (StructureDefinition)baseStructure.DeepCopy();
@@ -379,6 +361,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                         (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
                     }
                 }
+#if DEBUG
+                else
+                {
+                    // Silently ignore missing profile and continue expansion
+                    Debug.Print("Resolved the external profile with url '{0}', but it does not contain a snapshot representation... ignore and continue...".FormatWith(primaryDiffTypeProfile));
+                }
+#endif
 
 #if DETECT_RECURSION
                 _recursionChecker.OnAfterExpandType(primaryDiffTypeProfile);
@@ -467,6 +456,54 @@ namespace Hl7.Fhir.Specification.Snapshot
             };
         }
 
+        /// <summary>
+        /// Verify that the specified structure has a snapshot component.
+        /// If not, then check the value of the <see cref="SnapshotGeneratorSettings.ExpandExternalProfiles"/> setting.
+        /// If <c>true</c>, then expand the snapshot.
+        /// Otherwise, if <paramref name="isRequired"/> equals <c>true</c> or if
+        /// <see cref="SnapshotGeneratorSettings.IgnoreUnresolvedProfiles"/> equals <c>false</c>,
+        /// then throw an <see cref="NotSupportedException"/>.
+        /// </summary>
+        /// <returns>
+        /// <c>true if the structure now has a snapshot component, or <c>false</c> otherwise (i.e. ignore and continue).</c>
+        /// </returns>
+        private bool ensureSnapshot(StructureDefinition structure, bool isRequired = false)
+        {
+            Debug.Assert(structure != null);
+            Debug.Assert(!string.IsNullOrEmpty(structure.Url));
+
+            if (structure.Snapshot == null)
+            {
+                if (_settings.ExpandExternalProfiles)
+                {
+                    // Automatically expand external profiles on demand
+                    Debug.Print("Recursively expand snapshot of external profile with url: '{0}' ...".FormatWith(structure.Url));
+                    // Clone().Generate(baseStructure);
+                    generate(structure);
+                }
+                else if (isRequired || !_settings.IgnoreUnresolvedProfiles)
+                {
+                    throw Error.NotSupported("Resolved the external profile with url '{0}', but it does not contain a snapshot representation.".FormatWith(structure));
+                }
+            }
+            return structure.Snapshot != null;
+        }
+
+        /// <summary>Recursively expand the snapshot of a referenced external profile.</summary>
+        private void generate(StructureDefinition structure)
+        {
+            Debug.Assert(structure != null);
+            Debug.Assert(structure.Snapshot == null);
+            structure.Snapshot = new StructureDefinition.SnapshotComponent()
+            {
+                Element = expand(structure)
+            };
+        }
+
+        /// <summary>
+        /// Expand the differential component of the specified structure and return the expanded element list.
+        /// The given structure is not modified.
+        /// </summary>
         private List<ElementDefinition> expand(StructureDefinition structure)
         {
             List<ElementDefinition> result;
@@ -498,19 +535,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 );
             }
 
-            if (baseStructure.Snapshot == null)
-            {
-                if (_settings.ExpandExternalProfiles)
-                {
-                    // Automatically expand external profiles on demand
-                    Debug.Print("Recursively expand base profile with url: '{0}' ...".FormatWith(baseStructure.Url));
-                    Clone().Generate(baseStructure);
-                }
-                else
-                {
-                    throw Error.InvalidOperation("Resolved base profile for url '{0}' does not contain a snapshot representation.", structure.Base);
-                }
-            }
+            // Base profile must have a valid snapshot component
+            ensureSnapshot(baseStructure, true);
 
             var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
             generateBaseElements(snapshot.Element);
@@ -526,7 +552,13 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
-        // internal static bool expandElement(ElementNavigator nav, ArtifactResolver resolver, SnapshotGeneratorSettings settings)
+        /// <summary>
+        /// Expand the currently active element within the specified <see cref="ElementNavigator"/> instance.
+        /// If the element has a name reference, then merge from the targeted element.
+        /// Otherwise, if the element has a custom type profile, then merge it.
+        /// </summary>
+        /// <param name="nav"></param>
+        /// <returns></returns>
         internal bool expandElement(ElementNavigator nav)
         {
             if (nav.Current == null)
@@ -571,11 +603,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         // Try to resolve the custom element type profile reference
                         baseStructure = _resolver.GetStructureDefinition(typeProfile);
-                        //if ((baseStructure == null || baseStructure.Snapshot == null) && _settings.IgnoreUnresolvedTypeProfiles)
-                        //{
-                        //    // Ignore unresolved external type profile reference; expand the underlying standard core type
-                        //    baseStructure = _resolver.GetStructureDefinitionForCoreType(typeCode);
-                        //}
                         if (baseStructure == null)
                         {
                             if (_settings.IgnoreUnresolvedProfiles)
@@ -606,44 +633,20 @@ namespace Hl7.Fhir.Specification.Snapshot
                         }
                     }
 
-                    if (baseStructure.Snapshot == null)
+                    if (ensureSnapshot(baseStructure))
                     {
-                        if (_settings.ExpandExternalProfiles)
-                        {
-                            // Automatically expand external profiles on demand
-                            Debug.Print("Recursively expand type profile with url: '{0}' ...".FormatWith(baseStructure.Url));
-                            Clone().Generate(baseStructure);
-                        }
-                        //else if (typeProfile != null)
-                        //{
-                        //    throw Error.NotSupported("Resolved profile for url '{0}' does not contain a snapshot representation.".FormatWith(typeProfile));
-                        //}
-                        //else
-                        //{
-                        //    throw Error.NotSupported("Resolved profile for type '{0}' does not contain a snapshot representation.".FormatWith(typeCode));
-                        //}
-                        else if (!_settings.IgnoreUnresolvedProfiles)
-                        {
-                            const string fmtMsg = "Resolved profile for {0} '{1}' does not contain a snapshot representation.";
-                            var msg = typeProfile != null
-                                ? fmtMsg.FormatWith("url", typeProfile)
-                                : fmtMsg.FormatWith("type", typeCode);
-                            throw Error.InvalidOperation(msg);
-                        }
-#if DEBUG
-                        else
-                        {
-                            // Otherwise silently ignore and continue expansion
-                            Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(baseStructure.Url));
-                        }
-#endif
-
+                        generateBaseElements(baseStructure.Snapshot.Element);
+                        var sourceNav = new ElementNavigator(baseStructure.Snapshot.Element);
+                        sourceNav.MoveToFirstChild();
+                        nav.CopyChildren(sourceNav);
                     }
-
-                    generateBaseElements(baseStructure.Snapshot.Element);
-                    var sourceNav = new ElementNavigator(baseStructure.Snapshot.Element);
-                    sourceNav.MoveToFirstChild();
-                    nav.CopyChildren(sourceNav);
+#if DEBUG
+                    else
+                    {
+                        // Silently ignore missing profile and continue expansion
+                        Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(baseStructure.Url));
+                    }
+#endif
                 }
             }
 
