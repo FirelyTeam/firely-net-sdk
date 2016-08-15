@@ -37,56 +37,57 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ValidateInvariantAllExamples()
         {
             string examplesZip = @"TestData\examples.zip";
-
-            // Create an empty temporary directory for us to dump the intermediary files in
-            string baseTestPath = Path.Combine(Path.GetTempPath(), "FHIRValidateAllTestXml");
-            if (Directory.Exists(baseTestPath))
-                Directory.Delete(baseTestPath, true);
-            Directory.CreateDirectory(baseTestPath);
-
-            // Unzip files into this path
-            Debug.WriteLine("Unzipping example files from {0} to {1}", examplesZip, baseTestPath);
-            ZipFile.ExtractToDirectory(examplesZip, baseTestPath);
-
-            Debug.WriteLine(String.Format("Validating files in {0}", baseTestPath));
-            var files = Directory.EnumerateFiles(baseTestPath);
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
             int testFileCount = 0;
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
-            foreach (string file in files)
+
+            var zip = ZipFile.OpenRead(examplesZip);
+            using (zip)
             {
-                // Verified examples that fail validations
-
-                //// vsd-3, vsd-8
-                //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
-                //    continue;
-
-                testFileCount++;
-                // Debug.WriteLine(String.Format("Validating {0}", file));
-                var resource = parser.Parse<Resource>(System.IO.File.ReadAllText(file));
-                resource.InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
-                resource.AddDefaultConstraints();
-                var outcome = new OperationOutcome();
-                resource.ValidateInvariants(outcome);
-                if (outcome.Issue.Count > 0)
+                foreach (var entry in zip.Entries)
                 {
-                    Debug.WriteLine(String.Format("Validating {0} failed:", file));
-                    foreach (var item in outcome.Issue)
+                    Stream file = entry.Open();
+                    using (file)
                     {
-                        if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
-                            failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
-                        else
-                            failedInvariantCodes[item.Details.Coding[0].Code]++;
-                        Trace.WriteLine("\t"+ item.Details.Coding[0].Code + ": " + item.Details.Text);
+                        // Verified examples that fail validations
+
+                        //// vsd-3, vsd-8
+                        //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
+                        //    continue;
+
+                        var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
+                        var resource = parser.Parse<Resource>(reader);
+
+                        testFileCount++;
+                        // Debug.WriteLine(String.Format("Validating {0}", entry.Name));
+                        resource.InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+                        resource.AddDefaultConstraints();
+                        var outcome = new OperationOutcome();
+                        resource.ValidateInvariants(outcome);
+                        if (outcome.Issue.Count > 0)
+                        {
+                            Debug.WriteLine(String.Format("Validating {0} failed:", entry.Name));
+                            foreach (var item in outcome.Issue)
+                            {
+                                if (!failedInvariantCodes.ContainsKey(item.Details.Coding[0].Code))
+                                    failedInvariantCodes.Add(item.Details.Coding[0].Code, 1);
+                                else
+                                    failedInvariantCodes[item.Details.Coding[0].Code]++;
+                                Trace.WriteLine("\t" + item.Details.Coding[0].Code + ": " + item.Details.Text);
+                            }
+                            Trace.WriteLine("-------------------------");
+                            Trace.WriteLine(FhirSerializer.SerializeResourceToXml(resource));
+                            Trace.WriteLine("-------------------------");
+                        }
+                        if (outcome.Issue.Count != 0)
+                        {
+                            errorCount++;
+                        }
                     }
-                    // Trace.WriteLine(outcome.ToString());
-                }
-                if (outcome.Issue.Count != 0)
-                {
-                    errorCount++;
                 }
             }
+
             Debug.WriteLine(String.Format("\r\n------------------\r\nValidation failed in {0} of {1} examples", errorCount, testFileCount));
             if (failedInvariantCodes.Count > 0)
             {
