@@ -38,75 +38,71 @@ namespace Hl7.Fhir.Tests.Model
         {
             string examplesZip = @"TestData\examples.zip";
 
-            // Create an empty temporary directory for us to dump the intermediary files in
-            string baseTestPath = Path.Combine(Path.GetTempPath(), "FHIRValidateAllTestXml");
-            if (Directory.Exists(baseTestPath))
-                Directory.Delete(baseTestPath, true);
-            Directory.CreateDirectory(baseTestPath);
-
-            // Unzip files into this path
-            Debug.WriteLine("Unzipping example files from {0} to {1}", examplesZip, baseTestPath);
-            ZipFile.ExtractToDirectory(examplesZip, baseTestPath);
-
-            Debug.WriteLine(String.Format("Validating files in {0}", baseTestPath));
-            var files = Directory.EnumerateFiles(baseTestPath);
             FhirXmlParser parser = new FhirXmlParser();
             int errorCount = 0;
             int testFileCount = 0;
             Dictionary<String, int> exampleSearchValues = new Dictionary<string, int>();
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
-            foreach (string file in files)
+            var zip = ZipFile.OpenRead(examplesZip);
+            using (zip)
             {
-                // Verified examples that fail validations
-
-                //// vsd-3, vsd-8
-                //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
-                //    continue;
-
-                testFileCount++;
-                // Debug.WriteLine(String.Format("Validating {0}", file));
-                var resource = parser.Parse<Resource>(System.IO.File.ReadAllText(file));
-
-                // Extract the search properties
-                var searchparameters = ModelInfo.SearchParameters.Where(r => r.Resource == resource.ResourceType.ToString() && !String.IsNullOrEmpty(r.Expression));
-                foreach (var index in searchparameters)
+                foreach (var entry in zip.Entries)
                 {
-                    // prepare the search data cache
-                    string key = resource.ResourceType.ToString() + "_" + index.Name;
-                    if (!exampleSearchValues.ContainsKey(key))
-                        exampleSearchValues.Add(key, 0);
-
-                    // Extract the values from the example
-                    var resourceModel = FluentPath.ModelNavigator.CreateInput(resource);
-                    var navigator = FluentPath.ModelNavigator.CreateInput(resource);
-                    var results = Hl7.FluentPath.PathExpression.Select(index.Expression, resourceModel, navigator);
-                    if (results.Count() > 0)
+                    Stream file = entry.Open();
+                    using (file)
                     {
-                        foreach (var t2 in results)
+                        // Verified examples that fail validations
+
+                        //// vsd-3, vsd-8
+                        //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
+                        //    continue;
+
+                        testFileCount++;
+                        // Debug.WriteLine(String.Format("Validating {0}", file));
+                        var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
+                        var resource = parser.Parse<Resource>(reader);
+
+                        // Extract the search properties
+                        var searchparameters = ModelInfo.SearchParameters.Where(r => r.Resource == resource.ResourceType.ToString() && !String.IsNullOrEmpty(r.Expression));
+                        foreach (var index in searchparameters)
                         {
-                            if (t2 != null)
+                            // prepare the search data cache
+                            string key = resource.ResourceType.ToString() + "_" + index.Name;
+                            if (!exampleSearchValues.ContainsKey(key))
+                                exampleSearchValues.Add(key, 0);
+
+                            // Extract the values from the example
+                            var resourceModel = FluentPath.ModelNavigator.CreateInput(resource);
+                            var navigator = FluentPath.ModelNavigator.CreateInput(resource);
+                            var results = Hl7.FluentPath.PathExpression.Select(index.Expression, resourceModel, navigator);
+                            if (results.Count() > 0)
                             {
-                                if (t2 is FluentPath.ModelNavigator && (t2 as FluentPath.ModelNavigator).FhirValue != null)
+                                foreach (var t2 in results)
                                 {
-                                    // Validate the type of data returned against the type of search parameter
-                                    Debug.Write(index.Resource + "." + index.Name + ": ");
-                                    Debug.WriteLine((t2 as FluentPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
-                                    exampleSearchValues[key]++;
-                                    // System.Diagnostics.Trace.WriteLine(string.Format("{0}: {1}", xpath.Value, t2.AsStringRepresentation()));
-                                }
-                                else
-                                {
-                                    if (t2.Value is Hl7.FluentPath.ConstantValue)
+                                    if (t2 != null)
                                     {
-                                        Debug.Write(index.Resource + "." + index.Name + ": ");
-                                        Debug.WriteLine((t2.Value as Hl7.FluentPath.ConstantValue).Value);
-                                        exampleSearchValues[key]++;
+                                        if (t2 is FluentPath.ModelNavigator && (t2 as FluentPath.ModelNavigator).FhirValue != null)
+                                        {
+                                            // Validate the type of data returned against the type of search parameter
+                                            Debug.Write(index.Resource + "." + index.Name + ": ");
+                                            Debug.WriteLine((t2 as FluentPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
+                                            exampleSearchValues[key]++;
+                                            // System.Diagnostics.Trace.WriteLine(string.Format("{0}: {1}", xpath.Value, t2.AsStringRepresentation()));
+                                        }
+                                        else
+                                        {
+                                            if (t2.Value is Hl7.FluentPath.ConstantValue)
+                                            {
+                                                Debug.Write(index.Resource + "." + index.Name + ": ");
+                                                Debug.WriteLine((t2.Value as Hl7.FluentPath.ConstantValue).Value);
+                                                exampleSearchValues[key]++;
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-
                 }
             }
 
