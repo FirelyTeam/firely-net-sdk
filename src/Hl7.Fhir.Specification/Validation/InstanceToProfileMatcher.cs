@@ -27,10 +27,23 @@ namespace Hl7.Fhir.Validation
             {
                 var match = new Match() { Definition = definitionElement };
 
-                var found = elementsToMatch.Where(ie => NameMatches(definitionElement, ie)).ToList();
+                // Special case is the .value of a primitive fhir type, this is represented
+                // as the "Value" of the IValueProvider interface, not as a real child
+                if (definitionElement.Current.IsPrimitiveValuePath())
+                {
+                    if (instanceParent.Value != null)
+                        match.InstanceElements = new List<IElementNavigator> { instanceParent };
+                    else
+                        match.InstanceElements = new List<IElementNavigator>();
+                }
+                else
+                {
+                    var found = elementsToMatch.Where(ie => NameMatches(definitionElement, ie)).ToList();
 
-                match.InstanceElements.AddRange(found);
-                elementsToMatch.RemoveAll(e => found.Contains(e));
+                    match.InstanceElements.AddRange(found);
+                    elementsToMatch.RemoveAll(e => found.Contains(e));
+                }
+
                 matches.Add(match);
             }
 

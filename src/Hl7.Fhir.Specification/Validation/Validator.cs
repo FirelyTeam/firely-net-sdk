@@ -41,25 +41,7 @@ namespace Hl7.Fhir.Validation
             if (DefinitionNavigator.HasChildren)
             {
                 // Handle in-lined constraints on children
-                var matchResult = InstanceToProfileMatcher.Match(DefinitionNavigator, Instance);
-
-                verify(() => !matchResult.UnmatchedInstanceElements.Any(), "Encountered unknown child elements {0}".
-                                FormatWith(String.Join(",", matchResult.UnmatchedInstanceElements.Select(e => "'" + e.Name + "'"))),
-                                Issue.CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN);
-
-                //TODO: Give warnings for out-of order children
-
-                ValidateCardinality(matchResult);
-
-                // Recursively validate my children
-                foreach (Match match in matchResult.Matches)
-                {
-                    foreach (IElementNavigator element in match.InstanceElements)
-                    {
-                        var validator = new Validator(match.Definition, element, ValidationContext);
-                        validator.Validate();
-                    }
-                }
+                ValidateChildConstraints();
             }
 
             if (Definition.Slicing != null)
@@ -89,6 +71,29 @@ namespace Hl7.Fhir.Validation
             // Validate Constraint
 
             return Report.Success();
+        }
+
+        internal void ValidateChildConstraints()
+        {
+            var matchResult = InstanceToProfileMatcher.Match(DefinitionNavigator, Instance);
+
+            verify(() => !matchResult.UnmatchedInstanceElements.Any(), "Encountered unknown child elements {0}".
+                            FormatWith(String.Join(",", matchResult.UnmatchedInstanceElements.Select(e => "'" + e.Name + "'"))),
+                            Issue.CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN);
+
+            //TODO: Give warnings for out-of order children
+
+            ValidateCardinality(matchResult);
+
+            // Recursively validate my children
+            foreach (Match match in matchResult.Matches)
+            {
+                foreach (IElementNavigator element in match.InstanceElements)
+                {
+                    var validator = new Validator(match.Definition, element, ValidationContext);
+                    validator.Validate();
+                }
+            }
         }
 
         internal void ValidateCardinality(MatchResult matchResult)
@@ -126,7 +131,7 @@ namespace Hl7.Fhir.Validation
 
         internal void ValidateType()
         {
-            if (isPrimitiveValuePath(Definition.Path))
+            if (Definition.IsPrimitiveValuePath())
             {
                 // The "value" property of a FHIR Primitive is the bottom of our recursion chain, it does not have a nameReference
                 // nor a <type>, the only thing left to do to validate the content is to validate the string representation of the
@@ -238,14 +243,6 @@ namespace Hl7.Fhir.Validation
                 verify(() => success, "Primitive value '{0}' does not match regex '{1}'".FormatWith(value, primitiveRegEx), Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE);
             }
         }
-
-        private static bool isPrimitiveValuePath(string path)
-        {
-            return path.Count(c => c == '.') == 1 &&
-                        path.EndsWith(".value") &&
-                        Char.IsLower(path[0]);
-        }
-
 
         internal void ValidateFixed()
         {
@@ -389,4 +386,17 @@ namespace Hl7.Fhir.Validation
                    t == typeof(FhirString);
         }
     }
+
+    internal static class ElementDefinitionNavigatorExtensions
+    {
+       public static bool IsPrimitiveValuePath(this ElementDefinition ed)
+        {
+            var path = ed.Path;
+            return path.Count(c => c == '.') == 1 &&
+                        path.EndsWith(".value") &&
+                        Char.IsLower(path[0]);
+        }
+
+    }
+
 }
