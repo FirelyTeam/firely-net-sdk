@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}}")]
     [InvokeIValidatableObject]
-    public abstract partial class Resource 
+    public abstract partial class Resource
     {
         /// <summary>
         /// This is the base URL of the FHIR server that this resource is hosted on
@@ -49,7 +49,8 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public Uri ResourceBase
         {
-            get {
+            get
+            {
                 object data;
                 var result = UserData.TryGetValue("@@@RESOURCEBASE@@@", out data);
                 if (result)
@@ -104,14 +105,17 @@ namespace Hl7.Fhir.Model
                 }
                 var resourceModel = Hl7.FluentPath.FhirValueList.Create(model);
                 Hl7.FluentPath.PathExpression.CompiledExpression compExpr;
-                if (_expressionCache.ContainsKey(expression))
+                lock (_expressionCache)
                 {
-                    compExpr = _expressionCache[expression];
-                }
-                else
-                {
-                    compExpr = Hl7.FluentPath.PathExpression.Compile(expression);
-                    _expressionCache.Add(expression, compExpr);
+                    if (_expressionCache.ContainsKey(expression))
+                    {
+                        compExpr = _expressionCache[expression];
+                    }
+                    else
+                    {
+                        compExpr = Hl7.FluentPath.PathExpression.Compile(expression);
+                        _expressionCache.Add(expression, compExpr);
+                    }
                 }
 
                 if (Hl7.FluentPath.PathExpression.Predicate(compExpr, resourceModel, resourceModel))
@@ -150,7 +154,7 @@ namespace Hl7.Fhir.Model
         {
             if (Id == null) return null;
 
-            var result =  Hl7.Fhir.Rest.ResourceIdentity.Build(TypeName, Id, VersionId);
+            var result = Hl7.Fhir.Rest.ResourceIdentity.Build(TypeName, Id, VersionId);
 
             if (!string.IsNullOrEmpty(baseUrl))
                 return result.WithBase(baseUrl);
@@ -225,11 +229,11 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public string VersionId
         {
-            get 
+            get
             {
                 if (HasVersionId)
                     return Meta.VersionId;
-                else 
+                else
                     return null;
             }
             set
