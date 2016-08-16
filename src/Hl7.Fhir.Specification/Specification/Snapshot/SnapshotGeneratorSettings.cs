@@ -1,5 +1,7 @@
 ﻿// [WMR 20160815] New: emit reference to base element via UserData
 #define BASEDEF
+// [WMR 20160815] New: expand all complex elements (even without any diff constraints)
+#define EXPANDALL
 
 /* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
@@ -23,6 +25,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             ExpandExternalProfiles = false,
             RewriteElementBase = false,
             NormalizeElementBase = false    // true in STU3
+#if BASEDEF
+            , EmitBaseData = false
+#endif
+#if EXPANDALL
+            , ExpandAll = false
+#endif
         };
 
         /// <summary>
@@ -57,7 +65,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>
         /// Enable this setting to rewrite all ElementDefinition.Base components by tracking the base hierarchy.
-        /// If disable (default), the snapshot inherits existing Base components present in base resource.
+        /// If disabled (default), the snapshot inherits existing Base components present in base resource.
         /// </summary>
         /// <remarks>
         /// This setting is useful to correct errors in the core profile definitions.
@@ -76,9 +84,21 @@ namespace Hl7.Fhir.Specification.Snapshot
 #if BASEDEF
         /// <summary>
         /// EXPERIMENTAL!
-        /// Enable this setting to decorate the expanded snapshot with information about matching base elements.
+        /// Enable this setting to decorate the expanded snapshot elements with references to the associated base element definitions.
         /// </summary>
         public bool EmitBaseData { get; set; }
+#endif
+
+#if EXPANDALL
+        /// <summary>
+        /// EXPERIMENTAL!
+        /// Enable this setting to recursively expand all profile elements, regardless of wether differential constraints exist.
+        /// By default, the snapshot generator only expands elements with matching differential constraints.
+        /// </summary>
+        /// <remarks>
+        /// If you enable this setting, the size of the resulting snapshot component may grow significantly due to the additional redundant information.
+        /// </remarks>
+        public bool ExpandAll { get; set; }
 #endif
     }
 }

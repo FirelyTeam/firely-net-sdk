@@ -85,6 +85,31 @@ namespace Hl7.Fhir.Specification.Tests
             dumpBasePaths(expanded);
         }
 
+
+        [TestMethod]
+        // [Ignore] // For debugging purposes
+        public void GenerateSnapshotExpandAll()
+        {
+            _settings.ExpandAll = true;
+
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-patient");
+
+            Assert.IsNotNull(sd);
+
+            // dumpReferences(sd);
+
+            // StructureDefinition expanded;
+            // generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            var expanded = generateSnapshot(sd, _testSource);
+            var areEqual = sd.IsExactly(expanded);
+            Assert.IsFalse(areEqual);
+
+            dumpBasePaths(expanded);
+        }
+
+
         [TestMethod]
         // [Ignore] // For debugging purposes
         public void GenerateRecursiveSnapshot()
@@ -524,9 +549,11 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine("StructureDefinition '{0}' ('{1}')".FormatWith(sd.Name, sd.Url));
                 Debug.WriteLine("Base = '{0}'".FormatWith(sd.Base));
                 Debug.Indent();
+                Debug.Print("Element.Path | Element.Base.Path");
+                Debug.Print(new string('=', 100));
                 foreach (var elem in sd.Snapshot.Element)
                 {
-                    Debug.WriteLine("{0}  <===  {1}", elem.Path, elem.Base.Path);
+                    Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base.Path);
                 }
                 Debug.Unindent();
             }

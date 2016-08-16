@@ -1,6 +1,8 @@
 ﻿#define DETECT_RECURSION
 // [WMR 20160815] New: emit reference to base element via UserData
 #define BASEDEF
+// [WMR 20160815] New: expand all complex elements (even without any diff constraints)
+#define EXPANDALL
 
 /* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
@@ -243,6 +245,20 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => snapshot generator should add this
                 fixExtensionUrl(snap);
             }
+#if EXPANDALL
+            else if (_settings.ExpandAll)
+            {
+                var types = snap.Current.Type;
+                if (types.Count == 1)
+                {
+                    var typeCode = types[0].Code;
+                    if (typeCode.HasValue && ModelInfo.IsDataType(typeCode.Value))
+                    {
+                        expandElement(snap);
+                    }
+                }
+            }
+#endif
         }
 
         // [WMR 20160720] Merge custom element type profiles, e.g. Patient.name with type.profile = "MyHumanName"
