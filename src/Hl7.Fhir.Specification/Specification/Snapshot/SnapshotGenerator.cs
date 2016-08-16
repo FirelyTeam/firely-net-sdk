@@ -1,5 +1,6 @@
 ﻿#define DETECT_RECURSION
-// #define MAX_PATH_DEPTH
+// [WMR 20160815] New: emit reference to base element via UserData
+// #define BASE_ELEMENT_USERDATA
 
 /* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
@@ -22,7 +23,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 {
 
 
-    public sealed class SnapshotGenerator
+    public sealed partial class SnapshotGenerator
     {
         // public const string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
         public static readonly string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
@@ -196,9 +197,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 MergeTypeProfiles(snap, diff);
             }
 
-            // [WMR 20160720] Changed, use SnapshotGeneratorSettings
-            // (new ElementDefnMerger(_markChanges)).Merge(snap.Current, diff.Current);
-            (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, diff.Current);
+            MergeElementDefinition(snap.Current, diff.Current);
 
             if (diff.HasChildren)
             {
@@ -236,6 +235,15 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => snapshot generator should add this
                 fixExtensionUrl(snap);
             }
+        }
+
+        /// <summary>Merge two <see cref="ElementDefinition"/> instances.</summary>
+        /// <param name="snap">The base element definition.</param>
+        /// <param name="diff">The constraint element definition.</param>
+        private void MergeElementDefinition(ElementDefinition snap, ElementDefinition diff)
+        {
+            // (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap, diff);
+            ElementDefnMerger.Merge(this, snap, diff);
         }
 
         // [WMR 20160720] Merge custom element type profiles, e.g. Patient.name with type.profile = "MyHumanName"
@@ -360,7 +368,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     else
                     {
                         // Only merge the profile root element; no need to expand children
-                        (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, baseNav.Current);
+                        MergeElementDefinition(snap.Current, baseNav.Current);
                     }
                 }
 #if DEBUG
@@ -436,9 +444,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
 
-            // [WMR 20160720] Changed, use SnapshotGeneratorSettings
-            // (new ElementDefnMerger(_markChanges)).Merge(snap.Current, slicingEntry);
-            (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap.Current, slicingEntry);
+            MergeElementDefinition(snap.Current, slicingEntry);
 
             ////TODO: update / check the slice entry's min/max property to match what we've found in the slice group
         }
@@ -655,10 +661,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             return true;
         }
 
+        /// <summary>Decorate the specified element using a custom extension to indicate that it specifies constraints on the base element.</summary>
+        /// <param name="snap"></param>
         private void markChange(Element snap)
         {
-            // [WMR 20160720] Changed, use SnapshotGeneratorSettings
-            // if (_markChanges)
             if (_settings.MarkChanges)
             {
                 snap.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
@@ -723,18 +729,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             return result.ToArray();
         }
-
-        //[Conditional("MAX_PATH_DEPTH")]
-        //private void VerifyMaxPathDepth(string path)
-        //{
-        //    const int maxDepth = 3;
-        //    Debug.Print("VerifyMaxPathDepth: '{0}' : level {1}".FormatWith(nav.Path, nav.Path.Count(c => c == '.')));
-        //    var depth = path.Count(c => c == '.');
-        //    if (depth > maxDepth)
-        //    {
-        //        throw Error.InvalidOperation("Invalid operation. Snapshot expansion of element '{0}' has exceeded the maximum path depth ({1}).".FormatWith(path, maxDepth));
-        //    }
-        //}
 
     }
 }

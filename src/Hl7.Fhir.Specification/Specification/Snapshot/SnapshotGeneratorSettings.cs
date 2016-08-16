@@ -5,7 +5,6 @@
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
- using System;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
