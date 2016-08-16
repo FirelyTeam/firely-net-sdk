@@ -238,6 +238,8 @@ namespace Hl7.Fhir.Specification.Tests
             var avg = duration / count;
             Debug.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
         }
+
+
         
 #if false
         private void forDoc()
@@ -528,8 +530,135 @@ namespace Hl7.Fhir.Specification.Tests
                 }
                 Debug.Unindent();
             }
-
         }
 
+        // [WMR 20160816] Test custom user data about related base definitions
+
+        [TestMethod]
+        public void GenerateSnapshotEmitBaseData()
+        {
+            _settings.EmitBaseData = true;
+            _settings.MarkChanges = true;
+            _settings.ExpandExternalProfiles = true;
+
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
+            // var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
+
+            Assert.IsNotNull(sd);
+
+            // dumpReferences(sd);
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            assertBaseDefs(expanded);
+        }
+
+        private void assertBaseDefs(StructureDefinition sd)
+        {
+            Assert.IsNotNull(sd);
+            Assert.IsNotNull(sd.Snapshot);
+            var elems = sd.Snapshot.Element;
+            Assert.IsNotNull(elems);
+            Assert.IsTrue(elems.Count > 0);
+            var baseProfile = elems[0].GetBaseProfile();
+            Assert.IsNotNull(baseProfile);
+            Debug.WriteLine("Profile base url = '{0}'".FormatWith(sd.Base));
+            Debug.Print("Base profile url = '{0}'".FormatWith(baseProfile.Url));
+            Assert.AreEqual(sd.Base, baseProfile.Url);
+            Debug.Print("Constraint? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | Invalid?");
+            Debug.Print(new string('=', 100));
+            foreach (var elem in elems)
+            {
+                Assert.IsNotNull(elem.Base);
+                var baseDef = elem.GetBaseDefinition();
+                Assert.IsNotNull(baseDef);
+                Assert.AreNotEqual(elem, baseDef);
+                // Ignore Path differences
+                var equals = baseDef.IsExactly(elem);
+                if (elem.Path != elem.Base.Path)
+                {
+                    var clone = (ElementDefinition)baseDef.DeepCopy();
+                    clone.Path = elem.Path;
+                    equals = clone.IsExactly(elem);
+                }
+                // var extChanged = elem.GetExtensionValue<FhirBoolean>(SnapshotGenerator.CHANGED_BY_DIFF_EXT);
+                // var isChanged = extChanged != null ? extChanged.Value == true : false;
+                var hasChanges = HasChanges(elem);
+
+                var isValid = hasChanges == !equals; // || elem.IsRootElement() || elem.Slicing != null;
+
+                Debug.WriteLine("{0}  |  {1}  |  {2}  |  {3}  |  {4}  |  {5}    {6}", equals ? "-" : "+", hasChanges ? "+" : "-", elem.Path, elem.Base.Path, baseDef.Path, !isValid ? "!!!" : "");
+                Assert.AreEqual(elem.Base.Path, baseDef.Path);
+                // [WMR 20160816] WRONG! baseDef could be inherited from type profile and may further constrain original cardinality
+                // Assert.AreEqual(elem.Base.Min, baseDef.Min);
+                // Assert.AreEqual(elem.Base.Max, baseDef.Max);
+
+                // WRONG! ElementDefnMerger may fill in missing default Short & Definition properties for extensions
+                // The properties will be marked as changed, but their values are equal to base
+                // Debug.Assert(isValid);
+
+            }
+        }
+
+        // Returns true if the specified element or any of its' components contain the special change tracking extension
+        private bool HasChanges(ElementDefinition elem)
+        {
+            return IsChanged(elem)
+                || HasChanges(elem.AliasElement)
+                || IsChanged(elem.Base)
+                || IsChanged(elem.Binding)
+                || HasChanges(elem.Code)
+                || IsChanged(elem.CommentsElement)
+                || HasChanges(elem.ConditionElement)
+                || HasChanges(elem.Constraint)
+                || IsChanged(elem.DefaultValue)
+                || IsChanged(elem.DefinitionElement)
+                || IsChanged(elem.Example)
+                || HasChanges(elem.Extension)
+                || HasChanges(elem.FhirCommentsElement)
+                || IsChanged(elem.Fixed)
+                || IsChanged(elem.IsModifierElement)
+                || IsChanged(elem.IsSummaryElement)
+                || IsChanged(elem.LabelElement)
+                || HasChanges(elem.Mapping)
+                || IsChanged(elem.MaxElement)
+                || IsChanged(elem.MaxLengthElement)
+                || IsChanged(elem.MaxValue)
+                || IsChanged(elem.MeaningWhenMissingElement)
+                || IsChanged(elem.MinElement)
+                || IsChanged(elem.MinValue)
+                || IsChanged(elem.MustSupportElement)
+                || IsChanged(elem.NameElement)
+                || IsChanged(elem.NameReferenceElement)
+                || IsChanged(elem.PathElement)
+                || IsChanged(elem.Pattern)
+                || HasChanges(elem.RepresentationElement)
+                || IsChanged(elem.RequirementsElement)
+                || IsChanged(elem.ShortElement)
+                || IsChanged(elem.Slicing)
+                || HasChanges(elem.Type);
+        }
+
+        private static bool HasChanges<T>(IList<T> extendables) where T : IExtendable
+        {
+            return extendables != null ? extendables.Any(e => IsChanged(e)) : false;
+        }
+
+        private static bool IsChanged(IExtendable extendable)
+        {
+            if (extendable != null)
+            {
+                var ext = extendable.GetExtensionValue<FhirBoolean>(SnapshotGenerator.CHANGED_BY_DIFF_EXT);
+                return ext != null && ext.Value == true;
+            }
+            return false;
+        }
     }
 }

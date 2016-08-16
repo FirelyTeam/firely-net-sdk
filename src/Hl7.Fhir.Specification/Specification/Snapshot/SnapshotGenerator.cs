@@ -1,6 +1,6 @@
 ﻿#define DETECT_RECURSION
 // [WMR 20160815] New: emit reference to base element via UserData
-// #define BASE_ELEMENT_USERDATA
+#define BASEDEF
 
 /* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
@@ -133,70 +133,78 @@ namespace Hl7.Fhir.Specification.Snapshot
             return nav.Elements;
         }
 
-        private void merge(ElementNavigator snapNav, ElementNavigator diffNav)
+        private void merge(ElementNavigator snap, ElementNavigator diff)
         {
-            var snapPos = snapNav.Bookmark();
-            var diffPos = diffNav.Bookmark();
+            var snapPos = snap.Bookmark();
+            var diffPos = diff.Bookmark();
 
             try
             {
-                // [WMR 20160815] Optimized
-                // var matches = (new ElementMatcher()).Match(snapNav, diffNav);
-                var matches = ElementMatcher.Match(snapNav, diffNav);
+                var matches = ElementMatcher.Match(snap, diff);
 
-                // Debug.WriteLine("Matches for children of " + snapNav.Path + (snapNav.Current != null && snapNav.Current.Name != null ? " '" + snapNav.Current.Name + "'" : null));
-                // matches.DumpMatches(snapNav, diffNav);
+                // Debug.WriteLine("Matches for children of " + snap.Path + (snap.Current != null && snap.Current.Name != null ? " '" + snap.Current.Name + "'" : null));
+                // matches.DumpMatches(snap, diff);
 
                 foreach (var match in matches)
                 {
-                    if (!snapNav.ReturnToBookmark(match.BaseBookmark))
+                    if (!snap.ReturnToBookmark(match.BaseBookmark))
                         throw Error.InvalidOperation("Internal merging error: bookmark '{0}' in snap is no longer available", match.BaseBookmark);
-                    if (!diffNav.ReturnToBookmark(match.DiffBookmark))
+                    if (!diff.ReturnToBookmark(match.DiffBookmark))
                         throw Error.InvalidOperation("Internal merging error: bookmark '{0}' in diff is no longer available", match.DiffBookmark);
 
                     if (match.Action == ElementMatcher.MatchAction.Add)
                     {
                         // Add new slice after the last existing slice in base profile
-                        snapNav.MoveToLastSlice();
-                        var lastSlice = snapNav.Bookmark();
+                        snap.MoveToLastSlice();
+                        var lastSlice = snap.Bookmark();
 
                         // Initialize slice by duplicating base slice entry
-                        snapNav.ReturnToBookmark(match.BaseBookmark);
-                        snapNav.DuplicateAfter(lastSlice);
+                        snap.ReturnToBookmark(match.BaseBookmark);
+                        snap.DuplicateAfter(lastSlice);
                         // Important: explicitly clear the slicing node in the copy!
-                        snapNav.Current.Slicing = null;
+                        snap.Current.Slicing = null;
 
-                        markChange(snapNav.Current);
+                        markChange(snap.Current);
 
                         // Merge differential
-                        mergeElement(snapNav, diffNav);
+                        mergeElement(snap, diff);
 
                     }
                     else if (match.Action == ElementMatcher.MatchAction.Merge)
                     {
-                        mergeElement(snapNav, diffNav);
+                        mergeElement(snap, diff);
                     }
                     else if (match.Action == ElementMatcher.MatchAction.Slice)
                     {
-                        makeSlice(snapNav, diffNav);
+                        makeSlice(snap, diff);
                     }
                 }
             }
             finally
             {
-                snapNav.ReturnToBookmark(snapPos);
-                diffNav.ReturnToBookmark(diffPos);
+                snap.ReturnToBookmark(snapPos);
+                diff.ReturnToBookmark(diffPos);
             }
         }
 
 
         private void mergeElement(ElementNavigator snap, ElementNavigator diff)
         {
+            // [WMR 20160816] Multiple inheritance - diamond problem
+            // Element inherits constraints from base profile and also from any local type profile
+            // Which constraints have priority?
+            // Ewout: not defined yet, under discussion; use cases exist for both options
+            // In this implementation, constraints from type profiles get priority over base
+
+            // TODO: Merge multiple base element definitions...
+
+            // First merge constraints from element type profile, if it exists
             if (_settings.MergeTypeProfiles)
             {
                 MergeTypeProfiles(snap, diff);
             }
 
+            // Then merge constraints from base profile
             MergeElementDefinition(snap.Current, diff.Current);
 
             if (diff.HasChildren)
@@ -235,15 +243,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => snapshot generator should add this
                 fixExtensionUrl(snap);
             }
-        }
-
-        /// <summary>Merge two <see cref="ElementDefinition"/> instances.</summary>
-        /// <param name="snap">The base element definition.</param>
-        /// <param name="diff">The constraint element definition.</param>
-        private void MergeElementDefinition(ElementDefinition snap, ElementDefinition diff)
-        {
-            // (new ElementDefnMerger(_settings.MarkChanges)).Merge(snap, diff);
-            ElementDefnMerger.Merge(this, snap, diff);
         }
 
         // [WMR 20160720] Merge custom element type profiles, e.g. Patient.name with type.profile = "MyHumanName"
@@ -434,7 +433,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 if (slicingEntry.IsExtension())
                 {
-                    // In this case we create a "prefab" extension slice (with just slincing info)
+                    // In this case we create a "prefab" extension slice (with just slicing info)
                     // that's simply merged with the original element in base
                     slicingEntry = createExtensionSlicingEntry();
                 }
@@ -487,7 +486,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Automatically expand external profiles on demand
                     Debug.Print("Recursively expand snapshot of external profile with url: '{0}' ...".FormatWith(structure.Url));
                     // Clone().Generate(baseStructure);
-                    generate(structure);
+                    generateExterna(structure);
                 }
                 else if (isRequired || !_settings.IgnoreUnresolvedProfiles)
                 {
@@ -498,7 +497,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Recursively expand the snapshot of a referenced external profile.</summary>
-        private void generate(StructureDefinition structure)
+        private void generateExterna(StructureDefinition structure)
         {
             Debug.Assert(structure != null);
             Debug.Assert(structure.Snapshot == null);
@@ -545,18 +544,31 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Base profile must have a valid snapshot component
             ensureSnapshot(baseStructure, true);
+            Debug.Assert(baseStructure.Snapshot != null);
+            Debug.Assert(baseStructure.Snapshot.Element != null);
+            Debug.Assert(baseStructure.Snapshot.Element.Count > 0);
 
             var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
             generateBaseElements(snapshot.Element);
-            var snapNav = new ElementNavigator(snapshot.Element);
+
+            var snap = new ElementNavigator(snapshot.Element);
+
+#if BASEDEF
+            // [WMR 20160816] Emit a reference to the original (unmodified) base profile on the root element
+            if (_settings.EmitBaseData)
+            {
+                var baseProfile = (StructureDefinition)baseStructure.DeepCopy();
+                snapshot.Element[0].SetBaseProfile(baseProfile);
+            }
+#endif
 
             // Fill out the gaps (mostly missing parents) in the differential representation
             var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
-            var diffNav = new ElementNavigator(fullDifferential);
+            var diff = new ElementNavigator(fullDifferential);
 
-            merge(snapNav, diffNav);
+            merge(snap, diff);
 
-            result = snapNav.ToListOfElements();
+            result = snap.ToListOfElements();
             return result;
         }
 
@@ -661,16 +673,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             return true;
         }
 
-        /// <summary>Decorate the specified element using a custom extension to indicate that it specifies constraints on the base element.</summary>
-        /// <param name="snap"></param>
-        private void markChange(Element snap)
-        {
-            if (_settings.MarkChanges)
-            {
-                snap.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
-            }
-        }
-
         private void generateBaseElements(IEnumerable<ElementDefinition> elements)
         {
             // [WMR 20160805] NEW
@@ -695,22 +697,20 @@ namespace Hl7.Fhir.Specification.Snapshot
                         var elemName = element.GetNameFromPath();
                         baseElem = baseTypeDefs.SelectMany(sd => sd.Snapshot.Element).FirstOrDefault(e => e.GetNameFromPath() == elemName) ?? element;
                     }
-
                     element.Base = new ElementDefinition.BaseComponent()
                     {
                         MaxElement = (FhirString)baseElem.MaxElement.DeepCopy(),
                         MinElement = (Integer)baseElem.MinElement.DeepCopy(),
                         PathElement = (FhirString)baseElem.PathElement.DeepCopy()
                     };
-
-                    //element.Base = new ElementDefinition.BaseComponent()
-                    //{
-                    //    MaxElement = (FhirString)element.MaxElement.DeepCopy(),
-                    //    MinElement = (Integer)element.MinElement.DeepCopy(),
-                    //    PathElement = (FhirString)element.PathElement.DeepCopy()
-                    //};
-
                 }
+#if BASEDEF
+                if (_settings.EmitBaseData)
+                {
+                    var baseDef = (ElementDefinition)element.DeepCopy();
+                    element.SetBaseDefinition(baseDef);
+                }
+#endif
             }
         }
 
@@ -730,5 +730,65 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result.ToArray();
         }
 
+        private void MergeElementDefinition(ElementDefinition snap, ElementDefinition diff)
+        {
+            ElementDefnMerger.Merge(this, snap, diff);
+        }
+
+        /// <summary>
+        /// Decorate the specified snapshot element definition with a custom extension,
+        /// to indicate that it specifies constraints on the base element definition.
+        /// </summary>
+        /// <param name="snap"></param>
+        private void markChange(Element snap)
+        {
+            if (_settings.MarkChanges)
+            {
+                snap.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
+            }
+        }
     }
+
+#if BASEDEF
+    /// <summary>Extension methods to access custom element data on the snapshot.</summary>
+    public static class SnapshotElementExtensions
+    {
+        private static readonly string USERDATA_BASEPROFILE = "@@@SNAPSHOTBASEPROFILE@@@";
+        private static readonly string USERDATA_BASEDEF = "@@@SNAPSHOTBASEDEF@@@";
+
+        /// <summary>Gets a reference to the base profile <see cref="StructureDefinition"/> instance.</summary>
+        public static StructureDefinition GetBaseProfile(this Element element)
+        {
+            object result = null;
+            if (element.UserData.TryGetValue(USERDATA_BASEPROFILE, out result))
+            {
+                return result as StructureDefinition;
+            }
+            return null;
+        }
+
+        /// <summary>Sets a reference to the base profile <see cref="StructureDefinition"/> instance.</summary>
+        public static void SetBaseProfile(this Element element, StructureDefinition baseProfile)
+        {
+            element.UserData[USERDATA_BASEPROFILE] = baseProfile;
+        }
+
+        /// <summary>Gets a reference to the matching <see cref="ElementDefinition"/> instance from the base profile.</summary>
+        public static ElementDefinition GetBaseDefinition(this Element element)
+        {
+            object result = null;
+            if (element.UserData.TryGetValue(USERDATA_BASEDEF, out result))
+            {
+                return result as ElementDefinition;
+            }
+            return null;
+        }
+
+        /// <summary>Sets a reference to the matching <see cref="ElementDefinition"/> instance from the base profile.</summary>
+        public static void SetBaseDefinition(this Element element, ElementDefinition baseDef)
+        {
+            element.UserData[USERDATA_BASEDEF] = baseDef;
+        }
+    }
+#endif
 }

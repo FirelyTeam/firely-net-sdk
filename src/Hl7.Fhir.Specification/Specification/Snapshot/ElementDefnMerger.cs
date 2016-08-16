@@ -23,6 +23,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         private class ElementDefnMerger
         {
+            /// <summary>Merge the two specified <see cref="ElementDefinition"/> instances.</summary>
             public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff)
             {
                 var merger = new ElementDefnMerger(generator);
@@ -100,6 +101,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // Note: use ObjectValue in order to handle unknown resource types
                             new ElementDefinition.TypeRefComponent() { CodeElement = new Code<FHIRDefinedType>() { ObjectValue = snap.Path } }
                         };
+                        markChange(snap.Type[0]);
                     }
                 }
                 // Type is just overridden

@@ -1,4 +1,7 @@
-﻿/* 
+﻿// [WMR 20160815] New: emit reference to base element via UserData
+#define BASEDEF
+
+/* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -69,5 +72,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Path = 'Patient.name.given' => Base.Path = 'HumanName.given' (derived from parent element type = 'HumanName')
         /// </example>
         public bool NormalizeElementBase { get; set; }
+
+#if BASEDEF
+        /// <summary>
+        /// EXPERIMENTAL!
+        /// Enable this setting to decorate the expanded snapshot with information about matching base elements.
+        /// </summary>
+        public bool EmitBaseData { get; set; }
+#endif
     }
 }
