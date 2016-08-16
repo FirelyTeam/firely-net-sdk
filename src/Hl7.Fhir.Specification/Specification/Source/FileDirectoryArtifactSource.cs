@@ -61,7 +61,8 @@ namespace Hl7.Fhir.Specification.Source
         {
             get
             {
-                var codebase = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var codebase = AppDomain.CurrentDomain.BaseDirectory;
+                // var codebase = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
                 if (Directory.Exists(codebase))
                     return codebase;

@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var wa = new WebArtifactSource();
 
-            var artifact = wa.LoadConformanceResourceByUrl("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/Flag");
+            var artifact = wa.LoadConformanceResourceByUrl("http://fhir3.healthintersections.com.au/open/StructureDefinition/Flag");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNull(client);
 
-            var artifact = wa.LoadConformanceResourceByUrl("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/Flag");
+            var artifact = wa.LoadConformanceResourceByUrl("http://fhir3.healthintersections.com.au/open/StructureDefinition/Flag");
 
             Assert.IsNotNull(client);
             Assert.AreEqual(client.Status, 3);

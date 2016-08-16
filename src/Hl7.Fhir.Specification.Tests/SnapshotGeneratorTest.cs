@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // cqif-guidanceartifact profile is derived from cqif-knowledgemodule
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-patient");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-encounter");
