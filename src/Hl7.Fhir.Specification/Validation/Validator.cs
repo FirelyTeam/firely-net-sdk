@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Validation
@@ -22,8 +23,6 @@ namespace Hl7.Fhir.Validation
         public ElementDefinitionNavigator DefinitionNavigator;
         public IValidationContext ValidationContext;
 
-        private Lazy<IList<IElementNavigator>> _instanceChildren;
-        internal IList<IElementNavigator> InstanceChildren { get { return _instanceChildren.Value; } }
         internal ElementDefinition Definition { get { return DefinitionNavigator.Current; } }
 
         public Validator(ElementDefinitionNavigator definition, IElementNavigator instance, IValidationContext context)
@@ -31,30 +30,15 @@ namespace Hl7.Fhir.Validation
             Instance = instance;
             DefinitionNavigator = definition;
             ValidationContext = context;
-
-            _instanceChildren = new Lazy<IList<IElementNavigator>>(() => Instance.Children().ToList());
         }
 
         public bool Validate()
         {
             // Any node must either have a value, or children, or both (e.g. extensions on primitives)
-            if (!verify(() => Instance.Value != null || InstanceChildren.Any(), "Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN))
+            if (!verify(() => Instance.Value != null || Instance.HasChildren(), "Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN))
                 return false;
 
-            //TODO: Probably better to first start with <type> section, then we have figured out the type in the instance
-            //only if that is correct, it makes sense to compare to fixed, min/max values etc.
-            var types = Definition.Type.Select(tr => tr.Code.Value).Distinct();
-            if(!Definition.Type.Any())
-            {
-                throw new NotImplementedException("ElementDefs without <type>");
-                // Can only happen at the "value" element of a FHIR Primitive
-                if(isPrimitiveValuePath(Definition.Path))
-                {
-
-                }
-            }
-
-            if(DefinitionNavigator.HasChildren)
+            if (DefinitionNavigator.HasChildren)
             {
                 // Handle in-lined constraints on children
                 var matchResult = InstanceToProfileMatcher.Match(DefinitionNavigator, Instance);
@@ -65,10 +49,10 @@ namespace Hl7.Fhir.Validation
 
                 //TODO: Give warnings for out-of order children
 
-                //TODO: Validate cardinality
+                ValidateCardinality(matchResult);
 
                 // Recursively validate my children
-                foreach(Match match in matchResult.Matches)
+                foreach (Match match in matchResult.Matches)
                 {
                     foreach (IElementNavigator element in match.InstanceElements)
                     {
@@ -78,7 +62,7 @@ namespace Hl7.Fhir.Validation
                 }
             }
 
-            if(Definition.Slicing != null)
+            if (Definition.Slicing != null)
             {
                 // This is the slicing entry
                 // TODO: Find my siblings and try to validate the content against
@@ -92,7 +76,7 @@ namespace Hl7.Fhir.Validation
 
 
             ValidateType();
-
+            ValidateNameReference();
 
             // Min/max (cardinality) has been validated by parent, we cannot know down here
             ValidateFixed();
@@ -107,9 +91,51 @@ namespace Hl7.Fhir.Validation
             return Report.Success();
         }
 
+        internal void ValidateCardinality(MatchResult matchResult)
+        {
+            foreach(var match in matchResult.Matches)
+            {
+                var definition = match.Definition.Current;
+                var occurs = match.InstanceElements.Count;
+                var cardinality = Cardinality.FromElementDefinition(definition);
+
+                if (verify(() => definition.Min != null && definition.Max != null, "ElementDefinition does not specify cardinality", Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING))
+                {
+                    verify(() => cardinality.InRange(occurs), "Element '{0}' occurs {1} times, which is not within the specified cardinality of {2}"
+                                .FormatWith(match.Definition.Current.Name, occurs, cardinality.ToString()), Issue.CONTENT_ELEMENT_INCORRECT_OCCURRENCE);
+                }
+            }
+        }
+
+        internal void ValidateNameReference()
+        {
+            if (Definition.NameReference != null)
+            {
+                var referencedPositionNav = DefinitionNavigator.ShallowCopy();
+
+                if (verify(() => referencedPositionNav.JumpToNameReference(Definition.NameReference),
+                        "ElementDefinition uses a non-existing nameReference '{0}'".FormatWith(Definition.NameReference),
+                        Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE))
+                {
+                    var validator = new Validator(referencedPositionNav, Instance, ValidationContext);
+                    validator.Validate();
+                }
+
+            }
+        }
+
         internal void ValidateType()
         {
-            verify(() => !Definition.Type.Select(tr=>tr.Code).Contains(null), "ElementDefinition contains a type with an empty type code", Issue.PROFILE_ELEMENTDEF_CONTAINS_NULL_TYPE);
+            if (isPrimitiveValuePath(Definition.Path))
+            {
+                // The "value" property of a FHIR Primitive is the bottom of our recursion chain, it does not have a nameReference
+                // nor a <type>, the only thing left to do to validate the content is to validate the string representation of the
+                // primitive against the regex given in the core definition
+                VerifyPrimitiveContents();
+                return;
+            }
+
+            verify(() => !Definition.Type.Select(tr => tr.Code).Contains(null), "ElementDefinition contains a type with an empty type code", Issue.PROFILE_ELEMENTDEF_CONTAINS_NULL_TYPE);
 
             // Make a list of unique Codes in the typerefs (remember, there may be more TypeRefs for a single type, 
             // each with a different profile on that type)
@@ -183,6 +209,36 @@ namespace Hl7.Fhir.Validation
             //return success;
         }
 
+        public void VerifyPrimitiveContents()
+        {
+            // Go look for the primitive type extensions
+            //  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-regex">
+            //        <valueString value="-?([0]|([1-9][0-9]*))"/>
+            //      </extension>
+            //      <code>
+            //        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type">
+            //          <valueString value="number"/>
+            //        </extension>
+            //        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type">
+            //          <valueString value="int"/>
+            //        </extension>
+            //      </code>
+            // Note that the implementer of IValueProvider may already have outsmarted us and parsed
+            // the wire representation (i.e. POCO). If the provider reads xml directly, would it know the
+            // type? Would it convert it to a .NET native type? How to check?
+
+            bool hasSingleRegExForValue = Definition.Type.Count() == 1 && Definition.Type.First().GetPrimitiveValueRegEx() != null;
+
+            if (verify(() => hasSingleRegExForValue, "Core specification for datatype '{0}' does not contain the regex to validate the value"
+                        .FormatWith(DefinitionNavigator.ParentPath), Issue.PROFILE_ELEMENTDEF_NO_PRIMITIVE_REGEX))
+            {
+                var primitiveRegEx = Definition.Type.First().GetPrimitiveValueRegEx();
+                var value = Instance.Value.ToString();
+                var success = Regex.Match(value, primitiveRegEx).Success;
+                verify(() => success, "Primitive value '{0}' does not match regex '{1}'".FormatWith(value, primitiveRegEx), Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE);
+            }
+        }
+
         private static bool isPrimitiveValuePath(string path)
         {
             return path.Count(c => c == '.') == 1 &&
@@ -214,7 +270,7 @@ namespace Hl7.Fhir.Validation
             if (Definition.MinValue == null) return;
 
             // Min/max are only defined for ordered types
-            if(!verify(() => Definition.MinValue.GetType().IsOrderedFhirType(),
+            if (!verify(() => Definition.MinValue.GetType().IsOrderedFhirType(),
                 "MinValue was given in ElementDefinition, but type '{0}' is not an ordered type".FormatWith(Definition.MinValue.TypeName),
                 Issue.PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE)) return;
 
@@ -230,10 +286,10 @@ namespace Hl7.Fhir.Validation
 
             var maxLength = Definition.MaxLength.Value;
 
-            if (!verify(() => maxLength > 0, "MaxLength was given in ElementDefinition, but it has a negative value ({0})".FormatWith(maxLength), 
+            if (!verify(() => maxLength > 0, "MaxLength was given in ElementDefinition, but it has a negative value ({0})".FormatWith(maxLength),
                 Issue.PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE)) return;
 
-            if(Instance.Value != null)
+            if (Instance.Value != null)
             {
                 //TODO: Is ToString() really the right way to turn (Fhir?) Primitives back into their original representation?
                 //If the source is POCO, hopefully FHIR types have all overloaded ToString() 
@@ -245,7 +301,7 @@ namespace Hl7.Fhir.Validation
 
         private delegate bool Condition();
 
-        private bool verify(Condition condition, string message, Issue issue, IPositionProvider location = null)                                
+        private bool verify(Condition condition, string message, Issue issue, IPositionProvider location = null)
         {
             if (!condition())
             {
@@ -266,6 +322,48 @@ namespace Hl7.Fhir.Validation
 
 
 
+    internal class Cardinality
+    {
+        public int Min;
+        public string Max;
+
+
+        public static Cardinality FromElementDefinition(ElementDefinition def)
+        {
+            if (def.Min == null) throw Error.ArgumentNull("def.Min");
+            if (def.Max == null) throw Error.ArgumentNull("def.Max");
+
+            return new Cardinality(def.Min.Value, def.Max);
+        }
+
+        public Cardinality(int min, string max)
+        {
+            if (max == null) throw Error.ArgumentNull("max");
+
+            Min = min;
+            Max = max;
+        }
+
+        public bool InRange(int x)
+        {
+            if (x < Min)
+                return false;
+
+            if (Max == "*")
+                return true;
+
+            int max = Convert.ToInt16(Max);
+            if (x > max)
+                return false;
+
+            return true;
+        }
+
+        public override string ToString()
+        {
+            return Min + ".." + Max;
+        }
+    }
 
     public interface IValidationContext
     {
@@ -273,78 +371,7 @@ namespace Hl7.Fhir.Validation
 
         // Resolver, Containing Bundle, parent Resource?
         // Options: validate_across_references
-    }
-
-
-    public class Issue
-    {
-        public int Code;
-        public OperationOutcome.IssueSeverity Severity;
-        public OperationOutcome.IssueType Type;
-
-        public CodeableConcept ToCodeableConcept()
-        {
-            return new CodeableConcept("http://hl7.org/fhir/validation-operation-outcome", Code.ToString());
-        }
-
-        private static Issue def(int code, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType type)
-        {
-            return new Issue() { Code = code, Severity = severity, Type = type };
-        }
-
-        // Content errors
-        public static readonly Issue CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN = def(1000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN = def(1001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_ELEMENT_HAS_UNKNOWN_TYPE = def(1002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_ELEMENT_HAS_UNALLOWED_TYPE = def(1003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_ELEMENT_MUST_MATCH_TYPE = def(1004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_ELEMENT_VALUE_TOO_LONG = def(1005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-
-        // Profile problems
-        public static readonly Issue PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE = def(2000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
-        public static readonly Issue PROFILE_ELEMENTDEF_MAX_USES_UNORDERED_TYPE = def(2001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
-        public static readonly Issue PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE = def(2002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
-        public static readonly Issue PROFILE_ELEMENTDEF_CONTAINS_NULL_TYPE = def(2003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
-        public static readonly Issue PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE = def(2004, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
-
-        // Unsupported 
-        public static readonly Issue UNSUPPORTED_SLICING_NOT_SUPPORTED = def(3000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
-        public static readonly Issue UNSUPPORTED_NEED_SNAPSHOT = def(3001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
-
-        // Non-availability, incomplete data
-        public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE = def(4000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-
-    }
-
-
-    public static class OperationOutcomeExtensions
-    {
-        public static bool Success(this OperationOutcome.IssueComponent ic)
-        {
-            return ic.Severity != null && ic.Severity.Value.IsSuccess();
-        }
-
-        public static bool Failure(this OperationOutcome.IssueComponent ic)
-        {
-            return !ic.Success();
-        }
-
-        public static bool Success(this OperationOutcome results)
-        {
-            return !results.Failure();
-        }
-
-        public static bool Failure(this OperationOutcome results)
-        {
-            return results.Issue.Any(i => i.Failure());
-        }
-
-
-        public static bool IsSuccess(this OperationOutcome.IssueSeverity sev)
-        {
-            return sev == OperationOutcome.IssueSeverity.Information ||
-                    sev == OperationOutcome.IssueSeverity.Warning;
-        }
+        // FP SymbolTable
     }
 
     internal static class TypeExtensions
@@ -360,30 +387,6 @@ namespace Hl7.Fhir.Validation
                    t == typeof(Integer) ||
                    t == typeof(Quantity) ||
                    t == typeof(FhirString);
-        }
-    }
-
-
-    internal static class TypeRefExtensions
-    {
-        public static string ProfileUri(this ElementDefinition.TypeRefComponent typeRef)
-        {
-            if (typeRef.Profile.Any())
-            {
-                return typeRef.Profile.First();
-            }
-            else
-                return "http://hl7.org/fhir/StructureDefinition/" + typeRef.Code.GetLiteral();
-        }
-
-        public static string ToHumanReadable(this ElementDefinition.TypeRefComponent typeRef)
-        {
-            var result = typeRef.Code.GetLiteral();
-
-            if (typeRef.Profile != null)
-                result += " ({0})".FormatWith(typeRef.Profile);
-
-            return result;
         }
     }
 }

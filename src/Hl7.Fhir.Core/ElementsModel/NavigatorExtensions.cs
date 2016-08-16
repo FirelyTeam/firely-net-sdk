@@ -19,6 +19,13 @@ namespace Hl7.Fhir.FluentPath
             }
         }
 
+        public static bool HasChildren<T>(this T navigator) where T:INavigator<T>
+        {
+            var nav = navigator.Clone();
+
+            return nav.MoveToFirstChild();
+        }
+
         public static IEnumerable<object> Values<T>(this T navigator) where T : INavigator<T>, IValueProvider
         {
             var nav = navigator.Clone();

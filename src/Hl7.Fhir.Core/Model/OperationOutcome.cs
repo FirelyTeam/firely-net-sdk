@@ -78,6 +78,15 @@ namespace Hl7.Fhir.Model
             return text;
         }
 
+
+        public bool Success
+        {
+            get
+            {
+                return !Issue.Any(i => !i.Success);
+            }
+        }
+
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public partial class IssueComponent
         {
@@ -88,6 +97,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     return String.Format("Code=\"{0}\" {1}", this.Code, _Details.DebuggerDisplay("Details."));
+                }
+            }
+
+            public bool Success
+            {
+                get
+                {
+                    return Severity != null && (Severity.Value == IssueSeverity.Information || Severity.Value == IssueSeverity.Warning);
                 }
             }
         }

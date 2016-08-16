@@ -5,7 +5,6 @@
 * This file is licensed under the BSD 3-Clause license
 */
 
-using Hl7.Fhir.Specification.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
