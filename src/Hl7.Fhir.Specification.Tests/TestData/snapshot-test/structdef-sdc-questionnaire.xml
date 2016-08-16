@@ -293,7 +293,7 @@
       <type>
         <code value="Extension"/>
         <profile
-                 value="http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire-endpoint"/>
+                 value="http://hl7.org/fhir/StructureDefinition/sdc-questionnaire-endpoint"/>
       </type>
       <condition value="ele-1"/>
       <constraint>
@@ -335,7 +335,7 @@
       <type>
         <code value="Extension"/>
         <profile
-                 value="http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire-provenanceSignatureRequred"/>
+                 value="http://hl7.org/fhir/StructureDefinition/sdc-questionnaire-provenanceSignatureRequred"/>
       </type>
       <mustSupport value="true"/>
       <isModifier value="false"/>
@@ -1245,7 +1245,7 @@
       <type>
         <code value="Extension"/>
         <profile
-                 value="http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire-optionalDisplay"/>
+                 value="http://hl7.org/fhir/StructureDefinition/sdc-questionnaire-optionalDisplay"/>
       </type>
       <condition value="ele-1"/>
       <constraint>
@@ -3199,7 +3199,7 @@
       <type>
         <code value="Extension"/>
         <profile
-                 value="http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire-endpoint"/>
+                 value="http://hl7.org/fhir/StructureDefinition/sdc-questionnaire-endpoint"/>
       </type>
       <mustSupport value="true"/>
       <isModifier value="false"/>
@@ -3218,7 +3218,7 @@
       <type>
         <code value="Extension"/>
         <profile
-                 value="http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire-provenanceSignatureRequred"/>
+                 value="http://hl7.org/fhir/StructureDefinition/sdc-questionnaire-provenanceSignatureRequred"/>
       </type>
       <mustSupport value="true"/>
       <isModifier value="false"/>
@@ -3480,7 +3480,7 @@
       <type>
         <code value="Extension"/>
         <profile
-                 value="http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire-optionalDisplay"/>
+                 value="http://hl7.org/fhir/StructureDefinition/sdc-questionnaire-optionalDisplay"/>
       </type>
       <mustSupport value="false"/>
       <isModifier value="false"/>

@@ -19,7 +19,7 @@
   <!-- [WMR 20160810] Fixed
 	<kind value="complex-type" />
   -->
-  <kind value="datatype" />
+  <kind value="resource" />
   
   <abstract value="false" />
 	<contextType value="resource" />
@@ -30,11 +30,11 @@
 	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
 	<derivation value="constraint" />
   -->
-  <constrainedType value="Extension"/>
-  <base value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+  <type value="Extension"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+	<derivation value="constraint" />
 
-
-  <snapshot>
+	<snapshot>
 		<element id="Extension">
 			<path value="Extension" />
 			<short value="Do not call flag." />

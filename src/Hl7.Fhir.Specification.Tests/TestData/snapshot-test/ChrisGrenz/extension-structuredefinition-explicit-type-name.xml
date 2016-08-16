@@ -16,11 +16,11 @@
   <description value="A name to use for the type, in implementations. This is a suggestion; it&#39;s not a normative part of the FHIR specification, but it does appear in the UML diagrams, and is used in generated code, schemas, etc.to identify the type."/>
   <fhirVersion value="1.0.2"/>
   <kind value="datatype"/>
-  <constrainedType value="Extension"/>
+  <type value="Extension"/>
   <abstract value="false"/>
   <contextType value="datatype"/>
   <context value="ElementDefinition"/>
-  <base value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/>
   <snapshot>
     <element>
       <path value="Extension"/>

@@ -329,9 +329,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(generator.expandElement(nav));
             Assert.IsTrue(nav.MoveToChild("period"), "Did not move into complex datatype ContactPoint");
 
-            nav.JumpToFirst("Questionnaire.group");
+            nav.JumpToFirst("Questionnaire.item");
             Assert.IsTrue(generator.expandElement(nav));
-            Assert.IsTrue(nav.MoveToChild("title"), "Did not move into internally defined backbone element Group");
+            Assert.IsTrue(nav.MoveToChild("text"), "Did not move into internally defined backbone element Group");
         }
 
         // [WMR 20160802] NEW - Expand a single element
@@ -352,14 +352,14 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestExpandElement_QuestionnaireGroupGroup()
         {
             // Validate name reference expansion
-            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.group");
+            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item.item");
         }
 
         [TestMethod]
         public void TestExpandElement_QuestionnaireGroupQuestionGroup()
         {
             // Validate name reference expansion
-            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.question.group");
+            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item.item.item");
         }
 
         private void TestExpandElement(string srcProfileUrl, string expandElemPath)

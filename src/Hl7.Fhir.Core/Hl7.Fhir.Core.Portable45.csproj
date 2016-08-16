@@ -101,6 +101,7 @@
     <Compile Include="Model\Date.cs" />
     <Compile Include="Model\BackboneElement.cs" />
     <Compile Include="Model\Element.cs" />
+    <Compile Include="Model\ElementDefinition.cs" />
     <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Base64Binary.cs" />
     <Compile Include="Model\FhirString.cs" />

@@ -184,7 +184,15 @@ namespace Hl7.Fhir.Specification.Navigation
 
             for (int pos = 0; pos < Count; pos++)
             {
-                if (Elements[pos].Name == nameReference)
+                if (nameReference.StartsWith("#"))
+                {
+                    if (Elements[pos].ElementId == nameReference.TrimStart('#'))
+                    {
+                        OrdinalPosition = pos;
+                        return true;
+                    }
+                }
+                else if (Elements[pos].Name == nameReference)
                 {
                     OrdinalPosition = pos;
                     return true;

@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Specification.Tests
             var conceptMaps = conceptMapUrls.Select( url => (ConceptMap)source.LoadConformanceResourceByUrl(url));
 
             Assert.IsTrue(conceptMaps.Count() > 0);
-            Assert.IsTrue(conceptMaps.Any(cm => cm.Id == "v2-address-use"));
+            Assert.IsTrue(conceptMaps.Any(cm => cm.Id == "cm-address-use-v2"));
         }
 
         [TestMethod]

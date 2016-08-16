@@ -12,12 +12,13 @@
   <date value="2015-09-22T20:02:49+10:00" />
   <description value="Extension to provide translations for a primitive string element" />
   <fhirVersion value="1.0.1" />
-  <kind value="datatype" />
-  <constrainedType value="Extension" />
+  <kind value="primitive-type" />
+  <type value="Extension" />
   <abstract value="false" />
   <contextType value="resource" />
   <context value="string" />
-  <base value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="specialization" />
   <snapshot>
     <element>
       <path value="Extension"/>

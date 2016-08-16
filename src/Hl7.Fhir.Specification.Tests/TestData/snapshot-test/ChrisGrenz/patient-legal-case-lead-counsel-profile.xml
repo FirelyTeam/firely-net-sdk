@@ -14,22 +14,15 @@
 		<name value="RIM Mapping" />
 	</mapping>
 
-  <!-- [WMR 20160810] Fixed
 	<kind value="complex-type" />
-  -->
-  <kind value="datatype" />
 
   <abstract value="false" />
 	<contextType value="datatype" />
 	<context value="Extension.value[x]" />
 
-  <!-- [WMR 20160810] Fixed
-	<baseType value="Extension" />
+  <type value="Extension" />
 	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
 	<derivation value="constraint" />
-  -->
-  <constrainedType value="Extension"/>
-  <base value="http://hl7.org/fhir/StructureDefinition/Extension"/>
 
   <snapshot>
 		<element id="Extension">

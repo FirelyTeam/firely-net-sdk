@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\ElementDefinition.cs" />
     <Compile Include="Model\Generated\ActivityDefinition.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>

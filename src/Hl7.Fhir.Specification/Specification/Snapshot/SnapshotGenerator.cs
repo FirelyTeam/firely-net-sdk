@@ -553,7 +553,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     // [WMR 20160720] Handle custom type profiles (GForge #9791)
                     var primaryType = defn.Type[0];
-                    if (!String.IsNullOrEmpty(primaryType.Code))
+                    if (String.IsNullOrEmpty(primaryType.Code))
                     {
                         // Element has no type code, cannot expand...
                         return false;

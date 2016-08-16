@@ -539,7 +539,7 @@ namespace Hl7.Fhir.Tests.Rest
             //// tests....
 
             System.Diagnostics.Trace.WriteLine("\r\nHistory on the patient type");
-            history = client.TypeHistory("Patient", timestampBeforeCreationAndDeletions);
+            history = client.TypeHistory("Patient", timestampBeforeCreationAndDeletions.ToUniversalTime());
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
             Assert.AreEqual(4, history.Entry.Count());
@@ -547,21 +547,24 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
             System.Diagnostics.Trace.WriteLine("\r\nHistory on the patient type (using the generic method in the client)");
-            history = client.TypeHistory<Patient>(timestampBeforeCreationAndDeletions, summary: SummaryType.True);
+            history = client.TypeHistory<Patient>(timestampBeforeCreationAndDeletions.ToUniversalTime(), summary: SummaryType.True);
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
             Assert.AreEqual(4, history.Entry.Count());
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
-            System.Diagnostics.Trace.WriteLine("\r\nWhole system history since the start of this test");
-            history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions);
-            Assert.IsNotNull(history);
-            DebugDumpBundle(history);
-            Assert.IsTrue(4 <= history.Entry.Count(), "Whole System history should have at least 4 new events");
-            // Check that the number of patients that have been created is what we expected
-            Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null && entry.Resource is Patient).Count());
-            Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted() && entry.Request.Url.Contains("Patient")).Count());
+            if (!testEndpoint.OriginalString.Contains("sqlonfhir-stu3"))
+            {
+                System.Diagnostics.Trace.WriteLine("\r\nWhole system history since the start of this test");
+                history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions.ToUniversalTime());
+                Assert.IsNotNull(history);
+                DebugDumpBundle(history);
+                Assert.IsTrue(4 <= history.Entry.Count(), "Whole System history should have at least 4 new events");
+                // Check that the number of patients that have been created is what we expected
+                Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null && entry.Resource is Patient).Count());
+                Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted() && entry.Request.Url.Contains("Patient")).Count());
+            }
         }
 
 

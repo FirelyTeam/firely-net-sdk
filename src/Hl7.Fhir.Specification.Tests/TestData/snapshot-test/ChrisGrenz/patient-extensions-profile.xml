@@ -47,10 +47,11 @@
 	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
 	<derivation value="constraint" />
   -->
-  <constrainedType value="Patient"/>
-  <base value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+	<derivation value="constraint" />
 
-  <snapshot>
+	<snapshot>
 		<element id="Patient">
 			<path value="Patient" />
 			<short value="Information about an individual or animal receiving health care services" />
