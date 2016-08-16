@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Specification.Navigation
         // [WMR 20160801] NEW
 
         /// <summary>Enumerates the type profile references of the primary element type.</summary>
-        public static IEnumerable<string> PrimaryTypeProfiles(this ElementDefinition elem)
+        public static string PrimaryTypeProfiles(this ElementDefinition elem)
         {
             if (elem.Type != null)
             {
@@ -107,25 +107,25 @@ namespace Hl7.Fhir.Specification.Navigation
                     return primaryType.Profile;
                 }
             }
-            return Enumerable.Empty<string>();
+            return null;
         }
 
 
         /// <summary>Returns the first type profile reference of the primary element type, if it exists, or <c>null</c></summary>
         public static string PrimaryTypeProfile(this ElementDefinition elem)
         {
-            return elem.PrimaryTypeProfiles().FirstOrDefault();
+            return elem.PrimaryTypeProfiles();
         }
 
         /// <summary>Returns the type code of the primary element type, or <c>null</c>.</summary>
-        public static FHIRDefinedType? PrimaryTypeCode(this ElementDefinition elem)
+        public static FHIRAllTypes? PrimaryTypeCode(this ElementDefinition elem)
         {
             if (elem.Type != null)
             {
                 var type = elem.Type.FirstOrDefault();
                 if (type != null)
                 {
-                    return primaryType.Profile;
+                    return (FHIRAllTypes)Enum.Parse(typeof(FHIRAllTypes), type.Code);
                 }
             }
             return null;
@@ -152,9 +152,9 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public static string GetNameFromPath(this ElementDefinition element)
         {
- 	        var pos = element.Path.LastIndexOf(".");
+            var pos = element.Path.LastIndexOf(".");
 
-            return pos != -1 ? element.Path.Substring(pos+1) : element.Path;
+            return pos != -1 ? element.Path.Substring(pos + 1) : element.Path;
         }
 
         public static string GetParentNameFromPath(this ElementDefinition element)
@@ -164,5 +164,5 @@ namespace Hl7.Fhir.Specification.Navigation
 
     }
 }
-    
-    
+
+

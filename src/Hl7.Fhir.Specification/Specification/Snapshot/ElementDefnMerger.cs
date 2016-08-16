@@ -85,13 +85,13 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (snap.IsRootElement())
             {
                 var primaryType = snap.Type.FirstOrDefault();
-                if (primaryType == null || primaryType.Code == FHIRDefinedType.DomainResource)
+                if (primaryType == null || primaryType.Code == FHIRAllTypes.DomainResource.ToString())
                 {
                     snap.Type = new List<ElementDefinition.TypeRefComponent>()
                     {
                         // Initialize root element type code from element path, e.g. "Patient"
                         // Note: use ObjectValue in order to handle unknown resource types
-                        new ElementDefinition.TypeRefComponent() { CodeElement = new Code<FHIRDefinedType>() { ObjectValue = snap.Path } }
+                        new ElementDefinition.TypeRefComponent() { CodeElement = new Code() { ObjectValue = snap.Path } }
                     };
                 }
             }

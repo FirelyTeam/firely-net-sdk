@@ -258,17 +258,19 @@ namespace Hl7.Fhir.Specification.Snapshot
         private void ExpandTypeProfiles(ElementNavigator snap, ElementNavigator diff)
         {
             var primaryDiffType = diff.Current.Type.FirstOrDefault();
-            if (primaryDiffType != null && primaryDiffType.Code != FHIRAllTypes.Reference.ToString())
+            if (primaryDiffType == null || primaryDiffType.Code == FHIRAllTypes.Reference.ToString())
             {
-                var primaryDiffTypeProfile = primaryDiffType.Profile;
-                var primarySnapType = snap.Current.Type.FirstOrDefault();
-                var primarySnapTypeProfile = primarySnapType != null ? primarySnapType.Profile : null;
-                if (!string.IsNullOrEmpty(primaryDiffTypeProfile) && primaryDiffTypeProfile != primarySnapTypeProfile)
-                {
-                    // Debug.Print("Path = '{0}' - Merge custom type profile '{1}'".FormatWith(diff.Path, primaryTypeProfile));
+                return;
+            }
 
-            var primaryDiffTypeProfile = primaryDiffType.Profile.FirstOrDefault();
-            var primarySnapTypeProfile = primarySnapType.Profile.FirstOrDefault();
+            var primarySnapType = snap.Current.Type.FirstOrDefault();
+            if (primarySnapType == null)
+            {
+                return;
+            }
+
+            var primaryDiffTypeProfile = primaryDiffType.Profile;
+            var primarySnapTypeProfile = primarySnapType.Profile;
             if (string.IsNullOrEmpty(primaryDiffTypeProfile) || primaryDiffTypeProfile == primarySnapTypeProfile)
             {
                 return;
@@ -387,28 +389,24 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (extElem.IsExtension() && nav.HasChildren)
             {
                 // Resolve the canonical url of the extension definition from type[0]/profile[0]
-                var primaryType = extElem.Type.FirstOrDefault();
-                if (primaryType != null)
+                var profile = extElem.PrimaryTypeProfile();
+                if (profile != null)
                 {
-                    var profile = primaryType.Profile;
-                    if (profile != null)
+                    var snapExtPos = nav.Bookmark();
+                    try
                     {
-                        var snapExtPos = nav.Bookmark();
-                        try
+                        if (nav.MoveToChild("url"))
                         {
-                            if (nav.MoveToChild("url"))
+                            var urlElem = nav.Current;
+                            if (urlElem != null && urlElem.Fixed == null)
                             {
-                                var urlElem = nav.Current;
-                                if (urlElem != null && urlElem.Fixed == null)
-                                {
-                                    urlElem.Fixed = new FhirUri(profile);
-                                }
+                                urlElem.Fixed = new FhirUri(profile);
                             }
                         }
-                        finally
-                        {
-                            nav.ReturnToBookmark(snapExtPos);
-                        }
+                    }
+                    finally
+                    {
+                        nav.ReturnToBookmark(snapExtPos);
                     }
                 }
             }
@@ -479,19 +477,19 @@ namespace Hl7.Fhir.Specification.Snapshot
                 throw Error.Argument("structure", "structure is not a constraint or extension");
             }
 
-            if (structure.Base == null)
+            if (structure.BaseDefinition == null)
             {
                 throw Error.Argument("structure", "structure is a constraint, but no base has been specified");
             }
 
-            var baseStructure = _resolver.GetStructureDefinition(structure.Base);
+            var baseStructure = _resolver.GetStructureDefinition(structure.BaseDefinition);
 
             if (baseStructure == null)
             {
                 // throw Error.InvalidOperation("Could not locate the base StructureDefinition for url " + structure.Base);
                 throw Error.ResourceReferenceNotFoundException(
-                    structure.Base,
-                    "Unresolved profile reference. Cannot locate the base profile with url '{0}'".FormatWith(structure.Base)
+                    structure.BaseDefinition,
+                    "Unresolved profile reference. Cannot locate the base profile with url '{0}'".FormatWith(structure.BaseDefinition)
                 );
             }
 
@@ -505,7 +503,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else
                 {
-                    throw Error.InvalidOperation("Resolved base profile for url '{0}' does not contain a snapshot representation.", structure.Base);
+                    throw Error.InvalidOperation("Resolved base profile for url '{0}' does not contain a snapshot representation.", structure.BaseDefinition);
                 }
             }
 
@@ -538,7 +536,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (!String.IsNullOrEmpty(defn.ContentReference))
             {
                 var sourceNav = new ElementNavigator(nav);
-                // This likely needs more work
                 var success = sourceNav.JumpToNameReference(defn.ContentReference);
 
                 if (!success)
@@ -556,19 +553,52 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     // [WMR 20160720] Handle custom type profiles (GForge #9791)
                     var primaryType = defn.Type[0];
-                    var typeProfile = primaryType.Profile;
-                    StructureDefinition coreType = null;
-                    if (!defn.IsExtension() && !defn.IsReference() && !string.IsNullOrEmpty(typeProfile) && settings.ExpandTypeProfiles)
+                    if (!String.IsNullOrEmpty(primaryType.Code))
                     {
-                        coreType = resolver.GetStructureDefinition(typeProfile);
-                        if ((coreType == null || coreType.Snapshot == null) && settings.IgnoreMissingTypeProfiles)
+                        // Element has no type code, cannot expand...
+                        return false;
+                    }
+
+                    var typeCode = primaryType.Code;
+                    var typeProfile = primaryType.Profile;
+                    StructureDefinition baseStructure = null;
+                    if (!defn.IsExtension() && !defn.IsReference() && !string.IsNullOrEmpty(typeProfile) && _settings.ExpandTypeProfiles)
+                    {
+                        // Try to resolve the custom element type profile reference
+                        baseStructure = _resolver.GetStructureDefinition(typeProfile);
+                        //if ((baseStructure == null || baseStructure.Snapshot == null) && _settings.IgnoreUnresolvedTypeProfiles)
+                        //{
+                        //    // Ignore unresolved external type profile reference; expand the underlying standard core type
+                        //    baseStructure = _resolver.GetStructureDefinitionForCoreType(typeCode);
+                        //}
+                        if (baseStructure == null)
                         {
-                            coreType = resolver.GetStructureDefinitionForCoreType(primaryType.Code);
+                            if (_settings.IgnoreUnresolvedProfiles)
+                            {
+                                // Ignore unresolved external type profile reference; expand the underlying standard core type
+                                baseStructure = _resolver.GetStructureDefinitionForCoreType(typeCode);
+                            }
                         }
                     }
                     else
                     {
-                        coreType = resolver.GetStructureDefinitionForCoreType(primaryType.Code);
+                        baseStructure = _resolver.GetStructureDefinitionForCoreType(typeCode);
+                    }
+
+                    if (baseStructure == null)
+                    {
+                        // throw Error.NotSupported("Trying to navigate down a node that has a declared base type of '{0}', which is unknown".FormatWith(typeCode));
+                        if (typeProfile != null)
+                        {
+                            throw Error.ResourceReferenceNotFoundException(
+                                typeProfile,
+                                "Unresolved profile reference. Cannot locate the element type profile for url '{0}'".FormatWith(typeProfile)
+                            );
+                        }
+                        else
+                        {
+                            throw Error.NotSupported("Unresolved element type. Cannot locate the profile for element type '{0}'.".FormatWith(typeCode));
+                        }
                     }
 
                     if (baseStructure.Snapshot == null)
@@ -652,7 +682,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        private StructureDefinition[] getBaseTypeDefs(FHIRDefinedType? type)
+        private StructureDefinition[] getBaseTypeDefs(FHIRAllTypes? type)
         {
             var result = new Stack<StructureDefinition>();
             while (type.HasValue)

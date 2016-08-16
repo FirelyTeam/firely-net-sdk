@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (sd != null && sd.Snapshot != null)
             {
                 Debug.WriteLine("References for StructureDefinition '{0}' ('{1}')".FormatWith(sd.Name, sd.Url));
-                Debug.WriteLine("Base = '{0}'".FormatWith(sd.Base));
+                Debug.WriteLine("Base = '{0}'".FormatWith(sd.BaseDefinition));
 
                 // FhirClient client = new FhirClient("http://fhir2.healthintersections.com.au/open/");
                 // var folderPath = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\snapshot-test\download");
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (sd != null && sd.Snapshot != null)
             {
                 Debug.WriteLine("StructureDefinition '{0}' ('{1}')".FormatWith(sd.Name, sd.Url));
-                Debug.WriteLine("Base = '{0}'".FormatWith(sd.Base));
+                Debug.WriteLine("Base = '{0}'".FormatWith(sd.BaseDefinition));
                 Debug.Indent();
                 foreach (var elem in sd.Snapshot.Element)
                 {

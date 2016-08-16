@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var sbm = snapNav.Bookmark();
             var dbm = diffNav.Bookmark();
 
-            foreach(var match in matches)
+            foreach (var match in matches)
             {
                 if (!snapNav.ReturnToBookmark(match.BaseBookmark) || !diffNav.ReturnToBookmark(match.DiffBookmark))
                     throw Error.InvalidOperation("Found unreachable bookmark in matches");
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             bool isExtension = diffNav.Current.IsExtension();
             bool diffIsSliced = diffNav.Current.Slicing != null;
             if (diffIsSliced || isExtension)
-                {
+            {
                 // Differential has information for the slicing entry
                 result.Add(new MatchInfo()
                 {
@@ -288,15 +288,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // snapNav has already expanded target extension definition 'questionnaire-enableWhen'
                 // => Match to base profile on child element with name 'question'
 
-                var diffProfiles = diffNav.Current.Type.FirstOrDefault().Profile;
-                if (diffProfiles == null || diffProfiles.Length == 0)
+                var diffProfiles = diffNav.Current.PrimaryTypeProfiles();
+                if (string.IsNullOrEmpty(diffProfiles))
                 {
                     throw Error.InvalidOperation("Differential is reslicing on url, but resliced element has no type profile (path = '{0}').", diffNav.Path);
                 }
 
                 var diffProfile = diffProfiles;
-                string profileUrl, elementName;
-                var isComplex = SnapshotGenerator.IsComplexProfileReference(diffProfile, out profileUrl, out elementName);
+                var profileRef = ProfileReference.FromUrl(diffProfile);
                 while (snapNav.MoveToNext(snapNav.PathName))
                 {
                     var baseProfiles = snapNav.Current.PrimaryTypeProfiles().ToArray();
