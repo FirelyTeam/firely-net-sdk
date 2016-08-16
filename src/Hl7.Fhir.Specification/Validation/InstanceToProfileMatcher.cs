@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Validation
             if (name == instance.Name) return true;   
 
             // match where definition path includes a type suffix (typeslice shorthand)
-            // example:  Patient.deceasedBoolean matches Patient.deceased (with type 'boolean')
+            // example: path Patient.deceasedBoolean matches Patient.deceased (with type 'boolean')
             if (name == instance.Name + instance.TypeName.Capitalize()) return true;
 
             // match where definition path is a choice (suffix '[x]'), in this case
