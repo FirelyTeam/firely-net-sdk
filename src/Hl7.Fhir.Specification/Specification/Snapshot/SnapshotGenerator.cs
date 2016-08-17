@@ -1,6 +1,4 @@
 ﻿#define DETECT_RECURSION
-// [WMR 20160815] New: emit reference to base element via UserData
-#define BASEDEF
 // [WMR 20160815] New: expand all complex elements (even without any diff constraints)
 #define EXPANDALL
 
@@ -23,11 +21,9 @@ using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
-    // TODO: If IgnoreUnresolvedProfiles = true, then aggregate info about all missing profiles and return to client
-
     public sealed partial class SnapshotGenerator
     {
-        // public const string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
+        /// <summary>The canonical url of the extension definition that marks snapshot elements with associated differential constraints.</summary>
         public static readonly string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
 
         private ArtifactResolver _resolver;
@@ -161,7 +157,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // Important: explicitly clear the slicing node in the copy!
                         snap.Current.Slicing = null;
 
-                        markChange(snap.Current);
+                        // Notify clients about a snapshot element with differential constraints
+                        OnConstraint(snap.Current);
 
                         // Merge differential
                         mergeElement(snap, diff);
@@ -569,14 +566,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             var snap = new ElementNavigator(snapshot.Element);
 
-#if BASEDEF
-            // [WMR 20160816] Emit a reference to the original (unmodified) base profile on the root element
-            if (_settings.EmitBaseData)
-            {
-                var baseProfile = (StructureDefinition)baseStructure.DeepCopy();
-                snapshot.Element[0].SetBaseProfile(baseProfile);
-            }
-#endif
+            // [WMR 20160817] Notify client about the resolved base profile
+            OnBaseProfileResolved(baseStructure);
 
             // Fill out the gaps (mostly missing parents) in the differential representation
             var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
@@ -719,14 +710,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                         MinElement = (Integer)baseElem.MinElement.DeepCopy(),
                         PathElement = (FhirString)baseElem.PathElement.DeepCopy()
                     };
+
                 }
-#if BASEDEF
-                if (_settings.EmitBaseData)
-                {
-                    var baseDef = (ElementDefinition)element.DeepCopy();
-                    element.SetBaseDefinition(baseDef);
-                }
-#endif
+                // Notify clients about resolved base element
+                OnBaseElementResolved(element);
             }
         }
 
@@ -746,60 +733,5 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result.ToArray();
         }
 
-        /// <summary>
-        /// Decorate the specified snapshot element definition with a custom extension,
-        /// to indicate that it specifies constraints on the base element definition.
-        /// </summary>
-        /// <param name="snap"></param>
-        private void markChange(Element snap)
-        {
-            if (_settings.MarkChanges)
-            {
-                snap.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
-            }
-        }
     }
-
-#if BASEDEF
-    /// <summary>Extension methods to access custom element data on the snapshot.</summary>
-    public static class SnapshotElementExtensions
-    {
-        private static readonly string USERDATA_BASEPROFILE = "@@@SNAPSHOTBASEPROFILE@@@";
-        private static readonly string USERDATA_BASEDEF = "@@@SNAPSHOTBASEDEF@@@";
-
-        private static TValue GetValueOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> collection, TKey key, TValue defaultValue = default(TValue))
-        {
-            TValue result;
-            if (collection.TryGetValue(key, out result))
-            {
-                return result;
-            }
-            return defaultValue;
-        }
-
-        /// <summary>Gets a reference to the base profile <see cref="StructureDefinition"/> instance.</summary>
-        public static StructureDefinition GetBaseProfile(this Element element)
-        {
-            return element.UserData.GetValueOrDefault(USERDATA_BASEPROFILE) as StructureDefinition;
-        }
-
-        /// <summary>Sets a reference to the base profile <see cref="StructureDefinition"/> instance.</summary>
-        public static void SetBaseProfile(this Element element, StructureDefinition baseProfile)
-        {
-            element.UserData[USERDATA_BASEPROFILE] = baseProfile;
-        }
-
-        /// <summary>Gets a reference to the matching <see cref="ElementDefinition"/> instance from the base profile.</summary>
-        public static ElementDefinition GetBaseDefinition(this Element element)
-        {
-            return element.UserData.GetValueOrDefault(USERDATA_BASEDEF) as ElementDefinition;
-        }
-
-        /// <summary>Sets a reference to the matching <see cref="ElementDefinition"/> instance from the base profile.</summary>
-        public static void SetBaseDefinition(this Element element, ElementDefinition baseDef)
-        {
-            element.UserData[USERDATA_BASEDEF] = baseDef;
-        }
-    }
-#endif
 }

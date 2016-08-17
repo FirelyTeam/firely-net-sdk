@@ -62,8 +62,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // In case the diff doesn't have these, give some generic defaults.
                 if (isExtensionConstraint)
                 {
-                    snap.Short = "Extension"; markChange(snap.ShortElement);
-                    snap.Definition = "An Extension"; markChange(snap.DefinitionElement);
+                    snap.Short = "Extension"; OnConstraint(snap.ShortElement);
+                    snap.Definition = "An Extension"; OnConstraint(snap.DefinitionElement);
                     snap.Comments = null;
                     snap.Requirements = null;
                     snap.AliasElement = new List<FhirString>();
@@ -101,14 +101,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // Note: use ObjectValue in order to handle unknown resource types
                             new ElementDefinition.TypeRefComponent() { CodeElement = new Code<FHIRDefinedType>() { ObjectValue = snap.Path } }
                         };
-                        markChange(snap.Type[0]);
+                        OnConstraint(snap.Type[0]);
                     }
                 }
                 // Type is just overridden
                 else if (!diff.Type.IsNullOrEmpty() && !diff.IsExactly(snap))
                 {
                     snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
-                    foreach (var element in snap.Type) markChange(snap);
+                    foreach (var element in snap.Type) OnConstraint(snap);
                 }
             
 
@@ -144,9 +144,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
             }
 
-            private void markChange(Element snap)
+            /// <summary>Notify clients about a snapshot element with differential constraints.</summary>
+            private void OnConstraint(Element snap)
             {
-                _generator.markChange(snap);
+                _generator.OnConstraint(snap);
             }
 
             /// <summary>
@@ -188,7 +189,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         result.ObjectValue = diffText;
                     }
 
-                    markChange(result);
+                    OnConstraint(result);
                     return result;
                 }
                 else
@@ -203,7 +204,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (diff != null && (snap == null || !diff.IsExactly(snap)))
                 {
                     var result = (T)diff.DeepCopy();
-                    markChange(result);
+                    OnConstraint(result);
                     return result;
                 }
                 else
@@ -224,7 +225,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         if (!result.Any(e => elemComparer(e, element)))
                         {
                             var newElement = (T)element.DeepCopy();
-                            markChange(newElement);
+                            OnConstraint(newElement);
                             result.Add(newElement);
                         }
                     }

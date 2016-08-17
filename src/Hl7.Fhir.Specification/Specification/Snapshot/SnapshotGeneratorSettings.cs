@@ -1,6 +1,4 @@
-﻿// [WMR 20160815] New: emit reference to base element via UserData
-#define BASEDEF
-// [WMR 20160815] New: expand all complex elements (even without any diff constraints)
+﻿// [WMR 20160815] New: expand all complex elements (even without any diff constraints)
 #define EXPANDALL
 
 /* 
@@ -27,9 +25,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             ExpandExternalProfiles = false,
             RewriteElementBase = false,
             NormalizeElementBase = false    // true in STU3
-#if BASEDEF
-            , EmitBaseData = false
-#endif
 #if EXPANDALL
             , ExpandAll = false
 #endif
@@ -82,18 +77,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Path = 'Patient.name.given' => Base.Path = 'HumanName.given' (derived from parent element type = 'HumanName')
         /// </example>
         public bool NormalizeElementBase { get; set; }
-
-#if BASEDEF
-        /// <summary>
-        /// EXPERIMENTAL!
-        /// Enable this setting to decorate each element definition in the snapshot
-        /// component with a reference to the associated base element definition.
-        /// </summary>
-        /// <remarks>
-        /// The information is persisted in <see cref="Base.UserData"/> storage and not serialized.
-        /// </remarks>
-        public bool EmitBaseData { get; set; }
-#endif
 
 #if EXPANDALL
         /// <summary>
