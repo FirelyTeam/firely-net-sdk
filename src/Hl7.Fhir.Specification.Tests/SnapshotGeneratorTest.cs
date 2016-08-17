@@ -574,8 +574,8 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
-            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
-            var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            // var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
 
             Assert.IsNotNull(sd);
 
@@ -621,7 +621,14 @@ namespace Hl7.Fhir.Specification.Tests
 
                 var isValid = hasChanges == !equals; // || elem.IsRootElement() || elem.Slicing != null;
 
-                Debug.WriteLine("{0}  |  {1}  |  {2}  |  {3}  |  {4}  |  {5}    {6}", equals ? "-" : "+", hasChanges ? "+" : "-", elem.Path, elem.Base.Path, baseDef.Path, !isValid ? "!!!" : "");
+                Debug.WriteLine("{0}  |  {1}  |  {2}  |  {3}  |  {4}  |  {5}",
+                    equals ? "-" : "+",
+                    hasChanges ? "+" : "-",
+                    elem.Path,
+                    elem.Base.Path,
+                    baseDef.Path,
+                    !isValid ? "!!!" : ""
+                );
                 Assert.AreEqual(elem.Base.Path, baseDef.Path);
                 // [WMR 20160816] WRONG! baseDef could be inherited from type profile and may further constrain original cardinality
                 // Assert.AreEqual(elem.Base.Min, baseDef.Min);

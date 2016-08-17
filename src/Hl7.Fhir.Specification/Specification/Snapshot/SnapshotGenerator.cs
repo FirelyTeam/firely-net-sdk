@@ -23,7 +23,7 @@ using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
-
+    // TODO: If IgnoreUnresolvedProfiles = true, then aggregate info about all missing profiles and return to client
 
     public sealed partial class SnapshotGenerator
     {
@@ -45,11 +45,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         public SnapshotGenerator(ArtifactResolver resolver) : this(resolver, SnapshotGeneratorSettings.Default) { }
-
-        //private SnapshotGenerator Clone()
-        //{
-        //    return new SnapshotGenerator(_resolver, _settings);
-        //}
 
         /// <summary>
         /// (Re-)generate the <see cref="StructureDefinition.Snapshot"/> component of the specified <see cref="StructureDefinition"/> instance.
@@ -203,11 +198,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             // First merge constraints from element type profile, if it exists
             if (_settings.MergeTypeProfiles)
             {
-                MergeTypeProfiles(snap, diff);
+                mergeTypeProfiles(snap, diff);
             }
 
             // Then merge constraints from base profile
-            MergeElementDefinition(snap.Current, diff.Current);
+            mergeElementDefinition(snap.Current, diff.Current);
 
             if (diff.HasChildren)
             {
@@ -261,6 +256,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
         }
 
+        private void mergeElementDefinition(ElementDefinition snap, ElementDefinition diff)
+        {
+            ElementDefnMerger.Merge(this, snap, diff);
+        }
+
         // [WMR 20160720] Merge custom element type profiles, e.g. Patient.name with type.profile = "MyHumanName"
         // Also for extensions, i.e. an extension element in a profile inherits constraints from the extension definition
         // Specifically, the profile extension element inherits the cardinality from the extension definition root element (unless overridden in differential)
@@ -281,8 +281,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         //
         // Following logic is configurable
         // By default, use strategy (A): ignore custom type profile, merge from base
-        // If MergeTypeProfiles is enabled, then first merge custom type profile before merging base
-        private void MergeTypeProfiles(ElementNavigator snap, ElementNavigator diff)
+        // If mergeTypeProfiles is enabled, then first merge custom type profile before merging base
+        private void mergeTypeProfiles(ElementNavigator snap, ElementNavigator diff)
         {
             var primaryDiffType = diff.Current.Type.FirstOrDefault();
             if (primaryDiffType == null || primaryDiffType.Code == FHIRDefinedType.Reference)
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     else
                     {
                         // Only merge the profile root element; no need to expand children
-                        MergeElementDefinition(snap.Current, baseNav.Current);
+                        mergeElementDefinition(snap.Current, baseNav.Current);
                     }
                 }
 #if DEBUG
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
 
-            MergeElementDefinition(snap.Current, slicingEntry);
+            mergeElementDefinition(snap.Current, slicingEntry);
 
             ////TODO: update / check the slice entry's min/max property to match what we've found in the slice group
         }
@@ -746,11 +746,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result.ToArray();
         }
 
-        private void MergeElementDefinition(ElementDefinition snap, ElementDefinition diff)
-        {
-            ElementDefnMerger.Merge(this, snap, diff);
-        }
-
         /// <summary>
         /// Decorate the specified snapshot element definition with a custom extension,
         /// to indicate that it specifies constraints on the base element definition.
@@ -772,15 +767,20 @@ namespace Hl7.Fhir.Specification.Snapshot
         private static readonly string USERDATA_BASEPROFILE = "@@@SNAPSHOTBASEPROFILE@@@";
         private static readonly string USERDATA_BASEDEF = "@@@SNAPSHOTBASEDEF@@@";
 
+        private static TValue GetValueOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> collection, TKey key, TValue defaultValue = default(TValue))
+        {
+            TValue result;
+            if (collection.TryGetValue(key, out result))
+            {
+                return result;
+            }
+            return defaultValue;
+        }
+
         /// <summary>Gets a reference to the base profile <see cref="StructureDefinition"/> instance.</summary>
         public static StructureDefinition GetBaseProfile(this Element element)
         {
-            object result = null;
-            if (element.UserData.TryGetValue(USERDATA_BASEPROFILE, out result))
-            {
-                return result as StructureDefinition;
-            }
-            return null;
+            return element.UserData.GetValueOrDefault(USERDATA_BASEPROFILE) as StructureDefinition;
         }
 
         /// <summary>Sets a reference to the base profile <see cref="StructureDefinition"/> instance.</summary>
@@ -792,12 +792,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Gets a reference to the matching <see cref="ElementDefinition"/> instance from the base profile.</summary>
         public static ElementDefinition GetBaseDefinition(this Element element)
         {
-            object result = null;
-            if (element.UserData.TryGetValue(USERDATA_BASEDEF, out result))
-            {
-                return result as ElementDefinition;
-            }
-            return null;
+            return element.UserData.GetValueOrDefault(USERDATA_BASEDEF) as ElementDefinition;
         }
 
         /// <summary>Sets a reference to the matching <see cref="ElementDefinition"/> instance from the base profile.</summary>

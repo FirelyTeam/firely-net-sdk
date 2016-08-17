@@ -11,6 +11,8 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
+
 namespace Hl7.Fhir.Specification.Snapshot
 {
     /// <summary>Configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
@@ -84,8 +86,12 @@ namespace Hl7.Fhir.Specification.Snapshot
 #if BASEDEF
         /// <summary>
         /// EXPERIMENTAL!
-        /// Enable this setting to decorate the expanded snapshot elements with references to the associated base element definitions.
+        /// Enable this setting to decorate each element definition in the snapshot
+        /// component with a reference to the associated base element definition.
         /// </summary>
+        /// <remarks>
+        /// The information is persisted in <see cref="Base.UserData"/> storage and not serialized.
+        /// </remarks>
         public bool EmitBaseData { get; set; }
 #endif
 
