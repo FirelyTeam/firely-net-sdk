@@ -7,6 +7,7 @@
  */
 
 
+using Hl7.ElementModel;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;

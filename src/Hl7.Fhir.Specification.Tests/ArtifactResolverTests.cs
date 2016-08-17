@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Tests
             source = ArtifactResolver.CreateOffline();
         }
 
-        ArtifactResolver source = null;
+        IArtifactSource source = null;
 
 
         [TestMethod]

@@ -8,6 +8,7 @@
 
 using System.Linq;
 using System.Collections.Generic;
+using Hl7.ElementModel;
 
 namespace Hl7.Fhir.FluentPath
 {

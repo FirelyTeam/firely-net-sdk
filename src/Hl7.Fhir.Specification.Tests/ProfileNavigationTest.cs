@@ -17,7 +17,8 @@ using System.Collections.Generic;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.Core.ElementModel;
+using Hl7.ElementModel;
+using Hl7.FluentPath;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -28,7 +29,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class ProfileNavigationTest
 #endif
     {
-        private ArtifactResolver _source;
+        private IArtifactSource _source;
 
         [TestInitialize]
         public void Setup()

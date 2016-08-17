@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.FluentPath;
+using Hl7.ElementModel;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -38,6 +38,14 @@ namespace Hl7.Fhir.Specification.Navigation
             OrdinalPosition = other.OrdinalPosition;
         }
 
+
+        public static ElementDefinitionNavigator ForSnapshot(StructureDefinition sd)
+        {
+            if (sd.Snapshot == null) throw Error.ArgumentNull("sd.Snapshot");
+
+            return new ElementDefinitionNavigator(sd.Snapshot.Element);
+        }
+
         public ElementDefinitionNavigator ShallowCopy()
         {
             var result = new ElementDefinitionNavigator();
@@ -46,6 +54,9 @@ namespace Hl7.Fhir.Specification.Navigation
 
             return result;
         }
+
+
+        public bool AtRoot {  get { return OrdinalPosition == null;  } }
 
         /// <summary>
         /// Get the name of the current node, based on the last part of the part

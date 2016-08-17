@@ -68,16 +68,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ElementsModel\PocoElementNavigator.cs" />
-    <Compile Include="ElementsModel\IElementNavigator.cs" />
-    <Compile Include="ElementsModel\INameProvider.cs" />
-    <Compile Include="ElementsModel\INavigator.cs" />
-    <Compile Include="ElementsModel\ITypeNameProvider.cs" />
-    <Compile Include="ElementsModel\IValueProvider.cs" />
-    <Compile Include="ElementsModel\NavigatorExtensions.cs" />
-    <Compile Include="ElementsModel\PocoNavigator.cs" />
-    <Compile Include="ElementsModel\PartialDateTime.cs" />
-    <Compile Include="ElementsModel\Time.cs" />
+    <Compile Include="..\hl7.fhir.specification\validation\Cardinality.cs">
+      <Link>Validation\Cardinality.cs</Link>
+    </Compile>
+    <Compile Include="ElementModel\ElementNode.cs" />
+    <Compile Include="ElementModel\ElementNodeNavigator.cs" />
+    <Compile Include="ElementModel\INode.cs" />
+    <Compile Include="ElementModel\IPositionProvider.cs" />
+    <Compile Include="ElementModel\NodeExtensions.cs" />
+    <Compile Include="FluentPath\PocoElementNavigator.cs" />
+    <Compile Include="ElementModel\ElementInterfaces.cs" />
+    <Compile Include="ElementModel\INameProvider.cs" />
+    <Compile Include="ElementModel\INavigator.cs" />
+    <Compile Include="ElementModel\ITypeNameProvider.cs" />
+    <Compile Include="ElementModel\IValueProvider.cs" />
+    <Compile Include="ElementModel\NavigatorExtensions.cs" />
+    <Compile Include="FluentPath\PocoNavigator.cs" />
+    <Compile Include="FluentPath\PartialDateTime.cs" />
+    <Compile Include="FluentPath\Time.cs" />
     <Compile Include="Support\EnumUtility.cs" />
     <Compile Include="Model\IValue.cs" />
     <Compile Include="Model\Time.cs" />

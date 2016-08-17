@@ -72,6 +72,8 @@
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
+    <Compile Include="Specification\Source\ArtifactSourceExtentions.cs" />
+    <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
     <Compile Include="Validation\Issue.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorTypeExtensions.cs" />

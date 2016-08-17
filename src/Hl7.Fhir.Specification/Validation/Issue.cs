@@ -1,17 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Hl7.Fhir.Core.ElementModel;
-using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Support;
-using System.Diagnostics;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Validation
 {
@@ -50,6 +40,7 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue PROFILE_ELEMENTDEF_NO_PRIMITIVE_REGEX = def(2005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE = def(2006, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_CARDINALITY_MISSING = def(2007, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
+        public static readonly Issue PROFILE_ELEMENTDEF_IS_EMPTY = def(2008, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
 
         // Unsupported 
         public static readonly Issue UNSUPPORTED_SLICING_NOT_SUPPORTED = def(3000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);

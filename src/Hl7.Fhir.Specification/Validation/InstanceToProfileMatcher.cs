@@ -1,15 +1,12 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Hl7.Fhir.Core.ElementModel;
-using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using Hl7.ElementModel;
 
 namespace Hl7.Fhir.Validation
 {
@@ -25,20 +22,18 @@ namespace Hl7.Fhir.Validation
 
             foreach(var definitionElement in definitionElements)
             {
-                var match = new Match() { Definition = definitionElement };
+                var match = new Match() { Definition = definitionElement, InstanceElements = new List<IElementNavigator>() };
 
                 // Special case is the .value of a primitive fhir type, this is represented
                 // as the "Value" of the IValueProvider interface, not as a real child
                 if (definitionElement.Current.IsPrimitiveValuePath())
                 {
                     if (instanceParent.Value != null)
-                        match.InstanceElements = new List<IElementNavigator> { instanceParent };
-                    else
-                        match.InstanceElements = new List<IElementNavigator>();
+                        match.InstanceElements.Add( instanceParent );
                 }
                 else
                 {
-                    var found = elementsToMatch.Where(ie => NameMatches(definitionElement, ie)).ToList();
+                    var found = elementsToMatch.Where(ie => NameMatches(definitionElement.PathName, ie)).ToList();
 
                     match.InstanceElements.AddRange(found);
                     elementsToMatch.RemoveAll(e => found.Contains(e));
@@ -68,7 +63,7 @@ namespace Hl7.Fhir.Validation
                         // If a name appears twice, it's a slice child, and we can skip it: we will just
                         // match an instance element to a single definition element, which is the slicing entry
                         // if we're dealing with a slice
-                        if (nav.PathName != definitionElements.Last().PathName)
+                        if (!definitionElements.Any() || definitionElements.Last().PathName != nav.PathName)
                             definitionElements.Add(nav.ShallowCopy());
                     } while (nav.MoveToNext());
                 }
@@ -81,10 +76,8 @@ namespace Hl7.Fhir.Validation
             return definitionElements;
         }
 
-        public static bool NameMatches(ElementDefinitionNavigator definition, IElementNavigator instance)
-        {
-            var name = definition.PathName;
-            
+        public static bool NameMatches(string name, IElementNavigator instance)
+        {           
             // simple direct match
             if (name == instance.Name) return true;   
 
@@ -112,6 +105,6 @@ namespace Hl7.Fhir.Validation
     internal class Match
     {
         public ElementDefinitionNavigator Definition;
-        public List<IElementNavigator> InstanceElements = new List<IElementNavigator>();
+        public List<IElementNavigator> InstanceElements;
     }
 }

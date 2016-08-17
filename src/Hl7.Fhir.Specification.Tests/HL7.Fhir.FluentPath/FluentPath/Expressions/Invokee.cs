@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.ElementModel;
 using Hl7.Fhir.FluentPath.Functions;
 using Hl7.Fhir.Support;
 using System;
@@ -128,12 +129,12 @@ namespace Hl7.Fhir.FluentPath.Expressions
             };
         }
 
-        public static Invokee Return(Hl7.Fhir.FluentPath.IValueProvider value)
+        public static Invokee Return(Hl7.ElementModel.IValueProvider value)
         {
-            return (_, __) => (new[] { (Hl7.Fhir.FluentPath.IValueProvider)value });
+            return (_, __) => (new[] { (Hl7.ElementModel.IValueProvider)value });
         }
 
-        public static Invokee Return(IEnumerable<Hl7.Fhir.FluentPath.IValueProvider> value)
+        public static Invokee Return(IEnumerable<Hl7.ElementModel.IValueProvider> value)
         {
             return (_, __) => value;
         }

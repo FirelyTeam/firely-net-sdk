@@ -92,6 +92,7 @@
     <Compile Include="Specification\Snapshot\SnapshotGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
     <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
+    <Compile Include="Specification\Source\ArtifactSourceExtentions.cs" />
     <Compile Include="Specification\Source\MultiArtifactSource.cs" />
     <Compile Include="Specification\Source\ArtifactResolver.cs" />
     <Compile Include="Specification\Source\CachedArtifactSource.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Specification\Source\ConformanceArtifactScanner.cs" />
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
     <Compile Include="Validation\Issue.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />

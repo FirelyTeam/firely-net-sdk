@@ -1,10 +1,9 @@
-﻿using Hl7.Fhir.Core.ElementModel;
-using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.Introspection;
+﻿using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
+using Hl7.FluentPath;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -37,6 +36,9 @@ namespace Hl7.Fhir.Validation
             // Any node must either have a value, or children, or both (e.g. extensions on primitives)
             if (!verify(() => Instance.Value != null || Instance.HasChildren(), "Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN))
                 return false;
+
+            if (!verify(() => !DefinitionNavigator.AtRoot || DefinitionNavigator.MoveToFirstChild(), "ElementDefinition has no content", Issue.PROFILE_ELEMENTDEF_IS_EMPTY))
+                return true;        // Nothing to validate against, so "valid"
 
             if (DefinitionNavigator.HasChildren)
             {
@@ -318,49 +320,6 @@ namespace Hl7.Fhir.Validation
     }
 
 
-
-    internal class Cardinality
-    {
-        public int Min;
-        public string Max;
-
-
-        public static Cardinality FromElementDefinition(ElementDefinition def)
-        {
-            if (def.Min == null) throw Error.ArgumentNull("def.Min");
-            if (def.Max == null) throw Error.ArgumentNull("def.Max");
-
-            return new Cardinality(def.Min.Value, def.Max);
-        }
-
-        public Cardinality(int min, string max)
-        {
-            if (max == null) throw Error.ArgumentNull("max");
-
-            Min = min;
-            Max = max;
-        }
-
-        public bool InRange(int x)
-        {
-            if (x < Min)
-                return false;
-
-            if (Max == "*")
-                return true;
-
-            int max = Convert.ToInt16(Max);
-            if (x > max)
-                return false;
-
-            return true;
-        }
-
-        public override string ToString()
-        {
-            return Min + ".." + Max;
-        }
-    }
 
     public interface IValidationContext
     {

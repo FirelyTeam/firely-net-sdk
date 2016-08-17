@@ -5,6 +5,7 @@ using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.Support;
 using System.Text;
 using System.Threading.Tasks;
+using Hl7.ElementModel;
 
 namespace Hl7.Fhir.FluentPath
 {

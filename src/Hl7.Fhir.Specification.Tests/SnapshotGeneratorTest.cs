@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class SnapshotGeneratorTest
 #endif
     {
-        private ArtifactResolver _testSource;
+        private IArtifactSource _testSource;
         private readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
         {
             MarkChanges = false,
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 #endif
 
-        private StructureDefinition generateSnapshot(StructureDefinition original, ArtifactResolver source)
+        private StructureDefinition generateSnapshot(StructureDefinition original, IArtifactSource source)
         {
             // var generator = new SnapshotGenerator(source, markChanges: false);        
             var generator = new SnapshotGenerator(source, _settings);
@@ -233,13 +233,13 @@ namespace Hl7.Fhir.Specification.Tests
             return expanded;
         }
 
-        private bool generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
+        private bool generateSnapshotAndCompare(StructureDefinition original, IArtifactSource source)
         {
             StructureDefinition expanded;
             return generateSnapshotAndCompare(original, source, out expanded);
         }
 
-        private bool generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source, out StructureDefinition expanded)
+        private bool generateSnapshotAndCompare(StructureDefinition original, IArtifactSource source, out StructureDefinition expanded)
         {
             expanded = generateSnapshot(original, source);
 

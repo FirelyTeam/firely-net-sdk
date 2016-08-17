@@ -1,17 +1,7 @@
-using System;
 using System.Linq;
-using System.Collections.Generic;
-using Hl7.Fhir.Core.ElementModel;
-using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
-using System.Diagnostics;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Validation
 {

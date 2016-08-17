@@ -27,13 +27,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         // public const string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
         public static readonly string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
 
-        private ArtifactResolver _resolver;
+        private IArtifactSource _resolver;
         private SnapshotGeneratorSettings _settings;
 #if DETECT_RECURSION
         private SnapshotRecursionChecker _recursionChecker = new SnapshotRecursionChecker();
 #endif
 
-        public SnapshotGenerator(ArtifactResolver resolver, SnapshotGeneratorSettings settings)
+        public SnapshotGenerator(IArtifactSource resolver, SnapshotGeneratorSettings settings)
         {
             if (resolver == null) throw Error.ArgumentNull("resolver");
             if (settings == null) throw Error.ArgumentNull("settings");
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             _settings = settings;
         }
 
-        public SnapshotGenerator(ArtifactResolver resolver) : this(resolver, SnapshotGeneratorSettings.Default) { }
+        public SnapshotGenerator(IArtifactSource resolver) : this(resolver, SnapshotGeneratorSettings.Default) { }
 
         private SnapshotGenerator Clone()
         {
