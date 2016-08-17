@@ -38,34 +38,40 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        /// <summary>An event that notifies clients that the base profile has been resolved.</summary>
-        public event SnapshotProfileHandler BaseProfileResolved;
+        /// <summary>An event that notifies clients when a base profile has been resolved.</summary>
+        public event SnapshotBaseProfileHandler PrepareBaseProfile;
 
-        /// <summary>Raise the <see cref="BaseProfileResolved"/> event to notify the client that the associated base profile has been resolved.</summary>
-        /// <param name="profile"></param>
-        internal void OnBaseProfileResolved(StructureDefinition profile)
+        /// <summary>
+        /// Raise the <see cref="PrepareBaseProfile"/> event to notify the client
+        /// when the associated base profile has been resolved and prepared for merging.
+        /// </summary>
+        /// <param name="profile">A profile <see cref="StructureDefinition"/> instance.</param>
+        /// <param name="baseProfile">The associated base profile <see cref="StructureDefinition"/> instance.</param>
+        internal void OnPrepareBaseProfile(StructureDefinition profile, StructureDefinition baseProfile)
         {
             if (profile == null) { throw new ArgumentNullException("profile"); }
-            var handler = BaseProfileResolved;
+            if (baseProfile == null) { throw new ArgumentNullException("baseProfile"); }
+            var handler = PrepareBaseProfile;
             if (handler != null)
             {
-                var args = new SnapshotProfileEventArgs(profile);
+                var args = new SnapshotBaseProfileEventArgs(profile, baseProfile);
                 handler(this, args);
             }
         }
 
         /// <summary>
-        /// An event that notifies clients when a base profile element definition has been resolved.
+        /// An event that notifies clients when a base profile element definition is being prepared.
+        /// The snapshot generator has already fixed the element base path.
         /// After the event handler returns, the snapshot generator merges any associated
         /// differential constraints and adds the resulting element definition to the snapshot.
         /// </summary>
-        public event SnapshotElementHandler BaseElementResolved;
+        public event SnapshotElementHandler PrepareBaseElement;
 
-        /// <summary>Raise the <see cref="BaseElementResolved"/> event to notify the client when a base element definition has been resolved.</summary>
-        internal void OnBaseElementResolved(ElementDefinition element)
+        /// <summary>Raise the <see cref="PrepareBaseElement"/> event to notify the client when a base element definition is being prepared for merging.</summary>
+        internal void OnPrepareBaseElement(ElementDefinition element)
         {
             if (element == null) { throw new ArgumentNullException("element"); }
-            var handler = BaseElementResolved;
+            var handler = PrepareBaseElement;
             if (handler != null)
             {
                 var args = new SnapshotElementEventArgs(element);
@@ -92,22 +98,28 @@ namespace Hl7.Fhir.Specification.Snapshot
     public delegate void SnapshotConstraintHandler(object sender, SnapshotConstraintEventArgs e);
 
 
-    /// <summary>Event arguments for the <see cref="SnapshotProfileHandler"/> event delegate.</summary>
-    public class SnapshotProfileEventArgs : EventArgs
+    /// <summary>Event arguments for the <see cref="SnapshotBaseProfileHandler"/> event delegate.</summary>
+    public class SnapshotBaseProfileEventArgs : EventArgs
     {
         private readonly StructureDefinition _profile;
+        private readonly StructureDefinition _baseProfile;
 
-        public SnapshotProfileEventArgs(StructureDefinition profile) : base()
+        public SnapshotBaseProfileEventArgs(StructureDefinition profile, StructureDefinition baseProfile) : base()
         {
             _profile = profile;
+            _baseProfile = baseProfile;
         }
 
         /// <summary>Returns a reference to a profile.</summary>
         public StructureDefinition Profile { get { return _profile; } }
+
+        /// <summary>Returns a reference to the associated base profile.</summary>
+        public StructureDefinition BaseProfile { get { return _baseProfile; } }
+
     }
 
-    /// <summary>A delegate type for hooking up <see cref="SnapshotGenerator.BaseProfileResolved"/> events.</summary>
-    public delegate void SnapshotProfileHandler(object sender, SnapshotProfileEventArgs e);
+    /// <summary>A delegate type for hooking up <see cref="SnapshotGenerator.PrepareBaseProfile"/> events.</summary>
+    public delegate void SnapshotBaseProfileHandler(object sender, SnapshotBaseProfileEventArgs e);
 
 
     /// <summary>Event arguments for the <see cref="SnapshotElementHandler"/> event delegate.</summary>

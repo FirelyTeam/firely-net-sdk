@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [Ignore] // For debugging purposes
         public void GenerateSnapshotExpandAll()
         {
-            _settings.ExpandAll = true;
+            _settings.ExpandUnconstrainedElements = true;
 
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
             var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-patient");
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Specification.Tests
             var expanded = (StructureDefinition)original.DeepCopy();
             Assert.IsTrue(original.IsExactly(expanded));
 
-            _generator.Generate(expanded);
+            _generator.Update(expanded);
 
             return expanded;
         }
@@ -552,14 +552,14 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Debug.WriteLine("StructureDefinition '{0}' ('{1}')".FormatWith(sd.Name, sd.Url));
                 Debug.WriteLine("Base = '{0}'".FormatWith(sd.Base));
-                Debug.Indent();
+                // Debug.Indent();
                 Debug.Print("Element.Path | Element.Base.Path");
                 Debug.Print(new string('=', 100));
                 foreach (var elem in sd.Snapshot.Element)
                 {
                     Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base.Path);
                 }
-                Debug.Unindent();
+                // Debug.Unindent();
             }
         }
 
@@ -587,15 +587,17 @@ namespace Hl7.Fhir.Specification.Tests
             _generator = new SnapshotGenerator(_testSource, _settings);
 
             // [WMR 20160817] Attach custom event handlers
-            SnapshotProfileHandler profileHandler = (sender, args) =>
+            SnapshotBaseProfileHandler profileHandler = (sender, args) =>
             {
-                var baseProfile = args.Profile;
+                var profile = args.Profile;
+                Assert.AreEqual(profile, sd);
+                var baseProfile = args.BaseProfile;
                 Assert.IsNotNull(baseProfile);
-                Debug.WriteLine("StructureDefinition.Base = '{0}'".FormatWith(sd.Base));
+                Debug.WriteLine("StructureDefinition.Base = '{0}'".FormatWith(profile.Base));
                 Debug.Print("Base StructureDefinition.Url = '{0}'".FormatWith(baseProfile.Url));
-                Assert.AreEqual(sd.Base, baseProfile.Url);
+                Assert.AreEqual(profile.Base, baseProfile.Url);
             };
-            _generator.BaseProfileResolved += profileHandler;
+            _generator.PrepareBaseProfile += profileHandler;
 
             SnapshotElementHandler elementHandler = (sender, args) =>
             {
@@ -604,7 +606,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var baseDef = (ElementDefinition)elem.DeepCopy();
                 elem.UserData[USERDATA_BASEDEF] = baseDef;
             };
-            _generator.BaseElementResolved += elementHandler;
+            _generator.PrepareBaseElement += elementHandler;
 
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
@@ -612,8 +614,8 @@ namespace Hl7.Fhir.Specification.Tests
             assertBaseDefs(expanded);
 
             // Detach event handlers
-            _generator.BaseElementResolved -= elementHandler;
-            _generator.BaseProfileResolved -= profileHandler;
+            _generator.PrepareBaseElement -= elementHandler;
+            _generator.PrepareBaseProfile -= profileHandler;
             _generator = null;
         }
 

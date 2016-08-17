@@ -44,24 +44,25 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>
         /// (Re-)generate the <see cref="StructureDefinition.Snapshot"/> component of the specified <see cref="StructureDefinition"/> instance.
-        /// Expand the <see cref="StructureDefinition.Differential"/> component, merge base profile and type profiles.
+        /// Resolve the associated base profile snapshot and merge the <see cref="StructureDefinition.Differential"/> component.
         /// </summary>
         /// <param name="structure">A <see cref="StructureDefinition"/> instance.</param>
-        public void Generate(StructureDefinition structure)
+        public void Update(StructureDefinition structure)
         {
             structure.Snapshot = new StructureDefinition.SnapshotComponent()
             {
-                Element = Expand(structure)
+                Element = Generate(structure)
             };
         }
 
         /// <summary>
-        /// Expand the <see cref="StructureDefinition.Differential"/> component, merge base profile and type profiles.
+        /// Generate the snapshot element list of the specified <see cref="StructureDefinition"/> instance.
+        /// Resolve the associated base profile snapshot and merge the <see cref="StructureDefinition.Differential"/> component.
         /// Returns the expanded element list.
-        /// The given <see cref="StructureDefinition"/> instance is not modified.
+        /// Does not modify the <see cref="StructureDefinition.Snapshot"/> property of the specified instance.
         /// </summary>
         /// <param name="structure">A <see cref="StructureDefinition"/> instance.</param>
-        public List<ElementDefinition> Expand(StructureDefinition structure)
+        public List<ElementDefinition> Generate(StructureDefinition structure)
         {
             if (structure == null)
             {
@@ -77,7 +78,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             List<ElementDefinition> result = null;
             try
             {
-                result = expand(structure);
+                result = generate(structure);
             }
             finally
             {
@@ -238,7 +239,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 fixExtensionUrl(snap);
             }
 #if EXPANDALL
-            else if (_settings.ExpandAll)
+            else if (_settings.ExpandUnconstrainedElements)
             {
                 var types = snap.Current.Type;
                 if (types.Count == 1)
@@ -499,7 +500,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Automatically expand external profiles on demand
                     Debug.Print("Recursively expand snapshot of external profile with url: '{0}' ...".FormatWith(structure.Url));
                     // Clone().Generate(baseStructure);
-                    generateExterna(structure);
+                    updateExternalProfile(structure);
                 }
                 else if (isRequired || !_settings.IgnoreUnresolvedProfiles)
                 {
@@ -509,14 +510,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             return structure.Snapshot != null;
         }
 
-        /// <summary>Recursively expand the snapshot of a referenced external profile.</summary>
-        private void generateExterna(StructureDefinition structure)
+        /// <summary>Expand the snapshot of a referenced external profile.</summary>
+        private void updateExternalProfile(StructureDefinition structure)
         {
             Debug.Assert(structure != null);
             Debug.Assert(structure.Snapshot == null);
             structure.Snapshot = new StructureDefinition.SnapshotComponent()
             {
-                Element = expand(structure)
+                Element = generate(structure)
             };
         }
 
@@ -524,7 +525,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Expand the differential component of the specified structure and return the expanded element list.
         /// The given structure is not modified.
         /// </summary>
-        private List<ElementDefinition> expand(StructureDefinition structure)
+        private List<ElementDefinition> generate(StructureDefinition structure)
         {
             List<ElementDefinition> result;
             var differential = structure.Differential;
@@ -561,13 +562,13 @@ namespace Hl7.Fhir.Specification.Snapshot
             Debug.Assert(baseStructure.Snapshot.Element != null);
             Debug.Assert(baseStructure.Snapshot.Element.Count > 0);
 
+            // [WMR 20160817] Notify client about the resolved, expanded base profile
+            OnPrepareBaseProfile(structure, baseStructure);
+
             var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
             generateBaseElements(snapshot.Element);
 
             var snap = new ElementNavigator(snapshot.Element);
-
-            // [WMR 20160817] Notify client about the resolved base profile
-            OnBaseProfileResolved(baseStructure);
 
             // Fill out the gaps (mostly missing parents) in the differential representation
             var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
@@ -713,7 +714,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 }
                 // Notify clients about resolved base element
-                OnBaseElementResolved(element);
+                OnPrepareBaseElement(element);
             }
         }
 
