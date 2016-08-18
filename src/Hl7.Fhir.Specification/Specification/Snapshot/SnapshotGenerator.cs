@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         private readonly SnapshotRecursionChecker _recursionChecker = new SnapshotRecursionChecker();
 #endif
 
-        public SnapshotGenerator(ArtifactResolver resolver, SnapshotGeneratorSettings settings)
+        public SnapshotGenerator(ArtifactResolver resolver, SnapshotGeneratorSettings settings) : this()
         {
             if (resolver == null) throw Error.ArgumentNull("resolver");
             if (settings == null) throw Error.ArgumentNull("settings");
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         public SnapshotGenerator(ArtifactResolver resolver) : this(resolver, SnapshotGeneratorSettings.Default)
         {
-            _roInvalidProfiles = new ReadOnlyCollection<SnapshotProfileInfo>(_invalidProfiles);
+            // ...
         }
 
         /// <summary>

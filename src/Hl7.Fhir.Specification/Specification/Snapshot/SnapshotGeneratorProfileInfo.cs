@@ -56,6 +56,12 @@ namespace Hl7.Fhir.Specification.Snapshot
         private readonly InvalidProfileList _invalidProfiles = new InvalidProfileList();
         private readonly ReadOnlyCollection<SnapshotProfileInfo> _roInvalidProfiles;
 
+        // Private ctor to initialize the read-only collection
+        private SnapshotGenerator()
+        {
+            _roInvalidProfiles = new ReadOnlyCollection<SnapshotProfileInfo>(_invalidProfiles);
+        }
+
         /// <summary>Returns information about missing or invalid external profiles after snapshot generation.</summary>
         public ReadOnlyCollection<SnapshotProfileInfo> InvalidProfiles { get { return _roInvalidProfiles; } }
     }
