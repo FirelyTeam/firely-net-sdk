@@ -22,7 +22,21 @@ namespace Hl7.ElementModel
 
         public string Name { get; private set; }
 
-        public string Path { get; private set; }
+        public string Path
+        {
+            get
+            {
+                var myIndex = Parent != null ? Parent.Children.Where(c=> c.Name == Name).ToList().IndexOf(this) : -1;
+                var root = Parent != null ? Parent.Path + "." : "";
+                root += Name;
+
+                if(myIndex >= 0)
+                    root += "[{0}]".FormatWith(myIndex);
+
+                return root;
+            }
+
+        }
 
         public string TypeName { get; private set; }
 
@@ -43,13 +57,7 @@ namespace Hl7.ElementModel
             TypeName = typeName;
             Children = children;
 
-            int childIndex = 0;
-            foreach (var c in children)
-            {
-                c.Parent = this;
-                c.Path = Path + ".{0}[{1}]".FormatWith(c.Name, childIndex);
-                childIndex++;
-            }
+            foreach (var c in children) c.Parent = this;
         }
 
         public static ElementNode Valued(string name, object value, params ElementNode[] children)
