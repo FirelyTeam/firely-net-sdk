@@ -15,7 +15,7 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public class ElementNavigator : IValueProvider, ITypeNameProvider
+    internal class PocoElementNavigator : IValueProvider, ITypeNameProvider
     {
         static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {
@@ -24,7 +24,7 @@ namespace Hl7.Fhir.FluentPath
         }
 
         // For Normal element properties representing a FHIR type
-        internal ElementNavigator(string name, Base value)
+        internal PocoElementNavigator(string name, Base value)
         {
             if (value == null) throw Error.ArgumentNull("value");
 
@@ -35,7 +35,7 @@ namespace Hl7.Fhir.FluentPath
 
         // For properties representing primitive strings (id, url, div), as
         // rendered as attributes in the xml
-        internal ElementNavigator(string name, string value)
+        internal PocoElementNavigator(string name, string value)
         {
             if (value == null) throw Error.ArgumentNull("value");
 
@@ -109,21 +109,21 @@ namespace Hl7.Fhir.FluentPath
         }
 
 
-        public ElementNavigator Next { get; private set; }
+        public PocoElementNavigator Next { get; private set; }
 
-        private List<ElementNavigator> _children;
+        private List<PocoElementNavigator> _children;
 
-        public IEnumerable<ElementNavigator> Children()
+        public IEnumerable<PocoElementNavigator> Children()
         {
             // Cache children
             if (_children != null) return _children;
 
             // If this is a primitive, there are no children
-            if (_pocoElement == null) return Enumerable.Empty<ElementNavigator>();
+            if (_pocoElement == null) return Enumerable.Empty<PocoElementNavigator>();
 
-            _children = new List<ElementNavigator>();
+            _children = new List<PocoElementNavigator>();
 
-            ElementNavigator previousChild = null;
+            PocoElementNavigator previousChild = null;
 
             var mapping = GetMappingForType(_pocoElement.GetType());
 
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.FluentPath
                         {
                             if (colItem != null)
                             {
-                                _children.Add(new ElementNavigator(item.Name, (Base)colItem));
+                                _children.Add(new PocoElementNavigator(item.Name, (Base)colItem));
                                 if (previousChild != null)
                                     previousChild.Next = _children.Last();
                                 previousChild = _children.Last();
@@ -157,9 +157,9 @@ namespace Hl7.Fhir.FluentPath
                     else
                     {
                         if(itemValue is string)
-                            _children.Add(new ElementNavigator(item.Name, (string)itemValue));
+                            _children.Add(new PocoElementNavigator(item.Name, (string)itemValue));
                         else
-                            _children.Add(new ElementNavigator(item.Name, (Base)itemValue));
+                            _children.Add(new PocoElementNavigator(item.Name, (Base)itemValue));
 
                         if (previousChild != null)
                             previousChild.Next = _children.Last();

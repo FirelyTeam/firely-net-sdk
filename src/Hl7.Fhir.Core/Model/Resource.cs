@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
                 // Need to serialize to XML until the object model processor exists
                 // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
                 // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
-                var tree = new FluentPath.ModelNavigator(this);
+                var tree = new FluentPath.PocoNavigator(this);
                 foreach (var invariantRule in InvariantConstraints)
                 {
                     ValidateInvariantRule(invariantRule, tree, result);

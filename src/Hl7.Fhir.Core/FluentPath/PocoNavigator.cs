@@ -17,27 +17,27 @@ using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.FluentPath
 {
-    public class ModelNavigator : IElementNavigator
+    public class PocoNavigator : IElementNavigator
     {
         public static IEnumerable<IValueProvider> CreateInput(Base model)
         {
-            return new List<IValueProvider>() { new ModelNavigator(model) };
+            return new List<IValueProvider>() { new PocoNavigator(model) };
         }
 
-        public ModelNavigator(Base model)
+        public PocoNavigator(Base model)
         {
             if (model == null) throw Error.ArgumentNull("model");
 
-            _current = new ElementNavigator(model.TypeName, model);
+            _current = new PocoElementNavigator(model.TypeName, model);
         }
 
-        internal ModelNavigator(ElementNavigator current)
+        internal PocoNavigator(PocoElementNavigator current)
         {
             _current =  current;
         }
 
 
-        private ElementNavigator _current;
+        private PocoElementNavigator _current;
 
         /// <summary>
         /// Returns 
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.FluentPath
         public IElementNavigator Clone()
         {
             // Console.WriteLine("Cloning: {0}", this.GetName());
-            return new ModelNavigator(_current);
+            return new PocoNavigator(_current);
         }
     }
 }
