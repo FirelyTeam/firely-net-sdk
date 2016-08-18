@@ -611,21 +611,19 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    foreach (var prop in base.Properties) { yield return prop; }
-                   yield return Bounds;
-                   yield return CountElement;
-                   yield return DurationElement;
-                   yield return DurationMaxElement;
-                   yield return DurationUnitsElement;
-                   yield return FrequencyElement;
-                   yield return FrequencyMaxElement;
-                   yield return PeriodElement;
-                   yield return PeriodMaxElement;
-                   yield return PeriodUnitsElement;
-                   yield return WhenElement;
+                yield return Bounds;
+                yield return CountElement;
+                yield return DurationElement;
+                yield return DurationMaxElement;
+                yield return DurationUnitsElement;
+                yield return FrequencyElement;
+                yield return FrequencyMaxElement;
+                yield return PeriodElement;
+                yield return PeriodMaxElement;
+                yield return PeriodUnitsElement;
+                yield return WhenElement;
                 }
             }
-
             
         }
         
@@ -741,10 +739,12 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               foreach (var prop in EventElement) { yield return prop; }
-               yield return Repeat;
-               yield return Code;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // Timing properties
+                foreach (var prop in EventElement) { yield return prop; }
+                yield return Repeat;
+                yield return Code;
             }
         }
     

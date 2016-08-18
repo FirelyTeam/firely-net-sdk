@@ -126,9 +126,11 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               yield return Numerator;
-               yield return Denominator;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // Ratio properties
+                yield return Numerator;
+                yield return Denominator;
             }
         }
     

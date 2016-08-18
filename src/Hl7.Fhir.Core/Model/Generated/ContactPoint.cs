@@ -328,12 +328,14 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               yield return SystemElement;
-               yield return ValueElement;
-               yield return UseElement;
-               yield return RankElement;
-               yield return Period;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // ContactPoint properties
+                yield return SystemElement;
+                yield return ValueElement;
+                yield return UseElement;
+                yield return RankElement;
+                yield return Period;
             }
         }
     

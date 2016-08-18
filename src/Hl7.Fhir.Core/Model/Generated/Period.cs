@@ -164,9 +164,11 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               yield return StartElement;
-               yield return EndElement;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // Period properties
+                yield return StartElement;
+                yield return EndElement;
             }
         }
     

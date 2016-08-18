@@ -413,7 +413,16 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                foreach (var prop in base.Properties) { yield return prop; }
+                // Resource properties
+                yield return Meta;
+                yield return ImplicitRulesElement;
+                yield return LanguageElement;
+                // DomainResource properties
+                yield return Text;
+                foreach (var prop in Contained) { yield return prop; }
+                foreach (var prop in Extension) { yield return prop; }
+                foreach (var prop in ModifierExtension) { yield return prop; }
+                // SupplyRequest properties
                 yield return Patient;
                 yield return Source;
                 yield return DateElement;

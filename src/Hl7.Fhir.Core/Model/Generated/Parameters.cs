@@ -266,7 +266,11 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                foreach (var prop in base.Properties) { yield return prop; }
+                // Resource properties
+                yield return Meta;
+                yield return ImplicitRulesElement;
+                yield return LanguageElement;
+                // Parameters properties
                 foreach (var prop in Parameter) { yield return prop; }
             }
         }

@@ -74,9 +74,12 @@
 		}
     }
 
-	foreach (System.Xml.XmlNode e in docResources.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR))
-	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = 'Communication' or fhir:id/@value = 'Basic' or fhir:id/@value = 'Appointment' or fhir:id/@value = 'Patient']", nsR))
+	var sdNodes = docResources.DocumentElement.SelectNodes(
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR);
+	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = 'Communication' or fhir:id/@value = 'Basic' or fhir:id/@value = 'Appointment' or fhir:id/@value = 'Patient']", nsR);
+	
+
+	foreach (System.Xml.XmlNode e in sdNodes)
     {
 		if (e is System.Xml.XmlElement)
         {
@@ -591,19 +594,8 @@ if(!abstractType) {
         {
             get
             {
-                foreach (var prop in base.Properties) { yield return prop; }
 <#
-	foreach (PropertyDetails pd in props)
-    {
-		if (pd.IsMultiCard())
-		{
-			WriteLine("                foreach (var prop in {0}) {{ yield return prop; }}", pd.Name);
-		}
-		else
-		{
-			WriteLine("                yield return {0};", pd.Name);
-		}
-    }
+				YieldProperties(docResources, e as System.Xml.XmlElement, nsR, enums);
 #>
             }
         }
@@ -1228,5 +1220,47 @@ if(!abstractType) {
 
 			return result;
         }
+
     }
+
+	// [WMR 20160818] NEW - Recursively yield all properties, including properties inherited from base resource(s)
+	public void YieldProperties(System.Xml.XmlDocument docResources, System.Xml.XmlElement structDefElem, System.Xml.XmlNamespaceManager nsR, Dictionary<string, string> enums)
+	{
+		// First recurse on base resource, emit inherited properties
+
+		var baseNode = structDefElem.SelectSingleNode("fhir:base/@value", nsR);
+		if (baseNode != null && !string.IsNullOrEmpty(baseNode.Value)) 
+		{
+			var baseUri = baseNode.Value;
+			var baseStructDefElem = docResources.DocumentElement.SelectSingleNode(
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:url/@value = '" + baseUri + "']", nsR) as System.Xml.XmlElement;
+			if (baseStructDefElem != null)
+			{
+				YieldProperties(docResources, baseStructDefElem, nsR, enums);
+			}
+		}
+
+		// Then emit local properties
+		var resourceName = structDefElem.SelectSingleNode("fhir:name/@value", nsR).Value;
+		WriteLine("                // {0} properties", resourceName);
+		List<PropertyDetails> props = new List<PropertyDetails>();
+		foreach (System.Xml.XmlElement element in structDefElem.SelectNodes("fhir:differential/fhir:element", nsR))
+		{
+			PropertyDetails pd = PropertyDetails.Parse(resourceName, element, nsR, enums);
+			YieldProperty(pd);
+		}
+	}
+
+	public void YieldProperty(PropertyDetails pd)
+	{
+			if (pd == null || pd.PropType == "Hl7.Fhir.Model.Id") { }
+			else if (pd.IsMultiCard())
+			{
+				WriteLine("                foreach (var prop in {0}) {{ yield return prop; }}", pd.Name);
+			}
+			else
+			{
+				WriteLine("                yield return {0};", pd.Name);
+			}
+	}
 #>

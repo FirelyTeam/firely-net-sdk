@@ -1672,7 +1672,16 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                foreach (var prop in base.Properties) { yield return prop; }
+                // Resource properties
+                yield return Meta;
+                yield return ImplicitRulesElement;
+                yield return LanguageElement;
+                // DomainResource properties
+                yield return Text;
+                foreach (var prop in Contained) { yield return prop; }
+                foreach (var prop in Extension) { yield return prop; }
+                foreach (var prop in ModifierExtension) { yield return prop; }
+                // ImplementationGuide properties
                 yield return UrlElement;
                 yield return VersionElement;
                 yield return NameElement;
@@ -1684,7 +1693,6 @@ namespace Hl7.Fhir.Model
                 yield return DescriptionElement;
                 foreach (var prop in UseContext) { yield return prop; }
                 yield return CopyrightElement;
-                yield return FhirVersionElement;
                 foreach (var prop in Dependency) { yield return prop; }
                 foreach (var prop in Package) { yield return prop; }
                 foreach (var prop in Global) { yield return prop; }

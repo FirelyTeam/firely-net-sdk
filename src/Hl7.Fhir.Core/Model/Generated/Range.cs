@@ -126,9 +126,11 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               yield return Low;
-               yield return High;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // Range properties
+                yield return Low;
+                yield return High;
             }
         }
     

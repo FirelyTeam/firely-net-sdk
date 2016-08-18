@@ -237,12 +237,14 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               foreach (var prop in Type) { yield return prop; }
-               yield return WhenElement;
-               yield return Who;
-               yield return ContentTypeElement;
-               yield return BlobElement;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // Signature properties
+                foreach (var prop in Type) { yield return prop; }
+                yield return WhenElement;
+                yield return Who;
+                yield return ContentTypeElement;
+                yield return BlobElement;
             }
         }
     

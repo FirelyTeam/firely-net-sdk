@@ -3800,7 +3800,16 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                foreach (var prop in base.Properties) { yield return prop; }
+                // Resource properties
+                yield return Meta;
+                yield return ImplicitRulesElement;
+                yield return LanguageElement;
+                // DomainResource properties
+                yield return Text;
+                foreach (var prop in Contained) { yield return prop; }
+                foreach (var prop in Extension) { yield return prop; }
+                foreach (var prop in ModifierExtension) { yield return prop; }
+                // Conformance properties
                 yield return UrlElement;
                 yield return VersionElement;
                 yield return NameElement;
@@ -3815,7 +3824,6 @@ namespace Hl7.Fhir.Model
                 yield return KindElement;
                 yield return Software;
                 yield return Implementation;
-                yield return FhirVersionElement;
                 yield return AcceptUnknownElement;
                 foreach (var prop in FormatElement) { yield return prop; }
                 foreach (var prop in Profile) { yield return prop; }

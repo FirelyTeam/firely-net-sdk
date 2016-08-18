@@ -302,12 +302,14 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               yield return ValueElement;
-               yield return ComparatorElement;
-               yield return UnitElement;
-               yield return SystemElement;
-               yield return CodeElement;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // Quantity properties
+                yield return ValueElement;
+                yield return ComparatorElement;
+                yield return UnitElement;
+                yield return SystemElement;
+                yield return CodeElement;
             }
         }
     

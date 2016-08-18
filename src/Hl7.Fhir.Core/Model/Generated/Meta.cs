@@ -234,12 +234,13 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               yield return VersionIdElement;
-               yield return LastUpdatedElement;
-               foreach (var prop in ProfileElement) { yield return prop; }
-               foreach (var prop in Security) { yield return prop; }
-               foreach (var prop in Tag) { yield return prop; }
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // Meta properties
+                yield return LastUpdatedElement;
+                foreach (var prop in ProfileElement) { yield return prop; }
+                foreach (var prop in Security) { yield return prop; }
+                foreach (var prop in Tag) { yield return prop; }
             }
         }
     

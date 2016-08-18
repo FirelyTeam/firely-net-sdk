@@ -374,15 +374,17 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               yield return ContentTypeElement;
-               yield return LanguageElement;
-               yield return DataElement;
-               yield return UrlElement;
-               yield return SizeElement;
-               yield return HashElement;
-               yield return TitleElement;
-               yield return CreationElement;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // Attachment properties
+                yield return ContentTypeElement;
+                yield return LanguageElement;
+                yield return DataElement;
+                yield return UrlElement;
+                yield return SizeElement;
+                yield return HashElement;
+                yield return TitleElement;
+                yield return CreationElement;
             }
         }
     

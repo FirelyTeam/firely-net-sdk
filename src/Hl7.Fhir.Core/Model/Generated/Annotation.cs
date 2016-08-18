@@ -182,10 +182,12 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               yield return Author;
-               yield return TimeElement;
-               yield return TextElement;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // Annotation properties
+                yield return Author;
+                yield return TimeElement;
+                yield return TextElement;
             }
         }
     

@@ -164,9 +164,11 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               yield return ReferenceElement;
-               yield return DisplayElement;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // Reference properties
+                yield return ReferenceElement;
+                yield return DisplayElement;
             }
         }
     

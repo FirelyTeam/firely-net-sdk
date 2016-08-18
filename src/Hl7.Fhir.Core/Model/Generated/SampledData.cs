@@ -324,14 +324,16 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               yield return Origin;
-               yield return PeriodElement;
-               yield return FactorElement;
-               yield return LowerLimitElement;
-               yield return UpperLimitElement;
-               yield return DimensionsElement;
-               yield return DataElement;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // SampledData properties
+                yield return Origin;
+                yield return PeriodElement;
+                yield return FactorElement;
+                yield return LowerLimitElement;
+                yield return UpperLimitElement;
+                yield return DimensionsElement;
+                yield return DataElement;
             }
         }
     

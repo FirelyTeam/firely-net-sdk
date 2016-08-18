@@ -269,12 +269,14 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               yield return SystemElement;
-               yield return VersionElement;
-               yield return CodeElement;
-               yield return DisplayElement;
-               yield return UserSelectedElement;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // Coding properties
+                yield return SystemElement;
+                yield return VersionElement;
+                yield return CodeElement;
+                yield return DisplayElement;
+                yield return UserSelectedElement;
             }
         }
     

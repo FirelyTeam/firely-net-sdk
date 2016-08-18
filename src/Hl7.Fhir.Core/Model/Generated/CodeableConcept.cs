@@ -146,9 +146,11 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-               foreach (var prop in base.Properties) { yield return prop; }
-               foreach (var prop in Coding) { yield return prop; }
-               yield return TextElement;
+                // Element properties
+                foreach (var prop in Extension) { yield return prop; }
+                // CodeableConcept properties
+                foreach (var prop in Coding) { yield return prop; }
+                yield return TextElement;
             }
         }
     
