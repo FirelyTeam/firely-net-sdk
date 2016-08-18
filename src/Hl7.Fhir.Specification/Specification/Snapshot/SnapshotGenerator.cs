@@ -16,6 +16,7 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -38,7 +39,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             _settings = settings;
         }
 
-        public SnapshotGenerator(ArtifactResolver resolver) : this(resolver, SnapshotGeneratorSettings.Default) { }
+        public SnapshotGenerator(ArtifactResolver resolver) : this(resolver, SnapshotGeneratorSettings.Default)
+        {
+            _roInvalidProfiles = new ReadOnlyCollection<SnapshotProfileInfo>(_invalidProfiles);
+        }
 
         /// <summary>
         /// (Re-)generate the <see cref="StructureDefinition.Snapshot"/> component of the specified <see cref="StructureDefinition"/> instance.
@@ -72,7 +76,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Clear invalid profile information
-            ClearInvalidProfiles();
+            _invalidProfiles.Clear();
 
 #if DETECT_RECURSION
             _recursionChecker.StartExpansion(structure.Url);
@@ -123,7 +127,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 throw Error.Argument("element", "The element to expand is not included in the given element list.");
             }
 
-            ClearInvalidProfiles();
+            _invalidProfiles.Clear();
 
             expandElement(nav);
 
@@ -336,7 +340,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 // Otherwise silently ignore and continue expansion
                 Debug.Print("Warning! Unresolved type profile for element '{0}' with url '{1}' - continue expansion...".FormatWith(diff.Path, primaryDiffTypeProfile));
-                RegisterInvalidProfile(primaryDiffTypeProfile, SnapshotProfileStatus.Missing);
+                _invalidProfiles.Add(primaryDiffTypeProfile, SnapshotProfileStatus.Missing);
             }
             else
             {
@@ -503,7 +507,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else
                 {
-                    RegisterInvalidProfile(structure.Url, SnapshotProfileStatus.NoSnapshot);
+                    _invalidProfiles.Add(structure.Url, SnapshotProfileStatus.NoSnapshot);
 
                 }
             }
@@ -635,7 +639,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         {
                             if (_settings.IgnoreUnresolvedProfiles)
                             {
-                                RegisterInvalidProfile(typeProfile, SnapshotProfileStatus.Missing);
+                                _invalidProfiles.Add(typeProfile, SnapshotProfileStatus.Missing);
                                 // Ignore unresolved external type profile reference; expand the underlying standard core type
                                 baseStructure = _resolver.GetStructureDefinitionForCoreType(typeCode);
                             }

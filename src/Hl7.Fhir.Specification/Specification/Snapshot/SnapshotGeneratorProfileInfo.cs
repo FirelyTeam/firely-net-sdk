@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -39,22 +40,23 @@ namespace Hl7.Fhir.Specification.Snapshot
         public SnapshotProfileStatus Status { get; private set; }
     }
 
+    internal sealed class InvalidProfileList : List<SnapshotProfileInfo>
+    {
+        public InvalidProfileList() : base() { }
+
+        public void Add(string url, SnapshotProfileStatus status)
+        {
+            Add(new SnapshotProfileInfo(url, status));
+        }
+    }
+
 
     public partial class SnapshotGenerator
     {
-        private readonly IList<SnapshotProfileInfo> _invalidExternalProfiles = new List<SnapshotProfileInfo>();
+        private readonly InvalidProfileList _invalidProfiles = new InvalidProfileList();
+        private readonly ReadOnlyCollection<SnapshotProfileInfo> _roInvalidProfiles;
 
         /// <summary>Returns information about missing or invalid external profiles after snapshot generation.</summary>
-        public IList<SnapshotProfileInfo> InvalidExternalProfiles { get { return _invalidExternalProfiles; } }
-
-        private void RegisterInvalidProfile(string url, SnapshotProfileStatus status)
-        {
-            _invalidExternalProfiles.Add(new SnapshotProfileInfo(url, status));
-        }
-
-        private void ClearInvalidProfiles()
-        {
-            _invalidExternalProfiles.Clear();
-        }
+        public ReadOnlyCollection<SnapshotProfileInfo> InvalidProfiles { get { return _roInvalidProfiles; } }
     }
 }

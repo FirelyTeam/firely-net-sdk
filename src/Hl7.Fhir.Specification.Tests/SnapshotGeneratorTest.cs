@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
-            var invalidProfiles = _generator.InvalidExternalProfiles;
+            var invalidProfiles = _generator.InvalidProfiles;
             Assert.AreEqual(3, invalidProfiles.Count);
 
             assertProfileInfo(invalidProfiles, "http://example.org/fhir/StructureDefinition/MyExtensionNoSnapshot", SnapshotProfileStatus.NoSnapshot);
