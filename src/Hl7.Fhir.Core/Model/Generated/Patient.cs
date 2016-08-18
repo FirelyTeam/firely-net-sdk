@@ -855,12 +855,19 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Patient_PAT_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("name or telecom or address or organization"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("contact.all(name or telecom or address or organization)"))},
             Key = "pat-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL at least contain a contact's details or a reference to an organization",
             Xpath = "f:name or f:telecom or f:address or f:organization"
         };
+
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(Patient_PAT_1);
+        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

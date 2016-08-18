@@ -53,6 +53,10 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hl7.FluentPath, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.3-alpha1\lib\net45\Hl7.FluentPath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -87,6 +91,9 @@
     <Compile Include="FluentPath\PartialDateTime.cs" />
     <Compile Include="FluentPath\Time.cs" />
     <Compile Include="Support\EnumUtility.cs" />
+    <Compile Include="FluentPath\ElementNavigator.cs" />
+    <Compile Include="FluentPath\NavigatorPOCO.cs" />
+    <Compile Include="Introspection\EnumUtility.cs" />
     <Compile Include="Model\IValue.cs" />
     <Compile Include="Model\Time.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
@@ -633,7 +640,7 @@
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
-    <Compile Include="Support\Logging.cs" />
+    <Compile Include="Support\Error.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
     <Compile Include="Introspection\ModelInspector.cs" />
     <Compile Include="Serialization\PrimitiveTypeConverter.cs" />

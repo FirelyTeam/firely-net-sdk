@@ -1392,12 +1392,19 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent AuditEvent_SEV_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("name.empty() or query.empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("object.all(name.empty() or query.empty())"))},
             Key = "sev-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Either a name or a query (NOT both)",
             Xpath = "not(exists(f:name)) or not(exists(f:query))"
         };
+
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(AuditEvent_SEV_1);
+        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -28,8 +28,6 @@
 
 */
 
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -107,5 +105,71 @@ namespace Hl7.Fhir.Model
             //TODO: Additional checks not implementable by the regex
         }
 
+        public static bool operator >(FhirDateTime a, FhirDateTime b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return String.Compare(a.Value, b.Value) > 0;
+        }
+
+        public static bool operator >=(FhirDateTime a, FhirDateTime b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return String.Compare(a.Value, b.Value) >= 0;
+        }
+
+        public static bool operator <(FhirDateTime a, FhirDateTime b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return String.Compare(a.Value, b.Value) < 0;
+        }
+
+        public static bool operator <=(FhirDateTime a, FhirDateTime b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return String.Compare(a.Value, b.Value) <= 0;
+        }
+
+        /// <summary>
+        /// Equality needs to consider both timezones and precision
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator ==(FhirDateTime a, FhirDateTime b)
+        {
+            // If both are null then the are the same
+            if (object.ReferenceEquals(a, null) && object.ReferenceEquals(b, null))
+                return true;
+            if (object.ReferenceEquals(a, null) || object.ReferenceEquals(b, null))
+                return false;
+
+            if (string.IsNullOrEmpty(a.Value) && string.IsNullOrEmpty(b.Value))
+                return true;
+            if (string.IsNullOrEmpty(a.Value) || string.IsNullOrEmpty(b.Value))
+                return false;
+
+            // If the precisions are not the same, then they are not equal (except timezone)
+            if (a.Value.Length != b.Value.Length && a.Value.Length <= 19)
+                return false;
+            // otherwise we need to compare the times
+            return a.ToDateTimeOffset() == b.ToDateTimeOffset();
+        }
+
+        public static bool operator !=(FhirDateTime a, FhirDateTime b)
+        {
+            return !(a == b);
+        }
     }
 }

@@ -930,7 +930,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Composition_CMP_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("emptyReason.empty() or entry.empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("section.all(emptyReason.empty() or entry.empty())"))},
             Key = "cmp-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A section can only have an emptyReason if it is empty",
@@ -939,12 +939,20 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Composition_CMP_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("text or entry or section"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("section.all(text or entry or section)"))},
             Key = "cmp-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "A section must at least one of text, entries, or sub-sections",
             Xpath = "exists(f:text) or exists(f:entry) or exists(f:section)"
         };
+
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(Composition_CMP_2);
+            InvariantConstraints.Add(Composition_CMP_1);
+        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

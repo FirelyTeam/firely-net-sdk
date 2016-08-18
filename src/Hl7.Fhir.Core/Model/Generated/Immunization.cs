@@ -931,7 +931,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Immunization_IMM_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(wasNotGiven = 'true') or explanation.reasonNotGiven.empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(wasNotGiven = true) or explanation.reasonNotGiven.empty()"))},
             Key = "imm-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If immunization was administered (wasNotGiven=false) then explanation.reasonNotGiven SHALL be absent.",
@@ -940,12 +940,20 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Immunization_IMM_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(wasNotGiven = 'true').not() or (reaction.empty() and explanation.reason.empty())"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("(wasNotGiven = true).not() or (reaction.empty() and explanation.reason.empty())"))},
             Key = "imm-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If immunization was not administred (wasNotGiven=true) then there SHALL be no reaction nor explanation.reason present",
             Xpath = "not(f:wasNotGiven/@value=true() and (count(f:reaction) > 0 or exists(f:explanation/f:reason)))"
         };
+
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(Immunization_IMM_2);
+            InvariantConstraints.Add(Immunization_IMM_1);
+        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

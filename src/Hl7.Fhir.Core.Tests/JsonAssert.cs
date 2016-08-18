@@ -20,20 +20,20 @@ namespace Hl7.Fhir.Tests
 {
     public class JsonAssert
     {
-        public static void AreSame(JObject expected, JObject actual)
+        public static void AreSame(string filename, JObject expected, JObject actual, List<string> errors)
         {
-            areSame(expected.Root, actual.Root);
+            areSame(filename, expected.Root, actual.Root, errors);
         }
 
-        public static void AreSame(string expected, string actual)
+        public static void AreSame(string filename, string expected, string actual, List<string> errors)
         {
             JObject exp = SerializationUtil.JObjectFromReader(SerializationUtil.JsonReaderFromJsonText(expected));
             JObject act = SerializationUtil.JObjectFromReader(SerializationUtil.JsonReaderFromJsonText(actual));
 
-            AreSame(exp, act);
+            AreSame(filename, exp, act, errors);
         }
 
-        private static void areSame(JToken expected, JToken actual)
+        private static void areSame(string filename, JToken expected, JToken actual, List<string> errors)
         {
             if ((expected.Type == JTokenType.Integer && actual.Type == JTokenType.Float) ||
                 (expected.Type == JTokenType.Float && actual.Type == JTokenType.Integer))
@@ -41,7 +41,12 @@ namespace Hl7.Fhir.Tests
                 JValue leftVal = (JValue)expected;
                 JValue rightVal = (JValue)actual;
 
-                Assert.AreEqual(leftVal.ToString(), rightVal.ToString());
+                if (leftVal.ToString() != rightVal.ToString())
+                {
+                    errors.Add(String.Format("Error comparing values in: {0}:{1}, {2} - {3}",
+                                filename, expected.Path, leftVal.ToString(), rightVal.ToString()));
+                }
+                // Assert.AreEqual(leftVal.ToString(), rightVal.ToString());
                 // Bug in json.net, will sometimes convert to integer instead of float
                 return;
             }
@@ -57,8 +62,8 @@ namespace Hl7.Fhir.Tests
                 if(la.Count != ra.Count)
                     throw new AssertFailedException("Array size is not the same at " + actual.Path);
 
-                for(var i=0; i<la.Count; i++)
-                    areSame(la[i],ra[i]);
+                for (var i = 0; i < la.Count; i++)
+                    areSame(filename, la[i], ra[i], errors);
             }
 
             else if (expected.Type == JTokenType.Object)
@@ -77,7 +82,7 @@ namespace Hl7.Fhir.Tests
                     if (!ro.TryGetValue(lMember.Key, out rMember) || rMember == null)
                         throw new AssertFailedException(String.Format("Expected member '{0}' not found in actual at " + expected.Path, lMember.Key));
 
-                    areSame(lMember.Value, rMember);
+                    areSame(filename, lMember.Value, rMember, errors);
                 }
 
                 foreach (var rMember in ro)
@@ -98,11 +103,10 @@ namespace Hl7.Fhir.Tests
                 if (lValue.TrimStart().StartsWith("<div"))
                 {
                     // Don't check the narrative, namespaces are not correctly generated in DSTU2
-
                     //var leftDoc = SerializationUtil.XDocumentFromXmlText(lValue);
                     //var rightDoc = SerializationUtil.XDocumentFromXmlText(rValue);
 
-                    //XmlAssert.AreSame(leftDoc, rightDoc);
+                    //XmlAssert.AreSame(filename, leftDoc, rightDoc);
                 }
                 else
                 {
@@ -117,6 +121,6 @@ namespace Hl7.Fhir.Tests
             }
         }
 
-  
+
     }
 }

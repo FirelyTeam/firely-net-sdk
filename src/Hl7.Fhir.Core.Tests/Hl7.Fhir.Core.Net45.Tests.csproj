@@ -56,6 +56,10 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hl7.FluentPath, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.3-alpha1\lib\net45\Hl7.FluentPath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -93,7 +97,9 @@
     <Compile Include="Model\DeepCopyTest.cs" />
     <Compile Include="Model\DeepMatchTest.cs" />
     <Compile Include="Model\CodeEnumTests.cs" />
+    <Compile Include="Model\DateTimeOperatorTests.cs" />
     <Compile Include="Model\ModelTests.cs" />
+    <Compile Include="Model\ValidateAllExamplesSearchExtractionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="JsonAssert.cs" />
     <Compile Include="Rest\FhirClientTests.cs" />
@@ -113,6 +119,8 @@
     <Compile Include="Serialization\RoundtripTest.cs" />
     <Compile Include="Serialization\SerializationTests.cs" />
     <Compile Include="TrainingTests\Z-TrainingUnitTests.cs" />
+    <Compile Include="Validation\AllResourceInvariantsTest.cs" />
+    <Compile Include="Validation\ValidateAllExamplesTest.cs" />
     <Compile Include="Validation\ValidatePatient.cs" />
     <Compile Include="Validation\ValidationTests.cs" />
     <Compile Include="XmlAssert.cs" />

@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent NamingSystem_NSD_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("uniqueId.where(preferred = true).select(type).distinct()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("uniqueId.where(preferred = true).select(type).isDistinct()"))},
             Key = "nsd-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Can't have more than one preferred identifier for a type",
@@ -740,6 +740,15 @@ namespace Hl7.Fhir.Model
             Human = "Root systems cannot have uuid or sid identifiers",
             Xpath = "not(f:kind/@value='root' and f:uniqueId/f:type/@value=('uuid', 'ruid'))"
         };
+
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(NamingSystem_NSD_2);
+            InvariantConstraints.Add(NamingSystem_NSD_3);
+            InvariantConstraints.Add(NamingSystem_NSD_1);
+        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

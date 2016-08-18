@@ -20,27 +20,25 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <summary>Enumerate all distinct element type profiles.</summary>
         /// <param name="nav">A <see cref="ElementDefinitionNavigator"/> instance.</param>
         /// <returns>A sequence of type profile resource references.</returns>
-        public static IEnumerable<string> DistinctTypeProfiles(this ElementDefinitionNavigator nav)
+        public static IEnumerable<string> EnumerateTypeProfiles(this ElementNavigator nav)
         {
-            return DistinctTypeProfiles(nav.Elements);
+            return EnumerateTypeProfiles(nav.Elements);
         }
 
         /// <summary>Enumerate all distinct element type profiles.</summary>
         /// <param name="elements">A <see cref="StructureDefinition.SnapshotComponent"/> or <see cref="StructureDefinition.DifferentialComponent"/> instance.</param>
         /// <returns>A sequence of type profile resource references.</returns>
-        public static IEnumerable<string> DistinctTypeProfiles(this IElementList elements)
+        public static IEnumerable<string> EnumerateTypeProfiles(this IElementList elements)
         {
-            return DistinctTypeProfiles(elements.Element);
+            return EnumerateTypeProfiles(elements.Element);
         }
 
-        /// <summary>Enumerate all distinct element type profiles.</summary>
+        /// <summary>Enumerate all element type profiles.</summary>
         /// <param name="elements">A list of <see cref="ElementDefinition"/> instances.</param>
         /// <returns>A sequence of type profile resource references.</returns>
-        public static IEnumerable<string> DistinctTypeProfiles(this IList<ElementDefinition> elements)
+        public static IEnumerable<string> EnumerateTypeProfiles(this IList<ElementDefinition> elements)
         {
-            var profiles = elements.SelectMany(e => e.Type).SelectMany(t => t.Profile);
-            return profiles.OrderBy(p => p).Distinct();
-
+            return elements.SelectMany(e => e.Type).SelectMany(t => t.Profile);
         }
     }
 }

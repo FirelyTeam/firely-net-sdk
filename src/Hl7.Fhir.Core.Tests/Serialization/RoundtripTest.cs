@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Tests.Serialization
 #if PORTABLE45
 	public class PortableRoundtripTest
 #else
-	public class RoundtripTest
+    public class RoundtripTest
 #endif
     { 
         [TestMethod]   
@@ -38,14 +38,14 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var t = new FhirXmlParser().Parse<TestScript>(original);
             var outputXml = FhirSerializer.SerializeResourceToXml(t);
-            XmlAssert.AreSame(original, outputXml);
+            XmlAssert.AreSame(exampleXml, original, outputXml);
 
             var outputJson = FhirSerializer.SerializeResourceToJson(t);
             var t2 = new FhirJsonParser().Parse<TestScript>(outputJson);
 //            Assert.IsTrue(t.IsExactly(t2));
 
             var outputXml2 = FhirSerializer.SerializeResourceToXml(t2);
-            XmlAssert.AreSame(original, outputXml2);
+            XmlAssert.AreSame(exampleXml, original, outputXml2);
         }
         [TestMethod]
         [TestCategory("LongRunner")]
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Debug.WriteLine("Unzipping example files from {0} to {1}", examplesZip, examplePath);
 
             ZipFile.ExtractToDirectory(examplesZip, examplePath);
-      
+
             var intermediate1Path = Path.Combine(baseTestPath, "intermediate1");
             Debug.WriteLine("Converting files in {0} to {1}", baseTestPath, intermediate1Path);
             convertFiles(examplePath, intermediate1Path);
@@ -119,7 +119,12 @@ namespace Hl7.Fhir.Tests.Serialization
             Debug.WriteLine("Re-converting files in {0} back to original format in {1}", intermediate1Path, intermediate2Path);
             convertFiles(intermediate1Path, intermediate2Path);
             Debug.WriteLine("Comparing files in {0} to files in {1}", baseTestPath, intermediate2Path);
-            compareFiles(examplePath, intermediate2Path);
+
+            List<string> errors = new List<string>();
+            compareFiles(examplePath, intermediate2Path, errors);
+            Console.WriteLine("------------------------------------------------");
+            Console.WriteLine(String.Join("\r\n", errors));
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
 
@@ -130,13 +135,19 @@ namespace Hl7.Fhir.Tests.Serialization
 
             foreach (string file in files)
             {
+                if (file.Contains(".profile"))
+                    continue;
+                if (file.Contains(".schema"))
+                    continue;
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string ext = Path.GetExtension(file);
                 var toExt = ext == ".xml" ? ".json" : ".xml";
                 string outputFile = Path.Combine(outputPath, exampleName) + toExt;
 
-                Debug.WriteLine("Converting {0} [{1}->{2}] ",exampleName,ext,toExt);
+                Debug.WriteLine("Converting {0} [{1}->{2}] ", exampleName, ext, toExt);
 
+                if (file.Contains("expansions.") || file.Contains("profiles-resources") || file.Contains("profiles-others") || file.Contains("valuesets."))
+                    continue;
                 if (!isFeed(file))
                     convertResource(file, outputFile);
                 else
@@ -147,15 +158,22 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
 
-        private void compareFiles(string expectedPath, string actualPath)
+        private void compareFiles(string expectedPath, string actualPath, List<string> errors)
         {
             var files = Directory.EnumerateFiles(expectedPath);
 
             foreach (string file in files)
             {
+                if (file.Contains(".profile"))
+                    continue;
+                if (file.Contains(".schema"))
+                    continue;
                 string exampleName = Path.GetFileNameWithoutExtension(file);
                 string extension = Path.GetExtension(file);
                 string actualFile = Path.Combine(actualPath, exampleName) + extension;
+
+                if (actualFile.Contains("dataelements.") || actualFile.Contains("expansions.") || actualFile.Contains("profiles-resources") || actualFile.Contains("profiles-others") || actualFile.Contains("valuesets."))
+                    continue;
 
                 if (!File.Exists(actualFile))
                     Assert.Fail("File {0}.{1} was not converted and not found in {2}", exampleName, extension,
@@ -163,16 +181,16 @@ namespace Hl7.Fhir.Tests.Serialization
 
                 Debug.WriteLine("Comparing " + exampleName);
 
-                compareFile(file, actualFile);
+                compareFile(file, actualFile, errors);
             }
         }
 
-        private void compareFile(string expectedFile, string actualFile)
+        private void compareFile(string expectedFile, string actualFile, List<string> errors)
         {
-            if(expectedFile.EndsWith(".xml"))
-                XmlAssert.AreSame(File.ReadAllText(expectedFile),File.ReadAllText(actualFile));
+            if (expectedFile.EndsWith(".xml"))
+                XmlAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile), File.ReadAllText(actualFile));
             else
-                JsonAssert.AreSame(File.ReadAllText(expectedFile), File.ReadAllText(actualFile));
+                JsonAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile), File.ReadAllText(actualFile), errors);
         }
 
         private bool isFeed(string filename)
@@ -191,11 +209,12 @@ namespace Hl7.Fhir.Tests.Serialization
             }
         }
 
-      
+
         private void convertResource(string inputFile, string outputFile)
         {
             //TODO: call validation after reading
-
+            if (inputFile.Contains("expansions.") || inputFile.Contains("profiles-resources") || inputFile.Contains("profiles-others") || inputFile.Contains("valuesets."))
+                return;
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);

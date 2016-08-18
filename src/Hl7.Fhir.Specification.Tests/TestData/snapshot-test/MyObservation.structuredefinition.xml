@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <meta>
+    <lastUpdated value="2016-08-18T13:02:01.497+02:00" />
+  </meta>
+  <url value="http://example.org/fhir/StructureDefinition/MyObservation" />
+  <name value="MyObservation" />
+  <status value="draft" />
+  <fhirVersion value="1.0.2" />
+  <kind value="resource" />
+  <constrainedType value="Observation" />
+  <abstract value="false" />
+  <base value="http://hl7.org/fhir/StructureDefinition/Observation" />
+  <differential>
+    <element>
+      <path value="Observation" />
+      <type>
+        <code value="Observation" />
+      </type>
+    </element>
+    <element>
+      <path value="Observation.extension" />
+      <slicing>
+        <discriminator value="url" />
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element>
+      <path value="Observation.extension" />
+      <name value="MyExtension" />
+      <definition value="Optional Extensions Element - found in all resources." />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://example.org/fhir/StructureDefinition/MyExtensionNoSnapshot" />
+      </type>
+    </element>
+    <element>
+      <path value="Observation.identifier" />
+      <type>
+        <code value="Identifier" />
+        <profile value="http://example.org/fhir/StructureDefinition/MyIdentifier" />
+      </type>
+    </element>
+    <element>
+      <path value="Observation.category" />
+      <type>
+        <code value="CodeableConcept" />
+        <profile value="http://example.org/fhir/StructureDefinition/MyCodeableConcept" />
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

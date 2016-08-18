@@ -303,10 +303,10 @@ if(!abstractType) {
 		nComponentPropNum += 10;
 #>
             /// <summary>
-            /// <#= pd.Summary.Replace("&", "&amp;") #>
+            /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n            /// ") #>
             /// </summary>
             [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
-<# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
+<# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference" && pd.ReferenceTargets != null) {#>
             [References(<#= pd.ReferenceTargets #>)]
 <# }
 #>
@@ -333,7 +333,7 @@ if(!abstractType) {
 			{
 #>
             /// <summary>
-            /// <#= pd.Summary.Replace("&", "&amp;") #>
+            /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
@@ -441,7 +441,7 @@ if(!abstractType) {
 		nPropNum += 10;
 #>
         /// <summary>
-        /// <#= pd.Summary.Replace("&", "&amp;") #>
+        /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
         /// </summary>
         [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.Element" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
@@ -471,7 +471,7 @@ if(!abstractType) {
         {
 #>
         /// <summary>
-        /// <#= pd.Summary.Replace("&", "&amp;") #>
+        /// <#= pd.Summary.Replace("&", "&amp;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
 <# if (false && pd.CardMax != "1") {#>        [Cardinality(Min=<#= pd.CardMin #>,Max=<#= pd.CardMax.Replace("*", "-1") #>)] 
@@ -498,12 +498,18 @@ if(!abstractType) {
         }
     }
 
-#><# if (resourceName != "DomainResource") { #>
+#><# if (resourceName != "DomainResource2") { #>
 
 <#
             foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", nsR))
             {
                 string expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value", nsR).Value;
+                string parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", nsR).Value;
+                if (parentPath.Contains("."))
+                {
+                    // This expression applied to a backbone element, so need to give it scope
+                    expression = parentPath.Replace(resourceName + ".", "") + ".all(" + expression + ")";
+                }
                 string key = node.SelectSingleNode("fhir:key/@value", nsR).Value;
                 string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
                 string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
@@ -520,6 +526,28 @@ if(!abstractType) {
 <#            }
 #>
 <#}#>
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+<#
+            foreach (XmlElement node in e.SelectNodes("fhir:differential/fhir:element/fhir:constraint", nsR))
+            {
+                string expression = node.SelectSingleNode("fhir:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-expression']/fhir:valueString/@value", nsR).Value;
+                string parentPath = node.ParentNode.SelectSingleNode("fhir:path/@value", nsR).Value;
+                if (parentPath.Contains("."))
+                {
+                    // This expression applied to a backbone element, so need to give it scope
+                    expression = parentPath.Replace(resourceName + ".", "") + ".all(" + expression + ")";
+                }
+                string key = node.SelectSingleNode("fhir:key/@value", nsR).Value;
+                string severity = node.SelectSingleNode("fhir:severity/@value", nsR).Value;
+                string human = node.SelectSingleNode("fhir:human/@value", nsR).Value;
+                string xpath = node.SelectSingleNode("fhir:xpath/@value", nsR).Value;
+#>            InvariantConstraints.Add(<#= resourceName + "_" + key.Replace("-", "_").ToUpper() #>);
+<#            }
+#>        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as <#= resourceName #>;
@@ -684,6 +712,7 @@ if(!abstractType) {
 				case "Meta" : return "Hl7.Fhir.Model.Meta";
 				case "decimal" : return "Hl7.Fhir.Model.FhirDecimal"; 
 				case "markdown" : return "Hl7.Fhir.Model.Markdown";
+				case "xhtml" : return "Hl7.Fhir.Model.Xhtml";
 				case "instant" : return "Hl7.Fhir.Model.Instant";
 				case "integer" : return "Hl7.Fhir.Model.Integer";
 				case "unsignedInt" : return "Hl7.Fhir.Model.UnsignedInt";
@@ -777,6 +806,10 @@ if(!abstractType) {
 			result.Name = result.FhirName.ToUpper().Substring(0,1) + result.FhirName.Substring(1); // convert this to the actual property name
 
 			if (enums.ContainsValue("Hl7.Fhir.Model." + ResourceBase + "." + result.Name))
+				result.Name += "_";
+
+			// A property name cannot be the same as the classname, otherwise c# thinks this is a constructor!
+			if (result.Name == resourceName)
 				result.Name += "_";
 
 			result.CardMin = element.SelectSingleNode("fhir:min/@value", nsR).Value;
@@ -936,6 +969,7 @@ if(!abstractType) {
 						result.ReferenceTargets += ",";
 					result.ReferenceTargets += "\"" +erp.Value.Substring(erp.Value.LastIndexOf("/")+1) + "\"";
                 }
+				if (!string.IsNullOrEmpty(result.ReferenceTargets))
 				result.ReferenceTargets = result.ReferenceTargets.Replace("\"Resource\"", "");
             }
 
@@ -1168,6 +1202,7 @@ if(!abstractType) {
 						result.ReferenceTargets += ",";
 					result.ReferenceTargets += "\"" +erp.Value.Substring(erp.Value.LastIndexOf("/")+1) + "\"";
                 }
+				if (!string.IsNullOrEmpty(result.ReferenceTargets))
 				result.ReferenceTargets = result.ReferenceTargets.Replace("\"Resource\"", "");
             }
 

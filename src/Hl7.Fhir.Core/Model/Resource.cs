@@ -62,8 +62,82 @@ namespace Hl7.Fhir.Model
             {
                 UserData["@@@RESOURCEBASE@@@"] = value;
             }
-        }        
+        }
 
+        /// <summary>
+        /// The List of invariants to be validated for the resource
+        /// </summary>
+        [NotMapped]
+        public List<ElementDefinition.ConstraintComponent> InvariantConstraints;
+
+        private static Dictionary<string, Hl7.FluentPath.PathExpression.CompiledExpression> _expressionCache = new Dictionary<string, Hl7.FluentPath.PathExpression.CompiledExpression>();
+
+        public virtual void AddDefaultConstraints()
+        {
+            if (InvariantConstraints == null || InvariantConstraints.Count == 0)
+                InvariantConstraints = new List<ElementDefinition.ConstraintComponent>();
+        }
+
+        /// <summary>
+        /// Perform the Invariant based validation for this rule
+        /// </summary>
+        /// <param name="invariantRule"></param>
+        /// <param name="model"></param>
+        /// <param name="result">The OperationOutcome that will have the validation results appended</param>
+        /// <returns></returns>
+        protected static bool ValidateInvariantRule(ElementDefinition.ConstraintComponent invariantRule, ElementModel.IElementNavigator model, OperationOutcome result)
+        {
+            string expression = invariantRule.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
+            try
+            {
+                // No FluentPath extension
+                if (string.IsNullOrEmpty(expression))
+                {
+                    result.Issue.Add(new OperationOutcome.IssueComponent()
+                    {
+                        Code = OperationOutcome.IssueType.Invariant,
+                        Severity = OperationOutcome.IssueSeverity.Warning,
+                        Details = new CodeableConcept(null, invariantRule.Key, "Unable to validate without a fluentpath expression"),
+                        Diagnostics = expression
+                    });
+                    return true;
+                }
+                var resourceModel = Hl7.FluentPath.FhirValueList.Create(model);
+                Hl7.FluentPath.PathExpression.CompiledExpression compExpr;
+                if (_expressionCache.ContainsKey(expression))
+                {
+                    compExpr = _expressionCache[expression];
+                }
+                else
+                {
+                    compExpr = Hl7.FluentPath.PathExpression.Compile(expression);
+                    _expressionCache.Add(expression, compExpr);
+                }
+
+                if (Hl7.FluentPath.PathExpression.Predicate(compExpr, resourceModel, resourceModel))
+                    return true;
+
+                result.Issue.Add(new OperationOutcome.IssueComponent()
+                {
+                    Code = OperationOutcome.IssueType.Invariant,
+                    Severity = OperationOutcome.IssueSeverity.Error,
+                    Details = new CodeableConcept(null, invariantRule.Key, invariantRule.Human),
+                    Diagnostics = expression
+                });
+                return false;
+            }
+            catch (Exception ex)
+            {
+                result.Issue.Add(new OperationOutcome.IssueComponent()
+                {
+                    Code = OperationOutcome.IssueType.Invariant,
+                    Severity = OperationOutcome.IssueSeverity.Fatal,
+                    Details = new CodeableConcept(null, invariantRule.Key, "FATAL: Unable to process the invariant rule: " + invariantRule.Key + " " + expression),
+                    Diagnostics = String.Format("FluentPath: {0}\r\nError: {1}", expression, ex.Message)
+                });
+                return false;
+            }
+        }
 
         /// <summary>
         /// Returns the entire URI of the location that this resource was retrieved from
@@ -102,16 +176,50 @@ namespace Hl7.Fhir.Model
             // if (Id != null && !new Uri(Id,UriKind.RelativeOrAbsolute).IsAbsoluteUri)
             //    result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry id must be an absolute URI"));
 
-            if(Meta != null)
+            if (Meta != null)
             {
                 // if (!String.IsNullOrEmpty(this.Meta.VersionId) && !new Uri(Id,UriKind.RelativeOrAbsolute).IsAbsoluteUri)
                 //     result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry selflink must be an absolute URI"));
 
                 if (Meta.Tag != null && validationContext.ValidateRecursively())
-                    DotNetAttributeValidation.TryValidate(Meta.Tag,result,true);
+                    DotNetAttributeValidation.TryValidate(Meta.Tag, result, true);
             }
 
+            // and process all the invariants from the resource
+            ValidateInvariants(result);
+
             return result;
+        }
+
+        public void ValidateInvariants(List<ValidationResult> result)
+        {
+            OperationOutcome results = new OperationOutcome();
+            ValidateInvariants(results);
+            foreach (var item in results.Issue)
+            {
+                if (item.Severity == OperationOutcome.IssueSeverity.Error
+                    || item.Severity == OperationOutcome.IssueSeverity.Fatal)
+                    result.Add(new ValidationResult(item.Details.Coding[0].Code + ": " + item.Details.Text));
+            }
+        }
+
+        public void ValidateInvariants(OperationOutcome result)
+        {
+            if (InvariantConstraints != null && InvariantConstraints.Count > 0)
+            {
+                var sw = System.Diagnostics.Stopwatch.StartNew();
+                // Need to serialize to XML until the object model processor exists
+                // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
+                // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
+                var tree = new FluentPath.ModelNavigator(this);
+                foreach (var invariantRule in InvariantConstraints)
+                {
+                    ValidateInvariantRule(invariantRule, tree, result);
+                }
+
+                sw.Stop();
+                // System.Diagnostics.Trace.WriteLine(String.Format("Validation of {0} execution took {1}", ResourceType.ToString(), sw.Elapsed.TotalSeconds));
+            }
         }
 
         [NotMapped]

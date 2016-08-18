@@ -442,6 +442,12 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.DocumentManifest.RelatedComponent> _Related;
         
 
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+        }
+
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
             var dest = other as DocumentManifest;
