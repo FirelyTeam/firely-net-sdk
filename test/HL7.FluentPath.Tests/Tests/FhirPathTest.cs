@@ -30,7 +30,7 @@ namespace Hl7.FluentPath.Tests
             // var navigator = new TreeNavigator(tree);
             // return navigator;
 
-            var patient = FhirParser.ParseFromXml(tpXml) as Hl7.Fhir.Model.Resource;
+            var patient = (new FhirXmlParser()).Parse<Hl7.Fhir.Model.Patient>(tpXml);
             return new ModelNavigator(patient);
         }
 

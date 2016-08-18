@@ -75,10 +75,10 @@ namespace Hl7.FluentPath.Functions
         private static bool namesAreEqual(IValueProvider left, IValueProvider right, bool useEquivalence = false)
         {
             // If the values have names, compare them
-            if (left is INameProvider && right is INameProvider)
+            if (left is INamedNode && right is INamedNode)
             {
-                var lNP = (INameProvider)left;
-                var rNP = (INameProvider)right;
+                var lNP = (INamedNode)left;
+                var rNP = (INamedNode)right;
 
                 if (useEquivalence && lNP.Name == "id") return true;      // don't compare 'id' elements for equivalence
                 if (lNP.Name != rNP.Name) return false;

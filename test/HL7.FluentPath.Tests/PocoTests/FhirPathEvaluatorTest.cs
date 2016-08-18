@@ -361,9 +361,9 @@ namespace Hl7.FluentPath.Tests
         {
             var result = "";
 
-            if (nav is INameProvider)
+            if (nav is INamedNode)
             {
-                result = ((INameProvider)nav).Name;
+                result = ((INamedNode)nav).Name;
             }
 
             if (nav is ITypeNameProvider)

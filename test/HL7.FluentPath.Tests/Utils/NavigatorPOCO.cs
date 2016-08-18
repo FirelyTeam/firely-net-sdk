@@ -4,6 +4,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.FluentPath.Support;
 using Hl7.ElementModel;
+using System;
 
 namespace Hl7.FluentPath.Tests
 {
@@ -53,6 +54,16 @@ namespace Hl7.FluentPath.Tests
                 return _current.TypeName; // This needs to be fixed
             }
         }
+
+
+        public string Path
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
 
         /// <summary>
         /// The FHIR TypeName is also returned for the name of the root element
