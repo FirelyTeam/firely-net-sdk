@@ -43,12 +43,12 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Hl7.FluentPath, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.3-alpha2\lib\net45\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sprache, Version=2.0.0.52, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sprache.2.0.0.52\lib\portable-net4+netcore45+win8+wp8+sl5+MonoAndroid+Xamarin.iOS10+MonoTouch\Sprache.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -73,35 +73,6 @@
     </Compile>
     <Compile Include="ArtifactResolverTests.cs" />
     <Compile Include="ArtifactSourceTests.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\ConstantValue.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Expressions\CallSignature.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Expressions\Closure.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Expressions\ClosureExtensions.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Expressions\DynaDispatcher.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Expressions\EvaluatorVisitor.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Expressions\ExpressionNode.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Expressions\ExpressionVisitor.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Expressions\Invokee.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Expressions\SymbolTable.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Expressions\SymbolTableInit.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Expressions\TreeVisualizerVisitor.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Expressions\Typecasts.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\FhirValueList.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Functions\CollectionOperators.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Functions\ConversionOperators.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Functions\EqualityOperators.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Functions\LogicOperators.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Functions\StringOperators.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Functions\TypeOperators.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Functions\UtilityOperators.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\IValueProviderListExtensions.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Parser\Grammar.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Parser\Lexer.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Parser\Operators.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\PartialDateTime.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\PathExpression.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\Time.cs" />
-    <Compile Include="HL7.Fhir.FluentPath\FluentPath\TypeInfo.cs" />
     <Compile Include="ProfileNavigationTest.cs" />
     <Compile Include="SchemaCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

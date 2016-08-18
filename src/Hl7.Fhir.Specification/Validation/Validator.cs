@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Validation
             if (Definition.Fixed == null) return;
 
             // Construct an IValueProvider based on the POCO parsed from profileElement.fixed/pattern etc.
-            IElementNavigator fixedValueNav = new PocoNavigator(Definition.Fixed);
+            //IElementNavigator fixedValueNav = new PocoNavigator(Definition.Fixed);
             //return  Compare(fixedValueNav, Instance, mode: Fixed);
         }
 
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Validation
             if (Definition.Pattern == null) return;
 
             // Construct an IValueProvider based on the POCO parsed from profileElement.fixed/pattern etc.
-            IElementNavigator fixedValueNav = new PocoNavigator(Definition.Pattern);
+            //IElementNavigator fixedValueNav = new PocoNavigator(Definition.Pattern);
             //return  Compare(fixedValueNav, Instance, mode: Pattern);
         }
 

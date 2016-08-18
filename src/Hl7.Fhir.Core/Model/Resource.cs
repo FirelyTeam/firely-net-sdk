@@ -36,6 +36,7 @@ using System.Text;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Rest;
+using Hl7.ElementModel;
 
 namespace Hl7.Fhir.Model
 {
@@ -85,7 +86,7 @@ namespace Hl7.Fhir.Model
         /// <param name="model"></param>
         /// <param name="result">The OperationOutcome that will have the validation results appended</param>
         /// <returns></returns>
-        protected static bool ValidateInvariantRule(ElementDefinition.ConstraintComponent invariantRule, ElementModel.IElementNavigator model, OperationOutcome result)
+        protected static bool ValidateInvariantRule(ElementDefinition.ConstraintComponent invariantRule, IElementNavigator model, OperationOutcome result)
         {
             string expression = invariantRule.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
             try

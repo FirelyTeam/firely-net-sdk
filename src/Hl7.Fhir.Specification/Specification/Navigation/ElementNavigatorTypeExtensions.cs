@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <summary>Enumerate all distinct element type profiles.</summary>
         /// <param name="nav">A <see cref="ElementDefinitionNavigator"/> instance.</param>
         /// <returns>A sequence of type profile resource references.</returns>
-        public static IEnumerable<string> EnumerateTypeProfiles(this ElementNavigator nav)
+        public static IEnumerable<string> EnumerateTypeProfiles(this ElementDefinitionNavigator nav)
         {
             return EnumerateTypeProfiles(nav.Elements);
         }

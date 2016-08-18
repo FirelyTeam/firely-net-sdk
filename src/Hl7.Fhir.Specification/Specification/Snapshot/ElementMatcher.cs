@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// of one of snap's elements.  (NO NEED, it just has to match direct children, not deeper)
         /// This function assumes the differential is not sparse: it must have parent nodes for all child constraint paths.
         /// </remarks>
-        public static List<MatchInfo> Match(ElementNavigator snapNav, ElementNavigator diffNav)
+        public static List<MatchInfo> Match(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             if (!snapNav.HasChildren) throw Error.Argument("snapNav", "Cannot match base to diff: element '{0}' in snap has no children".FormatWith(snapNav.Path));
             if (!diffNav.HasChildren) throw Error.Argument("diffNav", "Cannot match base to diff: element '{0}' in diff has no children".FormatWith(diffNav.Path));
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         /// <param name="snapNav"></param>
         /// <returns></returns>
-        private static List<string> listChoiceElements(ElementNavigator snapNav)
+        private static List<string> listChoiceElements(ElementDefinitionNavigator snapNav)
         {
             var bm = snapNav.Bookmark();
             var result = new List<string>();

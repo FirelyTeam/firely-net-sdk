@@ -55,7 +55,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hl7.FluentPath, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3-alpha1\lib\netstandard1.0\Hl7.FluentPath.dll</HintPath>
+      <HintPath>..\packages\Hl7.FluentPath.0.3-alpha2\lib\netstandard1.0\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
@@ -622,7 +622,6 @@
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Support\DateExtensions.cs" />
     <Compile Include="Support\EnumUtility.cs" />
-    <Compile Include="Introspection\EnumUtility.cs" />
     <Compile Include="Support\Error.cs" />
     <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />

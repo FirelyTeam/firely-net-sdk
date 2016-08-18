@@ -6,38 +6,38 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.ElementModel;
+using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Model;
-using Hl7.ElementModel;
 
-namespace Hl7.FluentPath
+namespace Hl7.Fhir.FluentPath
 {
-    public class PocoNavigator : IElementNavigator
+    public class ModelNavigator : IElementNavigator
     {
         public static IEnumerable<IValueProvider> CreateInput(Base model)
         {
-            return new List<IValueProvider>() { new PocoNavigator(model) };
+            return new List<IValueProvider>() { new ModelNavigator(model) };
         }
 
-        public PocoNavigator(Base model)
+        public ModelNavigator(Base model)
         {
             if (model == null) throw Error.ArgumentNull("model");
 
-            _current = new PocoElementNavigator(model.TypeName, model);
+            _current = new ElementNavigator(model.TypeName, model);
         }
 
-        internal PocoNavigator(PocoElementNavigator current)
+        internal ModelNavigator(ElementNavigator current)
         {
             _current =  current;
         }
 
 
-        private PocoElementNavigator _current;
+        private ElementNavigator _current;
 
         /// <summary>
         /// Returns 
@@ -50,6 +50,20 @@ namespace Hl7.FluentPath
                 Console.WriteLine("    -> Read Value of {0}: {1}", _current.Name, _current.Value);
 #endif
                 return _current.Value;
+            }
+        }
+
+        /// <summary>
+        /// Returns 
+        /// </summary>
+        public Base FhirValue
+        {
+            get
+            {
+#if DEBUGX
+                Console.WriteLine("    -> Read Value of {0}: {1}", _current.Name, _current.Value);
+#endif
+                return _current.FhirValue;
             }
         }
 
@@ -124,7 +138,7 @@ namespace Hl7.FluentPath
         public IElementNavigator Clone()
         {
             // Console.WriteLine("Cloning: {0}", this.GetName());
-            return new PocoNavigator(_current);
+            return new ModelNavigator(_current);
         }
     }
 }

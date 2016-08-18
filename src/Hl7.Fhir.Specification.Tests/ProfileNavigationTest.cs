@@ -541,19 +541,19 @@ namespace Hl7.Fhir.Specification.Tests
         }
     }
 
-    public static class PocoEvaluatorExtensions
-    {
-        public static IEnumerable<IValueProvider> ForPoco(this CompiledExpression ce, Base poco)
-        {
-            var nav = new PocoNavigator(poco);
+    //public static class PocoEvaluatorExtensions
+    //{
+    //    public static IEnumerable<IValueProvider> ForPoco(this PathExpression.CompiledExpression ce, Base poco)
+    //    {
+    //        var nav = new FluentPath.ModelNavigator(poco);
 
-            return ce(new List<IValueProvider> { nav }, poco is Resource ? new List<IValueProvider> { nav } : null);
-        }
+    //        return ce(new List<IValueProvider> { nav }, poco is Resource ? new List<IValueProvider> { nav } : null);
+    //    }
 
-        public static IEnumerable<IValueProvider> ForNode(this CompiledExpression ce, IValueProvider node)
-        {
-            return ce(new List<IValueProvider> { node }, null);
-        }
-    }
+    //    public static IEnumerable<IValueProvider> ForNode(this PathExpression.CompiledExpression ce, IValueProvider node)
+    //    {
+    //        return ce(new List<IValueProvider> { node }, null);
+    //    }
+    //}
 
 }

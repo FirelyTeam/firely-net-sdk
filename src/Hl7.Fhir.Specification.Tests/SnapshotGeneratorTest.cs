@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
     {
         private SnapshotGenerator _generator;
-        private ArtifactResolver _testSource;
+        private IArtifactSource _testSource;
         private readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
         {
             // MarkChanges = false,
