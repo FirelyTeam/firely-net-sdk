@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,8 @@ namespace Hl7.ElementModel
         public IElementNode Parent { get; private set; }
 
         public string Name { get; private set; }
+
+        public string Path { get; private set; }
 
         public string TypeName { get; private set; }
 
@@ -40,7 +43,13 @@ namespace Hl7.ElementModel
             TypeName = typeName;
             Children = children;
 
-            foreach (var c in children) c.Parent = this;
+            int childIndex = 0;
+            foreach (var c in children)
+            {
+                c.Parent = this;
+                c.Path = Path + ".{0}[{1}]".FormatWith(c.Name, childIndex);
+                childIndex++;
+            }
         }
 
         public static ElementNode Valued(string name, object value, params ElementNode[] children)

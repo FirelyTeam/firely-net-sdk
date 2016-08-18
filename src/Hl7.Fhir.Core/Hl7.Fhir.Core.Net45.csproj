@@ -78,7 +78,7 @@
     <Compile Include="ElementModel\NodeExtensions.cs" />
     <Compile Include="FluentPath\PocoElementNavigator.cs" />
     <Compile Include="ElementModel\ElementInterfaces.cs" />
-    <Compile Include="ElementModel\INameProvider.cs" />
+    <Compile Include="ElementModel\INamedNode.cs" />
     <Compile Include="ElementModel\INavigator.cs" />
     <Compile Include="ElementModel\ITypeNameProvider.cs" />
     <Compile Include="ElementModel\IValueProvider.cs" />

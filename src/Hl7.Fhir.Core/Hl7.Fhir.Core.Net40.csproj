@@ -69,7 +69,7 @@
     <Compile Include="ElementModel\ElementInterfaces.cs" />
     <Compile Include="ElementModel\ElementNode.cs" />
     <Compile Include="ElementModel\ElementNodeNavigator.cs" />
-    <Compile Include="ElementModel\INameProvider.cs" />
+    <Compile Include="ElementModel\INamedNode.cs" />
     <Compile Include="ElementModel\INavigator.cs" />
     <Compile Include="ElementModel\INode.cs" />
     <Compile Include="ElementModel\IPositionProvider.cs" />

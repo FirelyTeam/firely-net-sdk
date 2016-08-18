@@ -29,10 +29,10 @@ namespace Hl7.Fhir.FluentPath.Functions
         public static bool IsEqualTo(this IValueProvider left, IValueProvider right)
         {
             // If the values have names, compare them
-            if (left is INameProvider && right is INameProvider)
+            if (left is INamedNode && right is INamedNode)
             {
-                var lNP = (INameProvider)left;
-                var rNP = (INameProvider)right;
+                var lNP = (INamedNode)left;
+                var rNP = (INamedNode)right;
 
                 if (lNP.Name != rNP.Name) return false;
             }
@@ -89,10 +89,10 @@ namespace Hl7.Fhir.FluentPath.Functions
         public static bool IsEquivalentTo(this IValueProvider left, IValueProvider right)
         {
             // If the values have names, compare them
-            if (left is INameProvider && right is INameProvider)
+            if (left is INamedNode && right is INamedNode)
             {
-                var lNP = (INameProvider)left;
-                var rNP = (INameProvider)right;
+                var lNP = (INamedNode)left;
+                var rNP = (INamedNode)right;
 
                 if (lNP.Name != rNP.Name) return false;
 

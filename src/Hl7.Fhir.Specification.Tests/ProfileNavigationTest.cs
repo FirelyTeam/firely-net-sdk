@@ -494,25 +494,25 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
-        public void TestNavigationByFhirPath()
-        {
-            StructureDefinition testSD = _source.GetStructureDefinition("http://example.org/fhir/StructureDefinition/human-group");
-            var nav = new ElementDefinitionNavigator(testSD.Snapshot.Element);
-            nav.MoveToFirstChild();
+        //[TestMethod]
+        //public void TestNavigationByFhirPath()
+        //{
+        //    StructureDefinition testSD = _source.GetStructureDefinition("http://example.org/fhir/StructureDefinition/human-group");
+        //    var nav = new ElementDefinitionNavigator(testSD.Snapshot.Element);
+        //    nav.MoveToFirstChild();
 
-            var path = PathExpression.Compile("name.extension");
-            var result = path.ForNode(nav);
-            Assert.AreEqual(2, result.Count());
+        //    var path = PathExpression.Compile("name.extension");
+        //    var result = path.ForNode(nav);
+        //    Assert.AreEqual(2, result.Count());
 
-            var path2 = PathExpression.Compile("characteristic.\"value[x]\"");
-            result = path2.ForNode(nav);
-            Assert.AreEqual(1, result.Count());
+        //    var path2 = PathExpression.Compile("characteristic.\"value[x]\"");
+        //    result = path2.ForNode(nav);
+        //    Assert.AreEqual(1, result.Count());
 
-            var ed = result.Single().Value as ElementDefinition;
-            Assert.IsNotNull(ed);            
-            Assert.AreEqual(ed.Short, "Value held by characteristic");
-        }
+        //    var ed = result.Single().Value as ElementDefinition;
+        //    Assert.IsNotNull(ed);            
+        //    Assert.AreEqual(ed.Short, "Value held by characteristic");
+        //}
 
 
         private static ElementDefinitionNavigator createTestNav()

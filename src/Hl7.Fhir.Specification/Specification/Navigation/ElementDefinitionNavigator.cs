@@ -16,7 +16,7 @@ using Hl7.ElementModel;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
-    public class ElementDefinitionNavigator : IElementNavigator
+    public class ElementDefinitionNavigator
     {
         internal ElementDefinitionNavigator()
         {
@@ -104,32 +104,32 @@ namespace Hl7.Fhir.Specification.Navigation
 
 
 
-        IElementNavigator INavigator<IElementNavigator>.Clone()
-        {
-            return this.ShallowCopy();
-        }
+        //IElementNavigator INavigator<IElementNavigator>.Clone()
+        //{
+        //    return this.ShallowCopy();
+        //}
 
-        string INameProvider.Name
-        {
-            get
-            {
-                return this.PathName;
-            }
-        }
+        //string INamedNode.Name
+        //{
+        //    get
+        //    {
+        //        return this.PathName;
+        //    }
+        //}
 
-        object IValueProvider.Value
-        {
-            get
-            {
-                return Current;
-            }
-        }
+        //object IValueProvider.Value
+        //{
+        //    get
+        //    {
+        //        return Current;
+        //    }
+        //}
 
 
-        string ITypeNameProvider.TypeName
-        {
-            get { return "ElementDefinition";  }
-        }
+        //string ITypeNameProvider.TypeName
+        //{
+        //    get { return "ElementDefinition";  }
+        //}
 
 
         //----------------------------------

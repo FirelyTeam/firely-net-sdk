@@ -8,9 +8,14 @@
 
 namespace Hl7.ElementModel
 {
-    public interface INameProvider
+    public interface INamedNode
     {
         string Name
+        {
+            get;
+        }
+
+        string Path
         {
             get;
         }

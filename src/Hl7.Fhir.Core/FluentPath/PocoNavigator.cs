@@ -77,6 +77,15 @@ namespace Hl7.FluentPath
                 return _current.Name;
             }
         }
+
+        public string Path
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public bool MoveToFirstChild()
         {
             if (_current.Children().Any())

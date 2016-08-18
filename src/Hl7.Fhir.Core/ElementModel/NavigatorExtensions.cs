@@ -60,27 +60,27 @@ namespace Hl7.ElementModel
             }
         }
 
-        public static IEnumerable<object> Values<T>(this T navigator, string name) where T : INavigator<T>, INameProvider, IValueProvider
+        public static IEnumerable<object> Values<T>(this T navigator, string name) where T : INavigator<T>, INamedNode, IValueProvider
         {
             return navigator.Values(n => n.Name == name);
         }
 
-        public static IEnumerable<object> ChildrenValues<T>(this IEnumerable<T> navigators, string name) where T: INavigator<T>, INameProvider, IValueProvider
+        public static IEnumerable<object> ChildrenValues<T>(this IEnumerable<T> navigators, string name) where T: INavigator<T>, INamedNode, IValueProvider
         {
             return navigators.SelectMany(n => n.Values(name));
         }
 
-        public static IEnumerable<string> GetChildNames<T>(this T navigator)where T : INavigator<T>, INameProvider
+        public static IEnumerable<string> GetChildNames<T>(this T navigator)where T : INavigator<T>, INamedNode
         {
             return navigator.Children().Select(c => c.Name).Distinct();
         }
 
-        public static IEnumerable<T> GetChildrenByName<T>(this T navigator, string name)where T : INavigator<T>, INameProvider
+        public static IEnumerable<T> GetChildrenByName<T>(this T navigator, string name)where T : INavigator<T>, INamedNode
         {
             return navigator.Children().Where(c => c.Name == name);
         }
 
-        public static IEnumerable<T> GetChildrenByName<T>(this IEnumerable<T> navigators, string name) where T : INavigator<T>, INameProvider
+        public static IEnumerable<T> GetChildrenByName<T>(this IEnumerable<T> navigators, string name) where T : INavigator<T>, INamedNode
         {
             return navigators.SelectMany(n => n.Children().Where(c => c.Name == name));
         }

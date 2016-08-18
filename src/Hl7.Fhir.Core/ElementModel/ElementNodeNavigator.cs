@@ -43,6 +43,15 @@ namespace Hl7.ElementModel
             }
         }
 
+        public string Path
+        {
+            get
+            {
+                return Current.Path;
+            }
+        }
+
+
         public object Value
         {
             get

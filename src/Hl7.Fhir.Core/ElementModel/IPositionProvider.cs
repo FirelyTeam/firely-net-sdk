@@ -8,7 +8,15 @@ namespace Hl7.ElementModel
     public interface IPositionProvider
     {
         // By FluentPath position
-        // By line/pos position
+    }
+
+
+    public interface IUnparsedSource
+    {
+        string OriginalText { get; }
+
+        int Line { get; }
+        int Pos { get; }
     }
 
 }
