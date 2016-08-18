@@ -2394,7 +2394,41 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        public override IEnumerable<Base> Properties
+        {
+            get
+            {
+                foreach (var prop in base.Properties) { yield return prop; }
+                foreach (var prop in Identifier) { yield return prop; }
+                yield return Request;
+                yield return Ruleset;
+                yield return OriginalRuleset;
+                yield return CreatedElement;
+                yield return Organization;
+                yield return RequestProvider;
+                yield return RequestOrganization;
+                yield return OutcomeElement;
+                yield return DispositionElement;
+                yield return PayeeType;
+                foreach (var prop in Item) { yield return prop; }
+                foreach (var prop in AddItem) { yield return prop; }
+                foreach (var prop in Error) { yield return prop; }
+                yield return TotalCost;
+                yield return UnallocDeductable;
+                yield return TotalBenefit;
+                yield return PaymentAdjustment;
+                yield return PaymentAdjustmentReason;
+                yield return PaymentDateElement;
+                yield return PaymentAmount;
+                yield return PaymentRef;
+                yield return Reserved;
+                yield return Form;
+                foreach (var prop in Note) { yield return prop; }
+                foreach (var prop in Coverage) { yield return prop; }
+            }
+        }
+
     }
     
 }

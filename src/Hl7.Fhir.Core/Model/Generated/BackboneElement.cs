@@ -100,6 +100,15 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        public override IEnumerable<Base> Properties
+        {
+            get
+            {
+               foreach (var prop in base.Properties) { yield return prop; }
+               foreach (var prop in ModifierExtension) { yield return prop; }
+            }
+        }
     
     
     }

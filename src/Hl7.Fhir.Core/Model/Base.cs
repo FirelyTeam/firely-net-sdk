@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
 
 
         public abstract string TypeName { get; }
+
+        public virtual IEnumerable<Base> Properties { get { return Enumerable.Empty<Base>(); } }
     }
 }
-
-

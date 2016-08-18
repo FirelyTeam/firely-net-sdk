@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
-using System.Linq;
 using System.Runtime.Serialization;
 
 /*
@@ -119,7 +118,16 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        public override IEnumerable<Base> Properties
+        {
+            get
+            {
+                foreach (var p in base.Properties) { yield return p; }
+                yield return Value;
+            }
+        }
+
     }
     
 }

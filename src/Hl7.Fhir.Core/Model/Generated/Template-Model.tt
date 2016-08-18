@@ -559,9 +559,9 @@ if(!abstractType) {
 	foreach (PropertyDetails pd in props)
     {
 		if (pd.CardMax == "*")
-			WriteLine("            if( !DeepComparable.Matches({0}, otherT.{0})) return false;", pd.Name, pd.PropType, pd.CardMax);
+			WriteLine("            if( !DeepComparable.Matches({0}, otherT.{0})) return false;", pd.Name); // , pd.PropType, pd.CardMax);
 		else
-			WriteLine("            if( !DeepComparable.Matches({0}, otherT.{0})) return false;", pd.Name, pd.PropType, pd.CardMax);
+			WriteLine("            if( !DeepComparable.Matches({0}, otherT.{0})) return false;", pd.Name); // , pd.PropType, pd.CardMax);
     }
 #>
             
@@ -577,13 +577,40 @@ if(!abstractType) {
 <#
 	foreach (PropertyDetails pd in props)
     {
-		WriteLine("            if( !DeepComparable.IsExactly({0}, otherT.{0})) return false;", pd.Name, pd.PropType, pd.CardMax);
+		WriteLine("            if( !DeepComparable.IsExactly({0}, otherT.{0})) return false;", pd.Name); // , pd.PropType, pd.CardMax);
     }
 #>
             
             return true;
         }
-        
+
+<#
+		// [WMR 20160818] START - implement generic properties collection
+#>
+        public override IEnumerable<Base> Properties
+        {
+            get
+            {
+                foreach (var prop in base.Properties) { yield return prop; }
+<#
+	foreach (PropertyDetails pd in props)
+    {
+		if (pd.IsMultiCard())
+		{
+			WriteLine("                foreach (var prop in {0}) {{ yield return prop; }}", pd.Name);
+		}
+		else
+		{
+			WriteLine("                yield return {0};", pd.Name);
+		}
+    }
+#>
+            }
+        }
+<#
+		// [WMR 20160818] END - implement generic properties collection
+#>
+
     }
     
 }

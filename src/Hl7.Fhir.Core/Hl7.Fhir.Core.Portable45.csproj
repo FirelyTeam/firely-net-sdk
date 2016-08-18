@@ -299,7 +299,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Generated\Template-DataTypeModel1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\Template-Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Template-Model1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Template-Model.tt</DependentUpon>
@@ -672,11 +682,11 @@
     </Content>
     <Content Include="Model\Generated\Template-DataTypeModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-DataTypeModel.cs</LastGenOutput>
+      <LastGenOutput>Template-DataTypeModel1.cs</LastGenOutput>
     </Content>
     <Content Include="Model\Generated\Template-Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Model.cs</LastGenOutput>
+      <LastGenOutput>Template-Model1.cs</LastGenOutput>
     </Content>
     <Content Include="Model\Generated\Template-ModelInfo.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

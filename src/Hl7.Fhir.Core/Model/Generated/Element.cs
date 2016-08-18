@@ -112,7 +112,16 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Extension, otherT.Extension)) return false;
             
             return true;
-        }        
+        }
+
+        public override IEnumerable<Base> Properties
+        {
+            get
+            {
+                foreach (var p in base.Properties) { yield return p; }
+                foreach (var p in Extension) { yield return p; }
+            }
+        }
     }
     
 }

@@ -1031,7 +1031,37 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        public override IEnumerable<Base> Properties
+        {
+            get
+            {
+                foreach (var prop in base.Properties) { yield return prop; }
+                foreach (var prop in Identifier) { yield return prop; }
+                yield return ProvidedBy;
+                yield return ServiceCategory;
+                foreach (var prop in ServiceType) { yield return prop; }
+                yield return Location;
+                yield return ServiceNameElement;
+                yield return CommentElement;
+                yield return ExtraDetailsElement;
+                yield return Photo;
+                foreach (var prop in Telecom) { yield return prop; }
+                foreach (var prop in CoverageArea) { yield return prop; }
+                foreach (var prop in ServiceProvisionCode) { yield return prop; }
+                yield return Eligibility;
+                yield return EligibilityNoteElement;
+                foreach (var prop in ProgramNameElement) { yield return prop; }
+                foreach (var prop in Characteristic) { yield return prop; }
+                foreach (var prop in ReferralMethod) { yield return prop; }
+                yield return PublicKeyElement;
+                yield return AppointmentRequiredElement;
+                foreach (var prop in AvailableTime) { yield return prop; }
+                foreach (var prop in NotAvailable) { yield return prop; }
+                yield return AvailabilityExceptionsElement;
+            }
+        }
+
     }
     
 }

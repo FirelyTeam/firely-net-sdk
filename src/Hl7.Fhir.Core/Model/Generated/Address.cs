@@ -483,6 +483,24 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        public override IEnumerable<Base> Properties
+        {
+            get
+            {
+               foreach (var prop in base.Properties) { yield return prop; }
+               yield return UseElement;
+               yield return TypeElement;
+               yield return TextElement;
+               foreach (var prop in LineElement) { yield return prop; }
+               yield return CityElement;
+               yield return DistrictElement;
+               yield return StateElement;
+               yield return PostalCodeElement;
+               yield return CountryElement;
+               yield return Period;
+            }
+        }
     
     
     }

@@ -152,7 +152,19 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        public override IEnumerable<Base> Properties
+        {
+            get
+            {
+                foreach (var prop in base.Properties) { yield return prop; }
+                yield return Text;
+                foreach (var prop in Contained) { yield return prop; }
+                foreach (var prop in Extension) { yield return prop; }
+                foreach (var prop in ModifierExtension) { yield return prop; }
+            }
+        }
+
     }
     
 }

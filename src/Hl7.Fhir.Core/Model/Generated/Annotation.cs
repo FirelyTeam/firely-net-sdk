@@ -177,6 +177,17 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        public override IEnumerable<Base> Properties
+        {
+            get
+            {
+               foreach (var prop in base.Properties) { yield return prop; }
+               yield return Author;
+               yield return TimeElement;
+               yield return TextElement;
+            }
+        }
     
     
     }

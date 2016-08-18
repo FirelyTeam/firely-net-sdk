@@ -712,7 +712,27 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        public override IEnumerable<Base> Properties
+        {
+            get
+            {
+                foreach (var prop in base.Properties) { yield return prop; }
+                foreach (var prop in Identifier) { yield return prop; }
+                yield return StatusElement;
+                yield return Type;
+                yield return Reason;
+                yield return PriorityElement;
+                yield return DescriptionElement;
+                yield return StartElement;
+                yield return EndElement;
+                yield return MinutesDurationElement;
+                foreach (var prop in Slot) { yield return prop; }
+                yield return CommentElement;
+                foreach (var prop in Participant) { yield return prop; }
+            }
+        }
+
     }
     
 }

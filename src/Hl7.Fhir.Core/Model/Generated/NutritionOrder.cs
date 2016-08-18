@@ -1240,7 +1240,27 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        public override IEnumerable<Base> Properties
+        {
+            get
+            {
+                foreach (var prop in base.Properties) { yield return prop; }
+                yield return Patient;
+                yield return Orderer;
+                foreach (var prop in Identifier) { yield return prop; }
+                yield return Encounter;
+                yield return DateTimeElement;
+                yield return StatusElement;
+                foreach (var prop in AllergyIntolerance) { yield return prop; }
+                foreach (var prop in FoodPreferenceModifier) { yield return prop; }
+                foreach (var prop in ExcludeFoodModifier) { yield return prop; }
+                yield return OralDiet;
+                foreach (var prop in Supplement) { yield return prop; }
+                yield return EnteralFormula;
+            }
+        }
+
     }
     
 }

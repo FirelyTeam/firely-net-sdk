@@ -160,7 +160,9 @@
     <Compile Include="Model\Generated\DeviceUseStatement.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\DomainResource.cs" />
+    <Compile Include="Model\Generated\DomainResource.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Generated\ElementDefinition.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
@@ -288,6 +290,11 @@
       <DependentUpon>Template-Model.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\Generated\Template-Model2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Template-ModelInfo.cs">
       <AutoGen>True</AutoGen>
@@ -677,7 +684,7 @@
     </Content>
     <Content Include="Model\Generated\Template-Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Model.cs</LastGenOutput>
+      <LastGenOutput>Template-Model2.cs</LastGenOutput>
     </Content>
     <Content Include="Model\Generated\Template-Bindings.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
