@@ -89,12 +89,15 @@ namespace Hl7.Fhir.Specification.Tests
 
         [TestMethod]
         // [Ignore] // For debugging purposes
-        public void GenerateSnapshotExpandAll()
+        public void GenerateSnapshotExpandUnconstrainedElements()
         {
             _settings.ExpandUnconstrainedElements = true;
 
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-patient");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-patient");
+
+            // [WMR 20160818] Verify that full expansion does not hang on recursive named references
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
 
             Assert.IsNotNull(sd);
 
