@@ -1,12 +1,13 @@
-﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
+﻿/* 
+ * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.IO;
 
 namespace Hl7.Fhir.Support
 {
@@ -132,27 +133,6 @@ namespace Hl7.Fhir.Support
         }
 
         /// <summary>
-        /// Creates an <see cref="FormatException"/> with the provided properties.
-        /// </summary>
-        /// <param name="message">A string explaining the reason for the exception.</param>
-        /// <param name="pos">Optional line position information for the message</param>
-        /// <returns>The logged <see cref="Exception"/>.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
-        internal static FormatException Format(string message, IPositionInfo pos)
-        {
-            string excMessage;
-
-            if (pos != null)
-            {
-                excMessage = String.Format("At line {0}, pos {1}: {2}", pos.LineNumber, pos.LinePosition, message);
-            }
-            else
-                excMessage = Error.formatMessage(message);
-
-            return new FormatException(excMessage);
-        }
-
-        /// <summary>
         /// Creates an <see cref="NotImplementedException"/>.
         /// </summary>
         /// <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
@@ -183,5 +163,25 @@ namespace Hl7.Fhir.Support
             return new ResourceReferenceNotFoundException(url, Error.formatMessage(messageFormat, messageArgs));
         }
 
+        /// <summary>
+        /// Creates an <see cref="FormatException"/> with the provided properties.
+        /// </summary>
+        /// <param name="message">A string explaining the reason for the exception.</param>
+        /// <param name="pos">Optional line position information for the message</param>
+        /// <returns>The logged <see cref="Exception"/>.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
+        internal static FormatException Format(string message, IPositionInfo pos)
+        {
+            string excMessage;
+
+            if (pos != null)
+            {
+                excMessage = String.Format("At line {0}, pos {1}: {2}", pos.LineNumber, pos.LinePosition, message);
+            }
+            else
+                excMessage = Error.formatMessage(message);
+
+            return new FormatException(excMessage);
+        }
     }
 }

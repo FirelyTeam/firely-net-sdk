@@ -622,9 +622,9 @@
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Support\DateExtensions.cs" />
     <Compile Include="Introspection\EnumUtility.cs" />
+    <Compile Include="Support\Error.cs" />
     <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
-    <Compile Include="Support\Logging.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
     <Compile Include="Introspection\ModelInspector.cs" />
     <Compile Include="Serialization\PrimitiveTypeConverter.cs" />

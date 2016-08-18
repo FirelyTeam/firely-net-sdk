@@ -60,8 +60,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Hl7.Fhir.Core\Support\Logging.cs">
-      <Link>Support\Logging.cs</Link>
+    <Compile Include="..\Hl7.Fhir.Core\Support\Error.cs">
+      <Link>Support\Error.cs</Link>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="..\Hl7.Fhir.Core\Support\ReflectionHelper.cs">
@@ -83,6 +83,8 @@
     <Compile Include="Specification\Navigation\ElementNavigatorModificationExtensions.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorMovementExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorEvents.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorProfileInfo.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
     <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
     <Compile Include="Specification\Source\MultiArtifactSource.cs" />
