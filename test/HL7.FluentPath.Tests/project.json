@@ -4,7 +4,7 @@
   "dependencies": {
     "xunit": "2.2.0-beta2-build3300",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "src": "0.3-alpha1",
+    "Hl7.FluentPath": "*",
     "Hl7.Fhir.DSTU2": "0.90.5"
   },
   "frameworks": {
