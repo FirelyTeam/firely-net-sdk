@@ -1,6 +1,4 @@
 ﻿#define DETECT_RECURSION
-// [WMR 20160815] New: expand all complex elements (even without any diff constraints)
-#define EXPANDALL
 
 /* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
@@ -26,10 +24,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>The canonical url of the extension definition that marks snapshot elements with associated differential constraints.</summary>
         public static readonly string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
 
-        private ArtifactResolver _resolver;
-        private SnapshotGeneratorSettings _settings;
+        private readonly ArtifactResolver _resolver;
+        private readonly SnapshotGeneratorSettings _settings;
 #if DETECT_RECURSION
-        private SnapshotRecursionChecker _recursionChecker = new SnapshotRecursionChecker();
+        private readonly SnapshotRecursionChecker _recursionChecker = new SnapshotRecursionChecker();
 #endif
 
         public SnapshotGenerator(ArtifactResolver resolver, SnapshotGeneratorSettings settings)
@@ -72,6 +70,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 throw Error.Argument("structure", "The specified StructureDefinition resource has no canonical url.");
             }
+
+            // Clear invalid profile information
+            ClearInvalidProfiles();
 
 #if DETECT_RECURSION
             _recursionChecker.StartExpansion(structure.Url);
@@ -121,6 +122,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 throw Error.Argument("element", "The element to expand is not included in the given element list.");
             }
+
+            ClearInvalidProfiles();
 
             expandElement(nav);
 
@@ -238,7 +241,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => snapshot generator should add this
                 fixExtensionUrl(snap);
             }
-#if EXPANDALL
             else if (_settings.ExpandUnconstrainedElements)
             {
                 var types = snap.Current.Type;
@@ -251,7 +253,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                 }
             }
-#endif
         }
 
         private void mergeElementDefinition(ElementDefinition snap, ElementDefinition diff)
@@ -335,6 +336,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 // Otherwise silently ignore and continue expansion
                 Debug.Print("Warning! Unresolved type profile for element '{0}' with url '{1}' - continue expansion...".FormatWith(diff.Path, primaryDiffTypeProfile));
+                RegisterInvalidProfile(primaryDiffTypeProfile, SnapshotProfileStatus.Missing);
             }
             else
             {
@@ -384,13 +386,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                         mergeElementDefinition(snap.Current, baseNav.Current);
                     }
                 }
-#if DEBUG
-                else
-                {
-                    // Silently ignore missing profile and continue expansion
-                    Debug.Print("Resolved the external profile with url '{0}', but it does not contain a snapshot representation... ignore and continue...".FormatWith(primaryDiffTypeProfile));
-                }
-#endif
 
 #if DETECT_RECURSION
                 _recursionChecker.OnAfterExpandType(primaryDiffTypeProfile);
@@ -505,6 +500,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 else if (isRequired || !_settings.IgnoreUnresolvedProfiles)
                 {
                     throw Error.NotSupported("Resolved the external profile with url '{0}', but it does not contain a snapshot representation.".FormatWith(structure));
+                }
+                else
+                {
+                    RegisterInvalidProfile(structure.Url, SnapshotProfileStatus.NoSnapshot);
+
                 }
             }
             return structure.Snapshot != null;
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var typeCode = primaryType.Code.Value;
                     var typeProfile = primaryType.Profile.FirstOrDefault();
                     StructureDefinition baseStructure = null;
-                    if (!defn.IsExtension() && !defn.IsReference() && !string.IsNullOrEmpty(typeProfile) && _settings.MergeTypeProfiles)
+                    if (!string.IsNullOrEmpty(typeProfile) && _settings.MergeTypeProfiles && !defn.IsExtension() && !defn.IsReference())
                     {
                         // Try to resolve the custom element type profile reference
                         baseStructure = _resolver.GetStructureDefinition(typeProfile);
@@ -635,6 +635,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         {
                             if (_settings.IgnoreUnresolvedProfiles)
                             {
+                                RegisterInvalidProfile(typeProfile, SnapshotProfileStatus.Missing);
                                 // Ignore unresolved external type profile reference; expand the underlying standard core type
                                 baseStructure = _resolver.GetStructureDefinitionForCoreType(typeCode);
                             }

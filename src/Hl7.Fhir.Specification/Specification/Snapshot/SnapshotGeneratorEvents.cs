@@ -15,7 +15,13 @@ namespace Hl7.Fhir.Specification.Snapshot
 
     public partial class SnapshotGenerator
     {
-        /// <summary>An event that notifies clients when a differential constraint has been processed.</summary>
+        /// <summary>
+        /// An event that notifies clients when a differential constraint has been processed.
+        /// The specified <see cref="Element"/> instance is the result of merging the base
+        /// element with the associated differential constraint(s).
+        /// The event handler can inspect and optionally modify the element.
+        /// The result will be included in the snapshot.
+        /// </summary>
         public event SnapshotConstraintHandler Constraint;
 
         /// <summary>Raise the <see cref="Constraint"/> event to notify the client that a differential constraint has been processed.</summary>
@@ -38,7 +44,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        /// <summary>An event that notifies clients when a base profile has been resolved.</summary>
+        /// <summary>
+        /// An event that notifies clients when a base profile has been resolved.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="SnapshotBaseProfileEventArgs.BaseProfile"/> event argument returns a
+        /// reference to the original base profile instance as returned by the artifact source.
+        /// Modifications to this instance will affect the original cached artifact
+        /// and will be visible to other consumers of the artifact source.
+        /// </remarks>
         public event SnapshotBaseProfileHandler PrepareBaseProfile;
 
         /// <summary>
@@ -60,10 +74,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>
-        /// An event that notifies clients when a base profile element definition is being prepared.
-        /// The snapshot generator has already fixed the element base path.
+        /// An event that notifies clients when the generator initializes a new snapshot element.
+        /// The specified element is cloned from the base profile and the base path has been fixed.
+        /// The event handler can inspect and optionally modify the base element clone.
         /// After the event handler returns, the snapshot generator merges any associated
-        /// differential constraints and adds the resulting element definition to the snapshot.
+        /// differential constraints and the result is included in the snapshot.
         /// </summary>
         public event SnapshotElementHandler PrepareBaseElement;
 

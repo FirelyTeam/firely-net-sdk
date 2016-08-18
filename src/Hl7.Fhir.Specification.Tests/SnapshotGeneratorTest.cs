@@ -209,14 +209,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             var extensionElements = sd.Differential.Element.Where(e => e.IsExtension());
             Assert.IsNotNull(extensionElements);
-            Assert.AreEqual(extensionElements.Count(), 2); // Extension slicing entry + first extension definition
+            Assert.AreEqual(2, extensionElements.Count()); // Extension slicing entry + first extension definition
             var extensionElement = extensionElements.Skip(1).FirstOrDefault();
             var extensionType = extensionElement.Type.FirstOrDefault();
             Assert.IsNotNull(extensionType);
-            Assert.AreEqual(extensionType.Code, FHIRDefinedType.Extension);
+            Assert.AreEqual(FHIRDefinedType.Extension, extensionType.Code);
             Assert.IsNotNull(extensionType.Profile);
             var extDefUrl = extensionType.Profile.FirstOrDefault();
-            Assert.AreEqual(extDefUrl, @"http://example.org/fhir/StructureDefinition/MyLocationExtension");
+            Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyLocationExtension", extDefUrl);
             var ext = _testSource.GetStructureDefinition(extDefUrl);
             Assert.IsNotNull(ext);
             Assert.IsNull(ext.Snapshot);
@@ -229,6 +229,36 @@ namespace Hl7.Fhir.Specification.Tests
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
             dumpBasePaths(expanded);
+        }
+
+        [TestMethod]
+        //[Ignore]
+        public void GenerateSnapshotIgnoreMissingExternalProfile()
+        {
+            var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyObservation");
+            Assert.IsNotNull(sd);
+
+            dumpReferences(sd, true);
+
+            
+            _settings.IgnoreUnresolvedProfiles = true;  // On missing profile, aggregate information and continue
+            _settings.MergeTypeProfiles = true;         // Merge the external type/extension profiles
+            _settings.ExpandExternalProfiles = false;   // Don't generate missing snapshots
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            var invalidProfiles = _generator.InvalidExternalProfiles;
+            Assert.AreEqual(3, invalidProfiles.Count);
+
+            assertProfileInfo(invalidProfiles, "http://example.org/fhir/StructureDefinition/MyExtensionNoSnapshot", SnapshotProfileStatus.NoSnapshot);
+            assertProfileInfo(invalidProfiles, "http://example.org/fhir/StructureDefinition/MyCodeableConcept", SnapshotProfileStatus.Missing);
+            assertProfileInfo(invalidProfiles, "http://example.org/fhir/StructureDefinition/MyIdentifier", SnapshotProfileStatus.Missing);
+        }
+
+        private static void assertProfileInfo(IList<SnapshotProfileInfo> info, string url, SnapshotProfileStatus status)
+        {
+            Assert.AreEqual(1, info.Count(pi => pi.Url == url & pi.Status == status));
         }
 
         // [WMR 20160721] Following profiles are not yet handled (TODO)
@@ -511,9 +541,9 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20160722] For debugging purposes
         [Conditional("DEBUG")]
-        private void dumpReferences(StructureDefinition sd)
+        private void dumpReferences(StructureDefinition sd, bool differential = false)
         {
-            if (sd != null && sd.Snapshot != null)
+            if (sd != null)
             {
                 Debug.WriteLine("References for StructureDefinition '{0}' ('{1}')".FormatWith(sd.Name, sd.Url));
                 Debug.WriteLine("Base = '{0}'".FormatWith(sd.Base));
@@ -522,7 +552,8 @@ namespace Hl7.Fhir.Specification.Tests
                 // var folderPath = Path.Combine(Directory.GetCurrentDirectory(), @"TestData\snapshot-test\download");
                 // if (!Directory.Exists(folderPath)) { Directory.CreateDirectory(folderPath); }
 
-                var profiles = sd.Snapshot.DistinctTypeProfiles();
+                var component = differential ? sd.Differential.Element : sd.Snapshot.Element;
+                var profiles = component.EnumerateTypeProfiles().Distinct();
 
                 Debug.Indent();
                 foreach (var profile in profiles)
@@ -590,7 +621,7 @@ namespace Hl7.Fhir.Specification.Tests
             SnapshotBaseProfileHandler profileHandler = (sender, args) =>
             {
                 var profile = args.Profile;
-                Assert.AreEqual(profile, sd);
+                Assert.AreEqual(sd, profile);
                 var baseProfile = args.BaseProfile;
                 Assert.IsNotNull(baseProfile);
                 Debug.WriteLine("StructureDefinition.Base = '{0}'".FormatWith(profile.Base));
