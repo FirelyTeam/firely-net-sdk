@@ -70,6 +70,8 @@ namespace Hl7.Fhir.Validation
         // Non-availability, incomplete data
         public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE = def(4000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
+        // Processing information
+        public static readonly Issue PROCESSING_PROGRESS = def(5000, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);
     }
 
 }

@@ -51,29 +51,10 @@ namespace Hl7.Fhir.Model
                 return Text.Div;
             }
 
-            var text = String.Empty;
-            if (Issue != null)
-            {
-                foreach (var issue in Issue)
-                {
-                    if (!String.IsNullOrEmpty(text))
-                        text += " ------------- ";  // Add divider after each issue
+            var text = "";
 
-                    if (issue.Severity != null)
-                    {
-                        text += issue.Severity.ToString() + ": ";
-                    }
-
-                    if (issue.Diagnostics != null)
-                    {
-                        text += issue.Diagnostics;
-                    }
-                    else
-                    {
-                        text += "No diagnostics";
-                    }
-                }
-            }
+            foreach (var issue in Issue)
+                text += issue.ToString() + Environment.NewLine;
 
             return text;
         }
@@ -106,6 +87,47 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     return Severity != null && (Severity.Value == IssueSeverity.Information || Severity.Value == IssueSeverity.Warning);
+                }
+            }
+
+            public override string ToString()
+            {
+                string text = new string(' ', HierarchyLevel*2);
+
+                if (Severity != null)
+                {
+                    text += "[" + Severity.ToString().ToUpper() + "] ";
+                }
+
+                if (Diagnostics != null)
+                {
+                    text += Diagnostics;
+                }
+                else
+                {
+                    text += "(no diagnostics)";
+                }
+
+                if (Location.Any())
+                {
+                    text += " (at " + String.Join(", ", Location) + ")";
+                }
+
+                return text;
+            }
+
+            public const string OPERATIONOUTCOME_ISSUE_HIERARCHY = "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-hierarchy";
+
+            public int HierarchyLevel
+            {
+                get
+                {
+                    return this.GetIntegerExtension(OPERATIONOUTCOME_ISSUE_HIERARCHY).GetValueOrDefault(0);
+                }
+
+                set
+                {
+                    this.SetIntegerExtension(OPERATIONOUTCOME_ISSUE_HIERARCHY, value);
                 }
             }
         }

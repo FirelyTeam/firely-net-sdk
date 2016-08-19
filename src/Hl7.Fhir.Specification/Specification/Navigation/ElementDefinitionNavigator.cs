@@ -21,11 +21,22 @@ namespace Hl7.Fhir.Specification.Navigation
         {
         }
 
-        public ElementDefinitionNavigator(IList<ElementDefinition> elements)
+        public ElementDefinitionNavigator(IList<ElementDefinition> elements, StructureDefinition definition)
         {
             if (elements == null) throw Error.ArgumentNull("elements");
 
+            StructureDefinition = definition;
             Elements = elements.ToList();      // make a *shallow* copy of the list of elements
+            OrdinalPosition = null;
+        }
+
+        public ElementDefinitionNavigator(StructureDefinition definition)
+        {
+            if (definition == null) throw Error.ArgumentNull("definition");
+            if (definition.Snapshot == null) throw Error.ArgumentNull("snapshot");
+            
+            StructureDefinition = definition;
+            Elements = definition.Snapshot.Element.ToList();      // make a *shallow* copy of the list of elements
             OrdinalPosition = null;
         }
 
@@ -35,14 +46,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
             Elements = other.Elements.ToList();
             OrdinalPosition = other.OrdinalPosition;
-        }
-
-
-        public static ElementDefinitionNavigator ForSnapshot(StructureDefinition sd)
-        {
-            if (sd.Snapshot == null) throw Error.ArgumentNull("sd.Snapshot");
-
-            return new ElementDefinitionNavigator(sd.Snapshot.Element);
+            StructureDefinition = other.StructureDefinition;
         }
 
         public ElementDefinitionNavigator ShallowCopy()
@@ -50,9 +54,32 @@ namespace Hl7.Fhir.Specification.Navigation
             var result = new ElementDefinitionNavigator();
             result.Elements = this.Elements;
             result.OrdinalPosition = this.OrdinalPosition;
+            result.StructureDefinition = this.StructureDefinition;
 
             return result;
         }
+
+     
+        public ElementDefinitionNavigator(IList<ElementDefinition> elements) : this(elements, null)
+        {
+        }
+
+
+        public static ElementDefinitionNavigator ForSnapshot(StructureDefinition sd)
+        {
+            if (sd.Snapshot == null) throw Error.ArgumentNull("snapshot");
+
+            return new ElementDefinitionNavigator(sd.Snapshot.Element,sd);
+        }
+
+        public static ElementDefinitionNavigator ForDifferential(StructureDefinition sd)
+        {
+            if (sd.Differential == null) throw Error.ArgumentNull("differential");
+
+            return new ElementDefinitionNavigator(sd.Differential.Element,sd);
+        }
+
+        public StructureDefinition StructureDefinition { get; private set; }
 
 
         public bool AtRoot {  get { return OrdinalPosition == null;  } }

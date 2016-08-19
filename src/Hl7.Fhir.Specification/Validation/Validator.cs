@@ -1,4 +1,5 @@
 ﻿using Hl7.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
@@ -16,13 +17,21 @@ namespace Hl7.Fhir.Validation
 {
     public class Validator
     {
-        public OperationOutcome Outcome = new OperationOutcome();
+        private OperationOutcome _outcome = new OperationOutcome();
 
         public IElementNavigator Instance;
         public ElementDefinitionNavigator DefinitionNavigator;
         public IValidationContext ValidationContext;
 
         internal ElementDefinition Definition { get { return DefinitionNavigator.Current; } }
+
+        string DefinitionUrl
+        {
+            get
+            {
+                return DefinitionNavigator.StructureDefinition != null ? DefinitionNavigator.StructureDefinition.Url : "(unknown)";
+            }
+        }
 
         public Validator(ElementDefinitionNavigator definition, IElementNavigator instance, IValidationContext context)
         {
@@ -31,14 +40,17 @@ namespace Hl7.Fhir.Validation
             ValidationContext = context;
         }
 
-        public bool Validate()
+        public OperationOutcome Validate()
         {
+            // Let's go!
+            info("Start validation against definition path '{0}' (in {1})".FormatWith(DefinitionNavigator.Path, DefinitionUrl), Issue.PROCESSING_PROGRESS);
+
             // Any node must either have a value, or children, or both (e.g. extensions on primitives)
             if (!verify(() => Instance.Value != null || Instance.HasChildren(), "Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN))
-                return false;
+                return _outcome;
 
             if (!verify(() => !DefinitionNavigator.AtRoot || DefinitionNavigator.MoveToFirstChild(), "ElementDefinition has no content", Issue.PROFILE_ELEMENTDEF_IS_EMPTY))
-                return true;        // Nothing to validate against, so "valid"
+                return _outcome;        // Nothing to validate against, so "valid"
 
             if (DefinitionNavigator.HasChildren)
             {
@@ -58,7 +70,6 @@ namespace Hl7.Fhir.Validation
                             "one of the slices", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE);
             }
 
-
             ValidateType();
             ValidateNameReference();
 
@@ -72,11 +83,17 @@ namespace Hl7.Fhir.Validation
             // Validate Binding
             // Validate Constraint
 
-            return Outcome.Success();
+            if (_outcome.Success)
+                info("Validation succeeded", Issue.PROCESSING_PROGRESS);
+            else
+                info("Validation failed with {0} errors".FormatWith(_outcome.ListErrors().Count()), Issue.PROCESSING_PROGRESS);
+
+            return _outcome;
         }
 
         internal void ValidateChildConstraints()
         {
+            info("Start validation of inlined child constraints", Issue.PROCESSING_PROGRESS);
             var matchResult = InstanceToProfileMatcher.Match(DefinitionNavigator, Instance);
 
             verify(() => !matchResult.UnmatchedInstanceElements.Any(), "Encountered unknown child elements {0}".
@@ -93,7 +110,7 @@ namespace Hl7.Fhir.Validation
                 foreach (IElementNavigator element in match.InstanceElements)
                 {
                     var validator = new Validator(match.Definition, element, ValidationContext);
-                    validator.Validate();
+                    _outcome.Include(validator.Validate());
                 }
             }
         }
@@ -118,6 +135,8 @@ namespace Hl7.Fhir.Validation
         {
             if (Definition.NameReference != null)
             {
+                info("Start validation of constraints referred to by nameReference '{0}'".FormatWith(Definition.NameReference), Issue.PROCESSING_PROGRESS);
+
                 var referencedPositionNav = DefinitionNavigator.ShallowCopy();
 
                 if (verify(() => referencedPositionNav.JumpToNameReference(Definition.NameReference),
@@ -125,7 +144,7 @@ namespace Hl7.Fhir.Validation
                         Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE))
                 {
                     var validator = new Validator(referencedPositionNav, Instance, ValidationContext);
-                    validator.Validate();
+                    _outcome.Include(validator.Validate());
                 }
 
             }
@@ -133,8 +152,11 @@ namespace Hl7.Fhir.Validation
 
         internal void ValidateType()
         {
+            info("Validating against constraints specified by the element's type", Issue.PROCESSING_PROGRESS);
+
             if (Definition.IsPrimitiveValuePath())
             {
+                info("This is a leaf primitive value attribute", Issue.PROCESSING_PROGRESS);
                 // The "value" property of a FHIR Primitive is the bottom of our recursion chain, it does not have a nameReference
                 // nor a <type>, the only thing left to do to validate the content is to validate the string representation of the
                 // primitive against the regex given in the core definition
@@ -190,9 +212,21 @@ namespace Hl7.Fhir.Validation
                     if (verify(() => typeDefinition.Snapshot != null && typeDefinition.Snapshot.Element != null && typeDefinition.Snapshot.Element.Any(),
                         "Referenced profile '{0}' does not include a snapshot".FormatWith(uri), Issue.UNSUPPORTED_NEED_SNAPSHOT))
                     {
+                        info("Validating against type '{0}' (at {1})".FormatWith(typeRef.Code.GetLiteral(), uri), Issue.PROCESSING_PROGRESS);
                         // We'll have success when we match one of the profiles in the list
-                        var validator = new Validator(new ElementDefinitionNavigator(typeDefinition.Snapshot.Element), Instance, ValidationContext);
-                        success |= validator.Validate();
+                        var nav = new ElementDefinitionNavigator(typeDefinition);
+                        nav.MoveToFirstChild();
+                        var validator = new Validator(nav, Instance, ValidationContext);
+
+                        var subReport = validator.Validate();
+                        success |= subReport.Success;
+
+                        // HACK, this is just a probe (another typeref may succeed), so the information
+                        // in this subreport it just that - information (even the errors)
+                        foreach (var issue in subReport.Issue) issue.Severity = OperationOutcome.IssueSeverity.Information;
+                        _outcome.Include(subReport);
+
+                        success |= subReport.Success;
                     }
                 }
             }
@@ -212,8 +246,6 @@ namespace Hl7.Fhir.Validation
 
                 verify(() => success, message, Issue.CONTENT_ELEMENT_MUST_MATCH_TYPE);
             }
-
-            //return success;
         }
 
         public void VerifyPrimitiveContents()
@@ -304,11 +336,16 @@ namespace Hl7.Fhir.Validation
         {
             if (!condition())
             {
-                Outcome.AddIssue( issue.ToIssueComponent(message, location) );
+                _outcome.AddIssue( issue.ToIssueComponent(message, location == null ? Instance : location) );
                 return false;
             }
             else
                 return true;
+        }
+
+        private void info(string message, Issue infoIssue, INamedNode location = null)
+        {
+            _outcome.AddIssue(infoIssue.ToIssueComponent(message, location == null ? Instance : location));
         }
     }
 
@@ -319,7 +356,7 @@ namespace Hl7.Fhir.Validation
         IArtifactSource ArtifactSource { get; }
 
         // Resolver, Containing Bundle, parent Resource?
-        // Options: validate_across_references
+        // Options: validate_across_references, log verbosity
         // FP SymbolTable
     }
 

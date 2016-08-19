@@ -43,8 +43,9 @@ namespace Hl7.Fhir.Validation
             var data = ElementNode.Node("active").ToNavigator();
 
             var validator = new Validator(boolDefNav, data, null);
-            Assert.IsFalse(validator.Validate());
-            Assert.IsTrue(validator.Outcome.ToString().Contains("must not be empty"));
+            var result = validator.Validate();
+            Assert.IsFalse(result.Success);
+            Assert.IsTrue(result.ToString().Contains("must not be empty"));
         }
 
 
@@ -97,6 +98,17 @@ namespace Hl7.Fhir.Validation
             var x = report;
         }
 
+
+        [TestMethod]
+        public void ValidateCardinalityInPrimtive()
+        {
+            var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral()).ToNavigator();
+
+            var validator = new Validator(boolDefNav, data, ctx);
+            var report = validator.Validate();
+        }
+
+
         [TestMethod]
         public void ValidateCardinality()
         {
@@ -110,7 +122,6 @@ namespace Hl7.Fhir.Validation
 
             var validator = new Validator(boolDefNav, data, ctx);
             var report = validator.Validate();
-            var x = report;
         }
     }
 
