@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
             return text;
         }
 
-
+        [NotMapped]
         public bool Success
         {
             get
@@ -100,6 +100,7 @@ namespace Hl7.Fhir.Model
                 }
             }
 
+            [NotMapped]
             public bool Success
             {
                 get
