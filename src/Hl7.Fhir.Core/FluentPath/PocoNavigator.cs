@@ -28,16 +28,30 @@ namespace Hl7.Fhir.FluentPath
         {
             if (model == null) throw Error.ArgumentNull("model");
 
-            _current = new PocoElementNavigator(model.TypeName, model);
+            //_current = new PocoElementNavigator(model.TypeName, model);
+            _parentPath = "";
+
+            var me = new PocoElementNavigator(model.TypeName, model);
+            _siblings = new List<PocoElementNavigator> { me };
+            _index = 0;
         }
 
-        internal PocoNavigator(PocoElementNavigator current)
+        private PocoNavigator()
         {
-            _current =  current;
         }
 
+        private IList<PocoElementNavigator> _siblings;
+        private int _index;
+        private string _parentPath;
 
-        private PocoElementNavigator _current;
+        private PocoElementNavigator Current
+        {
+            get
+            {
+                return _siblings[_index];
+            }
+        }
+
 
         /// <summary>
         /// Returns 
@@ -49,7 +63,7 @@ namespace Hl7.Fhir.FluentPath
 #if DEBUGX
                 Console.WriteLine("    -> Read Value of {0}: {1}", _current.Name, _current.Value);
 #endif
-                return _current.Value;
+                return Current.Value;
             }
         }
 
@@ -63,7 +77,7 @@ namespace Hl7.Fhir.FluentPath
 #if DEBUGX
                 Console.WriteLine("    -> Read Value of {0}: {1}", _current.Name, _current.Value);
 #endif
-                return _current.FhirValue;
+                return Current.FhirValue;
             }
         }
 
@@ -74,7 +88,7 @@ namespace Hl7.Fhir.FluentPath
         {
             get
             {
-                return _current.TypeName; // This needs to be fixed
+                return Current.TypeName; // This needs to be fixed
             }
         }
 
@@ -88,7 +102,7 @@ namespace Hl7.Fhir.FluentPath
 #if DEBUGX
                 Console.WriteLine("Read Name: {0} (value = {1})", _current.Name, _current.Value);
 #endif
-                return _current.Name;
+                return Current.Name;
             }
         }
 
@@ -96,15 +110,25 @@ namespace Hl7.Fhir.FluentPath
         {
             get
             {
-                throw new NotImplementedException();
+                if (String.IsNullOrEmpty(_parentPath))
+                {
+                    return Current.Name;
+                }
+                else
+                {
+                    int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
+                    return _parentPath + ".{0}[{1}]".FormatWith(Current.Name, myIndex);
+                }
             }
         }
 
         public bool MoveToFirstChild()
         {
-            if (_current.Children().Any())
+            if (Current.Children().Any())
             {
-                _current = _current.Children().First();
+                _parentPath = Path;
+                _siblings = Current.Children().ToList();
+                _index = 0;
                 return true;
             }
 
@@ -119,11 +143,11 @@ namespace Hl7.Fhir.FluentPath
         /// </returns>
         public bool MoveToNext()
         {
-            if (_current != null && _current.Next != null)
-            {
-                string oldName = this.Name;
-                _current = _current.Next;
-                string newName = this.Name;
+            if(_siblings.Count > _index+1)
+            { 
+                string oldName = Current.Name;
+                _index++;
+                string newName = Current.Name;
                 // Console.WriteLine("Move Next: {0} -> {1}", oldName, newName);
                 return true;
             }
@@ -137,8 +161,13 @@ namespace Hl7.Fhir.FluentPath
         /// <returns></returns>
         public IElementNavigator Clone()
         {
+            var result = new PocoNavigator();
+
+            result._siblings = this._siblings;
+            result._index = this._index;
+            result._parentPath = this._parentPath;
             // Console.WriteLine("Cloning: {0}", this.GetName());
-            return new PocoNavigator(_current);
+            return result;
         }
     }
 }

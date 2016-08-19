@@ -109,8 +109,6 @@ namespace Hl7.Fhir.FluentPath
         }
 
 
-        public PocoElementNavigator Next { get; private set; }
-
         private List<PocoElementNavigator> _children;
 
         public IEnumerable<PocoElementNavigator> Children()
@@ -122,8 +120,6 @@ namespace Hl7.Fhir.FluentPath
             if (_pocoElement == null) return Enumerable.Empty<PocoElementNavigator>();
 
             _children = new List<PocoElementNavigator>();
-
-            PocoElementNavigator previousChild = null;
 
             var mapping = GetMappingForType(_pocoElement.GetType());
 
@@ -148,22 +144,16 @@ namespace Hl7.Fhir.FluentPath
                             if (colItem != null)
                             {
                                 _children.Add(new PocoElementNavigator(item.Name, (Base)colItem));
-                                if (previousChild != null)
-                                    previousChild.Next = _children.Last();
-                                previousChild = _children.Last();
                             }
                         }
                     }
                     else
                     {
                         if(itemValue is string)
+                            // The special case for the 'url' and 'id' properties, which are primitive strings
                             _children.Add(new PocoElementNavigator(item.Name, (string)itemValue));
                         else
                             _children.Add(new PocoElementNavigator(item.Name, (Base)itemValue));
-
-                        if (previousChild != null)
-                            previousChild.Next = _children.Last();
-                        previousChild = _children.Last();
                     }
                 }
             }
