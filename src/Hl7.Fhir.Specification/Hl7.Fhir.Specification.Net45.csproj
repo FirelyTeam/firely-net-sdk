@@ -108,6 +108,7 @@
     <Compile Include="Specification\Source\ConformanceArtifactScanner.cs" />
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="XPath\CustomXsltFunction.cs" />

@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="ArtifactResolverTests.cs" />
     <Compile Include="ArtifactSourceTests.cs" />
+    <Compile Include="OutcomeReportingTest.cs" />
     <Compile Include="ProfileNavigationTest.cs" />
     <Compile Include="SchemaCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

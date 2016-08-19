@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Validation
 {
     public class Validator
     {
-        public OperationOutcome Report = new OperationOutcome();
+        public OperationOutcome Outcome = new OperationOutcome();
 
         public IElementNavigator Instance;
         public ElementDefinitionNavigator DefinitionNavigator;
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Validation
             // Validate Binding
             // Validate Constraint
 
-            return Report.Success();
+            return Outcome.Success();
         }
 
         internal void ValidateChildConstraints()
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Validation
 
                 // Instance typename must be one of the allowed types in the choice
                 verify(() => allowedTypes.Contains(instanceType), "Type specified in the instance ('{0}') is not one of the allowed choices ({1})"
-                            .FormatWith(Instance.TypeName, String.Join(",", allowedTypes.Select(t => "'" + t + "'"))), Issue.CONTENT_ELEMENT_HAS_UNALLOWED_TYPE);
+                            .FormatWith(Instance.TypeName, String.Join(",", allowedTypes.Select(t => "'" + t + "'"))), Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE);
 
                 // Validate against one or more typerefs for this type
                 typeRefsToValidate = Definition.Type.Where(tr => tr.Code == instanceType);
@@ -300,18 +300,11 @@ namespace Hl7.Fhir.Validation
 
         private delegate bool Condition();
 
-        private bool verify(Condition condition, string message, Issue issue, IPositionProvider location = null)
+        private bool verify(Condition condition, string message, Issue issue, INamedNode location = null)
         {
             if (!condition())
             {
-                var ic = new OperationOutcome.IssueComponent() { Severity = issue.Severity, Code = issue.Type, Diagnostics = message };
-                ic.Details = issue.ToCodeableConcept();
-
-                //TODO: add position info 
-                if (location == null) location = Instance;
-
-                Report.Issue.Add(ic);
-
+                Outcome.AddIssue( issue.ToIssueComponent(message, location) );
                 return false;
             }
             else

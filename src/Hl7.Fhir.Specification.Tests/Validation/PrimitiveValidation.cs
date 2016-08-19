@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Validation
 
             var validator = new Validator(boolDefNav, data, null);
             Assert.IsFalse(validator.Validate());
-            Assert.IsTrue(validator.Report.ToString().Contains("must not be empty"));
+            Assert.IsTrue(validator.Outcome.ToString().Contains("must not be empty"));
         }
 
 

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
+using Hl7.ElementModel;
 
 namespace Hl7.Fhir.Validation
 {
@@ -13,7 +14,27 @@ namespace Hl7.Fhir.Validation
 
         public CodeableConcept ToCodeableConcept()
         {
-            return new CodeableConcept("http://hl7.org/fhir/validation-operation-outcome", Code.ToString());
+            return ToCodeableConcept(Code);
+        }
+
+        public static CodeableConcept ToCodeableConcept(int issueCode)
+        {
+            return new CodeableConcept("http://hl7.org/fhir/validation-operation-outcome", issueCode.ToString());
+        }
+
+        public OperationOutcome.IssueComponent ToIssueComponent(string message, INamedNode location = null)
+        {
+            return ToIssueComponent(message, location != null ? location.Path : null);
+        }
+
+        public OperationOutcome.IssueComponent ToIssueComponent(string message, string path=null)
+        {
+            var ic = new OperationOutcome.IssueComponent() { Severity = this.Severity, Code = this.Type, Diagnostics = message };
+            ic.Details = ToCodeableConcept();
+
+            if (path != null) ic.Location = new List<string> { path };
+
+            return ic;
         }
 
         private static Issue def(int code, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType type)
@@ -25,7 +46,7 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN = def(1000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN = def(1001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_HAS_UNKNOWN_TYPE = def(1002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_ELEMENT_HAS_UNALLOWED_TYPE = def(1003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_ELEMENT_HAS_INCORRECT_TYPE = def(1003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_MUST_MATCH_TYPE = def(1004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_VALUE_TOO_LONG = def(1005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE = def(1006, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);

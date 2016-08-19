@@ -116,6 +116,7 @@
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
     <Compile Include="Validation\Issue.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />
+    <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="XPath\CustomXsltFunction.cs" />
     <Compile Include="XPath\FhirNamespaceManager.cs" />
