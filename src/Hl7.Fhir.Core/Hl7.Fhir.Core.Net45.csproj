@@ -75,8 +75,10 @@
     <Compile Include="..\hl7.fhir.specification\validation\Cardinality.cs">
       <Link>Validation\Cardinality.cs</Link>
     </Compile>
+    <Compile Include="FluentPath\PathNavigator.cs" />
     <Compile Include="FluentPath\PocoElementNavigator.cs" />
     <Compile Include="FluentPath\PocoNavigator.cs" />
+    <Compile Include="FluentPath\XmlDomNavigator.cs" />
     <Compile Include="Support\EnumUtility.cs" />
     <Compile Include="Model\IValue.cs" />
     <Compile Include="Model\Time.cs" />
