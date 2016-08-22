@@ -92,6 +92,7 @@
     <Compile Include="Introspection\EnumMappingTest.cs" />
     <Compile Include="Introspection\ModelInspectorTest.cs" />
     <Compile Include="Introspection\PropertyMappingTest.cs" />
+    <Compile Include="Model\AnnotationTests.cs" />
     <Compile Include="Model\BundleExtensionsTest.cs" />
     <Compile Include="Model\DeepCompareTest.cs" />
     <Compile Include="Model\DeepCopyTest.cs" />
