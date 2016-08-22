@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.ElementModel
 {
-    public class ElementNodeNavigator : IElementNavigator
+    public struct ElementNodeNavigator : IElementNavigator
     {
         private IList<IElementNode> _siblings;
         private int _index;
@@ -14,11 +14,6 @@ namespace Hl7.ElementModel
         public IElementNode Current
         {
             get { return _siblings[_index]; }
-        }
-
-
-        private ElementNodeNavigator()
-        {
         }
 
         public ElementNodeNavigator(IElementNode wrapped)
