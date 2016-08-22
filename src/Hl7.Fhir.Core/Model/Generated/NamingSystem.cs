@@ -209,6 +209,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ContactComponent elements
+                    yield return NameElement;
+                    foreach (var elem in Telecom) { yield return elem; }
+                }
+            }
             
         }
         
@@ -379,6 +394,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // UniqueIdComponent elements
+                    yield return TypeElement;
+                    yield return ValueElement;
+                    yield return PreferredElement;
+                    yield return Period;
+                }
             }
             
         }
@@ -827,36 +859,36 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // NamingSystem properties
-                yield return NameElement;
-                yield return StatusElement;
-                yield return KindElement;
-                yield return PublisherElement;
-                foreach (var prop in Contact) { yield return prop; }
-                yield return ResponsibleElement;
-                yield return DateElement;
-                yield return Type;
-                yield return DescriptionElement;
-                foreach (var prop in UseContext) { yield return prop; }
-                yield return UsageElement;
-                foreach (var prop in UniqueId) { yield return prop; }
-                yield return ReplacedBy;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// NamingSystem elements
+				yield return NameElement;
+				yield return StatusElement;
+				yield return KindElement;
+				yield return PublisherElement;
+				foreach (var elem in Contact) { yield return elem; }
+				yield return ResponsibleElement;
+				yield return DateElement;
+				yield return Type;
+				yield return DescriptionElement;
+				foreach (var elem in UseContext) { yield return elem; }
+				yield return UsageElement;
+				foreach (var elem in UniqueId) { yield return elem; }
+				yield return ReplacedBy;
             }
         }
-
     }
     
 }

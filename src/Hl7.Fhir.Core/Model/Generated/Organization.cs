@@ -162,6 +162,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ContactComponent elements
+                    yield return Purpose;
+                    yield return Name;
+                    foreach (var elem in Telecom) { yield return elem; }
+                    yield return Address;
+                }
+            }
             
         }
         
@@ -412,31 +429,31 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Organization properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return ActiveElement;
-                yield return Type;
-                yield return NameElement;
-                foreach (var prop in Telecom) { yield return prop; }
-                foreach (var prop in Address) { yield return prop; }
-                yield return PartOf;
-                foreach (var prop in Contact) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Organization elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return ActiveElement;
+				yield return Type;
+				yield return NameElement;
+				foreach (var elem in Telecom) { yield return elem; }
+				foreach (var elem in Address) { yield return elem; }
+				yield return PartOf;
+				foreach (var elem in Contact) { yield return elem; }
             }
         }
-
     }
     
 }

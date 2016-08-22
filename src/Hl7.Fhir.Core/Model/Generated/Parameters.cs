@@ -184,6 +184,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ParameterComponent elements
+                    yield return NameElement;
+                    yield return Value;
+                    yield return Resource;
+                    foreach (var elem in Part) { yield return elem; }
+                }
+            }
             
         }
         
@@ -270,19 +287,19 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // Parameters properties
-                foreach (var prop in Parameter) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// Parameters elements
+				foreach (var elem in Parameter) { yield return elem; }
             }
         }
-
     }
     
 }

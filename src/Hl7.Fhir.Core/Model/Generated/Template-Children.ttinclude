@@ -1,0 +1,75 @@
+﻿<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#+
+	// [WMR 20160818] NEW - Recursively yield all child elements, including elements inherited from base resource(s)
+
+	public void YieldChildren(System.Xml.XmlDocument docBaseTypes, System.Xml.XmlElement structDefElem, System.Xml.XmlNamespaceManager nsR, Dictionary<string, string> enums, string indent)
+	{
+		// First recurse on base resource, emit inherited elements
+
+		var baseNode = structDefElem.SelectSingleNode("fhir:base/@value", nsR);
+		if (baseNode != null && !string.IsNullOrEmpty(baseNode.Value)) 
+		{
+			var baseUri = baseNode.Value;
+			var baseStructDefElem = docBaseTypes.DocumentElement.SelectSingleNode(
+				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:url/@value = '" + baseUri + "']", nsR) as System.Xml.XmlElement;
+			if (baseStructDefElem != null)
+			{
+				YieldChildren(docBaseTypes, baseStructDefElem, nsR, enums, indent);
+			}
+		}
+
+		// Then emit local properties
+		var resourceName = structDefElem.SelectSingleNode("fhir:name/@value", nsR).Value;
+		WriteLine("{0}// {1} elements", indent, resourceName);
+		List<PropertyDetails> props = new List<PropertyDetails>();
+		foreach (System.Xml.XmlElement element in structDefElem.SelectNodes("fhir:differential/fhir:element", nsR))
+		{
+			PropertyDetails pd = PropertyDetails.Parse(resourceName, element, nsR, enums);
+			YieldChild(pd, indent);
+		}
+	}
+
+	public void YieldComponent(System.Xml.XmlDocument docBaseTypes, string componentName, string componentType, List<PropertyDetails> component, System.Xml.XmlNamespaceManager nsR, Dictionary<string, string> enums, string indent)
+	{
+		// First emit inherited elements derived from (BackBone)Element base types
+
+		var backboneElemStructDefElem = docBaseTypes.DocumentElement.SelectSingleNode(
+			"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = '" + componentType + "']", nsR) as System.Xml.XmlElement;
+		if (backboneElemStructDefElem != null)
+		{
+			YieldChildren(docBaseTypes, backboneElemStructDefElem, nsR, enums, indent);
+		}
+		// DEBUGGING
+		else
+		{
+			WriteLine("{0}// Error! Missing base structure definition for type '{1}'", indent, componentType);
+		}
+
+		WriteLine("{0}// {1} elements", indent, componentName);
+        foreach (PropertyDetails pd in component)
+        {
+            YieldChild(pd, indent);
+        }
+	}
+
+	public void YieldChild(PropertyDetails pd, string indent)
+	{
+			if (pd == null) { }
+			// Exclude special properties encoded as Xml attributes (Element.Id) - not derived from Base
+			else if (pd.isXmlAttribute) { }
+			else if (pd.IsMultiCard())
+			{
+				WriteLine("{0}foreach (var elem in {1}) {{ yield return elem; }}", indent, pd.Name);
+			}
+			else
+			{
+				WriteLine("{0}yield return {1};", indent, pd.Name);
+			}
+	}
+#>

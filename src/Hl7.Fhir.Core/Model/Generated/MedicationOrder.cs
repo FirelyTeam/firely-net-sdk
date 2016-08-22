@@ -325,6 +325,29 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // DosageInstructionComponent elements
+                    yield return TextElement;
+                    yield return AdditionalInstructions;
+                    yield return Timing;
+                    yield return AsNeeded;
+                    yield return Site;
+                    yield return Route;
+                    yield return Method;
+                    yield return Dose;
+                    yield return Rate;
+                    yield return MaxDosePerPeriod;
+                }
+            }
             
         }
         
@@ -473,6 +496,24 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // DispenseRequestComponent elements
+                    yield return Medication;
+                    yield return ValidityPeriod;
+                    yield return NumberOfRepeatsAllowedElement;
+                    yield return Quantity;
+                    yield return ExpectedSupplyDuration;
+                }
+            }
             
         }
         
@@ -553,6 +594,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // SubstitutionComponent elements
+                    yield return Type;
+                    yield return Reason;
+                }
             }
             
         }
@@ -928,38 +984,38 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // MedicationOrder properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return DateWrittenElement;
-                yield return StatusElement;
-                yield return DateEndedElement;
-                yield return ReasonEnded;
-                yield return Patient;
-                yield return Prescriber;
-                yield return Encounter;
-                yield return Reason;
-                yield return NoteElement;
-                yield return Medication;
-                foreach (var prop in DosageInstruction) { yield return prop; }
-                yield return DispenseRequest;
-                yield return Substitution;
-                yield return PriorPrescription;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// MedicationOrder elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return DateWrittenElement;
+				yield return StatusElement;
+				yield return DateEndedElement;
+				yield return ReasonEnded;
+				yield return Patient;
+				yield return Prescriber;
+				yield return Encounter;
+				yield return Reason;
+				yield return NoteElement;
+				yield return Medication;
+				foreach (var elem in DosageInstruction) { yield return elem; }
+				yield return DispenseRequest;
+				yield return Substitution;
+				yield return PriorPrescription;
             }
         }
-
     }
     
 }

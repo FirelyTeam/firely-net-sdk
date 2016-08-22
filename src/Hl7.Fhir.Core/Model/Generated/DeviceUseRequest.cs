@@ -514,36 +514,36 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // DeviceUseRequest properties
-                yield return BodySite;
-                yield return StatusElement;
-                yield return Device;
-                yield return Encounter;
-                foreach (var prop in Identifier) { yield return prop; }
-                foreach (var prop in Indication) { yield return prop; }
-                foreach (var prop in NotesElement) { yield return prop; }
-                foreach (var prop in PrnReason) { yield return prop; }
-                yield return OrderedOnElement;
-                yield return RecordedOnElement;
-                yield return Subject;
-                yield return Timing;
-                yield return PriorityElement;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// DeviceUseRequest elements
+				yield return BodySite;
+				yield return StatusElement;
+				yield return Device;
+				yield return Encounter;
+				foreach (var elem in Identifier) { yield return elem; }
+				foreach (var elem in Indication) { yield return elem; }
+				foreach (var elem in NotesElement) { yield return elem; }
+				foreach (var elem in PrnReason) { yield return elem; }
+				yield return OrderedOnElement;
+				yield return RecordedOnElement;
+				yield return Subject;
+				yield return Timing;
+				yield return PriorityElement;
             }
         }
-
     }
     
 }

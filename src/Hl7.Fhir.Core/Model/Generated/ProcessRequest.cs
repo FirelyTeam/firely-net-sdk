@@ -166,6 +166,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ItemsComponent elements
+                    yield return SequenceLinkIdElement;
+                }
+            }
             
         }
         
@@ -595,39 +609,39 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // ProcessRequest properties
-                yield return ActionElement;
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Ruleset;
-                yield return OriginalRuleset;
-                yield return CreatedElement;
-                yield return Target;
-                yield return Provider;
-                yield return Organization;
-                yield return Request;
-                yield return Response;
-                yield return NullifyElement;
-                yield return ReferenceElement;
-                foreach (var prop in Item) { yield return prop; }
-                foreach (var prop in IncludeElement) { yield return prop; }
-                foreach (var prop in ExcludeElement) { yield return prop; }
-                yield return Period;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// ProcessRequest elements
+				yield return ActionElement;
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Ruleset;
+				yield return OriginalRuleset;
+				yield return CreatedElement;
+				yield return Target;
+				yield return Provider;
+				yield return Organization;
+				yield return Request;
+				yield return Response;
+				yield return NullifyElement;
+				yield return ReferenceElement;
+				foreach (var elem in Item) { yield return elem; }
+				foreach (var elem in IncludeElement) { yield return elem; }
+				foreach (var elem in ExcludeElement) { yield return elem; }
+				yield return Period;
             }
         }
-
     }
     
 }

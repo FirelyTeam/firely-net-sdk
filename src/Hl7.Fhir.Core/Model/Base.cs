@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
 
             if (dest != null)
             {
-                if (UserData != null) dest.UserData = new Dictionary<string,object>(UserData);
+                if (UserData != null) dest.UserData = new Dictionary<string, object>(UserData);
                 if (FhirComments != null) dest.FhirComments = new List<string>(FhirComments);
                 return dest;
             }
@@ -128,6 +128,13 @@ namespace Hl7.Fhir.Model
 
         public abstract string TypeName { get; }
 
-        public virtual IEnumerable<Base> Properties { get { return Enumerable.Empty<Base>(); } }
+        /// <summary>
+        /// Enumerate all child nodes.
+        /// Return a sequence of child elements, components and/or properties.
+        /// Child nodes are returned in the order defined by the FHIR specification.
+        /// First returns child nodes inherited from any base class(es), recursively.
+        /// Finally returns child nodes defined by the current class.
+        /// </summary>
+        public virtual IEnumerable<Base> Children { get { return Enumerable.Empty<Base>(); } }
     }
 }

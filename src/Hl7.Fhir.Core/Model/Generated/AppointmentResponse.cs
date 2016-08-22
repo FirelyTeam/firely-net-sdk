@@ -363,31 +363,31 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // AppointmentResponse properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Appointment;
-                yield return StartElement;
-                yield return EndElement;
-                foreach (var prop in ParticipantType) { yield return prop; }
-                yield return Actor;
-                yield return ParticipantStatus_Element;
-                yield return CommentElement;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// AppointmentResponse elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Appointment;
+				yield return StartElement;
+				yield return EndElement;
+				foreach (var elem in ParticipantType) { yield return elem; }
+				yield return Actor;
+				yield return ParticipantStatus_Element;
+				yield return CommentElement;
             }
         }
-
     }
     
 }

@@ -1,6 +1,7 @@
 ﻿
+
 //
-// Model Generated on Thu, 18 Aug 2016 18:08:18 GMT for FHIR v1.0.2
+// Model Generated on Mon, 22 Aug 2016 17:27:01 GMT for FHIR v1.0.2
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): Conformance.rest.resource.type

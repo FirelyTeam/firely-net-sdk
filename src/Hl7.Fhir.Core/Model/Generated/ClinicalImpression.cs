@@ -159,6 +159,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // InvestigationsComponent elements
+                    yield return Code;
+                    foreach (var elem in Item) { yield return elem; }
+                }
+            }
             
         }
         
@@ -259,6 +274,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // FindingComponent elements
+                    yield return Item;
+                    yield return CauseElement;
+                }
+            }
             
         }
         
@@ -358,6 +388,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ReasonElement, otherT.ReasonElement)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // RuledOutComponent elements
+                    yield return Item;
+                    yield return ReasonElement;
+                }
             }
             
         }
@@ -810,40 +855,40 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // ClinicalImpression properties
-                yield return Patient;
-                yield return Assessor;
-                yield return StatusElement;
-                yield return DateElement;
-                yield return DescriptionElement;
-                yield return Previous;
-                foreach (var prop in Problem) { yield return prop; }
-                yield return Trigger;
-                foreach (var prop in Investigations) { yield return prop; }
-                yield return ProtocolElement;
-                yield return SummaryElement;
-                foreach (var prop in Finding) { yield return prop; }
-                foreach (var prop in Resolved) { yield return prop; }
-                foreach (var prop in RuledOut) { yield return prop; }
-                yield return PrognosisElement;
-                foreach (var prop in Plan) { yield return prop; }
-                foreach (var prop in Action) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// ClinicalImpression elements
+				yield return Patient;
+				yield return Assessor;
+				yield return StatusElement;
+				yield return DateElement;
+				yield return DescriptionElement;
+				yield return Previous;
+				foreach (var elem in Problem) { yield return elem; }
+				yield return Trigger;
+				foreach (var elem in Investigations) { yield return elem; }
+				yield return ProtocolElement;
+				yield return SummaryElement;
+				foreach (var elem in Finding) { yield return elem; }
+				foreach (var elem in Resolved) { yield return elem; }
+				foreach (var elem in RuledOut) { yield return elem; }
+				yield return PrognosisElement;
+				foreach (var elem in Plan) { yield return elem; }
+				foreach (var elem in Action) { yield return elem; }
             }
         }
-
     }
     
 }

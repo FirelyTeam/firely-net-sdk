@@ -213,6 +213,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ResponseComponent elements
+                    yield return IdentifierElement;
+                    yield return CodeElement;
+                    yield return Details;
+                }
+            }
             
         }
         
@@ -418,6 +434,24 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // MessageSourceComponent elements
+                    yield return NameElement;
+                    yield return SoftwareElement;
+                    yield return VersionElement;
+                    yield return Contact;
+                    yield return EndpointElement;
+                }
+            }
             
         }
         
@@ -553,6 +587,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(EndpointElement, otherT.EndpointElement)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // MessageDestinationComponent elements
+                    yield return NameElement;
+                    yield return Target;
+                    yield return EndpointElement;
+                }
             }
             
         }
@@ -808,34 +858,34 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // MessageHeader properties
-                yield return TimestampElement;
-                yield return Event;
-                yield return Response;
-                yield return Source;
-                foreach (var prop in Destination) { yield return prop; }
-                yield return Enterer;
-                yield return Author;
-                yield return Receiver;
-                yield return Responsible;
-                yield return Reason;
-                foreach (var prop in Data) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// MessageHeader elements
+				yield return TimestampElement;
+				yield return Event;
+				yield return Response;
+				yield return Source;
+				foreach (var elem in Destination) { yield return elem; }
+				yield return Enterer;
+				yield return Author;
+				yield return Receiver;
+				yield return Responsible;
+				yield return Reason;
+				foreach (var elem in Data) { yield return elem; }
             }
         }
-
     }
     
 }

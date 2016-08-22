@@ -201,6 +201,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ImageComponent elements
+                    yield return CommentElement;
+                    yield return Link;
+                }
+            }
             
         }
         
@@ -601,40 +616,40 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // DiagnosticReport properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return StatusElement;
-                yield return Category;
-                yield return Code;
-                yield return Subject;
-                yield return Encounter;
-                yield return Effective;
-                yield return IssuedElement;
-                yield return Performer;
-                foreach (var prop in Request) { yield return prop; }
-                foreach (var prop in Specimen) { yield return prop; }
-                foreach (var prop in Result) { yield return prop; }
-                foreach (var prop in ImagingStudy) { yield return prop; }
-                foreach (var prop in Image) { yield return prop; }
-                yield return ConclusionElement;
-                foreach (var prop in CodedDiagnosis) { yield return prop; }
-                foreach (var prop in PresentedForm) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// DiagnosticReport elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return StatusElement;
+				yield return Category;
+				yield return Code;
+				yield return Subject;
+				yield return Encounter;
+				yield return Effective;
+				yield return IssuedElement;
+				yield return Performer;
+				foreach (var elem in Request) { yield return elem; }
+				foreach (var elem in Specimen) { yield return elem; }
+				foreach (var elem in Result) { yield return elem; }
+				foreach (var elem in ImagingStudy) { yield return elem; }
+				foreach (var elem in Image) { yield return elem; }
+				yield return ConclusionElement;
+				foreach (var elem in CodedDiagnosis) { yield return elem; }
+				foreach (var elem in PresentedForm) { yield return elem; }
             }
         }
-
     }
     
 }

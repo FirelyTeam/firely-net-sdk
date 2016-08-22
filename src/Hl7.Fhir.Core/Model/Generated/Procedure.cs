@@ -163,6 +163,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // PerformerComponent elements
+                    yield return Actor;
+                    yield return Role;
+                }
+            }
             
         }
         
@@ -244,6 +259,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Manipulated, otherT.Manipulated)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // FocalDeviceComponent elements
+                    yield return Action;
+                    yield return Manipulated;
+                }
             }
             
         }
@@ -699,44 +729,44 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Procedure properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Subject;
-                yield return StatusElement;
-                yield return Category;
-                yield return Code;
-                yield return NotPerformedElement;
-                foreach (var prop in ReasonNotPerformed) { yield return prop; }
-                foreach (var prop in BodySite) { yield return prop; }
-                yield return Reason;
-                foreach (var prop in Performer) { yield return prop; }
-                yield return Performed;
-                yield return Encounter;
-                yield return Location;
-                yield return Outcome;
-                foreach (var prop in Report) { yield return prop; }
-                foreach (var prop in Complication) { yield return prop; }
-                foreach (var prop in FollowUp) { yield return prop; }
-                yield return Request;
-                foreach (var prop in Notes) { yield return prop; }
-                foreach (var prop in FocalDevice) { yield return prop; }
-                foreach (var prop in Used) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Procedure elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Subject;
+				yield return StatusElement;
+				yield return Category;
+				yield return Code;
+				yield return NotPerformedElement;
+				foreach (var elem in ReasonNotPerformed) { yield return elem; }
+				foreach (var elem in BodySite) { yield return elem; }
+				yield return Reason;
+				foreach (var elem in Performer) { yield return elem; }
+				yield return Performed;
+				yield return Encounter;
+				yield return Location;
+				yield return Outcome;
+				foreach (var elem in Report) { yield return elem; }
+				foreach (var elem in Complication) { yield return elem; }
+				foreach (var elem in FollowUp) { yield return elem; }
+				yield return Request;
+				foreach (var elem in Notes) { yield return elem; }
+				foreach (var elem in FocalDevice) { yield return elem; }
+				foreach (var elem in Used) { yield return elem; }
             }
         }
-
     }
     
 }

@@ -214,6 +214,25 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // DosageComponent elements
+                    yield return TextElement;
+                    yield return Site;
+                    yield return Route;
+                    yield return Method;
+                    yield return Quantity;
+                    yield return Rate;
+                }
+            }
             
         }
         
@@ -589,37 +608,37 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // MedicationAdministration properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return StatusElement;
-                yield return Patient;
-                yield return Practitioner;
-                yield return Encounter;
-                yield return Prescription;
-                yield return WasNotGivenElement;
-                foreach (var prop in ReasonNotGiven) { yield return prop; }
-                foreach (var prop in ReasonGiven) { yield return prop; }
-                yield return EffectiveTime;
-                yield return Medication;
-                foreach (var prop in Device) { yield return prop; }
-                yield return NoteElement;
-                yield return Dosage;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// MedicationAdministration elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return StatusElement;
+				yield return Patient;
+				yield return Practitioner;
+				yield return Encounter;
+				yield return Prescription;
+				yield return WasNotGivenElement;
+				foreach (var elem in ReasonNotGiven) { yield return elem; }
+				foreach (var elem in ReasonGiven) { yield return elem; }
+				yield return EffectiveTime;
+				yield return Medication;
+				foreach (var elem in Device) { yield return elem; }
+				yield return NoteElement;
+				yield return Dosage;
             }
         }
-
     }
     
 }

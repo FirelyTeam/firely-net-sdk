@@ -202,6 +202,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // StudyComponent elements
+                    yield return UidElement;
+                    yield return UrlElement;
+                    yield return ImagingStudy;
+                    foreach (var elem in Series) { yield return elem; }
+                }
+            }
             
         }
         
@@ -336,6 +353,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // SeriesComponent elements
+                    yield return UidElement;
+                    yield return UrlElement;
+                    foreach (var elem in Instance) { yield return elem; }
+                }
             }
             
         }
@@ -510,6 +543,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // InstanceComponent elements
+                    yield return SopClassElement;
+                    yield return UidElement;
+                    yield return UrlElement;
+                    foreach (var elem in Frames) { yield return elem; }
+                }
+            }
             
         }
         
@@ -629,6 +679,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // FramesComponent elements
+                    foreach (var elem in FrameNumbersElement) { yield return elem; }
+                    yield return UrlElement;
+                }
             }
             
         }
@@ -854,30 +919,30 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // ImagingObjectSelection properties
-                yield return UidElement;
-                yield return Patient;
-                yield return Title;
-                yield return DescriptionElement;
-                yield return Author;
-                yield return AuthoringTimeElement;
-                foreach (var prop in Study) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// ImagingObjectSelection elements
+				yield return UidElement;
+				yield return Patient;
+				yield return Title;
+				yield return DescriptionElement;
+				yield return Author;
+				yield return AuthoringTimeElement;
+				foreach (var elem in Study) { yield return elem; }
             }
         }
-
     }
     
 }

@@ -209,6 +209,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ContactComponent elements
+                    yield return NameElement;
+                    foreach (var elem in Telecom) { yield return elem; }
+                }
+            }
             
         }
         
@@ -398,6 +413,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // MappingComponent elements
+                    yield return IdentityElement;
+                    yield return UriElement;
+                    yield return NameElement;
+                    yield return CommentsElement;
+                }
+            }
             
         }
         
@@ -463,6 +495,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // SnapshotComponent elements
+                    foreach (var elem in Element) { yield return elem; }
+                }
+            }
             
         }
         
@@ -527,6 +573,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Element, otherT.Element)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // DifferentialComponent elements
+                    foreach (var elem in Element) { yield return elem; }
+                }
             }
             
         }
@@ -1450,47 +1510,48 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // StructureDefinition properties
-                yield return UrlElement;
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return VersionElement;
-                yield return NameElement;
-                yield return DisplayElement;
-                yield return StatusElement;
-                yield return ExperimentalElement;
-                yield return PublisherElement;
-                foreach (var prop in Contact) { yield return prop; }
-                yield return DateElement;
-                yield return DescriptionElement;
-                foreach (var prop in UseContext) { yield return prop; }
-                yield return RequirementsElement;
-                yield return CopyrightElement;
-                foreach (var prop in Code) { yield return prop; }
-                foreach (var prop in Mapping) { yield return prop; }
-                yield return KindElement;
-                yield return ConstrainedTypeElement;
-                yield return AbstractElement;
-                yield return ContextTypeElement;
-                foreach (var prop in ContextElement) { yield return prop; }
-                yield return BaseElement;
-                yield return Snapshot;
-                yield return Differential;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// StructureDefinition elements
+				yield return UrlElement;
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return VersionElement;
+				yield return NameElement;
+				yield return DisplayElement;
+				yield return StatusElement;
+				yield return ExperimentalElement;
+				yield return PublisherElement;
+				foreach (var elem in Contact) { yield return elem; }
+				yield return DateElement;
+				yield return DescriptionElement;
+				foreach (var elem in UseContext) { yield return elem; }
+				yield return RequirementsElement;
+				yield return CopyrightElement;
+				foreach (var elem in Code) { yield return elem; }
+				yield return FhirVersionElement;
+				foreach (var elem in Mapping) { yield return elem; }
+				yield return KindElement;
+				yield return ConstrainedTypeElement;
+				yield return AbstractElement;
+				yield return ContextTypeElement;
+				foreach (var elem in ContextElement) { yield return elem; }
+				yield return BaseElement;
+				yield return Snapshot;
+				yield return Differential;
             }
         }
-
     }
     
 }

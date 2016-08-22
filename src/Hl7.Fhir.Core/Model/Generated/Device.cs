@@ -559,39 +559,39 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Device properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Type;
-                foreach (var prop in Note) { yield return prop; }
-                yield return StatusElement;
-                yield return ManufacturerElement;
-                yield return ModelElement;
-                yield return VersionElement;
-                yield return ManufactureDateElement;
-                yield return ExpiryElement;
-                yield return UdiElement;
-                yield return LotNumberElement;
-                yield return Owner;
-                yield return Location;
-                yield return Patient;
-                foreach (var prop in Contact) { yield return prop; }
-                yield return UrlElement;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Device elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Type;
+				foreach (var elem in Note) { yield return elem; }
+				yield return StatusElement;
+				yield return ManufacturerElement;
+				yield return ModelElement;
+				yield return VersionElement;
+				yield return ManufactureDateElement;
+				yield return ExpiryElement;
+				yield return UdiElement;
+				yield return LotNumberElement;
+				yield return Owner;
+				yield return Location;
+				yield return Patient;
+				foreach (var elem in Contact) { yield return elem; }
+				yield return UrlElement;
             }
         }
-
     }
     
 }

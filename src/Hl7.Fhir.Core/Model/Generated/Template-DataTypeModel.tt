@@ -1,6 +1,7 @@
 ﻿<#@ template debug="true" hostSpecific="true" #>
 <#@ output extension=".cs" #>
 <#@ include file="TemplateFileManagerV2.1.ttinclude" #>
+<#@ include file="Template-Children.ttinclude" #>
 <#@ import namespace="System" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Diagnostics" #>
@@ -556,15 +557,12 @@ if (!abstractType){
 		    // [WMR 20160818] START - implement generic properties collection
 #>
 
-            public override IEnumerable<Base> Properties
+            public override IEnumerable<Base> Children
             {
                 get
                 {
 <#
-					foreach (PropertyDetails pd in component)
-					{
-						YieldProperty(pd);
-					}
+					YieldComponent(docTypes, componentName, "Element", component, nsR, enums, "                    ");
 #>
                 }
             }
@@ -741,12 +739,12 @@ if (!abstractType){
 		// [WMR 20160818] START - implement generic properties collection
 #>
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
 <#
-				YieldProperties(docResources, e as System.Xml.XmlElement, nsR, enums);
+                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ");
 #>
             }
         }
@@ -808,6 +806,7 @@ if (!abstractType){
 		public string AllowedTypes;
 		public string BackboneComponentType;
 		public string CodeRequiredBinding;
+		public bool isXmlAttribute;
 
 		public string PropTypeWithCard()
         {
@@ -896,6 +895,8 @@ if (!abstractType){
 			PropertyDetails result = new PropertyDetails();
 			if (element.SelectSingleNode("fhir:isSummary[@value = 'true']", nsR) != null)
 				result.isSummaryProp = true;
+			if (element.SelectSingleNode("fhir:representation[@value = 'xmlAttr']", nsR) != null)
+				result.isXmlAttribute = true;
 			if (element.SelectSingleNode("fhir:short/@value", nsR) != null)
 				result.Summary = element.SelectSingleNode("fhir:short/@value", nsR).Value;
 			if (element.SelectSingleNode("fhir:type/fhir:code/@value", nsR) != null)
@@ -1378,45 +1379,4 @@ if (!abstractType){
 			return result;
         }
     }
-
-	// [WMR 20160818] NEW - Recursively yield all properties, including properties inherited from base resource(s)
-	public void YieldProperties(System.Xml.XmlDocument docResources, System.Xml.XmlElement structDefElem, System.Xml.XmlNamespaceManager nsR, Dictionary<string, string> enums)
-	{
-		// First recurse on base resource, emit inherited properties
-
-		var baseNode = structDefElem.SelectSingleNode("fhir:base/@value", nsR);
-		if (baseNode != null && !string.IsNullOrEmpty(baseNode.Value)) 
-		{
-			var baseUri = baseNode.Value;
-			var baseStructDefElem = docResources.DocumentElement.SelectSingleNode(
-				"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:url/@value = '" + baseUri + "']", nsR) as System.Xml.XmlElement;
-			if (baseStructDefElem != null)
-			{
-				YieldProperties(docResources, baseStructDefElem, nsR, enums);
-			}
-		}
-
-		// Then emit local properties
-		var resourceName = structDefElem.SelectSingleNode("fhir:name/@value", nsR).Value;
-		WriteLine("                // {0} properties", resourceName);
-		List<PropertyDetails> props = new List<PropertyDetails>();
-		foreach (System.Xml.XmlElement element in structDefElem.SelectNodes("fhir:differential/fhir:element", nsR))
-		{
-			PropertyDetails pd = PropertyDetails.Parse(resourceName, element, nsR, enums);
-			YieldProperty(pd);
-		}
-	}
-
-	public void YieldProperty(PropertyDetails pd)
-	{
-			if (pd == null || pd.PropType == "Hl7.Fhir.Model.Id") { }
-			else if (pd.IsMultiCard())
-			{
-				WriteLine("                foreach (var prop in {0}) {{ yield return prop; }}", pd.Name);
-			}
-			else
-			{
-				WriteLine("                yield return {0};", pd.Name);
-			}
-	}
 #>

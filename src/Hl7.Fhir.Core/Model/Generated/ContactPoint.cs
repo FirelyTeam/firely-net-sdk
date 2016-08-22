@@ -324,13 +324,13 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Element properties
-                foreach (var prop in Extension) { yield return prop; }
-                // ContactPoint properties
+                // Element elements
+                foreach (var elem in Extension) { yield return elem; }
+                // ContactPoint elements
                 yield return SystemElement;
                 yield return ValueElement;
                 yield return UseElement;

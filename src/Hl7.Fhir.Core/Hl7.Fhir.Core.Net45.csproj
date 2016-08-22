@@ -674,6 +674,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Model\Generated\Template-Children.ttinclude" />
     <None Include="Model\Generated\TemplateFileManagerV2.1.ttinclude" />
     <None Include="packages.config">
       <SubType>Designer</SubType>

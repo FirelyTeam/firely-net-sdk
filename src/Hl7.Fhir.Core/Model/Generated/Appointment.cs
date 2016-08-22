@@ -313,6 +313,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ParticipantComponent elements
+                    foreach (var elem in Type) { yield return elem; }
+                    yield return Actor;
+                    yield return RequiredElement;
+                    yield return StatusElement;
+                }
+            }
             
         }
         
@@ -722,35 +739,35 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Appointment properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return StatusElement;
-                yield return Type;
-                yield return Reason;
-                yield return PriorityElement;
-                yield return DescriptionElement;
-                yield return StartElement;
-                yield return EndElement;
-                yield return MinutesDurationElement;
-                foreach (var prop in Slot) { yield return prop; }
-                yield return CommentElement;
-                foreach (var prop in Participant) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Appointment elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return StatusElement;
+				yield return Type;
+				yield return Reason;
+				yield return PriorityElement;
+				yield return DescriptionElement;
+				yield return StartElement;
+				yield return EndElement;
+				yield return MinutesDurationElement;
+				foreach (var elem in Slot) { yield return elem; }
+				yield return CommentElement;
+				foreach (var elem in Participant) { yield return elem; }
             }
         }
-
     }
     
 }

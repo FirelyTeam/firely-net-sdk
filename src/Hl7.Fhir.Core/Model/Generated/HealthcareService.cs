@@ -182,6 +182,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ServiceTypeComponent elements
+                    yield return Type;
+                    foreach (var elem in Specialty) { yield return elem; }
+                }
+            }
             
         }
         
@@ -371,6 +386,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // AvailableTimeComponent elements
+                    foreach (var elem in DaysOfWeek_Element) { yield return elem; }
+                    yield return AllDayElement;
+                    yield return AvailableStartTimeElement;
+                    yield return AvailableEndTimeElement;
+                }
+            }
             
         }
         
@@ -470,6 +502,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(During, otherT.During)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // NotAvailableComponent elements
+                    yield return DescriptionElement;
+                    yield return During;
+                }
             }
             
         }
@@ -1038,45 +1085,45 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // HealthcareService properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return ProvidedBy;
-                yield return ServiceCategory;
-                foreach (var prop in ServiceType) { yield return prop; }
-                yield return Location;
-                yield return ServiceNameElement;
-                yield return CommentElement;
-                yield return ExtraDetailsElement;
-                yield return Photo;
-                foreach (var prop in Telecom) { yield return prop; }
-                foreach (var prop in CoverageArea) { yield return prop; }
-                foreach (var prop in ServiceProvisionCode) { yield return prop; }
-                yield return Eligibility;
-                yield return EligibilityNoteElement;
-                foreach (var prop in ProgramNameElement) { yield return prop; }
-                foreach (var prop in Characteristic) { yield return prop; }
-                foreach (var prop in ReferralMethod) { yield return prop; }
-                yield return PublicKeyElement;
-                yield return AppointmentRequiredElement;
-                foreach (var prop in AvailableTime) { yield return prop; }
-                foreach (var prop in NotAvailable) { yield return prop; }
-                yield return AvailabilityExceptionsElement;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// HealthcareService elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return ProvidedBy;
+				yield return ServiceCategory;
+				foreach (var elem in ServiceType) { yield return elem; }
+				yield return Location;
+				yield return ServiceNameElement;
+				yield return CommentElement;
+				yield return ExtraDetailsElement;
+				yield return Photo;
+				foreach (var elem in Telecom) { yield return elem; }
+				foreach (var elem in CoverageArea) { yield return elem; }
+				foreach (var elem in ServiceProvisionCode) { yield return elem; }
+				yield return Eligibility;
+				yield return EligibilityNoteElement;
+				foreach (var elem in ProgramNameElement) { yield return elem; }
+				foreach (var elem in Characteristic) { yield return elem; }
+				foreach (var elem in ReferralMethod) { yield return elem; }
+				yield return PublicKeyElement;
+				yield return AppointmentRequiredElement;
+				foreach (var elem in AvailableTime) { yield return elem; }
+				foreach (var elem in NotAvailable) { yield return elem; }
+				yield return AvailabilityExceptionsElement;
             }
         }
-
     }
     
 }

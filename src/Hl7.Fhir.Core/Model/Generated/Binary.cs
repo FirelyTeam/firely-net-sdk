@@ -170,20 +170,20 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // Binary properties
-                yield return ContentTypeElement;
-                yield return ContentElement;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// Binary elements
+				yield return ContentTypeElement;
+				yield return ContentElement;
             }
         }
-
     }
     
 }

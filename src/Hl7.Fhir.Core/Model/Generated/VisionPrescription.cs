@@ -639,6 +639,34 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // DispenseComponent elements
+                    yield return Product;
+                    yield return EyeElement;
+                    yield return SphereElement;
+                    yield return CylinderElement;
+                    yield return AxisElement;
+                    yield return PrismElement;
+                    yield return BaseElement;
+                    yield return AddElement;
+                    yield return PowerElement;
+                    yield return BackCurveElement;
+                    yield return DiameterElement;
+                    yield return Duration;
+                    yield return ColorElement;
+                    yield return BrandElement;
+                    yield return NotesElement;
+                }
+            }
             
         }
         
@@ -825,30 +853,30 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // VisionPrescription properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return DateWrittenElement;
-                yield return Patient;
-                yield return Prescriber;
-                yield return Encounter;
-                yield return Reason;
-                foreach (var prop in Dispense) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// VisionPrescription elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return DateWrittenElement;
+				yield return Patient;
+				yield return Prescriber;
+				yield return Encounter;
+				yield return Reason;
+				foreach (var elem in Dispense) { yield return elem; }
             }
         }
-
     }
     
 }

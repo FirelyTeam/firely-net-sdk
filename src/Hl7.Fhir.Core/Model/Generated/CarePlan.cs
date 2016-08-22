@@ -261,6 +261,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // RelatedPlanComponent elements
+                    yield return CodeElement;
+                    yield return Plan;
+                }
+            }
             
         }
         
@@ -341,6 +356,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Member, otherT.Member)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ParticipantComponent elements
+                    yield return Role;
+                    yield return Member;
+                }
             }
             
         }
@@ -457,6 +487,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ActivityComponent elements
+                    foreach (var elem in ActionResulting) { yield return elem; }
+                    foreach (var elem in Progress) { yield return elem; }
+                    yield return Reference;
+                    yield return Detail;
+                }
             }
             
         }
@@ -813,6 +860,34 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // DetailComponent elements
+                    yield return Category;
+                    yield return Code;
+                    foreach (var elem in ReasonCode) { yield return elem; }
+                    foreach (var elem in ReasonReference) { yield return elem; }
+                    foreach (var elem in Goal) { yield return elem; }
+                    yield return StatusElement;
+                    yield return StatusReason;
+                    yield return ProhibitedElement;
+                    yield return Scheduled;
+                    yield return Location;
+                    foreach (var elem in Performer) { yield return elem; }
+                    yield return Product;
+                    yield return DailyAmount;
+                    yield return Quantity;
+                    yield return DescriptionElement;
+                }
             }
             
         }
@@ -1202,39 +1277,39 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // CarePlan properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Subject;
-                yield return StatusElement;
-                yield return Context;
-                yield return Period;
-                foreach (var prop in Author) { yield return prop; }
-                yield return ModifiedElement;
-                foreach (var prop in Category) { yield return prop; }
-                yield return DescriptionElement;
-                foreach (var prop in Addresses) { yield return prop; }
-                foreach (var prop in Support) { yield return prop; }
-                foreach (var prop in RelatedPlan) { yield return prop; }
-                foreach (var prop in Participant) { yield return prop; }
-                foreach (var prop in Goal) { yield return prop; }
-                foreach (var prop in Activity) { yield return prop; }
-                yield return Note;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// CarePlan elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Subject;
+				yield return StatusElement;
+				yield return Context;
+				yield return Period;
+				foreach (var elem in Author) { yield return elem; }
+				yield return ModifiedElement;
+				foreach (var elem in Category) { yield return elem; }
+				yield return DescriptionElement;
+				foreach (var elem in Addresses) { yield return elem; }
+				foreach (var elem in Support) { yield return elem; }
+				foreach (var elem in RelatedPlan) { yield return elem; }
+				foreach (var elem in Participant) { yield return elem; }
+				foreach (var elem in Goal) { yield return elem; }
+				foreach (var elem in Activity) { yield return elem; }
+				yield return Note;
             }
         }
-
     }
     
 }

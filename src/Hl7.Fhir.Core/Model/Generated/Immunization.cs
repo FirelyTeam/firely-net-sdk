@@ -131,6 +131,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ExplanationComponent elements
+                    foreach (var elem in Reason) { yield return elem; }
+                    foreach (var elem in ReasonNotGiven) { yield return elem; }
+                }
+            }
             
         }
         
@@ -265,6 +280,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ReportedElement, otherT.ReportedElement)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ReactionComponent elements
+                    yield return DateElement;
+                    yield return Detail;
+                    yield return ReportedElement;
+                }
             }
             
         }
@@ -521,6 +552,27 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(DoseStatusReason, otherT.DoseStatusReason)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // VaccinationProtocolComponent elements
+                    yield return DoseSequenceElement;
+                    yield return DescriptionElement;
+                    yield return Authority;
+                    yield return SeriesElement;
+                    yield return SeriesDosesElement;
+                    foreach (var elem in TargetDisease) { yield return elem; }
+                    yield return DoseStatus;
+                    yield return DoseStatusReason;
+                }
             }
             
         }
@@ -1056,44 +1108,44 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Immunization properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return StatusElement;
-                yield return DateElement;
-                yield return VaccineCode;
-                yield return Patient;
-                yield return WasNotGivenElement;
-                yield return ReportedElement;
-                yield return Performer;
-                yield return Requester;
-                yield return Encounter;
-                yield return Manufacturer;
-                yield return Location;
-                yield return LotNumberElement;
-                yield return ExpirationDateElement;
-                yield return Site;
-                yield return Route;
-                yield return DoseQuantity;
-                foreach (var prop in Note) { yield return prop; }
-                yield return Explanation;
-                foreach (var prop in Reaction) { yield return prop; }
-                foreach (var prop in VaccinationProtocol) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Immunization elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return StatusElement;
+				yield return DateElement;
+				yield return VaccineCode;
+				yield return Patient;
+				yield return WasNotGivenElement;
+				yield return ReportedElement;
+				yield return Performer;
+				yield return Requester;
+				yield return Encounter;
+				yield return Manufacturer;
+				yield return Location;
+				yield return LotNumberElement;
+				yield return ExpirationDateElement;
+				yield return Site;
+				yield return Route;
+				yield return DoseQuantity;
+				foreach (var elem in Note) { yield return elem; }
+				yield return Explanation;
+				foreach (var elem in Reaction) { yield return elem; }
+				foreach (var elem in VaccinationProtocol) { yield return elem; }
             }
         }
-
     }
     
 }

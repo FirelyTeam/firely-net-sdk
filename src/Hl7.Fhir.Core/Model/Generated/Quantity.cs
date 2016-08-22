@@ -298,13 +298,13 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Element properties
-                foreach (var prop in Extension) { yield return prop; }
-                // Quantity properties
+                // Element elements
+                foreach (var elem in Extension) { yield return elem; }
+                // Quantity elements
                 yield return ValueElement;
                 yield return ComparatorElement;
                 yield return UnitElement;

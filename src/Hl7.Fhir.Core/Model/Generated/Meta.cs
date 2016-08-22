@@ -230,17 +230,18 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Element properties
-                foreach (var prop in Extension) { yield return prop; }
-                // Meta properties
+                // Element elements
+                foreach (var elem in Extension) { yield return elem; }
+                // Meta elements
+                yield return VersionIdElement;
                 yield return LastUpdatedElement;
-                foreach (var prop in ProfileElement) { yield return prop; }
-                foreach (var prop in Security) { yield return prop; }
-                foreach (var prop in Tag) { yield return prop; }
+                foreach (var elem in ProfileElement) { yield return elem; }
+                foreach (var elem in Security) { yield return elem; }
+                foreach (var elem in Tag) { yield return elem; }
             }
         }
     

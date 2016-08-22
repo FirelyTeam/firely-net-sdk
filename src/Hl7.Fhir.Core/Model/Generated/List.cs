@@ -228,6 +228,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // EntryComponent elements
+                    yield return Flag;
+                    yield return DeletedElement;
+                    yield return DateElement;
+                    yield return Item;
+                }
+            }
             
         }
         
@@ -607,36 +624,36 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // List properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return TitleElement;
-                yield return Code;
-                yield return Subject;
-                yield return Source;
-                yield return Encounter;
-                yield return StatusElement;
-                yield return DateElement;
-                yield return OrderedBy;
-                yield return ModeElement;
-                yield return NoteElement;
-                foreach (var prop in Entry) { yield return prop; }
-                yield return EmptyReason;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// List elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return TitleElement;
+				yield return Code;
+				yield return Subject;
+				yield return Source;
+				yield return Encounter;
+				yield return StatusElement;
+				yield return DateElement;
+				yield return OrderedBy;
+				yield return ModeElement;
+				yield return NoteElement;
+				foreach (var elem in Entry) { yield return elem; }
+				yield return EmptyReason;
             }
         }
-
     }
     
 }

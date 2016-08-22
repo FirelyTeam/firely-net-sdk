@@ -233,14 +233,14 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Element properties
-                foreach (var prop in Extension) { yield return prop; }
-                // Signature properties
-                foreach (var prop in Type) { yield return prop; }
+                // Element elements
+                foreach (var elem in Extension) { yield return elem; }
+                // Signature elements
+                foreach (var elem in Type) { yield return elem; }
                 yield return WhenElement;
                 yield return Who;
                 yield return ContentTypeElement;

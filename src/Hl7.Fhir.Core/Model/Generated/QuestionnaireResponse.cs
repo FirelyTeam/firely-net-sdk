@@ -280,6 +280,25 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // GroupComponent elements
+                    yield return LinkIdElement;
+                    yield return TitleElement;
+                    yield return TextElement;
+                    yield return Subject;
+                    foreach (var elem in Group) { yield return elem; }
+                    foreach (var elem in Question) { yield return elem; }
+                }
+            }
             
         }
         
@@ -415,6 +434,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // QuestionComponent elements
+                    yield return LinkIdElement;
+                    yield return TextElement;
+                    foreach (var elem in Answer) { yield return elem; }
+                }
+            }
             
         }
         
@@ -496,6 +531,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // AnswerComponent elements
+                    yield return Value;
+                    foreach (var elem in Group) { yield return elem; }
+                }
             }
             
         }
@@ -744,32 +794,32 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // QuestionnaireResponse properties
-                yield return Identifier;
-                yield return Questionnaire;
-                yield return StatusElement;
-                yield return Subject;
-                yield return Author;
-                yield return AuthoredElement;
-                yield return Source;
-                yield return Encounter;
-                yield return Group;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// QuestionnaireResponse elements
+				yield return Identifier;
+				yield return Questionnaire;
+				yield return StatusElement;
+				yield return Subject;
+				yield return Author;
+				yield return AuthoredElement;
+				yield return Source;
+				yield return Encounter;
+				yield return Group;
             }
         }
-
     }
     
 }

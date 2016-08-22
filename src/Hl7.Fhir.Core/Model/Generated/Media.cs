@@ -476,35 +476,35 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Media properties
-                yield return TypeElement;
-                yield return Subtype;
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Subject;
-                yield return Operator;
-                yield return View;
-                yield return DeviceNameElement;
-                yield return HeightElement;
-                yield return WidthElement;
-                yield return FramesElement;
-                yield return DurationElement;
-                yield return Content;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Media elements
+				yield return TypeElement;
+				yield return Subtype;
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Subject;
+				yield return Operator;
+				yield return View;
+				yield return DeviceNameElement;
+				yield return HeightElement;
+				yield return WidthElement;
+				yield return FramesElement;
+				yield return DurationElement;
+				yield return Content;
             }
         }
-
     }
     
 }

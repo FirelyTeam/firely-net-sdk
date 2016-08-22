@@ -132,6 +132,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ActorComponent elements
+                    yield return Entity;
+                    foreach (var elem in Role) { yield return elem; }
+                }
+            }
             
         }
         
@@ -366,6 +381,27 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ValuedItemComponent elements
+                    yield return Entity;
+                    yield return Identifier;
+                    yield return EffectiveTimeElement;
+                    yield return Quantity;
+                    yield return UnitPrice;
+                    yield return FactorElement;
+                    yield return PointsElement;
+                    yield return Net;
+                }
+            }
             
         }
         
@@ -484,6 +520,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(SignatureElement, otherT.SignatureElement)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // SignatoryComponent elements
+                    yield return Type;
+                    yield return Party;
+                    yield return SignatureElement;
+                }
             }
             
         }
@@ -769,6 +821,31 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // TermComponent elements
+                    yield return Identifier;
+                    yield return IssuedElement;
+                    yield return Applies;
+                    yield return Type;
+                    yield return SubType;
+                    yield return Subject;
+                    foreach (var elem in Action) { yield return elem; }
+                    foreach (var elem in ActionReason) { yield return elem; }
+                    foreach (var elem in Actor) { yield return elem; }
+                    yield return TextElement;
+                    foreach (var elem in ValuedItem) { yield return elem; }
+                    foreach (var elem in Group) { yield return elem; }
+                }
+            }
             
         }
         
@@ -851,6 +928,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // TermActorComponent elements
+                    yield return Entity;
+                    foreach (var elem in Role) { yield return elem; }
+                }
             }
             
         }
@@ -1086,6 +1178,27 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // TermValuedItemComponent elements
+                    yield return Entity;
+                    yield return Identifier;
+                    yield return EffectiveTimeElement;
+                    yield return Quantity;
+                    yield return UnitPrice;
+                    yield return FactorElement;
+                    yield return PointsElement;
+                    yield return Net;
+                }
+            }
             
         }
         
@@ -1151,6 +1264,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // FriendlyLanguageComponent elements
+                    yield return Content;
+                }
             }
             
         }
@@ -1218,6 +1345,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // LegalLanguageComponent elements
+                    yield return Content;
+                }
+            }
             
         }
         
@@ -1283,6 +1424,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ComputableLanguageComponent elements
+                    yield return Content;
+                }
             }
             
         }
@@ -1657,41 +1812,41 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Contract properties
-                yield return Identifier;
-                yield return IssuedElement;
-                yield return Applies;
-                foreach (var prop in Subject) { yield return prop; }
-                foreach (var prop in Authority) { yield return prop; }
-                foreach (var prop in Domain) { yield return prop; }
-                yield return Type;
-                foreach (var prop in SubType) { yield return prop; }
-                foreach (var prop in Action) { yield return prop; }
-                foreach (var prop in ActionReason) { yield return prop; }
-                foreach (var prop in Actor) { yield return prop; }
-                foreach (var prop in ValuedItem) { yield return prop; }
-                foreach (var prop in Signer) { yield return prop; }
-                foreach (var prop in Term) { yield return prop; }
-                yield return Binding;
-                foreach (var prop in Friendly) { yield return prop; }
-                foreach (var prop in Legal) { yield return prop; }
-                foreach (var prop in Rule) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Contract elements
+				yield return Identifier;
+				yield return IssuedElement;
+				yield return Applies;
+				foreach (var elem in Subject) { yield return elem; }
+				foreach (var elem in Authority) { yield return elem; }
+				foreach (var elem in Domain) { yield return elem; }
+				yield return Type;
+				foreach (var elem in SubType) { yield return elem; }
+				foreach (var elem in Action) { yield return elem; }
+				foreach (var elem in ActionReason) { yield return elem; }
+				foreach (var elem in Actor) { yield return elem; }
+				foreach (var elem in ValuedItem) { yield return elem; }
+				foreach (var elem in Signer) { yield return elem; }
+				foreach (var elem in Term) { yield return elem; }
+				yield return Binding;
+				foreach (var elem in Friendly) { yield return elem; }
+				foreach (var elem in Legal) { yield return elem; }
+				foreach (var elem in Rule) { yield return elem; }
             }
         }
-
     }
     
 }

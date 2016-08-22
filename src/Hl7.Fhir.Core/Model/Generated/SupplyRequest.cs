@@ -162,6 +162,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // WhenComponent elements
+                    yield return Code;
+                    yield return Schedule;
+                }
+            }
             
         }
         
@@ -415,33 +430,33 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // SupplyRequest properties
-                yield return Patient;
-                yield return Source;
-                yield return DateElement;
-                yield return Identifier;
-                yield return StatusElement;
-                yield return Kind;
-                yield return OrderedItem;
-                foreach (var prop in Supplier) { yield return prop; }
-                yield return Reason;
-                yield return When;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// SupplyRequest elements
+				yield return Patient;
+				yield return Source;
+				yield return DateElement;
+				yield return Identifier;
+				yield return StatusElement;
+				yield return Kind;
+				yield return OrderedItem;
+				foreach (var elem in Supplier) { yield return elem; }
+				yield return Reason;
+				yield return When;
             }
         }
-
     }
     
 }

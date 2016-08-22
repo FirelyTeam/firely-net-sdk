@@ -302,33 +302,33 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // RelatedPerson properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Patient;
-                yield return Relationship;
-                yield return Name;
-                foreach (var prop in Telecom) { yield return prop; }
-                yield return GenderElement;
-                yield return BirthDateElement;
-                foreach (var prop in Address) { yield return prop; }
-                foreach (var prop in Photo) { yield return prop; }
-                yield return Period;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// RelatedPerson elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Patient;
+				yield return Relationship;
+				yield return Name;
+				foreach (var elem in Telecom) { yield return elem; }
+				yield return GenderElement;
+				yield return BirthDateElement;
+				foreach (var elem in Address) { yield return elem; }
+				foreach (var elem in Photo) { yield return elem; }
+				yield return Period;
             }
         }
-
     }
     
 }

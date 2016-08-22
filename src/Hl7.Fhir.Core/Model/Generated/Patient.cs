@@ -258,6 +258,26 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ContactComponent elements
+                    foreach (var elem in Relationship) { yield return elem; }
+                    yield return Name;
+                    foreach (var elem in Telecom) { yield return elem; }
+                    yield return Address;
+                    yield return GenderElement;
+                    yield return Organization;
+                    yield return Period;
+                }
+            }
             
         }
         
@@ -354,6 +374,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(GenderStatus, otherT.GenderStatus)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // AnimalComponent elements
+                    yield return Species;
+                    yield return Breed;
+                    yield return GenderStatus;
+                }
             }
             
         }
@@ -454,6 +490,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(PreferredElement, otherT.PreferredElement)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // CommunicationComponent elements
+                    yield return Language;
+                    yield return PreferredElement;
+                }
             }
             
         }
@@ -556,6 +607,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // LinkComponent elements
+                    yield return Other;
+                    yield return TypeElement;
+                }
             }
             
         }
@@ -958,40 +1024,40 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Patient properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return ActiveElement;
-                foreach (var prop in Name) { yield return prop; }
-                foreach (var prop in Telecom) { yield return prop; }
-                yield return GenderElement;
-                yield return BirthDateElement;
-                yield return Deceased;
-                foreach (var prop in Address) { yield return prop; }
-                yield return MaritalStatus;
-                yield return MultipleBirth;
-                foreach (var prop in Photo) { yield return prop; }
-                foreach (var prop in Contact) { yield return prop; }
-                yield return Animal;
-                foreach (var prop in Communication) { yield return prop; }
-                foreach (var prop in CareProvider) { yield return prop; }
-                yield return ManagingOrganization;
-                foreach (var prop in Link) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Patient elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return ActiveElement;
+				foreach (var elem in Name) { yield return elem; }
+				foreach (var elem in Telecom) { yield return elem; }
+				yield return GenderElement;
+				yield return BirthDateElement;
+				yield return Deceased;
+				foreach (var elem in Address) { yield return elem; }
+				yield return MaritalStatus;
+				yield return MultipleBirth;
+				foreach (var elem in Photo) { yield return elem; }
+				foreach (var elem in Contact) { yield return elem; }
+				yield return Animal;
+				foreach (var elem in Communication) { yield return elem; }
+				foreach (var elem in CareProvider) { yield return elem; }
+				yield return ManagingOrganization;
+				foreach (var elem in Link) { yield return elem; }
             }
         }
-
     }
     
 }

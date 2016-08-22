@@ -293,6 +293,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // StatusHistoryComponent elements
+                    yield return StatusElement;
+                    yield return Period;
+                }
+            }
             
         }
         
@@ -390,6 +405,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Individual, otherT.Individual)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ParticipantComponent elements
+                    foreach (var elem in Type) { yield return elem; }
+                    yield return Period;
+                    yield return Individual;
+                }
             }
             
         }
@@ -624,6 +655,30 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // HospitalizationComponent elements
+                    yield return PreAdmissionIdentifier;
+                    yield return Origin;
+                    yield return AdmitSource;
+                    foreach (var elem in AdmittingDiagnosis) { yield return elem; }
+                    yield return ReAdmission;
+                    foreach (var elem in DietPreference) { yield return elem; }
+                    foreach (var elem in SpecialCourtesy) { yield return elem; }
+                    foreach (var elem in SpecialArrangement) { yield return elem; }
+                    yield return Destination;
+                    yield return DischargeDisposition;
+                    foreach (var elem in DischargeDiagnosis) { yield return elem; }
+                }
+            }
             
         }
         
@@ -740,6 +795,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // LocationComponent elements
+                    yield return Location;
+                    yield return StatusElement;
+                    yield return Period;
+                }
             }
             
         }
@@ -1149,42 +1220,42 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Encounter properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return StatusElement;
-                foreach (var prop in StatusHistory) { yield return prop; }
-                yield return ClassElement;
-                foreach (var prop in Type) { yield return prop; }
-                yield return Priority;
-                yield return Patient;
-                foreach (var prop in EpisodeOfCare) { yield return prop; }
-                foreach (var prop in IncomingReferral) { yield return prop; }
-                foreach (var prop in Participant) { yield return prop; }
-                yield return Appointment;
-                yield return Period;
-                yield return Length;
-                foreach (var prop in Reason) { yield return prop; }
-                foreach (var prop in Indication) { yield return prop; }
-                yield return Hospitalization;
-                foreach (var prop in Location) { yield return prop; }
-                yield return ServiceProvider;
-                yield return PartOf;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Encounter elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return StatusElement;
+				foreach (var elem in StatusHistory) { yield return elem; }
+				yield return ClassElement;
+				foreach (var elem in Type) { yield return elem; }
+				yield return Priority;
+				yield return Patient;
+				foreach (var elem in EpisodeOfCare) { yield return elem; }
+				foreach (var elem in IncomingReferral) { yield return elem; }
+				foreach (var elem in Participant) { yield return elem; }
+				yield return Appointment;
+				yield return Period;
+				yield return Length;
+				foreach (var elem in Reason) { yield return elem; }
+				foreach (var elem in Indication) { yield return elem; }
+				yield return Hospitalization;
+				foreach (var elem in Location) { yield return elem; }
+				yield return ServiceProvider;
+				yield return PartOf;
             }
         }
-
     }
     
 }

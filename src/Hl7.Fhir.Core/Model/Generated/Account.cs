@@ -331,34 +331,34 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Account properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return NameElement;
-                yield return Type;
-                yield return StatusElement;
-                yield return ActivePeriod;
-                yield return Currency;
-                yield return Balance;
-                yield return CoveragePeriod;
-                yield return Subject;
-                yield return Owner;
-                yield return DescriptionElement;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Account elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return NameElement;
+				yield return Type;
+				yield return StatusElement;
+				yield return ActivePeriod;
+				yield return Currency;
+				yield return Balance;
+				yield return CoveragePeriod;
+				yield return Subject;
+				yield return Owner;
+				yield return DescriptionElement;
             }
         }
-
     }
     
 }

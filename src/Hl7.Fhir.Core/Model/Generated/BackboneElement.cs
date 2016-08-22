@@ -101,14 +101,14 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Element properties
-                foreach (var prop in Extension) { yield return prop; }
-                // BackboneElement properties
-                foreach (var prop in ModifierExtension) { yield return prop; }
+                // Element elements
+                foreach (var elem in Extension) { yield return elem; }
+                // BackboneElement elements
+                foreach (var elem in ModifierExtension) { yield return elem; }
             }
         }
     

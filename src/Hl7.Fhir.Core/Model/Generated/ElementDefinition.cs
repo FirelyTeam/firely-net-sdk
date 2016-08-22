@@ -328,14 +328,17 @@ namespace Hl7.Fhir.Model
                 return true;
             }
 
-            public override IEnumerable<Base> Properties
+            public override IEnumerable<Base> Children
             {
                 get
                 {
-                foreach (var prop in DiscriminatorElement) { yield return prop; }
-                yield return DescriptionElement;
-                yield return OrderedElement;
-                yield return RulesElement;
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // SlicingComponent elements
+                    foreach (var elem in DiscriminatorElement) { yield return elem; }
+                    yield return DescriptionElement;
+                    yield return OrderedElement;
+                    yield return RulesElement;
                 }
             }
             
@@ -495,13 +498,16 @@ namespace Hl7.Fhir.Model
                 return true;
             }
 
-            public override IEnumerable<Base> Properties
+            public override IEnumerable<Base> Children
             {
                 get
                 {
-                yield return PathElement;
-                yield return MinElement;
-                yield return MaxElement;
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BaseComponent elements
+                    yield return PathElement;
+                    yield return MinElement;
+                    yield return MaxElement;
                 }
             }
             
@@ -661,13 +667,16 @@ namespace Hl7.Fhir.Model
                 return true;
             }
 
-            public override IEnumerable<Base> Properties
+            public override IEnumerable<Base> Children
             {
                 get
                 {
-                yield return CodeElement;
-                foreach (var prop in ProfileElement) { yield return prop; }
-                foreach (var prop in AggregationElement) { yield return prop; }
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // TypeRefComponent elements
+                    yield return CodeElement;
+                    foreach (var elem in ProfileElement) { yield return elem; }
+                    foreach (var elem in AggregationElement) { yield return elem; }
                 }
             }
             
@@ -898,14 +907,18 @@ namespace Hl7.Fhir.Model
                 return true;
             }
 
-            public override IEnumerable<Base> Properties
+            public override IEnumerable<Base> Children
             {
                 get
                 {
-                yield return RequirementsElement;
-                yield return SeverityElement;
-                yield return HumanElement;
-                yield return XpathElement;
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // ConstraintComponent elements
+                    yield return KeyElement;
+                    yield return RequirementsElement;
+                    yield return SeverityElement;
+                    yield return HumanElement;
+                    yield return XpathElement;
                 }
             }
             
@@ -1045,13 +1058,16 @@ namespace Hl7.Fhir.Model
                 return true;
             }
 
-            public override IEnumerable<Base> Properties
+            public override IEnumerable<Base> Children
             {
                 get
                 {
-                yield return StrengthElement;
-                yield return DescriptionElement;
-                yield return ValueSet;
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BindingComponent elements
+                    yield return StrengthElement;
+                    yield return DescriptionElement;
+                    yield return ValueSet;
                 }
             }
             
@@ -1210,12 +1226,16 @@ namespace Hl7.Fhir.Model
                 return true;
             }
 
-            public override IEnumerable<Base> Properties
+            public override IEnumerable<Base> Children
             {
                 get
                 {
-                yield return LanguageElement;
-                yield return MapElement;
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // MappingComponent elements
+                    yield return IdentityElement;
+                    yield return LanguageElement;
+                    yield return MapElement;
                 }
             }
             
@@ -2113,28 +2133,28 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Element properties
-                foreach (var prop in Extension) { yield return prop; }
-                // ElementDefinition properties
+                // Element elements
+                foreach (var elem in Extension) { yield return elem; }
+                // ElementDefinition elements
                 yield return PathElement;
-                foreach (var prop in RepresentationElement) { yield return prop; }
+                foreach (var elem in RepresentationElement) { yield return elem; }
                 yield return NameElement;
                 yield return LabelElement;
-                foreach (var prop in Code) { yield return prop; }
+                foreach (var elem in Code) { yield return elem; }
                 yield return Slicing;
                 yield return ShortElement;
                 yield return DefinitionElement;
                 yield return CommentsElement;
                 yield return RequirementsElement;
-                foreach (var prop in AliasElement) { yield return prop; }
+                foreach (var elem in AliasElement) { yield return elem; }
                 yield return MinElement;
                 yield return MaxElement;
                 yield return Base;
-                foreach (var prop in Type) { yield return prop; }
+                foreach (var elem in Type) { yield return elem; }
                 yield return NameReferenceElement;
                 yield return DefaultValue;
                 yield return MeaningWhenMissingElement;
@@ -2144,12 +2164,13 @@ namespace Hl7.Fhir.Model
                 yield return MinValue;
                 yield return MaxValue;
                 yield return MaxLengthElement;
-                foreach (var prop in Constraint) { yield return prop; }
+                foreach (var elem in ConditionElement) { yield return elem; }
+                foreach (var elem in Constraint) { yield return elem; }
                 yield return MustSupportElement;
                 yield return IsModifierElement;
                 yield return IsSummaryElement;
                 yield return Binding;
-                foreach (var prop in Mapping) { yield return prop; }
+                foreach (var elem in Mapping) { yield return elem; }
             }
         }
     

@@ -170,11 +170,13 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                foreach (var p in base.Properties) { yield return p; }
+                // Element elements
+                foreach (var p in Extension) { yield return p; }
+                // Narrative elements
                 yield return StatusElement;
                 // Div property does not implement Base...
             }

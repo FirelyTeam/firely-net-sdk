@@ -371,19 +371,19 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Element properties
-                foreach (var prop in Extension) { yield return prop; }
-                // HumanName properties
+                // Element elements
+                foreach (var elem in Extension) { yield return elem; }
+                // HumanName elements
                 yield return UseElement;
                 yield return TextElement;
-                foreach (var prop in FamilyElement) { yield return prop; }
-                foreach (var prop in GivenElement) { yield return prop; }
-                foreach (var prop in PrefixElement) { yield return prop; }
-                foreach (var prop in SuffixElement) { yield return prop; }
+                foreach (var elem in FamilyElement) { yield return elem; }
+                foreach (var elem in GivenElement) { yield return elem; }
+                foreach (var elem in PrefixElement) { yield return elem; }
+                foreach (var elem in SuffixElement) { yield return elem; }
                 yield return Period;
             }
         }

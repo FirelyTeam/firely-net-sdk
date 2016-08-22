@@ -322,6 +322,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // EventComponent elements
+                    yield return StatusElement;
+                    yield return Description;
+                    yield return DateTimeElement;
+                    yield return Actor;
+                }
+            }
             
         }
         
@@ -472,6 +489,24 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ItemComponent elements
+                    yield return Code;
+                    foreach (var elem in Specimen) { yield return elem; }
+                    yield return BodySite;
+                    yield return StatusElement;
+                    foreach (var elem in Event) { yield return elem; }
+                }
             }
             
         }
@@ -765,35 +800,35 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // DiagnosticOrder properties
-                yield return Subject;
-                yield return Orderer;
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Encounter;
-                foreach (var prop in Reason) { yield return prop; }
-                foreach (var prop in SupportingInformation) { yield return prop; }
-                foreach (var prop in Specimen) { yield return prop; }
-                yield return StatusElement;
-                yield return PriorityElement;
-                foreach (var prop in Event) { yield return prop; }
-                foreach (var prop in Item) { yield return prop; }
-                foreach (var prop in Note) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// DiagnosticOrder elements
+				yield return Subject;
+				yield return Orderer;
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Encounter;
+				foreach (var elem in Reason) { yield return elem; }
+				foreach (var elem in SupportingInformation) { yield return elem; }
+				foreach (var elem in Specimen) { yield return elem; }
+				yield return StatusElement;
+				yield return PriorityElement;
+				foreach (var elem in Event) { yield return elem; }
+				foreach (var elem in Item) { yield return elem; }
+				foreach (var elem in Note) { yield return elem; }
             }
         }
-
     }
     
 }

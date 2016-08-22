@@ -147,6 +147,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ProductComponent elements
+                    yield return Form;
+                    foreach (var elem in Ingredient) { yield return elem; }
+                    foreach (var elem in Batch) { yield return elem; }
+                }
+            }
             
         }
         
@@ -228,6 +244,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // IngredientComponent elements
+                    yield return Item;
+                    yield return Amount;
+                }
             }
             
         }
@@ -347,6 +378,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // BatchComponent elements
+                    yield return LotNumberElement;
+                    yield return ExpirationDateElement;
+                }
+            }
             
         }
         
@@ -427,6 +473,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // PackageComponent elements
+                    yield return Container;
+                    foreach (var elem in Content) { yield return elem; }
+                }
             }
             
         }
@@ -509,6 +570,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ContentComponent elements
+                    yield return Item;
+                    yield return Amount;
+                }
             }
             
         }
@@ -659,28 +735,28 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Medication properties
-                yield return Code;
-                yield return IsBrandElement;
-                yield return Manufacturer;
-                yield return Product;
-                yield return Package;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Medication elements
+				yield return Code;
+				yield return IsBrandElement;
+				yield return Manufacturer;
+				yield return Product;
+				yield return Package;
             }
         }
-
     }
     
 }

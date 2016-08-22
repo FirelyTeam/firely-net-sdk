@@ -218,29 +218,29 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // BodySite properties
-                yield return Patient;
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Code;
-                foreach (var prop in Modifier) { yield return prop; }
-                yield return DescriptionElement;
-                foreach (var prop in Image) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// BodySite elements
+				yield return Patient;
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Code;
+				foreach (var elem in Modifier) { yield return elem; }
+				yield return DescriptionElement;
+				foreach (var elem in Image) { yield return elem; }
             }
         }
-
     }
     
 }

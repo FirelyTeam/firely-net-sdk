@@ -292,6 +292,24 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ReferenceRangeComponent elements
+                    yield return Low;
+                    yield return High;
+                    yield return Meaning;
+                    yield return Age;
+                    yield return TextElement;
+                }
+            }
             
         }
         
@@ -392,6 +410,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // RelatedComponent elements
+                    yield return TypeElement;
+                    yield return Target;
+                }
             }
             
         }
@@ -507,6 +540,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ComponentComponent elements
+                    yield return Code;
+                    yield return Value;
+                    yield return DataAbsentReason;
+                    foreach (var elem in ReferenceRange) { yield return elem; }
+                }
             }
             
         }
@@ -978,43 +1028,43 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Observation properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return StatusElement;
-                yield return Category;
-                yield return Code;
-                yield return Subject;
-                yield return Encounter;
-                yield return Effective;
-                yield return IssuedElement;
-                foreach (var prop in Performer) { yield return prop; }
-                yield return Value;
-                yield return DataAbsentReason;
-                yield return Interpretation;
-                yield return CommentsElement;
-                yield return BodySite;
-                yield return Method;
-                yield return Specimen;
-                yield return Device;
-                foreach (var prop in ReferenceRange) { yield return prop; }
-                foreach (var prop in Related) { yield return prop; }
-                foreach (var prop in Component) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Observation elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return StatusElement;
+				yield return Category;
+				yield return Code;
+				yield return Subject;
+				yield return Encounter;
+				yield return Effective;
+				yield return IssuedElement;
+				foreach (var elem in Performer) { yield return elem; }
+				yield return Value;
+				yield return DataAbsentReason;
+				yield return Interpretation;
+				yield return CommentsElement;
+				yield return BodySite;
+				yield return Method;
+				yield return Specimen;
+				yield return Device;
+				foreach (var elem in ReferenceRange) { yield return elem; }
+				foreach (var elem in Related) { yield return elem; }
+				foreach (var elem in Component) { yield return elem; }
             }
         }
-
     }
     
 }

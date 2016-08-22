@@ -129,6 +129,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // WhenComponent elements
+                    yield return Code;
+                    yield return Schedule;
+                }
+            }
             
         }
         
@@ -342,31 +357,31 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Order properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return DateElement;
-                yield return Subject;
-                yield return Source;
-                yield return Target;
-                yield return Reason;
-                yield return When;
-                foreach (var prop in Detail) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Order elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return DateElement;
+				yield return Subject;
+				yield return Source;
+				yield return Target;
+				yield return Reason;
+				yield return When;
+				foreach (var elem in Detail) { yield return elem; }
             }
         }
-
     }
     
 }

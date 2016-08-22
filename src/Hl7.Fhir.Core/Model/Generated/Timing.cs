@@ -607,21 +607,24 @@ namespace Hl7.Fhir.Model
                 return true;
             }
 
-            public override IEnumerable<Base> Properties
+            public override IEnumerable<Base> Children
             {
                 get
                 {
-                yield return Bounds;
-                yield return CountElement;
-                yield return DurationElement;
-                yield return DurationMaxElement;
-                yield return DurationUnitsElement;
-                yield return FrequencyElement;
-                yield return FrequencyMaxElement;
-                yield return PeriodElement;
-                yield return PeriodMaxElement;
-                yield return PeriodUnitsElement;
-                yield return WhenElement;
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // RepeatComponent elements
+                    yield return Bounds;
+                    yield return CountElement;
+                    yield return DurationElement;
+                    yield return DurationMaxElement;
+                    yield return DurationUnitsElement;
+                    yield return FrequencyElement;
+                    yield return FrequencyMaxElement;
+                    yield return PeriodElement;
+                    yield return PeriodMaxElement;
+                    yield return PeriodUnitsElement;
+                    yield return WhenElement;
                 }
             }
             
@@ -735,14 +738,14 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Element properties
-                foreach (var prop in Extension) { yield return prop; }
-                // Timing properties
-                foreach (var prop in EventElement) { yield return prop; }
+                // Element elements
+                foreach (var elem in Extension) { yield return elem; }
+                // Timing elements
+                foreach (var elem in EventElement) { yield return elem; }
                 yield return Repeat;
                 yield return Code;
             }

@@ -192,6 +192,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ContactComponent elements
+                    yield return NameElement;
+                    foreach (var elem in Telecom) { yield return elem; }
+                }
+            }
             
         }
         
@@ -504,6 +519,28 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ParameterComponent elements
+                    yield return NameElement;
+                    yield return UseElement;
+                    yield return MinElement;
+                    yield return MaxElement;
+                    yield return DocumentationElement;
+                    yield return TypeElement;
+                    yield return Profile;
+                    yield return Binding;
+                    foreach (var elem in Part) { yield return elem; }
+                }
+            }
             
         }
         
@@ -605,6 +642,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ValueSet, otherT.ValueSet)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // BindingComponent elements
+                    yield return StrengthElement;
+                    yield return ValueSet;
+                }
             }
             
         }
@@ -1283,42 +1335,42 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // OperationDefinition properties
-                yield return UrlElement;
-                yield return VersionElement;
-                yield return NameElement;
-                yield return StatusElement;
-                yield return KindElement;
-                yield return ExperimentalElement;
-                yield return PublisherElement;
-                foreach (var prop in Contact) { yield return prop; }
-                yield return DateElement;
-                yield return DescriptionElement;
-                yield return RequirementsElement;
-                yield return IdempotentElement;
-                yield return CodeElement;
-                yield return NotesElement;
-                yield return Base;
-                yield return SystemElement;
-                foreach (var prop in TypeElement) { yield return prop; }
-                yield return InstanceElement;
-                foreach (var prop in Parameter) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// OperationDefinition elements
+				yield return UrlElement;
+				yield return VersionElement;
+				yield return NameElement;
+				yield return StatusElement;
+				yield return KindElement;
+				yield return ExperimentalElement;
+				yield return PublisherElement;
+				foreach (var elem in Contact) { yield return elem; }
+				yield return DateElement;
+				yield return DescriptionElement;
+				yield return RequirementsElement;
+				yield return IdempotentElement;
+				yield return CodeElement;
+				yield return NotesElement;
+				yield return Base;
+				yield return SystemElement;
+				foreach (var elem in TypeElement) { yield return elem; }
+				yield return InstanceElement;
+				foreach (var elem in Parameter) { yield return elem; }
             }
         }
-
     }
     
 }

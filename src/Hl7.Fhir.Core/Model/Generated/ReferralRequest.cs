@@ -491,39 +491,39 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // ReferralRequest properties
-                yield return StatusElement;
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return DateElement;
-                yield return Type;
-                yield return Specialty;
-                yield return Priority;
-                yield return Patient;
-                yield return Requester;
-                foreach (var prop in Recipient) { yield return prop; }
-                yield return Encounter;
-                yield return DateSentElement;
-                yield return Reason;
-                yield return DescriptionElement;
-                foreach (var prop in ServiceRequested) { yield return prop; }
-                foreach (var prop in SupportingInformation) { yield return prop; }
-                yield return FulfillmentTime;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// ReferralRequest elements
+				yield return StatusElement;
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return DateElement;
+				yield return Type;
+				yield return Specialty;
+				yield return Priority;
+				yield return Patient;
+				yield return Requester;
+				foreach (var elem in Recipient) { yield return elem; }
+				yield return Encounter;
+				yield return DateSentElement;
+				yield return Reason;
+				yield return DescriptionElement;
+				foreach (var elem in ServiceRequested) { yield return elem; }
+				foreach (var elem in SupportingInformation) { yield return elem; }
+				yield return FulfillmentTime;
             }
         }
-
     }
     
 }

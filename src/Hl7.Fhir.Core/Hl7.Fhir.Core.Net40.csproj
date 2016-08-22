@@ -296,11 +296,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Model\Generated\Template-Model2.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\Template-ModelInfo.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -673,6 +668,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Model\Generated\Template-Children.ttinclude" />
     <None Include="Model\Generated\TemplateFileManagerV2.1.ttinclude" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -690,7 +686,7 @@
     </Content>
     <Content Include="Model\Generated\Template-Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Model2.cs</LastGenOutput>
+      <LastGenOutput>Template-Model.cs</LastGenOutput>
     </Content>
     <Content Include="Model\Generated\Template-Bindings.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

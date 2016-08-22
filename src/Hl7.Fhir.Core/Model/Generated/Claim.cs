@@ -236,6 +236,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // PayeeComponent elements
+                    yield return Type;
+                    yield return Provider;
+                    yield return Organization;
+                    yield return Person;
+                }
+            }
             
         }
         
@@ -336,6 +353,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Diagnosis, otherT.Diagnosis)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // DiagnosisComponent elements
+                    yield return SequenceElement;
+                    yield return Diagnosis;
+                }
             }
             
         }
@@ -595,6 +627,27 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(OriginalRuleset, otherT.OriginalRuleset)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // CoverageComponent elements
+                    yield return SequenceElement;
+                    yield return FocalElement;
+                    yield return Coverage;
+                    yield return BusinessArrangementElement;
+                    yield return Relationship;
+                    foreach (var elem in PreAuthRefElement) { yield return elem; }
+                    yield return ClaimResponse;
+                    yield return OriginalRuleset;
+                }
             }
             
         }
@@ -1019,6 +1072,36 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ItemsComponent elements
+                    yield return SequenceElement;
+                    yield return Type;
+                    yield return Provider;
+                    foreach (var elem in DiagnosisLinkIdElement) { yield return elem; }
+                    yield return Service;
+                    yield return ServiceDateElement;
+                    yield return Quantity;
+                    yield return UnitPrice;
+                    yield return FactorElement;
+                    yield return PointsElement;
+                    yield return Net;
+                    yield return Udi;
+                    yield return BodySite;
+                    foreach (var elem in SubSite) { yield return elem; }
+                    foreach (var elem in Modifier) { yield return elem; }
+                    foreach (var elem in Detail) { yield return elem; }
+                    yield return Prosthesis;
+                }
+            }
             
         }
         
@@ -1288,6 +1371,29 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // DetailComponent elements
+                    yield return SequenceElement;
+                    yield return Type;
+                    yield return Service;
+                    yield return Quantity;
+                    yield return UnitPrice;
+                    yield return FactorElement;
+                    yield return PointsElement;
+                    yield return Net;
+                    yield return Udi;
+                    foreach (var elem in SubDetail) { yield return elem; }
+                }
+            }
             
         }
         
@@ -1540,6 +1646,28 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // SubDetailComponent elements
+                    yield return SequenceElement;
+                    yield return Type;
+                    yield return Service;
+                    yield return Quantity;
+                    yield return UnitPrice;
+                    yield return FactorElement;
+                    yield return PointsElement;
+                    yield return Net;
+                    yield return Udi;
+                }
+            }
             
         }
         
@@ -1674,6 +1802,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ProsthesisComponent elements
+                    yield return InitialElement;
+                    yield return PriorDateElement;
+                    yield return PriorMaterial;
+                }
+            }
             
         }
         
@@ -1789,6 +1933,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ExtractionDateElement, otherT.ExtractionDateElement)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // MissingTeethComponent elements
+                    yield return Tooth;
+                    yield return Reason;
+                    yield return ExtractionDateElement;
+                }
             }
             
         }
@@ -2418,52 +2578,52 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Claim properties
-                yield return TypeElement;
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Ruleset;
-                yield return OriginalRuleset;
-                yield return CreatedElement;
-                yield return Target;
-                yield return Provider;
-                yield return Organization;
-                yield return Use_Element;
-                yield return Priority;
-                yield return FundsReserve;
-                yield return Enterer;
-                yield return Facility;
-                yield return Prescription;
-                yield return OriginalPrescription;
-                yield return Payee;
-                yield return Referral;
-                foreach (var prop in Diagnosis) { yield return prop; }
-                foreach (var prop in Condition) { yield return prop; }
-                yield return Patient;
-                foreach (var prop in Coverage) { yield return prop; }
-                foreach (var prop in Exception) { yield return prop; }
-                yield return SchoolElement;
-                yield return AccidentElement;
-                yield return AccidentType;
-                foreach (var prop in InterventionException) { yield return prop; }
-                foreach (var prop in Item) { yield return prop; }
-                foreach (var prop in AdditionalMaterials) { yield return prop; }
-                foreach (var prop in MissingTeeth) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Claim elements
+				yield return TypeElement;
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Ruleset;
+				yield return OriginalRuleset;
+				yield return CreatedElement;
+				yield return Target;
+				yield return Provider;
+				yield return Organization;
+				yield return Use_Element;
+				yield return Priority;
+				yield return FundsReserve;
+				yield return Enterer;
+				yield return Facility;
+				yield return Prescription;
+				yield return OriginalPrescription;
+				yield return Payee;
+				yield return Referral;
+				foreach (var elem in Diagnosis) { yield return elem; }
+				foreach (var elem in Condition) { yield return elem; }
+				yield return Patient;
+				foreach (var elem in Coverage) { yield return elem; }
+				foreach (var elem in Exception) { yield return elem; }
+				yield return SchoolElement;
+				yield return AccidentElement;
+				yield return AccidentType;
+				foreach (var elem in InterventionException) { yield return elem; }
+				foreach (var elem in Item) { yield return elem; }
+				foreach (var elem in AdditionalMaterials) { yield return elem; }
+				foreach (var elem in MissingTeeth) { yield return elem; }
             }
         }
-
     }
     
 }

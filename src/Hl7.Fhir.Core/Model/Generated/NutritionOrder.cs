@@ -274,6 +274,25 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // OralDietComponent elements
+                    foreach (var elem in Type) { yield return elem; }
+                    foreach (var elem in Schedule) { yield return elem; }
+                    foreach (var elem in Nutrient) { yield return elem; }
+                    foreach (var elem in Texture) { yield return elem; }
+                    foreach (var elem in FluidConsistencyType) { yield return elem; }
+                    yield return InstructionElement;
+                }
+            }
             
         }
         
@@ -354,6 +373,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // NutrientComponent elements
+                    yield return Modifier;
+                    yield return Amount;
+                }
+            }
             
         }
         
@@ -433,6 +467,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(FoodType, otherT.FoodType)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // TextureComponent elements
+                    yield return Modifier;
+                    yield return FoodType;
+                }
             }
             
         }
@@ -600,6 +649,24 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(InstructionElement, otherT.InstructionElement)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // SupplementComponent elements
+                    yield return Type;
+                    yield return ProductNameElement;
+                    foreach (var elem in Schedule) { yield return elem; }
+                    yield return Quantity;
+                    yield return InstructionElement;
+                }
             }
             
         }
@@ -851,6 +918,28 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // EnteralFormulaComponent elements
+                    yield return BaseFormulaType;
+                    yield return BaseFormulaProductNameElement;
+                    yield return AdditiveType;
+                    yield return AdditiveProductNameElement;
+                    yield return CaloricDensity;
+                    yield return RouteofAdministration;
+                    foreach (var elem in Administration) { yield return elem; }
+                    yield return MaxVolumeToDeliver;
+                    yield return AdministrationInstructionElement;
+                }
+            }
             
         }
         
@@ -947,6 +1036,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // AdministrationComponent elements
+                    yield return Schedule;
+                    yield return Quantity;
+                    yield return Rate;
+                }
             }
             
         }
@@ -1248,35 +1353,35 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // NutritionOrder properties
-                yield return Patient;
-                yield return Orderer;
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Encounter;
-                yield return DateTimeElement;
-                yield return StatusElement;
-                foreach (var prop in AllergyIntolerance) { yield return prop; }
-                foreach (var prop in FoodPreferenceModifier) { yield return prop; }
-                foreach (var prop in ExcludeFoodModifier) { yield return prop; }
-                yield return OralDiet;
-                foreach (var prop in Supplement) { yield return prop; }
-                yield return EnteralFormula;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// NutritionOrder elements
+				yield return Patient;
+				yield return Orderer;
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Encounter;
+				yield return DateTimeElement;
+				yield return StatusElement;
+				foreach (var elem in AllergyIntolerance) { yield return elem; }
+				foreach (var elem in FoodPreferenceModifier) { yield return elem; }
+				foreach (var elem in ExcludeFoodModifier) { yield return elem; }
+				yield return OralDiet;
+				foreach (var elem in Supplement) { yield return elem; }
+				yield return EnteralFormula;
             }
         }
-
     }
     
 }

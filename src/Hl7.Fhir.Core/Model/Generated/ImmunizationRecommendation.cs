@@ -271,6 +271,27 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // RecommendationComponent elements
+                    yield return DateElement;
+                    yield return VaccineCode;
+                    yield return DoseNumberElement;
+                    yield return ForecastStatus;
+                    foreach (var elem in DateCriterion) { yield return elem; }
+                    yield return Protocol;
+                    foreach (var elem in SupportingImmunization) { yield return elem; }
+                    foreach (var elem in SupportingPatientInformation) { yield return elem; }
+                }
+            }
             
         }
         
@@ -371,6 +392,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // DateCriterionComponent elements
+                    yield return Code;
+                    yield return ValueElement;
+                }
             }
             
         }
@@ -542,6 +578,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // ProtocolComponent elements
+                    yield return DoseSequenceElement;
+                    yield return DescriptionElement;
+                    yield return Authority;
+                    yield return SeriesElement;
+                }
+            }
             
         }
         
@@ -643,26 +696,26 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // ImmunizationRecommendation properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Patient;
-                foreach (var prop in Recommendation) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// ImmunizationRecommendation elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Patient;
+				foreach (var elem in Recommendation) { yield return elem; }
             }
         }
-
     }
     
 }

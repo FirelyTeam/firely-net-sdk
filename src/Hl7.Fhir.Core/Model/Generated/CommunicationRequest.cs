@@ -184,6 +184,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // PayloadComponent elements
+                    yield return Content;
+                }
+            }
             
         }
         
@@ -506,37 +520,37 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // CommunicationRequest properties
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return Category;
-                yield return Sender;
-                foreach (var prop in Recipient) { yield return prop; }
-                foreach (var prop in Payload) { yield return prop; }
-                foreach (var prop in Medium) { yield return prop; }
-                yield return Requester;
-                yield return StatusElement;
-                yield return Encounter;
-                yield return Scheduled;
-                foreach (var prop in Reason) { yield return prop; }
-                yield return RequestedOnElement;
-                yield return Subject;
-                yield return Priority;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// CommunicationRequest elements
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return Category;
+				yield return Sender;
+				foreach (var elem in Recipient) { yield return elem; }
+				foreach (var elem in Payload) { yield return elem; }
+				foreach (var elem in Medium) { yield return elem; }
+				yield return Requester;
+				yield return StatusElement;
+				yield return Encounter;
+				yield return Scheduled;
+				foreach (var elem in Reason) { yield return elem; }
+				yield return RequestedOnElement;
+				yield return Subject;
+				yield return Priority;
             }
         }
-
     }
     
 }

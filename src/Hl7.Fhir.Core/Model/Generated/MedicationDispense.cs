@@ -320,6 +320,29 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // DosageInstructionComponent elements
+                    yield return TextElement;
+                    yield return AdditionalInstructions;
+                    yield return Timing;
+                    yield return AsNeeded;
+                    yield return Site;
+                    yield return Route;
+                    yield return Method;
+                    yield return Dose;
+                    yield return Rate;
+                    yield return MaxDosePerPeriod;
+                }
+            }
             
         }
         
@@ -419,6 +442,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ResponsibleParty, otherT.ResponsibleParty)) return false;
                 
                 return true;
+            }
+
+
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    // SubstitutionComponent elements
+                    yield return Type;
+                    foreach (var elem in Reason) { yield return elem; }
+                    foreach (var elem in ResponsibleParty) { yield return elem; }
+                }
             }
             
         }
@@ -821,39 +860,39 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // MedicationDispense properties
-                yield return Identifier;
-                yield return StatusElement;
-                yield return Patient;
-                yield return Dispenser;
-                foreach (var prop in AuthorizingPrescription) { yield return prop; }
-                yield return Type;
-                yield return Quantity;
-                yield return DaysSupply;
-                yield return Medication;
-                yield return WhenPreparedElement;
-                yield return WhenHandedOverElement;
-                yield return Destination;
-                foreach (var prop in Receiver) { yield return prop; }
-                yield return NoteElement;
-                foreach (var prop in DosageInstruction) { yield return prop; }
-                yield return Substitution;
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// MedicationDispense elements
+				yield return Identifier;
+				yield return StatusElement;
+				yield return Patient;
+				yield return Dispenser;
+				foreach (var elem in AuthorizingPrescription) { yield return elem; }
+				yield return Type;
+				yield return Quantity;
+				yield return DaysSupply;
+				yield return Medication;
+				yield return WhenPreparedElement;
+				yield return WhenHandedOverElement;
+				yield return Destination;
+				foreach (var elem in Receiver) { yield return elem; }
+				yield return NoteElement;
+				foreach (var elem in DosageInstruction) { yield return elem; }
+				yield return Substitution;
             }
         }
-
     }
     
 }

@@ -422,37 +422,37 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
-        public override IEnumerable<Base> Properties
+        public override IEnumerable<Base> Children
         {
             get
             {
-                // Resource properties
-                yield return Meta;
-                yield return ImplicitRulesElement;
-                yield return LanguageElement;
-                // DomainResource properties
-                yield return Text;
-                foreach (var prop in Contained) { yield return prop; }
-                foreach (var prop in Extension) { yield return prop; }
-                foreach (var prop in ModifierExtension) { yield return prop; }
-                // Coverage properties
-                yield return Issuer;
-                yield return Bin;
-                yield return Period;
-                yield return Type;
-                yield return SubscriberId;
-                foreach (var prop in Identifier) { yield return prop; }
-                yield return GroupElement;
-                yield return PlanElement;
-                yield return SubPlanElement;
-                yield return DependentElement;
-                yield return SequenceElement;
-                yield return Subscriber;
-                yield return Network;
-                foreach (var prop in Contract) { yield return prop; }
+				// Resource elements
+				yield return IdElement;
+				yield return Meta;
+				yield return ImplicitRulesElement;
+				yield return LanguageElement;
+				// DomainResource elements
+				yield return Text;
+				foreach (var elem in Contained) { yield return elem; }
+				foreach (var elem in Extension) { yield return elem; }
+				foreach (var elem in ModifierExtension) { yield return elem; }
+				// Coverage elements
+				yield return Issuer;
+				yield return Bin;
+				yield return Period;
+				yield return Type;
+				yield return SubscriberId;
+				foreach (var elem in Identifier) { yield return elem; }
+				yield return GroupElement;
+				yield return PlanElement;
+				yield return SubPlanElement;
+				yield return DependentElement;
+				yield return SequenceElement;
+				yield return Subscriber;
+				yield return Network;
+				foreach (var elem in Contract) { yield return elem; }
             }
         }
-
     }
     
 }
