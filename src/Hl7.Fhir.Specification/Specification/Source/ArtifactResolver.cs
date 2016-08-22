@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) using a list of other IArtifactSources
-    /// </summary>
+    /// </summary>    
     public class ArtifactResolver : IArtifactSource
     {        
         public ArtifactResolver(IArtifactSource source)
@@ -91,85 +91,70 @@ namespace Hl7.Fhir.Specification.Source
             return Source.ListConformanceResources();
         }
 
-
+        [Obsolete("Use the extension method with the same name on an IArtifactSource")]
         public StructureDefinition GetExtensionDefinition(string url, bool requireSnapshot=true)
         {
-            var cr = LoadConformanceResourceByUrl(url) as StructureDefinition;
-            if (cr == null) return null;
-
-            if (!cr.IsExtension)
-                throw Error.Argument("url", "Given url exists as a StructureDefinition, but is not an extension");
-
-            if (cr.Snapshot == null && requireSnapshot)
-                return null;
-
-            return cr;
+            return Source.GetExtensionDefinition(url, requireSnapshot);
         }
 
+        [Obsolete("Use the extension method with the same name on an IArtifactSource")]
         public StructureDefinition GetStructureDefinition(string url)
         {
-            return LoadConformanceResourceByUrl(url) as StructureDefinition;
+            return Source.GetStructureDefinition(url);            
         }
 
+        [Obsolete("Use the extension method with the same name on an IArtifactSource")]
         public StructureDefinition GetStructureDefinitionForCoreType(string typename)
         {
-            var url = ResourceIdentity.Build(new Uri(XmlNs.FHIR), "StructureDefinition", typename).ToString();
-            return GetStructureDefinition(url);
+            return Source.GetStructureDefinitionForCoreType(typename);
         }
 
+        [Obsolete("Use the extension method with the same name on an IArtifactSource")]
         public StructureDefinition GetStructureDefinitionForCoreType(FHIRDefinedType type)
         {
-            return GetStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
+            return Source.GetStructureDefinitionForCoreType(type);
         }
 
-        /// <summary>
-        /// Return canonical urls of all the core Resource/datatype/primitive StructureDefinitions available in the IArtifactSource
-        /// </summary>
+        [Obsolete("Use the extension method with the same name on an IArtifactSource")]
         public IEnumerable<string> GetCoreModelUrls()
         {
-            return ListConformanceResources()
-                .Select(ci => ci.Url)
-                .Where(uri => uri != null && uri.StartsWith(XmlNs.FHIR) && ModelInfo.IsCoreModelType(new ResourceIdentity(uri).Id));
+            return Source.GetCoreModelUrls();
         }
 
-
+        [Obsolete("Use the extension method with the same name on an IArtifactSource")]
         public IEnumerable<ConceptMap> GetConceptMaps()
         {
-            //Note: we assume this ArtifactSource caches the conceptmaps. Otherwise this is expensive.
-
-            var conceptMapUrls = ListConformanceResources().Where(info => info.Type == ResourceType.ConceptMap).Select(info => info.Url);
-
-            return conceptMapUrls.Select(url => (ConceptMap)LoadConformanceResourceByUrl(url));
+            return Source.GetConceptMaps();
         }
 
+        [Obsolete("Use the extension method with the same name on an IArtifactSource")]
         public IEnumerable<ConceptMap> GetConceptMapsForSource(string uri)
         {
-            return GetConceptMaps().Where(cm => cm.SourceAsString() == uri);
+            return Source.GetConceptMapsForSource(uri);
         }
 
+        [Obsolete("Use the extension method with the same name on an IArtifactSource")]
         public IEnumerable<ConceptMap> GetConceptMapsForSource(ValueSet source)
         {
-            return GetConceptMapsForSource(source.Url);
+            return Source.GetConceptMapsForSource(source);
         }
 
+        [Obsolete("Use the extension method with the same name on an IArtifactSource")]
         public IEnumerable<ConceptMap> GetConceptMapsForSource(StructureDefinition source)
         {
-            return GetConceptMapsForSource(source.Url);
+            return Source.GetConceptMapsForSource(source);
         }
 
+        [Obsolete("Use the extension method with the same name on an IArtifactSource")]
         public ValueSet GetValueSet(string url)
         {
-            return LoadConformanceResourceByUrl(url) as ValueSet;
+            return Source.GetValueSet(url);
         }
 
+        [Obsolete("Use the extension method with the same name on an IArtifactSource")]
         public ValueSet GetValueSetBySystem(string system)
         {
-            var vsInfo = ListConformanceResources().Where(ci => ci.ValueSetSystem == system).SingleOrDefault();
-
-            if(vsInfo != null)
-                return GetValueSet(vsInfo.Url);
-
-            return null;
+            return Source.GetValueSetBySystem(system);
         }
 
     }

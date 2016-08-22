@@ -43,6 +43,10 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hl7.FluentPath, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.3-alpha2\lib\net45\Hl7.FluentPath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -69,10 +73,12 @@
     </Compile>
     <Compile Include="ArtifactResolverTests.cs" />
     <Compile Include="ArtifactSourceTests.cs" />
+    <Compile Include="OutcomeReportingTest.cs" />
     <Compile Include="ProfileNavigationTest.cs" />
     <Compile Include="SchemaCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnapshotGeneratorTest.cs" />
+    <Compile Include="Validation\PrimitiveValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestData\message_false_SlicingExtensionTestProfile.xml">
@@ -845,7 +851,9 @@
       <Name>Hl7.Fhir.Specification.Net45</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="TestData\validation\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

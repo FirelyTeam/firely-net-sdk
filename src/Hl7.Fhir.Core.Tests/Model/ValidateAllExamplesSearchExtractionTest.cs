@@ -123,8 +123,8 @@ namespace Hl7.Fhir.Tests.Model
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var resourceModel = FluentPath.ModelNavigator.CreateInput(resource);
-            var navigator = FluentPath.ModelNavigator.CreateInput(resource);
+            var resourceModel = FluentPath.PocoNavigator.CreateInput(resource);
+            var navigator = FluentPath.PocoNavigator.CreateInput(resource);
             try
             {
                 var results = Hl7.FluentPath.PathExpression.Select(index.Expression, resourceModel, navigator);
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Tests.Model
                     {
                         if (t2 != null)
                         {
-                            if (t2 is FluentPath.ModelNavigator && (t2 as FluentPath.ModelNavigator).FhirValue != null)
+                            if (t2 is FluentPath.PocoNavigator && (t2 as FluentPath.PocoNavigator).FhirValue != null)
                             {
                                 // Validate the type of data returned against the type of search parameter
                             //    Debug.Write(index.Resource + "." + index.Name + ": ");

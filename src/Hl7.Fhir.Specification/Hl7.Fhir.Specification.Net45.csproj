@@ -43,6 +43,10 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hl7.FluentPath, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.3-alpha2\lib\net45\Hl7.FluentPath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -72,14 +76,18 @@
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
+    <Compile Include="Specification\Source\ArtifactSourceExtentions.cs" />
+    <Compile Include="Validation\Cardinality.cs" />
+    <Compile Include="Validation\InstanceToProfileMatcher.cs" />
+    <Compile Include="Validation\Issue.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorTypeExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileReference.cs" />
     <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
     <Compile Include="Specification\Snapshot\ElementMatcher.cs" />
     <Compile Include="Specification\Snapshot\ElementDefnMerger.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGenerator.cs" />
-    <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
-    <Compile Include="Specification\Navigation\ElementNavigator.cs" />
+    <Compile Include="Specification\Navigation\Bookmark.cs" />
+    <Compile Include="Specification\Navigation\ElementDefinitionNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorModificationExtensions.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorMovementExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
@@ -100,6 +108,16 @@
     <Compile Include="Specification\Source\ConformanceArtifactScanner.cs" />
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
+    <Compile Include="Validation\TypeRefExtensions.cs" />
+    <Compile Include="Validation\Validator.cs" />
+    <Compile Include="XPath\CustomXsltFunction.cs" />
+    <Compile Include="XPath\FhirNamespaceManager.cs" />
+    <Compile Include="XPath\JsonReaderExtensions.cs" />
+    <Compile Include="XPath\JsonXPathNavigator.cs" />
+    <Compile Include="XPath\JTokenExtensions.cs" />
+    <Compile Include="XPath\NavigatorState.cs" />
+    <Compile Include="XPath\XPath2Context.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Net45.csproj">
@@ -113,6 +131,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

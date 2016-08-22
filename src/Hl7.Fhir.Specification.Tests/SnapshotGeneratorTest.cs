@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
     {
         private SnapshotGenerator _generator;
-        private ArtifactResolver _testSource;
+        private IArtifactSource _testSource;
         private readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
         {
             // MarkChanges = false,
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 #endif
 
-        private StructureDefinition generateSnapshot(StructureDefinition original, ArtifactResolver source)
+        private StructureDefinition generateSnapshot(StructureDefinition original, IArtifactSource source)
         {
             // var generator = new SnapshotGenerator(source, _settings);
             if (_generator == null)
@@ -334,13 +334,13 @@ namespace Hl7.Fhir.Specification.Tests
             return expanded;
         }
 
-        private bool generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
+        private bool generateSnapshotAndCompare(StructureDefinition original, IArtifactSource source)
         {
             StructureDefinition expanded;
             return generateSnapshotAndCompare(original, source, out expanded);
         }
 
-        private bool generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source, out StructureDefinition expanded)
+        private bool generateSnapshotAndCompare(StructureDefinition original, IArtifactSource source, out StructureDefinition expanded)
         {
             expanded = generateSnapshot(original, source);
 
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Specification.Tests
             var tree = new DifferentialTreeConstructor(e).MakeTree();
             Assert.IsNotNull(tree);
 
-            var nav = new ElementNavigator(tree);
+			var nav = new ElementDefinitionNavigator(tree);
             Assert.AreEqual(10, nav.Count);
 
             Assert.IsTrue(nav.MoveToChild("A"));
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(qStructDef);
             Assert.IsNotNull(qStructDef.Snapshot);
 
-            var nav = new ElementNavigator(qStructDef.Snapshot.Element);
+			var nav = new ElementDefinitionNavigator(qStructDef.Snapshot.Element);
 
             var generator = new SnapshotGenerator(_testSource, SnapshotGeneratorSettings.Default);
 
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Specification.Tests
             else if (nameRef != null)
             {
                 // Validate name reference expansion
-                var nav = new ElementNavigator(elems);
+                var nav = new ElementDefinitionNavigator(elems);
                 Assert.IsTrue(nav.JumpToNameReference(nameRef));
                 var prefix = nav.Path;
                 Assert.IsTrue(nav.MoveToFirstChild());

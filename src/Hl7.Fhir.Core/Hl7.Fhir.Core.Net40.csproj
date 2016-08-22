@@ -51,7 +51,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hl7.FluentPath, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3-alpha1\lib\net40\Hl7.FluentPath.dll</HintPath>
+      <HintPath>..\packages\Hl7.FluentPath.0.3-alpha2\lib\net40\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -70,11 +70,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
-    <Compile Include="FluentPath\ElementNavigator.cs" />
-    <Compile Include="FluentPath\NavigatorPOCO.cs" />
+    <Compile Include="FluentPath\PocoElementNavigator.cs" />
+    <Compile Include="FluentPath\PocoNavigator.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
-    <Compile Include="Introspection\EnumUtility.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />
     <Compile Include="Introspection\FhirEnumerationAttribute.cs" />
     <Compile Include="Introspection\FhirTypeAttribute.cs" />
@@ -622,6 +621,7 @@
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Support\DateExtensions.cs" />
+    <Compile Include="Support\EnumUtility.cs" />
     <Compile Include="Support\Error.cs" />
     <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
