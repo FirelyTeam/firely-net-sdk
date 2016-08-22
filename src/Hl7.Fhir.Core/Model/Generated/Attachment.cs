@@ -375,16 +375,16 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var elem in Extension) { yield return elem; }
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
                 // Attachment elements
-                yield return ContentTypeElement;
-                yield return LanguageElement;
-                yield return DataElement;
-                yield return UrlElement;
-                yield return SizeElement;
-                yield return HashElement;
-                yield return TitleElement;
-                yield return CreationElement;
+                if (ContentTypeElement != null) yield return ContentTypeElement;
+                if (LanguageElement != null) yield return LanguageElement;
+                if (DataElement != null) yield return DataElement;
+                if (UrlElement != null) yield return UrlElement;
+                if (SizeElement != null) yield return SizeElement;
+                if (HashElement != null) yield return HashElement;
+                if (TitleElement != null) yield return TitleElement;
+                if (CreationElement != null) yield return CreationElement;
             }
         }
     

@@ -236,14 +236,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // CharacteristicComponent elements
-                    yield return Code;
-                    yield return Value;
-                    yield return ExcludeElement;
-                    yield return Period;
+                    if (Code != null) yield return Code;
+                    if (Value != null) yield return Value;
+                    if (ExcludeElement != null) yield return ExcludeElement;
+                    if (Period != null) yield return Period;
                 }
             }
             
@@ -370,13 +370,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // MemberComponent elements
-                    yield return Entity;
-                    yield return Period;
-                    yield return InactiveElement;
+                    if (Entity != null) yield return Entity;
+                    if (Period != null) yield return Period;
+                    if (InactiveElement != null) yield return InactiveElement;
                 }
             }
             
@@ -652,24 +652,24 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// Group elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return TypeElement;
-				yield return ActualElement;
-				yield return Code;
-				yield return NameElement;
-				yield return QuantityElement;
-				foreach (var elem in Characteristic) { yield return elem; }
-				foreach (var elem in Member) { yield return elem; }
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (TypeElement != null) yield return TypeElement;
+				if (ActualElement != null) yield return ActualElement;
+				if (Code != null) yield return Code;
+				if (NameElement != null) yield return NameElement;
+				if (QuantityElement != null) yield return QuantityElement;
+				foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
+				foreach (var elem in Member) { if (elem != null) yield return elem; }
             }
         }
     }

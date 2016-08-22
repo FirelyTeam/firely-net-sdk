@@ -489,18 +489,18 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var elem in Extension) { yield return elem; }
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
                 // Address elements
-                yield return UseElement;
-                yield return TypeElement;
-                yield return TextElement;
-                foreach (var elem in LineElement) { yield return elem; }
-                yield return CityElement;
-                yield return DistrictElement;
-                yield return StateElement;
-                yield return PostalCodeElement;
-                yield return CountryElement;
-                yield return Period;
+                if (UseElement != null) yield return UseElement;
+                if (TypeElement != null) yield return TypeElement;
+                if (TextElement != null) yield return TextElement;
+                foreach (var elem in LineElement) { if (elem != null) yield return elem; }
+                if (CityElement != null) yield return CityElement;
+                if (DistrictElement != null) yield return DistrictElement;
+                if (StateElement != null) yield return StateElement;
+                if (PostalCodeElement != null) yield return PostalCodeElement;
+                if (CountryElement != null) yield return CountryElement;
+                if (Period != null) yield return Period;
             }
         }
     

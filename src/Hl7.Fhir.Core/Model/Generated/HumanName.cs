@@ -376,15 +376,15 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var elem in Extension) { yield return elem; }
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
                 // HumanName elements
-                yield return UseElement;
-                yield return TextElement;
-                foreach (var elem in FamilyElement) { yield return elem; }
-                foreach (var elem in GivenElement) { yield return elem; }
-                foreach (var elem in PrefixElement) { yield return elem; }
-                foreach (var elem in SuffixElement) { yield return elem; }
-                yield return Period;
+                if (UseElement != null) yield return UseElement;
+                if (TextElement != null) yield return TextElement;
+                foreach (var elem in FamilyElement) { if (elem != null) yield return elem; }
+                foreach (var elem in GivenElement) { if (elem != null) yield return elem; }
+                foreach (var elem in PrefixElement) { if (elem != null) yield return elem; }
+                foreach (var elem in SuffixElement) { if (elem != null) yield return elem; }
+                if (Period != null) yield return Period;
             }
         }
     

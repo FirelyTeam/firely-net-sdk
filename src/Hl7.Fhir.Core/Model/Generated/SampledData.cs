@@ -325,15 +325,15 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var elem in Extension) { yield return elem; }
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
                 // SampledData elements
-                yield return Origin;
-                yield return PeriodElement;
-                yield return FactorElement;
-                yield return LowerLimitElement;
-                yield return UpperLimitElement;
-                yield return DimensionsElement;
-                yield return DataElement;
+                if (Origin != null) yield return Origin;
+                if (PeriodElement != null) yield return PeriodElement;
+                if (FactorElement != null) yield return FactorElement;
+                if (LowerLimitElement != null) yield return LowerLimitElement;
+                if (UpperLimitElement != null) yield return UpperLimitElement;
+                if (DimensionsElement != null) yield return DimensionsElement;
+                if (DataElement != null) yield return DataElement;
             }
         }
     

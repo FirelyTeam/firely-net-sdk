@@ -165,10 +165,10 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var elem in Extension) { yield return elem; }
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
                 // Reference elements
-                yield return ReferenceElement;
-                yield return DisplayElement;
+                if (ReferenceElement != null) yield return ReferenceElement;
+                if (DisplayElement != null) yield return DisplayElement;
             }
         }
     

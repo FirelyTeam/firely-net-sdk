@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                foreach (var p in Extension) { yield return p; }
+                foreach (var p in Extension) { if (p != null) yield return p; }
             }
         }
     }

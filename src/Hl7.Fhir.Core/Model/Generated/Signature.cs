@@ -238,13 +238,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var elem in Extension) { yield return elem; }
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
                 // Signature elements
-                foreach (var elem in Type) { yield return elem; }
-                yield return WhenElement;
-                yield return Who;
-                yield return ContentTypeElement;
-                yield return BlobElement;
+                foreach (var elem in Type) { if (elem != null) yield return elem; }
+                if (WhenElement != null) yield return WhenElement;
+                if (Who != null) yield return Who;
+                if (ContentTypeElement != null) yield return ContentTypeElement;
+                if (BlobElement != null) yield return BlobElement;
             }
         }
     

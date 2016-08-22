@@ -368,24 +368,24 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// AppointmentResponse elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return Appointment;
-				yield return StartElement;
-				yield return EndElement;
-				foreach (var elem in ParticipantType) { yield return elem; }
-				yield return Actor;
-				yield return ParticipantStatus_Element;
-				yield return CommentElement;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Appointment != null) yield return Appointment;
+				if (StartElement != null) yield return StartElement;
+				if (EndElement != null) yield return EndElement;
+				foreach (var elem in ParticipantType) { if (elem != null) yield return elem; }
+				if (Actor != null) yield return Actor;
+				if (ParticipantStatus_Element != null) yield return ParticipantStatus_Element;
+				if (CommentElement != null) yield return CommentElement;
             }
         }
     }

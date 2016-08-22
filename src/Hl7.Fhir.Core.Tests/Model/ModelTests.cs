@@ -317,36 +317,16 @@ namespace Hl7.Fhir.Tests.Model
         {
             var patient = new Patient();
             var children = patient.Children.ToArray();
-            Base[] expected =
-            {
-                // ===== Resource elements =====
-                patient.IdElement, patient.Meta, patient.ImplicitRulesElement, patient.LanguageElement,
-                
-                // ===== DomainResource elements =====
-                patient.Text,
-                // patient.Contained = empty collection
-                // patient.Extension = empty collection
-                // patient.ModifierExtension = empty collection
+            Base[] expected = { };
+            Assert.IsTrue(expected.SequenceEqual(children));
+        }
 
-                // ===== Patient elements =====
-                // patient.Identifier = empty collection
-                patient.ActiveElement,
-                // patient.Name = empty collection
-                // patient.Telecom = empty collection
-                patient.GenderElement,
-                patient.BirthDateElement,
-                patient.Deceased,
-                // patient.Address = empty collection
-                patient.MaritalStatus,
-                patient.MultipleBirth,
-                // patient.Photo = empty collection
-                // patient.Contact = empty collection
-                patient.Animal,
-                // patient.Communication = empty collection
-                // patient.CareProvider = empty collection
-                patient.ManagingOrganization
-                // patient.Link = empty collection
-            };
+        [TestMethod]
+        public void TestChildren_EmptyTiming()
+        {
+            var timing = new Timing();
+            var children = timing.Children.ToArray();
+            Base[] expected = { };
             Assert.IsTrue(expected.SequenceEqual(children));
         }
 
@@ -381,32 +361,32 @@ namespace Hl7.Fhir.Tests.Model
             Base[] expected =
             {
                 // ===== Resource elements =====
-                patient.IdElement, patient.Meta, patient.ImplicitRulesElement, patient.LanguageElement,
+                // patient.IdElement, patient.Meta, patient.ImplicitRulesElement, patient.LanguageElement,
                 
                 // ===== DomainResource elements =====
-                patient.Text,
+                // patient.Text,
                 // patient.Contained = empty collection
                 // patient.Extension = empty collection
                 // patient.ModifierExtension = empty collection
 
                 // ===== Patient elements =====
                 // patient.Identifier = empty collection
-                patient.ActiveElement,
+                // patient.ActiveElement,
                 patient.Name[0],
                 patient.Name[1],
                 // patient.Telecom = empty collection
-                patient.GenderElement,
-                patient.BirthDateElement,
-                patient.Deceased,
+                // patient.GenderElement,
+                // patient.BirthDateElement,
+                // patient.Deceased,
                 patient.Address[0],
-                patient.MaritalStatus,
-                patient.MultipleBirth,
+                // patient.MaritalStatus,
+                // patient.MultipleBirth,
                 // patient.Photo = empty collection
                 // patient.Contact = empty collection
-                patient.Animal,
+                // patient.Animal,
                 // patient.Communication = empty collection
                 // patient.CareProvider = empty collection
-                patient.ManagingOrganization
+                // patient.ManagingOrganization
                 // patient.Link = empty collection
             };
             Assert.IsTrue(expected.SequenceEqual(children));
@@ -419,11 +399,11 @@ namespace Hl7.Fhir.Tests.Model
                 // name.Extension = empty collection
 
                 // ===== HumanName elements =====
-                name.UseElement,
-                name.TextElement,
+                // name.UseElement,
+                // name.TextElement,
                 name.FamilyElement[0],
                 name.GivenElement[0],
-                name.Period
+                // name.Period
             };
             Assert.IsTrue(expected.SequenceEqual(children));
 
@@ -435,34 +415,16 @@ namespace Hl7.Fhir.Tests.Model
                 // name.Extension = empty collection
 
                 // ===== Address elements =====
-                address.UseElement,
-                address.TypeElement,
-                address.TextElement,
+                // address.UseElement,
+                // address.TypeElement,
+                // address.TextElement,
                 address.LineElement[0],
                 address.CityElement,
-                address.DistrictElement,
-                address.StateElement,
-                address.PostalCodeElement,
-                address.CountryElement,
-                address.Period
-            };
-            Assert.IsTrue(expected.SequenceEqual(children));
-        }
-
-        [TestMethod]
-        public void TestChildren_EmptyTiming()
-        {
-            var timing = new Timing();
-            var children = timing.Children.ToArray();
-            Base[] expected =
-            {
-                // ===== Element elements =====
-                // timing.Extension = empty collection
-
-                // ===== Timing elements =====
-                // timing.EventElement = empty collection
-                timing.Repeat,
-                timing.Code
+                // address.DistrictElement,
+                // address.StateElement,
+                // address.PostalCodeElement,
+                // address.CountryElement,
+                // address.Period
             };
             Assert.IsTrue(expected.SequenceEqual(children));
         }

@@ -304,19 +304,19 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // DosageComponent elements
-                    yield return TextElement;
-                    yield return Timing;
-                    yield return AsNeeded;
-                    yield return Site;
-                    yield return Route;
-                    yield return Method;
-                    yield return Quantity;
-                    yield return Rate;
-                    yield return MaxDosePerPeriod;
+                    if (TextElement != null) yield return TextElement;
+                    if (Timing != null) yield return Timing;
+                    if (AsNeeded != null) yield return AsNeeded;
+                    if (Site != null) yield return Site;
+                    if (Route != null) yield return Route;
+                    if (Method != null) yield return Method;
+                    if (Quantity != null) yield return Quantity;
+                    if (Rate != null) yield return Rate;
+                    if (MaxDosePerPeriod != null) yield return MaxDosePerPeriod;
                 }
             }
             
@@ -690,29 +690,29 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// MedicationStatement elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return Patient;
-				yield return InformationSource;
-				yield return DateAssertedElement;
-				yield return StatusElement;
-				yield return WasNotTakenElement;
-				foreach (var elem in ReasonNotTaken) { yield return elem; }
-				yield return ReasonForUse;
-				yield return Effective;
-				yield return NoteElement;
-				foreach (var elem in SupportingInformation) { yield return elem; }
-				yield return Medication;
-				foreach (var elem in Dosage) { yield return elem; }
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Patient != null) yield return Patient;
+				if (InformationSource != null) yield return InformationSource;
+				if (DateAssertedElement != null) yield return DateAssertedElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (WasNotTakenElement != null) yield return WasNotTakenElement;
+				foreach (var elem in ReasonNotTaken) { if (elem != null) yield return elem; }
+				if (ReasonForUse != null) yield return ReasonForUse;
+				if (Effective != null) yield return Effective;
+				if (NoteElement != null) yield return NoteElement;
+				foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
+				if (Medication != null) yield return Medication;
+				foreach (var elem in Dosage) { if (elem != null) yield return elem; }
             }
         }
     }

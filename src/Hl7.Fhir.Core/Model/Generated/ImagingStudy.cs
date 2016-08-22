@@ -450,21 +450,21 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // SeriesComponent elements
-                    yield return NumberElement;
-                    yield return Modality;
-                    yield return UidElement;
-                    yield return DescriptionElement;
-                    yield return NumberOfInstancesElement;
-                    yield return AvailabilityElement;
-                    yield return UrlElement;
-                    yield return BodySite;
-                    yield return Laterality;
-                    yield return StartedElement;
-                    foreach (var elem in Instance) { yield return elem; }
+                    if (NumberElement != null) yield return NumberElement;
+                    if (Modality != null) yield return Modality;
+                    if (UidElement != null) yield return UidElement;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (NumberOfInstancesElement != null) yield return NumberOfInstancesElement;
+                    if (AvailabilityElement != null) yield return AvailabilityElement;
+                    if (UrlElement != null) yield return UrlElement;
+                    if (BodySite != null) yield return BodySite;
+                    if (Laterality != null) yield return Laterality;
+                    if (StartedElement != null) yield return StartedElement;
+                    foreach (var elem in Instance) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -716,16 +716,16 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // InstanceComponent elements
-                    yield return NumberElement;
-                    yield return UidElement;
-                    yield return SopClassElement;
-                    yield return TypeElement;
-                    yield return TitleElement;
-                    foreach (var elem in Content) { yield return elem; }
+                    if (NumberElement != null) yield return NumberElement;
+                    if (UidElement != null) yield return UidElement;
+                    if (SopClassElement != null) yield return SopClassElement;
+                    if (TypeElement != null) yield return TypeElement;
+                    if (TitleElement != null) yield return TitleElement;
+                    foreach (var elem in Content) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -1185,32 +1185,32 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// ImagingStudy elements
-				yield return StartedElement;
-				yield return Patient;
-				yield return UidElement;
-				yield return Accession;
-				foreach (var elem in Identifier) { yield return elem; }
-				foreach (var elem in Order) { yield return elem; }
-				foreach (var elem in ModalityList) { yield return elem; }
-				yield return Referrer;
-				yield return AvailabilityElement;
-				yield return UrlElement;
-				yield return NumberOfSeriesElement;
-				yield return NumberOfInstancesElement;
-				foreach (var elem in Procedure) { yield return elem; }
-				yield return Interpreter;
-				yield return DescriptionElement;
-				foreach (var elem in Series) { yield return elem; }
+				if (StartedElement != null) yield return StartedElement;
+				if (Patient != null) yield return Patient;
+				if (UidElement != null) yield return UidElement;
+				if (Accession != null) yield return Accession;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				foreach (var elem in Order) { if (elem != null) yield return elem; }
+				foreach (var elem in ModalityList) { if (elem != null) yield return elem; }
+				if (Referrer != null) yield return Referrer;
+				if (AvailabilityElement != null) yield return AvailabilityElement;
+				if (UrlElement != null) yield return UrlElement;
+				if (NumberOfSeriesElement != null) yield return NumberOfSeriesElement;
+				if (NumberOfInstancesElement != null) yield return NumberOfInstancesElement;
+				foreach (var elem in Procedure) { if (elem != null) yield return elem; }
+				if (Interpreter != null) yield return Interpreter;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in Series) { if (elem != null) yield return elem; }
             }
         }
     }

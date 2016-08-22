@@ -189,12 +189,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ServiceTypeComponent elements
-                    yield return Type;
-                    foreach (var elem in Specialty) { yield return elem; }
+                    if (Type != null) yield return Type;
+                    foreach (var elem in Specialty) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -393,14 +393,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // AvailableTimeComponent elements
-                    foreach (var elem in DaysOfWeek_Element) { yield return elem; }
-                    yield return AllDayElement;
-                    yield return AvailableStartTimeElement;
-                    yield return AvailableEndTimeElement;
+                    foreach (var elem in DaysOfWeek_Element) { if (elem != null) yield return elem; }
+                    if (AllDayElement != null) yield return AllDayElement;
+                    if (AvailableStartTimeElement != null) yield return AvailableStartTimeElement;
+                    if (AvailableEndTimeElement != null) yield return AvailableEndTimeElement;
                 }
             }
             
@@ -510,12 +510,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // NotAvailableComponent elements
-                    yield return DescriptionElement;
-                    yield return During;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (During != null) yield return During;
                 }
             }
             
@@ -1090,38 +1090,38 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// HealthcareService elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return ProvidedBy;
-				yield return ServiceCategory;
-				foreach (var elem in ServiceType) { yield return elem; }
-				yield return Location;
-				yield return ServiceNameElement;
-				yield return CommentElement;
-				yield return ExtraDetailsElement;
-				yield return Photo;
-				foreach (var elem in Telecom) { yield return elem; }
-				foreach (var elem in CoverageArea) { yield return elem; }
-				foreach (var elem in ServiceProvisionCode) { yield return elem; }
-				yield return Eligibility;
-				yield return EligibilityNoteElement;
-				foreach (var elem in ProgramNameElement) { yield return elem; }
-				foreach (var elem in Characteristic) { yield return elem; }
-				foreach (var elem in ReferralMethod) { yield return elem; }
-				yield return PublicKeyElement;
-				yield return AppointmentRequiredElement;
-				foreach (var elem in AvailableTime) { yield return elem; }
-				foreach (var elem in NotAvailable) { yield return elem; }
-				yield return AvailabilityExceptionsElement;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (ProvidedBy != null) yield return ProvidedBy;
+				if (ServiceCategory != null) yield return ServiceCategory;
+				foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
+				if (Location != null) yield return Location;
+				if (ServiceNameElement != null) yield return ServiceNameElement;
+				if (CommentElement != null) yield return CommentElement;
+				if (ExtraDetailsElement != null) yield return ExtraDetailsElement;
+				if (Photo != null) yield return Photo;
+				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+				foreach (var elem in CoverageArea) { if (elem != null) yield return elem; }
+				foreach (var elem in ServiceProvisionCode) { if (elem != null) yield return elem; }
+				if (Eligibility != null) yield return Eligibility;
+				if (EligibilityNoteElement != null) yield return EligibilityNoteElement;
+				foreach (var elem in ProgramNameElement) { if (elem != null) yield return elem; }
+				foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
+				foreach (var elem in ReferralMethod) { if (elem != null) yield return elem; }
+				if (PublicKeyElement != null) yield return PublicKeyElement;
+				if (AppointmentRequiredElement != null) yield return AppointmentRequiredElement;
+				foreach (var elem in AvailableTime) { if (elem != null) yield return elem; }
+				foreach (var elem in NotAvailable) { if (elem != null) yield return elem; }
+				if (AvailabilityExceptionsElement != null) yield return AvailabilityExceptionsElement;
             }
         }
     }

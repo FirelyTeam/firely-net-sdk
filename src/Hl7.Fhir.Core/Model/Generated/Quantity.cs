@@ -303,13 +303,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var elem in Extension) { yield return elem; }
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
                 // Quantity elements
-                yield return ValueElement;
-                yield return ComparatorElement;
-                yield return UnitElement;
-                yield return SystemElement;
-                yield return CodeElement;
+                if (ValueElement != null) yield return ValueElement;
+                if (ComparatorElement != null) yield return ComparatorElement;
+                if (UnitElement != null) yield return UnitElement;
+                if (SystemElement != null) yield return SystemElement;
+                if (CodeElement != null) yield return CodeElement;
             }
         }
     

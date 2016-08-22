@@ -223,22 +223,22 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// BodySite elements
-				yield return Patient;
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return Code;
-				foreach (var elem in Modifier) { yield return elem; }
-				yield return DescriptionElement;
-				foreach (var elem in Image) { yield return elem; }
+				if (Patient != null) yield return Patient;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Code != null) yield return Code;
+				foreach (var elem in Modifier) { if (elem != null) yield return elem; }
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in Image) { if (elem != null) yield return elem; }
             }
         }
     }

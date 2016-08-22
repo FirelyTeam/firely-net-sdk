@@ -495,18 +495,18 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ReactionComponent elements
-                    yield return Substance;
-                    yield return CertaintyElement;
-                    foreach (var elem in Manifestation) { yield return elem; }
-                    yield return DescriptionElement;
-                    yield return OnsetElement;
-                    yield return SeverityElement;
-                    yield return ExposureRoute;
-                    yield return Note;
+                    if (Substance != null) yield return Substance;
+                    if (CertaintyElement != null) yield return CertaintyElement;
+                    foreach (var elem in Manifestation) { if (elem != null) yield return elem; }
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (OnsetElement != null) yield return OnsetElement;
+                    if (SeverityElement != null) yield return SeverityElement;
+                    if (ExposureRoute != null) yield return ExposureRoute;
+                    if (Note != null) yield return Note;
                 }
             }
             
@@ -927,30 +927,30 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// AllergyIntolerance elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return OnsetElement;
-				yield return RecordedDateElement;
-				yield return Recorder;
-				yield return Patient;
-				yield return Reporter;
-				yield return Substance;
-				yield return StatusElement;
-				yield return CriticalityElement;
-				yield return TypeElement;
-				yield return CategoryElement;
-				yield return LastOccurenceElement;
-				yield return Note;
-				foreach (var elem in Reaction) { yield return elem; }
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (OnsetElement != null) yield return OnsetElement;
+				if (RecordedDateElement != null) yield return RecordedDateElement;
+				if (Recorder != null) yield return Recorder;
+				if (Patient != null) yield return Patient;
+				if (Reporter != null) yield return Reporter;
+				if (Substance != null) yield return Substance;
+				if (StatusElement != null) yield return StatusElement;
+				if (CriticalityElement != null) yield return CriticalityElement;
+				if (TypeElement != null) yield return TypeElement;
+				if (CategoryElement != null) yield return CategoryElement;
+				if (LastOccurenceElement != null) yield return LastOccurenceElement;
+				if (Note != null) yield return Note;
+				foreach (var elem in Reaction) { if (elem != null) yield return elem; }
             }
         }
     }

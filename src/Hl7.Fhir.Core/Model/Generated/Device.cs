@@ -564,32 +564,32 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// Device elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return Type;
-				foreach (var elem in Note) { yield return elem; }
-				yield return StatusElement;
-				yield return ManufacturerElement;
-				yield return ModelElement;
-				yield return VersionElement;
-				yield return ManufactureDateElement;
-				yield return ExpiryElement;
-				yield return UdiElement;
-				yield return LotNumberElement;
-				yield return Owner;
-				yield return Location;
-				yield return Patient;
-				foreach (var elem in Contact) { yield return elem; }
-				yield return UrlElement;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Type != null) yield return Type;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (ManufacturerElement != null) yield return ManufacturerElement;
+				if (ModelElement != null) yield return ModelElement;
+				if (VersionElement != null) yield return VersionElement;
+				if (ManufactureDateElement != null) yield return ManufactureDateElement;
+				if (ExpiryElement != null) yield return ExpiryElement;
+				if (UdiElement != null) yield return UdiElement;
+				if (LotNumberElement != null) yield return LotNumberElement;
+				if (Owner != null) yield return Owner;
+				if (Location != null) yield return Location;
+				if (Patient != null) yield return Patient;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (UrlElement != null) yield return UrlElement;
             }
         }
     }

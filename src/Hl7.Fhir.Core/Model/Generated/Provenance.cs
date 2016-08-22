@@ -204,14 +204,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // AgentComponent elements
-                    yield return Role;
-                    yield return Actor;
-                    yield return UserId;
-                    foreach (var elem in RelatedAgent) { yield return elem; }
+                    if (Role != null) yield return Role;
+                    if (Actor != null) yield return Actor;
+                    if (UserId != null) yield return UserId;
+                    foreach (var elem in RelatedAgent) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -322,12 +322,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // RelatedAgentComponent elements
-                    yield return Type;
-                    yield return TargetElement;
+                    if (Type != null) yield return Type;
+                    if (TargetElement != null) yield return TargetElement;
                 }
             }
             
@@ -525,15 +525,15 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // EntityComponent elements
-                    yield return RoleElement;
-                    yield return Type;
-                    yield return ReferenceElement;
-                    yield return DisplayElement;
-                    yield return Agent;
+                    if (RoleElement != null) yield return RoleElement;
+                    if (Type != null) yield return Type;
+                    if (ReferenceElement != null) yield return ReferenceElement;
+                    if (DisplayElement != null) yield return DisplayElement;
+                    if (Agent != null) yield return Agent;
                 }
             }
             
@@ -797,26 +797,26 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// Provenance elements
-				foreach (var elem in Target) { yield return elem; }
-				yield return Period;
-				yield return RecordedElement;
-				foreach (var elem in Reason) { yield return elem; }
-				yield return Activity;
-				yield return Location;
-				foreach (var elem in PolicyElement) { yield return elem; }
-				foreach (var elem in Agent) { yield return elem; }
-				foreach (var elem in Entity) { yield return elem; }
-				foreach (var elem in Signature) { yield return elem; }
+				foreach (var elem in Target) { if (elem != null) yield return elem; }
+				if (Period != null) yield return Period;
+				if (RecordedElement != null) yield return RecordedElement;
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
+				if (Activity != null) yield return Activity;
+				if (Location != null) yield return Location;
+				foreach (var elem in PolicyElement) { if (elem != null) yield return elem; }
+				foreach (var elem in Agent) { if (elem != null) yield return elem; }
+				foreach (var elem in Entity) { if (elem != null) yield return elem; }
+				foreach (var elem in Signature) { if (elem != null) yield return elem; }
             }
         }
     }

@@ -246,13 +246,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ProductionSpecificationComponent elements
-                    yield return SpecType;
-                    yield return ComponentId;
-                    yield return ProductionSpecElement;
+                    if (SpecType != null) yield return SpecType;
+                    if (ComponentId != null) yield return ComponentId;
+                    if (ProductionSpecElement != null) yield return ProductionSpecElement;
                 }
             }
             
@@ -514,26 +514,26 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// DeviceComponent elements
-				yield return Type;
-				yield return Identifier;
-				yield return LastSystemChangeElement;
-				yield return Source;
-				yield return Parent;
-				foreach (var elem in OperationalStatus) { yield return elem; }
-				yield return ParameterGroup;
-				yield return MeasurementPrincipleElement;
-				foreach (var elem in ProductionSpecification) { yield return elem; }
-				yield return LanguageCode;
+				if (Type != null) yield return Type;
+				if (Identifier != null) yield return Identifier;
+				if (LastSystemChangeElement != null) yield return LastSystemChangeElement;
+				if (Source != null) yield return Source;
+				if (Parent != null) yield return Parent;
+				foreach (var elem in OperationalStatus) { if (elem != null) yield return elem; }
+				if (ParameterGroup != null) yield return ParameterGroup;
+				if (MeasurementPrincipleElement != null) yield return MeasurementPrincipleElement;
+				foreach (var elem in ProductionSpecification) { if (elem != null) yield return elem; }
+				if (LanguageCode != null) yield return LanguageCode;
             }
         }
     }

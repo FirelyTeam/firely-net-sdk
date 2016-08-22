@@ -202,12 +202,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // StatusHistoryComponent elements
-                    yield return StatusElement;
-                    yield return Period;
+                    if (StatusElement != null) yield return StatusElement;
+                    if (Period != null) yield return Period;
                 }
             }
             
@@ -315,13 +315,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // CareTeamComponent elements
-                    foreach (var elem in Role) { yield return elem; }
-                    yield return Period;
-                    yield return Member;
+                    foreach (var elem in Role) { if (elem != null) yield return elem; }
+                    if (Period != null) yield return Period;
+                    if (Member != null) yield return Member;
                 }
             }
             
@@ -586,27 +586,27 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// EpisodeOfCare elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return StatusElement;
-				foreach (var elem in StatusHistory) { yield return elem; }
-				foreach (var elem in Type) { yield return elem; }
-				foreach (var elem in Condition) { yield return elem; }
-				yield return Patient;
-				yield return ManagingOrganization;
-				yield return Period;
-				foreach (var elem in ReferralRequest) { yield return elem; }
-				yield return CareManager;
-				foreach (var elem in CareTeam) { yield return elem; }
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				foreach (var elem in StatusHistory) { if (elem != null) yield return elem; }
+				foreach (var elem in Type) { if (elem != null) yield return elem; }
+				foreach (var elem in Condition) { if (elem != null) yield return elem; }
+				if (Patient != null) yield return Patient;
+				if (ManagingOrganization != null) yield return ManagingOrganization;
+				if (Period != null) yield return Period;
+				foreach (var elem in ReferralRequest) { if (elem != null) yield return elem; }
+				if (CareManager != null) yield return CareManager;
+				foreach (var elem in CareTeam) { if (elem != null) yield return elem; }
             }
         }
     }

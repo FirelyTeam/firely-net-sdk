@@ -191,11 +191,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // PayloadComponent elements
-                    yield return Content;
+                    if (Content != null) yield return Content;
                 }
             }
             
@@ -525,30 +525,30 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// CommunicationRequest elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return Category;
-				yield return Sender;
-				foreach (var elem in Recipient) { yield return elem; }
-				foreach (var elem in Payload) { yield return elem; }
-				foreach (var elem in Medium) { yield return elem; }
-				yield return Requester;
-				yield return StatusElement;
-				yield return Encounter;
-				yield return Scheduled;
-				foreach (var elem in Reason) { yield return elem; }
-				yield return RequestedOnElement;
-				yield return Subject;
-				yield return Priority;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Category != null) yield return Category;
+				if (Sender != null) yield return Sender;
+				foreach (var elem in Recipient) { if (elem != null) yield return elem; }
+				foreach (var elem in Payload) { if (elem != null) yield return elem; }
+				foreach (var elem in Medium) { if (elem != null) yield return elem; }
+				if (Requester != null) yield return Requester;
+				if (StatusElement != null) yield return StatusElement;
+				if (Encounter != null) yield return Encounter;
+				if (Scheduled != null) yield return Scheduled;
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
+				if (RequestedOnElement != null) yield return RequestedOnElement;
+				if (Subject != null) yield return Subject;
+				if (Priority != null) yield return Priority;
             }
         }
     }

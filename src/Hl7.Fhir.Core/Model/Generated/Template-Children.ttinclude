@@ -45,10 +45,11 @@
 		{
 			YieldChildren(docBaseTypes, backboneElemStructDefElem, nsR, enums, indent);
 		}
-		// DEBUGGING
 		else
 		{
-			WriteLine("{0}// Error! Missing base structure definition for type '{1}'", indent, componentType);
+			// DEBUGGING
+			// WriteLine("{0}// Error! Missing base structure definition for type '{1}'", indent, componentType);
+			throw new InvalidOperationException("Error! Missing base structure definition for type " + componentType);
 		}
 
 		WriteLine("{0}// {1} elements", indent, componentName);
@@ -65,11 +66,11 @@
 			else if (pd.isXmlAttribute) { }
 			else if (pd.IsMultiCard())
 			{
-				WriteLine("{0}foreach (var elem in {1}) {{ yield return elem; }}", indent, pd.Name);
+				WriteLine("{0}foreach (var elem in {1}) {{ if (elem != null) yield return elem; }}", indent, pd.Name);
 			}
 			else
 			{
-				WriteLine("{0}yield return {1};", indent, pd.Name);
+				WriteLine("{0}if ({1} != null) yield return {1};", indent, pd.Name);
 			}
 	}
 #>

@@ -479,15 +479,15 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // IssueComponent elements
-                    yield return SeverityElement;
-                    yield return CodeElement;
-                    yield return Details;
-                    yield return DiagnosticsElement;
-                    foreach (var elem in LocationElement) { yield return elem; }
+                    if (SeverityElement != null) yield return SeverityElement;
+                    if (CodeElement != null) yield return CodeElement;
+                    if (Details != null) yield return Details;
+                    if (DiagnosticsElement != null) yield return DiagnosticsElement;
+                    foreach (var elem in LocationElement) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -561,17 +561,17 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// OperationOutcome elements
-				foreach (var elem in Issue) { yield return elem; }
+				foreach (var elem in Issue) { if (elem != null) yield return elem; }
             }
         }
     }

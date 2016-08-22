@@ -175,13 +175,13 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// Binary elements
-				yield return ContentTypeElement;
-				yield return ContentElement;
+				if (ContentTypeElement != null) yield return ContentTypeElement;
+				if (ContentElement != null) yield return ContentElement;
             }
         }
     }

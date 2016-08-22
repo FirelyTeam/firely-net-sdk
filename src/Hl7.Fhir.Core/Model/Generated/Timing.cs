@@ -612,19 +612,19 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // RepeatComponent elements
-                    yield return Bounds;
-                    yield return CountElement;
-                    yield return DurationElement;
-                    yield return DurationMaxElement;
-                    yield return DurationUnitsElement;
-                    yield return FrequencyElement;
-                    yield return FrequencyMaxElement;
-                    yield return PeriodElement;
-                    yield return PeriodMaxElement;
-                    yield return PeriodUnitsElement;
-                    yield return WhenElement;
+                    if (Bounds != null) yield return Bounds;
+                    if (CountElement != null) yield return CountElement;
+                    if (DurationElement != null) yield return DurationElement;
+                    if (DurationMaxElement != null) yield return DurationMaxElement;
+                    if (DurationUnitsElement != null) yield return DurationUnitsElement;
+                    if (FrequencyElement != null) yield return FrequencyElement;
+                    if (FrequencyMaxElement != null) yield return FrequencyMaxElement;
+                    if (PeriodElement != null) yield return PeriodElement;
+                    if (PeriodMaxElement != null) yield return PeriodMaxElement;
+                    if (PeriodUnitsElement != null) yield return PeriodUnitsElement;
+                    if (WhenElement != null) yield return WhenElement;
                 }
             }
             
@@ -743,11 +743,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var elem in Extension) { yield return elem; }
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
                 // Timing elements
-                foreach (var elem in EventElement) { yield return elem; }
-                yield return Repeat;
-                yield return Code;
+                foreach (var elem in EventElement) { if (elem != null) yield return elem; }
+                if (Repeat != null) yield return Repeat;
+                if (Code != null) yield return Code;
             }
         }
     

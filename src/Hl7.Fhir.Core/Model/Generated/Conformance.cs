@@ -552,12 +552,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ContactComponent elements
-                    yield return NameElement;
-                    foreach (var elem in Telecom) { yield return elem; }
+                    if (NameElement != null) yield return NameElement;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -721,13 +721,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // SoftwareComponent elements
-                    yield return NameElement;
-                    yield return VersionElement;
-                    yield return ReleaseDateElement;
+                    if (NameElement != null) yield return NameElement;
+                    if (VersionElement != null) yield return VersionElement;
+                    if (ReleaseDateElement != null) yield return ReleaseDateElement;
                 }
             }
             
@@ -856,12 +856,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ImplementationComponent elements
-                    yield return DescriptionElement;
-                    yield return UrlElement;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (UrlElement != null) yield return UrlElement;
                 }
             }
             
@@ -1145,19 +1145,19 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // RestComponent elements
-                    yield return ModeElement;
-                    yield return DocumentationElement;
-                    yield return Security;
-                    foreach (var elem in Resource) { yield return elem; }
-                    foreach (var elem in Interaction) { yield return elem; }
-                    yield return TransactionMode_Element;
-                    foreach (var elem in SearchParam) { yield return elem; }
-                    foreach (var elem in Operation) { yield return elem; }
-                    foreach (var elem in CompartmentElement) { yield return elem; }
+                    if (ModeElement != null) yield return ModeElement;
+                    if (DocumentationElement != null) yield return DocumentationElement;
+                    if (Security != null) yield return Security;
+                    foreach (var elem in Resource) { if (elem != null) yield return elem; }
+                    foreach (var elem in Interaction) { if (elem != null) yield return elem; }
+                    if (TransactionMode_Element != null) yield return TransactionMode_Element;
+                    foreach (var elem in SearchParam) { if (elem != null) yield return elem; }
+                    foreach (var elem in Operation) { if (elem != null) yield return elem; }
+                    foreach (var elem in CompartmentElement) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -1319,14 +1319,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // SecurityComponent elements
-                    yield return CorsElement;
-                    foreach (var elem in Service) { yield return elem; }
-                    yield return DescriptionElement;
-                    foreach (var elem in Certificate) { yield return elem; }
+                    if (CorsElement != null) yield return CorsElement;
+                    foreach (var elem in Service) { if (elem != null) yield return elem; }
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    foreach (var elem in Certificate) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -1454,12 +1454,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // CertificateComponent elements
-                    yield return TypeElement;
-                    yield return BlobElement;
+                    if (TypeElement != null) yield return TypeElement;
+                    if (BlobElement != null) yield return BlobElement;
                 }
             }
             
@@ -1886,22 +1886,22 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ResourceComponent elements
-                    yield return TypeElement;
-                    yield return Profile;
-                    foreach (var elem in Interaction) { yield return elem; }
-                    yield return VersioningElement;
-                    yield return ReadHistoryElement;
-                    yield return UpdateCreateElement;
-                    yield return ConditionalCreateElement;
-                    yield return ConditionalUpdateElement;
-                    yield return ConditionalDeleteElement;
-                    foreach (var elem in SearchIncludeElement) { yield return elem; }
-                    foreach (var elem in SearchRevIncludeElement) { yield return elem; }
-                    foreach (var elem in SearchParam) { yield return elem; }
+                    if (TypeElement != null) yield return TypeElement;
+                    if (Profile != null) yield return Profile;
+                    foreach (var elem in Interaction) { if (elem != null) yield return elem; }
+                    if (VersioningElement != null) yield return VersioningElement;
+                    if (ReadHistoryElement != null) yield return ReadHistoryElement;
+                    if (UpdateCreateElement != null) yield return UpdateCreateElement;
+                    if (ConditionalCreateElement != null) yield return ConditionalCreateElement;
+                    if (ConditionalUpdateElement != null) yield return ConditionalUpdateElement;
+                    if (ConditionalDeleteElement != null) yield return ConditionalDeleteElement;
+                    foreach (var elem in SearchIncludeElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in SearchRevIncludeElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in SearchParam) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -2030,12 +2030,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ResourceInteractionComponent elements
-                    yield return CodeElement;
-                    yield return DocumentationElement;
+                    if (CodeElement != null) yield return CodeElement;
+                    if (DocumentationElement != null) yield return DocumentationElement;
                 }
             }
             
@@ -2343,17 +2343,17 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // SearchParamComponent elements
-                    yield return NameElement;
-                    yield return DefinitionElement;
-                    yield return TypeElement;
-                    yield return DocumentationElement;
-                    foreach (var elem in TargetElement) { yield return elem; }
-                    foreach (var elem in ModifierElement) { yield return elem; }
-                    foreach (var elem in ChainElement) { yield return elem; }
+                    if (NameElement != null) yield return NameElement;
+                    if (DefinitionElement != null) yield return DefinitionElement;
+                    if (TypeElement != null) yield return TypeElement;
+                    if (DocumentationElement != null) yield return DocumentationElement;
+                    foreach (var elem in TargetElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in ModifierElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in ChainElement) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -2482,12 +2482,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // SystemInteractionComponent elements
-                    yield return CodeElement;
-                    yield return DocumentationElement;
+                    if (CodeElement != null) yield return CodeElement;
+                    if (DocumentationElement != null) yield return DocumentationElement;
                 }
             }
             
@@ -2599,12 +2599,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // OperationComponent elements
-                    yield return NameElement;
-                    yield return Definition;
+                    if (NameElement != null) yield return NameElement;
+                    if (Definition != null) yield return Definition;
                 }
             }
             
@@ -2766,14 +2766,14 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // MessagingComponent elements
-                    foreach (var elem in Endpoint) { yield return elem; }
-                    yield return ReliableCacheElement;
-                    yield return DocumentationElement;
-                    foreach (var elem in Event) { yield return elem; }
+                    foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
+                    if (ReliableCacheElement != null) yield return ReliableCacheElement;
+                    if (DocumentationElement != null) yield return DocumentationElement;
+                    foreach (var elem in Event) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -2884,12 +2884,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // EndpointComponent elements
-                    yield return Protocol;
-                    yield return AddressElement;
+                    if (Protocol != null) yield return Protocol;
+                    if (AddressElement != null) yield return AddressElement;
                 }
             }
             
@@ -3142,17 +3142,17 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // EventComponent elements
-                    yield return Code;
-                    yield return CategoryElement;
-                    yield return ModeElement;
-                    yield return FocusElement;
-                    yield return Request;
-                    yield return Response;
-                    yield return DocumentationElement;
+                    if (Code != null) yield return Code;
+                    if (CategoryElement != null) yield return CategoryElement;
+                    if (ModeElement != null) yield return ModeElement;
+                    if (FocusElement != null) yield return FocusElement;
+                    if (Request != null) yield return Request;
+                    if (Response != null) yield return Response;
+                    if (DocumentationElement != null) yield return DocumentationElement;
                 }
             }
             
@@ -3299,13 +3299,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // DocumentComponent elements
-                    yield return ModeElement;
-                    yield return DocumentationElement;
-                    yield return Profile;
+                    if (ModeElement != null) yield return ModeElement;
+                    if (DocumentationElement != null) yield return DocumentationElement;
+                    if (Profile != null) yield return Profile;
                 }
             }
             
@@ -4075,37 +4075,37 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// Conformance elements
-				yield return UrlElement;
-				yield return VersionElement;
-				yield return NameElement;
-				yield return StatusElement;
-				yield return ExperimentalElement;
-				yield return PublisherElement;
-				foreach (var elem in Contact) { yield return elem; }
-				yield return DateElement;
-				yield return DescriptionElement;
-				yield return RequirementsElement;
-				yield return CopyrightElement;
-				yield return KindElement;
-				yield return Software;
-				yield return Implementation;
-				yield return FhirVersionElement;
-				yield return AcceptUnknownElement;
-				foreach (var elem in FormatElement) { yield return elem; }
-				foreach (var elem in Profile) { yield return elem; }
-				foreach (var elem in Rest) { yield return elem; }
-				foreach (var elem in Messaging) { yield return elem; }
-				foreach (var elem in Document) { yield return elem; }
+				if (UrlElement != null) yield return UrlElement;
+				if (VersionElement != null) yield return VersionElement;
+				if (NameElement != null) yield return NameElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (ExperimentalElement != null) yield return ExperimentalElement;
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (DateElement != null) yield return DateElement;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (RequirementsElement != null) yield return RequirementsElement;
+				if (CopyrightElement != null) yield return CopyrightElement;
+				if (KindElement != null) yield return KindElement;
+				if (Software != null) yield return Software;
+				if (Implementation != null) yield return Implementation;
+				if (FhirVersionElement != null) yield return FhirVersionElement;
+				if (AcceptUnknownElement != null) yield return AcceptUnknownElement;
+				foreach (var elem in FormatElement) { if (elem != null) yield return elem; }
+				foreach (var elem in Profile) { if (elem != null) yield return elem; }
+				foreach (var elem in Rest) { if (elem != null) yield return elem; }
+				foreach (var elem in Messaging) { if (elem != null) yield return elem; }
+				foreach (var elem in Document) { if (elem != null) yield return elem; }
             }
         }
     }

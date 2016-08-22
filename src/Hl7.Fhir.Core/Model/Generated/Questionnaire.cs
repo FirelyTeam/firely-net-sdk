@@ -456,18 +456,18 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // GroupComponent elements
-                    yield return LinkIdElement;
-                    yield return TitleElement;
-                    foreach (var elem in Concept) { yield return elem; }
-                    yield return TextElement;
-                    yield return RequiredElement;
-                    yield return RepeatsElement;
-                    foreach (var elem in Group) { yield return elem; }
-                    foreach (var elem in Question) { yield return elem; }
+                    if (LinkIdElement != null) yield return LinkIdElement;
+                    if (TitleElement != null) yield return TitleElement;
+                    foreach (var elem in Concept) { if (elem != null) yield return elem; }
+                    if (TextElement != null) yield return TextElement;
+                    if (RequiredElement != null) yield return RequiredElement;
+                    if (RepeatsElement != null) yield return RepeatsElement;
+                    foreach (var elem in Group) { if (elem != null) yield return elem; }
+                    foreach (var elem in Question) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -768,19 +768,19 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // QuestionComponent elements
-                    yield return LinkIdElement;
-                    foreach (var elem in Concept) { yield return elem; }
-                    yield return TextElement;
-                    yield return TypeElement;
-                    yield return RequiredElement;
-                    yield return RepeatsElement;
-                    yield return Options;
-                    foreach (var elem in Option) { yield return elem; }
-                    foreach (var elem in Group) { yield return elem; }
+                    if (LinkIdElement != null) yield return LinkIdElement;
+                    foreach (var elem in Concept) { if (elem != null) yield return elem; }
+                    if (TextElement != null) yield return TextElement;
+                    if (TypeElement != null) yield return TypeElement;
+                    if (RequiredElement != null) yield return RequiredElement;
+                    if (RepeatsElement != null) yield return RepeatsElement;
+                    if (Options != null) yield return Options;
+                    foreach (var elem in Option) { if (elem != null) yield return elem; }
+                    foreach (var elem in Group) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -1105,24 +1105,24 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// Questionnaire elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return VersionElement;
-				yield return StatusElement;
-				yield return DateElement;
-				yield return PublisherElement;
-				foreach (var elem in Telecom) { yield return elem; }
-				foreach (var elem in SubjectTypeElement) { yield return elem; }
-				yield return Group;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (VersionElement != null) yield return VersionElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (DateElement != null) yield return DateElement;
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+				foreach (var elem in SubjectTypeElement) { if (elem != null) yield return elem; }
+				if (Group != null) yield return Group;
             }
         }
     }

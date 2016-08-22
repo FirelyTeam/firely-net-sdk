@@ -170,12 +170,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // PerformerComponent elements
-                    yield return Actor;
-                    yield return Role;
+                    if (Actor != null) yield return Actor;
+                    if (Role != null) yield return Role;
                 }
             }
             
@@ -267,12 +267,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // FocalDeviceComponent elements
-                    yield return Action;
-                    yield return Manipulated;
+                    if (Action != null) yield return Action;
+                    if (Manipulated != null) yield return Manipulated;
                 }
             }
             
@@ -734,37 +734,37 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// Procedure elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return Subject;
-				yield return StatusElement;
-				yield return Category;
-				yield return Code;
-				yield return NotPerformedElement;
-				foreach (var elem in ReasonNotPerformed) { yield return elem; }
-				foreach (var elem in BodySite) { yield return elem; }
-				yield return Reason;
-				foreach (var elem in Performer) { yield return elem; }
-				yield return Performed;
-				yield return Encounter;
-				yield return Location;
-				yield return Outcome;
-				foreach (var elem in Report) { yield return elem; }
-				foreach (var elem in Complication) { yield return elem; }
-				foreach (var elem in FollowUp) { yield return elem; }
-				yield return Request;
-				foreach (var elem in Notes) { yield return elem; }
-				foreach (var elem in FocalDevice) { yield return elem; }
-				foreach (var elem in Used) { yield return elem; }
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				if (StatusElement != null) yield return StatusElement;
+				if (Category != null) yield return Category;
+				if (Code != null) yield return Code;
+				if (NotPerformedElement != null) yield return NotPerformedElement;
+				foreach (var elem in ReasonNotPerformed) { if (elem != null) yield return elem; }
+				foreach (var elem in BodySite) { if (elem != null) yield return elem; }
+				if (Reason != null) yield return Reason;
+				foreach (var elem in Performer) { if (elem != null) yield return elem; }
+				if (Performed != null) yield return Performed;
+				if (Encounter != null) yield return Encounter;
+				if (Location != null) yield return Location;
+				if (Outcome != null) yield return Outcome;
+				foreach (var elem in Report) { if (elem != null) yield return elem; }
+				foreach (var elem in Complication) { if (elem != null) yield return elem; }
+				foreach (var elem in FollowUp) { if (elem != null) yield return elem; }
+				if (Request != null) yield return Request;
+				foreach (var elem in Notes) { if (elem != null) yield return elem; }
+				foreach (var elem in FocalDevice) { if (elem != null) yield return elem; }
+				foreach (var elem in Used) { if (elem != null) yield return elem; }
             }
         }
     }

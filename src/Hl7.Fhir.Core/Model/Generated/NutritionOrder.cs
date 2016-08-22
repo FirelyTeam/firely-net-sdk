@@ -281,16 +281,16 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // OralDietComponent elements
-                    foreach (var elem in Type) { yield return elem; }
-                    foreach (var elem in Schedule) { yield return elem; }
-                    foreach (var elem in Nutrient) { yield return elem; }
-                    foreach (var elem in Texture) { yield return elem; }
-                    foreach (var elem in FluidConsistencyType) { yield return elem; }
-                    yield return InstructionElement;
+                    foreach (var elem in Type) { if (elem != null) yield return elem; }
+                    foreach (var elem in Schedule) { if (elem != null) yield return elem; }
+                    foreach (var elem in Nutrient) { if (elem != null) yield return elem; }
+                    foreach (var elem in Texture) { if (elem != null) yield return elem; }
+                    foreach (var elem in FluidConsistencyType) { if (elem != null) yield return elem; }
+                    if (InstructionElement != null) yield return InstructionElement;
                 }
             }
             
@@ -380,12 +380,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // NutrientComponent elements
-                    yield return Modifier;
-                    yield return Amount;
+                    if (Modifier != null) yield return Modifier;
+                    if (Amount != null) yield return Amount;
                 }
             }
             
@@ -475,12 +475,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // TextureComponent elements
-                    yield return Modifier;
-                    yield return FoodType;
+                    if (Modifier != null) yield return Modifier;
+                    if (FoodType != null) yield return FoodType;
                 }
             }
             
@@ -657,15 +657,15 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // SupplementComponent elements
-                    yield return Type;
-                    yield return ProductNameElement;
-                    foreach (var elem in Schedule) { yield return elem; }
-                    yield return Quantity;
-                    yield return InstructionElement;
+                    if (Type != null) yield return Type;
+                    if (ProductNameElement != null) yield return ProductNameElement;
+                    foreach (var elem in Schedule) { if (elem != null) yield return elem; }
+                    if (Quantity != null) yield return Quantity;
+                    if (InstructionElement != null) yield return InstructionElement;
                 }
             }
             
@@ -925,19 +925,19 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // EnteralFormulaComponent elements
-                    yield return BaseFormulaType;
-                    yield return BaseFormulaProductNameElement;
-                    yield return AdditiveType;
-                    yield return AdditiveProductNameElement;
-                    yield return CaloricDensity;
-                    yield return RouteofAdministration;
-                    foreach (var elem in Administration) { yield return elem; }
-                    yield return MaxVolumeToDeliver;
-                    yield return AdministrationInstructionElement;
+                    if (BaseFormulaType != null) yield return BaseFormulaType;
+                    if (BaseFormulaProductNameElement != null) yield return BaseFormulaProductNameElement;
+                    if (AdditiveType != null) yield return AdditiveType;
+                    if (AdditiveProductNameElement != null) yield return AdditiveProductNameElement;
+                    if (CaloricDensity != null) yield return CaloricDensity;
+                    if (RouteofAdministration != null) yield return RouteofAdministration;
+                    foreach (var elem in Administration) { if (elem != null) yield return elem; }
+                    if (MaxVolumeToDeliver != null) yield return MaxVolumeToDeliver;
+                    if (AdministrationInstructionElement != null) yield return AdministrationInstructionElement;
                 }
             }
             
@@ -1044,13 +1044,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // AdministrationComponent elements
-                    yield return Schedule;
-                    yield return Quantity;
-                    yield return Rate;
+                    if (Schedule != null) yield return Schedule;
+                    if (Quantity != null) yield return Quantity;
+                    if (Rate != null) yield return Rate;
                 }
             }
             
@@ -1358,28 +1358,28 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// NutritionOrder elements
-				yield return Patient;
-				yield return Orderer;
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return Encounter;
-				yield return DateTimeElement;
-				yield return StatusElement;
-				foreach (var elem in AllergyIntolerance) { yield return elem; }
-				foreach (var elem in FoodPreferenceModifier) { yield return elem; }
-				foreach (var elem in ExcludeFoodModifier) { yield return elem; }
-				yield return OralDiet;
-				foreach (var elem in Supplement) { yield return elem; }
-				yield return EnteralFormula;
+				if (Patient != null) yield return Patient;
+				if (Orderer != null) yield return Orderer;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Encounter != null) yield return Encounter;
+				if (DateTimeElement != null) yield return DateTimeElement;
+				if (StatusElement != null) yield return StatusElement;
+				foreach (var elem in AllergyIntolerance) { if (elem != null) yield return elem; }
+				foreach (var elem in FoodPreferenceModifier) { if (elem != null) yield return elem; }
+				foreach (var elem in ExcludeFoodModifier) { if (elem != null) yield return elem; }
+				if (OralDiet != null) yield return OralDiet;
+				foreach (var elem in Supplement) { if (elem != null) yield return elem; }
+				if (EnteralFormula != null) yield return EnteralFormula;
             }
         }
     }

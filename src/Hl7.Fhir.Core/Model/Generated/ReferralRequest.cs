@@ -496,32 +496,32 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// ReferralRequest elements
-				yield return StatusElement;
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return DateElement;
-				yield return Type;
-				yield return Specialty;
-				yield return Priority;
-				yield return Patient;
-				yield return Requester;
-				foreach (var elem in Recipient) { yield return elem; }
-				yield return Encounter;
-				yield return DateSentElement;
-				yield return Reason;
-				yield return DescriptionElement;
-				foreach (var elem in ServiceRequested) { yield return elem; }
-				foreach (var elem in SupportingInformation) { yield return elem; }
-				yield return FulfillmentTime;
+				if (StatusElement != null) yield return StatusElement;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (DateElement != null) yield return DateElement;
+				if (Type != null) yield return Type;
+				if (Specialty != null) yield return Specialty;
+				if (Priority != null) yield return Priority;
+				if (Patient != null) yield return Patient;
+				if (Requester != null) yield return Requester;
+				foreach (var elem in Recipient) { if (elem != null) yield return elem; }
+				if (Encounter != null) yield return Encounter;
+				if (DateSentElement != null) yield return DateSentElement;
+				if (Reason != null) yield return Reason;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in ServiceRequested) { if (elem != null) yield return elem; }
+				foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
+				if (FulfillmentTime != null) yield return FulfillmentTime;
             }
         }
     }

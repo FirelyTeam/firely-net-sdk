@@ -342,23 +342,23 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// OrderResponse elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return Request;
-				yield return DateElement;
-				yield return Who;
-				yield return OrderStatus_Element;
-				yield return DescriptionElement;
-				foreach (var elem in Fulfillment) { yield return elem; }
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Request != null) yield return Request;
+				if (DateElement != null) yield return DateElement;
+				if (Who != null) yield return Who;
+				if (OrderStatus_Element != null) yield return OrderStatus_Element;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in Fulfillment) { if (elem != null) yield return elem; }
             }
         }
     }

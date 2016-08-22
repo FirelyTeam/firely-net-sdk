@@ -127,10 +127,10 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var elem in Extension) { yield return elem; }
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
                 // Ratio elements
-                yield return Numerator;
-                yield return Denominator;
+                if (Numerator != null) yield return Numerator;
+                if (Denominator != null) yield return Denominator;
             }
         }
     

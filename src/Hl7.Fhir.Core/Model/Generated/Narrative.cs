@@ -175,9 +175,9 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var p in Extension) { yield return p; }
+                foreach (var p in Extension) { if (p != null) yield return p; }
                 // Narrative elements
-                yield return StatusElement;
+                if (StatusElement != null) yield return StatusElement;
                 // Div property does not implement Base...
             }
         }

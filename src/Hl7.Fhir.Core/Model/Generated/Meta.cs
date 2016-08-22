@@ -235,13 +235,13 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var elem in Extension) { yield return elem; }
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
                 // Meta elements
-                yield return VersionIdElement;
-                yield return LastUpdatedElement;
-                foreach (var elem in ProfileElement) { yield return elem; }
-                foreach (var elem in Security) { yield return elem; }
-                foreach (var elem in Tag) { yield return elem; }
+                if (VersionIdElement != null) yield return VersionIdElement;
+                if (LastUpdatedElement != null) yield return LastUpdatedElement;
+                foreach (var elem in ProfileElement) { if (elem != null) yield return elem; }
+                foreach (var elem in Security) { if (elem != null) yield return elem; }
+                foreach (var elem in Tag) { if (elem != null) yield return elem; }
             }
         }
     

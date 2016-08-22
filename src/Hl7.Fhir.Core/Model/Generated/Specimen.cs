@@ -255,16 +255,16 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // CollectionComponent elements
-                    yield return Collector;
-                    foreach (var elem in CommentElement) { yield return elem; }
-                    yield return Collected;
-                    yield return Quantity;
-                    yield return Method;
-                    yield return BodySite;
+                    if (Collector != null) yield return Collector;
+                    foreach (var elem in CommentElement) { if (elem != null) yield return elem; }
+                    if (Collected != null) yield return Collected;
+                    if (Quantity != null) yield return Quantity;
+                    if (Method != null) yield return Method;
+                    if (BodySite != null) yield return BodySite;
                 }
             }
             
@@ -391,13 +391,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // TreatmentComponent elements
-                    yield return DescriptionElement;
-                    yield return Procedure;
-                    foreach (var elem in Additive) { yield return elem; }
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Procedure != null) yield return Procedure;
+                    foreach (var elem in Additive) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -572,16 +572,16 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ContainerComponent elements
-                    foreach (var elem in Identifier) { yield return elem; }
-                    yield return DescriptionElement;
-                    yield return Type;
-                    yield return Capacity;
-                    yield return SpecimenQuantity;
-                    yield return Additive;
+                    foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Type != null) yield return Type;
+                    if (Capacity != null) yield return Capacity;
+                    if (SpecimenQuantity != null) yield return SpecimenQuantity;
+                    if (Additive != null) yield return Additive;
                 }
             }
             
@@ -843,26 +843,26 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// Specimen elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return StatusElement;
-				yield return Type;
-				foreach (var elem in Parent) { yield return elem; }
-				yield return Subject;
-				yield return AccessionIdentifier;
-				yield return ReceivedTimeElement;
-				yield return Collection;
-				foreach (var elem in Treatment) { yield return elem; }
-				foreach (var elem in Container) { yield return elem; }
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Type != null) yield return Type;
+				foreach (var elem in Parent) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				if (AccessionIdentifier != null) yield return AccessionIdentifier;
+				if (ReceivedTimeElement != null) yield return ReceivedTimeElement;
+				if (Collection != null) yield return Collection;
+				foreach (var elem in Treatment) { if (elem != null) yield return elem; }
+				foreach (var elem in Container) { if (elem != null) yield return elem; }
             }
         }
     }

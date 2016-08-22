@@ -240,17 +240,17 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // DetailsComponent elements
-                    yield return Type;
-                    yield return Request;
-                    yield return Responce;
-                    yield return Submitter;
-                    yield return Payee;
-                    yield return DateElement;
-                    yield return Amount;
+                    if (Type != null) yield return Type;
+                    if (Request != null) yield return Request;
+                    if (Responce != null) yield return Responce;
+                    if (Submitter != null) yield return Submitter;
+                    if (Payee != null) yield return Payee;
+                    if (DateElement != null) yield return DateElement;
+                    if (Amount != null) yield return Amount;
                 }
             }
             
@@ -359,12 +359,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // NotesComponent elements
-                    yield return Type;
-                    yield return TextElement;
+                    if (Type != null) yield return Type;
+                    if (TextElement != null) yield return TextElement;
                 }
             }
             
@@ -726,31 +726,31 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// PaymentReconciliation elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return Request;
-				yield return OutcomeElement;
-				yield return DispositionElement;
-				yield return Ruleset;
-				yield return OriginalRuleset;
-				yield return CreatedElement;
-				yield return Period;
-				yield return Organization;
-				yield return RequestProvider;
-				yield return RequestOrganization;
-				foreach (var elem in Detail) { yield return elem; }
-				yield return Form;
-				yield return Total;
-				foreach (var elem in Note) { yield return elem; }
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Request != null) yield return Request;
+				if (OutcomeElement != null) yield return OutcomeElement;
+				if (DispositionElement != null) yield return DispositionElement;
+				if (Ruleset != null) yield return Ruleset;
+				if (OriginalRuleset != null) yield return OriginalRuleset;
+				if (CreatedElement != null) yield return CreatedElement;
+				if (Period != null) yield return Period;
+				if (Organization != null) yield return Organization;
+				if (RequestProvider != null) yield return RequestProvider;
+				if (RequestOrganization != null) yield return RequestOrganization;
+				foreach (var elem in Detail) { if (elem != null) yield return elem; }
+				if (Form != null) yield return Form;
+				if (Total != null) yield return Total;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
             }
         }
     }

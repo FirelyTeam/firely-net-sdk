@@ -282,14 +282,14 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var elem in Extension) { yield return elem; }
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
                 // Identifier elements
-                yield return UseElement;
-                yield return Type;
-                yield return SystemElement;
-                yield return ValueElement;
-                yield return Period;
-                yield return Assigner;
+                if (UseElement != null) yield return UseElement;
+                if (Type != null) yield return Type;
+                if (SystemElement != null) yield return SystemElement;
+                if (ValueElement != null) yield return ValueElement;
+                if (Period != null) yield return Period;
+                if (Assigner != null) yield return Assigner;
             }
         }
     

@@ -183,12 +183,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // StageComponent elements
-                    yield return Summary;
-                    foreach (var elem in Assessment) { yield return elem; }
+                    if (Summary != null) yield return Summary;
+                    foreach (var elem in Assessment) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -280,12 +280,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // EvidenceComponent elements
-                    yield return Code;
-                    foreach (var elem in Detail) { yield return elem; }
+                    if (Code != null) yield return Code;
+                    foreach (var elem in Detail) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -705,32 +705,32 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// Condition elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return Patient;
-				yield return Encounter;
-				yield return Asserter;
-				yield return DateRecordedElement;
-				yield return Code;
-				yield return Category;
-				yield return ClinicalStatusElement;
-				yield return VerificationStatusElement;
-				yield return Severity;
-				yield return Onset;
-				yield return Abatement;
-				yield return Stage;
-				foreach (var elem in Evidence) { yield return elem; }
-				foreach (var elem in BodySite) { yield return elem; }
-				yield return NotesElement;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Patient != null) yield return Patient;
+				if (Encounter != null) yield return Encounter;
+				if (Asserter != null) yield return Asserter;
+				if (DateRecordedElement != null) yield return DateRecordedElement;
+				if (Code != null) yield return Code;
+				if (Category != null) yield return Category;
+				if (ClinicalStatusElement != null) yield return ClinicalStatusElement;
+				if (VerificationStatusElement != null) yield return VerificationStatusElement;
+				if (Severity != null) yield return Severity;
+				if (Onset != null) yield return Onset;
+				if (Abatement != null) yield return Abatement;
+				if (Stage != null) yield return Stage;
+				foreach (var elem in Evidence) { if (elem != null) yield return elem; }
+				foreach (var elem in BodySite) { if (elem != null) yield return elem; }
+				if (NotesElement != null) yield return NotesElement;
             }
         }
     }

@@ -106,9 +106,9 @@ namespace Hl7.Fhir.Model
             get
             {
                 // Element elements
-                foreach (var elem in Extension) { yield return elem; }
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
                 // BackboneElement elements
-                foreach (var elem in ModifierExtension) { yield return elem; }
+                foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
             }
         }
     

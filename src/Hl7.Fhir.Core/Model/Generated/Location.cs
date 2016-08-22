@@ -259,13 +259,13 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // PositionComponent elements
-                    yield return LongitudeElement;
-                    yield return LatitudeElement;
-                    yield return AltitudeElement;
+                    if (LongitudeElement != null) yield return LongitudeElement;
+                    if (LatitudeElement != null) yield return LatitudeElement;
+                    if (AltitudeElement != null) yield return AltitudeElement;
                 }
             }
             
@@ -594,28 +594,28 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// Location elements
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return StatusElement;
-				yield return NameElement;
-				yield return DescriptionElement;
-				yield return ModeElement;
-				yield return Type;
-				foreach (var elem in Telecom) { yield return elem; }
-				yield return Address;
-				yield return PhysicalType;
-				yield return Position;
-				yield return ManagingOrganization;
-				yield return PartOf;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (NameElement != null) yield return NameElement;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (ModeElement != null) yield return ModeElement;
+				if (Type != null) yield return Type;
+				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+				if (Address != null) yield return Address;
+				if (PhysicalType != null) yield return PhysicalType;
+				if (Position != null) yield return Position;
+				if (ManagingOrganization != null) yield return ManagingOrganization;
+				if (PartOf != null) yield return PartOf;
             }
         }
     }

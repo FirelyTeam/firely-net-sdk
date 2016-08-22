@@ -166,12 +166,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // InvestigationsComponent elements
-                    yield return Code;
-                    foreach (var elem in Item) { yield return elem; }
+                    if (Code != null) yield return Code;
+                    foreach (var elem in Item) { if (elem != null) yield return elem; }
                 }
             }
             
@@ -281,12 +281,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // FindingComponent elements
-                    yield return Item;
-                    yield return CauseElement;
+                    if (Item != null) yield return Item;
+                    if (CauseElement != null) yield return CauseElement;
                 }
             }
             
@@ -396,12 +396,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // RuledOutComponent elements
-                    yield return Item;
-                    yield return ReasonElement;
+                    if (Item != null) yield return Item;
+                    if (ReasonElement != null) yield return ReasonElement;
                 }
             }
             
@@ -860,33 +860,33 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// ClinicalImpression elements
-				yield return Patient;
-				yield return Assessor;
-				yield return StatusElement;
-				yield return DateElement;
-				yield return DescriptionElement;
-				yield return Previous;
-				foreach (var elem in Problem) { yield return elem; }
-				yield return Trigger;
-				foreach (var elem in Investigations) { yield return elem; }
-				yield return ProtocolElement;
-				yield return SummaryElement;
-				foreach (var elem in Finding) { yield return elem; }
-				foreach (var elem in Resolved) { yield return elem; }
-				foreach (var elem in RuledOut) { yield return elem; }
-				yield return PrognosisElement;
-				foreach (var elem in Plan) { yield return elem; }
-				foreach (var elem in Action) { yield return elem; }
+				if (Patient != null) yield return Patient;
+				if (Assessor != null) yield return Assessor;
+				if (StatusElement != null) yield return StatusElement;
+				if (DateElement != null) yield return DateElement;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (Previous != null) yield return Previous;
+				foreach (var elem in Problem) { if (elem != null) yield return elem; }
+				if (Trigger != null) yield return Trigger;
+				foreach (var elem in Investigations) { if (elem != null) yield return elem; }
+				if (ProtocolElement != null) yield return ProtocolElement;
+				if (SummaryElement != null) yield return SummaryElement;
+				foreach (var elem in Finding) { if (elem != null) yield return elem; }
+				foreach (var elem in Resolved) { if (elem != null) yield return elem; }
+				foreach (var elem in RuledOut) { if (elem != null) yield return elem; }
+				if (PrognosisElement != null) yield return PrognosisElement;
+				foreach (var elem in Plan) { if (elem != null) yield return elem; }
+				foreach (var elem in Action) { if (elem != null) yield return elem; }
             }
         }
     }

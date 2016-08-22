@@ -122,11 +122,11 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // ContentComponent elements
-                    yield return P;
+                    if (P != null) yield return P;
                 }
             }
             
@@ -217,12 +217,12 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     // Element elements
-                    foreach (var elem in Extension) { yield return elem; }
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
                     // BackboneElement elements
-                    foreach (var elem in ModifierExtension) { yield return elem; }
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
                     // RelatedComponent elements
-                    yield return Identifier;
-                    yield return Ref;
+                    if (Identifier != null) yield return Identifier;
+                    if (Ref != null) yield return Ref;
                 }
             }
             
@@ -556,28 +556,28 @@ namespace Hl7.Fhir.Model
             get
             {
 				// Resource elements
-				yield return IdElement;
-				yield return Meta;
-				yield return ImplicitRulesElement;
-				yield return LanguageElement;
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
 				// DomainResource elements
-				yield return Text;
-				foreach (var elem in Contained) { yield return elem; }
-				foreach (var elem in Extension) { yield return elem; }
-				foreach (var elem in ModifierExtension) { yield return elem; }
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
 				// DocumentManifest elements
-				yield return MasterIdentifier;
-				foreach (var elem in Identifier) { yield return elem; }
-				yield return Subject;
-				foreach (var elem in Recipient) { yield return elem; }
-				yield return Type;
-				foreach (var elem in Author) { yield return elem; }
-				yield return CreatedElement;
-				yield return SourceElement;
-				yield return StatusElement;
-				yield return DescriptionElement;
-				foreach (var elem in Content) { yield return elem; }
-				foreach (var elem in Related) { yield return elem; }
+				if (MasterIdentifier != null) yield return MasterIdentifier;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				foreach (var elem in Recipient) { if (elem != null) yield return elem; }
+				if (Type != null) yield return Type;
+				foreach (var elem in Author) { if (elem != null) yield return elem; }
+				if (CreatedElement != null) yield return CreatedElement;
+				if (SourceElement != null) yield return SourceElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in Content) { if (elem != null) yield return elem; }
+				foreach (var elem in Related) { if (elem != null) yield return elem; }
             }
         }
     }
