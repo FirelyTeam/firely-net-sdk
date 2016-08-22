@@ -48,5 +48,97 @@ namespace Hl7.Fhir.Model
 
             // TODO: Additional checks not implementable by the regex
         }
+
+        public static bool operator >(Time a, Time b)
+        {
+            var aValue = !Object.ReferenceEquals(a, null) ? a.Value : null;
+            var bValue = !Object.ReferenceEquals(b, null) ? b.Value : null;
+
+            if (aValue == null) return bValue == null;
+            if (bValue == null) return false;
+
+            return Hl7.FluentPath.Time.Parse("T"+a.Value) > Hl7.FluentPath.Time.Parse("T"+b.Value);
+        }
+
+        public static bool operator >=(Time a, Time b)
+        {
+            var aValue = !Object.ReferenceEquals(a, null) ? a.Value : null;
+            var bValue = !Object.ReferenceEquals(b, null) ? b.Value : null;
+
+            if (aValue == null) return bValue == null;
+            if (bValue == null) return false;
+
+            return Hl7.FluentPath.Time.Parse("T"+a.Value) >= Hl7.FluentPath.Time.Parse("T"+b.Value);
+        }
+
+        public static bool operator <(Time a, Time b)
+        {
+            var aValue = !Object.ReferenceEquals(a, null) ? a.Value : null;
+            var bValue = !Object.ReferenceEquals(b, null) ? b.Value : null;
+
+            if (aValue == null) return bValue == null;
+            if (bValue == null) return false;
+
+            return Hl7.FluentPath.Time.Parse("T"+a.Value) < Hl7.FluentPath.Time.Parse("T"+b.Value);
+        }
+
+        public static bool operator <=(Time a, Time b)
+        {
+            var aValue = !Object.ReferenceEquals(a, null) ? a.Value : null;
+            var bValue = !Object.ReferenceEquals(b, null) ? b.Value : null;
+
+            if (aValue == null) return bValue == null;
+            if (bValue == null) return false;
+
+            return Hl7.FluentPath.Time.Parse("T"+a.Value) <= Hl7.FluentPath.Time.Parse("T"+b.Value);
+        }
+
+        /// <summary>
+        /// If you use this operator, you should check that a modifierExtension isn't changing the meaning
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator ==(Time a, Time b)
+        {
+            return Object.Equals(a, b);
+        }
+
+        /// <summary>
+        /// If you use this operator, you should check that a modifierExtension isn't changing the meaning
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator !=(Time a, Time b)
+        {
+            return !Object.Equals(a, b);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Time)
+            {
+                var other = (Time)obj;
+                var otherValue = !Object.ReferenceEquals(other, null) ? other.Value : null;
+
+                if (Value == null) return otherValue == null;
+                if (otherValue == null) return false;
+
+                if (this.Value == otherValue) return true; // Default reference/string comparison works in most cases
+
+                var left = Hl7.FluentPath.Time.Parse("T"+Value);
+                var right = Hl7.FluentPath.Time.Parse("T"+otherValue);
+
+                return left == right;
+            }
+            else
+                return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
     }
 }

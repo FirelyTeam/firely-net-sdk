@@ -34,6 +34,7 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
 using System.Text.RegularExpressions;
+using Hl7.FluentPath;
 
 namespace Hl7.Fhir.Model
 {
@@ -68,6 +69,98 @@ namespace Hl7.Fhir.Model
 
             //TODO: Implement useful validation functionality
             return true;
+        }
+
+        public static bool operator >(Instant a, Instant b)
+        {
+            var aValue = !Object.ReferenceEquals(a, null) ? a.Value : null;
+            var bValue = !Object.ReferenceEquals(b, null) ? b.Value : null;
+
+            if (aValue == null) return bValue == null;
+            if (bValue == null) return false;
+
+            return PartialDateTime.FromDateTime(a.Value.Value) > PartialDateTime.FromDateTime(b.Value.Value);
+        }
+
+        public static bool operator >=(Instant a, Instant b)
+        {
+            var aValue = !Object.ReferenceEquals(a, null) ? a.Value : null;
+            var bValue = !Object.ReferenceEquals(b, null) ? b.Value : null;
+
+            if (aValue == null) return bValue == null;
+            if (bValue == null) return false;
+
+            return PartialDateTime.FromDateTime(a.Value.Value) >= PartialDateTime.FromDateTime(b.Value.Value);
+        }
+
+        public static bool operator <(Instant a, Instant b)
+        {
+            var aValue = !Object.ReferenceEquals(a, null) ? a.Value : null;
+            var bValue = !Object.ReferenceEquals(b, null) ? b.Value : null;
+
+            if (aValue == null) return bValue == null;
+            if (bValue == null) return false;
+
+            return PartialDateTime.FromDateTime(a.Value.Value) < PartialDateTime.FromDateTime(b.Value.Value);
+        }
+
+        public static bool operator <=(Instant a, Instant b)
+        {
+            var aValue = !Object.ReferenceEquals(a, null) ? a.Value : null;
+            var bValue = !Object.ReferenceEquals(b, null) ? b.Value : null;
+
+            if (aValue == null) return bValue == null;
+            if (bValue == null) return false;
+
+            return PartialDateTime.FromDateTime(a.Value.Value) <= PartialDateTime.FromDateTime(b.Value.Value);
+        }
+
+        /// <summary>
+        /// If you use this operator, you should check that a modifierExtension isn't changing the meaning
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator ==(Instant a, Instant b)
+        {
+            return Object.Equals(a, b);
+        }
+
+        /// <summary>
+        /// If you use this operator, you should check that a modifierExtension isn't changing the meaning
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator !=(Instant a, Instant b)
+        {
+            return !Object.Equals(a, b);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Instant)
+            {
+                var other = (Instant)obj;
+                var otherValue = !Object.ReferenceEquals(other, null) ? other.Value : null;
+
+                if (Value == null) return otherValue == null;
+                if (otherValue == null) return false;
+
+                if (this.Value == otherValue) return true; // Default reference/string comparison works in most cases
+
+                var left = PartialDateTime.FromDateTime(Value.Value);
+                var right = PartialDateTime.FromDateTime(otherValue.Value);
+
+                return left == right;
+            }
+            else
+                return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
         }
     }
 }
