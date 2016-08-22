@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Organization_ORG_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("telecom.where(use = 'home').empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("telecom.all(telecom.where(use = 'home').empty())"))},
             Key = "org-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "The telecom of an organization can never be of use 'home'",
@@ -334,12 +334,21 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Organization_ORG_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("address.where(use = 'home').empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("address.all(address.where(use = 'home').empty())"))},
             Key = "org-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "An address of an organization can never be of use 'home'",
             Xpath = "count(f:use[@value='home']) = 0"
         };
+
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(Organization_ORG_1);
+            InvariantConstraints.Add(Organization_ORG_3);
+            InvariantConstraints.Add(Organization_ORG_2);
+        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

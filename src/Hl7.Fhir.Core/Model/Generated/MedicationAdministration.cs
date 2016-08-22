@@ -493,12 +493,21 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("quantity or rate[x]"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("dosage.all(quantity or rate[x])"))},
             Key = "mad-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL have at least one of dosage.quantity and dosage.rate[x]",
             Xpath = "exists(f:quantity) or exists(f:rateRatio) or exists(f:rateRange)"
         };
+
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(MedicationAdministration_MAD_3);
+            InvariantConstraints.Add(MedicationAdministration_MAD_2);
+            InvariantConstraints.Add(MedicationAdministration_MAD_1);
+        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

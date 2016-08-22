@@ -46,7 +46,59 @@ namespace Hl7.Fhir.Model
         {
             return Regex.IsMatch(value as string, "^" + Time.PATTERN + "$", RegexOptions.Singleline);
 
-            //TODO: Additional checks not implementable by the regex
+            // TODO: Additional checks not implementable by the regex
+        }
+
+        public static bool operator >(Time a, Time b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return String.Compare(a.Value, b.Value) > 0;
+        }
+
+        public static bool operator >=(Time a, Time b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return String.Compare(a.Value, b.Value) >= 0;
+        }
+
+        public static bool operator <(Time a, Time b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return String.Compare(a.Value, b.Value) < 0;
+        }
+
+        public static bool operator <=(Time a, Time b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return String.Compare(a.Value, b.Value) <= 0;
+        }
+
+        public static bool operator ==(Time a, Time b)
+        {
+            // If both are null then the are the same
+            if (object.ReferenceEquals(a, null) && object.ReferenceEquals(b, null))
+                return true;
+            if (object.ReferenceEquals(a, null) || object.ReferenceEquals(b, null))
+                return false;
+
+            return String.Compare(a.Value, b.Value) == 0;
+        }
+
+        public static bool operator !=(Time a, Time b)
+        {
+            return !(a == b);
         }
     }
 }

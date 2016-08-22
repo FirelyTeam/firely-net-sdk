@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        [TestMethod, Ignore]
+        [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CreateAndFullRepresentation()
         {
@@ -701,7 +701,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        [TestMethod, Ignore]
+        [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CreateDynamic()
         {
@@ -781,7 +781,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("FhirClient"), TestCategory("IntegrationTest"), Ignore]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void RequestFullResource()
         {
             var client = new FhirClient(testEndpoint);

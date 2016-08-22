@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Tests.Model
             var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
             var xml2 = FhirSerializer.SerializeResourceToXml(p2);
-            XmlAssert.AreSame(xml, xml2);
+            XmlAssert.AreSame("TestPatient.xml", xml, xml2);
         }
 
         [TestMethod]
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Tests.Model
             var p = new FhirXmlParser().Parse<CarePlan>(xml);
             var p2 = (CarePlan)p.DeepCopy();
             var xml2 = FhirSerializer.SerializeResourceToXml(p2);
-            XmlAssert.AreSame(xml, xml2);
+            XmlAssert.AreSame("careplan-example-f201-renal.xml", xml, xml2);
         }
     }
 }

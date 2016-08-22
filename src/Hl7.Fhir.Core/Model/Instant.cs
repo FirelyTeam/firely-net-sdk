@@ -33,7 +33,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
-
+using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model
 {
@@ -62,9 +62,65 @@ namespace Hl7.Fhir.Model
 
         public static bool IsValidValue(string value)
         {
+            DateTimeOffset dto;
+            if (!DateTimeOffset.TryParse(value, out dto))
+                return false;
+
             //TODO: Implement useful validation functionality
             return true;
         }
 
+        public static bool operator >(Instant a, Instant b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return a.Value > b.Value;
+        }
+
+        public static bool operator >=(Instant a, Instant b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return a.Value > b.Value;
+        }
+
+        public static bool operator <(Instant a, Instant b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return a.Value < b.Value;
+        }
+
+        public static bool operator <=(Instant a, Instant b)
+        {
+            if (object.ReferenceEquals(a, null))
+                throw new ArgumentNullException("a");
+            if (object.ReferenceEquals(b, null))
+                throw new ArgumentNullException("b");
+            return a.Value < b.Value;
+        }
+
+        public static bool operator ==(Instant a, Instant b)
+        {
+            // If both are null then the are the same
+            if (object.ReferenceEquals(a, null) && object.ReferenceEquals(b, null))
+                return true;
+            if (object.ReferenceEquals(a, null) || object.ReferenceEquals(b, null))
+                return false;
+
+            // otherwise we need to compare the times
+            return a.Value == b.Value;
+        }
+
+        public static bool operator !=(Instant a, Instant b)
+        {
+            return !(a == b);
+        }
     }
 }

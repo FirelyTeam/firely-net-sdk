@@ -1102,12 +1102,19 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent CarePlan_CPL_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("detail.empty() or reference.empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("activity.all(detail.empty() or reference.empty())"))},
             Key = "cpl-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Provide a reference or detail, not both",
             Xpath = "not(exists(f:detail)) or not(exists(f:reference))"
         };
+
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(CarePlan_CPL_3);
+        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

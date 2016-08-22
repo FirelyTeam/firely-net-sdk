@@ -3431,7 +3431,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_5 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("capability.required or capability.validated"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("metadata.all(capability.required or capability.validated)"))},
             Key = "inv-5",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "TestScript metadata capability SHALL contain required or validated or both.",
@@ -3440,7 +3440,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_4 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("headerField.empty() or path.empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("variable.all(headerField.empty() or path.empty())"))},
             Key = "inv-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Variable cannot contain both headerField and path.",
@@ -3449,7 +3449,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_6 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("capability.required or capability.validated"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("setup.metadata.all(capability.required or capability.validated)"))},
             Key = "inv-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Setup metadata capability SHALL contain required or validated or both.",
@@ -3458,7 +3458,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("operation xor assert"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("setup.action.all(operation xor assert)"))},
             Key = "inv-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Setup action SHALL contain either an operation or assert but not both.",
@@ -3467,7 +3467,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_10 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("sourceId or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' |'search' | 'transaction' | 'history'))"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("setup.action.operation.all(sourceId or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' |'search' | 'transaction' | 'history')))"))},
             Key = "inv-10",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Setup operation SHALL contain either sourceId or targetId or params or url.",
@@ -3476,7 +3476,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_13 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("compareToSourceId.empty() xor compareToSourcePath"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("setup.action.assert.all(compareToSourceId.empty() xor compareToSourcePath)"))},
             Key = "inv-13",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Setup action assert shall contain both compareToSourceId and compareToSourcePath or neither.",
@@ -3485,7 +3485,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_8 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("contentType.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + validateProfileId.count() <=1"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("setup.action.assert.all(contentType.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + validateProfileId.count() <=1)"))},
             Key = "inv-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only a single assertion SHALL be present within setup action assert element.",
@@ -3494,7 +3494,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_7 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("capability.required or capability.validated"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("test.metadata.all(capability.required or capability.validated)"))},
             Key = "inv-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Test metadata capability SHALL contain required or validated or both.",
@@ -3503,7 +3503,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("operation xor assert"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("test.action.all(operation xor assert)"))},
             Key = "inv-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Test action SHALL contain either an operation or assert but not both.",
@@ -3512,7 +3512,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_11 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("sourceId or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' | 'search' | 'transaction' | 'history'))"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("test.action.operation.all(sourceId or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' | 'search' | 'transaction' | 'history')))"))},
             Key = "inv-11",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Test operation SHALL contain either sourceId or targetId or params or url.",
@@ -3521,7 +3521,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_14 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("compareToSourceId.empty() xor compareToSourcePath"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("test.action.assert.all(compareToSourceId.empty() xor compareToSourcePath)"))},
             Key = "inv-14",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Test action assert shall contain both compareToSourceId and compareToSourcePath or neither.",
@@ -3530,7 +3530,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_9 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("contentType.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + validateProfileId.count() <=1"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("test.action.assert.all(contentType.count() + headerField.count() + minimumId.count() + navigationLinks.count() + path.count() + resource.count() + responseCode.count() + response.count() + validateProfileId.count() <=1)"))},
             Key = "inv-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Only a single assertion SHALL be present within test action assert element.",
@@ -3539,7 +3539,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("operation"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("teardown.action.all(operation)"))},
             Key = "inv-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Teardown action SHALL contain an operation.",
@@ -3548,12 +3548,32 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent TestScript_INV_12 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("sourceId or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' | 'search' | 'transaction' | 'history'))"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("teardown.action.operation.all(sourceId or (targetId.count() + url.count() + params.count() = 1) or (type.code in ('conformance' | 'search' | 'transaction' | 'history')))"))},
             Key = "inv-12",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Teardown operation SHALL contain either sourceId or targetId or params or url.",
             Xpath = "f:sourceId or (f:targetId or f:url or (f:params and f:resource)) and (count(f:targetId) + count(f:url) + count(f:params) =1) or (f:type/f:code/@value='conformance' or f:type/f:code/@value='search' or f:type/f:code/@value='transaction' or f:type/f:code/@value='history')"
         };
+
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(TestScript_INV_5);
+            InvariantConstraints.Add(TestScript_INV_4);
+            InvariantConstraints.Add(TestScript_INV_6);
+            InvariantConstraints.Add(TestScript_INV_1);
+            InvariantConstraints.Add(TestScript_INV_10);
+            InvariantConstraints.Add(TestScript_INV_13);
+            InvariantConstraints.Add(TestScript_INV_8);
+            InvariantConstraints.Add(TestScript_INV_7);
+            InvariantConstraints.Add(TestScript_INV_2);
+            InvariantConstraints.Add(TestScript_INV_11);
+            InvariantConstraints.Add(TestScript_INV_14);
+            InvariantConstraints.Add(TestScript_INV_9);
+            InvariantConstraints.Add(TestScript_INV_3);
+            InvariantConstraints.Add(TestScript_INV_12);
+        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

@@ -1267,7 +1267,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("constrainedType or snapshot.element.select(path).distinct()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("constrainedType or snapshot.element.select(path).isDistinct()"))},
             Key = "sdf-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Element paths must be unique unless the structure is a constraint",
@@ -1276,7 +1276,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("snapshot.element.tail().all(path.startsWith($context.snapshot.element.first().path+\".\")) and differential.element.tail().all(path.startsWith($context.differential.element.first().path+\".\"))"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("snapshot.element.tail().all(path.startsWith(%context.snapshot.element.first().path+\".\")) and differential.element.tail().all(path.startsWith(%context.differential.element.first().path+\".\"))"))},
             Key = "sdf-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "In any snapshot or differential, all the elements except the first have to have a path that starts with the path of the first + \".\"",
@@ -1285,7 +1285,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_9 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("*.element.first().label.empty() and *.element.first().code.empty() and *.element.first().requirements.empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("children().element.first().label.empty() and children().element.first().code.empty() and children().element.first().requirements.empty()"))},
             Key = "sdf-9",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "In any snapshot or differential, no label, code or requirements on the an element without a \".\" in the path (e.g. the first element)",
@@ -1303,7 +1303,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("name or uri"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("mapping.all(name or uri)"))},
             Key = "sdf-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have at a name or a uri (or both)",
@@ -1312,12 +1312,30 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("element.all(definition and min and max)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("snapshot.all(element.all(definition and min and max))"))},
             Key = "sdf-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Each element definition in a snapshot must have a formal definition and cardinalities",
             Xpath = "count(f:element) = count(f:element[exists(f:definition) and exists(f:min) and exists(f:max)])"
         };
+
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(StructureDefinition_SDF_11);
+            InvariantConstraints.Add(StructureDefinition_SDF_5);
+            InvariantConstraints.Add(StructureDefinition_SDF_12);
+            InvariantConstraints.Add(StructureDefinition_SDF_4);
+            InvariantConstraints.Add(StructureDefinition_SDF_7);
+            InvariantConstraints.Add(StructureDefinition_SDF_6);
+            InvariantConstraints.Add(StructureDefinition_SDF_1);
+            InvariantConstraints.Add(StructureDefinition_SDF_8);
+            InvariantConstraints.Add(StructureDefinition_SDF_9);
+            InvariantConstraints.Add(StructureDefinition_SDF_10);
+            InvariantConstraints.Add(StructureDefinition_SDF_2);
+            InvariantConstraints.Add(StructureDefinition_SDF_3);
+        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {

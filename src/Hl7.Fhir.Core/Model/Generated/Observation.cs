@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Observation_OBS_7 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("component.where(code = $context.code).empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("component.where(code = %context.code).empty()"))},
             Key = "obs-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Component code SHALL not be same as observation code",
@@ -864,12 +864,21 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Observation_OBS_3 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("low or high or text"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("referenceRange.all(low or high or text)"))},
             Key = "obs-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must have at least a low or a high or text",
             Xpath = "(exists(f:low) or exists(f:high)or exists(f:text))"
         };
+
+        public override void AddDefaultConstraints()
+        {
+            base.AddDefaultConstraints();
+
+            InvariantConstraints.Add(Observation_OBS_6);
+            InvariantConstraints.Add(Observation_OBS_7);
+            InvariantConstraints.Add(Observation_OBS_3);
+        }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
         {
