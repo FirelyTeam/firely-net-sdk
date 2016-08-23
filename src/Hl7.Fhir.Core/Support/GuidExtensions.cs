@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Support
 {
-    internal static class GuidExtensions
+    public static class GuidExtensions
     {
         public static string ToFhirId(this System.Guid me)
         {
