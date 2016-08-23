@@ -305,17 +305,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Template-DataTypeModel1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\Template-Model.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\Template-Model1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Template-Model.tt</DependentUpon>
@@ -630,6 +620,7 @@
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
+    <Compile Include="Support\CanonicalUrlConflictException.cs" />
     <Compile Include="Support\DateExtensions.cs" />
     <Compile Include="Support\EnumUtility.cs" />
     <Compile Include="Support\Error.cs" />
@@ -688,11 +679,11 @@
     </Content>
     <Content Include="Model\Generated\Template-DataTypeModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-DataTypeModel1.cs</LastGenOutput>
+      <LastGenOutput>Template-DataTypeModel.cs</LastGenOutput>
     </Content>
     <Content Include="Model\Generated\Template-Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Model1.cs</LastGenOutput>
+      <LastGenOutput>Template-Model.cs</LastGenOutput>
     </Content>
     <Content Include="Model\Generated\Template-ModelInfo.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

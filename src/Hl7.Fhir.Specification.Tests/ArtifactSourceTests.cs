@@ -32,9 +32,9 @@ namespace Hl7.Fhir.Specification.Tests
         public void ZipCacherShouldCache()
         {
             var cacheKey = Guid.NewGuid().ToString();
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(),"validation.xml.zip");
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "validation.xml.zip");
 
-            var fa = new ZipCacher(zipFile,cacheKey);
+            var fa = new ZipCacher(zipFile, cacheKey);
 
             Assert.IsFalse(fa.IsActual());
 
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsTrue(firstRun > secondRun);
 
-            fa = new ZipCacher(zipFile,cacheKey);
+            fa = new ZipCacher(zipFile, cacheKey);
 
             Assert.IsTrue(fa.IsActual());
 
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void SetupExampleDir()
         {
-           _testPath = prepareExampleDirectory();
+            _testPath = prepareExampleDirectory();
         }
 
         [TestMethod]
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             var vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/iso21090-preferred") as StructureDefinition;
-           
+
             Assert.IsNotNull(vs);
 
             var cis = fa.ListConformanceResources();
@@ -155,10 +155,10 @@ namespace Hl7.Fhir.Specification.Tests
         public void ReadsSubdirectories()
         {
             var testPath = prepareExampleDirectory();
-            var fa = new FileDirectoryArtifactSource(testPath, includeSubdirectories:true);
+            var fa = new FileDirectoryArtifactSource(testPath, includeSubdirectories: true);
             var names = fa.ListArtifactNames();
 
-            Assert.AreEqual(5,names.Count());
+            Assert.AreEqual(5, names.Count());
             Assert.IsTrue(names.Contains("TestPatient.json"));
         }
 
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Try to find an additional US profile (they are distributed with the spec for now)
             var us = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/uslab-dr");
             Assert.IsNotNull(us);
-            Assert.IsTrue(us is StructureDefinition);           
+            Assert.IsTrue(us is StructureDefinition);
         }
 
 
@@ -234,8 +234,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             var dicomVS = allConformanceInformation.Where(ci => ci.ValueSetSystem == "http://nema.org/dicom/dicm").SingleOrDefault();
             Assert.IsNotNull(dicomVS);
-            Assert.AreEqual("http://hl7.org/fhir/ValueSet/dicom-dcim",dicomVS.Url);
-            Assert.AreEqual("DICOM Controlled Terminology Definitions",dicomVS.Name);
+            Assert.AreEqual("http://hl7.org/fhir/ValueSet/dicom-dcim", dicomVS.Url);
+            Assert.AreEqual("DICOM Controlled Terminology Definitions", dicomVS.Name);
 
             var moneySD = allConformanceInformation.Where(ci => ci.Url == "http://hl7.org/fhir/StructureDefinition/Money").SingleOrDefault();
             Assert.IsNotNull(moneySD);
@@ -285,8 +285,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             private int _status = 0;
 
-            public int Status 
-            { 
+            public int Status
+            {
                 get { return _status; }
                 private set { _status = value; }
             }
@@ -379,6 +379,50 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
 
         }
-   
+
+        // [WMR 20160823] NEW - Verify FileDirectoryArtifactSource & CanonicalUrlConflictException
+        [TestMethod]
+        public void TestCanonicalUrlConflicts()
+        {
+            const string srcFileName = "extension-definitions.xml";
+            const string dupFileName = "diagnosticorder-reason-duplicate.xml";
+            const string url = "http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason";
+
+            var za = ZipArtifactSource.CreateValidationSource();
+
+            // Try to find a core extension
+            var ext = za.LoadConformanceResourceByUrl(url);
+            Assert.IsNotNull(ext);
+            Assert.IsTrue(ext is StructureDefinition);
+
+            // Save back to disk to create a conflicting duplicate
+            var xml = FhirSerializer.SerializeToXml(ext);
+            var filePath = Path.Combine(_testPath, dupFileName);
+            File.WriteAllText(filePath, xml);
+
+            bool conflictException = false;
+            try
+            {
+                var fa = new FileDirectoryArtifactSource(_testPath);
+                var res = fa.LoadConformanceResourceByUrl(url);
+            }
+            catch (CanonicalUrlConflictException ex)
+            {
+                Debug.Print("{0}:\r\n{1}", ex.GetType().Name, ex.Message);
+                Assert.IsNotNull(ex.Conflicts);
+                Assert.AreEqual(1, ex.Conflicts.Length);
+                var conflict = ex.Conflicts[0];
+                Assert.AreEqual(url, conflict.Url);
+                Assert.IsTrue(conflict.FilePaths.Contains(Path.Combine(_testPath, srcFileName)));
+                Assert.IsTrue(conflict.FilePaths.Contains(filePath));
+                conflictException = true;
+            }
+            finally
+            {
+                File.Delete(filePath);
+            }
+            Assert.IsTrue(conflictException);
+        }
+
     }
 }
