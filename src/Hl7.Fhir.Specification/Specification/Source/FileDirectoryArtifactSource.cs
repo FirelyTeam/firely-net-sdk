@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Specification.Source
         /// xml and a json version is available, the xml version is returned</returns>
         public Resource LoadConformanceResourceByUrl(string url)
         {
-            if (url == null) throw Error.ArgumentNull("identifier");
+            if (url == null) throw Error.ArgumentNull("url");
             prepareResources();
 
             var info = _resourceInformation.SingleOrDefault(ci => ci.Url == url);
