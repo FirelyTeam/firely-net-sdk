@@ -418,11 +418,11 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestExpandChild()
         {
-            var qStructDef = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Questionnaire");
-            Assert.IsNotNull(qStructDef);
-            Assert.IsNotNull(qStructDef.Snapshot);
+            var sd = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            Assert.IsNotNull(sd);
+            Assert.IsNotNull(sd.Snapshot);
 
-			var nav = new ElementDefinitionNavigator(qStructDef.Snapshot.Element);
+			var nav = new ElementDefinitionNavigator(sd.Snapshot.Element);
 
             var generator = new SnapshotGenerator(_testSource, SnapshotGeneratorSettings.Default);
 
@@ -440,33 +440,53 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestExpandElement_PatientIdentifier()
         {
-            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.identifier");
+            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.identifier");
         }
 
         [TestMethod]
         public void TestExpandElement_PatientName()
         {
-            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.name");
+            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.name");
         }
 
         [TestMethod]
         public void TestExpandElement_QuestionnaireGroupGroup()
         {
             // Validate name reference expansion
-            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.group");
+            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.group");
         }
 
         [TestMethod]
         public void TestExpandElement_QuestionnaireGroupQuestionGroup()
         {
             // Validate name reference expansion
-            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.question.group");
+            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.question.group");
         }
 
-        private void TestExpandElement(string srcProfileUrl, string expandElemPath)
+        [TestMethod]
+        public void TestExpandElement_Slice()
         {
-            const string Indent = "  ";
+            var sd = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/lipidprofile");
+            Assert.IsNotNull(sd);
+            Assert.IsNotNull(sd.Snapshot);
 
+            // DiagnosticReport.result is sliced
+            var nav = new ElementDefinitionNavigator(sd.Snapshot.Element);
+
+            // Move to slicing entry
+            nav.JumpToFirst("DiagnosticReport.result");
+            Assert.IsNotNull(nav.Current.Slicing);
+
+            // Move to first (named) slice
+            nav.MoveToNext();
+            Assert.AreEqual(nav.Path, "DiagnosticReport.result");
+            Assert.IsNotNull(nav.Current.Name);
+
+            testExpandElement(sd, nav.Current);
+        }
+
+        private void testExpandElement(string srcProfileUrl, string expandElemPath)
+        {
             // Prepare...
             var sd = _testSource.GetStructureDefinition(srcProfileUrl);
             Assert.IsNotNull(sd);
@@ -476,10 +496,21 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(elems);
 
             Debug.WriteLine("Input:");
-            Debug.WriteLine(string.Join(Environment.NewLine, elems.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => Indent + e.Path)));
+            Debug.Indent();
+            Debug.WriteLine(string.Join(Environment.NewLine, elems.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => e.Path)));
+            Debug.Unindent();
 
             var elem = elems.FirstOrDefault(e => e.Path == expandElemPath);
+            testExpandElement(sd, elem);
+        }
+
+        private void testExpandElement(StructureDefinition sd, ElementDefinition elem)
+        {
             Assert.IsNotNull(elem);
+            var elems = sd.Snapshot.Element;
+            Assert.IsTrue(elems.Contains(elem));
+
+            var expandElemPath = elem.Path;
 
             // Test...
             _generator = new SnapshotGenerator(_testSource, _settings);
@@ -487,7 +518,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify results
             Debug.WriteLine("\r\nOutput:");
-            Debug.WriteLine(string.Join(Environment.NewLine, result.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => Indent + e.Path)));
+            Debug.Indent();
+            Debug.WriteLine(string.Join(Environment.NewLine, result.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => e.Path)));
+            Debug.Unindent();
 
             Assert.IsNotNull(elem.Type);
             var elemType = elem.Type.FirstOrDefault();
@@ -497,22 +530,43 @@ namespace Hl7.Fhir.Specification.Tests
                 // Validate type profile expansion
                 var elemTypeCode = elemType.Code.Value;
                 Assert.IsNotNull(elemTypeCode);
+
                 var elemProfile = elemType.Profile.FirstOrDefault();
-                var sdType = elemProfile != null
+                var sdType = elemProfile != null && elemTypeCode != FHIRDefinedType.Reference
                     ? _testSource.GetStructureDefinition(elemProfile)
                     : _testSource.GetStructureDefinitionForCoreType(elemTypeCode);
 
                 Assert.IsNotNull(sdType);
                 Assert.IsNotNull(sdType.Snapshot);
+                Assert.IsNotNull(sdType.Snapshot.Element);
+                Assert.IsTrue(sdType.Snapshot.Element.Count > 0);
 
                 Debug.WriteLine("\r\nType:");
-                Debug.WriteLine(string.Join(Environment.NewLine, sdType.Snapshot.Element.Select(e => Indent + e.Path)));
+                Debug.Indent();
+                Debug.WriteLine(string.Join(Environment.NewLine, sdType.Snapshot.Element.Select(e => e.Path)));
+                Debug.Unindent();
 
                 sdType.Snapshot.Rebase(expandElemPath);
                 var typeElems = sdType.Snapshot.Element;
 
                 Assert.IsTrue(result.Count == elems.Count + typeElems.Count - 1);
-                Assert.IsTrue(result.Where(e => e.Path.StartsWith(expandElemPath)).Count() == typeElems.Count);
+                if (elem.Name == null)
+                {
+                    Assert.IsTrue(result.Where(e => e.Path.StartsWith(expandElemPath)).Count() == typeElems.Count);
+                }
+                else
+                {
+                    // The expanded element represents a slice
+                    var nav = new ElementDefinitionNavigator(result);
+                    nav.JumpToNameReference(elem.Name);
+                    var cnt = 1;
+                    Assert.IsTrue(nav.MoveToFirstChild());
+                    do
+                    {
+                        Assert.AreEqual(typeElems[cnt++].Path, nav.Path);
+                    } while (nav.MoveToNext());
+                    Assert.AreEqual(typeElems.Count, cnt);
+                }
 
                 var startPos = result.IndexOf(elem);
                 for (int i = 0; i < typeElems.Count; i++)
@@ -520,6 +574,7 @@ namespace Hl7.Fhir.Specification.Tests
                     var path = typeElems[i].Path;
                     Assert.IsTrue(result[startPos + i].Path.EndsWith(path, StringComparison.OrdinalIgnoreCase));
                 }
+
             }
             else if (nameRef != null)
             {
@@ -531,13 +586,15 @@ namespace Hl7.Fhir.Specification.Tests
                 var pos = result.IndexOf(elem);
 
                 Debug.WriteLine("\r\nName Reference:");
+                Debug.Indent();
                 do
                 {
-                    Debug.WriteLine(Indent + nav.Path);
+                    Debug.WriteLine(nav.Path);
                     var srcPath = nav.Path.Substring(prefix.Length);
                     var tgtPath = result[++pos].Path.Substring(expandElemPath.Length);
                     Assert.AreEqual(srcPath, tgtPath);
                 } while (nav.MoveToNext());
+                Debug.Unindent();
             }
 
         }
