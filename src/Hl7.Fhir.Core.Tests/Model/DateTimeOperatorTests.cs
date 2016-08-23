@@ -33,12 +33,21 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(new Date("2016-05-02") != new Date("2016-05-03"));
             Assert.IsTrue(new Date("2016-05-02") != null);
             Assert.IsTrue(null != new FhirDateTime("2016-05-03"));
-            Assert.IsTrue(new Date("2016") != new Date(""));
-            Assert.IsTrue(new Date("") != new Date("2017"));
-            Assert.IsTrue(new Date("") == new Date(""));
+            Assert.IsTrue(new Date("2016") != new Date());
+            Assert.IsTrue(new Date() != new Date("2017"));
             Assert.IsTrue(new Date() == new Date());
             Assert.IsTrue((null as Date) == null);
         }
+
+        [TestMethod]
+        public void DateComparisonOperators()
+        {
+            Assert.IsTrue(new Date("2016-05") > new Date("2016-04"));
+            Assert.IsFalse(new Date("2016-05") > new Date());
+            Assert.IsTrue(new Date("2016-02") < new Date("2016-04"));
+            Assert.IsFalse(new Date("2016-05") < new Date());
+        }
+
 
         [TestMethod]
         public void DateTimeEqualityOperators()
@@ -48,9 +57,8 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(new FhirDateTime(2016, 5, 2) != new FhirDateTime(2016, 5, 3));
             Assert.IsTrue(new FhirDateTime(2016, 5, 2) != null);
             Assert.IsTrue(null != new FhirDateTime(2016, 5, 3));
-            Assert.IsTrue(new FhirDateTime("2016") != new FhirDateTime(""));
-            Assert.IsTrue(new FhirDateTime("") != new FhirDateTime("2017"));
-            Assert.IsTrue(new FhirDateTime("") == new FhirDateTime(""));
+            Assert.IsTrue(new FhirDateTime("2016") != new FhirDateTime());
+            Assert.IsTrue(new FhirDateTime() != new FhirDateTime("2017"));
             Assert.IsTrue(new FhirDateTime() == new FhirDateTime());
             Assert.IsTrue((null as FhirDateTime) == null);
 
@@ -94,9 +102,8 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(new Time("12:00:00") != new Time("00:00:00"));
             Assert.IsTrue(new Time("12:00:00") != null);
             Assert.IsTrue(null != new Time("12:00:00"));
-            Assert.IsTrue(new Time("12:00:00") != new Time(""));
-            Assert.IsTrue(new Time("") != new Time("12:00:00"));
-            Assert.IsTrue(new Time("") == new Time(""));
+            Assert.IsTrue(new Time("12:00:00") != new Time());
+            Assert.IsTrue(new Time() != new Time("12:00:00"));
             Assert.IsTrue(new Time() == new Time());
             Assert.IsTrue((null as Time) == null);
         }

@@ -118,6 +118,7 @@ namespace Hl7.Fhir.Model
 
             public const string OPERATIONOUTCOME_ISSUE_HIERARCHY = "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-hierarchy";
 
+            [NotMapped]
             public int HierarchyLevel
             {
                 get

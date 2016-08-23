@@ -114,10 +114,21 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var intermediate1Path = Path.Combine(baseTestPath, "intermediate1");
             Debug.WriteLine("Converting files in {0} to {1}", baseTestPath, intermediate1Path);
+            var sw = new Stopwatch();
+            sw.Start();
             convertFiles(examplePath, intermediate1Path);
+            sw.Stop();
+            Debug.WriteLine("Conversion took {0} seconds", sw.ElapsedMilliseconds / 1000);
+            sw.Reset();
+
             var intermediate2Path = Path.Combine(baseTestPath, "intermediate2");
             Debug.WriteLine("Re-converting files in {0} back to original format in {1}", intermediate1Path, intermediate2Path);
+            sw.Start();
             convertFiles(intermediate1Path, intermediate2Path);
+            sw.Stop();
+            Debug.WriteLine("Conversion took {0} seconds", sw.ElapsedMilliseconds / 1000);
+            sw.Reset();
+
             Debug.WriteLine("Comparing files in {0} to files in {1}", baseTestPath, intermediate2Path);
 
             List<string> errors = new List<string>();

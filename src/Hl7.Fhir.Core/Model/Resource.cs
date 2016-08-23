@@ -50,19 +50,22 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public Uri ResourceBase
         {
-            get {
-                object data;
-                var result = UserData.TryGetValue("@@@RESOURCEBASE@@@", out data);
-                if (result)
-                    return data as Uri;
-                else
-                    return null;
+            get
+            {
+                var bd = Annotation<ResourceBaseData>();
+                return bd != null ? bd.Base : null;
             }
 
             set
             {
-                UserData["@@@RESOURCEBASE@@@"] = value;
+                RemoveAnnotations<ResourceBaseData>();
+                AddAnnotation(new ResourceBaseData { Base = value } );
             }
+        }
+
+        private class ResourceBaseData
+        {
+            public Uri Base;
         }
 
         /// <summary>
