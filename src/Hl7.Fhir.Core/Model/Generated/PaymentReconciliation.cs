@@ -235,6 +235,7 @@ namespace Hl7.Fhir.Model
             }
 
 
+            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -354,6 +355,7 @@ namespace Hl7.Fhir.Model
             }
 
 
+            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -721,6 +723,7 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
+        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get

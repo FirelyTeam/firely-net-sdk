@@ -686,7 +686,6 @@
     </Content>
     <Content Include="Model\Generated\Template-Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Model.cs</LastGenOutput>
     </Content>
     <Content Include="Model\Generated\Template-Bindings.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

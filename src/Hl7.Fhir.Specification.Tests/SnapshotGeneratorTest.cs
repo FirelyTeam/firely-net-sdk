@@ -624,7 +624,8 @@ namespace Hl7.Fhir.Specification.Tests
             SnapshotBaseProfileHandler profileHandler = (sender, args) =>
             {
                 var profile = args.Profile;
-                Assert.AreEqual(sd, profile);
+                // Assert.AreEqual(sd, profile);
+                Assert.IsTrue(sd.IsExactly(profile)); // generateSnapshot clones the input
                 var baseProfile = args.BaseProfile;
                 Assert.IsNotNull(baseProfile);
                 Debug.WriteLine("StructureDefinition.Base = '{0}'".FormatWith(profile.Base));

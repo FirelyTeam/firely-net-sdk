@@ -277,6 +277,7 @@ namespace Hl7.Fhir.Model
             return true;
         }
 
+        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get

@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
         /// First returns child nodes inherited from any base class(es), recursively.
         /// Finally returns child nodes defined by the current class.
         /// </summary>
+        [NotMapped]
         public virtual IEnumerable<Base> Children { get { return Enumerable.Empty<Base>(); } }
     }
 }

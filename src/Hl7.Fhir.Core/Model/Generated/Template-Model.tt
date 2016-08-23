@@ -431,6 +431,7 @@ if(!abstractType) {
 		    // [WMR 20160818] START - implement generic properties collection
 #>
 
+            [NotMapped]
             public override IEnumerable<Base> Children
             {
                 get
@@ -636,6 +637,7 @@ if(!abstractType) {
 <#
 		// [WMR 20160818] START - implement generic properties collection
 #>
+        [NotMapped]
         public override IEnumerable<Base> Children
         {
             get
