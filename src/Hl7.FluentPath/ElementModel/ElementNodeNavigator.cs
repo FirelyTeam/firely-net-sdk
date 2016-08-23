@@ -7,8 +7,7 @@ using Hl7.FluentPath.Support;
 
 namespace Hl7.ElementModel
 {
- 
-    public class ElementNodeNavigator : IElementNavigator
+    public struct ElementNodeNavigator : IElementNavigator
     {
         private IList<IElementNode> _siblings;
         private int _index;
@@ -16,11 +15,6 @@ namespace Hl7.ElementModel
         public IElementNode Current
         {
             get { return _siblings[_index]; }
-        }
-
-
-        internal ElementNodeNavigator()
-        {
         }
 
         public ElementNodeNavigator(IElementNode wrapped)
