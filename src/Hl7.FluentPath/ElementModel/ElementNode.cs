@@ -45,6 +45,7 @@ namespace Hl7.ElementModel
 
         public IList<IElementNode> Children { get; private set; }
 
+
         public IElementNavigator ToNavigator()
         {
             return new ElementNodeNavigator(this);

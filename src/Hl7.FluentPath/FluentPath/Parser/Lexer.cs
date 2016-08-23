@@ -78,7 +78,7 @@ namespace Hl7.FluentPath.Parser
                                  ", RegexOptions.IgnorePatternWhitespace);
 
         public static readonly Parser<Hl7.FluentPath.Time> Time =
-            Parse.Regex(TimeRegEx).Select(s => Hl7.FluentPath.Time.Parse(s.Substring(1)));
+            Parse.Regex(TimeRegEx).Select(s => Hl7.FluentPath.Time.Parse(s.Substring(2)));
 
         // NUMBER
         //   : [0-9]+('.' [0-9]+)?

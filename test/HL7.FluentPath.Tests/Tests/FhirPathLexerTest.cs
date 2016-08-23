@@ -96,7 +96,7 @@ namespace Hl7.FluentPath.Tests
 
         private void SucceedsTime(Parser<Time> parser, string s)
         {
-            AssertParser.SucceedsMatch(parser, s, Time.Parse(s.Substring(1)));
+            AssertParser.SucceedsMatch(parser, s, Time.Parse(s.Substring(2)));
         }
 
         [Fact]

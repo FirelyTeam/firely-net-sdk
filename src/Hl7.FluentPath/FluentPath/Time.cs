@@ -25,7 +25,7 @@ namespace Hl7.FluentPath
             }
             catch
             {
-                throw new FormatException("Time value is in an invalid format, should conform to the time part (including the 'T') of ISO8601");
+                throw new FormatException("Time value is in an invalid format, should conform to the time part of ISO8601");
             }
 
             return new Time { _value = value };
@@ -47,12 +47,12 @@ namespace Hl7.FluentPath
 
         private static string toDTOParseable(string value)
         {
-            if (value.Length == 3)
+            if (value.Length == 2)
                 value += ":00";
-            if (value.Length == 6)
+            if (value.Length == 5)
                 value += ":00";
 
-            return "2016-01-01" + value;
+            return "2016-01-01T" + value;
         }
 
         

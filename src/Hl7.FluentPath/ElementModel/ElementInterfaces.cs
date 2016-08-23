@@ -8,11 +8,11 @@
 
 namespace Hl7.ElementModel
 {
-    public interface IElementNavigator : INavigator<IElementNavigator>, ITypeNameProvider, INamedNode, IValueProvider, IPositionProvider
+    public interface IElementNavigator : INavigator<IElementNavigator>, ITypeNameProvider, INamedNode, IValueProvider
     {
     }
 
-    public interface IElementNode : INode<IElementNode>, ITypeNameProvider, INamedNode, IValueProvider, IPositionProvider
+    public interface IElementNode : INode<IElementNode>, ITypeNameProvider, INamedNode, IValueProvider
     {
     }
 }

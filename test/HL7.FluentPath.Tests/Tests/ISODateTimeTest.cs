@@ -47,16 +47,16 @@ namespace Hl7.FluentPath.Tests
         [Fact]
         public void TimeConstructor()
         {
-            Time.Parse("T12:34:44+02:00");
-            Time.Parse("T12:34:44");
-            Time.Parse("T12:34:44Z");
+            Time.Parse("12:34:44+02:00");
+            Time.Parse("12:34:44");
+            Time.Parse("12:34:44Z");
 
             Time pd;
-            Assert.True(Time.TryParse("T12:34:44Z", out pd));
-            Assert.Equal(pd, Time.Parse("T12:34:44Z"));
-            Assert.Equal("T12:34:44Z", pd.ToString());
+            Assert.True(Time.TryParse("12:34:44Z", out pd));
+            Assert.Equal(pd, Time.Parse("12:34:44Z"));
+            Assert.Equal("12:34:44Z", pd.ToString());
 
-            Assert.False(Time.TryParse("12:34:44Z", out pd));
+            Assert.False(Time.TryParse("92:34:44Z", out pd));
         }
 
         [Fact]
@@ -65,9 +65,9 @@ namespace Hl7.FluentPath.Tests
             Assert.True(PartialDateTime.Parse("2012-03-04T13:00:00Z") > PartialDateTime.Parse("2012-03-04T12:00:00Z"));
             Assert.True(PartialDateTime.Parse("2012-03-04T13:00:00Z") < PartialDateTime.Parse("2012-03-04T18:00:00+02:00"));
 
-            Assert.True(Time.Parse("T12:34:00+00:00") > Time.Parse("T12:33:55+00:00"));
-            Assert.True(Time.Parse("T13:00:00+00:00") < Time.Parse("T15:01:00+02:00"));
-            Assert.True(Time.Parse("T13:00:00+00:00") > Time.Parse("T14:59:00+02:00"));
+            Assert.True(Time.Parse("12:34:00+00:00") > Time.Parse("12:33:55+00:00"));
+            Assert.True(Time.Parse("13:00:00+00:00") < Time.Parse("15:01:00+02:00"));
+            Assert.True(Time.Parse("13:00:00+00:00") > Time.Parse("14:59:00+02:00"));
         }
 
         [Fact]
@@ -80,9 +80,9 @@ namespace Hl7.FluentPath.Tests
             Assert.True(PartialDateTime.Parse("2015-01-01T13:40:50+00:10") != PartialDateTime.Parse("2015-01-01T13:40:50Z"));
             Assert.True(PartialDateTime.Parse("2015-01-01T13:40:50+00:10") != PartialDateTime.Parse("2015-01-01"));
 
-            Assert.True(Time.Parse("T13:45:02Z") == Time.Parse("T13:45:02+00:00"));
-            Assert.True(Time.Parse("T13:45:02+01:00") == Time.Parse("T13:45:02+01:00"));
-            Assert.True(Time.Parse("T13:45:02+00:00") != Time.Parse("T13:45:02+01:00"));
+            Assert.True(Time.Parse("13:45:02Z") == Time.Parse("13:45:02+00:00"));
+            Assert.True(Time.Parse("13:45:02+01:00") == Time.Parse("13:45:02+01:00"));
+            Assert.True(Time.Parse("13:45:02+00:00") != Time.Parse("13:45:02+01:00"));
         }
     }
 }

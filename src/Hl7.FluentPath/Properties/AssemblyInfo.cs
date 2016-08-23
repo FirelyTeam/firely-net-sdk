@@ -20,4 +20,8 @@ using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
 
+#if RELEASE
+[assembly: AssemblyKeyFileAttribute(@"c:\git\fhir-net-api\src\FhirNetApi.snk")]
+#else
 [assembly: InternalsVisibleTo("Hl7.FluentPath.Tests")]
+#endif

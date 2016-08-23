@@ -3,9 +3,11 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Hl7.FluentPath.Support;
 
 namespace Hl7.ElementModel
 {
+ 
     public class ElementNodeNavigator : IElementNavigator
     {
         private IList<IElementNode> _siblings;
@@ -17,7 +19,7 @@ namespace Hl7.ElementModel
         }
 
 
-        private ElementNodeNavigator()
+        internal ElementNodeNavigator()
         {
         }
 
@@ -72,10 +74,10 @@ namespace Hl7.ElementModel
 
         public bool MoveToFirstChild()
         {
-            if(Current.Children != null && Current.Children.Any())
+            if (Current.Children != null && Current.Children.Any())
             {
-                _index = 0;
                 _siblings = Current.Children;
+                _index = 0;
                 return true;
             }
 
@@ -84,7 +86,7 @@ namespace Hl7.ElementModel
 
         public bool MoveToNext()
         {
-            if(_siblings.Count > _index+1)
+            if (_siblings.Count > _index + 1)
             {
                 _index += 1;
                 return true;

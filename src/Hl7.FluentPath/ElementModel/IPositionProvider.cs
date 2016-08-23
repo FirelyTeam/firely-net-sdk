@@ -4,19 +4,12 @@ using System.Collections.Generic;
 
 namespace Hl7.ElementModel
 {
-
-    public interface IPositionProvider
-    {
-        // By FluentPath position
-    }
-
-
-    public interface IUnparsedSource
+    public interface ITextSource
     {
         string OriginalText { get; }
 
-        int Line { get; }
-        int Pos { get; }
+        int SpanStart { get; }
+        int SpanEnd { get; }
     }
 
 }

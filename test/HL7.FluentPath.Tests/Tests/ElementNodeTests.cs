@@ -78,6 +78,8 @@ namespace Hl7.FluentPath.Tests
             Assert.Equal(nav.Name, "id");
             Assert.True(nav.MoveToNext());
             Assert.Equal(nav.Name, "extension");
+            Assert.True(nav.MoveToFirstChild());
+            Assert.Equal(nav.Name, "value");
         }
     }
 }
