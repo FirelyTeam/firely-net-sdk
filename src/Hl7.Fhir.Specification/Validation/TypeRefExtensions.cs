@@ -21,8 +21,8 @@ namespace Hl7.Fhir.Validation
         {
             var result = typeRef.Code.GetLiteral();
 
-            if (typeRef.Profile != null)
-                result += " ({0})".FormatWith(typeRef.Profile);
+            if (typeRef.Profile.Any())
+                result += " ({0})".FormatWith(typeRef.Profile.First());
 
             return result;
         }

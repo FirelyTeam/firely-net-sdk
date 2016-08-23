@@ -42,8 +42,8 @@ namespace Hl7.Fhir.Validation
         {
             var data = ElementNode.Node("active").ToNavigator();
 
-            var validator = new Validator(boolDefNav, data, null);
-            var result = validator.Validate();
+            var validator = new Validator(null);
+            var result = validator.ValidateElement(boolDefNav, data);
             Assert.IsFalse(result.Success);
             Assert.IsTrue(result.ToString().Contains("must not be empty"));
         }
@@ -54,11 +54,11 @@ namespace Hl7.Fhir.Validation
         {
             var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral()).ToNavigator();
 
-            Assert.IsTrue(InstanceToProfileMatcher.NameMatches("active", data));
-            Assert.IsTrue(InstanceToProfileMatcher.NameMatches("activeBoolean", data));
-            Assert.IsFalse(InstanceToProfileMatcher.NameMatches("activeDateTime", data));
-            Assert.IsTrue(InstanceToProfileMatcher.NameMatches("active[x]", data));
-            Assert.IsFalse(InstanceToProfileMatcher.NameMatches("activate", data));
+            Assert.IsTrue(ChildNameMatcher.NameMatches("active", data));
+            Assert.IsTrue(ChildNameMatcher.NameMatches("activeBoolean", data));
+            Assert.IsFalse(ChildNameMatcher.NameMatches("activeDateTime", data));
+            Assert.IsTrue(ChildNameMatcher.NameMatches("active[x]", data));
+            Assert.IsFalse(ChildNameMatcher.NameMatches("activate", data));
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Validation
                     ElementNode.Node("extension",
                         ElementNode.Valued("value", 4, "integer"))).ToNavigator();
 
-            var matches = InstanceToProfileMatcher.Match(boolDefNav, data);
+            var matches = ChildNameMatcher.Match(boolDefNav, data);
             Assert.IsFalse(matches.UnmatchedInstanceElements.Any());
             Assert.AreEqual(3, matches.Matches.Count());        // id, extension, value
             Assert.AreEqual(0, matches.Matches[0].InstanceElements.Count()); // id
@@ -93,8 +93,8 @@ namespace Hl7.Fhir.Validation
         {
             var data = ElementNode.Valued("active", "invalid", FHIRDefinedType.Boolean.GetLiteral()).ToNavigator();
 
-            var validator = new Validator(boolDefNav, data, ctx);
-            var report = validator.Validate();
+            var validator = new Validator(ctx);
+            var report = validator.ValidateElement(boolDefNav, data);
             var x = report;
         }
 
@@ -104,8 +104,8 @@ namespace Hl7.Fhir.Validation
         {
             var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral()).ToNavigator();
 
-            var validator = new Validator(boolDefNav, data, ctx);
-            var report = validator.Validate();
+            var validator = new Validator(ctx);
+            var report = validator.ValidateElement(boolDefNav, data);
         }
 
 
@@ -113,15 +113,15 @@ namespace Hl7.Fhir.Validation
         public void ValidateCardinality()
         {
             var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral(),
-                    ElementNode.Valued("id", "myId1"),
-                    ElementNode.Valued("id", "myId2"),
-                    ElementNode.Node("extension",
-                        ElementNode.Valued("value", 4, "integer")),
-                    ElementNode.Node("extension",
-                        ElementNode.Valued("value", "world!", "string"))).ToNavigator();
+                        ElementNode.Valued("id", "myId1"),
+                        ElementNode.Valued("id", "myId2"),
+                        ElementNode.Node("extension",
+                            ElementNode.Valued("value", 4, "integer")),
+                        ElementNode.Node("extension",
+                            ElementNode.Valued("value", "world!", "string"))).ToNavigator();
 
-            var validator = new Validator(boolDefNav, data, ctx);
-            var report = validator.Validate();
+            var validator = new Validator(ctx);
+            var report = validator.ValidateElement(boolDefNav,data);
         }
     }
 

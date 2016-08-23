@@ -29,6 +29,14 @@ namespace Hl7.Fhir.Validation
             outcome.Issue.AddRange(issues);
         }
 
+        public static void Add(this OperationOutcome outcome, OperationOutcome other)
+        {
+            foreach (var issue in other.Issue)
+            {
+                var myIssue = (OperationOutcome.IssueComponent)issue.DeepCopy();
+                outcome.AddIssue(myIssue);
+            }
+        }
         public static void Include(this OperationOutcome outcome, OperationOutcome other)
         {
             foreach(var issue in other.Issue)

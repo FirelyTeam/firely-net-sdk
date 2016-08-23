@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Validation
         // Content errors
         public static readonly Issue CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN = def(1000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN = def(1001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_ELEMENT_HAS_UNKNOWN_TYPE = def(1002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+//        public static readonly Issue CONTENT_ELEMENT_HAS_UNKNOWN_TYPE = def(1002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_HAS_INCORRECT_TYPE = def(1003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_MUST_MATCH_TYPE = def(1004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_VALUE_TOO_LONG = def(1005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);

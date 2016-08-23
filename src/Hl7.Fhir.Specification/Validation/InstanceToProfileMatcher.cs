@@ -11,7 +11,7 @@ using Hl7.ElementModel;
 namespace Hl7.Fhir.Validation
 {
 
-    internal class InstanceToProfileMatcher
+    internal class ChildNameMatcher
     {
         public static MatchResult Match(ElementDefinitionNavigator definitionParent, IElementNavigator instanceParent)
         {
@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Validation
 
                 // Special case is the .value of a primitive fhir type, this is represented
                 // as the "Value" of the IValueProvider interface, not as a real child
-                if (definitionElement.Current.IsPrimitiveValuePath())
+                if (definitionElement.Current.IsPrimitiveValueConstraint())
                 {
                     if (instanceParent.Value != null)
                         match.InstanceElements.Add( instanceParent );
