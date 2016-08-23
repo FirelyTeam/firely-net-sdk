@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            outcome.Info("Start validation against definition path '{0}'".FormatWith(definition.QualifiedDefinitionPath()), Issue.PROCESSING_PROGRESS, instance);
+            outcome.Info("Start validation of ElementDefinition at path '{0}'".FormatWith(definition.QualifiedDefinitionPath()), Issue.PROCESSING_PROGRESS, instance);
 
             // Any node must either have a value, or children, or both (e.g. extensions on primitives)
             if (!outcome.Verify(() => instance.Value != null || instance.HasChildren(), "Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance))
@@ -196,9 +196,9 @@ namespace Hl7.Fhir.Validation
         internal OperationOutcome ValidateChildConstraints(ElementDefinitionNavigator definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
-            outcome.Info("Start validation of inlined child constraints", Issue.PROCESSING_PROGRESS, instance);
-
             if (!definition.HasChildren) return outcome;
+
+            outcome.Info("Start validation of inlined child constraints for '{0}'".FormatWith(definition.Path), Issue.PROCESSING_PROGRESS, instance);
 
             var matchResult = ChildNameMatcher.Match(definition, instance);
 
@@ -273,9 +273,16 @@ namespace Hl7.Fhir.Validation
 
             outcome.Verify(() => !definition.Type.Select(tr => tr.Code).Contains(null), "ElementDefinition contains a type with an empty type code", Issue.PROFILE_ELEMENTDEF_CONTAINS_NULL_TYPE, instance);
 
-            var types = definition.Type.Where(tr => tr.Code != null);
+            if (definition.IsRootElementDefinition())
+            {
+                // This is a root element, in which the specified type is its base, and this snapshot already contains those constraints
+                // as children, so we can save on processing time
+                outcome.Info("This is a root ElementDefinition, skipped validation of base type ", Issue.PROCESSING_PROGRESS, instance);
+                return outcome;                
+            }
 
             // Check if this is a choice: there are multiple distinct Codes to choose from
+            var types = definition.Type.Where(tr => tr.Code != null);
             var choices = types.Select(tr => tr.Code.GetLiteral()).Distinct().ToList();
 
             if (choices.Count() > 1)
@@ -301,17 +308,17 @@ namespace Hl7.Fhir.Validation
                 outcome.Verify(() => choices.Any(), "ElementDefinition does not specify a type to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE, instance);
             }
 
-            if (!outcome.Success)
-            {
-                string message = "Contents of the element could not be validated against ";
+            //if (!outcome.Success)
+            //{
+            //    string message = "Contents of the element could not be validated against ";
 
-                if (choices.Count() == 1)
-                    message += "any of the given type/profiles for the type '{0}'".FormatWith(choices.Single());
-                else
-                    message += "any of the '{0}' types given in the choice".FormatWith(instance.TypeName);
+            //    if (choices.Count() == 1)
+            //        message += "any of the given type/profiles for the type '{0}'".FormatWith(choices.Single());
+            //    else
+            //        message += "any of the '{0}' types given in the choice".FormatWith(instance.TypeName);
 
-                outcome.Verify(() => outcome.Success, message, Issue.CONTENT_ELEMENT_MUST_MATCH_TYPE, instance);
-            }
+            //    outcome.Verify(() => outcome.Success, message, Issue.CONTENT_ELEMENT_MUST_MATCH_TYPE, instance);
+            //}
 
             return outcome;
         }
@@ -415,7 +422,7 @@ namespace Hl7.Fhir.Validation
                         //TODO: Is ToString() really the right way to turn (Fhir?) Primitives back into their original representation?
                         //If the source is POCO, hopefully FHIR types have all overloaded ToString() 
                         var serializedValue = instance.Value.ToString();
-                        outcome.Verify(() => serializedValue.Length > maxLength, "Value '{0}' is too long (maximum length is {1})".FormatWith(serializedValue, maxLength),
+                        outcome.Verify(() => serializedValue.Length <= maxLength, "Value '{0}' is too long (maximum length is {1})".FormatWith(serializedValue, maxLength),
                             Issue.CONTENT_ELEMENT_VALUE_TOO_LONG, instance);
                     }
                 }
@@ -461,6 +468,11 @@ namespace Hl7.Fhir.Validation
             return path.Count(c => c == '.') == 1 &&
                         path.EndsWith(".value") &&
                         Char.IsLower(path[0]);
+        }
+
+        public static bool IsRootElementDefinition(this ElementDefinition ed)
+        {
+            return !ed.Path.Contains('.');
         }
 
         public static string QualifiedDefinitionPath(this ElementDefinitionNavigator nav)

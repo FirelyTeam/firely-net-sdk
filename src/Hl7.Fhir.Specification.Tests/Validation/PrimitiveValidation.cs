@@ -122,6 +122,8 @@ namespace Hl7.Fhir.Validation
 
             var validator = new Validator(ctx);
             var report = validator.ValidateElement(boolDefNav,data);
+
+            Assert.AreEqual(3, report.ListErrors().Count());
         }
     }
 
