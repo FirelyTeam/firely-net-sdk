@@ -9,6 +9,7 @@
 using Hl7.ElementModel;
 using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -26,26 +27,63 @@ namespace Hl7.Fhir.Validation
 
             if (definition.Fixed != null)
             {
-                // Construct an IValueProvider based on the POCO parsed from profileElement.fixed/pattern etc.
                 IElementNavigator fixedValueNav = new PocoNavigator(definition.Fixed);
 
                 outcome.Verify(() => instance.IsExactlyEqualTo(fixedValueNav), "Value is not exactly equal to fixed value '{0}'"
-                            .FormatWith(definition.Fixed.ToString()), Issue.CONTENT_DOES_NOT_MATCH_FIXED_VALUE, instance);
+                            .FormatWith(toReadable(definition.Fixed)), Issue.CONTENT_DOES_NOT_MATCH_FIXED_VALUE, instance);
+            }
+
+            return outcome;
+        }
+
+        public static OperationOutcome ValidatePattern(this Validator v, ElementDefinition definition, IElementNavigator instance)
+        {
+            var outcome = new OperationOutcome();
+
+            if (definition.Pattern != null)
+            {
+                IElementNavigator patternValueNav = new PocoNavigator(definition.Pattern);
+
+                outcome.Verify(() => instance.Matches(patternValueNav), "Value does not match pattern '{0}'"
+                            .FormatWith(toReadable(definition.Pattern), "pattern"), Issue.CONTENT_DOES_NOT_MATCH_PATTERN_VALUE, instance);
             }
 
             return outcome;
         }
 
 
-        public static bool IsExactlyEqualTo(this IEnumerable<IElementNavigator> left, IEnumerable<IElementNavigator> right)
+        private static string toReadable(Base value)
         {
-            if (left.Count() != right.Count()) return false;
-
-            return left.Zip(right, (l, r) => l.IsExactlyEqualTo(r)).All(x => x);
+            if (value is Primitive)
+                return value.ToString();
+            else
+                return FhirSerializer.SerializeToJson(value, root: value.TypeName);
         }
+
+        public static bool IsExactlyEqualTo(this IElementNavigator left, IElementNavigator right)
+        {
+            if (left == null && right == null) return true;
+            if (left == null || right == null) return false;
+
+            if (!ValueEquality(left.Value, right.Value)) return false;
+
+            // Compare the children.
+            var childrenL = left.Children();
+            var childrenR = right.Children();
+
+            if (childrenL.Count() != childrenR.Count()) return false;
+
+            return childrenL.Zip(childrenR, 
+                            (childL, childR) => childL.Name == childR.Name && childL.IsExactlyEqualTo(childR)).All(t => t);
+        }
+
 
         public static bool ValueEquality<T1, T2>(T1 val1, T2 val2)
         {
+            // Compare the value
+            if (val1 == null && val2 == null) return true;
+            if (val1 == null || val2 == null) return false;
+
             try
             {
                 // convert val2 to type of val1.
@@ -60,29 +98,22 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        public static bool IsExactlyEqualTo(this IElementNavigator left, IElementNavigator right)
+
+
+        public static bool Matches(this IElementNavigator value, IElementNavigator pattern)
         {
-            if (left == null && right == null) return true;
-            if (left == null || right == null) return false;
+            if (value == null && pattern == null) return true;
+            if (value == null || pattern == null) return false;
             
-            var l = left.Value;
-            var r = right.Value;
-
-            // Compare the value
-            if (l == null && r != null) return false;
-            if (l != null && r == null) return false;
-
-            if (l != null && r != null)
-                if (!ValueEquality(l, r)) return false;
+            if (!ValueEquality(value.Value, pattern.Value)) return false;
 
             // Compare the children.
-            var childrenL = left.Children();
-            var childrenR = right.Children();
+            var valueChildren = value.Children();
+            var patternChildren = pattern.Children();
 
-            bool allNamesAreEqual = childrenL.Zip(childrenR, (childL, childR) => childL.Name == childR.Name).All(t => t);
+            return patternChildren.All(patternChild => valueChildren.Any(valueChild =>
+                  patternChild.Name == valueChild.Name && valueChild.Matches(patternChild)));
 
-            return allNamesAreEqual &&
-                    childrenL.IsExactlyEqualTo(childrenR);    // NOTE: Assumes null will never be returned when any() children exist
         }
     }
 }

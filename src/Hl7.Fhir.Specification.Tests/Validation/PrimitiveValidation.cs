@@ -20,36 +20,20 @@ namespace Hl7.Fhir.Validation
         public void SetupSource()
         {
             source = new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/validation", includeSubdirectories: true));
-
-            var patient = source.GetStructureDefinitionForCoreType(Model.FHIRDefinedType.Patient);
-            patientDefNav = ElementDefinitionNavigator.ForSnapshot(patient);
-            patientDefNav.MoveToFirstChild();
-
-            var extension = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Extension);
-            extensionDefNav = ElementDefinitionNavigator.ForSnapshot(extension);
-            extensionDefNav.MoveToFirstChild();
-
-            var boolean = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
-            boolDefNav = ElementDefinitionNavigator.ForSnapshot(boolean);
-            boolDefNav.MoveToFirstChild();
-
-            ctx = new ValidationContext() { ArtifactSource = source };
+            var ctx = new ValidationContext() { ArtifactSource = source };
+            validator = new Validator(ctx);
         }
 
         IArtifactSource source;
-        ValidationContext ctx;
-
-        ElementDefinitionNavigator patientDefNav;
-        ElementDefinitionNavigator boolDefNav;
-        ElementDefinitionNavigator extensionDefNav;
+        Validator validator;
 
         [TestMethod]
         public void TestEmptyElement()
         {
+            var boolSD = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
             var data = ElementNode.Node("active").ToNavigator();
 
-            var validator = new Validator(null);
-            var result = validator.ValidateElement(boolDefNav, data);
+            var result = validator.Validate(boolSD, data);
             Assert.IsFalse(result.Success);
             Assert.IsTrue(result.ToString().Contains("must not be empty"));
         }
@@ -70,6 +54,10 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void PrimitiveChildMatching()
         {
+            var boolean = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
+            var boolDefNav = ElementDefinitionNavigator.ForSnapshot(boolean);
+            boolDefNav.MoveToFirstChild();
+
             var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral(),
                     ElementNode.Node("extension",
                         ElementNode.Valued("value", 4, "integer"))).ToNavigator();
@@ -92,18 +80,15 @@ namespace Hl7.Fhir.Validation
         public void ValidatePrimitiveValue()
         {
             var def = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Oid);
-            var validator = new Validator(ctx);
 
             var instance = new Oid("1.2.3.4.q");
             var report = validator.Validate(def, instance);
-
             Assert.IsFalse(report.Success);
             Assert.AreEqual(1, report.Errors);
             Assert.AreEqual(0, report.Warnings);
 
             instance = new Oid("1.2.3.4");
             report = validator.Validate(def, instance);
-
             Assert.IsTrue(report.Success);
             Assert.AreEqual(0, report.Errors);
             Assert.AreEqual(0, report.Warnings);
@@ -113,6 +98,7 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void ValidateCardinality()
         {
+            var boolSD = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
             var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral(),
                         ElementNode.Valued("id", "myId1"),
                         ElementNode.Valued("id", "myId2"),
@@ -121,9 +107,7 @@ namespace Hl7.Fhir.Validation
                         ElementNode.Node("extension",
                             ElementNode.Valued("value", "world!", "string"))).ToNavigator();
 
-            var validator = new Validator(ctx);
-            var report = validator.ValidateElement(boolDefNav,data);
-
+            var report = validator.Validate(boolSD, data);
             Assert.AreEqual(3, report.ListErrors().Count());
         }
 
@@ -134,7 +118,6 @@ namespace Hl7.Fhir.Validation
 
             var extensionInstance = new Extension("http://some.org/testExtension", new Oid("1.2.3.4.5"));
 
-            var validator = new Validator(ctx);
             var report = validator.Validate(extensionSD, extensionInstance);
 
             Assert.AreEqual(0, report.Errors);
@@ -159,20 +142,20 @@ namespace Hl7.Fhir.Validation
             var instance = new Identifier("http://clearly.incorrect.nl/definition", "1234");
 
             var validationContext = new ValidationContext { ArtifactSource = source, GenerateSnapshot = false };
-            var validator = new Validator(validationContext);
+            var automatedValidator = new Validator(validationContext);
 
-            var report = validator.Validate(identifierBSN, instance);
+            var report = automatedValidator.Validate(identifierBSN, instance);
             Assert.IsTrue(report.ToString().Contains("does not include a snapshot"));
 
             validationContext.GenerateSnapshot = true;
-            report = validator.Validate(identifierBSN, instance);
+            report = automatedValidator.Validate(identifierBSN, instance);
             Assert.IsFalse(report.ToString().Contains("does not include a snapshot"));
 
             bool snapshotNeedCalled = false;
 
-            validator.OnSnapshotNeeded += (object s, OnSnapshotNeededEventArgs a) => { snapshotNeedCalled = true;  /* change nothing, warning should return */ };
+            automatedValidator.OnSnapshotNeeded += (object s, OnSnapshotNeededEventArgs a) => { snapshotNeedCalled = true;  /* change nothing, warning should return */ };
 
-            report = validator.Validate(identifierBSN, instance);
+            report = automatedValidator.Validate(identifierBSN, instance);
             Assert.IsTrue(snapshotNeedCalled);
             Assert.IsTrue(report.ToString().Contains("does not include a snapshot"));
         }
@@ -181,33 +164,74 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void ValidatesFixedValue()
         {
-            var context = new ValidationContext { ArtifactSource = source, GenerateSnapshot = true };
-            var validator = new Validator(context);
+            var patientSD = (StructureDefinition)source.GetStructureDefinitionForCoreType(FHIRDefinedType.Patient);
 
-            var instance1 = new Identifier("http://clearly.incorrect.nl/definition", "1234");
+            var instance1 = new CodeableConcept("http://this.isa.test.nl/definition", "1234");
+            instance1.Text = "This is fixed too";
 
-            var report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN", instance1);
+            var maritalStatusElement = patientSD.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
+            maritalStatusElement.Fixed = (CodeableConcept)instance1.DeepCopy();
+
+            var patient = new Patient();
+            patient.MaritalStatus = instance1;
+
+            var report = validator.Validate(patientSD, patient);
+            Assert.AreEqual(0, report.Errors);
+
+            patient.MaritalStatus.Text = "This is incorrect";
+            report = validator.Validate(patientSD, patient);
             Assert.AreEqual(1, report.Errors);
 
-            instance1.System = "urn:oid:2.16.840.1.113883.2.4.6.3";
-
-            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN", instance1);
+            patient.MaritalStatus.Text = "This is fixed too";
+            report = validator.Validate(patientSD, patient);
             Assert.AreEqual(0, report.Errors);
 
-            var weirdSD = (StructureDefinition)source.GetStructureDefinitionForCoreType(FHIRDefinedType.Identifier).DeepCopy();
+            patient.MaritalStatus.Coding.Add(new Coding("http://this.isa.test.nl/definition", "5678"));
+            report = validator.Validate(patientSD, patient);
+            Assert.AreEqual(1, report.Errors);
 
-            // Looks a bit weird, but by setting a complex fixed value on the root
-            // we actually limit all instances of the type to that single fixed value
-            weirdSD.Snapshot.Element[0].Fixed = (Identifier)instance1.DeepCopy();
+            patient.MaritalStatus.Coding.RemoveAt(1);
+            report = validator.Validate(patientSD, patient);
+            Assert.AreEqual(0, report.Errors);
+        }
 
-            // Should still have 0 errors, since the fixed == the instance
-            report = validator.Validate(weirdSD, instance1);
+        [TestMethod]
+        public void ValidatesPatternValue()
+        {
+            var patientSD = (StructureDefinition)source.GetStructureDefinitionForCoreType(FHIRDefinedType.Patient);
+
+            var instance1 = new CodeableConcept("http://this.isa.test.nl/definition", "1234");
+
+            var maritalStatusElement = patientSD.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
+            maritalStatusElement.Pattern = (CodeableConcept)instance1.DeepCopy();
+
+            var patient = new Patient();
+            patient.MaritalStatus = instance1;
+
+            var report = validator.Validate(patientSD, patient);
             Assert.AreEqual(0, report.Errors);
 
-            instance1.System = "http://clearly.another.mistake/definition";
-            report = validator.Validate(weirdSD, instance1);
+            patient.MaritalStatus.Text = "This is irrelevant";
+            report = validator.Validate(patientSD, patient);
+            Assert.AreEqual(0, report.Errors);
+
+            ((CodeableConcept)maritalStatusElement.Pattern).Text = "Not anymore";
+            report = validator.Validate(patientSD, patient);
+            Assert.AreEqual(1, report.Errors);
+
+            patient.MaritalStatus.Text = "Not anymore";
+            report = validator.Validate(patientSD, patient);
+            Assert.AreEqual(0, report.Errors);
+
+            patient.MaritalStatus.Coding.Insert(0,new Coding("http://this.isa.test.nl/definition", "5678"));
+            report = validator.Validate(patientSD, patient);
+            Assert.AreEqual(0, report.Errors);
+
+            patient.MaritalStatus.Coding.RemoveAt(1);
+            report = validator.Validate(patientSD, patient);
             Assert.AreEqual(1, report.Errors);
         }
+
 
         //TODO: Could check whether we handle "typeslices" correctly, where
         //typeslices are done without slicing, just having multiple typerefs, which nested

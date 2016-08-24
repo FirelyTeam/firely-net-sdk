@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Validation
 
             // Min/max (cardinality) has been validated by parent, we cannot know down here
             outcome.Add(this.ValidateFixed(elementConstraints, instance));
-            outcome.Add(ValidatePattern(elementConstraints, instance));
+            outcome.Add(this.ValidatePattern(elementConstraints, instance));
             outcome.Add(ValidateMinValue(elementConstraints, instance));
             // outcome.Add(ValidateMaxValue(elementConstraints, instance));
             outcome.Add(ValidateMaxLength(elementConstraints, instance));
@@ -390,34 +390,14 @@ namespace Hl7.Fhir.Validation
             // type? Would it convert it to a .NET native type? How to check?
 
             // The spec has no regexes for the primitives mentioned below, so don't check them
-            bool hasRegEx = !(new[] { "uri", "string" }).Contains(definition.GetParentNameFromPath());
+            bool hasSingleRegExForValue = definition.Type.Count() == 1 && definition.Type.First().GetPrimitiveValueRegEx() != null;
 
-            if (hasRegEx)
+            if (hasSingleRegExForValue)
             {
-                bool hasSingleRegExForValue = definition.Type.Count() == 1 && definition.Type.First().GetPrimitiveValueRegEx() != null;
-
-                if (outcome.Verify(() => hasSingleRegExForValue, "No single regex to validate the primitive value against found at '{0}'"
-                            .FormatWith(definition.Path), Issue.PROFILE_ELEMENTDEF_NO_PRIMITIVE_REGEX, instance))
-                {
-                    var primitiveRegEx = definition.Type.First().GetPrimitiveValueRegEx();
-                    var value = instance.Value.ToString();
-                    var success = Regex.Match(value, "^" + primitiveRegEx + "$").Success;
-                    outcome.Verify(() => success, "Primitive value '{0}' does not match regex '{1}'".FormatWith(value, primitiveRegEx), Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
-                }
-            }
-
-            return outcome;
-        }
-
-        internal OperationOutcome ValidatePattern(ElementDefinition definition, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-            if (definition.Pattern != null)
-            {
-                // Construct an IValueProvider based on the POCO parsed from profileElement.fixed/pattern etc.
-                //IElementNavigator fixedValueNav = new PocoNavigator(Definition.Fixed);
-                //return  Compare(fixedValueNav, Instance, mode: Fixed);
-
+                var primitiveRegEx = definition.Type.First().GetPrimitiveValueRegEx();
+                var value = instance.Value.ToString();
+                var success = Regex.Match(value, "^" + primitiveRegEx + "$").Success;
+                outcome.Verify(() => success, "Primitive value '{0}' does not match regex '{1}'".FormatWith(value, primitiveRegEx), Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
             }
 
             return outcome;
