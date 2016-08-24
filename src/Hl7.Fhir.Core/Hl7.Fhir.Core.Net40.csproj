@@ -549,7 +549,6 @@
     <Compile Include="Model\ModelInfo.cs" />
     <Compile Include="Model\Oid.cs" />
     <Compile Include="Model\OperationOutcome.cs" />
-    <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\PositiveInt.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
     <Compile Include="Model\Generated\Template-Bindings.cs">

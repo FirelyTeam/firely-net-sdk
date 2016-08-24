@@ -68,6 +68,35 @@ namespace Hl7.Fhir.Model
             }
         }
 
+
+        [NotMapped]
+        public int Fatals
+        {
+            get
+            {
+                return Issue.Where(i => i.Severity == IssueSeverity.Fatal).Count();
+            }
+        }
+
+        [NotMapped]
+        public int Errors
+        {
+            get
+            {
+                return Issue.Where(i => i.Severity == IssueSeverity.Error).Count();
+            }
+        }
+
+        [NotMapped]
+        public int Warnings
+        {
+            get
+            {
+                return Issue.Where(i => i.Severity == IssueSeverity.Warning).Count();
+            }
+        }
+
+
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public partial class IssueComponent
         {

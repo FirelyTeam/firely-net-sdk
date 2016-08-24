@@ -1,4 +1,5 @@
 ﻿using Hl7.ElementModel;
+using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
@@ -18,24 +19,29 @@ namespace Hl7.Fhir.Validation
         [TestInitialize]
         public void SetupSource()
         {
-            source = ArtifactResolver.CreateOffline();
+            source = new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/validation", includeSubdirectories: true));
 
             var patient = source.GetStructureDefinitionForCoreType(Model.FHIRDefinedType.Patient);
             patientDefNav = ElementDefinitionNavigator.ForSnapshot(patient);
             patientDefNav.MoveToFirstChild();
 
+            var extension = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Extension);
+            extensionDefNav = ElementDefinitionNavigator.ForSnapshot(extension);
+            extensionDefNav.MoveToFirstChild();
+
             var boolean = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
             boolDefNav = ElementDefinitionNavigator.ForSnapshot(boolean);
             boolDefNav.MoveToFirstChild();
 
-            ctx = new MyValidationContext() { ArtifactSource = source };
+            ctx = new ValidationContext() { ArtifactSource = source };
         }
 
         IArtifactSource source;
-        IValidationContext ctx;
+        ValidationContext ctx;
 
         ElementDefinitionNavigator patientDefNav;
         ElementDefinitionNavigator boolDefNav;
+        ElementDefinitionNavigator extensionDefNav;
 
         [TestMethod]
         public void TestEmptyElement()
@@ -82,30 +88,25 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private class MyValidationContext : IValidationContext
-        {
-            public IArtifactSource ArtifactSource { get; set; }
-        }
-
-
         [TestMethod]
         public void ValidatePrimitiveValue()
         {
-            var data = ElementNode.Valued("active", "invalid", FHIRDefinedType.Boolean.GetLiteral()).ToNavigator();
-
+            var def = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Oid);
             var validator = new Validator(ctx);
-            var report = validator.ValidateElement(boolDefNav, data);
-            var x = report;
-        }
 
+            var instance = new Oid("1.2.3.4.q");
+            var report = validator.Validate(def, instance);
 
-        [TestMethod]
-        public void ValidateCardinalityInPrimtive()
-        {
-            var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral()).ToNavigator();
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(1, report.Errors);
+            Assert.AreEqual(0, report.Warnings);
 
-            var validator = new Validator(ctx);
-            var report = validator.ValidateElement(boolDefNav, data);
+            instance = new Oid("1.2.3.4");
+            report = validator.Validate(def, instance);
+
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(0, report.Errors);
+            Assert.AreEqual(0, report.Warnings);
         }
 
 
@@ -125,6 +126,60 @@ namespace Hl7.Fhir.Validation
 
             Assert.AreEqual(3, report.ListErrors().Count());
         }
-    }
 
+        [TestMethod]
+        public void ValidateChoiceElement()
+        {
+            var extensionSD = (StructureDefinition)source.GetStructureDefinitionForCoreType(FHIRDefinedType.Extension).DeepCopy();
+
+            var extensionInstance = new Extension("http://some.org/testExtension", new Oid("1.2.3.4.5"));
+
+            var validator = new Validator(ctx);
+            var report = validator.Validate(extensionSD, extensionInstance);
+
+            Assert.AreEqual(0, report.Errors);
+            Assert.AreEqual(0, report.Warnings);
+
+            // Now remove the choice available for OID
+            var extValueDef = extensionSD.Snapshot.Element.Single(e => e.Path == "Extension.value[x]");
+            extValueDef.Type.RemoveAll(t => t.Code == FHIRDefinedType.Oid);
+
+            report = validator.Validate(extensionSD, extensionInstance);
+
+            Assert.AreEqual(1, report.Errors);
+            Assert.AreEqual(0, report.Warnings);
+        }
+
+        [TestMethod]
+        public void AutoGeneratesDifferential()
+        {
+            var identifierBSN = source.GetStructureDefinition("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN");
+            Assert.IsNotNull(identifierBSN);
+
+            var instance = new Identifier("http://clearly.incorrect.nl/definition", "1234");
+
+            var validationContext = new ValidationContext { ArtifactSource = source, GenerateSnapshot = false };
+            var validator = new Validator(validationContext);
+
+            var report = validator.Validate(identifierBSN, instance);
+            Assert.IsTrue(report.ToString().Contains("does not include a snapshot"));
+
+            validationContext.GenerateSnapshot = true;
+            report = validator.Validate(identifierBSN, instance);
+            Assert.IsFalse(report.ToString().Contains("does not include a snapshot"));
+
+            bool snapshotNeedCalled = false;
+
+            validator.OnSnapshotNeeded += (object s, OnSnapshotNeededEventArgs a) => { snapshotNeedCalled = true;  /* change nothing, warning should return */ };
+
+            report = validator.Validate(identifierBSN, instance);
+            Assert.IsTrue(snapshotNeedCalled);
+            Assert.IsTrue(report.ToString().Contains("does not include a snapshot"));
+        }
+
+
+        //TODO: Could check whether we handle "typeslices" correctly, where
+        //typeslices are done without slicing, just having multiple typerefs, which nested
+        //constraints. Is that even allowed?            
+    }
 }

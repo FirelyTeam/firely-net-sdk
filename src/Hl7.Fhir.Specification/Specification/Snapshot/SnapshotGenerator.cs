@@ -31,15 +31,15 @@ namespace Hl7.Fhir.Specification.Snapshot
         private readonly SnapshotRecursionChecker _recursionChecker = new SnapshotRecursionChecker();
 #endif
 
-        public SnapshotGenerator(IArtifactSource resolver, SnapshotGeneratorSettings settings) : this()
+        public SnapshotGenerator(IArtifactSource source, SnapshotGeneratorSettings settings) : this()
         {
-            if (resolver == null) throw Error.ArgumentNull("resolver");
+            if (source == null) throw Error.ArgumentNull("source");
             if (settings == null) throw Error.ArgumentNull("settings");
-            _resolver = resolver;
+            _resolver = source;
             _settings = settings;
         }
 
-        public SnapshotGenerator(ArtifactResolver resolver) : this(resolver, SnapshotGeneratorSettings.Default)
+        public SnapshotGenerator(IArtifactSource source) : this(source, SnapshotGeneratorSettings.Default)
         {
             // ...
         }

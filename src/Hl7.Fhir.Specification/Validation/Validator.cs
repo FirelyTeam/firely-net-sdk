@@ -1,7 +1,9 @@
 ﻿using Hl7.ElementModel;
+using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.FluentPath;
@@ -15,53 +17,34 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Validation
 {
-    public class Vector
+    public class OnSnapshotNeededEventArgs : EventArgs
     {
-        public ElementDefinitionNavigator DefinitionNavigator { get; private set; }
-        public IElementNavigator Instance { get; private set; }
-
-        public ElementDefinition Definition
+        public OnSnapshotNeededEventArgs(StructureDefinition definition, IArtifactSource source)
         {
-            get
-            {
-                return DefinitionNavigator.Current;
-            }
+            Definition = definition;
+            Source = source;
         }
 
-        public Vector(ElementDefinitionNavigator definitions, IElementNavigator instance)
-        {
-            if (definitions.Current == null) throw Error.Argument("definitions", "Navigator is not positioned at a node");
+        public StructureDefinition Definition { get; private set; }
 
-            DefinitionNavigator = definitions;
-            Instance = instance;
-        }
+        public IArtifactSource Source { get; private set; }
     }
 
 
-
+    /// <summary>
+    /// TODO: When an extension is used in an instance (not necessarily mandated by the profile I am validating against), I should still trace
+    /// the Extension.url to validate it
+    /// </summary>
     public class Validator
     {
-        public IValidationContext ValidationContext;
+        public ValidationContext ValidationContext;
 
-        public Validator(IValidationContext context)
+        public event EventHandler<OnSnapshotNeededEventArgs> OnSnapshotNeeded;
+
+        public Validator(ValidationContext context)
         {
             ValidationContext = context;
         }
-
-        public OperationOutcome Validate(IEnumerable<string> definitionUris, IElementNavigator instance, BatchValidationMode mode)
-        {
-            List<OperationOutcome> outcomes = new List<OperationOutcome>();
-
-            foreach (var uri in definitionUris)
-                outcomes.Add(Validate(uri, instance));
-
-            var outcome = new OperationOutcome();
-            outcome.Combine(outcomes, instance, mode);
-
-            return outcome;
-        }
-
-
 
         public OperationOutcome Validate(string definitionUri, IElementNavigator instance)
         {
@@ -75,18 +58,9 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-
-        public OperationOutcome Validate(IEnumerable<StructureDefinition> structureDefinitions, IElementNavigator instance, BatchValidationMode mode)
+        public OperationOutcome Validate(string definitionUri, Base instance)
         {
-            List<OperationOutcome> outcomes = new List<OperationOutcome>();
-
-            foreach (var sd in structureDefinitions)
-                outcomes.Add(Validate(sd, instance));
-
-            var outcome = new OperationOutcome();
-            outcome.Combine(outcomes, instance, mode);
-
-            return outcome;
+            return Validate(definitionUri, new PocoNavigator(instance));
         }
 
 
@@ -94,8 +68,16 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            if (outcome.Verify(() => structureDefinition.Snapshot != null && structureDefinition.Snapshot.Element != null && structureDefinition.Snapshot.Element.Any(),
-                "Profile '{0}' does not include a snapshot".FormatWith(structureDefinition.Url), Issue.UNSUPPORTED_NEED_SNAPSHOT, instance))
+            if (!structureDefinition.HasSnapshot && ValidationContext.ArtifactSource != null)
+            {
+                // Note: this modifies an SD that is passed to us. If this comes from a cache that's
+                // kept across processes, this could mean trouble, so clone it first
+                structureDefinition = (StructureDefinition)structureDefinition.DeepCopy();
+                SnapshotNeeded(structureDefinition, ValidationContext.ArtifactSource);
+            }
+
+            if (outcome.Verify(() => structureDefinition.HasSnapshot,
+                "Profile '{0}' does not include a snapshot. Instance data has not been validated.".FormatWith(structureDefinition.Url), Issue.UNSUPPORTED_NEED_SNAPSHOT, instance))
             {
                 var nav = new ElementDefinitionNavigator(structureDefinition);
 
@@ -116,6 +98,65 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
+        public OperationOutcome Validate(StructureDefinition structureDefinition, Base instance)
+        {
+            return Validate(structureDefinition, new PocoNavigator(instance));
+        }
+
+        public OperationOutcome Validate(IEnumerable<string> definitionUris, IElementNavigator instance, BatchValidationMode mode)
+        {
+            List<OperationOutcome> outcomes = new List<OperationOutcome>();
+
+            foreach (var uri in definitionUris)
+                outcomes.Add(Validate(uri, instance));
+
+            var outcome = new OperationOutcome();
+            outcome.Combine(outcomes, instance, mode);
+
+            return outcome;
+        }
+
+        public OperationOutcome Validate(IEnumerable<string> definitionUris, Base instance, BatchValidationMode mode)
+        {
+            return Validate(definitionUris, new PocoNavigator(instance), mode);
+        }
+
+
+        public OperationOutcome Validate(IEnumerable<StructureDefinition> structureDefinitions, IElementNavigator instance, BatchValidationMode mode)
+        {
+            List<OperationOutcome> outcomes = new List<OperationOutcome>();
+
+            foreach (var sd in structureDefinitions)
+                outcomes.Add(Validate(sd, instance));
+
+            var outcome = new OperationOutcome();
+            outcome.Combine(outcomes, instance, mode);
+
+            return outcome;
+        }
+
+        public OperationOutcome Validate(IEnumerable<StructureDefinition> structureDefinitions, Base instance, BatchValidationMode mode)
+        {
+            return Validate(structureDefinitions, new PocoNavigator(instance), mode);
+        }
+
+        protected virtual void SnapshotNeeded(StructureDefinition definition, IArtifactSource source)
+        {
+            // Default implementation: call event
+            if (OnSnapshotNeeded != null)
+            {
+                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, source));
+                return;
+            }
+
+            // Else, expand, depending on our configuration
+            if(ValidationContext.GenerateSnapshot)
+            {
+                var gen = new SnapshotGenerator(source);
+                gen.Update(definition);
+            }
+
+        }
 
         public OperationOutcome ValidateElement(IEnumerable<ElementDefinitionNavigator> definitions, IElementNavigator instance, BatchValidationMode mode)
         {
@@ -215,8 +256,7 @@ namespace Hl7.Fhir.Validation
             {
                 foreach (IElementNavigator element in match.InstanceElements)
                 {
-                    var validator = new Validator(ValidationContext);
-                    outcome.Include(validator.ValidateElement(match.Definition, element));
+                    outcome.Include(ValidateElement(match.Definition, element));
                 }
             }
 
@@ -257,8 +297,7 @@ namespace Hl7.Fhir.Validation
                         "ElementDefinition uses a non-existing nameReference '{0}'".FormatWith(definition.NameReference),
                         Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance))
                 {
-                    var validator = new Validator(ValidationContext);
-                    outcome.Include(validator.ValidateElement(referencedPositionNav, instance));
+                    outcome.Include(ValidateElement(referencedPositionNav, instance));
                 }
             }
 
@@ -344,15 +383,22 @@ namespace Hl7.Fhir.Validation
             // Note that the implementer of IValueProvider may already have outsmarted us and parsed
             // the wire representation (i.e. POCO). If the provider reads xml directly, would it know the
             // type? Would it convert it to a .NET native type? How to check?
-            bool hasSingleRegExForValue = definition.Type.Count() == 1 && definition.Type.First().GetPrimitiveValueRegEx() != null;
 
-            if (outcome.Verify(() => hasSingleRegExForValue, "No single regex to validate the primitive value against found at '{0}'"
-                        .FormatWith(definition.Path), Issue.PROFILE_ELEMENTDEF_NO_PRIMITIVE_REGEX, instance))
+            // The spec has no regexes for the primitives mentioned below, so don't check them
+            bool hasRegEx = !(new[] { "uri", "string" }).Contains(definition.GetParentNameFromPath());
+
+            if (hasRegEx)
             {
-                var primitiveRegEx = definition.Type.First().GetPrimitiveValueRegEx();
-                var value = instance.Value.ToString();
-                var success = Regex.Match(value, primitiveRegEx).Success;
-                outcome.Verify(() => success, "Primitive value '{0}' does not match regex '{1}'".FormatWith(value, primitiveRegEx), Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
+                bool hasSingleRegExForValue = definition.Type.Count() == 1 && definition.Type.First().GetPrimitiveValueRegEx() != null;
+
+                if (outcome.Verify(() => hasSingleRegExForValue, "No single regex to validate the primitive value against found at '{0}'"
+                            .FormatWith(definition.Path), Issue.PROFILE_ELEMENTDEF_NO_PRIMITIVE_REGEX, instance))
+                {
+                    var primitiveRegEx = definition.Type.First().GetPrimitiveValueRegEx();
+                    var value = instance.Value.ToString();
+                    var success = Regex.Match(value, "^" + primitiveRegEx + "$").Success;
+                    outcome.Verify(() => success, "Primitive value '{0}' does not match regex '{1}'".FormatWith(value, primitiveRegEx), Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
+                }
             }
 
             return outcome;
@@ -435,12 +481,14 @@ namespace Hl7.Fhir.Validation
 
 
 
-    public interface IValidationContext
+    public class ValidationContext
     {
-        IArtifactSource ArtifactSource { get; }
+        public IArtifactSource ArtifactSource { get; set; }
 
-        // Resolver, Containing Bundle, parent Resource?
-        // Options: validate_across_references, log verbosity
+        public bool GenerateSnapshot { get; set; }
+
+        // Containing Bundle, parent Resource?
+        // Options: validate_across_references, log verbosity, validate extension urls
         // FP SymbolTable
     }
 
