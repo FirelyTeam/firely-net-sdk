@@ -51,6 +51,7 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue CONTENT_ELEMENT_VALUE_TOO_LONG = def(1005, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE = def(1006, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_INCORRECT_OCCURRENCE = def(1007, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_DOES_NOT_MATCH_FIXED_VALUE = def(1008, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
         // Profile problems
         public static readonly Issue PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE = def(2000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);

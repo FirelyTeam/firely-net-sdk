@@ -178,6 +178,37 @@ namespace Hl7.Fhir.Validation
         }
 
 
+        [TestMethod]
+        public void ValidatesFixedValue()
+        {
+            var context = new ValidationContext { ArtifactSource = source, GenerateSnapshot = true };
+            var validator = new Validator(context);
+
+            var instance1 = new Identifier("http://clearly.incorrect.nl/definition", "1234");
+
+            var report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN", instance1);
+            Assert.AreEqual(1, report.Errors);
+
+            instance1.System = "urn:oid:2.16.840.1.113883.2.4.6.3";
+
+            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN", instance1);
+            Assert.AreEqual(0, report.Errors);
+
+            var weirdSD = (StructureDefinition)source.GetStructureDefinitionForCoreType(FHIRDefinedType.Identifier).DeepCopy();
+
+            // Looks a bit weird, but by setting a complex fixed value on the root
+            // we actually limit all instances of the type to that single fixed value
+            weirdSD.Snapshot.Element[0].Fixed = (Identifier)instance1.DeepCopy();
+
+            // Should still have 0 errors, since the fixed == the instance
+            report = validator.Validate(weirdSD, instance1);
+            Assert.AreEqual(0, report.Errors);
+
+            instance1.System = "http://clearly.another.mistake/definition";
+            report = validator.Validate(weirdSD, instance1);
+            Assert.AreEqual(1, report.Errors);
+        }
+
         //TODO: Could check whether we handle "typeslices" correctly, where
         //typeslices are done without slicing, just having multiple typerefs, which nested
         //constraints. Is that even allowed?            

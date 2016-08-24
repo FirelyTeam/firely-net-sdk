@@ -7,5 +7,8 @@ Ewout Kramer (Furore)
 Marten Smits (Furore)
 Christiaan Knaap (Furore)
 Martijn Harthoorn (Furore)
+Michel Rutten (Furore)
+Tilo Christ (Siemens)
 
+HSCIC (NHS Digital) for their financial support
 

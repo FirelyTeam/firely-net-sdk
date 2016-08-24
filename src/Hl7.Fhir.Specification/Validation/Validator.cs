@@ -1,4 +1,12 @@
-﻿using Hl7.ElementModel;
+﻿/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.ElementModel;
 using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
@@ -6,14 +14,11 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
-using Hl7.FluentPath;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
 
 namespace Hl7.Fhir.Validation
 {
@@ -203,7 +208,7 @@ namespace Hl7.Fhir.Validation
             }
 
             // Min/max (cardinality) has been validated by parent, we cannot know down here
-            outcome.Add(ValidateFixed(elementConstraints, instance));
+            outcome.Add(this.ValidateFixed(elementConstraints, instance));
             outcome.Add(ValidatePattern(elementConstraints, instance));
             outcome.Add(ValidateMinValue(elementConstraints, instance));
             // outcome.Add(ValidateMaxValue(elementConstraints, instance));
@@ -399,20 +404,6 @@ namespace Hl7.Fhir.Validation
                     var success = Regex.Match(value, "^" + primitiveRegEx + "$").Success;
                     outcome.Verify(() => success, "Primitive value '{0}' does not match regex '{1}'".FormatWith(value, primitiveRegEx), Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
                 }
-            }
-
-            return outcome;
-        }
-
-        internal OperationOutcome ValidateFixed(ElementDefinition definition, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-            if (definition.Fixed != null)
-            {
-                // Construct an IValueProvider based on the POCO parsed from profileElement.fixed/pattern etc.
-                //IElementNavigator fixedValueNav = new PocoNavigator(Definition.Fixed);
-                //return  Compare(fixedValueNav, Instance, mode: Fixed);
-
             }
 
             return outcome;
