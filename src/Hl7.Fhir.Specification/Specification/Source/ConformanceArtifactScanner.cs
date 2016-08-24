@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Specification.Source
                 .Select(res =>
                         new ConformanceInformation()
                         {
-                            Url = getPrimitiveValueElement(res, "url"),
+                            Canonical = getPrimitiveValueElement(res, "url"),
                             Name = getPrimitiveValueElement(res, "name"),
                             ValueSetSystem = getValueSetSystem(res),
                             Origin = _origin,

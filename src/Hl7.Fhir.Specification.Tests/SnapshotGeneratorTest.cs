@@ -368,10 +368,10 @@ namespace Hl7.Fhir.Specification.Tests
                 var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
                 if (fileName == "profiles-others")
                 {
-                    var sd = _testSource.GetStructureDefinition(sdInfo.Url);
+                    var sd = _testSource.GetStructureDefinition(sdInfo.Canonical);
 
                     if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
-                        "but could not get structure definition by that url later on!").FormatWith(sdInfo.Url, sdInfo.Origin));
+                        "but could not get structure definition by that url later on!").FormatWith(sdInfo.Canonical, sdInfo.Origin));
 
                     if (sd.IsConstraint || sd.IsExtension)
                         yield return sd;
