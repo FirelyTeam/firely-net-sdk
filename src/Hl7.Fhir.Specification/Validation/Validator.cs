@@ -78,11 +78,21 @@ namespace Hl7.Fhir.Validation
                 // Note: this modifies an SD that is passed to us. If this comes from a cache that's
                 // kept across processes, this could mean trouble, so clone it first
                 structureDefinition = (StructureDefinition)structureDefinition.DeepCopy();
-                SnapshotNeeded(structureDefinition, ValidationContext.ArtifactSource);
+
+                // We'll call out to an external component, so catch any exceptions and include them in our report
+                try
+                {
+                    SnapshotNeeded(structureDefinition, ValidationContext.ArtifactSource);
+                }
+                catch(Exception e)
+                {
+                    outcome.Info("Snapshot generation failed for {0}. Message: {1}"
+                           .FormatWith(structureDefinition.Url, e.Message), Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, instance);
+                }
             }
 
             if (outcome.Verify(() => structureDefinition.HasSnapshot,
-                "Profile '{0}' does not include a snapshot. Instance data has not been validated.".FormatWith(structureDefinition.Url), Issue.UNSUPPORTED_NEED_SNAPSHOT, instance))
+                "Profile '{0}' does not include a snapshot. Instance data has not been validated.".FormatWith(structureDefinition.Url), Issue.UNAVAILABLE_NEED_SNAPSHOT, instance))
             {
                 var nav = new ElementDefinitionNavigator(structureDefinition);
 
@@ -165,7 +175,7 @@ namespace Hl7.Fhir.Validation
                 return outcome;
 
             // Handle in-lined constraints on children
-            outcome.Add(ValidateChildConstraints(definition, instance));
+            outcome.Add(this.ValidateChildConstraints(definition, instance));
 
             var elementConstraints = definition.Current;
 
@@ -211,55 +221,6 @@ namespace Hl7.Fhir.Validation
                 // For now, we do not handle slices
                 outcome.Verify(() => definition.Current.Slicing == null, "ElementDefinition uses slicing, which is not yet supported. Instance has not been validated against " +
                             "any of the slices", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance);
-            }
-
-            return outcome;
-        }
-
-        internal OperationOutcome ValidateChildConstraints(ElementDefinitionNavigator definition, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-            if (!definition.HasChildren) return outcome;
-
-            outcome.Info("Start validation of inlined child constraints for '{0}'".FormatWith(definition.Path), Issue.PROCESSING_PROGRESS, instance);
-
-            var matchResult = ChildNameMatcher.Match(definition, instance);
-
-            outcome.Verify(() => !matchResult.UnmatchedInstanceElements.Any(), "Encountered unknown child elements {0}".
-                            FormatWith(String.Join(",", matchResult.UnmatchedInstanceElements.Select(e => "'" + e.Name + "'"))),
-                            Issue.CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN, instance);
-
-            //TODO: Give warnings for out-of order children.  Really? That's an xml artifact, no such thing in Json!
-
-            outcome.Add(ValidateCardinality(matchResult, instance));
-
-            // Recursively validate my children
-            foreach (Match match in matchResult.Matches)
-            {
-                foreach (IElementNavigator element in match.InstanceElements)
-                {
-                    outcome.Include(ValidateElement(match.Definition, element));
-                }
-            }
-
-            return outcome;
-        }
-
-        internal OperationOutcome ValidateCardinality(MatchResult matchResult, INamedNode parent)
-        {
-            var outcome = new OperationOutcome();
-
-            foreach (var match in matchResult.Matches)
-            {
-                var definition = match.Definition.Current;
-                var occurs = match.InstanceElements.Count;
-                var cardinality = Cardinality.FromElementDefinition(definition);
-
-                if (outcome.Verify(() => definition.Min != null && definition.Max != null, "ElementDefinition does not specify cardinality", Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING, parent))
-                {
-                    outcome.Verify(() => cardinality.InRange(occurs), "Element '{0}' occurs {1} times, which is not within the specified cardinality of {2}"
-                                .FormatWith(match.Definition.PathName, occurs, cardinality.ToString()), Issue.CONTENT_ELEMENT_INCORRECT_OCCURRENCE, parent);
-                }
             }
 
             return outcome;
@@ -445,8 +406,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-
-        protected virtual void SnapshotNeeded(StructureDefinition definition, IArtifactSource source)
+        internal void SnapshotNeeded(StructureDefinition definition, IArtifactSource source)
         {
             // Default implementation: call event
             if (OnSnapshotNeeded != null)
@@ -466,23 +426,10 @@ namespace Hl7.Fhir.Validation
                 var gen = new SnapshotGenerator(source, settings);
                 gen.Update(definition);
             }
-
         }
     }
 
 
-
-    public class ValidationContext
-    {
-        public IArtifactSource ArtifactSource { get; set; }
-
-        public bool GenerateSnapshot { get; set; }
-        public SnapshotGeneratorSettings GenerateSnapshotSettings { get; set; }
-
-        // Containing Bundle, parent Resource?
-        // Options: validate_across_references, log verbosity, validate extension urls
-        // FP SymbolTable
-    }
 
     internal static class TypeExtensions
     {
@@ -528,86 +475,9 @@ namespace Hl7.Fhir.Validation
         }
     }
 
-    internal delegate bool Condition();
-
-
     public enum BatchValidationMode
     {
         All,
         Any
-    }
-
-
-    internal static class OperationOutcomeValidationExtensions
-    {
-        public static bool Verify(this OperationOutcome outcome, Condition condition, string message, Issue issue, INamedNode location)
-        {
-            if (!condition())
-            {
-                outcome.AddIssue(issue.ToIssueComponent(message, location));
-                return false;
-            }
-            else
-                return true;
-        }
-
-        public static void Info(this OperationOutcome outcome, string message, Issue infoIssue, INamedNode location)
-        {
-            outcome.AddIssue(infoIssue.ToIssueComponent(message, location));
-        }
-
-
-        public static OperationOutcome MakeInformational(this OperationOutcome outcome)
-        {
-            var result = (OperationOutcome)outcome.DeepCopy();
-            foreach (var issue in result.Issue)
-                issue.Severity = OperationOutcome.IssueSeverity.Information;
-
-            return result;
-        }
-
-
-
-        public static void Combine(this OperationOutcome outcome, IEnumerable<OperationOutcome> inputs, INamedNode location, BatchValidationMode mode)
-        {
-            if (inputs.Count() == 1)
-            {
-                // To not pollute the output if there's just a single input, just add it to the output
-                outcome.Add(inputs.Single());
-                return;
-            }
-
-            outcome.Info("Combination of {0} child validation runs, {1} must succeed"
-                 .FormatWith(inputs.Count(), mode == BatchValidationMode.All ? "ALL" : "ANY"), Issue.PROCESSING_PROGRESS, location);
-
-            List<OperationOutcome> toInclude = new List<OperationOutcome>();
-
-            var successes = inputs.Where(i => i.Success).Count();
-            var failures = inputs.Count() - successes;
-            var combinedSuccess = mode == BatchValidationMode.Any ? successes > 0 : failures == 0;
-
-            int index = 1;
-
-            foreach (var report in inputs)
-            {
-                var reportToAdd = report;
-
-                outcome.Info("Report {0}: {1}".FormatWith(index, reportToAdd.Success ? "SUCCESS" : "FAILURE"), Issue.PROCESSING_PROGRESS, location);
-                
-                // We'd like to include all results of the combined reports, but if the total result is a success,
-                // any errors in failing subreports should just be informational
-                if (!report.Success && combinedSuccess)     
-                    reportToAdd = report.MakeInformational();
-
-                outcome.Include(reportToAdd);
-                index += 1;
-            }
-
-            if (outcome.Success)
-                outcome.Info("Combined validation succeeded", Issue.PROCESSING_PROGRESS, location);
-            else
-                outcome.Info("Combined validation failed, {0} child validation runs failed, {1} succeeded"
-                    .FormatWith(failures, successes), Issue.PROCESSING_PROGRESS, location);
-        }
     }
 }

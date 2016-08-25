@@ -1,3 +1,11 @@
+/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -70,10 +78,12 @@ namespace Hl7.Fhir.Validation
 
         // Unsupported 
         public static readonly Issue UNSUPPORTED_SLICING_NOT_SUPPORTED = def(3000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
-        public static readonly Issue UNSUPPORTED_NEED_SNAPSHOT = def(3001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
 
         // Non-availability, incomplete data
         public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE = def(4000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_ELEMENTDEF_WITHOUT_STRUCTDEF = def(4001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_NEED_SNAPSHOT = def(4002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_SNAPSHOT_GENERATION_FAILED = def(40032, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Processing information
         public static readonly Issue PROCESSING_PROGRESS = def(5000, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);

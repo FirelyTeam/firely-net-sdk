@@ -4,6 +4,7 @@
 *
 * This file is licensed under the BSD 3-Clause license
 */
+
 using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using System;

@@ -78,6 +78,7 @@
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Specification\Source\ArtifactSourceExtentions.cs" />
     <Compile Include="Validation\Cardinality.cs" />
+    <Compile Include="Validation\ChildConstraintExtensions.cs" />
     <Compile Include="Validation\FixedPatternExtensions.cs" />
     <Compile Include="Validation\InstanceToProfileMatcher.cs" />
     <Compile Include="Validation\Issue.cs" />
@@ -109,6 +110,8 @@
     <Compile Include="Specification\Source\ConformanceArtifactScanner.cs" />
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\OperationOutcomeValidationExtensions.cs" />
+    <Compile Include="Validation\ValidationContext.cs" />
     <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />
     <Compile Include="Validation\Validator.cs" />
