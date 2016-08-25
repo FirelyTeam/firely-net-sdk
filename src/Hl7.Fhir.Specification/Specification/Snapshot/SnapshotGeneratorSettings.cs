@@ -26,6 +26,21 @@ namespace Hl7.Fhir.Specification.Snapshot
             NormalizeElementBase = false   // true in STU3
         };
 
+        /// <summary>Default ctor.</summary>
+        public SnapshotGeneratorSettings() { }
+
+        /// <summary>Clone ctor. Generates a new instance with the same state as the specified instance.</summary>
+        public SnapshotGeneratorSettings(SnapshotGeneratorSettings settings)
+        {
+            IgnoreUnresolvedProfiles = settings.IgnoreUnresolvedProfiles;
+            ExpandExternalProfiles = settings.ExpandExternalProfiles;
+            ExpandUnconstrainedElements = settings.ExpandUnconstrainedElements;
+            MarkChanges = settings.MarkChanges;
+            MergeTypeProfiles = settings.MergeTypeProfiles;
+            RewriteElementBase = settings.RewriteElementBase;
+            NormalizeElementBase = settings.NormalizeElementBase;
+        }
+
         /// <summary>
         /// Enable this setting to ignore unknown or invalid element type profiles.
         /// If disabled (default), throw an exception for unknown or invalid element type profiles.
