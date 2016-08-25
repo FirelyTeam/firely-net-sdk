@@ -79,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnapshotGeneratorTest.cs" />
     <Compile Include="Validation\PrimitiveValidation.cs" />
+    <Compile Include="Validation\TestProfileArtifactSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestData\snapshot-test\ChrisGrenz\extension-structuredefinition-explicit-type-name.xml">
@@ -748,9 +749,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\TestPatient.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\validation\BSNIdentifier.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\validation\profiles-resources.xml">

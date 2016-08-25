@@ -19,8 +19,14 @@ namespace Hl7.Fhir.Validation
         [TestInitialize]
         public void SetupSource()
         {
-            source = new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/validation", includeSubdirectories: true));
-            var ctx = new ValidationContext() { ArtifactSource = source };
+            source = new CachedArtifactSource(
+                new MultiArtifactSource(
+                    new TestProfileArtifactSource(),
+                    new FileDirectoryArtifactSource("TestData/validation", includeSubdirectories: true)));
+
+            var ctx = new ValidationContext() { ArtifactSource = source, GenerateSnapshot = true };
+            ctx.GenerateSnapshotSettings = Specification.Snapshot.SnapshotGeneratorSettings.Default;
+            ctx.GenerateSnapshotSettings.ExpandExternalProfiles = true;
             validator = new Validator(ctx);
         }
 
@@ -230,6 +236,46 @@ namespace Hl7.Fhir.Validation
             patient.MaritalStatus.Coding.RemoveAt(1);
             report = validator.Validate(patientSD, patient);
             Assert.AreEqual(1, report.Errors);
+        }
+
+        [TestMethod]
+        public void ValidatesMultiplePossibleTypeRefs()
+        {
+            // Try adding a period
+
+            Patient p = new Patient();
+            p.Active = true;
+
+            var identifierBSN = new Identifier("urn:oid:2.16.840.1.113883.2.4.6.3", "1234");
+            var identifierDL = new Identifier("urn:oid:2.16.840.1.113883.2.4.6.12", "5678");
+
+            var dutchPatientUri = "http://validationtest.org/fhir/StructureDefinition/DutchPatient";
+
+            // First, Patient without the required identifier
+            var report = validator.Validate(dutchPatientUri, p);
+            Assert.AreEqual(1, report.Errors);
+            Assert.AreEqual(0, report.Warnings);
+
+            // Now, with the required identifier
+            p.Identifier.Add(identifierBSN);
+
+            report = validator.Validate(dutchPatientUri, p);
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(0, report.Warnings);
+
+            // Make the identifier incorrect
+            p.Identifier[0].System = "http://wrong.system";
+
+            report = validator.Validate(dutchPatientUri, p);
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(0, report.Warnings);
+
+            // Add the alternative
+            p.Identifier.Clear();
+            p.Identifier.Add(identifierDL);
+            report = validator.Validate(dutchPatientUri, p);
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(0, report.Warnings);
         }
 
 

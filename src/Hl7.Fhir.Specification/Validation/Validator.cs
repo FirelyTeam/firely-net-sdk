@@ -95,11 +95,6 @@ namespace Hl7.Fhir.Validation
 
             }
 
-            if (outcome.Success)
-                outcome.Info("Validation succeeded", Issue.PROCESSING_PROGRESS, instance);
-            else
-                outcome.Info("Validation failed with {0} errors".FormatWith(outcome.ListErrors().Count()), Issue.PROCESSING_PROGRESS, instance);
-
             return outcome;
         }
 
@@ -143,24 +138,6 @@ namespace Hl7.Fhir.Validation
         public OperationOutcome Validate(IEnumerable<StructureDefinition> structureDefinitions, Base instance, BatchValidationMode mode)
         {
             return Validate(structureDefinitions, new PocoNavigator(instance), mode);
-        }
-
-        protected virtual void SnapshotNeeded(StructureDefinition definition, IArtifactSource source)
-        {
-            // Default implementation: call event
-            if (OnSnapshotNeeded != null)
-            {
-                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, source));
-                return;
-            }
-
-            // Else, expand, depending on our configuration
-            if(ValidationContext.GenerateSnapshot)
-            {
-                var gen = new SnapshotGenerator(source);
-                gen.Update(definition);
-            }
-
         }
 
         public OperationOutcome ValidateElement(IEnumerable<ElementDefinitionNavigator> definitions, IElementNavigator instance, BatchValidationMode mode)
@@ -331,15 +308,23 @@ namespace Hl7.Fhir.Validation
 
             if (choices.Count() > 1)
             {
-                // This is a choice type, find out what type is present in the instance data
-                // (e.g. deceased[Boolean]). This is exposed by IElementNavigator.TypeName.
-                var applicableChoices = types.Where(tr => tr.Code.GetLiteral() == instance.TypeName).Select(t => t.ProfileUri());
+                outcome.Verify(() => definition.Path.EndsWith("[x]"), "ElementDefinition is a choice, but its path does not end with '[x]'",
+                        Issue.PROFILE_ELEMENTDEF_CHOICE_WITHOUT_XSUFFIX, instance);
 
-                // Instance typename must be one of the applicable types in the choice
-                outcome.Verify(() => applicableChoices.Any(), "Type specified in the instance ('{0}') is not one of the allowed choices ({1})"
-                            .FormatWith(instance.TypeName, String.Join(",", choices.Select(t => "'" + t + "'"))), Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance);
+                if (outcome.Verify(() => instance.TypeName != null, "ElementDefinition is a choice, but the instance does not indicate its actual type",
+                    Issue.CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE, instance))
+                {
 
-                outcome.Include(Validate(applicableChoices, instance, BatchValidationMode.Any));
+                    // This is a choice type, find out what type is present in the instance data
+                    // (e.g. deceased[Boolean]). This is exposed by IElementNavigator.TypeName.
+                    var applicableChoices = types.Where(tr => tr.Code.GetLiteral() == instance.TypeName).Select(t => t.ProfileUri());
+
+                    // Instance typename must be one of the applicable types in the choice
+                    outcome.Verify(() => applicableChoices.Any(), "Type specified in the instance ('{0}') is not one of the allowed choices ({1})"
+                                .FormatWith(instance.TypeName, String.Join(",", choices.Select(t => "'" + t + "'"))), Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance);
+
+                    outcome.Include(Validate(applicableChoices, instance, BatchValidationMode.Any));
+                }
             }
             else if (choices.Count() == 1)
             {
@@ -414,6 +399,8 @@ namespace Hl7.Fhir.Validation
                     Issue.PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE, instance))
                 {
                     //TODO: Define <=, >= on FHIR types and use these
+                    //No, use "the" complex types (currently from the FP assembly), so read them into FluentPath.DateTime, then compare.
+                    //
                     // return Definition.MinValue <= constructedValueFromNavigator
                     // Or assume acutal implementer of interface is PocoNavigator and get value from there
                     // Or just use Value and not support Quantity ;-)
@@ -422,6 +409,16 @@ namespace Hl7.Fhir.Validation
 
             return outcome;
         }
+
+                   // return t == typeof(FhirDateTime) ||
+                   //t == typeof(Date) ||
+                   //t == typeof(Instant) ||
+                   //t == typeof(Model.Time) ||
+                   //t == typeof(FhirDecimal) ||
+                   //t == typeof(Integer) ||
+                   //t == typeof(Quantity) ||
+                   //t == typeof(FhirString);
+
 
         internal OperationOutcome ValidateMaxLength(ElementDefinition definition, IElementNavigator instance)
         {
@@ -448,6 +445,29 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
+
+        protected virtual void SnapshotNeeded(StructureDefinition definition, IArtifactSource source)
+        {
+            // Default implementation: call event
+            if (OnSnapshotNeeded != null)
+            {
+                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, source));
+                return;
+            }
+
+            // Else, expand, depending on our configuration
+            if (ValidationContext.GenerateSnapshot)
+            {
+                SnapshotGeneratorSettings settings = ValidationContext.GenerateSnapshotSettings;
+
+                if (settings == null)
+                    settings = SnapshotGeneratorSettings.Default;
+
+                var gen = new SnapshotGenerator(source, settings);
+                gen.Update(definition);
+            }
+
+        }
     }
 
 
@@ -457,6 +477,7 @@ namespace Hl7.Fhir.Validation
         public IArtifactSource ArtifactSource { get; set; }
 
         public bool GenerateSnapshot { get; set; }
+        public SnapshotGeneratorSettings GenerateSnapshotSettings { get; set; }
 
         // Containing Bundle, parent Resource?
         // Options: validate_across_references, log verbosity, validate extension urls
@@ -549,37 +570,44 @@ namespace Hl7.Fhir.Validation
 
         public static void Combine(this OperationOutcome outcome, IEnumerable<OperationOutcome> inputs, INamedNode location, BatchValidationMode mode)
         {
-            var successful = inputs.Where(i => i.Success);
+            if (inputs.Count() == 1)
+            {
+                // To not pollute the output if there's just a single input, just add it to the output
+                outcome.Add(inputs.Single());
+                return;
+            }
 
-            outcome.Info("Combined output of {0} validation reports follow. {1} validation(s) succeeded".FormatWith(inputs.Count(), successful.Count()), Issue.PROCESSING_PROGRESS, location);
+            outcome.Info("Combination of {0} child validation runs, {1} must succeed"
+                 .FormatWith(inputs.Count(), mode == BatchValidationMode.All ? "ALL" : "ANY"), Issue.PROCESSING_PROGRESS, location);
 
             List<OperationOutcome> toInclude = new List<OperationOutcome>();
 
-
-
-            if (mode == BatchValidationMode.Any && successful.Any())
-            {
-                foreach (var report in inputs)
-                {
-                    if (report.Success)
-                        toInclude.Add(report);
-                    else
-                        toInclude.Add(report.MakeInformational());
-                }
-            }
-            else
-            {
-                toInclude.AddRange(inputs);
-            }
+            var successes = inputs.Where(i => i.Success).Count();
+            var failures = inputs.Count() - successes;
+            var combinedSuccess = mode == BatchValidationMode.Any ? successes > 0 : failures == 0;
 
             int index = 1;
 
-            foreach (var input in inputs)
+            foreach (var report in inputs)
             {
-                outcome.Info("Report {0}: {1}".FormatWith(index, input.Success ? "SUCCESS" : "FAILURE"), Issue.PROCESSING_PROGRESS, location);
-                outcome.Include(input);
+                var reportToAdd = report;
+
+                outcome.Info("Report {0}: {1}".FormatWith(index, reportToAdd.Success ? "SUCCESS" : "FAILURE"), Issue.PROCESSING_PROGRESS, location);
+                
+                // We'd like to include all results of the combined reports, but if the total result is a success,
+                // any errors in failing subreports should just be informational
+                if (!report.Success && combinedSuccess)     
+                    reportToAdd = report.MakeInformational();
+
+                outcome.Include(reportToAdd);
                 index += 1;
             }
+
+            if (outcome.Success)
+                outcome.Info("Combined validation succeeded", Issue.PROCESSING_PROGRESS, location);
+            else
+                outcome.Info("Combined validation failed, {0} child validation runs failed, {1} succeeded"
+                    .FormatWith(failures, successes), Issue.PROCESSING_PROGRESS, location);
         }
     }
 }

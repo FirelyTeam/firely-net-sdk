@@ -503,7 +503,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else if (isRequired || !_settings.IgnoreUnresolvedProfiles)
                 {
-                    throw Error.NotSupported("Resolved the external profile with url '{0}', but it does not contain a snapshot representation.".FormatWith(structure));
+                    throw Error.NotSupported("Resolved the external profile with url '{0}', but it does not contain a snapshot representation."
+                                .FormatWith(structure.Url));
                 }
                 else
                 {
