@@ -76,6 +76,11 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder");
             var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
 
+            // [WMR 20160825] Examples by Simone Heckman - custom, free-form canonical url
+            // => ResourceIdentity is obsolete!
+            // var sd = _testSource.GetStructureDefinition(@"http://fhir.de/StructureDefinition/kbv/betriebsstaette");
+            // var sd = _testSource.GetStructureDefinition(@"http://fhir.de/StructureDefinition/kbv/istNebenbetriebsstaette");
+
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
@@ -85,7 +90,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             dumpBasePaths(expanded);
         }
-
 
         [TestMethod]
         // [Ignore] // For debugging purposes
@@ -654,8 +658,12 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        // [WMR 20160816] Test custom user data about related base definitions
-        static readonly string USERDATA_BASEDEF = "@@@SNAPSHOTBASEDEF@@@";
+        // [WMR 20160816] Test custom annotations containing associated base definitions
+        class BaseDefAnnotation
+        {
+            public BaseDefAnnotation(ElementDefinition baseElemDef) { BaseElementDefinition = baseElemDef; }
+            public ElementDefinition BaseElementDefinition { get; private set; }
+        }
 
         [TestMethod]
         public void GenerateSnapshotEmitBaseData()
@@ -673,9 +681,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             // dumpReferences(sd);
 
-            _settings.ExpandExternalProfiles = true;
-            _settings.MarkChanges = true;
-            _generator = new SnapshotGenerator(_testSource, _settings);
+            var settings = new SnapshotGeneratorSettings(_settings);
+            settings.ExpandExternalProfiles = true;
+            settings.MarkChanges = true;
+            _generator = new SnapshotGenerator(_testSource, settings);
 
             // [WMR 20160817] Attach custom event handlers
             SnapshotBaseProfileHandler profileHandler = (sender, args) =>
@@ -696,7 +705,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var elem = args.Element;
                 Assert.IsNotNull(elem);
                 var baseDef = (ElementDefinition)elem.DeepCopy();
-                elem.UserData[USERDATA_BASEDEF] = baseDef;
+                elem.AddAnnotation(new BaseDefAnnotation(baseDef));
             };
             _generator.PrepareBaseElement += elementHandler;
 
@@ -724,7 +733,8 @@ namespace Hl7.Fhir.Specification.Tests
             foreach (var elem in elems)
             {
                 Assert.IsNotNull(elem.Base);
-                var baseDef = elem.UserData.GetValueOrDefault(USERDATA_BASEDEF) as ElementDefinition;
+                var ann = elem.Annotation<BaseDefAnnotation>();
+                var baseDef = ann != null ? ann.BaseElementDefinition : null;
                 Assert.IsNotNull(baseDef);
                 Assert.AreNotEqual(elem, baseDef);
                 // Ignore Path differences

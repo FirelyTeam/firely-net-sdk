@@ -114,22 +114,22 @@
     <Content Include="TestData\SlicingTypeTestProfile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\ChrisGrenz\extension-structuredefinition-explicit-type-name.xml">
+    <Content Include="TestData\snapshot-test\Chris Grenz\extension-structuredefinition-explicit-type-name.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\ChrisGrenz\patient-do-not-call-profile.xml">
+    <Content Include="TestData\snapshot-test\Chris Grenz\patient-do-not-call-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\ChrisGrenz\patient-extensions-profile.xml">
+    <Content Include="TestData\snapshot-test\Chris Grenz\patient-extensions-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\ChrisGrenz\patient-legal-case-lead-counsel-profile.xml">
+    <Content Include="TestData\snapshot-test\Chris Grenz\patient-legal-case-lead-counsel-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\ChrisGrenz\patient-legal-case-profile.xml">
+    <Content Include="TestData\snapshot-test\Chris Grenz\patient-legal-case-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\ChrisGrenz\patient-research-authorization-profile.xml">
+    <Content Include="TestData\snapshot-test\Chris Grenz\patient-research-authorization-profile.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\extensions\extension-11179-de-administrative-status.xml">
@@ -772,6 +772,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\profiles-types.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\Simone Heckman\StructureDefinition_kbv_betriebsstaette.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\Simone Heckman\StructureDefinition_kbv_istNebenbetriebsstaette.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\structdef-human-group.xml">
