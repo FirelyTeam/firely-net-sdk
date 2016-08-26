@@ -105,12 +105,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                 }
                 // Type is just overridden
-                else if (!diff.Type.IsNullOrEmpty() && !diff.IsExactly(snap))
+                // [WMR 20160826] Bugfix
+                else if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type)) // !diff.IsExactly(snap))
                 {
                     snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
                     foreach (var element in snap.Type) OnConstraint(snap);
                 }
-            
 
                 // ElementDefinition.nameReference cannot be overridden by a derived profile
                 // defaultValue and meaningWhenMissing can only be set in a resource/datatype/extension definition and cannot be overridden

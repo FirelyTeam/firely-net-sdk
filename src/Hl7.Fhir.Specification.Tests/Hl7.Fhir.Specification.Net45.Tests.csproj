@@ -747,22 +747,22 @@
     <Content Include="TestData\snapshot-test\extensions\extension-valueset-trusted-expansion.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\MyBasic.structuredefinition.xml">
+    <Content Include="TestData\snapshot-test\WMR\MyBasic.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\MyBundle.structuredefinition.xml">
+    <Content Include="TestData\snapshot-test\WMR\MyBundle.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\MyExtensionNoSnapshot.structuredefinition.xml">
+    <Content Include="TestData\snapshot-test\WMR\MyExtensionNoSnapshot.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\MyLocation.structuredefinition.xml">
+    <Content Include="TestData\snapshot-test\WMR\MyLocation.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\MyLocationExtension.structuredefinition.xml">
+    <Content Include="TestData\snapshot-test\WMR\MyLocationExtension.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\MyObservation.structuredefinition.xml">
+    <Content Include="TestData\snapshot-test\WMR\MyObservation.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\profiles-others.xml">
@@ -784,6 +784,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\valueset-group-type-human.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\WMR\MyExtension1.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\WMR\MyExtension2.structuredefinition.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\snapshot-test\WMR\MyPatient.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\TestPatient.xml">

@@ -27,6 +27,15 @@ namespace Hl7.Fhir.Specification.Navigation
                 && baseName.EndsWith("[x]")
                 && String.Compare(baseName, 0, newName, 0, baseName.Length - 3) == 0 && newName.Length > baseName.Length;
         }
+
+        /// <summary>Determines if the specified element names match. Also handles renamed choice type elements, e.g. "value[x]".</summary>
+        /// <param name="baseElementName">A base element name.</param>
+        /// <param name="elementName">A profile element name.</param>
+        /// <returns></returns>
+        internal static bool IsMatchingElementName(string baseElementName, string elementName)
+        {
+            return elementName == baseElementName || IsRenamedChoiceElement(baseElementName, elementName);
+        }
     }
 
     public static class NamedNavigationExtensions
@@ -97,17 +106,17 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node is not set."); }
-            if (nav.Current.Base == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
+            // if (nav.Current.Base == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
 
             var bm = nav.Bookmark();
-            var basePath = nav.Current.Base.Path;
-            if (string.IsNullOrEmpty(basePath)) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
+            var basePath = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
+            // if (string.IsNullOrEmpty(basePath)) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
 
             var result = false;
             while (nav.MoveToNext())
             {
-                var baseComp = nav.Current.Base;
-                if (baseComp != null && baseComp.Path == basePath)
+                var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
+                if (baseComp != null && baseComp == basePath)
                 {
                     // Match, advance cursor
                     bm = nav.Bookmark();

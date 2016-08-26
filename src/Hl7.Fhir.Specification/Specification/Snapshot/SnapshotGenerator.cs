@@ -353,17 +353,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (ensureSnapshot(baseStructure))
                 {
                     // Clone and rebase
-                    baseStructure = (StructureDefinition)baseStructure.DeepCopy();
-
                     var rebasePath = diff.Path;
                     if (profileRef.IsComplex)
                     {
                         rebasePath = ElementDefinitionNavigator.GetParentPath(rebasePath);
                     }
-                    baseStructure.Snapshot.Rebase(rebasePath);
+                    var rebasedBaseStructure = (StructureDefinition)baseStructure.DeepCopy();
+                    rebasedBaseStructure.Snapshot.Rebase(rebasePath);
 
-                    generateBaseElements(baseStructure.Snapshot.Element);
-                    var baseNav = new ElementDefinitionNavigator(baseStructure.Snapshot.Element);
+                    generateBaseElements(baseStructure.Snapshot.Element, baseStructure.ConstrainedType);
+
+                    var baseNav = new ElementDefinitionNavigator(rebasedBaseStructure.Snapshot.Element);
 
                     if (!profileRef.IsComplex)
                     {
@@ -569,7 +569,13 @@ namespace Hl7.Fhir.Specification.Snapshot
             OnPrepareBaseProfile(structure, baseStructure);
 
             var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
-            generateBaseElements(snapshot.Element);
+            generateBaseElements(snapshot.Element, structure.ConstrainedType);
+
+            // Notify observers
+            for (int i = 0; i < snapshot.Element.Count; i++)
+            {
+                OnPrepareElement(snapshot.Element[i], baseStructure.Snapshot.Element[i]);
+            }
 
             var snap = new ElementDefinitionNavigator(snapshot.Element);
 
@@ -630,7 +636,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var typeCode = primaryType.Code.Value;
                     var typeProfile = primaryType.Profile.FirstOrDefault();
                     StructureDefinition baseStructure = null;
-                    if (!string.IsNullOrEmpty(typeProfile) && _settings.MergeTypeProfiles && !defn.IsExtension() && !defn.IsReference())
+                    if (!string.IsNullOrEmpty(typeProfile) && _settings.MergeTypeProfiles && !defn.IsReference())
+                        // && !defn.IsExtension()
                     {
                         // Try to resolve the custom element type profile reference
                         baseStructure = _resolver.GetStructureDefinition(typeProfile);
@@ -667,10 +674,37 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     if (ensureSnapshot(baseStructure))
                     {
-                        generateBaseElements(baseStructure.Snapshot.Element);
-                        var sourceNav = new ElementDefinitionNavigator(baseStructure.Snapshot.Element);
+                        var baseSnap = baseStructure.Snapshot;
+                        // [WMR 20160826] We need to generate base paths for target elements
+                        // If the base profile is a constraint, then it is safe to (re)generate the ElementDefinition.Base components
+                        // However if the base profile is a core resource/type definition, then we shouldn't add Base components to it!
+                        // In that case, create a temporary clone, to ensure that the original instance doesn't get polluted/corrupted
+
+                        if (!baseStructure.ConstrainedType.HasValue)
+                        {
+                            baseSnap = (StructureDefinition.SnapshotComponent)baseSnap.DeepCopy();
+                        }
+
+                        // [WMR 20160826] Clone base profile, so we can (re-)generate base elements for the target without corrupting the base profile
+                        // baseSnap = (StructureDefinition.SnapshotComponent)baseSnap.DeepCopy();
+
+                        generateBaseElements(baseSnap.Element, baseStructure.ConstrainedType);
+                        var sourceNav = new ElementDefinitionNavigator(baseSnap.Element);
                         sourceNav.MoveToFirstChild();
                         nav.CopyChildren(sourceNav);
+
+                        // Notify observers
+                        var pos = nav.OrdinalPosition.Value;
+                        for (int i = 1; i < baseSnap.Element.Count; i++)
+                        {
+                            // Debug.Print("* {0} {1}".FormatWith(nav.Path, nav.Elements[i].GetExtension(CHANGED_BY_DIFF_EXT) != null ? "CHANGED" : null));
+                            Debug.Assert(nav.Elements[i].GetExtension(CHANGED_BY_DIFF_EXT) == null);
+
+                            // [WMR 20160826] Never inherit Changed extension from base profile!
+                            // nav.Elements[i].RemoveExtension(CHANGED_BY_DIFF_EXT);
+
+                            OnPrepareElement(nav.Elements[pos+i], baseSnap.Element[i]);
+                        }
                     }
 #if DEBUG
                     else
@@ -685,7 +719,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             return true;
         }
 
-        private void generateBaseElements(IEnumerable<ElementDefinition> elements)
+        // [WMR 20160826] TODO: Rewrite
+        // This shouldn't be a pre-processing step
+        // Base path is derived from the associated base element - emit when matching
+
+        private void generateBaseElements(IEnumerable<ElementDefinition> elements, FHIRDefinedType? constrainedType)
         {
             // [WMR 20160805] NEW
             // Base path should be derived from the original profile that introduces the element definition
@@ -696,36 +734,44 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Inspect root element to determine base type (Element/Resource/DomainResource)
             var rootElem = elements.FirstOrDefault();
-            var primaryTypeCode = rootElem.PrimaryTypeCode();
-            var baseTypeDefs = getBaseTypeDefs(primaryTypeCode);
+            var primaryTypeCode = constrainedType ?? rootElem.PrimaryTypeCode();
+            StructureDefinition[] baseStructures;
+            var normalize = _settings.NormalizeElementBase;
+            baseStructures = getBaseStructures(primaryTypeCode, normalize);
 
             foreach (var element in elements)
             {
-                if (_settings.RewriteElementBase || element.Base == null)
+                if (element.Base == null || normalize)
                 {
-                    var baseElem = element;
-                    if (_settings.NormalizeElementBase)
-                    {
-                        var elemName = element.GetNameFromPath();
-                        baseElem = baseTypeDefs.SelectMany(sd => sd.Snapshot.Element).FirstOrDefault(e => e.GetNameFromPath() == elemName) ?? element;
-                    }
+                    // var elemName = element.GetNameFromPath();
+                    // Find matching element definition in base profiles, starting at the nearest (immediate) base
+                    var baseElem = baseStructures.SelectMany(sd => sd.Snapshot.Element)
+                                                .FirstOrDefault(e => NamedNavigation.IsMatchingElementName(e.Path, element.Path));
+                    // If there is no matching base element, then this is (a clone of) the original (core profile) element definition
+                    // => generate base path from element path
+                    Debug.WriteLineIf(baseElem == null, "[generateBaseElements] {0} has no base...".FormatWith(element.Path));
+                    baseElem = baseElem ?? element;
+
+                    Debug.Print("[generateBaseElements] Path = {0}  Base = {1}".FormatWith(element.Path, baseElem.Path));
+
                     element.Base = new ElementDefinition.BaseComponent()
                     {
                         MaxElement = (FhirString)baseElem.MaxElement.DeepCopy(),
                         MinElement = (Integer)baseElem.MinElement.DeepCopy(),
                         PathElement = (FhirString)baseElem.PathElement.DeepCopy()
                     };
-
                 }
-                // Notify clients about resolved base element
-                OnPrepareBaseElement(element);
             }
         }
 
-        private StructureDefinition[] getBaseTypeDefs(FHIRDefinedType? type)
+        // Returns an array of base structures
+        // If normalize = false, then the array only contains the immediate base type profile
+        // If normalize = true, then the array contains the full base profile hierarchy, starting at the immediate base profile
+        private StructureDefinition[] getBaseStructures(FHIRDefinedType? type, bool normalize)
         {
             var result = new Stack<StructureDefinition>();
-            while (type.HasValue)
+            // Don't recurse on Element (=> Element.id)
+            while (type.HasValue && type.Value != FHIRDefinedType.Element)
             {
                 var sd = _resolver.GetStructureDefinitionForCoreType(type.Value);
                 if (sd == null)
@@ -733,6 +779,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     throw Error.InvalidOperation("Cannot resolve core profile for type '{0}'".FormatWith(type.Value));
                 }
                 result.Push(sd);
+                // If normalizing, then recurse on inner base types, otherwise only return the primary base profile
+                if (!normalize) { break; }
                 type = sd.Snapshot.Element.FirstOrDefault().PrimaryTypeCode();
             }
             return result.ToArray();

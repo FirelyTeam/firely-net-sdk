@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Following settings concern controversial aspects, behavior is not well defined
             // Needs discussion/decision from HL7 FHIR community
             MergeTypeProfiles = true,
-            RewriteElementBase = false,
+            // RewriteElementBase = false,
             NormalizeElementBase = false   // true in STU3
         };
 
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             ExpandUnconstrainedElements = settings.ExpandUnconstrainedElements;
             MarkChanges = settings.MarkChanges;
             MergeTypeProfiles = settings.MergeTypeProfiles;
-            RewriteElementBase = settings.RewriteElementBase;
+            // RewriteElementBase = settings.RewriteElementBase;
             NormalizeElementBase = settings.NormalizeElementBase;
         }
 
@@ -79,6 +79,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <remarks>See GForge #9791</remarks>
         public bool MergeTypeProfiles { get; set; }
 
+#if false
         /// <summary>
         /// EXPERIMENTAL!
         /// Enable this setting to rewrite all ElementDefinition.Base components by tracking the base hierarchy.
@@ -88,6 +89,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// This setting is useful to correct errors in the core profile definitions.
         /// </remarks>
         public bool RewriteElementBase { get; set; }
+#endif
 
         /// <summary>
         /// EXPERIMENTAL!
