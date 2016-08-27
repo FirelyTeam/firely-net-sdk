@@ -21,9 +21,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 {
     public sealed partial class SnapshotGenerator
     {
-        /// <summary>The canonical url of the extension definition that marks snapshot elements with associated differential constraints.</summary>
-        public static readonly string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
-
         private readonly IArtifactSource _resolver;
         private readonly SnapshotGeneratorSettings _settings;
 #if DETECT_RECURSION
@@ -358,12 +355,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         rebasePath = ElementDefinitionNavigator.GetParentPath(rebasePath);
                     }
-                    var rebasedBaseStructure = (StructureDefinition)baseStructure.DeepCopy();
-                    rebasedBaseStructure.Snapshot.Rebase(rebasePath);
+                    var rebasedBaseSnapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
+                    rebasedBaseSnapshot.Rebase(rebasePath);
 
-                    generateBaseElements(baseStructure.Snapshot.Element, baseStructure.ConstrainedType);
+                    generateBaseElements(rebasedBaseSnapshot.Element, baseStructure.ConstrainedType);
 
-                    var baseNav = new ElementDefinitionNavigator(rebasedBaseStructure.Snapshot.Element);
+                    var baseNav = new ElementDefinitionNavigator(rebasedBaseSnapshot.Element);
 
                     if (!profileRef.IsComplex)
                     {
@@ -697,11 +694,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                         var pos = nav.OrdinalPosition.Value;
                         for (int i = 1; i < baseSnap.Element.Count; i++)
                         {
-                            // Debug.Print("* {0} {1}".FormatWith(nav.Path, nav.Elements[i].GetExtension(CHANGED_BY_DIFF_EXT) != null ? "CHANGED" : null));
-                            Debug.Assert(nav.Elements[i].GetExtension(CHANGED_BY_DIFF_EXT) == null);
-
                             // [WMR 20160826] Never inherit Changed extension from base profile!
-                            // nav.Elements[i].RemoveExtension(CHANGED_BY_DIFF_EXT);
+                            nav.Elements[pos+i].ClearAllChangedByDiff();
 
                             OnPrepareElement(nav.Elements[pos+i], baseSnap.Element[i]);
                         }
@@ -732,7 +726,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Suggestion: core resource definitions should specify Base component for all elements inherited from (Domain)Resource
             // For now, we could hard-code the elements derived from (Domain)Resource
 
-            // Inspect root element to determine base type (Element/Resource/DomainResource)
+            // OPTIMIZE/IMPROVE: don't pre-generate base paths with fuzzy matching
+            // Instead, integrate logic into element merging, derived from matched base element def
+
+            // Inspect root element to determine base type (Element/Resource/DomainResource/...)
             var rootElem = elements.FirstOrDefault();
             var primaryTypeCode = constrainedType ?? rootElem.PrimaryTypeCode();
             StructureDefinition[] baseStructures;
@@ -743,16 +740,17 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 if (element.Base == null || normalize)
                 {
-                    // var elemName = element.GetNameFromPath();
                     // Find matching element definition in base profiles, starting at the nearest (immediate) base
+                    // Combine the snapshot element lists of all base profiles from root (e.g. Resource) to most derived (e.g. Patient)
+                    // Then find the first (least derived) matching base element
                     var baseElem = baseStructures.SelectMany(sd => sd.Snapshot.Element)
-                                                .FirstOrDefault(e => NamedNavigation.IsMatchingElementName(e.Path, element.Path));
+                                                .FirstOrDefault(e => ElementDefinitionNavigator.IsCandidateBaseElementPath(e.Path, element.Path));
                     // If there is no matching base element, then this is (a clone of) the original (core profile) element definition
                     // => generate base path from element path
-                    Debug.WriteLineIf(baseElem == null, "[generateBaseElements] {0} has no base...".FormatWith(element.Path));
+                    Debug.WriteLineIf(baseElem == null, "[generateBaseElements] Warning! {0} has no base... generate from element path".FormatWith(element.Path));
                     baseElem = baseElem ?? element;
 
-                    Debug.Print("[generateBaseElements] Path = {0}  Base = {1}".FormatWith(element.Path, baseElem.Path));
+                    // Debug.Print("[generateBaseElements] Path = {0}  Base = {1}".FormatWith(element.Path, baseElem.Path));
 
                     element.Base = new ElementDefinition.BaseComponent()
                     {
@@ -766,12 +764,12 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // Returns an array of base structures
         // If normalize = false, then the array only contains the immediate base type profile
-        // If normalize = true, then the array contains the full base profile hierarchy, starting at the immediate base profile
+        // If normalize = true, then the array contains the full base profile hierarchy,
         private StructureDefinition[] getBaseStructures(FHIRDefinedType? type, bool normalize)
         {
             var result = new Stack<StructureDefinition>();
-            // Don't recurse on Element (=> Element.id)
-            while (type.HasValue && type.Value != FHIRDefinedType.Element)
+
+            while (type.HasValue) // && type.Value != FHIRDefinedType.Element)
             {
                 var sd = _resolver.GetStructureDefinitionForCoreType(type.Value);
                 if (sd == null)
@@ -781,7 +779,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 result.Push(sd);
                 // If normalizing, then recurse on inner base types, otherwise only return the primary base profile
                 if (!normalize) { break; }
-                type = sd.Snapshot.Element.FirstOrDefault().PrimaryTypeCode();
+                var baseType = sd.Snapshot.Element.FirstOrDefault().PrimaryTypeCode();
+                // Prevent endless recursion...
+                // Note: only guards against direct self-references; assuming that longer cycles won't occur... (use HashSet)
+                if (baseType == type) { break; }
+                type = baseType;
             }
             return result.ToArray();
         }

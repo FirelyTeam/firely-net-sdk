@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             if (definition == null) throw Error.ArgumentNull("definition");
             if (definition.Snapshot == null) throw Error.ArgumentNull("snapshot");
-            
+
             StructureDefinition = definition;
             Elements = definition.Snapshot.Element.ToList();      // make a *shallow* copy of the list of elements
             OrdinalPosition = null;
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Specification.Navigation
             return result;
         }
 
-     
+
         public ElementDefinitionNavigator(IList<ElementDefinition> elements) : this(elements, null)
         {
         }
@@ -69,20 +69,20 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             if (sd.Snapshot == null) throw Error.ArgumentNull("snapshot");
 
-            return new ElementDefinitionNavigator(sd.Snapshot.Element,sd);
+            return new ElementDefinitionNavigator(sd.Snapshot.Element, sd);
         }
 
         public static ElementDefinitionNavigator ForDifferential(StructureDefinition sd)
         {
             if (sd.Differential == null) throw Error.ArgumentNull("differential");
 
-            return new ElementDefinitionNavigator(sd.Differential.Element,sd);
+            return new ElementDefinitionNavigator(sd.Differential.Element, sd);
         }
 
         public StructureDefinition StructureDefinition { get; private set; }
 
 
-        public bool AtRoot {  get { return OrdinalPosition == null;  } }
+        public bool AtRoot { get { return OrdinalPosition == null; } }
 
         /// <summary>
         /// Get the name of the current node, based on the last part of the part
@@ -553,6 +553,69 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             var dot = child.LastIndexOf(".");
             return dot != -1 ? child.Substring(0, dot) : String.Empty;
+        }
+
+        internal static bool IsChoiceElement(string elementName)
+        {
+            return elementName.EndsWith("[x]");
+        }
+
+        /// <summary>Determines if an element name matches a choice element name in the base profile.</summary>
+        /// <param name="baseName">A base element name.</param>
+        /// <param name="newName">An derived element name.</param>
+        /// <example>Match "value[x]" and "valueCodeableConcept"</example>
+        internal static bool IsRenamedChoiceElement(string baseName, string newName)
+        {
+            return baseName != null
+                && newName != null
+                && IsChoiceElement(baseName)
+                && String.Compare(baseName, 0, newName, 0, baseName.Length - 3) == 0 && newName.Length > baseName.Length;
+        }
+
+        /// <summary>Determines if the specified element path matches a base element path.</summary>
+        /// <param name="baseElementPath">A base element path.</param>
+        /// <param name="elementPath">An derived element path.</param>
+        /// <example>
+        /// IsMatchingBaseElementPath("DomainResource.meta", "Patient.meta")
+        /// IsMatchingBaseElementPath("Extension.valueBoolean", "Extension.value[x]")
+        /// </example>
+        internal static bool IsCandidateBaseElementPath(string baseElementPath, string elementPath)
+        {
+            // var root = GetPathRoot(elementPath);
+            // var rebased = ReplacePathRoot(baseElementPath, root);
+            // return elementPath == rebased || IsRenamedChoiceElement(rebased, elementPath);
+            var dot1 = baseElementPath != null ? baseElementPath.IndexOf('.') : -1;
+            var dot2 = elementPath != null ? elementPath.IndexOf('.') : -1;
+
+            if (dot1 > 0 && dot2 > 0)
+            {
+                var basePathPart = baseElementPath.Substring(dot1 + 1);
+                var pathPart = elementPath.Substring(dot2 + 1);
+                return basePathPart == pathPart || IsRenamedChoiceElement(basePathPart, pathPart);
+            }
+            return !string.IsNullOrEmpty(baseElementPath)
+                && !string.IsNullOrEmpty(elementPath)
+                && dot1 == -1 && dot2 == -1;
+             // && !ModelInfo.IsCoreModelType(baseElementPath);
+        }
+
+        /// <summary>Returns the root component of the specified element path.</summary>
+        /// <param name="path">An element path.</param>
+        /// <returns>A root path.</returns>
+        public static string GetPathRoot(string path)
+        {
+            var dot = path.IndexOf('.');
+            return dot > 0 ? path.Substring(0, dot) : path;
+        }
+
+        /// <summary>Replace the root component of the specified element path.</summary>
+        /// <param name="path">An element path.</param>
+        /// <param name="newRoot">The new path root.</param>
+        /// <returns>An element path.</returns>
+        public static string ReplacePathRoot(string path, string newRoot)
+        {
+            var dot = path.IndexOf('.');
+            return dot > 0 ? newRoot + path.Substring(dot) : newRoot;
         }
 
         internal static int NumberOfParts(string path)

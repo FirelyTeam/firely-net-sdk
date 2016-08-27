@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Specification.Tests
             settings.ExpandUnconstrainedElements = true;
             settings.MergeTypeProfiles = true;
             settings.MarkChanges = true;
-            //settings.NormalizeElementBase = true;
+            settings.NormalizeElementBase = true;
             _generator = new SnapshotGenerator(source, settings);
 
             // [WMR 20160817] Attach custom event handlers
@@ -703,22 +703,35 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(elem);
                 var ann = elem.Annotation<BaseDefAnnotation>();
                 ElementDefinition baseDef;
-                // We want to annotate a reference to the matching base element from the immediate base profile
-                // When the snapshot generator expands external profiles, then this handler gets called multiple times,
-                // starting at the farthest (root) base profile and ending with the nearest (immediate) base profile
+                // We want to annotate a reference to the matching base element from the (immediate) base profile.
+                // When the snapshot generator expands external profiles, then this handler is called once for each
+                // profile in the base hierarchy, starting at the root profile, e.g. Resource => DomainResource => Patient.
+                // Each time we recreate the annotation, so the final annotation contains a reference to the immediate base.
                 if (ann != null)
                 {
                     elem.RemoveAnnotations<BaseDefAnnotation>();
                 }
                 baseDef = args.BaseElement;
                 elem.AddAnnotation(new BaseDefAnnotation(baseDef));
-                Debug.Print("[SnapshotElementHandler] Path = '{0}' (#{1}, Base = #{2}{3})".FormatWith(elem.Path, elem.GetHashCode(), baseDef.GetHashCode(), ann != null ? " *" : null));
+                Debug.Write("[SnapshotElementHandler] #{0} '{1}' - Base: #{2} '{3}'".FormatWith(elem.GetHashCode(), elem.Path, baseDef.GetHashCode(), baseDef.Path));
+                Debug.WriteLine(ann != null && ann.BaseElementDefinition != null ? " (old Base: #{0} '{1}')".FormatWith(ann.BaseElementDefinition.GetHashCode(), ann.BaseElementDefinition.Path) : "");
+            };
+
+            SnapshotConstraintHandler constraintHandler = (sender, args) =>
+            {
+                var elem = args.Element as ElementDefinition;
+                if (elem != null)
+                {
+                    var changed = elem.GetChangedByDiff() == true;
+                    Debug.Print("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
+                }
             };
 
             try
             {
                 _generator.PrepareBaseProfile += profileHandler;
                 _generator.PrepareElement += elementHandler;
+                _generator.Constraint += constraintHandler;
 
                 StructureDefinition expanded;
                 generateSnapshotAndCompare(sd, source, out expanded);
@@ -741,6 +754,7 @@ namespace Hl7.Fhir.Specification.Tests
             finally
             {
                 // Detach event handlers
+                _generator.Constraint -= constraintHandler;
                 _generator.PrepareElement -= elementHandler;
                 _generator.PrepareBaseProfile -= profileHandler;
             }
@@ -765,29 +779,22 @@ namespace Hl7.Fhir.Specification.Tests
 
                 var ann = elem.Annotation<BaseDefAnnotation>();
                 var baseDef = ann != null ? ann.BaseElementDefinition : null;
-                // Assert.IsNotNull(baseDef);
                 Assert.AreNotEqual(elem, baseDef);
 
                 var hasChanges = HasChanges(elem);
-                var equals = baseDef == null && elem.Base == null;
+                var hasConstraints = false; // baseDef != null || elem.Base != null;
                 if (baseDef != null && elem.Base != null)
                 {
                     // If normalizing, then elem.Base.Path refers to the defining profile (e.g. DomainResource),
                     // whereas baseDef refers to the immediate base profile (e.g. Patient)
-
-                    Debug.Assert(settings.NormalizeElementBase || NamedNavigation.IsMatchingElementName(elem.Base.Path, baseDef.Path));
-
-                    // Path & Base are expected to differ
-                    var clone = (ElementDefinition)baseDef.DeepCopy();
-                    clone.Path = elem.Path;
-                    clone.Base = elem.Base;
-                    equals = clone.IsExactly(elem);
+                    Debug.Assert(settings.NormalizeElementBase || ElementDefinitionNavigator.IsCandidateBaseElementPath(elem.Base.Path, baseDef.Path));
+                    hasConstraints = HasConstraints(elem, baseDef);
                 }
-                var isValid = hasChanges == !equals;
-                Debug.WriteLine("{0}  |  {1}  |  {2}  |  {3}  |  {4}  |  {5} | {6} | {7}",
+                var isValid = hasChanges == hasConstraints;
+                Debug.WriteLine("{0,10}  |  {1}  |  {2,-12}  |  {3,-40}  |  {4,-40}  |  {5,-40}  |  {6,10}  |  {7}",
                     elem.GetHashCode(),
-                    equals ? "-" : "+",
-                    hasChanges ? "+" : "-",
+                    hasConstraints ? "+" : "-",
+                    GetChangeDescription(elem),
                     elem.Path,
                     elem.Base != null ? elem.Base.Path : null,
                     baseDef != null ? baseDef.Path : null,
@@ -795,10 +802,30 @@ namespace Hl7.Fhir.Specification.Tests
                     !isValid ? "!!!" : ""
                 );
                 //Assert.IsTrue(baseDef == null || isValid);
+                // Debug.Assert(baseDef == null || isValid);
             }
         }
 
-        // Returns true if the specified element or any of its' components contain the special change tracking extension
+        // Utility function to compare element and base element
+        // Path, Base and CHANGED_BY_DIFF_EXT extension are excluded from comparison
+        // Returns true if the element has any other constraints on base
+        private static bool HasConstraints(ElementDefinition elem, ElementDefinition baseElem)
+        {
+            var elemClone = (ElementDefinition)elem.DeepCopy();
+            var baseClone = (ElementDefinition)baseElem.DeepCopy();
+
+            // Path & Base are expected to differ
+            baseClone.Path = elem.Path;
+            baseClone.Base = elem.Base;
+            
+            // Also ignore any Changed extensions on base and diff
+            elemClone.ClearAllChangedByDiff();
+            baseClone.ClearAllChangedByDiff();
+
+            return !baseClone.IsExactly(elemClone);
+        }
+
+        // Returns true if the specified element or any of its' components contain the CHANGED_BY_DIFF_EXT extension
         private static bool HasChanges(ElementDefinition elem)
         {
             return IsChanged(elem)
@@ -837,6 +864,51 @@ namespace Hl7.Fhir.Specification.Tests
                 || HasChanges(elem.Type);
         }
 
+        private static string GetChangeDescription(ElementDefinition element)
+        {
+            if (IsChanged(element)) { return "Element"; }
+
+            
+            if (IsChanged(element.Slicing)) { return "Slicing"; }       // Moved to front
+            if (HasChanges(element.Type)) { return "Type"; }            // Moved to front
+            if (IsChanged(element.ShortElement)) { return "Short"; }    // Moved to front
+
+            if (HasChanges(element.AliasElement)) { return "Alias"; }
+            if (IsChanged(element.Base)) { return "Base"; }
+            if (IsChanged(element.Binding)) { return "Binding"; }
+            if (HasChanges(element.Code)) { return "Code"; }
+            if (IsChanged(element.CommentsElement)) { return "Comments"; }
+            if (HasChanges(element.ConditionElement)) { return "Condition"; }
+            if (HasChanges(element.Constraint)) { return "Constraint"; }
+            if (IsChanged(element.DefaultValue)) { return "DefaultValue"; }
+            if (IsChanged(element.DefinitionElement)) { return "Definition"; }
+            if (IsChanged(element.Example)) { return "Example"; }
+            if (HasChanges(element.Extension)) { return "Extension"; }
+            if (HasChanges(element.FhirCommentsElement)) { return "FhirComments"; }
+            if (IsChanged(element.Fixed)) { return "Fixed"; }
+            if (IsChanged(element.IsModifierElement)) { return "IsModifier"; }
+            if (IsChanged(element.IsSummaryElement)) { return "IsSummary"; }
+            if (IsChanged(element.LabelElement)) { return "Label"; }
+            if (HasChanges(element.Mapping)) { return "Mapping"; }
+            if (IsChanged(element.MaxElement)) { return "Max"; }
+            if (IsChanged(element.MaxLengthElement)) { return "MaxLength"; }
+            if (IsChanged(element.MaxValue)) { return "MaxValue"; }
+            if (IsChanged(element.MeaningWhenMissingElement)) { return "MeaningWhenMissing"; }
+            if (IsChanged(element.MinElement)) { return "Min"; }
+            if (IsChanged(element.MinValue)) { return "MinValue"; }
+            if (IsChanged(element.MustSupportElement)) { return "MustSupport"; }
+            if (IsChanged(element.NameElement)) { return "Name"; }
+            if (IsChanged(element.NameReferenceElement)) { return "NameReference"; }
+            if (IsChanged(element.PathElement)) { return "Path"; }
+            if (IsChanged(element.Pattern)) { return "Pattern"; }
+            if (HasChanges(element.RepresentationElement)) { return "Representation"; }
+            if (IsChanged(element.RequirementsElement)) { return "Requirements"; }
+            //if (IsChanged(element.ShortElement)) { return "Short"; }
+            //if (IsChanged(element.Slicing)) { return "Slicing"; }
+            //if (HasChanges(element.Type)) { return "Type"; }
+            return string.Empty;
+        }
+
         private static bool HasChanges<T>(IList<T> extendables) where T : IExtendable
         {
             return extendables != null ? extendables.Any(e => IsChanged(e)) : false;
@@ -844,12 +916,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private static bool IsChanged(IExtendable extendable)
         {
-            if (extendable != null)
-            {
-                var ext = extendable.GetExtensionValue<FhirBoolean>(SnapshotGenerator.CHANGED_BY_DIFF_EXT);
-                return ext != null && ext.Value == true;
-            }
-            return false;
+            return extendable!= null && extendable.GetChangedByDiff() == true;
         }
     }
 

@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Configurable default behavior: mark changed elements
             if (_settings.MarkChanges)
             {
-                element.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
+                element.SetChangedByDiff();
             }
 
             var handler = Constraint;

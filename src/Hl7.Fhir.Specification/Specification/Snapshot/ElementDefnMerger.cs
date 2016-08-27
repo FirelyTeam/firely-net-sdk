@@ -12,6 +12,7 @@ using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -43,7 +44,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // paths can be changed under one circumstance: the snap is a choice[x] element, and diff limits the type choices
                 // to one. The name can then be changed to choiceXXXX, where XXXX is the name of the type.
-                if(snap.Path != diff.Path && snap.IsChoice() && diff.Type.Count() == 1)
+                if (snap.Path != diff.Path && snap.IsChoice() && diff.Type.Count() == 1)
                 {
                     if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.ToString().Capitalize() != diff.Path)
                         throw Error.InvalidOperation("Path cannot be changed from '{0}' to '{1}', since the type is sliced to '{2}'"
@@ -140,6 +141,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Binding = mergeComplexAttribute(snap.Binding, diff.Binding);
 
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
+
+                // [WMR 20160817] TODO: Merge extensions
+                // snap.Extension = mergeCollection(snap.Extension, diff.Extension, (s, d) => s.Url == d.Url);
+                Debug.WriteLineIf(snap.Extension == null, "[ElementDefnMerger] Warning: Extension merging is not supported yet...");
 
                 // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
             }

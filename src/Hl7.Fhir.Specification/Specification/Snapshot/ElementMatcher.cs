@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         var typeSliceShorthand = diffNav.PathName;
 
                         // Try to match nameXXXXX to name[x]
-                        var matchingChoice = choiceNames.SingleOrDefault(xName => NamedNavigation.IsRenamedChoiceElement(xName, typeSliceShorthand));
+                        var matchingChoice = choiceNames.SingleOrDefault(xName => ElementDefinitionNavigator.IsRenamedChoiceElement(xName, typeSliceShorthand));
 
                         if (matchingChoice != null)
                             snapNav.MoveToNext(matchingChoice);

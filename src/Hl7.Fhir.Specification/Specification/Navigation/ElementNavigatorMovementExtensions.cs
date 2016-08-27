@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -15,29 +15,6 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
-    // [WMR 20160802] NEW
-    public static class NamedNavigation
-    {
-        /// <summary>Determines if an element name matches a choice element name in the base profile.</summary>
-        /// <example>Match "value[x]" and "valueCodeableConcept"</example>
-        internal static bool IsRenamedChoiceElement(string baseName, string newName)
-        {
-            return baseName != null
-                && newName != null
-                && baseName.EndsWith("[x]")
-                && String.Compare(baseName, 0, newName, 0, baseName.Length - 3) == 0 && newName.Length > baseName.Length;
-        }
-
-        /// <summary>Determines if the specified element names match. Also handles renamed choice type elements, e.g. "value[x]".</summary>
-        /// <param name="baseElementName">A base element name.</param>
-        /// <param name="elementName">A profile element name.</param>
-        /// <returns></returns>
-        internal static bool IsMatchingElementName(string baseElementName, string elementName)
-        {
-            return elementName == baseElementName || IsRenamedChoiceElement(baseElementName, elementName);
-        }
-    }
-
     public static class NamedNavigationExtensions
     {
         /// <summary>Move the navigator to the first child element with the specified name, if it exists.</summary>
@@ -85,7 +62,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
             while (nav.MoveToNext())
             {
-                if (NamedNavigation.IsRenamedChoiceElement(name, nav.PathName)) return true;
+                if (ElementDefinitionNavigator.IsRenamedChoiceElement(name, nav.PathName)) return true;
             }
 
             nav.ReturnToBookmark(bm);
@@ -97,7 +74,7 @@ namespace Hl7.Fhir.Specification.Navigation
         internal static bool IsCandidateTypeSlice(this ElementDefinitionNavigator nav, string diffName)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
-            return NamedNavigation.IsRenamedChoiceElement(nav.PathName, diffName);
+            return ElementDefinitionNavigator.IsRenamedChoiceElement(nav.PathName, diffName);
         }
 
         /// <summary>Move to last direct child element with same path as current element.</summary>

@@ -49,7 +49,7 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-       <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha1\lib\net40\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -95,6 +95,7 @@
     <Compile Include="Specification\Snapshot\ElementMatcher.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorEvents.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorProfileInfo.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
     <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
