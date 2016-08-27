@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Specification.Navigation
             while (nav.MoveToNext())
             {
                 var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
-                if (baseComp != null && baseComp == basePath)
+                if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp)))
                 {
                     // Match, advance cursor
                     bm = nav.Bookmark();

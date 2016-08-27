@@ -747,7 +747,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                                                 .FirstOrDefault(e => ElementDefinitionNavigator.IsCandidateBaseElementPath(e.Path, element.Path));
                     // If there is no matching base element, then this is (a clone of) the original (core profile) element definition
                     // => generate base path from element path
-                    Debug.WriteLineIf(baseElem == null, "[generateBaseElements] Warning! {0} has no base... generate from element path".FormatWith(element.Path));
+                    // Debug.WriteLineIf(baseElem == null, "[generateBaseElements] Warning! {0} has no base... generate from element path".FormatWith(element.Path));
                     baseElem = baseElem ?? element;
 
                     // Debug.Print("[generateBaseElements] Path = {0}  Base = {1}".FormatWith(element.Path, baseElem.Path));
