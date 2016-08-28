@@ -2282,7 +2282,7 @@
                   <a name="Identifier"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -2301,7 +2301,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
                   <span title="This element is a modifier element">?! </span>
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -2323,7 +2323,7 @@
                   <a name="Identifier.type"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -2345,7 +2345,7 @@
                   <a name="Identifier.system"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -2363,7 +2363,7 @@
                   <a name="Identifier.value"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -2381,7 +2381,7 @@
                   <a name="Identifier.period"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -2399,7 +2399,7 @@
                   <a name="Identifier.assigner"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -2893,7 +2893,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Coding"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -2911,7 +2911,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Coding.system"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -2929,7 +2929,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Coding.version"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -2947,7 +2947,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Coding.code"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -2965,7 +2965,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Coding.display"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -2983,7 +2983,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Coding.userSelected"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -3408,7 +3408,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Reference"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
@@ -3430,7 +3430,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Reference.reference"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -3449,7 +3449,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Reference.display"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -3501,6 +3501,9 @@ Where the system is known, a type is unnecessary because the type is always part
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="reference.startsWith(&#39;#&#39;).not() or (reference.substring(1).trace(&#39;url&#39;) in %resource.contained.id.trace(&#39;ids&#39;))"/>
+              </extension>
               <key value="ref-1"/>
               <severity value="error"/>
               <human value="SHALL have a local reference if the resource is provided inline"/>
@@ -3589,6 +3592,9 @@ Where the system is known, a type is unnecessary because the type is always part
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="reference.startsWith(&#39;#&#39;).not() or (reference.substring(1).trace(&#39;url&#39;) in %resource.contained.id.trace(&#39;ids&#39;))"/>
+              </extension>
               <key value="ref-1"/>
               <severity value="error"/>
               <human value="SHALL have a local reference if the resource is provided inline"/>
@@ -3679,7 +3685,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Signature"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -3697,7 +3703,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Signature.type"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -3719,7 +3725,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Signature.when"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -3737,7 +3743,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Signature.who_x_"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
@@ -3789,7 +3795,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Signature.contentType"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -3811,7 +3817,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Signature.blob"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4140,7 +4146,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="SampledData"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4158,7 +4164,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="SampledData.origin"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4176,7 +4182,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="SampledData.period"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4194,7 +4200,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="SampledData.factor"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4212,7 +4218,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="SampledData.lowerLimit"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4230,7 +4236,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="SampledData.upperLimit"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4248,7 +4254,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="SampledData.dimensions"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4266,7 +4272,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="SampledData.data"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4652,7 +4658,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Quantity"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
@@ -4674,7 +4680,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Quantity.value"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4693,7 +4699,7 @@ Where the system is known, a type is unnecessary because the type is always part
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
                   <span title="This element is a modifier element">?! </span>
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4715,7 +4721,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Quantity.unit"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4733,7 +4739,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Quantity.system"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -4752,7 +4758,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Quantity.code"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -4811,6 +4817,9 @@ Where the system is known, a type is unnecessary because the type is always part
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="code.empty() or system"/>
+              </extension>
               <key value="qty-3"/>
               <severity value="error"/>
               <human value="If a code for the unit is present, the system SHALL also be present"/>
@@ -4984,6 +4993,9 @@ Where the system is known, a type is unnecessary because the type is always part
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="code.empty() or system"/>
+              </extension>
               <key value="qty-3"/>
               <severity value="error"/>
               <human value="If a code for the unit is present, the system SHALL also be present"/>
@@ -5158,7 +5170,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Period"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
@@ -5180,7 +5192,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Period.start"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -5199,7 +5211,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Period.end"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -5258,6 +5270,9 @@ Where the system is known, a type is unnecessary because the type is always part
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="start.empty() or end.empty() or (start &lt;= end)"/>
+              </extension>
               <key value="per-1"/>
               <severity value="error"/>
               <human value="If present, start SHALL have a lower value than end"/>
@@ -5361,6 +5376,9 @@ Where the system is known, a type is unnecessary because the type is always part
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="start.empty() or end.empty() or (start &lt;= end)"/>
+              </extension>
               <key value="per-1"/>
               <severity value="error"/>
               <human value="If present, start SHALL have a lower value than end"/>
@@ -5465,7 +5483,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Attachment"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
@@ -5487,7 +5505,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Attachment.contentType"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -5509,7 +5527,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Attachment.language"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -5531,7 +5549,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Attachment.data"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -5549,7 +5567,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Attachment.url"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -5567,7 +5585,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Attachment.size"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -5585,7 +5603,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Attachment.hash"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -5603,7 +5621,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Attachment.title"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -5621,7 +5639,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Attachment.creation"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -5680,6 +5698,9 @@ Where the system is known, a type is unnecessary because the type is always part
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="data.empty() or contentType"/>
+              </extension>
               <key value="att-1"/>
               <severity value="error"/>
               <human value="It the Attachment has data, it SHALL have a contentType"/>
@@ -5897,6 +5918,9 @@ Where the system is known, a type is unnecessary because the type is always part
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="data.empty() or contentType"/>
+              </extension>
               <key value="att-1"/>
               <severity value="error"/>
               <human value="It the Attachment has data, it SHALL have a contentType"/>
@@ -6115,7 +6139,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Ratio"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
@@ -6137,7 +6161,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Ratio.numerator"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -6155,7 +6179,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Ratio.denominator"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -6213,6 +6237,9 @@ Where the system is known, a type is unnecessary because the type is always part
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="numerator.empty() xor denominator"/>
+              </extension>
               <key value="rat-1"/>
               <severity value="error"/>
               <human value="Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present"/>
@@ -6302,6 +6329,9 @@ Where the system is known, a type is unnecessary because the type is always part
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="numerator.empty() xor denominator"/>
+              </extension>
               <key value="rat-1"/>
               <severity value="error"/>
               <human value="Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present"/>
@@ -6393,7 +6423,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Range"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
@@ -6415,7 +6445,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Range.low"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -6434,7 +6464,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Range.high"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -6494,6 +6524,9 @@ Where the system is known, a type is unnecessary because the type is always part
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="low.empty() or high.empty() or (low &lt;= high)"/>
+              </extension>
               <key value="rng-2"/>
               <severity value="error"/>
               <human value="If present, low SHALL have a lower value than high"/>
@@ -6598,6 +6631,9 @@ Where the system is known, a type is unnecessary because the type is always part
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="low.empty() or high.empty() or (low &lt;= high)"/>
+              </extension>
               <key value="rng-2"/>
               <severity value="error"/>
               <human value="If present, low SHALL have a lower value than high"/>
@@ -6703,7 +6739,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Annotation"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -6721,7 +6757,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Annotation.author_x_"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
@@ -6771,7 +6807,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Annotation.time"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -6789,7 +6825,7 @@ Where the system is known, a type is unnecessary because the type is always part
                   <a name="Annotation.text"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -7098,7 +7134,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="CodeableConcept"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -7116,7 +7152,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="CodeableConcept.coding"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -7134,7 +7170,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="CodeableConcept.text"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -7964,7 +8000,6 @@ This element may need to be included in narrative because of the potential for m
               <code value="Extension"/>
             </type>
             <isModifier value="true"/>
-            <isSummary value="true"/>
             <mapping>
               <identity value="rim"/>
               <map value="N/A"/>
@@ -8000,7 +8035,6 @@ This element may need to be included in narrative because of the potential for m
               <code value="Extension"/>
             </type>
             <isModifier value="true"/>
-            <isSummary value="true"/>
             <mapping>
               <identity value="rim"/>
               <map value="N/A"/>
@@ -8437,6 +8471,9 @@ This element may need to be included in narrative because of the potential for m
             <max value="*"/>
             <condition value="ele-1"/>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="*"/>
+              </extension>
               <key value="ele-1"/>
               <severity value="error"/>
               <human value="All FHIR elements must have a @value or children"/>
@@ -8489,6 +8526,9 @@ This element may need to be included in narrative because of the potential for m
             <max value="*"/>
             <condition value="ele-1"/>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="*"/>
+              </extension>
               <key value="ele-1"/>
               <severity value="error"/>
               <human value="All FHIR elements must have a @value or children"/>
@@ -8577,7 +8617,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="HumanName"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -8596,7 +8636,7 @@ This element may need to be included in narrative because of the potential for m
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
                   <span title="This element is a modifier element">?! </span>
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -8618,7 +8658,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="HumanName.text"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -8636,7 +8676,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="HumanName.family"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -8654,7 +8694,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="HumanName.given"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -8672,7 +8712,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="HumanName.prefix"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -8690,7 +8730,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="HumanName.suffix"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -8708,7 +8748,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="HumanName.period"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -9231,7 +9271,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ContactPoint"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
@@ -9253,7 +9293,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ContactPoint.system"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -9276,7 +9316,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ContactPoint.value"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -9295,7 +9335,7 @@ This element may need to be included in narrative because of the potential for m
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
                   <span title="This element is a modifier element">?! </span>
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -9317,7 +9357,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ContactPoint.rank"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -9335,7 +9375,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ContactPoint.period"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -9398,6 +9438,9 @@ This element may need to be included in narrative because of the potential for m
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="value.empty() or system"/>
+              </extension>
               <key value="cpt-2"/>
               <severity value="error"/>
               <human value="A system is required if a value is provided."/>
@@ -9593,6 +9636,9 @@ This element may need to be included in narrative because of the potential for m
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="value.empty() or system"/>
+              </extension>
               <key value="cpt-2"/>
               <severity value="error"/>
               <human value="A system is required if a value is provided."/>
@@ -9790,7 +9836,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Meta"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -9808,7 +9854,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Meta.versionId"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -9826,7 +9872,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Meta.lastUpdated"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -9844,7 +9890,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Meta.profile"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -9862,7 +9908,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Meta.security"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -9884,7 +9930,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Meta.tag"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -10170,7 +10216,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Address"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -10189,7 +10235,7 @@ This element may need to be included in narrative because of the potential for m
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
                   <span title="This element is a modifier element">?! </span>
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -10211,7 +10257,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Address.type"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -10233,7 +10279,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Address.text"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -10251,7 +10297,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Address.line"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -10269,7 +10315,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Address.city"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -10287,7 +10333,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Address.district"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -10305,7 +10351,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Address.state"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -10323,7 +10369,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Address.postalCode"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -10341,7 +10387,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Address.country"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -10359,7 +10405,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Address.period"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -10626,7 +10672,7 @@ This element may need to be included in narrative because of the potential for m
             <path value="Address.district"/>
             <short value="District name (aka county)"/>
             <definition value="The name of the administrative area (county)."/>
-            <comments value="District is sometimes known as county, but in some regions &#39;county&#39; in used in place of city (municipality), so county name should be conveyed in city instead."/>
+            <comments value="District is sometimes known as county, but in some regions &#39;county&#39; is used in place of city (municipality), so county name should be conveyed in city instead."/>
             <alias value="County"/>
             <min value="0"/>
             <max value="1"/>
@@ -10937,7 +10983,7 @@ This element may need to be included in narrative because of the potential for m
             <path value="Address.district"/>
             <short value="District name (aka county)"/>
             <definition value="The name of the administrative area (county)."/>
-            <comments value="District is sometimes known as county, but in some regions &#39;county&#39; in used in place of city (municipality), so county name should be conveyed in city instead."/>
+            <comments value="District is sometimes known as county, but in some regions &#39;county&#39; is used in place of city (municipality), so county name should be conveyed in city instead."/>
             <alias value="County"/>
             <min value="0"/>
             <max value="1"/>
@@ -11115,7 +11161,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -11133,7 +11179,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.event"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -11151,7 +11197,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.repeat"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -11159,6 +11205,8 @@ This element may need to be included in narrative because of the potential for m
                   <a href="element.html">Element</a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">When the event is to occur
+                  <br/>
+                  <span style="font-style: italic" title="tim-5">period SHALL be a non-negative value</span>
                   <br/>
                   <span style="font-style: italic" title="tim-6">If there&#39;s a periodMax, there must be a period</span>
                   <br/>
@@ -11169,6 +11217,8 @@ This element may need to be included in narrative because of the potential for m
                   <span style="font-style: italic" title="tim-2">if there&#39;s a period, there needs to be period units</span>
                   <br/>
                   <span style="font-style: italic" title="tim-3">Either frequency or when can exist, not both</span>
+                  <br/>
+                  <span style="font-style: italic" title="tim-4">duration SHALL be a non-negative value</span>
                 </td>
               </tr>
 
@@ -11182,7 +11232,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.repeat.bounds_x_"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
@@ -11249,7 +11299,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.repeat.count"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -11268,17 +11318,13 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.repeat.duration"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
-                  <span title="This element has or is affected by some invariants">I</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
                   <a href="datatypes.html#decimal">decimal</a>
                 </td>
-                <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">How long when it happens
-                  <br/>
-                  <span style="font-style: italic" title="tim-4">duration SHALL be a non-negative value</span>
-                </td>
+                <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">How long when it happens</td>
               </tr>
 
               <tr style="border: 0px; padding:0px; vertical-align: top; background-color: white;">
@@ -11291,7 +11337,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.repeat.durationMax"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -11310,7 +11356,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.repeat.durationUnits"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -11333,7 +11379,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.repeat.frequency"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -11352,7 +11398,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.repeat.frequencyMax"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -11371,17 +11417,13 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.repeat.period"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
-                  <span title="This element has or is affected by some invariants">I</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
                   <a href="datatypes.html#decimal">decimal</a>
                 </td>
-                <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">Event occurs frequency times per period
-                  <br/>
-                  <span style="font-style: italic" title="tim-5">period SHALL be a non-negative value</span>
-                </td>
+                <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">Event occurs frequency times per period</td>
               </tr>
 
               <tr style="border: 0px; padding:0px; vertical-align: top; background-color: white;">
@@ -11394,7 +11436,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.repeat.periodMax"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -11413,7 +11455,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.repeat.periodUnits"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -11436,7 +11478,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.repeat.when"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -11458,7 +11500,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="Timing.code"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -11589,34 +11631,67 @@ This element may need to be included in narrative because of the potential for m
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="period.exists() implies period &gt;= 0"/>
+              </extension>
+              <key value="tim-5"/>
+              <severity value="error"/>
+              <human value="period SHALL be a non-negative value"/>
+              <xpath value="@value &gt;= 0 or not(@value)"/>
+            </constraint>
+            <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="periodMax.empty() or period"/>
+              </extension>
               <key value="tim-6"/>
               <severity value="error"/>
               <human value="If there&#39;s a periodMax, there must be a period"/>
               <xpath value="not(exists(f:periodMax)) or exists(f:period)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="durationMax.empty() or duration"/>
+              </extension>
               <key value="tim-7"/>
               <severity value="error"/>
               <human value="If there&#39;s a durationMax, there must be a duration"/>
               <xpath value="not(exists(f:durationMax)) or exists(f:duration)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="duration.empty() or durationUnits"/>
+              </extension>
               <key value="tim-1"/>
               <severity value="error"/>
               <human value="if there&#39;s a duration, there needs to be duration units"/>
               <xpath value="not(exists(f:duration)) or exists(f:durationUnits)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="period.empty() or periodUnits"/>
+              </extension>
               <key value="tim-2"/>
               <severity value="error"/>
               <human value="if there&#39;s a period, there needs to be period units"/>
               <xpath value="not(exists(f:period)) or exists(f:periodUnits)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="((period or frequency) and when).not()"/>
+              </extension>
               <key value="tim-3"/>
               <severity value="error"/>
               <human value="Either frequency or when can exist, not both"/>
               <xpath value="not((f:period or f:frequency) and f:when)"/>
+            </constraint>
+            <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="duration.exists() implies duration &gt;= 0"/>
+              </extension>
+              <key value="tim-4"/>
+              <severity value="error"/>
+              <human value="duration SHALL be a non-negative value"/>
+              <xpath value="@value &gt;= 0 or not(@value)"/>
             </constraint>
             <isSummary value="true"/>
             <mapping>
@@ -11706,12 +11781,6 @@ This element may need to be included in narrative because of the potential for m
             <type>
               <code value="decimal"/>
             </type>
-            <constraint>
-              <key value="tim-4"/>
-              <severity value="error"/>
-              <human value="duration SHALL be a non-negative value"/>
-              <xpath value="@value &gt;= 0 or not(@value)"/>
-            </constraint>
             <isSummary value="true"/>
             <mapping>
               <identity value="rim"/>
@@ -11797,12 +11866,6 @@ This element may need to be included in narrative because of the potential for m
             <type>
               <code value="decimal"/>
             </type>
-            <constraint>
-              <key value="tim-5"/>
-              <severity value="error"/>
-              <human value="period SHALL be a non-negative value"/>
-              <xpath value="@value &gt;= 0 or not(@value)"/>
-            </constraint>
             <isSummary value="true"/>
             <mapping>
               <identity value="rim"/>
@@ -11941,34 +12004,67 @@ This element may need to be included in narrative because of the potential for m
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="period.exists() implies period &gt;= 0"/>
+              </extension>
+              <key value="tim-5"/>
+              <severity value="error"/>
+              <human value="period SHALL be a non-negative value"/>
+              <xpath value="@value &gt;= 0 or not(@value)"/>
+            </constraint>
+            <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="periodMax.empty() or period"/>
+              </extension>
               <key value="tim-6"/>
               <severity value="error"/>
               <human value="If there&#39;s a periodMax, there must be a period"/>
               <xpath value="not(exists(f:periodMax)) or exists(f:period)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="durationMax.empty() or duration"/>
+              </extension>
               <key value="tim-7"/>
               <severity value="error"/>
               <human value="If there&#39;s a durationMax, there must be a duration"/>
               <xpath value="not(exists(f:durationMax)) or exists(f:duration)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="duration.empty() or durationUnits"/>
+              </extension>
               <key value="tim-1"/>
               <severity value="error"/>
               <human value="if there&#39;s a duration, there needs to be duration units"/>
               <xpath value="not(exists(f:duration)) or exists(f:durationUnits)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="period.empty() or periodUnits"/>
+              </extension>
               <key value="tim-2"/>
               <severity value="error"/>
               <human value="if there&#39;s a period, there needs to be period units"/>
               <xpath value="not(exists(f:period)) or exists(f:periodUnits)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="((period or frequency) and when).not()"/>
+              </extension>
               <key value="tim-3"/>
               <severity value="error"/>
               <human value="Either frequency or when can exist, not both"/>
               <xpath value="not((f:period or f:frequency) and f:when)"/>
+            </constraint>
+            <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="duration.exists() implies duration &gt;= 0"/>
+              </extension>
+              <key value="tim-4"/>
+              <severity value="error"/>
+              <human value="duration SHALL be a non-negative value"/>
+              <xpath value="@value &gt;= 0 or not(@value)"/>
             </constraint>
             <isSummary value="true"/>
             <mapping>
@@ -12026,12 +12122,6 @@ This element may need to be included in narrative because of the potential for m
             <type>
               <code value="decimal"/>
             </type>
-            <constraint>
-              <key value="tim-4"/>
-              <severity value="error"/>
-              <human value="duration SHALL be a non-negative value"/>
-              <xpath value="@value &gt;= 0 or not(@value)"/>
-            </constraint>
             <isSummary value="true"/>
             <mapping>
               <identity value="rim"/>
@@ -12117,12 +12207,6 @@ This element may need to be included in narrative because of the potential for m
             <type>
               <code value="decimal"/>
             </type>
-            <constraint>
-              <key value="tim-5"/>
-              <severity value="error"/>
-              <human value="period SHALL be a non-negative value"/>
-              <xpath value="@value &gt;= 0 or not(@value)"/>
-            </constraint>
             <isSummary value="true"/>
             <mapping>
               <identity value="rim"/>
@@ -12258,7 +12342,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy"></td>
@@ -12296,7 +12380,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.path"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12314,7 +12398,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.representation"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12336,7 +12420,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.name"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12354,7 +12438,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.label"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12372,7 +12456,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.code"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12394,7 +12478,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.slicing"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -12417,7 +12501,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.slicing.discriminator"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12436,7 +12520,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.slicing.description"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -12456,7 +12540,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.slicing.ordered"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12475,7 +12559,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.slicing.rules"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12497,7 +12581,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.short"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12515,7 +12599,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.definition"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12533,7 +12617,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.comments"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12551,7 +12635,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.requirements"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12569,7 +12653,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.alias"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12587,7 +12671,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.min"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -12606,7 +12690,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.max"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -12628,7 +12712,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.base"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12647,7 +12731,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.base.path"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12666,7 +12750,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.base.min"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12685,7 +12769,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.base.max"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12703,7 +12787,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.type"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
@@ -12726,7 +12810,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.type.code"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12749,7 +12833,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.type.profile"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12768,7 +12852,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.type.aggregation"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
@@ -12791,7 +12875,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.nameReference"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -12810,7 +12894,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.defaultValue_x_"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -12829,7 +12913,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.meaningWhenMissing"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -12848,7 +12932,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.fixed_x_"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -12867,7 +12951,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.pattern_x_"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -12886,7 +12970,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.example_x_"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12904,7 +12988,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.minValue_x_"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12922,7 +13006,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.maxValue_x_"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12940,7 +13024,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.maxLength"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12958,7 +13042,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.condition"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12976,7 +13060,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.constraint"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -12995,7 +13079,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.constraint.key"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
@@ -13015,7 +13099,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.constraint.requirements"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -13034,7 +13118,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.constraint.severity"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -13057,7 +13141,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.constraint.human"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -13076,7 +13160,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.constraint.xpath"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -13094,7 +13178,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.mustSupport"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -13112,7 +13196,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.isModifier"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -13130,7 +13214,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.isSummary"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -13148,7 +13232,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.binding"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -13171,7 +13255,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.binding.strength"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -13194,7 +13278,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.binding.description"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -13214,7 +13298,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.binding.valueSet_x_"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£ </span>
+                  <span title="This element is included in summaries">Σ </span>
                   <span title="This element has or is affected by some invariants">I</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
@@ -13268,7 +13352,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.mapping"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..*</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -13287,7 +13371,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.mapping.identity"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -13306,7 +13390,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.mapping.language"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">0..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -13329,7 +13413,7 @@ This element may need to be included in narrative because of the potential for m
                   <a name="ElementDefinition.mapping.map"> </a>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
-                  <span title="This element is included in summaries">Î£</span>
+                  <span title="This element is included in summaries">Σ</span>
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">1..1</td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">
@@ -13401,54 +13485,81 @@ This element may need to be included in narrative because of the potential for m
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="min.empty() or max.empty() or (max = &#39;*&#39;) or (min &lt;= max.toInteger())"/>
+              </extension>
               <key value="eld-2"/>
               <severity value="error"/>
               <human value="Min &lt;= Max"/>
               <xpath value="not(exists(f:min)) or not(exists(f:max)) or (not(f:max/@value) and not(f:min/@value)) or (f:max/@value = &#39;*&#39;) or (number(f:max/@value) &gt;= f:min/@value)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="nameReference.empty() or (type.empty() and defaultValue.empty() and fixed.empty() and pattern.empty() and example.empty() and minValue.empty() and maxValue.empty() and maxLength.empty() and binding.empty())"/>
+              </extension>
               <key value="eld-5"/>
               <severity value="error"/>
               <human value="Either a namereference or a fixed value (but not both) is permitted"/>
               <xpath value="not(exists(f:nameReference) and exists(f:*[starts-with(local-name(.), &#39;value&#39;)]))"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="pattern.empty() or (type.count() = 1)"/>
+              </extension>
               <key value="eld-7"/>
               <severity value="error"/>
               <human value="Pattern may only be specified if there is one type"/>
               <xpath value="not(exists(f:*[starts-with(local-name(.), &#39;pattern&#39;)])) or (count(f:type)=1)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="fixed.empty() or (type.count() = 1)"/>
+              </extension>
               <key value="eld-6"/>
               <severity value="error"/>
               <human value="Fixed value may only be specified if there is one type"/>
               <xpath value="not(exists(f:*[starts-with(local-name(.), &#39;fixed&#39;)])) or (count(f:type)=1)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="binding.empty() or type.code.empty() or type.select((code = &#39;code&#39;) or (code = &#39;Coding&#39;) or (code=&#39;CodeableConcept&#39;) or (code = &#39;Quantity&#39;) or (code = &#39;Extension&#39;) or (code = &#39;string&#39;) or (code = &#39;uri&#39;)).exists()"/>
+              </extension>
               <key value="eld-11"/>
               <severity value="error"/>
               <human value="Binding can only be present for coded elements, string, and uri"/>
               <xpath value="not(exists(f:binding)) or (count(f:type/f:code) = 0) or  f:type/f:code/@value=(&#39;code&#39;,&#39;Coding&#39;,&#39;CodeableConcept&#39;,&#39;Quantity&#39;,&#39;Extension&#39;, &#39;string&#39;, &#39;uri&#39;)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="pattern.empty() or fixed.empty()"/>
+              </extension>
               <key value="eld-8"/>
               <severity value="error"/>
               <human value="Pattern and value are mutually exclusive"/>
               <xpath value="not(exists(f:*[starts-with(local-name(.), &#39;pattern&#39;)])) or not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)]))"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="constraint.key.isDistinct()"/>
+              </extension>
               <key value="eld-14"/>
               <severity value="error"/>
               <human value="Constraints must be unique by key"/>
               <xpath value="count(f:constraint) = count(distinct-values(f:constraint/f:key/@value))"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="type.distinct(code,profile)"/>
+              </extension>
               <key value="eld-13"/>
               <severity value="error"/>
               <human value="Types must be unique by the combination of code and profile"/>
               <xpath value="not(exists(for $type in f:type return $type/preceding-sibling::f:type[f:code/@value=$type/f:code/@value and f:profile/@value = $type/f:profile/@value]))"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="defaultValue.empty() or meaningWhenMissing.empty()"/>
+              </extension>
               <key value="eld-15"/>
               <severity value="error"/>
               <human value="default value and meaningWhenMissing are mutually exclusive"/>
@@ -13650,6 +13761,9 @@ This element may need to be included in narrative because of the potential for m
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="discriminator or description"/>
+              </extension>
               <key value="eld-1"/>
               <severity value="error"/>
               <human value="If there are no discriminators, there must be a definition"/>
@@ -13946,6 +14060,9 @@ This element may need to be included in narrative because of the potential for m
             <condition value="eld-3"/>
             <condition value="eld-2"/>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="empty() or ($this = &#39;*&#39;) or (toInteger() &gt;= 0)"/>
+              </extension>
               <key value="eld-3"/>
               <severity value="error"/>
               <human value="Max SHALL be a number or &quot;*&quot;"/>
@@ -14091,6 +14208,9 @@ This element may need to be included in narrative because of the potential for m
             </type>
             <condition value="eld-13"/>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="aggregation.empty() or (code = &#39;Reference&#39;)"/>
+              </extension>
               <key value="eld-4"/>
               <severity value="error"/>
               <human value="Aggregation may only be specified if one of the allowed types for the element is a resource"/>
@@ -15176,6 +15296,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             </type>
             <condition value="eld-11"/>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="valueSet or description"/>
+              </extension>
               <key value="eld-10"/>
               <severity value="error"/>
               <human value="provide either a reference or a description (or both)"/>
@@ -15301,6 +15424,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             <condition value="eld-10"/>
             <condition value="eld-12"/>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="startsWith(&#39;http:&#39;) or startsWith(&#39;https&#39;)"/>
+              </extension>
               <key value="eld-12"/>
               <severity value="error"/>
               <human value="URI SHALL start with http:// or https://"/>
@@ -15449,54 +15575,81 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="min.empty() or max.empty() or (max = &#39;*&#39;) or (min &lt;= max.toInteger())"/>
+              </extension>
               <key value="eld-2"/>
               <severity value="error"/>
               <human value="Min &lt;= Max"/>
               <xpath value="not(exists(f:min)) or not(exists(f:max)) or (not(f:max/@value) and not(f:min/@value)) or (f:max/@value = &#39;*&#39;) or (number(f:max/@value) &gt;= f:min/@value)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="nameReference.empty() or (type.empty() and defaultValue.empty() and fixed.empty() and pattern.empty() and example.empty() and minValue.empty() and maxValue.empty() and maxLength.empty() and binding.empty())"/>
+              </extension>
               <key value="eld-5"/>
               <severity value="error"/>
               <human value="Either a namereference or a fixed value (but not both) is permitted"/>
               <xpath value="not(exists(f:nameReference) and exists(f:*[starts-with(local-name(.), &#39;value&#39;)]))"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="pattern.empty() or (type.count() = 1)"/>
+              </extension>
               <key value="eld-7"/>
               <severity value="error"/>
               <human value="Pattern may only be specified if there is one type"/>
               <xpath value="not(exists(f:*[starts-with(local-name(.), &#39;pattern&#39;)])) or (count(f:type)=1)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="fixed.empty() or (type.count() = 1)"/>
+              </extension>
               <key value="eld-6"/>
               <severity value="error"/>
               <human value="Fixed value may only be specified if there is one type"/>
               <xpath value="not(exists(f:*[starts-with(local-name(.), &#39;fixed&#39;)])) or (count(f:type)=1)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="binding.empty() or type.code.empty() or type.select((code = &#39;code&#39;) or (code = &#39;Coding&#39;) or (code=&#39;CodeableConcept&#39;) or (code = &#39;Quantity&#39;) or (code = &#39;Extension&#39;) or (code = &#39;string&#39;) or (code = &#39;uri&#39;)).exists()"/>
+              </extension>
               <key value="eld-11"/>
               <severity value="error"/>
               <human value="Binding can only be present for coded elements, string, and uri"/>
               <xpath value="not(exists(f:binding)) or (count(f:type/f:code) = 0) or  f:type/f:code/@value=(&#39;code&#39;,&#39;Coding&#39;,&#39;CodeableConcept&#39;,&#39;Quantity&#39;,&#39;Extension&#39;, &#39;string&#39;, &#39;uri&#39;)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="pattern.empty() or fixed.empty()"/>
+              </extension>
               <key value="eld-8"/>
               <severity value="error"/>
               <human value="Pattern and value are mutually exclusive"/>
               <xpath value="not(exists(f:*[starts-with(local-name(.), &#39;pattern&#39;)])) or not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)]))"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="constraint.key.isDistinct()"/>
+              </extension>
               <key value="eld-14"/>
               <severity value="error"/>
               <human value="Constraints must be unique by key"/>
               <xpath value="count(f:constraint) = count(distinct-values(f:constraint/f:key/@value))"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="type.distinct(code,profile)"/>
+              </extension>
               <key value="eld-13"/>
               <severity value="error"/>
               <human value="Types must be unique by the combination of code and profile"/>
               <xpath value="not(exists(for $type in f:type return $type/preceding-sibling::f:type[f:code/@value=$type/f:code/@value and f:profile/@value = $type/f:profile/@value]))"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="defaultValue.empty() or meaningWhenMissing.empty()"/>
+              </extension>
               <key value="eld-15"/>
               <severity value="error"/>
               <human value="default value and meaningWhenMissing are mutually exclusive"/>
@@ -15666,6 +15819,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Element"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="discriminator or description"/>
+              </extension>
               <key value="eld-1"/>
               <severity value="error"/>
               <human value="If there are no discriminators, there must be a definition"/>
@@ -15930,6 +16086,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             <condition value="eld-3"/>
             <condition value="eld-2"/>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="empty() or ($this = &#39;*&#39;) or (toInteger() &gt;= 0)"/>
+              </extension>
               <key value="eld-3"/>
               <severity value="error"/>
               <human value="Max SHALL be a number or &quot;*&quot;"/>
@@ -16043,6 +16202,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             </type>
             <condition value="eld-13"/>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="aggregation.empty() or (code = &#39;Reference&#39;)"/>
+              </extension>
               <key value="eld-4"/>
               <severity value="error"/>
               <human value="Aggregation may only be specified if one of the allowed types for the element is a resource"/>
@@ -17064,6 +17226,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             </type>
             <condition value="eld-11"/>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="valueSet or description"/>
+              </extension>
               <key value="eld-10"/>
               <severity value="error"/>
               <human value="provide either a reference or a description (or both)"/>
@@ -17157,6 +17322,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             <condition value="eld-10"/>
             <condition value="eld-12"/>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="startsWith(&#39;http:&#39;) or startsWith(&#39;https&#39;)"/>
+              </extension>
               <key value="eld-12"/>
               <severity value="error"/>
               <human value="URI SHALL start with http:// or https://"/>
@@ -17321,12 +17489,18 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Quantity"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="code.empty() or system"/>
+              </extension>
               <key value="qty-3"/>
               <severity value="error"/>
               <human value="If a code for the unit is present, the system SHALL also be present"/>
               <xpath value="not(exists(f:code)) or exists(f:system)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="(code or value.empty()) and (system.empty() or system = &#39;urn:iso:std:iso:4217&#39;)"/>
+              </extension>
               <key value="mny-1"/>
               <severity value="error"/>
               <human value="There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = &quot;urn:iso:std:iso:4217&quot; - currency)."/>
@@ -17535,6 +17709,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Quantity"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="(code or value.empty()) and (system.empty() or system = &#39;urn:iso:std:iso:4217&#39;)"/>
+              </extension>
               <key value="mny-1"/>
               <severity value="error"/>
               <human value="There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = &quot;urn:iso:std:iso:4217&quot; - currency)."/>
@@ -17602,12 +17779,18 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Quantity"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="code.empty() or system"/>
+              </extension>
               <key value="qty-3"/>
               <severity value="error"/>
               <human value="If a code for the unit is present, the system SHALL also be present"/>
               <xpath value="not(exists(f:code)) or exists(f:system)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="comparator.empty()"/>
+              </extension>
               <key value="sqty-1"/>
               <severity value="error"/>
               <human value="The comparator is not used on a SimpleQuantity"/>
@@ -17816,6 +17999,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Quantity"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="comparator.empty()"/>
+              </extension>
               <key value="sqty-1"/>
               <severity value="error"/>
               <human value="The comparator is not used on a SimpleQuantity"/>
@@ -17888,12 +18074,18 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Quantity"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="code.empty() or system"/>
+              </extension>
               <key value="qty-3"/>
               <severity value="error"/>
               <human value="If a code for the unit is present, the system SHALL also be present"/>
               <xpath value="not(exists(f:code)) or exists(f:system)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum)"/>
+              </extension>
               <key value="drt-1"/>
               <severity value="error"/>
               <human value="There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM."/>
@@ -18102,6 +18294,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Quantity"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum)"/>
+              </extension>
               <key value="drt-1"/>
               <severity value="error"/>
               <human value="There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM."/>
@@ -18169,12 +18364,18 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Quantity"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="code.empty() or system"/>
+              </extension>
               <key value="qty-3"/>
               <severity value="error"/>
               <human value="If a code for the unit is present, the system SHALL also be present"/>
               <xpath value="not(exists(f:code)) or exists(f:system)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum) and (code.empty() or code = &#39;1&#39;) and (value.empty() or value.contains(&#39;.&#39;).not())"/>
+              </extension>
               <key value="cnt-1"/>
               <severity value="error"/>
               <human value="There SHALL be a code with a value of &quot;1&quot; if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number."/>
@@ -18383,6 +18584,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Quantity"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum) and (code.empty() or code = &#39;1&#39;) and (value.empty() or value.contains(&#39;.&#39;).not())"/>
+              </extension>
               <key value="cnt-1"/>
               <severity value="error"/>
               <human value="There SHALL be a code with a value of &quot;1&quot; if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number."/>
@@ -18450,12 +18654,18 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Quantity"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="code.empty() or system"/>
+              </extension>
               <key value="qty-3"/>
               <severity value="error"/>
               <human value="If a code for the unit is present, the system SHALL also be present"/>
               <xpath value="not(exists(f:code)) or exists(f:system)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum)"/>
+              </extension>
               <key value="dis-1"/>
               <severity value="error"/>
               <human value="There SHALL be a code if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM."/>
@@ -18664,6 +18874,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Quantity"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum)"/>
+              </extension>
               <key value="dis-1"/>
               <severity value="error"/>
               <human value="There SHALL be a code if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM."/>
@@ -18731,12 +18944,18 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Quantity"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="code.empty() or system"/>
+              </extension>
               <key value="qty-3"/>
               <severity value="error"/>
               <human value="If a code for the unit is present, the system SHALL also be present"/>
               <xpath value="not(exists(f:code)) or exists(f:system)"/>
             </constraint>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value.contains(&#39;.&#39;).not())"/>
+              </extension>
               <key value="age-1"/>
               <severity value="error"/>
               <human value="There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.  If value is present, it SHALL be positive."/>
@@ -18945,6 +19164,9 @@ Note that an element that has the property IsModifier is not necessarily a &quot
               <code value="Quantity"/>
             </type>
             <constraint>
+              <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value.contains(&#39;.&#39;).not())"/>
+              </extension>
               <key value="age-1"/>
               <severity value="error"/>
               <human value="There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.  If value is present, it SHALL be positive."/>
