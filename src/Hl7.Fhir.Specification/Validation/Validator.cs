@@ -14,11 +14,12 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
+using Hl7.FluentPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-
+using System.Xml;
 
 namespace Hl7.Fhir.Validation
 {
@@ -77,7 +78,7 @@ namespace Hl7.Fhir.Validation
             {
                 // Note: this modifies an SD that is passed to us. If this comes from a cache that's
                 // kept across processes, this could mean trouble, so clone it first
-                structureDefinition = (StructureDefinition)structureDefinition.DeepCopy();
+                //structureDefinition = (StructureDefinition)structureDefinition.DeepCopy();
 
                 // We'll call out to an external component, so catch any exceptions and include them in our report
                 try
@@ -86,7 +87,7 @@ namespace Hl7.Fhir.Validation
                 }
                 catch(Exception e)
                 {
-                    outcome.Info("Snapshot generation failed for {0}. Message: {1}"
+                    Trace(outcome, "Snapshot generation failed for {0}. Message: {1}"
                            .FormatWith(structureDefinition.Url, e.Message), Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, instance);
                 }
             }
@@ -168,7 +169,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            outcome.Info("Start validation of ElementDefinition at path '{0}'".FormatWith(definition.QualifiedDefinitionPath()), Issue.PROCESSING_PROGRESS, instance);
+            Trace(outcome, "Start validation of ElementDefinition at path '{0}'".FormatWith(definition.QualifiedDefinitionPath()), Issue.PROCESSING_PROGRESS, instance);
 
             // Any node must either have a value, or children, or both (e.g. extensions on primitives)
             if (!outcome.Verify(() => instance.Value != null || instance.HasChildren(), "Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance))
@@ -190,6 +191,9 @@ namespace Hl7.Fhir.Validation
             }
             else
             {
+                outcome.Verify(() => elementConstraints.Type != null || elementConstraints.NameReference != null , 
+                        "ElementDefinition does not specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
+
                 outcome.Add(ValidateType(elementConstraints, instance));
                 outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
             }
@@ -232,7 +236,7 @@ namespace Hl7.Fhir.Validation
 
             if (definition.NameReference != null)
             {
-                outcome.Info("Start validation of constraints referred to by nameReference '{0}'".FormatWith(definition.NameReference), Issue.PROCESSING_PROGRESS, instance);
+                Trace(outcome, "Start validation of constraints referred to by nameReference '{0}'".FormatWith(definition.NameReference), Issue.PROCESSING_PROGRESS, instance);
 
                 var referencedPositionNav = allDefinitions.ShallowCopy();
 
@@ -251,7 +255,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            outcome.Info("Validating against constraints specified by the element's defined type", Issue.PROCESSING_PROGRESS, instance);
+            Trace(outcome, "Validating against constraints specified by the element's defined type", Issue.PROCESSING_PROGRESS, instance);
 
             outcome.Verify(() => !definition.Type.Select(tr => tr.Code).Contains(null), "ElementDefinition contains a type with an empty type code", Issue.PROFILE_ELEMENTDEF_CONTAINS_NULL_TYPE, instance);
 
@@ -259,7 +263,7 @@ namespace Hl7.Fhir.Validation
             {
                 // This is a root element, in which the specified type is its base, and this snapshot already contains those constraints
                 // as children, so we can save on processing time
-                outcome.Info("This is a root ElementDefinition, skipped validation of base type ", Issue.PROCESSING_PROGRESS, instance);
+                Trace(outcome, "This is a root ElementDefinition, skipped validation of base type ", Issue.PROCESSING_PROGRESS, instance);
                 return outcome;                
             }
 
@@ -293,10 +297,6 @@ namespace Hl7.Fhir.Validation
                 var applicableChoices = types.Select(t => t.ProfileUri());
                 outcome.Include(Validate(applicableChoices, instance, BatchValidationMode.Any));
             }
-            else
-            {
-                outcome.Verify(() => choices.Any(), "ElementDefinition does not specify a type to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE, instance);
-            }
 
             //if (!outcome.Success)
             //{
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            outcome.Info("Verifying content of the leaf primitive value attribute", Issue.PROCESSING_PROGRESS, instance);
+            Trace(outcome, "Verifying content of the leaf primitive value attribute", Issue.PROCESSING_PROGRESS, instance);
 
             // Go look for the primitive type extensions
             //  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-regex">
@@ -341,13 +341,42 @@ namespace Hl7.Fhir.Validation
             if (hasSingleRegExForValue)
             {
                 var primitiveRegEx = definition.Type.First().GetPrimitiveValueRegEx();
-                var value = instance.Value.ToString();
+                var value = toStringRepresentation(instance);
                 var success = Regex.Match(value, "^" + primitiveRegEx + "$").Success;
                 outcome.Verify(() => success, "Primitive value '{0}' does not match regex '{1}'".FormatWith(value, primitiveRegEx), Issue.CONTENT_ELEMENT_INVALID_PRIMITIVE_VALUE, instance);
             }
 
             return outcome;
         }
+
+        internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
+        {
+            if(ValidationContext.Trace)
+                outcome.Info(message, issue, location);
+        }
+
+        private string toStringRepresentation(IValueProvider vp)
+        {
+            if (vp == null || vp.Value == null) return null;
+
+            var val = vp.Value;
+
+            if (val is string)
+                return (string)val;
+            else if (val is long)
+                return XmlConvert.ToString((long)val);
+            else if (val is decimal)
+                return XmlConvert.ToString((decimal)val);
+            else if (val is bool)
+                return (bool)val ? "true" : "false";
+            else if (val is Hl7.FluentPath.Time)
+                return ((Hl7.FluentPath.Time)val).ToString();
+            else if (val is Hl7.FluentPath.PartialDateTime)
+                return ((Hl7.FluentPath.PartialDateTime)val).ToString();
+            else
+                return val.ToString();
+        }
+    
 
         internal OperationOutcome ValidateMinValue(ElementDefinition definition, IElementNavigator instance)
         {

@@ -19,6 +19,8 @@ namespace Hl7.Fhir.Validation
         public bool GenerateSnapshot { get; set; }
         public SnapshotGeneratorSettings GenerateSnapshotSettings { get; set; }
 
+        public bool Trace { get; set; }
+
         // Containing Bundle, parent Resource?
         // Options: validate_across_references, log verbosity, validate extension urls
         // FP SymbolTable

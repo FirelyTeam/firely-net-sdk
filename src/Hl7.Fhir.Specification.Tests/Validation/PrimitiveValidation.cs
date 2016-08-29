@@ -2,11 +2,14 @@
 using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +27,7 @@ namespace Hl7.Fhir.Validation
                     new TestProfileArtifactSource(),
                     new FileDirectoryArtifactSource("TestData/validation", includeSubdirectories: true)));
 
-            var ctx = new ValidationContext() { ArtifactSource = source, GenerateSnapshot = true };
+            var ctx = new ValidationContext() { ArtifactSource = source, GenerateSnapshot = true, Trace = false };
             ctx.GenerateSnapshotSettings = Specification.Snapshot.SnapshotGeneratorSettings.Default;
             ctx.GenerateSnapshotSettings.ExpandExternalProfiles = true;
             validator = new Validator(ctx);
@@ -278,6 +281,45 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(0, report.Warnings);
         }
 
+
+        [TestMethod]
+        public void ValidateOverNameRef()
+        {
+            var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-sdc-profile-example-cap.xml");
+
+            var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
+            Assert.IsNotNull(questionnaire);
+            var questionnaireSD = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Questionnaire);
+
+            var report = validator.Validate(questionnaireSD, questionnaire);
+            Assert.IsTrue(report.Success);
+
+            var sw = new Stopwatch();
+            sw.Start();
+            for(int i = 0; i < 100; i++)
+                report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType", questionnaire);
+            sw.Stop();
+            Debug.WriteLine(sw.ElapsedMilliseconds);
+
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(19, report.Errors);
+            Assert.AreEqual(1, report.Warnings);           // StructureDefinition/xhtml not found
+        }
+
+
+        [TestMethod]
+        public void MeasureDeepCopyPerformance()
+        {
+            var questionnaireXml = File.ReadAllText("TestData\\validation\\questionnaire-sdc-profile-example-cap.xml");
+
+            var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
+            Assert.IsNotNull(questionnaire);
+
+            for (var i = 0; i < 100; i++)
+            {
+                questionnaire.DeepCopy();
+            }
+        }
 
         //TODO: Could check whether we handle "typeslices" correctly, where
         //typeslices are done without slicing, just having multiple typerefs, which nested

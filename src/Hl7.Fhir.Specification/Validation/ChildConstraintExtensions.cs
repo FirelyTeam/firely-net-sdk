@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Validation
             var outcome = new OperationOutcome();
             if (!definition.HasChildren) return outcome;
 
-            outcome.Info("Start validation of inlined child constraints for '{0}'".FormatWith(definition.Path), Issue.PROCESSING_PROGRESS, instance);
+            validator.Trace(outcome, "Start validation of inlined child constraints for '{0}'".FormatWith(definition.Path), Issue.PROCESSING_PROGRESS, instance);
 
             var matchResult = ChildNameMatcher.Match(definition, instance);
 
