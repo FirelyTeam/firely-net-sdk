@@ -80,6 +80,8 @@
     <Compile Include="Introspection\NotMappedAttribute.cs" />
     <Compile Include="Introspection\ReferencesAttribute.cs" />
     <Compile Include="Introspection\XmlSerializationHint.cs" />
+    <Compile Include="Model\ElementDefinition.cs" />
+    <Compile Include="Model\ElementDefinitionExtensions.cs" />
     <Compile Include="Support\ObjectList.cs" />
     <Compile Include="Model\Base.cs" />
     <Compile Include="Model\Binary.cs" />

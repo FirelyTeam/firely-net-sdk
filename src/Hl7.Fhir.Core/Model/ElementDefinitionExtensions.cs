@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        public static ElementDefinition Required(this ElementDefinition ed, int min = 1, string max = "*")
+        public static ElementDefinition Required(this ElementDefinition ed, int min = 1, string max = "1")
         {
             ed.Min = min;
             ed.Max = max;
@@ -41,13 +41,18 @@ namespace Hl7.Fhir.Model
         public static ElementDefinition OfType(this ElementDefinition ed, FHIRDefinedType type, string profile=null)
         {
             ed.Type.Clear();
-            ed.Type.Add(new ElementDefinition.TypeRefComponent { Code = type, Profile = new[] { profile } });
+            ed.OrType(type, profile);
+
             return ed;
         }
 
         public static ElementDefinition OrType(this ElementDefinition ed, FHIRDefinedType type, string profile = null)
         {
-            ed.Type.Add(new ElementDefinition.TypeRefComponent { Code = type, Profile = new[] { profile } });
+            var newType = new ElementDefinition.TypeRefComponent { Code = type };
+            if (profile != null) newType.Profile = new[] { profile };
+
+            ed.Type.Add(newType);
+
             return ed;
         }
 

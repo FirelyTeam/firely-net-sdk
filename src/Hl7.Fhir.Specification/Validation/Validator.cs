@@ -54,6 +54,8 @@ namespace Hl7.Fhir.Validation
 
         public OperationOutcome Validate(string definitionUri, IElementNavigator instance)
         {
+            if (definitionUri == null) throw Error.ArgumentNull("definitionUri");
+
             var outcome = new OperationOutcome();
 
             StructureDefinition structureDefinition = ValidationContext.ArtifactSource.LoadConformanceResourceByUrl(definitionUri) as StructureDefinition;
@@ -78,7 +80,7 @@ namespace Hl7.Fhir.Validation
             {
                 // Note: this modifies an SD that is passed to us. If this comes from a cache that's
                 // kept across processes, this could mean trouble, so clone it first
-                //structureDefinition = (StructureDefinition)structureDefinition.DeepCopy();
+                structureDefinition = (StructureDefinition)structureDefinition.DeepCopy();
 
                 // We'll call out to an external component, so catch any exceptions and include them in our report
                 try
@@ -285,10 +287,11 @@ namespace Hl7.Fhir.Validation
                     var applicableChoices = types.Where(tr => tr.Code.GetLiteral() == instance.TypeName).Select(t => t.ProfileUri());
 
                     // Instance typename must be one of the applicable types in the choice
-                    outcome.Verify(() => applicableChoices.Any(), "Type specified in the instance ('{0}') is not one of the allowed choices ({1})"
-                                .FormatWith(instance.TypeName, String.Join(",", choices.Select(t => "'" + t + "'"))), Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance);
-
-                    outcome.Include(Validate(applicableChoices, instance, BatchValidationMode.Any));
+                    if (outcome.Verify(() => applicableChoices.Any(), "Type specified in the instance ('{0}') is not one of the allowed choices ({1})"
+                                .FormatWith(instance.TypeName, String.Join(",", choices.Select(t => "'" + t + "'"))), Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance))
+                    {
+                        outcome.Include(Validate(applicableChoices, instance, BatchValidationMode.Any));
+                    }
                 }
             }
             else if (choices.Count() == 1)

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Validation
         public static Stopwatch OUTCOME_INCLUDE_TIMER = new Stopwatch();
 
         public static void Include(this OperationOutcome outcome, OperationOutcome other)
-        {
-
-                
+        {               
             foreach (var issue in other.Issue)
             {
                 // var myIssue = (OperationOutcome.IssueComponent)issue.DeepCopy();

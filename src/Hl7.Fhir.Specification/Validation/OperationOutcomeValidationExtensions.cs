@@ -38,7 +38,9 @@ namespace Hl7.Fhir.Validation
 
         public static OperationOutcome MakeInformational(this OperationOutcome outcome)
         {
-            var result = (OperationOutcome)outcome.DeepCopy();
+            //var result = (OperationOutcome)outcome.DeepCopy();
+            var result = outcome;
+
             foreach (var issue in result.Issue)
                 issue.Severity = OperationOutcome.IssueSeverity.Information;
 

@@ -162,6 +162,10 @@ namespace Hl7.Fhir.Validation
 
             bool snapshotNeedCalled = false;
 
+            // I disabled cloning of SDs in the validator, so the last call to Validate() will have added a snapshot
+            // to our local identifierBSN
+            identifierBSN.Snapshot = null;
+
             automatedValidator.OnSnapshotNeeded += (object s, OnSnapshotNeededEventArgs a) => { snapshotNeedCalled = true;  /* change nothing, warning should return */ };
 
             report = automatedValidator.Validate(identifierBSN, instance);
@@ -294,18 +298,46 @@ namespace Hl7.Fhir.Validation
             var report = validator.Validate(questionnaireSD, questionnaire);
             Assert.IsTrue(report.Success);
 
-            var sw = new Stopwatch();
-            sw.Start();
-            for(int i = 0; i < 100; i++)
-                report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType", questionnaire);
-            sw.Stop();
-            Debug.WriteLine(sw.ElapsedMilliseconds);
+            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType", questionnaire);
 
             Assert.IsFalse(report.Success);
             Assert.AreEqual(19, report.Errors);
             Assert.AreEqual(1, report.Warnings);           // StructureDefinition/xhtml not found
         }
 
+
+        [TestMethod]
+        public void ValidateChoiceWithConstraints()
+        {
+            var obs = new Observation();
+            obs.Status = Observation.ObservationStatus.Final;
+            obs.Code = new CodeableConcept("http://somesystem.org/codes", "AABB");
+
+            obs.Value = new FhirString("I should be ok");
+            var report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(0, report.Warnings);
+
+            obs.Value = FhirDateTime.Now();
+            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(0, report.Warnings);
+
+            obs.Value = new Quantity(78m, "kg");
+            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(0, report.Warnings);
+
+            obs.Value = new Quantity(183m, "cm");
+            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(0, report.Warnings);
+
+            obs.Value = new Quantity(300m, "in");
+            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(0, report.Warnings);
+        }
 
         [TestMethod]
         public void MeasureDeepCopyPerformance()
@@ -315,10 +347,15 @@ namespace Hl7.Fhir.Validation
             var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
             Assert.IsNotNull(questionnaire);
 
-            for (var i = 0; i < 100; i++)
+            var sw = new Stopwatch();
+            sw.Start();
+            for (var i = 0; i < 10000; i++)
             {
-                questionnaire.DeepCopy();
+                var x = (Questionnaire)questionnaire.DeepCopy();
             }
+            sw.Stop();
+
+            Debug.WriteLine(sw.ElapsedMilliseconds / 10000.0);
         }
 
         //TODO: Could check whether we handle "typeslices" correctly, where

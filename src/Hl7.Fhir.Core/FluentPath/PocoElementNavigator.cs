@@ -20,7 +20,8 @@ namespace Hl7.Fhir.FluentPath
         static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {
             var inspector = Serialization.BaseFhirParser.Inspector;
-            return inspector.FindClassMappingByType(elementType);
+            //return inspector.FindClassMappingByType(elementType);
+            return inspector.ImportType(elementType);
         }
 
         // For Normal element properties representing a FHIR type

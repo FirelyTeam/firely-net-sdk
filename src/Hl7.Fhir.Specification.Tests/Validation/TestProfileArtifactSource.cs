@@ -17,7 +17,11 @@ namespace Hl7.Fhir.Validation
         {
             buildIdentifierWithBSN(),
             buildIdentifierWithDriversLicense(),
-            buildDutchPatient()
+            buildDutchPatient(),
+            buildQuestionnaireWithFixedType(),
+            buildHeightQuantity(),
+            buildWeightQuantity(),
+            buildWeightHeightObservation()
         };
 
         public IEnumerable<string> ListArtifactNames()
@@ -47,7 +51,7 @@ namespace Hl7.Fhir.Validation
             var cons = result.Differential.Element;
 
             cons.Add(new ElementDefinition("Patient").OfType(FHIRDefinedType.Patient));
-            cons.Add(new ElementDefinition("Patient.identifier").Required()
+            cons.Add(new ElementDefinition("Patient.identifier").Required(max: "*")
                         .OfType(FHIRDefinedType.Identifier, "http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN")
                         .OrType(FHIRDefinedType.Identifier, "http://validationtest.org/fhir/StructureDefinition/IdentifierWithDL"));
 
@@ -79,6 +83,66 @@ namespace Hl7.Fhir.Validation
 
             return result;
         }
+
+
+        private static StructureDefinition buildQuestionnaireWithFixedType()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType", "Fixed Questionnaire",
+                    "Questionnaire with a fixed question type of 'decimal'", FHIRDefinedType.Questionnaire);
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Questionnaire").OfType(FHIRDefinedType.Questionnaire));
+            cons.Add(new ElementDefinition("Questionnaire.group.question.type").Value(fix: new Code("decimal")));
+
+            return result;
+        }
+
+        private static StructureDefinition buildWeightQuantity()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/WeightQuantity", "Weight Quantity",
+                    "Quantity which allows just kilograms", FHIRDefinedType.Quantity);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Quantity").OfType(FHIRDefinedType.Quantity));
+            cons.Add(new ElementDefinition("Quantity.unit").Required().Value(fix: new FhirString("kg")));
+            cons.Add(new ElementDefinition("Quantity.system").Required().Value(fix: new FhirUri("http://unitsofmeasure.org")));
+            cons.Add(new ElementDefinition("Quantity.code").Required().Value(fix: new Code("kg")));
+
+            return result;
+        }
+
+        private static StructureDefinition buildHeightQuantity()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/HeightQuantity", "Height Quantity",
+                    "Quantity which allows just centimeters", FHIRDefinedType.Quantity);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Quantity").OfType(FHIRDefinedType.Quantity));
+            cons.Add(new ElementDefinition("Quantity.unit").Required().Value(fix: new FhirString("cm")));
+            cons.Add(new ElementDefinition("Quantity.system").Required().Value(fix: new FhirUri("http://unitsofmeasure.org")));
+            cons.Add(new ElementDefinition("Quantity.code").Required().Value(fix: new Code("cm")));
+
+            return result;
+        }
+
+        private static StructureDefinition buildWeightHeightObservation()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", "Weight/Height Observation",
+                    "Observation with a choice of weight/height or another type of value", FHIRDefinedType.Observation);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Observation").OfType(FHIRDefinedType.Observation));
+            cons.Add(new ElementDefinition("Observation.value[x]")
+                .OfType(FHIRDefinedType.Quantity, "http://validationtest.org/fhir/StructureDefinition/WeightQuantity")
+                .OrType(FHIRDefinedType.Quantity, "http://validationtest.org/fhir/StructureDefinition/HeightQuantity")
+                .OrType(FHIRDefinedType.String));
+
+            return result;
+        }
+
 
         private static StructureDefinition createTestSD(string url, string name, string description, FHIRDefinedType constrainedType, string baseUri=null)
         {
