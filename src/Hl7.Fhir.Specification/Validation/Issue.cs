@@ -78,6 +78,8 @@ namespace Hl7.Fhir.Validation
 
         // Unsupported 
         public static readonly Issue UNSUPPORTED_SLICING_NOT_SUPPORTED = def(3000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
+        public static readonly Issue UNSUPPORTED_NESTED_BUNDLES = def(3001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
+        public static readonly Issue UNSUPPORTED_FOLLOWING_REFERENCES = def(3002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
 
         // Non-availability, incomplete data
         public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE = def(4000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);

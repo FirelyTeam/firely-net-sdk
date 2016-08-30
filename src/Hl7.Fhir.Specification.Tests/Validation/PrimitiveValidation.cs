@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Validation
                     new TestProfileArtifactSource(),
                     new FileDirectoryArtifactSource("TestData/validation", includeSubdirectories: true)));
 
-            var ctx = new ValidationContext() { ArtifactSource = source, GenerateSnapshot = true, Trace = false };
+            var ctx = new ValidationContext() { ArtifactSource = source, GenerateSnapshot = true, Trace = true };
             ctx.GenerateSnapshotSettings = Specification.Snapshot.SnapshotGeneratorSettings.Default;
             ctx.GenerateSnapshotSettings.ExpandExternalProfiles = true;
             validator = new Validator(ctx);
@@ -69,10 +69,12 @@ namespace Hl7.Fhir.Validation
 
             var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral(),
                     ElementNode.Node("extension",
-                        ElementNode.Valued("value", 4, "integer"))).ToNavigator();
+                        ElementNode.Valued("value", 4, "integer")),
+                    ElementNode.Node("nonExistant")                                             
+                        ).ToNavigator();
 
             var matches = ChildNameMatcher.Match(boolDefNav, data);
-            Assert.IsFalse(matches.UnmatchedInstanceElements.Any());
+            Assert.AreEqual(1, matches.UnmatchedInstanceElements.Count);
             Assert.AreEqual(3, matches.Matches.Count());        // id, extension, value
             Assert.AreEqual(0, matches.Matches[0].InstanceElements.Count()); // id
             Assert.AreEqual(1, matches.Matches[1].InstanceElements.Count()); // extension
@@ -339,6 +341,22 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(0, report.Warnings);
         }
 
+
+        [TestMethod]
+        public void ValidateContained()
+        {
+            var careplanXml = File.ReadAllText("TestData\\validation\\careplan-example-integrated.xml");
+
+            var careplan = (new FhirXmlParser()).Parse<CarePlan>(careplanXml);
+            Assert.IsNotNull(careplan);
+            var careplanSD = source.GetStructureDefinitionForCoreType(FHIRDefinedType.CarePlan);
+
+            var report = validator.Validate(careplanSD, careplan);
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(0, report.Warnings);
+        }
+
+
         [TestMethod]
         public void MeasureDeepCopyPerformance()
         {
@@ -357,9 +375,5 @@ namespace Hl7.Fhir.Validation
 
             Debug.WriteLine(sw.ElapsedMilliseconds / 10000.0);
         }
-
-        //TODO: Could check whether we handle "typeslices" correctly, where
-        //typeslices are done without slicing, just having multiple typerefs, which nested
-        //constraints. Is that even allowed?            
     }
 }

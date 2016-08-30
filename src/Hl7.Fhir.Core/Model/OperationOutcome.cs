@@ -51,12 +51,25 @@ namespace Hl7.Fhir.Model
                 return Text.Div;
             }
 
-            var text = "";
+            if (Issue.Any())
+            {
+                var text = "";
 
-            foreach (var issue in Issue)
-                text += issue.ToString() + Environment.NewLine;
+                // When this is a summary report (e.g. just showing errors), it might well be informational 
+                // parents are missing in the hierarchy above their error children. In this case, don't
+                // try to use indentation.
+                bool useIndentation = Issue.First().HierarchyLevel == 0;
 
-            return text;
+                foreach (var issue in Issue)
+                {
+                    var indent = useIndentation ? new string(' ', issue.HierarchyLevel * 2) : "";
+                    text += indent + issue.ToString() + Environment.NewLine;
+                }
+
+                return text;
+            }
+
+            return "(no outcomes to report)";
         }
 
         [NotMapped]
@@ -121,7 +134,7 @@ namespace Hl7.Fhir.Model
 
             public override string ToString()
             {
-                string text = new string(' ', HierarchyLevel*2);
+                string text = "";
 
                 if (Severity != null)
                 {

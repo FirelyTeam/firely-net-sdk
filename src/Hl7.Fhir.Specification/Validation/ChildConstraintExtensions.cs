@@ -26,18 +26,9 @@ namespace Hl7.Fhir.Validation
 
             var matchResult = ChildNameMatcher.Match(definition, instance);
 
-            // If this is an abstract class, we have only a minimal definition, since concrete subclasses
-            // may have introduced additional members...
-            bool mayHaveUnknownChildren = false;
-
-            if (outcome.Verify(() => definition.StructureDefinition != null, "Navigator does not provide information about the StructureDefinition - cannot determin whether structure is abstract",
-                    Issue.UNAVAILABLE_ELEMENTDEF_WITHOUT_STRUCTDEF, instance))
-            {
-                mayHaveUnknownChildren = definition.StructureDefinition.Abstract != false;
-            }
-
-            outcome.Verify(() => mayHaveUnknownChildren || !matchResult.UnmatchedInstanceElements.Any(), "Encountered unknown child elements {0}".
-                            FormatWith(String.Join(",", matchResult.UnmatchedInstanceElements.Select(e => "'" + e.Name + "'"))),
+            outcome.Verify(() => !matchResult.UnmatchedInstanceElements.Any(), "Encountered unknown child elements {0} for definition '{1}'".
+                            FormatWith(String.Join(",", matchResult.UnmatchedInstanceElements.Select(e => "'" + e.Name + "'")),
+                                    definition.Path),
                             Issue.CONTENT_ELEMENT_HAS_UNKNOWN_CHILDREN, instance);
 
             //TODO: Give warnings for out-of order children.  Really? That's an xml artifact, no such thing in Json!

@@ -597,9 +597,6 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        // [WMR 20160816] Test custom user data about related base definitions
-        static readonly string USERDATA_BASEDEF = "@@@SNAPSHOTBASEDEF@@@";
-
         [TestMethod]
         public void GenerateSnapshotEmitBaseData()
         {
@@ -638,7 +635,8 @@ namespace Hl7.Fhir.Specification.Tests
                 var elem = args.Element;
                 Assert.IsNotNull(elem);
                 var baseDef = (ElementDefinition)elem.DeepCopy();
-                elem.UserData[USERDATA_BASEDEF] = baseDef;
+                elem.RemoveAnnotations<BaseDefInfo>();
+                elem.AddAnnotation(new BaseDefInfo { Data = baseDef });
             };
             _generator.PrepareBaseElement += elementHandler;
 
@@ -653,6 +651,12 @@ namespace Hl7.Fhir.Specification.Tests
             _generator = null;
         }
 
+        class BaseDefInfo
+        {
+            public ElementDefinition Data { get; set; }
+        }
+
+
         private static void assertBaseDefs(StructureDefinition sd)
         {
             Assert.IsNotNull(sd);
@@ -666,7 +670,8 @@ namespace Hl7.Fhir.Specification.Tests
             foreach (var elem in elems)
             {
                 Assert.IsNotNull(elem.Base);
-                var baseDef = elem.UserData.GetValueOrDefault(USERDATA_BASEDEF) as ElementDefinition;
+                var baseDefInfo = elem.Annotation<BaseDefInfo>();
+                var baseDef = baseDefInfo != null ? baseDefInfo.Data : null;
                 Assert.IsNotNull(baseDef);
                 Assert.AreNotEqual(elem, baseDef);
                 // Ignore Path differences
