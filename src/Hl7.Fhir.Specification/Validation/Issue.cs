@@ -62,6 +62,7 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue CONTENT_DOES_NOT_MATCH_FIXED_VALUE = def(1008, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_DOES_NOT_MATCH_PATTERN_VALUE = def(1009, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE = def(1010, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_ELEMENT_CHOICE_INVALID_INSTANCE_TYPE = def(1011, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
         // Profile problems
         public static readonly Issue PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE = def(2000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
@@ -73,7 +74,6 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE = def(2006, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_CARDINALITY_MISSING = def(2007, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_IS_EMPTY = def(2008, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
-        public static readonly Issue PROFILE_ELEMENTDEF_CHOICE_WITHOUT_XSUFFIX = def(2009, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
 
 
         // Unsupported 

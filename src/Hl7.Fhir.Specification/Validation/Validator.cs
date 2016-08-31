@@ -259,26 +259,39 @@ namespace Hl7.Fhir.Validation
 
             // Check if this is a choice: there are multiple distinct Codes to choose from
             var types = definition.Type.Where(tr => tr.Code != null);
-            var choices = types.Select(tr => tr.Code.GetLiteral()).Distinct().ToList();
+            var choices = types.Select(tr => tr.Code.Value).Distinct();
+            var hasPolymorphicType = choices.Any(tr => ModelInfo.IsCoreSuperType(tr));       // typerefs like Resource, Element are actually a choice
 
-            if (choices.Count() > 1)
+            if (choices.Count() > 1 || hasPolymorphicType)
             {
-                outcome.Verify(() => definition.Path.EndsWith("[x]"), "ElementDefinition is a choice, but its path does not end with '[x]'",
-                        Issue.PROFILE_ELEMENTDEF_CHOICE_WITHOUT_XSUFFIX, instance);
-
-                if (outcome.Verify(() => instance.TypeName != null, "ElementDefinition is a choice, but the instance does not indicate its actual type",
+                if (outcome.Verify(() => instance.TypeName != null, "ElementDefinition is a choice or contains a polymorphic type constraint, but the instance does not indicate its actual type",
                     Issue.CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE, instance))
                 {
-
                     // This is a choice type, find out what type is present in the instance data
-                    // (e.g. deceased[Boolean]). This is exposed by IElementNavigator.TypeName.
-                    var applicableChoices = types.Where(tr => tr.Code.GetLiteral() == instance.TypeName);
-
-                    // Instance typename must be one of the applicable types in the choice
-                    if (outcome.Verify(() => applicableChoices.Any(), "Type specified in the instance ('{0}') is not one of the allowed choices ({1})"
-                                .FormatWith(instance.TypeName, String.Join(",", choices.Select(t => "'" + t + "'"))), Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance))
+                    // (e.g. deceased[Boolean], or _resourceType in json). This is exposed by IElementNavigator.TypeName.
+                    var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.TypeName);
+                    if (outcome.Verify(() => instanceType != null, "Instance indicates the element is of type '{0}', which is not a known FHIR core type."
+                                .FormatWith(instance.TypeName), Issue.CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE, instance))
                     {
-                        outcome.Include(ValidateTypeReferences(applicableChoices, instance));
+                        var applicableChoices = types.Where(tr => ModelInfo.IsInstanceTypeFor(tr.Code.Value, instanceType.Value));
+
+                        // Instance typename must be one of the applicable types in the choice
+                        if (outcome.Verify(() => applicableChoices.Any(), "Type specified in the instance ('{0}') is not one of the allowed choices ({1})"
+                                    .FormatWith(instance.TypeName, String.Join(",", choices.Select(t => "'" + t.GetLiteral() + "'"))), Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance))
+                        {
+                            var actualChoices = applicableChoices;
+
+                            if (hasPolymorphicType)
+                            {
+                                // Now, rewrite the typerefs to validate so it will always contain the actual instance type instead of the
+                                // abstract super type, e.g. validate Patient, not Resource if the instance is a Patient.
+                                actualChoices = applicableChoices
+                                    .Select(tr => new ElementDefinition.TypeRefComponent { Code = instanceType, Profile = tr.Profile });
+
+                            }
+
+                            outcome.Include(ValidateTypeReferences(actualChoices, instance));
+                        }
                     }
                 }
             }

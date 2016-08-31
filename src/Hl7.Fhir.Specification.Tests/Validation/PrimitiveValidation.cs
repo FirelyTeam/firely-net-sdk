@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Validation
 
             var report = validator.Validate(careplanSD, careplan);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(0, report.Warnings);
+            Assert.AreEqual(1, report.Warnings);            // missing xhtml
         }
 
 

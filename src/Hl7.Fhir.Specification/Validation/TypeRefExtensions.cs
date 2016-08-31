@@ -22,7 +22,9 @@ namespace Hl7.Fhir.Validation
                 return typeRef.Profile.First();
             }
             else
+            {
                 return "http://hl7.org/fhir/StructureDefinition/" + typeRef.Code.GetLiteral();
+            }
         }
 
         public static string ToHumanReadable(this ElementDefinition.TypeRefComponent typeRef)

@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Tests.Model
 #if PORTABLE45
 	public class PortableModelTests
 #else
-	public class ModelTests
+    public class ModelTests
 #endif
     {
         [TestMethod]
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual("123", identifier.Value);
             Assert.AreEqual("http://nhi.health.nz", identifier.System);
         }
-       
+
 
         [TestMethod]
         public void SimpleValueSupport()
@@ -137,14 +137,14 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(2, ew.Count());
 
             Assert.AreEqual(0, p.ModifierExtension.Count());
-            var me = p.AddExtension("http://fhir.org/ext/ext-test3", new FhirString("bla"), isModifier:true);
+            var me = p.AddExtension("http://fhir.org/ext/ext-test3", new FhirString("bla"), isModifier: true);
             Assert.AreEqual(1, p.ModifierExtension.Count());
             Assert.AreEqual(me, p.GetExtension("http://fhir.org/ext/ext-test3"));
             Assert.AreEqual(me, p.GetExtensions("http://fhir.org/ext/ext-test3").Single());
             Assert.AreEqual(3, p.AllExtensions().Count());
 
             var code = new Code("test");
-            p.AddExtension("http://fhir.org/ext/code", code);            
+            p.AddExtension("http://fhir.org/ext/code", code);
             Assert.AreEqual(code, p.GetExtensionValue<Code>("http://fhir.org/ext/code"));
 
             var text = new FhirString("test");
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Tests.Model
             var fhirbool = new FhirBoolean(true);
             p.AddExtension("http://fhir.org/ext/bool", fhirbool);
             Assert.AreEqual(fhirbool, p.GetExtensionValue<FhirBoolean>("http://fhir.org/ext/bool"));
-            
+
         }
 
 
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Tests.Model
 
         //    Assert.IsNotNull(pat.FindContainedResource(rref));
         //    Assert.IsNotNull(pat.FindContainedResource(rref.Url));
-            
+
         //    rref.Reference = "#pat3";
         //    Assert.IsNull(pat.FindContainedResource(rref));
         //}
@@ -210,8 +210,8 @@ namespace Hl7.Fhir.Tests.Model
         {
             var p = new Patient();
             p.Name.Add(new HumanName());
-        }  
-    
+        }
+
 
         [TestMethod]
         public void TestModelInfoTypeSelectors()
@@ -245,8 +245,8 @@ namespace Hl7.Fhir.Tests.Model
                 Assert.AreEqual(type, type2, String.Format("Failed: '{0}' != '{1}' ?!", type, type2));
                 var typeName2 = ModelInfo.FhirTypeToFhirTypeName(type2.Value);
                 Assert.AreEqual(typeName, typeName2, String.Format("Failed: '{0}' != '{1}' ?!", typeName, typeName2));
-		    }
-		}
+            }
+        }
 
         [TestMethod]
         public void TestStringValueInterface()
@@ -291,7 +291,24 @@ namespace Hl7.Fhir.Tests.Model
             sv.Value = "20161201 23:59:00";
             Assert.AreEqual(sv.Value, "20161201 23:59:00");
 
-    }
+        }
+
+
+        [TestMethod]
+        public void TestSubclassInfo()
+        {
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Resource, FHIRDefinedType.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.DomainResource, FHIRDefinedType.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Patient, FHIRDefinedType.Patient));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Observation, FHIRDefinedType.Patient));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Resource, FHIRDefinedType.Bundle));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.DomainResource, FHIRDefinedType.Bundle));
+
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.HumanName));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.Oid));
+        }
 
         [TestMethod]
         public void TestIntegerValueInterface()
@@ -310,7 +327,7 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsNotNull(iv);
             iv.Value = 12345;
             Assert.AreEqual(iv.Value, 12345);
-}
+        }
 
 
     }
