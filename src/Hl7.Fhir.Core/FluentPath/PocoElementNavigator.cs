@@ -124,10 +124,9 @@ namespace Hl7.Fhir.FluentPath
 
             var mapping = GetMappingForType(_pocoElement.GetType());
 
-#if !PORTABLE45
             if (mapping == null)
-                System.Diagnostics.Trace.WriteLine(String.Format("Unknown type '{0}' encountered", _pocoElement.GetType().Name));
-#endif
+                throw Error.NotSupported(String.Format("Unknown type '{0}' encountered", _pocoElement.GetType().Name));
+
             foreach (var item in mapping.PropertyMappings)
             {
                 // Don't expose "value" as a child, that's our ValueProvider.Value (if we're a primitive)
