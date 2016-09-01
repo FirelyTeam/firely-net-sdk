@@ -18,10 +18,11 @@ namespace Hl7.FluentPath.Expressions
         {
         }
 
-        public static Closure Root(IEnumerable<IValueProvider> input)
+        public static Closure Root(IValueProvider root)
         {
             var newContext = new Closure();
 
+            var input = new[] { root };
             newContext.SetThis(input);
             newContext.SetThat(input);
             newContext.SetOriginalContext(input);
@@ -29,14 +30,15 @@ namespace Hl7.FluentPath.Expressions
             return newContext;
         }
 
-        public static Closure Root(IEnumerable<IValueProvider> input, IEnumerable<IValueProvider> resource)
+        public static Closure Root(IValueProvider root, IValueProvider resource)
         {
             var newContext = new Closure();
 
+            var input = new[] { root };
             newContext.SetThis(input);
             newContext.SetThat(input);
             newContext.SetOriginalContext(input);
-            if(resource != null) newContext.SetResource(resource);
+            if(resource != null) newContext.SetResource(new[] { resource } );
 
             return newContext;
         }

@@ -27,6 +27,7 @@ namespace Hl7.FluentPath.Expressions
             t.Add("count", (IEnumerable<object> f) => f.Count());
             t.Add("trace", (IEnumerable<IValueProvider> f, string name) => f.Trace(name));
 
+            //   t.Add("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.ConcatUnion(r));
             t.Add("binary.|", (object f, IEnumerable<IValueProvider> l, IEnumerable<IValueProvider> r) => l.DistinctUnion(r));
             t.Add("binary.contains", (object f, IEnumerable<IValueProvider> a, IValueProvider b) => a.Contains(b));
             t.Add("binary.in", (object f, IValueProvider a, IEnumerable<IValueProvider> b) => b.Contains(a));

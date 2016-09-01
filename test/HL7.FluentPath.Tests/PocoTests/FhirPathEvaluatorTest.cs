@@ -21,14 +21,16 @@ using System.Xml.Linq;
 using Hl7.ElementModel;
 using Xunit;
 using System.IO;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.FluentPath;
 
 namespace Hl7.FluentPath.Tests
 {
     public class PatientFixture : IDisposable
     {
-        public IEnumerable<IValueProvider> TestInput;
-        public IEnumerable<IValueProvider> Questionnaire;
-        public IEnumerable<IValueProvider> UuidProfile;
+        public IValueProvider TestInput;
+        public IValueProvider Questionnaire;
+        public IValueProvider UuidProfile;
         public int Counter = 0;
         public XDocument Xdoc; 
 
@@ -38,15 +40,15 @@ namespace Hl7.FluentPath.Tests
 
             var tpXml = System.IO.File.ReadAllText("TestData\\fp-test-patient.xml");
             var patient = parser.Parse<Patient>(tpXml);
-            TestInput = FhirValueList.Create(new ModelNavigator(patient));
+            TestInput = new PocoNavigator(patient);
 
             tpXml = System.IO.File.ReadAllText("TestData\\questionnaire-example.xml");
             var quest = parser.Parse<Questionnaire>(tpXml);
-            Questionnaire = FhirValueList.Create(new ModelNavigator(quest));
+            Questionnaire = new PocoNavigator(quest);
 
             tpXml = System.IO.File.ReadAllText("TestData\\uuid.profile.xml");
             var uuid = parser.Parse<StructureDefinition>(tpXml);
-            UuidProfile = FhirValueList.Create(new ModelNavigator(uuid));
+            UuidProfile = new PocoNavigator(uuid);
 
             Xdoc = new XDocument(new XElement("group", new XAttribute("name", "CSharpTests")));
         }
@@ -77,12 +79,12 @@ namespace Hl7.FluentPath.Tests
                         new XElement("output", new XAttribute("type", "boolean"), new XText("true")));
             Xdoc.Elements().First().Add(testXml);
 
-            Assert.True(PathExpression.IsBoolean(expr, true, TestInput));
+            Assert.True(TestInput.IsBoolean(expr, true));
         }
 
-        public void IsTrue(string expr, IEnumerable<IValueProvider> input)
+        public void IsTrue(string expr, IValueProvider input)
         {
-            Assert.True(PathExpression.IsBoolean(expr, true, input));
+            Assert.True(input.IsBoolean(expr, true));
         }
     }
 
@@ -98,7 +100,8 @@ namespace Hl7.FluentPath.Tests
         [Fact]
         public void TestTreeVisualizerVisitor()
         {
-            var expr = PathExpression.Parse("doSomething('ha!', 4, {}, $this, somethingElse(true))");
+            var compiler = new FluentPathCompiler();
+            var expr = compiler.Parse("doSomething('ha!', 4, {}, $this, somethingElse(true))");
             var result = expr.Dump();
             Debug.WriteLine(result);
         }
@@ -111,9 +114,9 @@ namespace Hl7.FluentPath.Tests
             fixture.IsTrue(@"1.exists()");
             fixture.IsTrue(@"Patient.identifier.exists()");
             fixture.IsTrue(@"Patient.dientifeir.exists().not()");
-            Assert.Equal(3L, PathExpression.Scalar(@"identifier.count()", fixture.TestInput));
-            Assert.Equal(3L, PathExpression.Scalar(@"Patient.identifier.count()", fixture.TestInput));
-            Assert.Equal(3L, PathExpression.Scalar(@"Patient.identifier.value.count()", fixture.TestInput));
+            Assert.Equal(3L, fixture.TestInput.Scalar(@"identifier.count()"));
+            Assert.Equal(3L, fixture.TestInput.Scalar(@"Patient.identifier.count()"));
+            Assert.Equal(3L, fixture.TestInput.Scalar(@"Patient.identifier.value.count()"));
         }
 
         [Fact]
@@ -126,16 +129,17 @@ namespace Hl7.FluentPath.Tests
         [Fact]
         public void TestDynaBinding()
         {
-            var input = FhirValueList.Create(new ConstantValue("Hello world!"), new ConstantValue(4));
-            Assert.Equal("ello", PathExpression.Scalar(@"$this[0].substring(1,%context[1])", input));
+            var input = (ElementNode.Node("root", 
+                    ElementNode.Valued("child", "Hello world!", "string"), ElementNode.Valued("child", 4L, "integer"))).ToNavigator();
+
+            Assert.Equal("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1])"));
         }
 
 
         [Fact]
         public void TestSDF11Bug()
         {
-   //         Assert.True(PathExpression.IsBoolean("snapshot.element.first().path + '' = constrainedType", true, fixture.UuidProfile));
-            Assert.True(PathExpression.IsBoolean("snapshot.element.first().path = constrainedType", true, fixture.UuidProfile));
+            Assert.True(fixture.UuidProfile.IsBoolean("snapshot.element.first().path = constrainedType", true));
         }
 
         [Fact]
@@ -476,7 +480,7 @@ namespace Hl7.FluentPath.Tests
         public void TestExpressionTodayFunction()
         {
             // Check that date comes in
-            Assert.Equal(PartialDateTime.Today(), PathExpression.Scalar("today()", fixture.TestInput));
+            Assert.Equal(PartialDateTime.Today(), fixture.TestInput.Scalar("today()"));
 
             // Check greater than
             fixture.IsTrue("today() < @" + PartialDateTime.FromDateTime(DateTime.Today.AddDays(1)));
@@ -554,5 +558,27 @@ namespace Hl7.FluentPath.Tests
             fixture.IsTrue("''.length() = 0");
             fixture.IsTrue("{}.length().empty()");
         }
+
+
+        //[Fact]
+        //public void TestUnionNotDistinct()
+        //{
+        //    var patXml = @"<Patient xmlns='http://hl7.org/fhir'>
+        //        <name>
+        //            <given value='bobs' />
+        //            <given value='bobs' />
+        //            <given value='bob2' />
+        //            <family value='f1' />
+        //            <family value='f2' />
+        //        </name>
+        //        <birthDate value='1973' />
+        //    </Patient>";
+
+        //    var pat = (new FhirXmlParser()).Parse<Patient>(patXml);
+        //    var patNav = new PocoNavigator(pat);
+
+        //    var result = PathExpression.Select("name.given | name.family", new[] { patNav });
+        //    Assert.Equal(5, result.Count());
+        //}
     }
 }

@@ -44,6 +44,12 @@ namespace Hl7.FluentPath.Functions
             return result;
         }
 
+        //public static IEnumerable<IValueProvider> ConcatUnion(this IEnumerable<IValueProvider> a, IEnumerable<IValueProvider> b)
+        //{
+        //    return a.Concat(b);
+        //}
+
+
         public static IEnumerable<IValueProvider> Item(this IEnumerable<IValueProvider> focus, int index)
         {
             return focus.Skip(index).Take(1);

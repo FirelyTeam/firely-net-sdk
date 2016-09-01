@@ -1,33 +1,42 @@
+/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Hl7.FluentPath;
 using Hl7.Fhir.Model;
+using Hl7.ElementModel;
 using Hl7.Fhir.Support;
 using Hl7.FluentPath.Support;
-using Hl7.ElementModel;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Introspection;
 using System.Reflection;
 
-namespace Hl7.FluentPath.Tests
+namespace Hl7.Fhir.FluentPath
 {
-    internal class ElementNavigator : IValueProvider, ITypeNameProvider
+    internal class PocoElementNavigator : IValueProvider, ITypeNameProvider
     {
         static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {
+            // var inspector = Serialization.BaseFhirParser.Inspector;
+            //return inspector.FindClassMappingByType(elementType);
+
             ResourceReader rdr = new ResourceReader(null, null);
             ModelInspector inspector;
             var ti = rdr.GetType().GetField("_inspector", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
             inspector = ti.GetValue(rdr) as ModelInspector;
-            // inspector = dstu2::Hl7.Fhir.Serialization.SerializationConfig.Inspector;
+
+            //return inspector.ImportType(elementType);
             return inspector.FindClassMappingByType(elementType);
         }
 
         // For Normal element properties representing a FHIR type
-        internal ElementNavigator(string name, Base value)
+        internal PocoElementNavigator(string name, Base value)
         {
             if (value == null) throw Error.ArgumentNull("value");
 
@@ -38,7 +47,7 @@ namespace Hl7.FluentPath.Tests
 
         // For properties representing primitive strings (id, url, div), as
         // rendered as attributes in the xml
-        internal ElementNavigator(string name, string value)
+        internal PocoElementNavigator(string name, string value)
         {
             if (value == null) throw Error.ArgumentNull("value");
 
@@ -51,6 +60,18 @@ namespace Hl7.FluentPath.Tests
 
         public string Name { get; private set; }
 
+        /// <summary>
+        /// This is only needed for search data extraction (and debugging)
+        /// to be able to read the values from the selected node (if a coding, so can get the value and system)
+        /// </summary>
+        public Base FhirValue
+        {
+            get
+            {
+                return _pocoElement;
+            }
+        }
+
         public object Value
         {
             get
@@ -58,11 +79,17 @@ namespace Hl7.FluentPath.Tests
                 if (_string != null) return _string;
 
                 if (_pocoElement is FhirDateTime)
-                    return FluentPath.PartialDateTime.FromDateTime(((FhirDateTime)_pocoElement).ToDateTimeOffset());
+                    return Hl7.FluentPath.PartialDateTime.FromDateTime(((FhirDateTime)_pocoElement).ToDateTimeOffset());
                 else if (_pocoElement is Hl7.Fhir.Model.Time)
-                    return FluentPath.Time.Parse(((Hl7.Fhir.Model.Time)_pocoElement).Value);
+                    return Hl7.FluentPath.Time.Parse(((Hl7.Fhir.Model.Time)_pocoElement).Value);
                 else if ((_pocoElement is Hl7.Fhir.Model.Date))
-                    return FluentPath.PartialDateTime.Parse(((Hl7.Fhir.Model.Date)_pocoElement).Value);
+                    return Hl7.FluentPath.PartialDateTime.Parse(((Hl7.Fhir.Model.Date)_pocoElement).Value);
+                else if (_pocoElement is Hl7.Fhir.Model.Instant)
+                {
+                    if (!((Hl7.Fhir.Model.Instant)_pocoElement).Value.HasValue)
+                        return null;
+                    return Hl7.FluentPath.PartialDateTime.Parse(((Hl7.Fhir.Model.Instant)_pocoElement).Value.Value.ToString("O"));
+                }
                 else if (_pocoElement is Primitive)
                     return ((Primitive)_pocoElement).ObjectValue;
                 else
@@ -94,26 +121,22 @@ namespace Hl7.FluentPath.Tests
         }
 
 
-        public ElementNavigator Next { get; private set; }
+        private List<PocoElementNavigator> _children;
 
-        private List<ElementNavigator> _children;
-
-        public IEnumerable<ElementNavigator> Children()
+        public IEnumerable<PocoElementNavigator> Children()
         {
             // Cache children
             if (_children != null) return _children;
 
             // If this is a primitive, there are no children
-            if (_pocoElement == null) return Enumerable.Empty<ElementNavigator>();
+            if (_pocoElement == null) return Enumerable.Empty<PocoElementNavigator>();
 
-            _children = new List<ElementNavigator>();
-
-            ElementNavigator previousChild = null;
+            _children = new List<PocoElementNavigator>();
 
             var mapping = GetMappingForType(_pocoElement.GetType());
 
             if (mapping == null)
-                Console.WriteLine("Unkown type '{0}' encountered".FormatWith(_pocoElement.GetType().Name));
+                throw Error.NotSupported(String.Format("Unknown type '{0}' encountered", _pocoElement.GetType().Name));
 
             foreach (var item in mapping.PropertyMappings)
             {
@@ -131,23 +154,17 @@ namespace Hl7.FluentPath.Tests
                         {
                             if (colItem != null)
                             {
-                                _children.Add(new ElementNavigator(item.Name, (Base)colItem));
-                                if (previousChild != null)
-                                    previousChild.Next = _children.Last();
-                                previousChild = _children.Last();
+                                _children.Add(new PocoElementNavigator(item.Name, (Base)colItem));
                             }
                         }
                     }
                     else
                     {
                         if(itemValue is string)
-                            _children.Add(new ElementNavigator(item.Name, (string)itemValue));
+                            // The special case for the 'url' and 'id' properties, which are primitive strings
+                            _children.Add(new PocoElementNavigator(item.Name, (string)itemValue));
                         else
-                            _children.Add(new ElementNavigator(item.Name, (Base)itemValue));
-
-                        if (previousChild != null)
-                            previousChild.Next = _children.Last();
-                        previousChild = _children.Last();
+                            _children.Add(new PocoElementNavigator(item.Name, (Base)itemValue));
                     }
                 }
             }

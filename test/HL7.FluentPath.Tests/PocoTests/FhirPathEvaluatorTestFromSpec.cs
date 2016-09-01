@@ -28,6 +28,7 @@ using Xunit;
 using Hl7.ElementModel;
 using Xunit.Sdk;
 using Xunit.Abstractions;
+using Hl7.Fhir.FluentPath;
 
 namespace Hl7.FluentPath.Tests
 {
@@ -112,10 +113,10 @@ namespace Hl7.FluentPath.Tests
         private void test(Resource resource, String expression, IEnumerable<XElement> expected)
         {
             var tpXml = FhirSerializer.SerializeToXml(resource);
-            var npoco = new ModelNavigator(resource);
+            var npoco = new PocoNavigator(resource);
             //       FhirPathEvaluatorTest.Render(npoco);
 
-            IEnumerable<IValueProvider> actual = PathExpression.Select(expression, FhirValueList.Create(npoco));
+            IEnumerable<IValueProvider> actual = npoco.Select(expression);
             Assert.Equal(expected.Count(), actual.Count());
 
             expected.Zip(actual, compare).Count();
@@ -138,10 +139,10 @@ namespace Hl7.FluentPath.Tests
         // @SuppressWarnings("deprecation")
         private void testBoolean(Resource resource, Base focus, String focusType, String expression, boolean value)
         {
-            var input = ModelNavigator.CreateInput(focus);
-            var container = resource != null ? ModelNavigator.CreateInput(resource) : null;
+            var input = new PocoNavigator(focus);
+            var container = resource != null ? new PocoNavigator(resource) : null;
 
-            Assert.True(PathExpression.IsBoolean(expression, value, input, container));
+            Assert.True(input.IsBoolean(expression, value, container));
         }
 
         enum ErrorType
@@ -154,7 +155,8 @@ namespace Hl7.FluentPath.Tests
         {
             try
             {
-                PathExpression.Select(expression, FhirValueList.Create(new ModelNavigator(resource)));
+                var resourceNav = new PocoNavigator(resource);
+                resourceNav.Select(expression);
                 throw new Exception();
             }
             catch (FormatException)

@@ -18,6 +18,7 @@ using Hl7.FluentPath.Functions;
 using Xunit;
 using Hl7.ElementModel;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.FluentPath;
 
 namespace Hl7.FluentPath.Tests
 {
@@ -31,7 +32,7 @@ namespace Hl7.FluentPath.Tests
             // return navigator;
 
             var patient = (new FhirXmlParser()).Parse<Hl7.Fhir.Model.Patient>(tpXml);
-            return new ModelNavigator(patient);
+            return new PocoNavigator(patient);
         }
 
         [Fact]
