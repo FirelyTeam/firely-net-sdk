@@ -23,6 +23,8 @@ using Xunit;
 using System.IO;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.FluentPath;
+using Hl7.FluentPath.Support;
+using Xunit.Abstractions;
 
 namespace Hl7.FluentPath.Tests
 {
@@ -32,7 +34,7 @@ namespace Hl7.FluentPath.Tests
         public IValueProvider Questionnaire;
         public IValueProvider UuidProfile;
         public int Counter = 0;
-        public XDocument Xdoc; 
+        public XDocument Xdoc;
 
         public PatientFixture()
         {
@@ -92,9 +94,13 @@ namespace Hl7.FluentPath.Tests
     {
         PatientFixture fixture;
 
-        public FhirPathEvaluatorTest(PatientFixture fixture)
+        private readonly ITestOutputHelper output;
+
+
+        public FhirPathEvaluatorTest(PatientFixture fixture, ITestOutputHelper output)
         {
             this.fixture = fixture;
+            this.output = output;
         }
 
         [Fact]
@@ -580,5 +586,43 @@ namespace Hl7.FluentPath.Tests
         //    var result = PathExpression.Select("name.given | name.family", new[] { patNav });
         //    Assert.Equal(5, result.Count());
         //}
+
+        [Fact]
+        public void CompilationIsCached()
+        {
+            Stopwatch sw = new Stopwatch();
+            string expression = "";
+
+            sw.Start();
+
+            var random = new Random();
+
+            // something that has not been compiled before
+            for (int i = 0; i < 1000; i++)
+            {
+                var next = random.Next(0, 10000);
+                expression = "Patient.name[{0}]".FormatWith(next);
+                fixture.TestInput.Select(expression);
+            }
+            sw.Stop();
+
+            var uncached = sw.ElapsedMilliseconds;
+
+            sw.Restart();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                fixture.TestInput.Select(expression);
+            }
+
+            sw.Stop();
+
+            var cached = sw.ElapsedMilliseconds;
+            output.WriteLine("Uncached: {0}, cached: {1}".FormatWith(uncached, cached));
+
+            Assert.True(cached < uncached / 2);
+
+        }
+
     }
 }

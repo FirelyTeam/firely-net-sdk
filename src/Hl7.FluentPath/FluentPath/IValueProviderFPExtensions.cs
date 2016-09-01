@@ -23,8 +23,10 @@ namespace Hl7.FluentPath
     public static class IValueProviderFPExtensions
     {
         private static Dictionary<string, CompiledExpression> _cache = new Dictionary<string, CompiledExpression>();
+        private static List<string> _mruList = new List<string>();      // sigh, no sortedlist in NETSTANDARD 1.0
         private static Object _cacheLock = new Object();
-        
+        public static int MAX_FP_EXPRESSION_CACHE_SIZE = 500;
+
         private static CompiledExpression getCompiledExpression(string expression)
         {
             lock(_cacheLock)
@@ -36,8 +38,19 @@ namespace Hl7.FluentPath
                 {
                     var compiler = new FluentPathCompiler();
                     ce = compiler.Compile(expression);
+
+                    if(_cache.Count >= MAX_FP_EXPRESSION_CACHE_SIZE)
+                    {
+                        var lruExpression = _mruList.First();
+                        _cache.Remove(lruExpression);
+                        _mruList.Remove(lruExpression);
+                    }
+
                     _cache.Add(expression, ce);
                 }
+
+                _mruList.Remove(expression);
+                _mruList.Add(expression);
                 
                 return ce;
             }
