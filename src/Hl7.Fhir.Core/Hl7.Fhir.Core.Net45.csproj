@@ -77,6 +77,7 @@
     </Compile>
     <Compile Include="FluentPath\PocoElementNavigator.cs" />
     <Compile Include="FluentPath\PocoNavigator.cs" />
+    <Compile Include="FluentPath\PocoNavigatorExtensions.cs" />
     <Compile Include="Model\ElementDefinitionExtensions.cs" />
     <Compile Include="Model\ElementDefinition.cs" />
     <Compile Include="Support\EnumUtility.cs" />
