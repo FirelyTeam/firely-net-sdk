@@ -846,7 +846,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Observation_OBS_6 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("dataAbsentReason.empty() or value[x].empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("dataAbsentReason.empty() or value.empty()"))},
             Key = "obs-6",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "dataAbsentReason SHALL only be present if Observation.value[x] is not present",

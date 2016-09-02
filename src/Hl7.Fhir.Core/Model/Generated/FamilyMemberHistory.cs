@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent FamilyMemberHistory_FHS_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("age[x].empty() or born[x].empty()"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("age.empty() or born.empty()"))},
             Key = "fhs-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Can have age[x] or born[x], but not both",

@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent MedicationStatement_MST_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("reasonForUse[x].empty() or wasNotTaken = false"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("reasonForUse.empty() or wasNotTaken = false"))},
             Key = "mst-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Reason for use is only permitted if wasNotTaken is false",
