@@ -39,8 +39,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var dPos = diffNav.Path + "[{0}]".FormatWith(diffNav.OrdinalPosition);
 
                 // [WMR 20160719] Add name, if not null
-                if (snapNav.Current.Name != null) bPos += " '{0}'".FormatWith(snapNav.Current.Name);
-                if (diffNav.Current.Name != null) dPos += " '{0}'".FormatWith(diffNav.Current.Name);
+                if (snapNav.Current != null && snapNav.Current.Name != null) bPos += " '{0}'".FormatWith(snapNav.Current.Name);
+                if (diffNav.Current != null && diffNav.Current.Name != null) dPos += " '{0}'".FormatWith(diffNav.Current.Name);
 
                 Debug.WriteLine("B:{0} <--{1}--> D:{2}".FormatWith(bPos, match.Action.ToString(), dPos));
             }
@@ -72,6 +72,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             Add,
             /// <summary>Begin a new slice with this slice as slicing entry</summary>
             Slice
+
+            // [WMR 20160902] NEW - Handle core resource & datatype definitions
+#if EXPAND_COREDEFS
+            , New
+#endif
         }
 
         /// <summary>
@@ -106,6 +111,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 do
                 {
+                    bool isNewElement = false;
+
                     // First, match directly -> try to find the child in base with the same name as the path in the diff
                     if (snapNav.PathName != diffNav.PathName && !snapNav.MoveToNext(diffNav.PathName))
                     {
@@ -129,14 +136,27 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // Instead, emit a list of OperationDefinitions to describe issues (TODO)
                             // Ewout: also annotate ElementDefinitions with associated OperationDefinitions
                             // Validator is responsible for verifying correctness
-                            snapNav.MoveToParent();
+
+                            isNewElement = true;
+
 #else
                             throw Error.InvalidOperation("Differential has a constraint for path '{0}', which does not exist in its base".FormatWith(diffNav.Path));
 #endif
                         }
                     }
 
+#if EXPAND_COREDEFS
+                    if (isNewElement)
+                    {
+                        result.Add(constructNew(snapNav, diffNav));
+                    }
+                    else
+                    {
+                        result.AddRange(constructMatch(snapNav, diffNav));
+                    }
+#else
                     result.AddRange(constructMatch(snapNav, diffNav));
+#endif
                 }
                 while (diffNav.MoveToNext());
             }
@@ -164,14 +184,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Note that in case of a slice, both snapNav and diffNav will always point to the first element in the slice group
 
             var match = new MatchInfo() { BaseBookmark = snapNav.Bookmark(), DiffBookmark = diffNav.Bookmark() };
-
-#if EXPAND_COREDEFS
-            if (snapNav.Current == null)
-            {
-                match.Action = MatchAction.Add;
-                return new List<MatchInfo>() { match };
-            }
-#endif
 
             bool baseIsSliced = snapNav.Current.Slicing != null;
 
@@ -357,6 +369,18 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             return result;
         }
+
+#if EXPAND_COREDEFS
+        // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
+        private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        {
+            var bm = snapNav.Bookmark();
+            snapNav.MoveToParent();
+            var match = new MatchInfo() { BaseBookmark = snapNav.Bookmark(), DiffBookmark = diffNav.Bookmark(), Action = MatchAction.New };
+            snapNav.ReturnToBookmark(bm);
+            return match;
+        }
+#endif
 
         // [WMR 20160801]
         // Determine if the specified discriminator(s) match on type/profile

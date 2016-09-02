@@ -1,6 +1,8 @@
 ﻿#define DETECT_RECURSION
 // [WMR 20160902] Also support snapshot generation for core resource & datatype definitions
 #define EXPAND_COREDEFS
+// [WMR 20160902] NEW - Improved logic to generate ElementDefinition.Base.Path
+#define NEW_ELEM_BASE
 
 /* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
@@ -153,40 +155,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     if (match.Action == ElementMatcher.MatchAction.Add)
                     {
-#if EXPAND_COREDEFS
-                        if (snap.Current == null)
-                        {
-                            // No matching base element; this is a new element definition
-                            // TODO: Verify that this is a core resource/datatype definition; otherwise throw!
-                            // Copy the element definition from differential to snapshot
-                            var clone = (ElementDefinition)diff.Current.DeepCopy();
-                            snap.AppendChild(clone);
-
-                            // Notify clients about a snapshot element with differential constraints
-                            OnConstraint(snap.Current);
-
-                            // Merge children
-                            mergeElement(snap, diff);
-                        }
-                        else
-                        {
-                            // Add new slice after the last existing slice in base profile
-                            snap.MoveToLastSlice();
-                            var lastSlice = snap.Bookmark();
-
-                            // Initialize slice by duplicating base slice entry
-                            snap.ReturnToBookmark(match.BaseBookmark);
-                            snap.DuplicateAfter(lastSlice);
-                            // Important: explicitly clear the slicing node in the copy!
-                            snap.Current.Slicing = null;
-
-                            // Notify clients about a snapshot element with differential constraints
-                            OnConstraint(snap.Current);
-
-                            // Merge differential
-                            mergeElement(snap, diff);
-                        }
-#else
                         // Add new slice after the last existing slice in base profile
                         snap.MoveToLastSlice();
                         var lastSlice = snap.Bookmark();
@@ -202,8 +170,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                         // Merge differential
                         mergeElement(snap, diff);
-#endif
-
                     }
                     else if (match.Action == ElementMatcher.MatchAction.Merge)
                     {
@@ -213,6 +179,27 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         makeSlice(snap, diff);
                     }
+#if EXPAND_COREDEFS
+                    else if (match.Action == ElementMatcher.MatchAction.New)
+                    {
+                        // No matching base element; this is a new element definition
+                        // snap is positioned at the associated parent element
+
+                        // Copy the element definition from differential to snapshot
+                        var clone = (ElementDefinition)diff.Current.DeepCopy();
+
+                        snap.AppendChild(clone);
+
+                        // Notify clients about a snapshot element with differential constraints
+                        OnConstraint(snap.Current);
+
+                        // Merge children
+                        mergeElement(snap, diff);
+
+                        // snap.MoveToParent();
+                    }
+#endif
+
                 }
             }
             finally
@@ -395,7 +382,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var rebasedBaseSnapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
                     rebasedBaseSnapshot.Rebase(rebasePath);
 
+#if NEW_ELEM_BASE
+                    generateBaseElements(rebasedBaseSnapshot.Element, baseStructure.Base);
+#else
                     generateBaseElements(rebasedBaseSnapshot.Element, baseStructure.ConstrainedType);
+#endif
 
                     var baseNav = new ElementDefinitionNavigator(rebasedBaseSnapshot.Element);
 
@@ -613,7 +604,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
 
+                // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
+#if !NEW_ELEM_BASE
                 generateBaseElements(snapshot.Element, structure.ConstrainedType);
+#endif
 
                 // [WMR 20160902] Rebase the base profile (e.g. DomainResource)
                 if (!structure.IsConstraint)
@@ -625,6 +619,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     snapshot.Rebase(rootElem.Path);
                 }
+
+#if NEW_ELEM_BASE
+                generateBaseElements(snapshot.Element, structure.Base);
+#endif
+
 
                 // Notify observers
                 for (int i = 0; i < snapshot.Element.Count; i++)
@@ -678,7 +677,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 OnPrepareElement(snapshot.Element[i], baseStructure.Snapshot.Element[i]);
             }
 #endif
-            var snap = new ElementDefinitionNavigator(snapshot.Element);
+                var snap = new ElementDefinitionNavigator(snapshot.Element);
 
             // Fill out the gaps (mostly missing parents) in the differential representation
             var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
@@ -704,7 +703,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 throw Error.ArgumentNull("Navigator is not positioned on an element");
             }
 
-            if (nav.HasChildren) return true;     // already has children, we're not doing anything extra
+            if (nav.HasChildren)
+            {
+                return true;     // already has children, we're not doing anything extra
+            }
 
             var defn = nav.Current;
 
@@ -776,20 +778,21 @@ namespace Hl7.Fhir.Specification.Snapshot
                     if (ensureSnapshot(baseStructure))
                     {
                         var baseSnap = baseStructure.Snapshot;
+
+
+#if NEW_ELEM_BASE
+                        generateBaseElements(baseSnap.Element, baseStructure.Base);
+#else
                         // [WMR 20160826] We need to generate base paths for target elements
                         // If the base profile is a constraint, then it is safe to (re)generate the ElementDefinition.Base components
                         // However if the base profile is a core resource/type definition, then we shouldn't add Base components to it!
                         // In that case, create a temporary clone, to ensure that the original instance doesn't get polluted/corrupted
-
                         if (!baseStructure.ConstrainedType.HasValue)
                         {
                             baseSnap = (StructureDefinition.SnapshotComponent)baseSnap.DeepCopy();
                         }
-
-                        // [WMR 20160826] Clone base profile, so we can (re-)generate base elements for the target without corrupting the base profile
-                        // baseSnap = (StructureDefinition.SnapshotComponent)baseSnap.DeepCopy();
-
                         generateBaseElements(baseSnap.Element, baseStructure.ConstrainedType);
+#endif
                         var sourceNav = new ElementDefinitionNavigator(baseSnap.Element);
                         sourceNav.MoveToFirstChild();
                         nav.CopyChildren(sourceNav);
@@ -798,10 +801,22 @@ namespace Hl7.Fhir.Specification.Snapshot
                         var pos = nav.OrdinalPosition.Value;
                         for (int i = 1; i < baseSnap.Element.Count; i++)
                         {
-                            // [WMR 20160826] Never inherit Changed extension from base profile!
-                            nav.Elements[pos+i].ClearAllChangedByDiff();
+                            var elem = nav.Elements[pos + i];
+                            var baseElem = baseSnap.Element[i];
 
-                            OnPrepareElement(nav.Elements[pos+i], baseSnap.Element[i]);
+                            // [WMR 20160826] Never inherit Changed extension from base profile!
+                            elem.ClearAllChangedByDiff();
+
+#if NEW_ELEM_BASE
+                            // [WMR 20160902] TODO: Initialize empty ElementDefinition.Base components if necessary
+                            // e.g. copy children from BackboneElement
+                            // => BackboneElement.modifierExtension has no base of it's own
+                            // => element is derived from BackboneElement
+                            // => [CurrentElement].modifierExtension.Base.Path = "BackboneElement.modifierExtension"
+                            ensureElementBase(elem, baseElem);
+#endif
+
+                            OnPrepareElement(elem, baseElem);
                         }
                     }
 #if DEBUG
@@ -817,8 +832,164 @@ namespace Hl7.Fhir.Specification.Snapshot
             return true;
         }
 
-        // [WMR 20160826] TODO: Rewrite
-        // This shouldn't be a pre-processing step
+#if NEW_ELEM_BASE
+        // [WMR 20160902] NEW
+        private void generateBaseElements(IList<ElementDefinition> elements, string baseProfileUrl)
+        {
+            var nav = new ElementDefinitionNavigator(elements);
+            if (nav.MoveToFirstChild() && !string.IsNullOrEmpty(baseProfileUrl))
+            {
+                var sd = _resolver.GetStructureDefinition(baseProfileUrl);
+                if (sd != null)
+                {
+                    ensureSnapshot(sd, true);
+                    generateBaseElements(sd.Snapshot.Element, sd.Base);
+
+                    var baseNav = new ElementDefinitionNavigator(sd);
+                    if (baseNav.MoveToFirstChild())
+                    {
+                        // Special handling for the root element - always derived from the root element of the immediate base profile
+                        ensureElementBase(nav.Current, baseNav.Current, true);
+
+                        if (nav.MoveToFirstChild() && baseNav.MoveToFirstChild())
+                        {
+                            do
+                            {
+                                generateElementBase(nav, baseNav);
+                            } while (nav.MoveToNext());
+                        }
+                    }
+
+                }
+                else
+                {
+                    if (!_settings.IgnoreUnresolvedProfiles)
+                    {
+                        throw Error.ResourceReferenceNotFoundException(
+                            baseProfileUrl,
+                            "Unresolved profile reference. Cannot locate the type profile for element '{0}'.\r\nProfile url = '{1}'".FormatWith(nav.Path, baseProfileUrl)
+                        );
+                    }
+                    _invalidProfiles.Add(sd.Url, SnapshotProfileStatus.Missing);
+                }
+            }
+        }
+
+        private void generateElementBase(ElementDefinitionNavigator nav, ElementDefinitionNavigator baseNav)
+        {
+            // Debug.Print("[generateElementBase] Path = {0}  Base = {1}".FormatWith(nav.Path, baseNav.Path));
+            var elem = nav.Current;
+            Debug.Assert(elem != null);
+
+            // Determine if the current element matches the current base element
+            if (baseNav.PathName == nav.PathName || ElementDefinitionNavigator.IsRenamedChoiceElement(baseNav.PathName, nav.PathName))
+            {
+                // Match!
+                
+                // Initialize Base component
+                ensureElementBase(elem, baseNav.Current);
+
+                // Consume the matched base element
+                baseNav.MoveToNext();
+
+                // Recurse child elements
+                if (nav.MoveToFirstChild() && baseNav.MoveToFirstChild())
+                {
+                    do
+                    {
+                        generateElementBase(nav, baseNav);
+                    } while (nav.MoveToNext());
+                }
+
+                return;
+            }
+            else
+            {
+                // Drill down base profile
+                var baseUrl = baseNav.StructureDefinition.Base;
+                if (baseUrl != null)
+                {
+                    var baseDef = _resolver.GetStructureDefinition(baseUrl);
+                    if (baseDef != null)
+                    {
+                        ensureSnapshot(baseDef, true);
+                        generateBaseElements(baseDef.Snapshot.Element, baseDef.Base);
+
+                        baseNav = new ElementDefinitionNavigator(baseDef);
+                        if (baseNav.MoveToFirstChild())
+                        {
+                            generateElementBase(nav, baseNav);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            // No match... try base profile
+            Debug.Print("[generateElementBase] Path = {0}  (no base)".FormatWith(nav.Path));
+        }
+
+        /// <summary>Assign the <see cref="ElementDefinition.Base"/> component if necessary.</summary>
+        /// <param name="elem">An <see cref="ElementDefinition"/> instance.</param>
+        /// <param name="baseElem">The associated base <see cref="ElementDefinition"/> instance.</param>
+        /// <param name="isRootElement">
+        /// If <c>false</c>, then initialize from baseElem.Base, if it exists.
+        /// The root element base component always references to the immediate base profile.
+        /// </param>
+        private void ensureElementBase(ElementDefinition elem, ElementDefinition baseElem, bool isRootElement = false)
+        {
+            Debug.Assert(elem != null);
+            if (elem.Base == null || (_settings.NormalizeElementBase && !isCreatedBySnapshotGenerator(elem.Base)))
+            {
+                Debug.Assert(baseElem != null);
+
+                elem.Base = !isRootElement && _settings.NormalizeElementBase && baseElem.Base != null
+                    ? createBaseComponent(
+                        baseElem.Base.MaxElement,
+                        baseElem.Base.MinElement,
+                        baseElem.Base.PathElement
+                    )
+                    : createBaseComponent(
+                        baseElem.MaxElement,
+                        baseElem.MinElement,
+                        baseElem.PathElement
+                    );
+
+                Debug.Print("[ensureElementBase] #{0} Path = {1}  Base = {2}".FormatWith(elem.GetHashCode(), elem.Path, elem.Base.Path));
+                Debug.Assert(isCreatedBySnapshotGenerator(elem.Base));
+
+            }
+        }
+
+        private ElementDefinition.BaseComponent createBaseComponent(FhirString maxElement, Integer minElement, FhirString pathElement)
+        {
+            var result = new ElementDefinition.BaseComponent()
+            {
+                MaxElement = (FhirString)maxElement.DeepCopy(),
+                MinElement = (Integer)minElement.DeepCopy(),
+                PathElement = (FhirString)pathElement.DeepCopy(),
+            };
+            result.AddAnnotation(new CreatedBySnapshotGeneratorAnnotation());
+            return result;
+        }
+
+        // Custom annotation to mark generated elements, so we can prevent duplicate re-generation
+        class CreatedBySnapshotGeneratorAnnotation
+        {
+            private readonly DateTime _created;
+            public DateTime Created { get { return _created; } }
+            public CreatedBySnapshotGeneratorAnnotation() { _created = DateTime.Now; }
+        }
+
+        /// <summary>Determines if the specified element was created by the <see cref="SnapshotGenerator"/> class.</summary>
+        /// <param name="elem">A FHIR <see cref="Element"/>.</param>
+        /// <returns><c>true</c> if the element was created by the <see cref="SnapshotGenerator"/> class, or <c>false</c> otherwise.</returns>
+        private bool isCreatedBySnapshotGenerator(Element elem)
+        {
+            return elem != null && elem.Annotation<CreatedBySnapshotGeneratorAnnotation>() != null;
+        }
+
+#else
         // Base path is derived from the associated base element - emit when matching
 
         private void generateBaseElements(IEnumerable<ElementDefinition> elements, FHIRDefinedType? constrainedType)
@@ -896,6 +1067,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             return result.ToArray();
         }
+#endif
+
 
     }
 }

@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Specification.Tests
             settings.ExpandUnconstrainedElements = true;
             settings.MergeTypeProfiles = true;
             settings.MarkChanges = true;
-            settings.NormalizeElementBase = true;
+            //settings.NormalizeElementBase = true;
             _generator = new SnapshotGenerator(source, settings);
 
             // [WMR 20160817] Attach custom event handlers
@@ -923,15 +923,50 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestExpandCoreResource()
         {
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
             var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
+
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
 
+            _settings.NormalizeElementBase = true;
+
             StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, _testSource, out expanded);
+            var result = generateSnapshotAndCompare(sd, _testSource, out expanded);
 
             dumpBasePaths(expanded);
+
+            if (!result)
+            {
+                Debug.Print("Failed!");
+                Debug.Print("Original has {0} elements, expanded has {1} elements...".FormatWith(sd.Snapshot.Element.Count, expanded.Snapshot.Element.Count));
+                // dumpBasePaths(sd);
+                if (expanded.Snapshot.Element.Count < sd.Snapshot.Element.Count)
+                {
+                    for (int i = 0; i < sd.Snapshot.Element.Count; i++)
+                    {
+                        var elem = sd.Snapshot.Element[i];
+                        var match = expanded.Snapshot.Element.Any(e => e.Path == elem.Path);
+                        if (!match)
+                        {
+                            Debug.Print("{0} has not been expanded...".FormatWith(elem.Path));
+                        }
+                    }
+                }
+                else if (expanded.Snapshot.Element.Count == sd.Snapshot.Element.Count)
+                {
+                    for (int i = 0; i < sd.Snapshot.Element.Count; i++)
+                    {
+                        var elem = sd.Snapshot.Element[i];
+                        var match = expanded.Snapshot.Element[i];
+                        if (!elem.IsExactly(match))
+                        Debug.Print("{0} <-> {1}  MISMATCH!".FormatWith(elem.Path, match.Path));
+                    }
+                }
+            }
+
+            Assert.IsTrue(result);
         }
 
 
