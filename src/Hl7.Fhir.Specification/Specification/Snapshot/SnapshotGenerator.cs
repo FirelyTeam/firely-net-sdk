@@ -25,21 +25,21 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>The canonical url of the extension definition that marks snapshot elements with associated differential constraints.</summary>
         public static readonly string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
 
-        private readonly ArtifactResolver _resolver;
+        private readonly IArtifactSource _resolver;
         private readonly SnapshotGeneratorSettings _settings;
 #if DETECT_RECURSION
         private readonly SnapshotRecursionChecker _recursionChecker = new SnapshotRecursionChecker();
 #endif
 
-        public SnapshotGenerator(ArtifactResolver resolver, SnapshotGeneratorSettings settings) : this()
+        public SnapshotGenerator(IArtifactSource source, SnapshotGeneratorSettings settings) : this()
         {
-            if (resolver == null) throw Error.ArgumentNull("resolver");
+            if (source == null) throw Error.ArgumentNull("source");
             if (settings == null) throw Error.ArgumentNull("settings");
-            _resolver = resolver;
+            _resolver = source;
             _settings = settings;
         }
 
-        public SnapshotGenerator(ArtifactResolver resolver) : this(resolver, SnapshotGeneratorSettings.Default)
+        public SnapshotGenerator(IArtifactSource source) : this(source, SnapshotGeneratorSettings.Default)
         {
             // ...
         }
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (elements == null) { throw Error.ArgumentNull("elements"); }
             if (element == null) { throw Error.ArgumentNull("element"); }
 
-            var nav = new ElementNavigator(elements);
+            var nav = new ElementDefinitionNavigator(elements);
             if (!nav.MoveTo(element))
             {
                 throw Error.Argument("element", "The element to expand is not included in the given element list.");
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return nav.Elements;
         }
 
-        private void merge(ElementNavigator snap, ElementNavigator diff)
+        private void merge(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             var snapPos = snap.Bookmark();
             var diffPos = diff.Bookmark();
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
 
-        private void mergeElement(ElementNavigator snap, ElementNavigator diff)
+        private void mergeElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             // [WMR 20160816] Multiple inheritance - diamond problem
             // Element inherits constraints from base profile and also from any local type profile
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Following logic is configurable
         // By default, use strategy (A): ignore custom type profile, merge from base
         // If mergeTypeProfiles is enabled, then first merge custom type profile before merging base
-        private void mergeTypeProfiles(ElementNavigator snap, ElementNavigator diff)
+        private void mergeTypeProfiles(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             var primaryDiffType = diff.Current.Type.FirstOrDefault();
             if (primaryDiffType == null || primaryDiffType.Code == FHIRDefinedType.Reference)
@@ -359,12 +359,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var rebasePath = diff.Path;
                     if (profileRef.IsComplex)
                     {
-                        rebasePath = ElementNavigator.GetParentPath(rebasePath);
+                        rebasePath = ElementDefinitionNavigator.GetParentPath(rebasePath);
                     }
                     baseStructure.Snapshot.Rebase(rebasePath);
 
                     generateBaseElements(baseStructure.Snapshot.Element);
-                    var baseNav = new ElementNavigator(baseStructure.Snapshot.Element);
+                    var baseNav = new ElementDefinitionNavigator(baseStructure.Snapshot.Element);
 
                     if (!profileRef.IsComplex)
                     {
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // [WMR 20160720] NEW
-        private void fixExtensionUrl(ElementNavigator nav)
+        private void fixExtensionUrl(ElementDefinitionNavigator nav)
         {
             var extElem = nav.Current;
             if (extElem.IsExtension() && nav.HasChildren)
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        private void makeSlice(ElementNavigator snap, ElementNavigator diff)
+        private void makeSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             // diff is now located at the first repeat of a slice, which is normally the slice entry (Extension slices need
             // not have a slicing entry)
@@ -503,7 +503,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else if (isRequired || !_settings.IgnoreUnresolvedProfiles)
                 {
-                    throw Error.NotSupported("Resolved the external profile with url '{0}', but it does not contain a snapshot representation.".FormatWith(structure));
+                    throw Error.NotSupported("Resolved the external profile with url '{0}', but it does not contain a snapshot representation."
+                                .FormatWith(structure.Url));
                 }
                 else
                 {
@@ -572,11 +573,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
             generateBaseElements(snapshot.Element);
 
-            var snap = new ElementNavigator(snapshot.Element);
+            var snap = new ElementDefinitionNavigator(snapshot.Element);
 
             // Fill out the gaps (mostly missing parents) in the differential representation
             var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
-            var diff = new ElementNavigator(fullDifferential);
+            var diff = new ElementDefinitionNavigator(fullDifferential);
 
             merge(snap, diff);
 
@@ -585,13 +586,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>
-        /// Expand the currently active element within the specified <see cref="ElementNavigator"/> instance.
+        /// Expand the currently active element within the specified <see cref="ElementDefinitionNavigator"/> instance.
         /// If the element has a name reference, then merge from the targeted element.
         /// Otherwise, if the element has a custom type profile, then merge it.
         /// </summary>
         /// <param name="nav"></param>
         /// <returns></returns>
-        internal bool expandElement(ElementNavigator nav)
+        internal bool expandElement(ElementDefinitionNavigator nav)
         {
             if (nav.Current == null)
             {
@@ -604,7 +605,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             if (!String.IsNullOrEmpty(defn.NameReference))
             {
-                var sourceNav = new ElementNavigator(nav);
+                var sourceNav = new ElementDefinitionNavigator(nav);
                 var success = sourceNav.JumpToNameReference(defn.NameReference);
 
                 if (!success)
@@ -669,7 +670,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     if (ensureSnapshot(baseStructure))
                     {
                         generateBaseElements(baseStructure.Snapshot.Element);
-                        var sourceNav = new ElementNavigator(baseStructure.Snapshot.Element);
+                        var sourceNav = new ElementDefinitionNavigator(baseStructure.Snapshot.Element);
                         sourceNav.MoveToFirstChild();
                         nav.CopyChildren(sourceNav);
                     }

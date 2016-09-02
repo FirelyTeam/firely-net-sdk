@@ -33,13 +33,13 @@ namespace Hl7.Fhir.Specification.Tests
             source = ArtifactResolver.CreateOffline();
         }
 
-        ArtifactResolver source = null;
+        IArtifactSource source = null;
 
 
         [TestMethod]
         public void GetConceptMaps()
         {
-            var conceptMapUrls = source.ListConformanceResources().Where(info => info.Type == ResourceType.ConceptMap).Select(info => info.Url);
+            var conceptMapUrls = source.ListConformanceResources().Where(info => info.Type == ResourceType.ConceptMap).Select(info => info.Canonical);
             var conceptMaps = conceptMapUrls.Select( url => (ConceptMap)source.LoadConformanceResourceByUrl(url));
 
             Assert.IsTrue(conceptMaps.Count() > 0);

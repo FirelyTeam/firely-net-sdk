@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
     {
         private SnapshotGenerator _generator;
-        private ArtifactResolver _testSource;
+        private IArtifactSource _testSource;
         private readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
         {
             // MarkChanges = false,
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 #endif
 
-        private StructureDefinition generateSnapshot(StructureDefinition original, ArtifactResolver source)
+        private StructureDefinition generateSnapshot(StructureDefinition original, IArtifactSource source)
         {
             // var generator = new SnapshotGenerator(source, _settings);
             if (_generator == null)
@@ -334,13 +334,13 @@ namespace Hl7.Fhir.Specification.Tests
             return expanded;
         }
 
-        private bool generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source)
+        private bool generateSnapshotAndCompare(StructureDefinition original, IArtifactSource source)
         {
             StructureDefinition expanded;
             return generateSnapshotAndCompare(original, source, out expanded);
         }
 
-        private bool generateSnapshotAndCompare(StructureDefinition original, ArtifactResolver source, out StructureDefinition expanded)
+        private bool generateSnapshotAndCompare(StructureDefinition original, IArtifactSource source, out StructureDefinition expanded)
         {
             expanded = generateSnapshot(original, source);
 
@@ -368,10 +368,10 @@ namespace Hl7.Fhir.Specification.Tests
                 var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
                 if (fileName == "profiles-others")
                 {
-                    var sd = _testSource.GetStructureDefinition(sdInfo.Url);
+                    var sd = _testSource.GetStructureDefinition(sdInfo.Canonical);
 
                     if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
-                        "but could not get structure definition by that url later on!").FormatWith(sdInfo.Url, sdInfo.Origin));
+                        "but could not get structure definition by that url later on!").FormatWith(sdInfo.Canonical, sdInfo.Origin));
 
                     if (sd.IsConstraint || sd.IsExtension)
                         yield return sd;
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Specification.Tests
             var tree = new DifferentialTreeConstructor(e).MakeTree();
             Assert.IsNotNull(tree);
 
-            var nav = new ElementNavigator(tree);
+			var nav = new ElementDefinitionNavigator(tree);
             Assert.AreEqual(10, nav.Count);
 
             Assert.IsTrue(nav.MoveToChild("A"));
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(qStructDef);
             Assert.IsNotNull(qStructDef.Snapshot);
 
-            var nav = new ElementNavigator(qStructDef.Snapshot.Element);
+			var nav = new ElementDefinitionNavigator(qStructDef.Snapshot.Element);
 
             var generator = new SnapshotGenerator(_testSource, SnapshotGeneratorSettings.Default);
 
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Specification.Tests
             else if (nameRef != null)
             {
                 // Validate name reference expansion
-                var nav = new ElementNavigator(elems);
+                var nav = new ElementDefinitionNavigator(elems);
                 Assert.IsTrue(nav.JumpToNameReference(nameRef));
                 var prefix = nav.Path;
                 Assert.IsTrue(nav.MoveToFirstChild());
@@ -597,9 +597,6 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        // [WMR 20160816] Test custom user data about related base definitions
-        static readonly string USERDATA_BASEDEF = "@@@SNAPSHOTBASEDEF@@@";
-
         [TestMethod]
         public void GenerateSnapshotEmitBaseData()
         {
@@ -638,7 +635,8 @@ namespace Hl7.Fhir.Specification.Tests
                 var elem = args.Element;
                 Assert.IsNotNull(elem);
                 var baseDef = (ElementDefinition)elem.DeepCopy();
-                elem.UserData[USERDATA_BASEDEF] = baseDef;
+                elem.RemoveAnnotations<BaseDefInfo>();
+                elem.AddAnnotation(new BaseDefInfo { Data = baseDef });
             };
             _generator.PrepareBaseElement += elementHandler;
 
@@ -653,6 +651,12 @@ namespace Hl7.Fhir.Specification.Tests
             _generator = null;
         }
 
+        class BaseDefInfo
+        {
+            public ElementDefinition Data { get; set; }
+        }
+
+
         private static void assertBaseDefs(StructureDefinition sd)
         {
             Assert.IsNotNull(sd);
@@ -666,7 +670,8 @@ namespace Hl7.Fhir.Specification.Tests
             foreach (var elem in elems)
             {
                 Assert.IsNotNull(elem.Base);
-                var baseDef = elem.UserData.GetValueOrDefault(USERDATA_BASEDEF) as ElementDefinition;
+                var baseDefInfo = elem.Annotation<BaseDefInfo>();
+                var baseDef = baseDefInfo != null ? baseDefInfo.Data : null;
                 Assert.IsNotNull(baseDef);
                 Assert.AreNotEqual(elem, baseDef);
                 // Ignore Path differences

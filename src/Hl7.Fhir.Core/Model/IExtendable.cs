@@ -123,6 +123,17 @@ namespace Hl7.Fhir.Model
         }
 
 
+        public static int? GetIntegerExtension(this IExtendable extendable, string uri)
+        {
+            var value = extendable.GetExtensionValue<Integer>(uri);
+
+            if (value != null)
+                return value.Value;
+            else
+                return null;
+        }
+
+
         public static T GetExtensionValue<T>(this IExtendable extendable, string uri) where T : Element
         {
             var ext = extendable.GetExtension(uri);
@@ -132,6 +143,23 @@ namespace Hl7.Fhir.Model
 
             return null;
         }
+
+
+        public static void SetIntegerExtension(this IExtendable extendable, string uri, int value)
+        {
+            extendable.SetExtension(uri, new Integer(value));
+        }
+
+        public static void SetStringExtension(this IExtendable extendable, string uri, string value)
+        {
+            extendable.SetExtension(uri, new FhirString(value));
+        }
+
+        public static void SetBoolExtension(this IExtendable extendable, string uri, bool value)
+        {
+            extendable.SetExtension(uri, new FhirBoolean(value));
+        }
+
 
         public static bool HasExtensions(this IExtendable extendable)
         {

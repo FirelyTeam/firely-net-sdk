@@ -27,7 +27,14 @@ namespace Hl7.Fhir.Specification.Source
     {
         public ResourceType Type { get; set; }
 
-        public string Url { get; set; }
+        public string Canonical { get; set; }
+
+        [Obsolete("Please use the equivalent, but less ambiguous Canonical property instead")]
+        public string Url
+        {
+            get { return Canonical; }
+            set { Canonical = Url; }
+        }
                 
         public string Name { get; set; }
 
@@ -37,7 +44,30 @@ namespace Hl7.Fhir.Specification.Source
 
         public override string ToString()
         {
-            return String.Format("{0} resource with id {1} ({2}), read from {3}", Type.ToString(), Url, Name, Origin);
+            return String.Format("{0} resource with id {1} ({2}), read from {3}", Type.ToString(), Canonical, Name, Origin);
+        }
+
+        public static ConformanceInformation FromResource(Resource r, string origin)
+        {
+            var ci = new ConformanceInformation();
+
+            ci.Origin = origin;
+            ci.Type = r.ResourceType;
+
+            var cr = r as IConformanceResource;
+            if (cr != null)
+            {
+                ci.Name = cr.Name;
+                ci.Canonical = cr.Url;
+            }
+
+            var vs = r as ValueSet;
+            if (vs != null)
+            {
+                ci.ValueSetSystem = vs.CodeSystem != null ? vs.CodeSystem.System : null;
+            }
+
+            return ci;
         }
     }
 }

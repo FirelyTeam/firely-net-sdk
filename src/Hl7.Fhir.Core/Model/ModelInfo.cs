@@ -381,6 +381,51 @@ namespace Hl7.Fhir.Model
         {
             return IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
         }
+
+        /// <summary>
+        /// Returns whether the type has subclasses in the core spec
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        /// <remarks>Quantity is not listed here, since its subclasses are
+        /// actually profiles on Quantity. Likewise, there is no real inheritance
+        /// in the primitives, so string is not a superclass for markdown</remarks>
+        public static bool IsCoreSuperType(FHIRDefinedType type)
+        {
+            return
+                type == FHIRDefinedType.Resource ||
+                type == FHIRDefinedType.DomainResource ||
+                type == FHIRDefinedType.Element ||
+                type == FHIRDefinedType.BackboneElement;
+        }
+
+        public static bool IsProfiledQuantity(FHIRDefinedType type)
+        {
+            return
+                type == FHIRDefinedType.Age ||
+                type == FHIRDefinedType.Distance ||
+                type == FHIRDefinedType.SimpleQuantity ||
+                type == FHIRDefinedType.Duration ||
+                type == FHIRDefinedType.Count ||
+                type == FHIRDefinedType.Money;
+        }
+
+        public static bool IsInstanceTypeFor(FHIRDefinedType superclass, FHIRDefinedType subclass)
+        {
+            if (superclass == subclass) return true;
+
+            if (IsKnownResource(subclass))
+            {
+                if (superclass == FHIRDefinedType.Resource)
+                    return true;
+                else if (superclass == FHIRDefinedType.DomainResource)
+                    return subclass != FHIRDefinedType.Parameters && subclass != FHIRDefinedType.Bundle && subclass != FHIRDefinedType.Binary;
+                else
+                    return false;
+            }
+            else
+                return superclass == FHIRDefinedType.Element;
+        }
     }
 
     public static class ModelInfoExtensions

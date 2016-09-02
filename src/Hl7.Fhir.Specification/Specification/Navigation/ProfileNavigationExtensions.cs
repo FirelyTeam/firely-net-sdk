@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <param name="path">The path to rebase the structure on</param>
         public static void Rebase(this IElementList root, string path)
         {
-            var nav = new ElementNavigator(root.Element);
+            var nav = new ElementDefinitionNavigator(root.Element);
 
             if (nav.MoveToFirstChild())
             {
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-        private static void rebaseChildren(BaseElementNavigator nav, string path, List<string> newPaths)
+        private static void rebaseChildren(ElementDefinitionNavigator nav, string path, List<string> newPaths)
         {
             var bm = nav.Bookmark();
 
@@ -159,9 +159,8 @@ namespace Hl7.Fhir.Specification.Navigation
 
         public static string GetParentNameFromPath(this ElementDefinition element)
         {
-            return ElementNavigator.GetParentPath(element.Path);
+            return ElementDefinitionNavigator.GetParentPath(element.Path);
         }
-
     }
 }
     

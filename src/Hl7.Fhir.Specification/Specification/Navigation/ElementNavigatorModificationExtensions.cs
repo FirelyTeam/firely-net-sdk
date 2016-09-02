@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Navigation
 {
     public static class NavModificationExtensions
     {
-        public static bool AppendChild(this BaseElementNavigator nav, ElementDefinition child)
+        public static bool AppendChild(this ElementDefinitionNavigator nav, ElementDefinition child)
         {
             var bm = nav.Bookmark();
 
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-        public static bool DeleteTree(this BaseElementNavigator nav)
+        public static bool DeleteTree(this ElementDefinitionNavigator nav)
         {
             var parent = nav.Bookmark();
 
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-        public static bool DeleteChildren(this BaseElementNavigator nav)
+        public static bool DeleteChildren(this ElementDefinitionNavigator nav)
         {
             var parent = nav.Bookmark();
 
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <param name="dest"></param>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static bool CopyChildren(this BaseElementNavigator dest, ElementNavigator source)
+        public static bool CopyChildren(this ElementDefinitionNavigator dest, ElementDefinitionNavigator source)
         {
             if (dest.HasChildren) return false;   // Protect children from being overwritten
             if (!source.MoveToFirstChild()) return true;    // Nothing to copy, but successful anyway

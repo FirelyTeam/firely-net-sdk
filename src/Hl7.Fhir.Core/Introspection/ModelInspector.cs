@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Introspection
 
         private object lockObject = new object();
 
-        internal ClassMapping ImportType(Type type)
+        public ClassMapping ImportType(Type type)
         {
             ClassMapping mapping = null;
 

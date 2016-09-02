@@ -36,6 +36,8 @@ using System.Text;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Rest;
+using Hl7.ElementModel;
+using Hl7.FluentPath;
 
 namespace Hl7.Fhir.Model
 {
@@ -49,19 +51,22 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public Uri ResourceBase
         {
-            get {
-                object data;
-                var result = UserData.TryGetValue("@@@RESOURCEBASE@@@", out data);
-                if (result)
-                    return data as Uri;
-                else
-                    return null;
+            get
+            {
+                var bd = Annotation<ResourceBaseData>();
+                return bd != null ? bd.Base : null;
             }
 
             set
             {
-                UserData["@@@RESOURCEBASE@@@"] = value;
+                RemoveAnnotations<ResourceBaseData>();
+                AddAnnotation(new ResourceBaseData { Base = value } );
             }
+        }
+
+        private class ResourceBaseData
+        {
+            public Uri Base;
         }
 
         /// <summary>
@@ -69,8 +74,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [NotMapped]
         public List<ElementDefinition.ConstraintComponent> InvariantConstraints;
-
-        private static Dictionary<string, Hl7.FluentPath.PathExpression.CompiledExpression> _expressionCache = new Dictionary<string, Hl7.FluentPath.PathExpression.CompiledExpression>();
 
         public virtual void AddDefaultConstraints()
         {
@@ -85,7 +88,7 @@ namespace Hl7.Fhir.Model
         /// <param name="model"></param>
         /// <param name="result">The OperationOutcome that will have the validation results appended</param>
         /// <returns></returns>
-        protected static bool ValidateInvariantRule(ElementDefinition.ConstraintComponent invariantRule, ElementModel.IElementNavigator model, OperationOutcome result)
+        protected static bool ValidateInvariantRule(ElementDefinition.ConstraintComponent invariantRule, IElementNavigator model, OperationOutcome result)
         {
             string expression = invariantRule.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
             try
@@ -102,19 +105,8 @@ namespace Hl7.Fhir.Model
                     });
                     return true;
                 }
-                var resourceModel = Hl7.FluentPath.FhirValueList.Create(model);
-                Hl7.FluentPath.PathExpression.CompiledExpression compExpr;
-                if (_expressionCache.ContainsKey(expression))
-                {
-                    compExpr = _expressionCache[expression];
-                }
-                else
-                {
-                    compExpr = Hl7.FluentPath.PathExpression.Compile(expression);
-                    _expressionCache.Add(expression, compExpr);
-                }
 
-                if (Hl7.FluentPath.PathExpression.Predicate(compExpr, resourceModel, resourceModel))
+                if (model.Predicate(expression, model))
                     return true;
 
                 result.Issue.Add(new OperationOutcome.IssueComponent()
@@ -211,7 +203,7 @@ namespace Hl7.Fhir.Model
                 // Need to serialize to XML until the object model processor exists
                 // string tpXml = Fhir.Serialization.FhirSerializer.SerializeResourceToXml(this);
                 // FhirPath.IFhirPathElement tree = FhirPath.InstanceTree.TreeConstructor.FromXml(tpXml);
-                var tree = new FluentPath.ModelNavigator(this);
+                var tree = new FluentPath.PocoNavigator(this);
                 foreach (var invariantRule in InvariantConstraints)
                 {
                     ValidateInvariantRule(invariantRule, tree, result);

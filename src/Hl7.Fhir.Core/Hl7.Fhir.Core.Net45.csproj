@@ -53,8 +53,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3-alpha1\lib\net45\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha4\lib\net45\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -72,9 +72,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FluentPath\ElementNavigator.cs" />
-    <Compile Include="FluentPath\NavigatorPOCO.cs" />
-    <Compile Include="Introspection\EnumUtility.cs" />
+    <Compile Include="..\hl7.fhir.specification\validation\Cardinality.cs">
+      <Link>Validation\Cardinality.cs</Link>
+    </Compile>
+    <Compile Include="FluentPath\PocoElementNavigator.cs" />
+    <Compile Include="FluentPath\PocoNavigator.cs" />
+    <Compile Include="FluentPath\PocoNavigatorExtensions.cs" />
+    <Compile Include="Model\ElementDefinitionExtensions.cs" />
+    <Compile Include="Model\ElementDefinition.cs" />
+    <Compile Include="Support\EnumUtility.cs" />
     <Compile Include="Model\IValue.cs" />
     <Compile Include="Model\Time.cs" />
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
@@ -562,7 +568,6 @@
     <Compile Include="Model\ModelInfo.cs" />
     <Compile Include="Model\Oid.cs" />
     <Compile Include="Model\OperationOutcome.cs" />
-    <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\UnsignedInt.cs" />
     <Compile Include="Rest\EntryToHttpExtensions.cs" />
     <Compile Include="Rest\FhirClientOperations.cs" />
@@ -632,6 +637,7 @@
     </Compile>
     <Compile Include="Support\NullExtensions.cs" />
     <Compile Include="Support\DateExtensions.cs" />
+    <Compile Include="Support\ObjectList.cs" />
     <Compile Include="Support\ResourceReferenceNotFoundException.cs" />
     <Compile Include="Support\XmlNs.cs" />
     <Compile Include="Support\ReflectionHelper.cs" />

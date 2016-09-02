@@ -124,8 +124,8 @@ namespace Hl7.Fhir.Specification.Source
                 try
                 {
                     var conformanceResources = readInformationFromFile(file).Where(ci =>
-                           ResourceIdentity.IsRestResourceIdentity(ci.Url) &&
-                           ModelInfo.IsConformanceResource((new ResourceIdentity(ci.Url)).ResourceType));
+                           ResourceIdentity.IsRestResourceIdentity(ci.Canonical) &&
+                           ModelInfo.IsConformanceResource((new ResourceIdentity(ci.Canonical)).ResourceType));
                     _resourceInformation.AddRange(conformanceResources);
                 }
                 catch(XmlException)
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Specification.Source
 
             // Check for duplicate canonical urls, this is forbidden within a single source (and actually, universally,
             // but if another source has the same url, the order of polling in the MultiArtifactSource matters)
-            var doubles = _resourceInformation.Where(ci=>ci.Url != null).GroupBy(ci => ci.Url).Where(group => group.Count() > 1);
+            var doubles = _resourceInformation.Where(ci=>ci.Canonical != null).GroupBy(ci => ci.Canonical).Where(group => group.Count() > 1);
             if (doubles.Any())
             {
                 throw Error.InvalidOperation("The source has found multiple Conformance Resource artifacts with the same canonical url: {0} appears at {1}"
@@ -192,10 +192,10 @@ namespace Hl7.Fhir.Specification.Source
         /// xml and a json version is available, the xml version is returned</returns>
         public Resource LoadConformanceResourceByUrl(string url)
         {
-            if (url == null) throw Error.ArgumentNull("identifier");
+            if (url == null) throw Error.ArgumentNull("url");
             prepareResources();
 
-            var info = _resourceInformation.SingleOrDefault(ci => ci.Url == url);
+            ConformanceInformation info = _resourceInformation.SingleOrDefault(ci => ci.Canonical == url);
             
             if(info == null) return null;
 
@@ -215,7 +215,12 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             if (artifactXml != null)
-                return new FhirXmlParser().Parse<Resource>(artifactXml);
+            {
+                var resultResource = new FhirXmlParser().Parse<Resource>(artifactXml);
+                var ci = ConformanceInformation.FromResource(resultResource, path);
+                resultResource.AddAnnotation(ci);
+                return resultResource;
+            }
             else
                 return null;
         }

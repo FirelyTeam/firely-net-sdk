@@ -57,7 +57,10 @@ namespace Hl7.Fhir.Specification.Source
 
             try
             {
-                return client.Read<Resource>(id);
+                var resultResource = client.Read<Resource>(id);
+                ConformanceInformation ci = ConformanceInformation.FromResource(resultResource, url);
+                resultResource.AddAnnotation(ci);
+                return resultResource;
             }
             catch (FhirOperationException)
             {

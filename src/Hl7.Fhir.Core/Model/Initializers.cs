@@ -204,4 +204,19 @@ namespace Hl7.Fhir.Model
         }
     }
 
+
+    public partial class Quantity
+    {
+        public Quantity()
+        {
+        }
+
+        public Quantity(decimal value, string unit, string system= "http://unitsofmeasure.org")
+        {
+            Value = value;
+            Unit = unit;
+            Code = unit;
+            System = system;
+        }
+    }
 }
