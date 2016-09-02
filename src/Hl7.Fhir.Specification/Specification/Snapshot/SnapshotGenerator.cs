@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             Debug.Assert(structure != null);
             Debug.Assert(!string.IsNullOrEmpty(structure.Url));
 
-            if (structure.Snapshot == null)
+            if (structure.Snapshot == null) //  || _settings.ForceExpandAll
             {
                 if (_settings.ExpandExternalProfiles)
                 {
@@ -513,6 +513,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Expand the snapshot of a referenced external profile.</summary>
         private void updateExternalProfile(StructureDefinition structure)
         {
+            // TODO: support SnapshotGeneratorSettings.ForceExpandAll
+            // Use (timestamp) annotation to mark & detect already (forceably) re-expanded profiles
+
             Debug.Assert(structure != null);
             Debug.Assert(structure.Snapshot == null);
             structure.Snapshot = new StructureDefinition.SnapshotComponent()
@@ -726,8 +729,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Suggestion: core resource definitions should specify Base component for all elements inherited from (Domain)Resource
             // For now, we could hard-code the elements derived from (Domain)Resource
 
-            // OPTIMIZE/IMPROVE: don't pre-generate base paths with fuzzy matching
-            // Instead, integrate logic into element merging, derived from matched base element def
+            // [WMR 20160827] PROBLEM: nested (BackBone) child elements are not properly matched:
+            //   patient.contact.modifierExtension => DomainResource.modifierExtension
+            // Needs proper recursive approach, best using ElementDefinitionNavigator
+            // Note: the main part of the expansion algorithm only operates on snapshot nodes that have a matching differential constraint
+            // Other snapshot nodes are copied as-is and left untouched.
+            // So we need to perform a full pre- or post-processing loop to (re-)generate the element Base components.
 
             // Inspect root element to determine base type (Element/Resource/DomainResource/...)
             var rootElem = elements.FirstOrDefault();
@@ -736,6 +743,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var normalize = _settings.NormalizeElementBase;
             baseStructures = getBaseStructures(primaryTypeCode, normalize);
 
+            // TODO: Use ElementDefinitionNavigator to operate on direct children; recurse on grandchildren
             foreach (var element in elements)
             {
                 if (element.Base == null || normalize)
@@ -744,7 +752,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Combine the snapshot element lists of all base profiles from root (e.g. Resource) to most derived (e.g. Patient)
                     // Then find the first (least derived) matching base element
                     var baseElem = baseStructures.SelectMany(sd => sd.Snapshot.Element)
-                                                .FirstOrDefault(e => ElementDefinitionNavigator.IsCandidateBaseElementPath(e.Path, element.Path));
+                                                 .FirstOrDefault(e => ElementDefinitionNavigator.IsCandidateBaseElementPath(e.Path, element.Path));
                     // If there is no matching base element, then this is (a clone of) the original (core profile) element definition
                     // => generate base path from element path
                     // Debug.WriteLineIf(baseElem == null, "[generateBaseElements] Warning! {0} has no base... generate from element path".FormatWith(element.Path));
