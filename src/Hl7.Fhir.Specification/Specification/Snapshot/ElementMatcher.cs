@@ -1,4 +1,6 @@
-﻿/* 
+﻿// [WMR 20160902] Also support snapshot generation for core resource & datatype definitions
+#define EXPAND_COREDEFS
+/* 
  * Copyright (c) 2015, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -29,7 +31,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             foreach(var match in matches)
             {
                 if (!snapNav.ReturnToBookmark(match.BaseBookmark) || !diffNav.ReturnToBookmark(match.DiffBookmark))
+                {
                     throw Error.InvalidOperation("Found unreachable bookmark in matches");
+                }
 
                 var bPos = snapNav.Path + "[{0}]".FormatWith(snapNav.OrdinalPosition);
                 var dPos = diffNav.Path + "[{0}]".FormatWith(diffNav.OrdinalPosition);
@@ -112,9 +116,24 @@ namespace Hl7.Fhir.Specification.Snapshot
                         var matchingChoice = choiceNames.SingleOrDefault(xName => ElementDefinitionNavigator.IsRenamedChoiceElement(xName, typeSliceShorthand));
 
                         if (matchingChoice != null)
+                        {
                             snapNav.MoveToNext(matchingChoice);
+                        }
                         else
+                        {
+#if EXPAND_COREDEFS
+                            // No match; consider this to be a new element definition
+                            // This is allowed for core resource & datatype definitions
+                            // Note that the SnapshotGenerator does not verify correctness; that is the responsibility of the Validator!
+                            // SnapshotGenerator should never throw, unless there is faulty logic
+                            // Instead, emit a list of OperationDefinitions to describe issues (TODO)
+                            // Ewout: also annotate ElementDefinitions with associated OperationDefinitions
+                            // Validator is responsible for verifying correctness
+                            snapNav.MoveToParent();
+#else
                             throw Error.InvalidOperation("Differential has a constraint for path '{0}', which does not exist in its base".FormatWith(diffNav.Path));
+#endif
+                        }
                     }
 
                     result.AddRange(constructMatch(snapNav, diffNav));
@@ -145,6 +164,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Note that in case of a slice, both snapNav and diffNav will always point to the first element in the slice group
 
             var match = new MatchInfo() { BaseBookmark = snapNav.Bookmark(), DiffBookmark = diffNav.Bookmark() };
+
+#if EXPAND_COREDEFS
+            if (snapNav.Current == null)
+            {
+                match.Action = MatchAction.Add;
+                return new List<MatchInfo>() { match };
+            }
+#endif
 
             bool baseIsSliced = snapNav.Current.Slicing != null;
 
@@ -218,7 +245,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     // If the differential contains a slicing entry, then it should also define at least a single slice.
                     if (!diffNav.MoveToNext())
+                    {
                         throw Error.InvalidOperation("Differential has a slicing entry for path '{0}', but no first actual slice", diffNav.Path);
+                    }
                 }
             }
 
@@ -376,7 +405,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 });
 
                 if (!diffNav.MoveToNext())
+                {
                     throw Error.InvalidOperation("Differential has a slicing entry {0}, but no first actual slice", diffNav.Path);
+                }
             }
 
             // Then, generate a match between the base's unsliced element and the slicing entries in the diff

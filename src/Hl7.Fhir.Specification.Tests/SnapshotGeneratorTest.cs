@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.Print(new string('=', 100));
                 foreach (var elem in sd.Snapshot.Element)
                 {
-                    Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base.Path);
+                    Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base != null ? elem.Base.Path : null);
                 }
                 // Debug.Unindent();
             }
@@ -918,19 +918,23 @@ namespace Hl7.Fhir.Specification.Tests
         {
             return extendable!= null && extendable.GetChangedByDiff() == true;
         }
-    }
 
-    static class DictionaryExtensions
-    {
-        public static TValue GetValueOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> collection, TKey key, TValue defaultValue = default(TValue))
+        // [WMR 20160902] NEW
+        [TestMethod]
+        public void TestExpandCoreResource()
         {
-            TValue result;
-            if (collection.TryGetValue(key, out result))
-            {
-                return result;
-            }
-            return defaultValue;
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
+            Assert.IsNotNull(sd);
+
+            // dumpReferences(sd);
+
+            StructureDefinition expanded;
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+
+            dumpBasePaths(expanded);
         }
 
+
     }
+
 }

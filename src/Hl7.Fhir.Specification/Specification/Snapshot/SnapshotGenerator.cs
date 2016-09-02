@@ -1,4 +1,6 @@
 ﻿#define DETECT_RECURSION
+// [WMR 20160902] Also support snapshot generation for core resource & datatype definitions
+#define EXPAND_COREDEFS
 
 /* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
@@ -151,6 +153,40 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     if (match.Action == ElementMatcher.MatchAction.Add)
                     {
+#if EXPAND_COREDEFS
+                        if (snap.Current == null)
+                        {
+                            // No matching base element; this is a new element definition
+                            // TODO: Verify that this is a core resource/datatype definition; otherwise throw!
+                            // Copy the element definition from differential to snapshot
+                            var clone = (ElementDefinition)diff.Current.DeepCopy();
+                            snap.AppendChild(clone);
+
+                            // Notify clients about a snapshot element with differential constraints
+                            OnConstraint(snap.Current);
+
+                            // Merge children
+                            mergeElement(snap, diff);
+                        }
+                        else
+                        {
+                            // Add new slice after the last existing slice in base profile
+                            snap.MoveToLastSlice();
+                            var lastSlice = snap.Bookmark();
+
+                            // Initialize slice by duplicating base slice entry
+                            snap.ReturnToBookmark(match.BaseBookmark);
+                            snap.DuplicateAfter(lastSlice);
+                            // Important: explicitly clear the slicing node in the copy!
+                            snap.Current.Slicing = null;
+
+                            // Notify clients about a snapshot element with differential constraints
+                            OnConstraint(snap.Current);
+
+                            // Merge differential
+                            mergeElement(snap, diff);
+                        }
+#else
                         // Add new slice after the last existing slice in base profile
                         snap.MoveToLastSlice();
                         var lastSlice = snap.Bookmark();
@@ -166,6 +202,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                         // Merge differential
                         mergeElement(snap, diff);
+#endif
 
                     }
                     else if (match.Action == ElementMatcher.MatchAction.Merge)
@@ -538,6 +575,68 @@ namespace Hl7.Fhir.Specification.Snapshot
                 throw Error.Argument("structure", "structure does not contain a differential specification");
             }
 
+            // [WMR 20160902] Also handle core resource / datatype definitions
+#if EXPAND_COREDEFS
+            if (differential.Element == null || differential.Element.Count == 0)
+            {
+                throw Error.Argument("structure", "Differential specification does not contain any element constraints.");
+            }
+
+            // [WMR 20160718] Also accept extension definitions (IsConstraint == false)
+            if (structure.IsConstraint && structure.Base == null)
+            {
+                throw Error.Argument("structure", "structure is a constraint, but no base has been specified");
+            }
+
+            StructureDefinition.SnapshotComponent snapshot;
+            if (structure.Base != null)
+            {
+                var baseStructure = _resolver.GetStructureDefinition(structure.Base);
+
+                if (baseStructure == null)
+                {
+                    // throw Error.InvalidOperation("Could not locate the base StructureDefinition for url " + structure.Base);
+                    throw Error.ResourceReferenceNotFoundException(
+                        structure.Base,
+                        "Unresolved profile reference. Cannot locate the base profile with url '{0}'".FormatWith(structure.Base)
+                    );
+                }
+
+                // Base profile must have a valid snapshot component
+                ensureSnapshot(baseStructure, true);
+                Debug.Assert(baseStructure.Snapshot != null);
+                Debug.Assert(baseStructure.Snapshot.Element != null);
+                Debug.Assert(baseStructure.Snapshot.Element.Count > 0);
+
+                // [WMR 20160817] Notify client about the resolved, expanded base profile
+                OnPrepareBaseProfile(structure, baseStructure);
+
+                snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
+
+                generateBaseElements(snapshot.Element, structure.ConstrainedType);
+
+                // [WMR 20160902] Rebase the base profile (e.g. DomainResource)
+                if (!structure.IsConstraint)
+                {
+                    var rootElem = differential.Element.FirstOrDefault();
+                    if (!rootElem.IsRootElement())
+                    {
+                        throw Error.Argument("structure", "Differential specification for core resource or datatype definitions does not start with root element definition.");
+                    }
+                    snapshot.Rebase(rootElem.Path);
+                }
+
+                // Notify observers
+                for (int i = 0; i < snapshot.Element.Count; i++)
+                {
+                    OnPrepareElement(snapshot.Element[i], baseStructure.Snapshot.Element[i]);
+                }
+            }
+            else
+            {
+                snapshot = new StructureDefinition.SnapshotComponent();
+            }
+#else
             // [WMR 20160718] Also accept extension definitions (IsConstraint == false)
             if (!structure.IsConstraint && !structure.IsExtension)
             {
@@ -570,6 +669,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             OnPrepareBaseProfile(structure, baseStructure);
 
             var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
+
             generateBaseElements(snapshot.Element, structure.ConstrainedType);
 
             // Notify observers
@@ -577,7 +677,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 OnPrepareElement(snapshot.Element[i], baseStructure.Snapshot.Element[i]);
             }
-
+#endif
             var snap = new ElementDefinitionNavigator(snapshot.Element);
 
             // Fill out the gaps (mostly missing parents) in the differential representation
