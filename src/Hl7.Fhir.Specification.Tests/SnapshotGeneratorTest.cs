@@ -923,8 +923,18 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestExpandCoreResource()
         {
-            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/BackboneElement");
+
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/HumanName");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Quantity");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
+
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Resource");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
+
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
 
             Assert.IsNotNull(sd);
 
@@ -939,36 +949,141 @@ namespace Hl7.Fhir.Specification.Tests
 
             if (!result)
             {
-                Debug.Print("Failed!");
-                Debug.Print("Original has {0} elements, expanded has {1} elements...".FormatWith(sd.Snapshot.Element.Count, expanded.Snapshot.Element.Count));
-                // dumpBasePaths(sd);
-                if (expanded.Snapshot.Element.Count < sd.Snapshot.Element.Count)
-                {
-                    for (int i = 0; i < sd.Snapshot.Element.Count; i++)
-                    {
-                        var elem = sd.Snapshot.Element[i];
-                        var match = expanded.Snapshot.Element.Any(e => e.Path == elem.Path);
-                        if (!match)
-                        {
-                            Debug.Print("{0} has not been expanded...".FormatWith(elem.Path));
-                        }
-                    }
-                }
-                else if (expanded.Snapshot.Element.Count == sd.Snapshot.Element.Count)
-                {
-                    for (int i = 0; i < sd.Snapshot.Element.Count; i++)
-                    {
-                        var elem = sd.Snapshot.Element[i];
-                        var match = expanded.Snapshot.Element[i];
-                        if (!elem.IsExactly(match))
-                        Debug.Print("{0} <-> {1}  MISMATCH!".FormatWith(elem.Path, match.Path));
-                    }
-                }
+                Debug.Print("Not equal... verifying...");
+                result = verifyElementBase(sd, expanded);
             }
 
             Assert.IsTrue(result);
         }
 
+        // Verify ElementDefinition.Base components
+        bool verifyElementBase(StructureDefinition original, StructureDefinition expanded)
+        {
+            var originalElems = original.Snapshot.Element;
+            var expandedElems = expanded.Snapshot.Element;
+            var isConstraint = expanded.ConstrainedType.HasValue;
+            Debug.Print("Original has {0} elements, expanded has {1} elements...".FormatWith(originalElems.Count, expandedElems.Count));
+
+            // dumpBasePaths(original);
+
+            bool verified = false;
+            if (expandedElems.Count < originalElems.Count)
+            {
+                for (int i = 0; i < originalElems.Count; i++)
+                {
+                    var elem = originalElems[i];
+                    var match = expandedElems.Any(e => e.Path == elem.Path);
+                    if (!match)
+                    {
+                        Debug.Print("{0} has not been expanded...".FormatWith(elem.Path));
+                    }
+                }
+            }
+            else if (expandedElems.Count == originalElems.Count)
+            {
+                verified = true;
+                var rootElemName = expandedElems[0].Path;
+
+                var baseProfileUrl = expanded.Base;
+                var baseProfile = baseProfileUrl != null ? _testSource.GetStructureDefinition(baseProfileUrl) : null;
+                var baseRootElemName = baseProfile != null && baseProfile.Snapshot != null ? baseProfile.Snapshot.Element[0].Path : null;
+                if (expandedElems.Count > 0 && baseRootElemName != null)
+                {
+                    verified &= verifyBasePath(expandedElems[0], originalElems[0], baseRootElemName);
+                }
+
+                if (expanded.Kind == StructureDefinition.StructureDefinitionKind.Datatype)
+                {
+                    // Datatype
+                    if (rootElemName != "Element" && expandedElems.Count > 2)
+                    {
+                        verified &= verifyBasePath(expandedElems[1], originalElems[1], "Element.id");
+                        verified &= verifyBasePath(expandedElems[2], originalElems[2], "Element.extension");
+                    }
+                }
+                else // if (expanded.Kind == StructureDefinition.StructureDefinitionKind.Resource)
+                {
+                    // Resource
+                    if (rootElemName != "Resource" && expandedElems.Count > 4)
+                    {
+                        verified &= verifyBasePath(expandedElems[1], originalElems[1], "Resource.id");
+                        verified &= verifyBasePath(expandedElems[2], originalElems[2], "Resource.meta");
+                        verified &= verifyBasePath(expandedElems[3], originalElems[3], "Resource.implicitRules");
+                        verified &= verifyBasePath(expandedElems[4], originalElems[4], "Resource.language");
+                    }
+                    if (rootElemName != "DomainResource" && expandedElems.Count > 8)
+                    {
+                        verified &= verifyBasePath(expandedElems[5], originalElems[5], "DomainResource.text");
+                        verified &= verifyBasePath(expandedElems[6], originalElems[6], "DomainResource.contained");
+                        verified &= verifyBasePath(expandedElems[7], originalElems[7], "DomainResource.extension");
+                        verified &= verifyBasePath(expandedElems[8], originalElems[8], "DomainResource.modifierExtension");
+                    }
+                    for (int i = 9; i < expandedElems.Count; i++)
+                    {
+                        var path = expandedElems[i].Path;
+                        if (path.EndsWith(".id"))
+                        {
+                            verified &= verifyBasePath(expandedElems[i], originalElems[i], "Element.id");
+                        }
+                        else if (path.EndsWith(".extension"))
+                        {
+                            verified &= verifyBasePath(expandedElems[i], originalElems[i], "Element.extension");
+                        }
+                        else if (path.EndsWith(".modifierExtension"))
+                        {
+                            verified &= verifyBasePath(expandedElems[i], originalElems[i], "BackboneElement.modifierExtension");
+                        }
+                        else 
+                        {
+                            if (!isConstraint)
+                            {
+                                // New resource element
+                                verified &= verifyBasePath(expandedElems[i], originalElems[i], isConstraint ? expandedElems[i].Path : null);
+                                verified &= verifyBasePath(originalElems[i], originalElems[i], isConstraint ? originalElems[i].Path : null);
+                            }
+                        }
+                    }
+                }
+
+
+            }
+            return verified;
+        }
+
+        static bool verifyBasePath(ElementDefinition elem, ElementDefinition orgElem, string path = "")
+        {
+            bool result = false;
+            if (!string.IsNullOrEmpty(path))
+            {
+                // Assert.IsNotNull(elem.Base);
+                // Assert.AreEqual(path, elem.Base.Path);
+
+                // Assert.IsNotNull(baseElem.Base);
+                // Assert.AreEqual(path, baseElem.Base.Path);
+
+                result = elem.Base != null && path == elem.Base.Path;
+
+                Debug.WriteLineIf(elem.Base == null, "EXPANSION: Path = {0}  => BASE IS MISSING".FormatWith(elem.Path));
+                Debug.WriteLineIf(orgElem.Base == null, "ORIGINAL: Path = {0}  => BASE IS MISSING".FormatWith(orgElem.Path));
+
+                Debug.WriteLineIf(elem.Base != null && path != elem.Base.Path, "EXPANSION: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(elem.Path, elem.Base != null ? elem.Base.Path : null, path));
+                Debug.WriteLineIf(orgElem.Base != null && path != orgElem.Base.Path, "ORIGINAL: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(orgElem.Path, orgElem.Base != null ? orgElem.Base.Path : null, path));
+
+            }
+            else
+            {
+                // New resource element
+                // Assert.IsNull(elem.Base);
+                // Assert.IsNull(baseElem.Base);
+
+                result = elem.Base == null;
+
+                Debug.WriteLineIf(elem.Base != null, "EXPANSION: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(elem.Path, elem.Base != null ? elem.Base.Path : null, path));
+                Debug.WriteLineIf(orgElem.Base != null, "ORIGINAL: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(orgElem.Path, orgElem.Base != null ? orgElem.Base.Path : null, path));
+
+            }
+            return result;
+        }
 
     }
 

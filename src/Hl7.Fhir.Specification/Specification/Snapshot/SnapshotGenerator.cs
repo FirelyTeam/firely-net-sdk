@@ -735,8 +735,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // Element has no type code, cannot expand...
                         return false;
                     }
-
                     var typeCode = primaryType.Code.Value;
+
                     var typeProfile = primaryType.Profile.FirstOrDefault();
                     StructureDefinition baseStructure = null;
                     if (!string.IsNullOrEmpty(typeProfile) && _settings.MergeTypeProfiles && !defn.IsReference())
@@ -808,11 +808,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                             elem.ClearAllChangedByDiff();
 
 #if NEW_ELEM_BASE
-                            // [WMR 20160902] TODO: Initialize empty ElementDefinition.Base components if necessary
+                            // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
                             // e.g. copy children from BackboneElement
                             // => BackboneElement.modifierExtension has no base of it's own
                             // => element is derived from BackboneElement
                             // => [CurrentElement].modifierExtension.Base.Path = "BackboneElement.modifierExtension"
+                            // [WMR 20160903] Handle Resource base type
                             ensureElementBase(elem, baseElem);
 #endif
 
@@ -926,7 +927,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // No match... try base profile
-            Debug.Print("[generateElementBase] Path = {0}  (no base)".FormatWith(nav.Path));
+            // Debug.Print("[generateElementBase] Path = {0}  (no base)".FormatWith(nav.Path));
         }
 
         /// <summary>Assign the <see cref="ElementDefinition.Base"/> component if necessary.</summary>
@@ -943,20 +944,38 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 Debug.Assert(baseElem != null);
 
-                elem.Base = !isRootElement && _settings.NormalizeElementBase && baseElem.Base != null
-                    ? createBaseComponent(
-                        baseElem.Base.MaxElement,
-                        baseElem.Base.MinElement,
-                        baseElem.Base.PathElement
-                    )
-                    : createBaseComponent(
+                if (!isRootElement && _settings.NormalizeElementBase)
+                {
+                    if (baseElem.Base != null)
+                    {
+                        elem.Base = createBaseComponent(
+                            baseElem.Base.MaxElement,
+                            baseElem.Base.MinElement,
+                            baseElem.Base.PathElement
+                        );
+                    }
+                    // [WMR 20160903] Resource has no base
+                    else if (!elem.Path.StartsWith("Resource.") && !elem.Path.StartsWith("Element."))
+                    {
+                        // Generate base component from base element
+                        elem.Base = createBaseComponent(
+                            baseElem.MaxElement,
+                            baseElem.MinElement,
+                            baseElem.PathElement
+                        );
+                    }
+                }
+                else
+                {
+                    elem.Base = createBaseComponent(
                         baseElem.MaxElement,
                         baseElem.MinElement,
                         baseElem.PathElement
                     );
+                }
 
-                Debug.Print("[ensureElementBase] #{0} Path = {1}  Base = {2}".FormatWith(elem.GetHashCode(), elem.Path, elem.Base.Path));
-                Debug.Assert(isCreatedBySnapshotGenerator(elem.Base));
+                // Debug.Print("[ensureElementBase] #{0} Path = {1}  Base = {2}".FormatWith(elem.GetHashCode(), elem.Path, elem.Base.Path));
+                Debug.Assert(elem.Base == null || isCreatedBySnapshotGenerator(elem.Base));
 
             }
         }

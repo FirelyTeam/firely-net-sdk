@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </remarks>
         public static List<MatchInfo> Match(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
-            if (!snapNav.HasChildren) throw Error.Argument("snapNav", "Cannot match base to diff: element '{0}' in snap has no children".FormatWith(snapNav.Path));
+            // if (!snapNav.HasChildren) throw Error.Argument("snapNav", "Cannot match base to diff: element '{0}' in snap has no children".FormatWith(snapNav.Path));
             if (!diffNav.HasChildren) throw Error.Argument("diffNav", "Cannot match base to diff: element '{0}' in diff has no children".FormatWith(diffNav.Path));
 
             // These bookmarks are used only in the finally {} to make sure we don't alter the position of the navs when leaving the merger
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             do
             {
-                if (snapNav.Current.IsChoice())
+                if (snapNav.Current != null && snapNav.Current.IsChoice())
                 {
                     result.Add(snapNav.PathName);
                 }

@@ -237,8 +237,11 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             get
             {
+                // [WMR 20160903] Handle empty list
+                if (Count == 0) { return false; }
+
                 // Special case, at document root
-                if (OrdinalPosition == null && Count > 0)
+                if (OrdinalPosition == null) // && Count > 0)
                     return true;
 
                 var childPos = OrdinalPosition.Value + 1;
