@@ -3502,7 +3502,7 @@ Where the system is known, a type is unnecessary because the type is always part
             </type>
             <constraint>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
-                <valueString value="reference.startsWith(&#39;#&#39;).not() or (reference.substring(1).trace(&#39;url&#39;) in %resource.contained.id.trace(&#39;ids&#39;))"/>
+                <valueString value="reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))"/>
               </extension>
               <key value="ref-1"/>
               <severity value="error"/>
@@ -13549,7 +13549,7 @@ This element may need to be included in narrative because of the potential for m
             </constraint>
             <constraint>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
-                <valueString value="type.distinct(code,profile)"/>
+                <valueString value="type.select(code&amp;profile).isDistinct()"/>
               </extension>
               <key value="eld-13"/>
               <severity value="error"/>
@@ -15425,7 +15425,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             <condition value="eld-12"/>
             <constraint>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
-                <valueString value="startsWith(&#39;http:&#39;) or startsWith(&#39;https&#39;)"/>
+                <valueString value="as(uri).startsWith('http:') or as(uri).startsWith('https')"/>
               </extension>
               <key value="eld-12"/>
               <severity value="error"/>
@@ -15639,7 +15639,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             </constraint>
             <constraint>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
-                <valueString value="type.distinct(code,profile)"/>
+                <valueString value="type.select(code&amp;profile).isDistinct()"/>
               </extension>
               <key value="eld-13"/>
               <severity value="error"/>
@@ -17323,7 +17323,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             <condition value="eld-12"/>
             <constraint>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
-                <valueString value="startsWith(&#39;http:&#39;) or startsWith(&#39;https&#39;)"/>
+                <valueString value="as(uri).startsWith('http:') or as(uri).startsWith('https')"/>
               </extension>
               <key value="eld-12"/>
               <severity value="error"/>
@@ -18374,7 +18374,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             </constraint>
             <constraint>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
-                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum) and (code.empty() or code = &#39;1&#39;) and (value.empty() or value.contains(&#39;.&#39;).not())"/>
+                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum) and (code.empty() or code = &#39;1&#39;) and (value.empty() or value.toString().contains('.').not())"/>
               </extension>
               <key value="cnt-1"/>
               <severity value="error"/>
@@ -18585,7 +18585,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             </type>
             <constraint>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
-                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum) and (code.empty() or code = &#39;1&#39;) and (value.empty() or value.contains(&#39;.&#39;).not())"/>
+                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum) and (code.empty() or code = &#39;1&#39;) and (value.empty() or value.toString().contains('.').not())"/>
               </extension>
               <key value="cnt-1"/>
               <severity value="error"/>
@@ -18954,7 +18954,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             </constraint>
             <constraint>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
-                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value.contains(&#39;.&#39;).not())"/>
+                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value.toString().contains('.').not())"/>
               </extension>
               <key value="age-1"/>
               <severity value="error"/>
@@ -19165,7 +19165,7 @@ Note that an element that has the property IsModifier is not necessarily a &quot
             </type>
             <constraint>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
-                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value.contains(&#39;.&#39;).not())"/>
+                <valueString value="(code or value.empty()) and (system.empty() or system = %ucum) and (value.empty() or value.toString().contains('.').not())"/>
               </extension>
               <key value="age-1"/>
               <severity value="error"/>
