@@ -64,6 +64,8 @@ namespace Hl7.Fhir.Specification.Source
 
         public Resource LoadConformanceResourceByUrl(string url)
         {
+            if (url == null) throw Error.ArgumentNull("url");
+
             return _conformanceResources.Get(url);
         }
 

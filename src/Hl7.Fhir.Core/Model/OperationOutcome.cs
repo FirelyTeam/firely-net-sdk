@@ -51,12 +51,25 @@ namespace Hl7.Fhir.Model
                 return Text.Div;
             }
 
-            var text = "";
+            if (Issue.Any())
+            {
+                var text = "";
 
-            foreach (var issue in Issue)
-                text += issue.ToString() + Environment.NewLine;
+                // When this is a summary report (e.g. just showing errors), it might well be informational 
+                // parents are missing in the hierarchy above their error children. In this case, don't
+                // try to use indentation.
+                bool useIndentation = Issue.First().HierarchyLevel == 0;
 
-            return text;
+                foreach (var issue in Issue)
+                {
+                    var indent = useIndentation ? new string(' ', issue.HierarchyLevel * 2) : "";
+                    text += indent + issue.ToString() + Environment.NewLine;
+                }
+
+                return text;
+            }
+
+            return "(no outcomes to report)";
         }
 
         [NotMapped]
@@ -67,6 +80,35 @@ namespace Hl7.Fhir.Model
                 return !Issue.Any(i => !i.Success);
             }
         }
+
+
+        [NotMapped]
+        public int Fatals
+        {
+            get
+            {
+                return Issue.Where(i => i.Severity == IssueSeverity.Fatal).Count();
+            }
+        }
+
+        [NotMapped]
+        public int Errors
+        {
+            get
+            {
+                return Issue.Where(i => i.Severity == IssueSeverity.Error).Count();
+            }
+        }
+
+        [NotMapped]
+        public int Warnings
+        {
+            get
+            {
+                return Issue.Where(i => i.Severity == IssueSeverity.Warning).Count();
+            }
+        }
+
 
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public partial class IssueComponent
@@ -92,7 +134,7 @@ namespace Hl7.Fhir.Model
 
             public override string ToString()
             {
-                string text = new string(' ', HierarchyLevel*2);
+                string text = "";
 
                 if (Severity != null)
                 {

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Specification.Source
         public static IEnumerable<string> GetCoreModelUrls(this IArtifactSource source)
         {
             return source.ListConformanceResources()
-                .Select(ci => ci.Url)
+                .Select(ci => ci.Canonical)
                 .Where(uri => uri != null && uri.StartsWith(XmlNs.FHIR) && ModelInfo.IsCoreModelType(new ResourceIdentity(uri).Id));
         }
 
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             //Note: we assume this ArtifactSource caches the conceptmaps. Otherwise this is expensive.
 
-            var conceptMapUrls = source.ListConformanceResources().Where(info => info.Type == ResourceType.ConceptMap).Select(info => info.Url);
+            var conceptMapUrls = source.ListConformanceResources().Where(info => info.Type == ResourceType.ConceptMap).Select(info => info.Canonical);
 
             return conceptMapUrls.Select(url => (ConceptMap)source.LoadConformanceResourceByUrl(url));
         }
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Specification.Source
             var vsInfo = source.ListConformanceResources().Where(ci => ci.ValueSetSystem == system).SingleOrDefault();
 
             if (vsInfo != null)
-                return source.GetValueSet(vsInfo.Url);
+                return source.GetValueSet(vsInfo.Canonical);
 
             return null;
         }

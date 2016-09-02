@@ -61,6 +61,20 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual("Bare string", data.Annotation<string>());
         }
 
+
+        [TestMethod]
+        public void TestAnnotationsAreCloneable()
+        {
+            FhirBoolean data = new FhirBoolean(true);
+
+            data.AddAnnotation(new AnnotationData { Data = "Hi!" });
+
+            var copied = (FhirBoolean)data.DeepCopy();
+
+            Assert.AreEqual("Hi!", copied.Annotation<AnnotationData>().Data);
+        }
+
+
         [TestMethod]
         public void SetBaseUri()
         {

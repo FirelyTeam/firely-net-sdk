@@ -293,6 +293,23 @@ namespace Hl7.Fhir.Tests.Model
 
         }
 
+
+        [TestMethod]
+        public void TestSubclassInfo()
+        {
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Resource, FHIRDefinedType.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.DomainResource, FHIRDefinedType.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Patient, FHIRDefinedType.Patient));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Observation, FHIRDefinedType.Patient));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Resource, FHIRDefinedType.Bundle));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.DomainResource, FHIRDefinedType.Bundle));
+
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.HumanName));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRDefinedType.Element, FHIRDefinedType.Oid));
+        }
+
         [TestMethod]
         public void TestIntegerValueInterface()
         {

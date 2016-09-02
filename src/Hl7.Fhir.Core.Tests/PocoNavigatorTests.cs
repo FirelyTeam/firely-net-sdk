@@ -43,6 +43,24 @@ namespace Hl7.Fhir
             IElementNavigator v2 = patient.Clone(); v2.MoveToNext(); v2.MoveToFirstChild(); v2.MoveToNext();
             Assert.AreEqual("Patient.active[0].extension[1].value[0]", v2.Path);
         }
+
+        [TestMethod]
+        public void PocoExtensionTest()
+        {
+            Patient p = new Patient();
+
+            p.Active = true;
+            p.ActiveElement.ElementId = "314";
+            p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
+            p.ActiveElement.AddExtension("http://something.org", new Integer(314));
+
+            Assert.AreEqual(true, p.Scalar("Patient.active[0]"));
+            Assert.AreEqual("314", p.Scalar("Patient.active[0].id[0]"));
+
+            var extensions = p.Select("Patient.active[0].extension");
+            Assert.AreEqual(2, extensions.Count());
+        }
+
     }
 
 }

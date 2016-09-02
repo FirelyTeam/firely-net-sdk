@@ -1,3 +1,11 @@
+/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
 using System.Linq;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
@@ -14,15 +22,17 @@ namespace Hl7.Fhir.Validation
                 return typeRef.Profile.First();
             }
             else
+            {
                 return "http://hl7.org/fhir/StructureDefinition/" + typeRef.Code.GetLiteral();
+            }
         }
 
         public static string ToHumanReadable(this ElementDefinition.TypeRefComponent typeRef)
         {
             var result = typeRef.Code.GetLiteral();
 
-            if (typeRef.Profile != null)
-                result += " ({0})".FormatWith(typeRef.Profile);
+            if (typeRef.Profile.Any())
+                result += " ({0})".FormatWith(typeRef.Profile.First());
 
             return result;
         }

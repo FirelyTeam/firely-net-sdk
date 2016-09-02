@@ -4,10 +4,12 @@
 *
 * This file is licensed under the BSD 3-Clause license
 */
+
 using Hl7.ElementModel;
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,14 +31,30 @@ namespace Hl7.Fhir.Validation
             outcome.Issue.AddRange(issues);
         }
 
-        public static void Include(this OperationOutcome outcome, OperationOutcome other)
+        public static void Add(this OperationOutcome outcome, OperationOutcome other)
         {
-            foreach(var issue in other.Issue)
+            foreach (var issue in other.Issue)
             {
-                var myIssue = (OperationOutcome.IssueComponent)issue.DeepCopy();
+                //var myIssue = (OperationOutcome.IssueComponent)issue.DeepCopy();
+                var myIssue = issue;
+                outcome.AddIssue(myIssue);
+            }
+        }
+
+
+        public static Stopwatch OUTCOME_INCLUDE_TIMER = new Stopwatch();
+
+        public static void Include(this OperationOutcome outcome, OperationOutcome other)
+        {               
+            foreach (var issue in other.Issue)
+            {
+                // var myIssue = (OperationOutcome.IssueComponent)issue.DeepCopy();
+                var myIssue = issue;
                 myIssue.SetHierarchyLevel(myIssue.GetHierarchyLevel() + 1);
                 outcome.AddIssue(myIssue);
             }
+
+
         }
 
         public static void Clear(this OperationOutcome outcome)
@@ -85,12 +103,6 @@ namespace Hl7.Fhir.Validation
         {
             return outcome.Issue.Where(i => i.GetHierarchyLevel() == level);
         }
-
-        public static bool Success(this OperationOutcome outcome)
-        {
-            return outcome.Success;
-        }
-
 
         public const string OPERATIONOUTCOME_ISSUE_HIERARCHY = "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-hierarchy";
 

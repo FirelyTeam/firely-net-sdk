@@ -1,7 +1,7 @@
 properties {
   $productName = "Hl7.Fhir .Net Library" 
   $productVersion = "0.90.6"             # Update this for a new release
-  $nugetPrelease = "alpha3"              # Set this to something like "alpha", if desired
+  $nugetPrelease = "alpha4"              # Set this to something like "alpha", if desired
 
   $ignoreTestFailure = $true             # Report build success, even though tests failed. Useful for alpha versions
 
@@ -22,7 +22,7 @@ properties {
 # See the following for some explanations: http://blogs.msdn.com/b/jjameson/archive/2009/04/03/best-practices-for-net-assembly-versioning.aspx 
 #  $assemblyVersion = "1.0"               # Update this according to the assembly version scheme, with Major.Minor. DO NOT INCLUDE BUILD OR REVISION here! 
 
-  $assemblyVersion = "0.90.6.3"    # This is a violation of the assembly version scheme, but the Fhir .Net library wants to go with this for all 0.x releases.
+  $assemblyVersion = "0.90.6.4"    # This is a violation of the assembly version scheme, but the Fhir .Net library wants to go with this for all 0.x releases.
 
   $nugetPkgs = @(                        # Update this for new DSTU version
     @{CsProj="Hl7.Fhir.Core"; AssemblyPattern="Hl7.Fhir.*.Core"; PkgId="Hl7.Fhir.DSTU2"},

@@ -37,6 +37,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Rest;
 using Hl7.ElementModel;
+using Hl7.FluentPath;
 
 namespace Hl7.Fhir.Model
 {
@@ -74,8 +75,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public List<ElementDefinition.ConstraintComponent> InvariantConstraints;
 
-        private static Dictionary<string, Hl7.FluentPath.PathExpression.CompiledExpression> _expressionCache = new Dictionary<string, Hl7.FluentPath.PathExpression.CompiledExpression>();
-
         public virtual void AddDefaultConstraints()
         {
             if (InvariantConstraints == null || InvariantConstraints.Count == 0)
@@ -106,19 +105,8 @@ namespace Hl7.Fhir.Model
                     });
                     return true;
                 }
-                var resourceModel = Hl7.FluentPath.FhirValueList.Create(model);
-                Hl7.FluentPath.PathExpression.CompiledExpression compExpr;
-                if (_expressionCache.ContainsKey(expression))
-                {
-                    compExpr = _expressionCache[expression];
-                }
-                else
-                {
-                    compExpr = Hl7.FluentPath.PathExpression.Compile(expression);
-                    _expressionCache.Add(expression, compExpr);
-                }
 
-                if (Hl7.FluentPath.PathExpression.Predicate(compExpr, resourceModel, resourceModel))
+                if (model.Predicate(expression, model))
                     return true;
 
                 result.Issue.Add(new OperationOutcome.IssueComponent()

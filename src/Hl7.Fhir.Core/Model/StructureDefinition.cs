@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
+using System.Linq;
 
 namespace Hl7.Fhir.Model
 {
@@ -56,6 +57,15 @@ namespace Hl7.Fhir.Model
             get
             {
                 return ConstrainedType == FHIRDefinedType.Extension || Base == "http://hl7.org/fhir/StructureDefinition/Extension";
+            }
+        }
+
+        [NotMapped]
+        public bool HasSnapshot
+        {
+            get
+            {
+                return Snapshot != null && Snapshot.Element != null && Snapshot.Element.Any();
             }
         }
     }

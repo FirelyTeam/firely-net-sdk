@@ -20,7 +20,8 @@ namespace Hl7.Fhir.FluentPath
         static Hl7.Fhir.Introspection.ClassMapping GetMappingForType(Type elementType)
         {
             var inspector = Serialization.BaseFhirParser.Inspector;
-            return inspector.FindClassMappingByType(elementType);
+            //return inspector.FindClassMappingByType(elementType);
+            return inspector.ImportType(elementType);
         }
 
         // For Normal element properties representing a FHIR type
@@ -123,10 +124,9 @@ namespace Hl7.Fhir.FluentPath
 
             var mapping = GetMappingForType(_pocoElement.GetType());
 
-#if !PORTABLE45
             if (mapping == null)
-                System.Diagnostics.Trace.WriteLine(String.Format("Unknown type '{0}' encountered", _pocoElement.GetType().Name));
-#endif
+                throw Error.NotSupported(String.Format("Unknown type '{0}' encountered", _pocoElement.GetType().Name));
+
             foreach (var item in mapping.PropertyMappings)
             {
                 // Don't expose "value" as a child, that's our ValueProvider.Value (if we're a primitive)

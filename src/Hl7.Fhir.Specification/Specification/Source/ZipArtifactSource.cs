@@ -43,11 +43,11 @@ namespace Hl7.Fhir.Specification.Source
        
         private bool _prepared = false;
 
-        private string _zipPath = null;
+        public string ZipPath { get; private set; }
 
         public ZipArtifactSource(string zipPath)
         {
-            _zipPath = zipPath;
+            ZipPath = zipPath;
         }
 
 
@@ -62,9 +62,9 @@ namespace Hl7.Fhir.Specification.Source
         {
             if (_prepared) return;
 
-            if (!File.Exists(_zipPath)) throw new FileNotFoundException(String.Format("Cannot prepare ZipArtifactSource: file '{0}' was not found", _zipPath ));
+            if (!File.Exists(ZipPath)) throw new FileNotFoundException(String.Format("Cannot prepare ZipArtifactSource: file '{0}' was not found", ZipPath ));
            
-            var zc = new ZipCacher(_zipPath, CACHE_KEY);
+            var zc = new ZipCacher(ZipPath, CACHE_KEY);
             _filesSource = new FileDirectoryArtifactSource(zc.GetContentDirectory(), includeSubdirectories: false);
 
             _prepared = true;
@@ -99,6 +99,7 @@ namespace Hl7.Fhir.Specification.Source
         public Resource LoadConformanceResourceByUrl(string url)
         {
             prepare();
+
             return _filesSource.LoadConformanceResourceByUrl(url);
         }                
     }

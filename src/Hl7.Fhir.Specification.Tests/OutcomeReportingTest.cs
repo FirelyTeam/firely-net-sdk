@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             OperationOutcome level2 = new OperationOutcome();
 
-            level2.AddIssue(Issue.UNSUPPORTED_NEED_SNAPSHOT.ToIssueComponent("A test warning at level 2", "Patient.active[0].id[0]"));
+            level2.AddIssue(Issue.UNAVAILABLE_NEED_SNAPSHOT.ToIssueComponent("A test warning at level 2", "Patient.active[0].id[0]"));
             level2.AddIssue(Issue.CONTENT_ELEMENT_MUST_MATCH_TYPE.ToIssueComponent("Another test error at level 2", "Patient.active[0].id[0]"));
 
             level1.Include(level2);

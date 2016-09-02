@@ -135,9 +135,12 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(pat);
             }
 
-            var vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/iso21090-preferred") as StructureDefinition;
-
-            Assert.IsNotNull(vs);
+            var extension = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/iso21090-preferred") as StructureDefinition;
+           
+            Assert.IsNotNull(extension);
+            Assert.IsTrue(extension.Annotation<ConformanceInformation>().Origin.EndsWith("extension-definitions.xml"));
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/iso21090-preferred", extension.Annotation<ConformanceInformation>().Canonical);
+            Assert.AreEqual(ResourceType.StructureDefinition, extension.Annotation<ConformanceInformation>().Type);
 
             var cis = fa.ListConformanceResources();
             foreach (var ci in cis) Debug.WriteLine(ci.ToString());
@@ -193,6 +196,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
+            var ci = vs.Annotation<ConformanceInformation>();
+            Assert.IsTrue(ci.Origin.EndsWith("v2-tables.xml"));
+            Assert.IsTrue(ci.Name.StartsWith("v2 Vaccines Administered"));
+            Assert.AreEqual("http://hl7.org/fhir/ValueSet/v2-0292", ci.Canonical);
+            Assert.AreEqual(ResourceType.ValueSet, ci.Type);
+
             vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/ValueSet/administrative-gender");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
@@ -204,6 +213,12 @@ namespace Hl7.Fhir.Specification.Tests
             var rs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/Condition");
             Assert.IsNotNull(rs);
             Assert.IsTrue(rs is StructureDefinition);
+
+            ci = rs.Annotation<ConformanceInformation>();
+            Assert.IsTrue(ci.Origin.EndsWith("profiles-resources.xml"));
+            Assert.AreEqual("Condition", ci.Name);
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/Condition", ci.Canonical);
+            Assert.AreEqual(ResourceType.StructureDefinition, ci.Type);
 
             rs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/StructureDefinition/ValueSet");
             Assert.IsNotNull(rs);
@@ -234,17 +249,17 @@ namespace Hl7.Fhir.Specification.Tests
 
             var dicomVS = allConformanceInformation.Where(ci => ci.ValueSetSystem == "http://nema.org/dicom/dicm").SingleOrDefault();
             Assert.IsNotNull(dicomVS);
-            Assert.AreEqual("http://hl7.org/fhir/ValueSet/dicom-dcim", dicomVS.Url);
-            Assert.AreEqual("DICOM Controlled Terminology Definitions", dicomVS.Name);
+            Assert.AreEqual("http://hl7.org/fhir/ValueSet/dicom-dcim",dicomVS.Canonical);
+            Assert.AreEqual("DICOM Controlled Terminology Definitions",dicomVS.Name);
 
-            var moneySD = allConformanceInformation.Where(ci => ci.Url == "http://hl7.org/fhir/StructureDefinition/Money").SingleOrDefault();
+            var moneySD = allConformanceInformation.Where(ci => ci.Canonical == "http://hl7.org/fhir/StructureDefinition/Money").SingleOrDefault();
             Assert.IsNotNull(moneySD);
-            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/Money", moneySD.Url);
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/Money", moneySD.Canonical);
             Assert.AreEqual("Money", moneySD.Name);
 
-            var reasonEXT = allConformanceInformation.Where(ci => ci.Url == "http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason").SingleOrDefault();
+            var reasonEXT = allConformanceInformation.Where(ci => ci.Canonical == "http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason").SingleOrDefault();
             Assert.IsNotNull(reasonEXT);
-            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason", reasonEXT.Url);
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason", reasonEXT.Canonical);
             Assert.AreEqual("Reason for this order", reasonEXT.Name);
         }
 
@@ -274,11 +289,17 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var wa = new WebArtifactSource();
 
-            var artifact = wa.LoadConformanceResourceByUrl("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/Flag");
+            var artifact = wa.LoadConformanceResourceByUrl("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/Observation");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
-            Assert.AreEqual("Flag", ((StructureDefinition)artifact).Name);
+            Assert.AreEqual("Observation", ((StructureDefinition)artifact).Name);
+
+            var ci = artifact.Annotation<ConformanceInformation>();
+            Assert.AreEqual("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/Observation", ci.Origin);
+            Assert.AreEqual("Observation", ci.Name);
+            Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/Observation", ci.Canonical);
+            Assert.AreEqual(ResourceType.StructureDefinition, ci.Type);
         }
 
         private class TestFhirClient : Rest.FhirClient

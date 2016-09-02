@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Hl7.Fhir.Introspection;
 #if !PORTABLE45 || NET45
 using System.Runtime.Serialization;
 #endif
@@ -197,6 +198,17 @@ namespace Hl7.Fhir.Rest
             if (id == null) throw Error.ArgumentNull("id");
 
             return new ResourceIdentity(null, null, id, null, ResourceIdentityForm.Local);
+        }
+
+
+        public static ResourceIdentity Core(FHIRDefinedType type)
+        {
+            return ResourceIdentity.Core(type.GetLiteral());
+        }
+
+        public static ResourceIdentity Core(string type)
+        {
+            return new ResourceIdentity("http://hl7.org/fhir/StructureDefinition/" + type);
         }
 
 

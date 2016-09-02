@@ -100,13 +100,15 @@ namespace Hl7.Fhir.Specification.Source
             return result;
         }
 
-        public Resource LoadConformanceResourceByUrl(string identifier)
+        public Resource LoadConformanceResourceByUrl(string url)
         {
+            if (url == null) throw Error.ArgumentNull("url");
+
             foreach (var source in Sources)
             {
                 try
                 {
-                    var result = source.LoadConformanceResourceByUrl(identifier);
+                    var result = source.LoadConformanceResourceByUrl(url);
 
                     if (result != null) return result;
                 }
