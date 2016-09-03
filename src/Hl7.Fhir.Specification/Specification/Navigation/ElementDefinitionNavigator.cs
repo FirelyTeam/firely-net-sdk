@@ -591,16 +591,17 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <param name="baseElementPath">A base element path.</param>
         /// <param name="elementPath">An derived element path.</param>
         /// <example>
-        /// IsMatchingBaseElementPath("DomainResource.meta", "Patient.meta")
-        /// IsMatchingBaseElementPath("Extension.valueBoolean", "Extension.value[x]")
+        /// IsCandidateBaseElementPath("DomainResource.meta", "Patient.meta")
+        /// IsCandidateBaseElementPath("Extension.value[x]", "Extension.valueBoolean")
+        /// IsCandidateBaseElementPath("Element.id", "Extension.url.id")
         /// </example>
         internal static bool IsCandidateBaseElementPath(string baseElementPath, string elementPath)
         {
             // var root = GetPathRoot(elementPath);
             // var rebased = ReplacePathRoot(baseElementPath, root);
             // return elementPath == rebased || IsRenamedChoiceElement(rebased, elementPath);
-            var dot1 = baseElementPath != null ? baseElementPath.IndexOf('.') : -1;
-            var dot2 = elementPath != null ? elementPath.IndexOf('.') : -1;
+            var dot1 = baseElementPath != null ? baseElementPath.LastIndexOf('.') : -1;
+            var dot2 = elementPath != null ? elementPath.LastIndexOf('.') : -1;
 
             if (dot1 > 0 && dot2 > 0)
             {

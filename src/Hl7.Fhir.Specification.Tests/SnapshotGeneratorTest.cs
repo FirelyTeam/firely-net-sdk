@@ -70,11 +70,18 @@ namespace Hl7.Fhir.Specification.Tests
         // [Ignore] // For debugging purposes
         public void GenerateSingleSnapshot()
         {
+            // _settings.MergeTypeProfiles = false;
+
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder");
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-alternate");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-procedurerequest");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
 
             // [WMR 20160825] Examples by Simone Heckman - custom, free-form canonical url
             // => ResourceIdentity is obsolete!
@@ -88,6 +95,21 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
+            dumpBasePaths(expanded);
+
+        }
+
+        [TestMethod]
+        public void GenerateRepeatedSnapshot()
+        {
+            StructureDefinition expanded;
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/measurereport");
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
+            dumpBasePaths(expanded);
+
+            // [WMR 20160903] TODO: Second expansion fails, base paths are now normalized...? (e.g. DomainResource.text)
+            sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/clinicaldocument");
+            generateSnapshotAndCompare(sd, _testSource, out expanded);
             dumpBasePaths(expanded);
         }
 
@@ -197,6 +219,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
+            _settings.NormalizeElementBase = true;
+            _settings.MergeTypeProfiles = true;
+            _settings.ExpandExternalProfiles = true;
+            _settings.IgnoreUnresolvedProfiles = false;
 
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
@@ -357,6 +383,9 @@ namespace Hl7.Fhir.Specification.Tests
             File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), FhirSerializer.SerializeResourceToXml(original));
             File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
             // }
+
+            // Assert.IsTrue(areEqual);
+            Debug.WriteLineIf(!areEqual, "WARNING: '{0}' Expansion is not equal to original!".FormatWith(original.Name));
 
             return areEqual;
         }
@@ -775,7 +804,7 @@ namespace Hl7.Fhir.Specification.Tests
             foreach (var elem in elems)
             {
                 // Each element should have a valid Base component, unless the profile is a core type/resource definition (no base)
-                Assert.AreEqual(isConstraint, elem.Base != null);
+                Assert.IsTrue(!isConstraint || elem.Base != null);
 
                 var ann = elem.Annotation<BaseDefAnnotation>();
                 var baseDef = ann != null ? ann.BaseElementDefinition : null;
@@ -791,7 +820,7 @@ namespace Hl7.Fhir.Specification.Tests
                     hasConstraints = HasConstraints(elem, baseDef);
                 }
                 var isValid = hasChanges == hasConstraints;
-                Debug.WriteLine("{0,10}  |  {1}  |  {2,-12}  |  {3,-40}  |  {4,-40}  |  {5,-40}  |  {6,10}  |  {7}",
+                Debug.WriteLine("{0,10}  |  {1}  |  {2,-12}  |  {3,-50}  |  {4,-40}  |  {5,-40}  |  {6,10}  |  {7}",
                     elem.GetHashCode(),
                     hasConstraints ? "+" : "-",
                     GetChangeDescription(elem),
@@ -931,10 +960,10 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
 
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Resource");
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
 
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
-            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
 
             Assert.IsNotNull(sd);
 
@@ -949,7 +978,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             if (!result)
             {
-                Debug.Print("Not equal... verifying...");
+                Debug.Print("Expanded is not exactly equal to original... verifying...");
                 result = verifyElementBase(sd, expanded);
             }
 

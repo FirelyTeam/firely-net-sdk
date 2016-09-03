@@ -270,10 +270,21 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var types = snap.Current.Type;
                 if (types.Count == 1)
                 {
-                    var typeCode = types[0].Code;
+                    var primaryType = types[0];
+                    var typeCode = primaryType.Code;
                     if (typeCode.HasValue && ModelInfo.IsDataType(typeCode.Value))
                     {
                         expandElement(snap);
+                    }
+                    // [WMR 20160903] Handle unknown/custom core types
+                    else if (!typeCode.HasValue && primaryType.CodeElement != null)
+                    {
+                        var typeName = primaryType.CodeElement.ObjectValue as string;
+                        if (!string.IsNullOrEmpty(typeName))
+                        {
+                            // Assume DataType; no way to determine...
+                            expandElement(snap);
+                        }
                     }
                 }
             }
@@ -307,13 +318,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         // If mergeTypeProfiles is enabled, then first merge custom type profile before merging base
         private void mergeTypeProfiles(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
-            var primaryDiffType = diff.Current.Type.FirstOrDefault();
-            if (primaryDiffType == null || primaryDiffType.Code == FHIRDefinedType.Reference)
+            var primaryDiffType = diff.Current.PrimaryType();
+            if (primaryDiffType == null || primaryDiffType.IsReference())
             {
                 return;
             }
 
-            var primarySnapType = snap.Current.Type.FirstOrDefault();
+            var primarySnapType = snap.Current.PrimaryType();
             if (primarySnapType == null)
             {
                 return;
@@ -621,6 +632,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
 #if NEW_ELEM_BASE
+                if (!_settings.NormalizeElementBase)
+                {
+                    // Always regenerate! Cannot reuse cloned base components
+                    foreach (var elem in snapshot.Element)
+                    {
+                        elem.Base = null;
+                    }
+                }
                 generateBaseElements(snapshot.Element, structure.Base);
 #endif
 
@@ -694,8 +713,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// If the element has a name reference, then merge from the targeted element.
         /// Otherwise, if the element has a custom type profile, then merge it.
         /// </summary>
-        /// <param name="nav"></param>
-        /// <returns></returns>
         internal bool expandElement(ElementDefinitionNavigator nav)
         {
             if (nav.Current == null)
@@ -730,108 +747,126 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     // [WMR 20160720] Handle custom type profiles (GForge #9791)
                     var primaryType = defn.Type[0];
-                    if (!primaryType.Code.HasValue)
+                    // [WMR 20160903] Don't expand primitive types, e.g. Extension.url (Uri) unless forced (because diff constraints exist)
+                    // if (expandPrimitives || !(primaryType.Code.HasValue && ModelInfo.IsPrimitive(primaryType.Code.Value)))
                     {
-                        // Element has no type code, cannot expand...
-                        return false;
-                    }
-                    var typeCode = primaryType.Code.Value;
+                        StructureDefinition baseStructure = getStructureForTypeRef(primaryType);
 
-                    var typeProfile = primaryType.Profile.FirstOrDefault();
-                    StructureDefinition baseStructure = null;
-                    if (!string.IsNullOrEmpty(typeProfile) && _settings.MergeTypeProfiles && !defn.IsReference())
-                        // && !defn.IsExtension()
-                    {
-                        // Try to resolve the custom element type profile reference
-                        baseStructure = _resolver.GetStructureDefinition(typeProfile);
-                        if (baseStructure == null)
+                        if (ensureSnapshot(baseStructure))
                         {
-                            if (_settings.IgnoreUnresolvedProfiles)
+                            var baseSnap = baseStructure.Snapshot;
+#if NEW_ELEM_BASE
+                            generateBaseElements(baseSnap.Element, baseStructure.Base);
+#else
+                            // [WMR 20160826] We need to generate base paths for target elements
+                            // If the base profile is a constraint, then it is safe to (re)generate the ElementDefinition.Base components
+                            // However if the base profile is a core resource/type definition, then we shouldn't add Base components to it!
+                            // In that case, create a temporary clone, to ensure that the original instance doesn't get polluted/corrupted
+                            if (!baseStructure.ConstrainedType.HasValue)
                             {
-                                _invalidProfiles.Add(typeProfile, SnapshotProfileStatus.Missing);
-                                // Ignore unresolved external type profile reference; expand the underlying standard core type
-                                baseStructure = _resolver.GetStructureDefinitionForCoreType(typeCode);
+                                baseSnap = (StructureDefinition.SnapshotComponent)baseSnap.DeepCopy();
+                            }
+                            generateBaseElements(baseSnap.Element, baseStructure.ConstrainedType);
+#endif
+                            var sourceNav = new ElementDefinitionNavigator(baseSnap.Element);
+                            sourceNav.MoveToFirstChild();
+                            nav.CopyChildren(sourceNav);
+
+                            // Notify observers
+                            var pos = nav.OrdinalPosition.Value;
+                            for (int i = 1; i < baseSnap.Element.Count; i++)
+                            {
+                                var elem = nav.Elements[pos + i];
+                                var baseElem = baseSnap.Element[i];
+
+                                // [WMR 20160826] Never inherit Changed extension from base profile!
+                                elem.ClearAllChangedByDiff();
+
+#if NEW_ELEM_BASE
+                                // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
+                                // e.g. copy children from BackboneElement
+                                // => BackboneElement.modifierExtension has no base of it's own
+                                // => element is derived from BackboneElement
+                                // => [CurrentElement].modifierExtension.Base.Path = "BackboneElement.modifierExtension"
+                                // [WMR 20160903] Handle Resource base type
+                                if (!_settings.NormalizeElementBase)
+                                {
+                                    // Always regenerate! Cannot reuse cloned base components
+                                    elem.Base = null;
+                                }
+
+                                ensureElementBase(elem, baseElem);
+#endif
+
+                                OnPrepareElement(elem, baseElem);
                             }
                         }
-                    }
-                    else
-                    {
-                        baseStructure = _resolver.GetStructureDefinitionForCoreType(typeCode);
-                    }
-
-                    if (baseStructure == null)
-                    {
-                        // throw Error.NotSupported("Trying to navigate down a node that has a declared base type of '{0}', which is unknown".FormatWith(typeCode));
-                        if (typeProfile != null)
-                        {
-                            throw Error.ResourceReferenceNotFoundException(
-                                typeProfile,
-                                "Unresolved profile reference. Cannot locate the element type profile for url '{0}'".FormatWith(typeProfile)
-                            );
-                        }
+#if DEBUG
                         else
                         {
-                            throw Error.NotSupported("Unresolved element type. Cannot locate the profile for element type '{0}'.".FormatWith(typeCode));
+                            // Silently ignore missing profile and continue expansion
+                            Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(baseStructure.Url));
                         }
-                    }
-
-                    if (ensureSnapshot(baseStructure))
-                    {
-                        var baseSnap = baseStructure.Snapshot;
-
-
-#if NEW_ELEM_BASE
-                        generateBaseElements(baseSnap.Element, baseStructure.Base);
-#else
-                        // [WMR 20160826] We need to generate base paths for target elements
-                        // If the base profile is a constraint, then it is safe to (re)generate the ElementDefinition.Base components
-                        // However if the base profile is a core resource/type definition, then we shouldn't add Base components to it!
-                        // In that case, create a temporary clone, to ensure that the original instance doesn't get polluted/corrupted
-                        if (!baseStructure.ConstrainedType.HasValue)
-                        {
-                            baseSnap = (StructureDefinition.SnapshotComponent)baseSnap.DeepCopy();
-                        }
-                        generateBaseElements(baseSnap.Element, baseStructure.ConstrainedType);
 #endif
-                        var sourceNav = new ElementDefinitionNavigator(baseSnap.Element);
-                        sourceNav.MoveToFirstChild();
-                        nav.CopyChildren(sourceNav);
-
-                        // Notify observers
-                        var pos = nav.OrdinalPosition.Value;
-                        for (int i = 1; i < baseSnap.Element.Count; i++)
-                        {
-                            var elem = nav.Elements[pos + i];
-                            var baseElem = baseSnap.Element[i];
-
-                            // [WMR 20160826] Never inherit Changed extension from base profile!
-                            elem.ClearAllChangedByDiff();
-
-#if NEW_ELEM_BASE
-                            // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
-                            // e.g. copy children from BackboneElement
-                            // => BackboneElement.modifierExtension has no base of it's own
-                            // => element is derived from BackboneElement
-                            // => [CurrentElement].modifierExtension.Base.Path = "BackboneElement.modifierExtension"
-                            // [WMR 20160903] Handle Resource base type
-                            ensureElementBase(elem, baseElem);
-#endif
-
-                            OnPrepareElement(elem, baseElem);
-                        }
                     }
-#if DEBUG
-                    else
-                    {
-                        // Silently ignore missing profile and continue expansion
-                        Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(baseStructure.Url));
-                    }
-#endif
                 }
             }
 
             return true;
         }
+
+        StructureDefinition getStructureForTypeRef(ElementDefinition.TypeRefComponent typeRef)
+        {
+            StructureDefinition baseStructure = null;
+
+            // [WMR 20160720] TODO: Handle custom type profiles (GForge #9791)
+
+            if (typeRef.CodeElement == null)
+            {
+                // Element has no type code, cannot expand...
+                return null;
+            }
+
+            var typeProfile = typeRef.Profile.FirstOrDefault();
+            if (!string.IsNullOrEmpty(typeProfile) && _settings.MergeTypeProfiles && !typeRef.IsReference())
+                // && !defn.IsExtension()
+            {
+                // Try to resolve the custom element type profile reference
+                baseStructure = _resolver.GetStructureDefinition(typeProfile);
+                if (baseStructure == null)
+                {
+                    if (_settings.IgnoreUnresolvedProfiles)
+                    {
+                        _invalidProfiles.Add(typeProfile, SnapshotProfileStatus.Missing);
+                        // Ignore unresolved external type profile reference; expand the underlying standard core type
+                        baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeRef.CodeElement);
+                    }
+                }
+            }
+            else
+            {
+                baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeRef.CodeElement);
+            }
+
+            if (baseStructure == null)
+            {
+                // throw Error.NotSupported("Trying to navigate down a node that has a declared base type of '{0}', which is unknown".FormatWith(typeCode));
+                if (typeProfile != null)
+                {
+                    throw Error.ResourceReferenceNotFoundException(
+                        typeProfile,
+                        "Unresolved profile reference. Cannot locate the element type profile for url '{0}'".FormatWith(typeProfile)
+                    );
+                }
+                else
+                {
+                    throw Error.NotSupported("Unresolved element type. Cannot locate the profile for element type '{0}'.".FormatWith(typeRef.CodeElement.ObjectValue));
+                }
+            }
+
+            return baseStructure;
+        }
+
 
 #if NEW_ELEM_BASE
         // [WMR 20160902] NEW
@@ -890,17 +925,22 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Initialize Base component
                 ensureElementBase(elem, baseNav.Current);
 
-                // Consume the matched base element
-                baseNav.MoveToNext();
-
                 // Recurse child elements
+                var navBm = nav.Bookmark();
+                var baseNavBm = baseNav.Bookmark();
                 if (nav.MoveToFirstChild() && baseNav.MoveToFirstChild())
                 {
                     do
                     {
                         generateElementBase(nav, baseNav);
                     } while (nav.MoveToNext());
+
+                    nav.ReturnToBookmark(navBm);
+                    baseNav.ReturnToBookmark(baseNavBm);
                 }
+
+                // Consume the matched base element
+                baseNav.MoveToNext();
 
                 return;
             }
@@ -976,7 +1016,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Debug.Print("[ensureElementBase] #{0} Path = {1}  Base = {2}".FormatWith(elem.GetHashCode(), elem.Path, elem.Base.Path));
                 Debug.Assert(elem.Base == null || isCreatedBySnapshotGenerator(elem.Base));
-
             }
         }
 
@@ -1089,5 +1128,5 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
 
-    }
+            }
 }
