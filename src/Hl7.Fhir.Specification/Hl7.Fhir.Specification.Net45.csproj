@@ -76,6 +76,7 @@
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotElementBaseGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorExtensions.cs" />
     <Compile Include="Specification\Source\ArtifactSourceExtentions.cs" />
     <Compile Include="Validation\Cardinality.cs" />
