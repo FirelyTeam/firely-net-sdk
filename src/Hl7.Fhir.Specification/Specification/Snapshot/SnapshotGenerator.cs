@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 {
     public sealed partial class SnapshotGenerator
     {
-        private readonly IArtifactSource _resolver;
+        private readonly IArtifactSource _source;
         private readonly SnapshotGeneratorSettings _settings;
 #if DETECT_RECURSION
         private readonly SnapshotRecursionChecker _recursionChecker = new SnapshotRecursionChecker();
@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (settings == null) throw Error.ArgumentNull("settings");
-            _resolver = source;
+            _source = source;
             _settings = settings;
         }
 
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Or to a parent element type that references itself
             // Need to keep a stack of already expanding url's...
 
-            var baseStructure = _resolver.GetStructureDefinition(primaryDiffTypeProfile);
+            var baseStructure = _source.GetStructureDefinition(primaryDiffTypeProfile);
             if (baseStructure == null)
             {
                 if (!_settings.IgnoreUnresolvedProfiles)
@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             StructureDefinition.SnapshotComponent snapshot;
             if (structure.Base != null)
             {
-                var baseStructure = _resolver.GetStructureDefinition(structure.Base);
+                var baseStructure = _source.GetStructureDefinition(structure.Base);
 
                 if (baseStructure == null)
                 {
@@ -818,20 +818,20 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // && !defn.IsExtension()
             {
                 // Try to resolve the custom element type profile reference
-                baseStructure = _resolver.GetStructureDefinition(typeProfile);
+                baseStructure = _source.GetStructureDefinition(typeProfile);
                 if (baseStructure == null)
                 {
                     if (_settings.IgnoreUnresolvedProfiles)
                     {
                         _invalidProfiles.Add(typeProfile, SnapshotProfileStatus.Missing);
                         // Ignore unresolved external type profile reference; expand the underlying standard core type
-                        baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeRef.CodeElement);
+                        baseStructure = _source.GetStructureDefinitionForTypeCode(typeRef.CodeElement);
                     }
                 }
             }
             else
             {
-                baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeRef.CodeElement);
+                baseStructure = _source.GetStructureDefinitionForTypeCode(typeRef.CodeElement);
             }
 
             if (baseStructure == null)
