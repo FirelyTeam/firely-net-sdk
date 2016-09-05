@@ -1,6 +1,4 @@
-﻿// [WMR 20160902] Also support snapshot generation for core resource & datatype definitions
-#define EXPAND_COREDEFS
-/* 
+﻿/* 
  * Copyright (c) 2015, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -71,12 +69,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// <summary>Add the elementdefinition to slice (with diff merged to the slicing entry base definition)</summary>
             Add,
             /// <summary>Begin a new slice with this slice as slicing entry</summary>
-            Slice
-
-            // [WMR 20160902] NEW - Handle core resource & datatype definitions
-#if EXPAND_COREDEFS
-            , New
-#endif
+            Slice,
+            /// <summary>Introduce a new element (for core resource & datatype definitions).</summary>
+            New
         }
 
         /// <summary>
@@ -128,7 +123,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                         }
                         else
                         {
-#if EXPAND_COREDEFS
                             // No match; consider this to be a new element definition
                             // This is allowed for core resource & datatype definitions
                             // Note that the SnapshotGenerator does not verify correctness; that is the responsibility of the Validator!
@@ -136,16 +130,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // Instead, emit a list of OperationDefinitions to describe issues (TODO)
                             // Ewout: also annotate ElementDefinitions with associated OperationDefinitions
                             // Validator is responsible for verifying correctness
-
                             isNewElement = true;
-
-#else
-                            throw Error.InvalidOperation("Differential has a constraint for path '{0}', which does not exist in its base".FormatWith(diffNav.Path));
-#endif
                         }
                     }
-
-#if EXPAND_COREDEFS
                     if (isNewElement)
                     {
                         result.Add(constructNew(snapNav, diffNav));
@@ -154,9 +141,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         result.AddRange(constructMatch(snapNav, diffNav));
                     }
-#else
-                    result.AddRange(constructMatch(snapNav, diffNav));
-#endif
                 }
                 while (diffNav.MoveToNext());
             }
@@ -370,17 +354,16 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
-#if EXPAND_COREDEFS
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
         private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
+            // Return reference to *parent* element as BaseBookmark!
             var bm = snapNav.Bookmark();
             snapNav.MoveToParent();
             var match = new MatchInfo() { BaseBookmark = snapNav.Bookmark(), DiffBookmark = diffNav.Bookmark(), Action = MatchAction.New };
             snapNav.ReturnToBookmark(bm);
             return match;
         }
-#endif
 
         // [WMR 20160801]
         // Determine if the specified discriminator(s) match on type/profile

@@ -1,8 +1,4 @@
 ﻿#define DETECT_RECURSION
-// [WMR 20160902] Also support snapshot generation for core resource & datatype definitions
-#define EXPAND_COREDEFS
-// [WMR 20160902] NEW - Improved logic to generate ElementDefinition.Base.Path
-#define NEW_ELEM_BASE
 
 /* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
@@ -179,7 +175,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         makeSlice(snap, diff);
                     }
-#if EXPAND_COREDEFS
+                    // For expanding core resource & datatype definitions
                     else if (match.Action == ElementMatcher.MatchAction.New)
                     {
                         // No matching base element; this is a new element definition
@@ -195,10 +191,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                         // Merge children
                         mergeElement(snap, diff);
-
-                        // snap.MoveToParent();
                     }
-#endif
 
                 }
             }
@@ -574,7 +567,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // [WMR 20160902] Also handle core resource / datatype definitions
-#if EXPAND_COREDEFS
             if (differential.Element == null || differential.Element.Count == 0)
             {
                 throw Error.Argument("structure", "Differential specification does not contain any element constraints.");
@@ -644,48 +636,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 snapshot = new StructureDefinition.SnapshotComponent();
             }
-#else
-            // [WMR 20160718] Also accept extension definitions (IsConstraint == false)
-            if (!structure.IsConstraint && !structure.IsExtension)
-            {
-                throw Error.Argument("structure", "structure is not a constraint or extension");
-            }
-
-            if (structure.Base == null)
-            {
-                throw Error.Argument("structure", "structure is a constraint, but no base has been specified");
-            }
-
-            var baseStructure = _resolver.GetStructureDefinition(structure.Base);
-
-            if (baseStructure == null)
-            {
-                // throw Error.InvalidOperation("Could not locate the base StructureDefinition for url " + structure.Base);
-                throw Error.ResourceReferenceNotFoundException(
-                    structure.Base,
-                    "Unresolved profile reference. Cannot locate the base profile with url '{0}'".FormatWith(structure.Base)
-                );
-            }
-
-            // Base profile must have a valid snapshot component
-            ensureSnapshot(baseStructure, true);
-            Debug.Assert(baseStructure.Snapshot != null);
-            Debug.Assert(baseStructure.Snapshot.Element != null);
-            Debug.Assert(baseStructure.Snapshot.Element.Count > 0);
-
-            // [WMR 20160817] Notify client about the resolved, expanded base profile
-            OnPrepareBaseProfile(structure, baseStructure);
-
-            var snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
-
-            generateBaseElements(snapshot.Element, structure.ConstrainedType);
-
-            // Notify observers
-            for (int i = 0; i < snapshot.Element.Count; i++)
-            {
-                OnPrepareElement(snapshot.Element[i], baseStructure.Snapshot.Element[i]);
-            }
-#endif
                 var snap = new ElementDefinitionNavigator(snapshot.Element);
 
             // Fill out the gaps (mostly missing parents) in the differential representation
@@ -756,13 +706,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                     //    baseSnap = (StructureDefinition.SnapshotComponent)baseSnap.DeepCopy();
                     //}
 
+                    // [WMR 20160903] No need to clone the structure, as we're generating from it's own base profile => invariant!
                     GenerateElementBase(baseSnap.Element, baseStructure.Base);
 
-                    var sourceNav = new ElementDefinitionNavigator(baseSnap.Element);
-                    sourceNav.MoveToFirstChild();
-                    nav.CopyChildren(sourceNav);
+                    var baseNav = new ElementDefinitionNavigator(baseSnap.Element);
+                    baseNav.MoveToFirstChild();
+                    nav.CopyChildren(baseNav);
 
-                    // Notify observers
+                    // Fix the copied elements and notify observers
                     var pos = nav.OrdinalPosition.Value;
                     for (int i = 1; i < baseSnap.Element.Count; i++)
                     {
@@ -792,7 +743,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 else
                 {
                     // Silently ignore missing profile and continue expansion
-                    Debug.Print("Warning! Resolved profile for url '{0}' has no snapshot - continue expansion...".FormatWith(baseStructure.Url));
+                    Debug.Print("Warning! Profile for type '{0}' cannot be found or has no snapshot - continue expansion...".FormatWith(primaryType.Code));
                 }
 #endif
 
@@ -801,6 +752,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             return true;
         }
 
+        // Resolve StructureDefinition for the specified typeRef component
+        // Throws an exception if not found
         StructureDefinition getStructureForTypeRef(ElementDefinition.TypeRefComponent typeRef)
         {
             StructureDefinition baseStructure = null;
@@ -834,7 +787,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 baseStructure = _source.GetStructureDefinitionForTypeCode(typeRef.CodeElement);
             }
 
-            if (baseStructure == null)
+            if (baseStructure == null && !_settings.IgnoreUnresolvedProfiles)
             {
                 // throw Error.NotSupported("Trying to navigate down a node that has a declared base type of '{0}', which is unknown".FormatWith(typeCode));
                 if (typeProfile != null)

@@ -1,7 +1,4 @@
-﻿// [WMR 20160902] Also support snapshot generation for core resource & datatype definitions
-#define EXPAND_COREDEFS
-
-/* 
+﻿/* 
  * Copyright (c) 2014, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -393,12 +390,9 @@ namespace Hl7.Fhir.Specification.Navigation
             // We're not positioned anywhere...
             if (OrdinalPosition == null) return false;
 
-#if !EXPAND_COREDEFS
-            // [WMR 20160902] This is allowed for core resource/datatype definitions!
-
             // Cannot insert a sibling to the unique root element
-            if (OrdinalPosition == 0) return false;
-#endif
+            // [WMR 20160902] This is allowed for core resource/datatype definitions!
+            // if (OrdinalPosition == 0) return false;
 
             return true;
         }
@@ -415,12 +409,9 @@ namespace Hl7.Fhir.Specification.Navigation
             if (!canInsertSiblingHere()) return false;
 
             var insertPosition = positionAfter();
-#if EXPAND_COREDEFS
+            // [WMR 20160903] Core resource or datatype definitions may introduce new children of the root element
             var parentPath = OrdinalPosition == 0 ? Path : ParentPath;
             var newSiblingPath = parentPath + "." + sibling.GetNameFromPath();
-#else
-            var newSiblingPath = ParentPath + "." + sibling.GetNameFromPath();
-#endif
 
             if (insertPosition == Count) // At last position
                 Elements.Add(sibling);
