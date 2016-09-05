@@ -63,6 +63,8 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue CONTENT_DOES_NOT_MATCH_PATTERN_VALUE = def(1009, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE = def(1010, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_CHOICE_INVALID_INSTANCE_TYPE = def(1011, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT = def(1012, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT = def(1013, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
 
         // Profile problems
         public static readonly Issue PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE = def(2000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
@@ -74,18 +76,19 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE = def(2006, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_CARDINALITY_MISSING = def(2007, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_IS_EMPTY = def(2008, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
-
+        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION = def(2009, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
 
         // Unsupported 
         public static readonly Issue UNSUPPORTED_SLICING_NOT_SUPPORTED = def(3000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
         public static readonly Issue UNSUPPORTED_NESTED_BUNDLES = def(3001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
         public static readonly Issue UNSUPPORTED_FOLLOWING_REFERENCES = def(3002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
+        public static readonly Issue UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH = def(3003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Non-availability, incomplete data
         public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE = def(4000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNAVAILABLE_ELEMENTDEF_WITHOUT_STRUCTDEF = def(4001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        //public static readonly Issue UNAVAILABLE_ELEMENTDEF_WITHOUT_STRUCTDEF = def(4001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_NEED_SNAPSHOT = def(4002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        public static readonly Issue UNAVAILABLE_SNAPSHOT_GENERATION_FAILED = def(40032, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_SNAPSHOT_GENERATION_FAILED = def(4003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Processing information
         public static readonly Issue PROCESSING_PROGRESS = def(5000, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);

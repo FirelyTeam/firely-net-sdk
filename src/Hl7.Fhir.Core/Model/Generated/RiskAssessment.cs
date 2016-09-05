@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("prediction.probability[x].all((low.empty() or ((low.code = \"%\") and (low.system = %ucum))) and (high.empty() or ((high.code = \"%\") and (high.system = %ucum))))"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("prediction.probability.all((low.empty() or ((low.code = '%') and (low.system = %ucum))) and (high.empty() or ((high.code = '%') and (high.system = %ucum))))"))},
             Key = "ras-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "low and high must be percentages, if present",
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_2 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("prediction.probability[x].all(probabilityDecimal <= 100)"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("prediction.probability.all($this <= 100)"))},
             Key = "ras-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Must be <= 100",

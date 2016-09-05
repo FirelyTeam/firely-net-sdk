@@ -1340,7 +1340,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_8 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("snapshot.element.tail().all(path.startsWith(%context.snapshot.element.first().path+\".\")) and differential.element.tail().all(path.startsWith(%context.differential.element.first().path+\".\"))"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("snapshot.element.tail().all(path.startsWith(%context.snapshot.element.first().path+'.')) and differential.element.tail().all(path.startsWith(%context.differential.element.first().path+'.'))"))},
             Key = "sdf-8",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "In any snapshot or differential, all the elements except the first have to have a path that starts with the path of the first + \".\"",

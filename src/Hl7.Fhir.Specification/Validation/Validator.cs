@@ -44,9 +44,11 @@ namespace Hl7.Fhir.Validation
     public class Validator
     {
         public ValidationContext ValidationContext { get; private set;  }
-        public IElementNavigator ContainingBundle { get; private set; }
-
+            
         public event EventHandler<OnSnapshotNeededEventArgs> OnSnapshotNeeded;
+
+        private Stack<IElementNavigator> FluentPathContext = new Stack<IElementNavigator>();
+
 
         public Validator(ValidationContext context)
         {
@@ -100,16 +102,6 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            if(instance.TypeName == FHIRDefinedType.Bundle.GetLiteral())
-            {
-                if (outcome.Verify(() => ContainingBundle == null, "Validation encountered a nested Bundle, which it does not (yet) support. Context for validation will remain at original root Bundle",
-                            Issue.UNSUPPORTED_NESTED_BUNDLES, instance))
-                {
-                    //TODO: When validating, maybe we should be able to next Bundle contexts by nesting validators
-                    ContainingBundle = instance;
-                }
-            }
-
             if (!structureDefinition.HasSnapshot && ValidationContext.ArtifactSource != null)
             {
                 // Note: this modifies an SD that is passed to us. If this comes from a cache that's
@@ -162,50 +154,119 @@ namespace Hl7.Fhir.Validation
         internal OperationOutcome ValidateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
+            bool isNewFPContext = definition.StructureDefinition.Kind == StructureDefinition.StructureDefinitionKind.Resource &&
+                                        definition.Current.IsRootElement();
 
-            Trace(outcome, "Start validation of ElementDefinition at path '{0}'".FormatWith(definition.QualifiedDefinitionPath()), Issue.PROCESSING_PROGRESS, instance);
-
-            // Any node must either have a value, or children, or both (e.g. extensions on primitives)
-            if (!outcome.Verify(() => instance.Value != null || instance.HasChildren(), "Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance))
-                return outcome;
-
-            var elementConstraints = definition.Current;
-
-            if (elementConstraints.IsPrimitiveValueConstraint())
+            try
             {
-                // The "value" property of a FHIR Primitive is the bottom of our recursion chain, it does not have a nameReference
-                // nor a <type>, the only thing left to do to validate the content is to validate the string representation of the
-                // primitive against the regex given in the core definition
-                outcome.Add(VerifyPrimitiveContents(elementConstraints, instance));
-            }
-            else if (definition.HasChildren)
-            {
-                // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
-                // so there's no point in also validating the <type> or <nameReference>
-                outcome.Add(this.ValidateChildConstraints(definition, instance));
-            }
-            else
-            {
-                // No inline-children, so validation depends on the presence of a <type> or <nameReference>
-                if (outcome.Verify(() => elementConstraints.Type != null || elementConstraints.NameReference != null,
-                        "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance))
+                Trace(outcome, "Start validation of ElementDefinition at path '{0}'".FormatWith(definition.QualifiedDefinitionPath()), Issue.PROCESSING_PROGRESS, instance);
+
+                if (isNewFPContext)
                 {
-                    outcome.Add(ValidateType(elementConstraints, instance));
-                    outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
+                    Trace(outcome, "Enter validation context (type {0})".FormatWith(instance.TypeName), Issue.PROCESSING_PROGRESS, instance);
+                    FluentPathContext.Push(instance);
+                }
+
+                // Any node must either have a value, or children, or both (e.g. extensions on primitives)
+                if (!outcome.Verify(() => instance.Value != null || instance.HasChildren(), "Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance))
+                    return outcome;
+
+                var elementConstraints = definition.Current;
+
+                if (elementConstraints.IsPrimitiveValueConstraint())
+                {
+                    // The "value" property of a FHIR Primitive is the bottom of our recursion chain, it does not have a nameReference
+                    // nor a <type>, the only thing left to do to validate the content is to validate the string representation of the
+                    // primitive against the regex given in the core definition
+                    outcome.Add(VerifyPrimitiveContents(elementConstraints, instance));
+                }
+                else if (definition.HasChildren)
+                {
+                    // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
+                    // so there's no point in also validating the <type> or <nameReference>
+                    outcome.Add(this.ValidateChildConstraints(definition, instance));
+                }
+                else
+                {
+                    // No inline-children, so validation depends on the presence of a <type> or <nameReference>
+                    if (outcome.Verify(() => elementConstraints.Type != null || elementConstraints.NameReference != null,
+                            "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance))
+                    {
+                        outcome.Add(ValidateType(elementConstraints, instance));
+                        outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
+                    }
+                }
+
+                outcome.Add(ValidateSlices(definition, instance));
+                // Min/max (cardinality) has been validated by parent, we cannot know down here
+                outcome.Add(this.ValidateFixed(elementConstraints, instance));
+                outcome.Add(this.ValidatePattern(elementConstraints, instance));
+                outcome.Add(ValidateMinValue(elementConstraints, instance));
+                // outcome.Add(ValidateMaxValue(elementConstraints, instance));
+                outcome.Add(ValidateMaxLength(elementConstraints, instance));
+
+                // Validate Binding
+
+                outcome.Add(ValidateConstraints(elementConstraints, instance));
+
+                return outcome;
+            }
+            finally
+            {
+                if (isNewFPContext)
+                {
+                    var context = FluentPathContext.Pop();
+                    Trace(outcome, "Leave validation context (type {0})".FormatWith(context.TypeName), Issue.PROCESSING_PROGRESS, instance);                    
                 }
             }
+        }
 
-            outcome.Add(ValidateSlices(definition, instance));
-            // Min/max (cardinality) has been validated by parent, we cannot know down here
-            outcome.Add(this.ValidateFixed(elementConstraints, instance));
-            outcome.Add(this.ValidatePattern(elementConstraints, instance));
-            outcome.Add(ValidateMinValue(elementConstraints, instance));
-            // outcome.Add(ValidateMaxValue(elementConstraints, instance));
-            outcome.Add(ValidateMaxLength(elementConstraints, instance));
 
-            // Validate Binding
-            // Validate Constraint
+        internal OperationOutcome ValidateConstraints(ElementDefinition definition, IElementNavigator instance)
+        {
+            var outcome = new OperationOutcome();
 
+            var context = FluentPathContext.Any() ? FluentPathContext.Peek() : null;
+
+
+            // <constraint>
+            //  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
+            //    <valueString value="reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))"/>
+            //  </extension>
+            //  <key value="ref-1"/>
+            //  <severity value="error"/>
+            //  <human value="SHALL have a local reference if the resource is provided inline"/>
+            //  <xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])"/>
+            //</constraint>
+            // 
+
+            foreach (var constraintElement in definition.Constraint)
+            {
+                var fpExpression = constraintElement.GetFluentPathConstraint();
+                if(outcome.Verify(() => fpExpression != null, "Encountered an invariant ({0}) that has no FluentPath expression, skipping validation of this constraint"
+                            .FormatWith(constraintElement.Key), Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance))
+                {
+                    bool success = false;
+                    try
+                    {
+                        success = instance.Predicate(fpExpression, context);
+
+                        var text = "Instance failed constraint " + constraintElement.ConstraintDescription();
+
+                        if (constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error)
+                            outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT, instance);
+                        else
+                            outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT, instance);
+
+                    }
+                    catch (Exception e)
+                    {
+                        outcome.Verify(() => true, "Evaluation of FluentPath for constraint '{0}' failed: {1}"
+                                        .FormatWith(constraintElement.Key, e.Message), Issue.PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION, instance);
+                    }
+                }
+            }
+        
             return outcome;
         }
 
@@ -493,6 +554,11 @@ namespace Hl7.Fhir.Validation
 
     internal static class ElementDefinitionNavigatorExtensions
     {
+        public static string GetFluentPathConstraint(this ElementDefinition.ConstraintComponent cc)
+        {
+            return cc.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
+        }
+
         public static bool IsPrimitiveValueConstraint(this ElementDefinition ed)
         {
             var path = ed.Path;
@@ -501,10 +567,16 @@ namespace Hl7.Fhir.Validation
                         Char.IsLower(path[0]);
         }
 
-        public static bool IsRootElementDefinition(this ElementDefinition ed)
+        public static string ConstraintDescription(this ElementDefinition.ConstraintComponent cc)
         {
-            return !ed.Path.Contains('.');
+            var desc = cc.Key;
+
+            if (cc.Human != null)
+                desc += " \"" + cc.Human + "\"";
+
+            return desc;
         }
+
 
         public static string QualifiedDefinitionPath(this ElementDefinitionNavigator nav)
         {

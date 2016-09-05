@@ -426,6 +426,17 @@ namespace Hl7.Fhir.Model
             else
                 return superclass == FHIRDefinedType.Element;
         }
+
+        public static string CanonicalUriForFhirCoreType(string typename)
+        {
+            return "http://hl7.org/fhir/StructureDefinition/" + typename;
+        }
+
+        public static string CanonicalUriForFhirCoreType(FHIRDefinedType type)
+        {
+            return CanonicalUriForFhirCoreType(type.GetLiteral());
+        }
+
     }
 
     public static class ModelInfoExtensions

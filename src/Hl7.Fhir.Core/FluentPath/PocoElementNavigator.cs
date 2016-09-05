@@ -65,7 +65,8 @@ namespace Hl7.Fhir.FluentPath
         {
             get
             {
-                if (_string != null) return _string;
+                if (_string != null)
+                    return _string;
 
                 if (_pocoElement is FhirDateTime)
                     return Hl7.FluentPath.PartialDateTime.FromDateTime(((FhirDateTime)_pocoElement).ToDateTimeOffset());
@@ -73,6 +74,12 @@ namespace Hl7.Fhir.FluentPath
                     return Hl7.FluentPath.Time.Parse(((Hl7.Fhir.Model.Time)_pocoElement).Value);
                 else if ((_pocoElement is Hl7.Fhir.Model.Date))
                     return Hl7.FluentPath.PartialDateTime.Parse(((Hl7.Fhir.Model.Date)_pocoElement).Value);
+                else if ((_pocoElement is Integer))
+                {
+                    if ((_pocoElement as Integer).Value.HasValue)
+                        return (long)(_pocoElement as Integer).Value.Value;
+                    return null;
+                }
                 else if (_pocoElement is Hl7.Fhir.Model.Instant)
                 {
                     if (!((Hl7.Fhir.Model.Instant)_pocoElement).Value.HasValue)

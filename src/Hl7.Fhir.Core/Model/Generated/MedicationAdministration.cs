@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent MedicationAdministration_MAD_1 = new ElementDefinition.ConstraintComponent()
         {
-            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("dosage.all(quantity or rate[x])"))},
+            Extension = new List<Model.Extension>() { new Model.Extension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression", new FhirString("dosage.all(quantity or rate)"))},
             Key = "mad-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "SHALL have at least one of dosage.quantity and dosage.rate[x]",

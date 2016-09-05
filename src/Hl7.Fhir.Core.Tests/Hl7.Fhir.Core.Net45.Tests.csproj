@@ -60,7 +60,7 @@
       <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha4\lib\net45\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
-  <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
@@ -155,6 +155,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Hl7.Fhir.Core\Model\Source\profiles-others.xml">
+      <Link>TestData\profiles-others.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="TestData\careplan-example-f201-renal.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

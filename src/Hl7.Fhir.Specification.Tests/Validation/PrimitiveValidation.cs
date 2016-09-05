@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Validation
             source = new CachedArtifactSource(
                 new MultiArtifactSource(
                     new TestProfileArtifactSource(),
-                    new FileDirectoryArtifactSource("TestData/validation", includeSubdirectories: true)));
+                    new FileDirectoryArtifactSource("validation.xml", includeSubdirectories: false)));
 
             var ctx = new ValidationContext() { ArtifactSource = source, GenerateSnapshot = true, Trace = true };
             ctx.GenerateSnapshotSettings = Specification.Snapshot.SnapshotGeneratorSettings.Default;
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Validation
 
             Assert.IsFalse(report.Success);
             Assert.AreEqual(19, report.Errors);
-            Assert.AreEqual(1, report.Warnings);           // StructureDefinition/xhtml not found
+            Assert.AreEqual(4, report.Warnings);           // StructureDefinition/xhtml not found, 3x narrative constraint with no fluentpath
         }
 
 
@@ -318,27 +318,27 @@ namespace Hl7.Fhir.Validation
             obs.Value = new FhirString("I should be ok");
             var report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(0, report.Warnings);
+            Assert.AreEqual(0, report.Warnings);    // missing qty-3 fp invariant
 
             obs.Value = FhirDateTime.Now();
             report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(0, report.Warnings);
+            Assert.AreEqual(0, report.Warnings);   // missing qty-3 fp invariant
 
             obs.Value = new Quantity(78m, "kg");
             report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(0, report.Warnings);
+            Assert.AreEqual(0, report.Warnings);   // 2x missing qty-3 fp invariant
 
             obs.Value = new Quantity(183m, "cm");
             report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(0, report.Warnings);
+            Assert.AreEqual(0, report.Warnings); // 2x missing qty-3 fp invariant
 
             obs.Value = new Quantity(300m, "in");
             report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(0, report.Warnings);
+            Assert.AreEqual(0, report.Warnings); // 3x missing qty-3 fp invariant
         }
 
 
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Validation
 
             var report = validator.Validate(careplanSD, careplan);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(1, report.Warnings);            // missing xhtml
+            Assert.AreEqual(4, report.Warnings);            // 4x missing xhtml
         }
 
 
@@ -374,6 +374,28 @@ namespace Hl7.Fhir.Validation
             sw.Stop();
 
             Debug.WriteLine(sw.ElapsedMilliseconds / 10000.0);
+        }
+
+        [TestMethod]
+        public void TriggerFPValidationError()
+        {
+            // pat-1: SHALL at least contain a contact's details or a reference to an organization (xpath: f:name or f:telecom or f:address or f:organization)
+            var p = new Patient();
+
+            p.Active = true;
+
+            var report = validator.Validate(p);
+            Assert.IsTrue(report.Success);
+
+            p.Contact.Add(new Patient.ContactComponent { Gender = AdministrativeGender.Male });
+
+            report = validator.Validate(p);
+            Assert.IsFalse(report.Success);
+
+            p.Contact.First().Address = new Address() { City = "Amsterdam" };
+
+            report = validator.Validate(p);
+            Assert.IsTrue(report.Success);
         }
     }
 }
