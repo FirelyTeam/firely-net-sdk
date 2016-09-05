@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             Add,
             /// <summary>Begin a new slice with this slice as slicing entry</summary>
             Slice,
-            /// <summary>Introduce a new element (for core resource & datatype definitions).</summary>
+            /// <summary>Introduce a new element (for core resource and datatype definitions).</summary>
             New
         }
 
