@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void SetupSource()
         {
-            source = ArtifactResolver.CreateOffline();
+            source = SourceFactory.CreateOffline();
         }
 
         IArtifactSource source = null;

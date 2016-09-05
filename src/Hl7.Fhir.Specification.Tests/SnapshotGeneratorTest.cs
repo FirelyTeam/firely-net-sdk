@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
-            _testSource = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/snapshot-test", includeSubdirectories: true)));
+            _testSource = new SourceFactory(new CachedSource(new DirectorySource("TestData/snapshot-test", includeSubdirectories: true)));
         }
 
         // [WMR 20160718] Generate snapshot for extension definition fails with exception:

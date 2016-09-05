@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
-            _source = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/validation")));
+            _source = new SourceFactory(new CachedSource(new DirectorySource("TestData/validation")));
         }
 
 

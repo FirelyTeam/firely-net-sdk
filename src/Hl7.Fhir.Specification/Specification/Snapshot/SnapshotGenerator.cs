@@ -16,7 +16,6 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
-using System.Collections.ObjectModel;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -25,13 +24,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>The canonical url of the extension definition that marks snapshot elements with associated differential constraints.</summary>
         public static readonly string CHANGED_BY_DIFF_EXT = "http://hl7.org/fhir/StructureDefinition/changedByDifferential";
 
-        private readonly IArtifactSource _resolver;
+        private readonly IResourceResolver _resolver;
         private readonly SnapshotGeneratorSettings _settings;
 #if DETECT_RECURSION
         private readonly SnapshotRecursionChecker _recursionChecker = new SnapshotRecursionChecker();
 #endif
 
-        public SnapshotGenerator(IArtifactSource source, SnapshotGeneratorSettings settings) : this()
+        public SnapshotGenerator(IResourceResolver source, SnapshotGeneratorSettings settings) : this()
         {
             if (source == null) throw Error.ArgumentNull("source");
             if (settings == null) throw Error.ArgumentNull("settings");
@@ -39,7 +38,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             _settings = settings;
         }
 
-        public SnapshotGenerator(IArtifactSource source) : this(source, SnapshotGeneratorSettings.Default)
+        public SnapshotGenerator(IResourceResolver source) : this(source, SnapshotGeneratorSettings.Default)
         {
             // ...
         }
@@ -327,7 +326,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Or to a parent element type that references itself
             // Need to keep a stack of already expanding url's...
 
-            var baseStructure = _resolver.GetStructureDefinition(primaryDiffTypeProfile);
+            var baseStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
             if (baseStructure == null)
             {
                 if (!_settings.IgnoreUnresolvedProfiles)
@@ -550,7 +549,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 throw Error.Argument("structure", "structure is a constraint, but no base has been specified");
             }
 
-            var baseStructure = _resolver.GetStructureDefinition(structure.Base);
+            var baseStructure = _resolver.FindStructureDefinition(structure.Base);
 
             if (baseStructure == null)
             {
@@ -635,20 +634,20 @@ namespace Hl7.Fhir.Specification.Snapshot
                     if (!string.IsNullOrEmpty(typeProfile) && _settings.MergeTypeProfiles && !defn.IsExtension() && !defn.IsReference())
                     {
                         // Try to resolve the custom element type profile reference
-                        baseStructure = _resolver.GetStructureDefinition(typeProfile);
+                        baseStructure = _resolver.FindStructureDefinition(typeProfile);
                         if (baseStructure == null)
                         {
                             if (_settings.IgnoreUnresolvedProfiles)
                             {
                                 _invalidProfiles.Add(typeProfile, SnapshotProfileStatus.Missing);
                                 // Ignore unresolved external type profile reference; expand the underlying standard core type
-                                baseStructure = _resolver.GetStructureDefinitionForCoreType(typeCode);
+                                baseStructure = _resolver.FindStructureDefinitionForCoreType(typeCode);
                             }
                         }
                     }
                     else
                     {
-                        baseStructure = _resolver.GetStructureDefinitionForCoreType(typeCode);
+                        baseStructure = _resolver.FindStructureDefinitionForCoreType(typeCode);
                     }
 
                     if (baseStructure == null)
@@ -729,7 +728,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var result = new Stack<StructureDefinition>();
             while (type.HasValue)
             {
-                var sd = _resolver.GetStructureDefinitionForCoreType(type.Value);
+                var sd = _resolver.FindStructureDefinitionForCoreType(type.Value);
                 if (sd == null)
                 {
                     throw Error.InvalidOperation("Cannot resolve core profile for type '{0}'".FormatWith(type.Value));

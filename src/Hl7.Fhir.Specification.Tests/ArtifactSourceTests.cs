@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void UseFileArtifactSource()
         {
-            var fa = new FileDirectoryArtifactSource(_testPath);
+            var fa = new DirectorySource(_testPath);
             fa.Mask = "*.xml|*.xsd";
             var names = fa.ListArtifactNames();
 
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void FileSourceSkipsExecutables()
         {
-            var fa = new FileDirectoryArtifactSource(_testPath);
+            var fa = new DirectorySource(_testPath);
             Assert.IsFalse(fa.ListArtifactNames().Any(name => name.EndsWith(".dll")));
             Assert.IsFalse(fa.ListArtifactNames().Any(name => name.EndsWith(".exe")));
         }
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ReadsSubdirectories()
         {
             var testPath = prepareExampleDirectory();
-            var fa = new FileDirectoryArtifactSource(testPath, includeSubdirectories:true);
+            var fa = new DirectorySource(testPath, includeSubdirectories:true);
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(5,names.Count());
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void GetSomeBundledArtifacts()
         {
-            var za = ZipArtifactSource.CreateValidationSource();
+            var za = ZipSource.CreateValidationSource();
 
             using (var a = za.LoadArtifactByName("patient.sch"))
             {
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void GetSomeArtifactsById()
         {
-            var fa = ZipArtifactSource.CreateValidationSource();
+            var fa = ZipSource.CreateValidationSource();
 
             var vs = fa.LoadConformanceResourceByUrl("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ValidateConformanceInformationScanner()
         {
-            var fa = ZipArtifactSource.CreateValidationSource();
+            var fa = ZipSource.CreateValidationSource();
 
             var allConformanceInformation = fa.ListConformanceResources();
 
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSetupIsOnce()
         {
-            var fa = ZipArtifactSource.CreateValidationSource();
+            var fa = ZipSource.CreateValidationSource();
 
             var sw = new Stopwatch();
             sw.Start();
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void RetrieveWebArtifact()
         {
-            var wa = new WebArtifactSource();
+            var wa = new WebSource();
 
             var artifact = wa.LoadConformanceResourceByUrl("http://fhir-dev.healthintersections.com.au/open/StructureDefinition/Observation");
 
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             TestFhirClient client = null;
 
-            var wa = new WebArtifactSource(id => client = new TestFhirClient(id));
+            var wa = new WebSource(id => client = new TestFhirClient(id));
 
             Assert.IsNull(client);
 
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void RetrieveArtifactMulti()
         {
-            var resolver = new MultiArtifactSource(ZipArtifactSource.CreateValidationSource(), new WebArtifactSource());
+            var resolver = new MultiSource(ZipSource.CreateValidationSource(), new WebSource());
 
             var vs = resolver.LoadConformanceResourceByUrl("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSourceCaching()
         {
-            var src = new CachedArtifactSource(new MultiArtifactSource(ZipArtifactSource.CreateValidationSource(), new WebArtifactSource()));
+            var src = new CachedSource(new MultiSource(ZipSource.CreateValidationSource(), new WebSource()));
 
             Stopwatch sw1 = new Stopwatch();
 

@@ -22,10 +22,10 @@ namespace Hl7.Fhir.Validation
         [TestInitialize]
         public void SetupSource()
         {
-            source = new CachedArtifactSource(
-                new MultiArtifactSource(
+            source = new CachedSource(
+                new MultiSource(
                     new TestProfileArtifactSource(),
-                    new FileDirectoryArtifactSource("validation.xml", includeSubdirectories: false)));
+                    new DirectorySource("validation.xml", includeSubdirectories: false)));
 
             var ctx = new ValidationContext() { ArtifactSource = source, GenerateSnapshot = true, Trace = true };
             ctx.GenerateSnapshotSettings = Specification.Snapshot.SnapshotGeneratorSettings.Default;

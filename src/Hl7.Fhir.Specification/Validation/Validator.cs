@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Validation
 {
     public class OnSnapshotNeededEventArgs : EventArgs
     {
-        public OnSnapshotNeededEventArgs(StructureDefinition definition, IArtifactSource source)
+        public OnSnapshotNeededEventArgs(StructureDefinition definition, IConformanceStore source)
         {
             Definition = definition;
             Source = source;
@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Validation
 
         public StructureDefinition Definition { get; private set; }
 
-        public IArtifactSource Source { get; private set; }
+        public IConformanceStore Source { get; private set; }
     }
 
 
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal void SnapshotNeeded(StructureDefinition definition, IArtifactSource source)
+        internal void SnapshotNeeded(StructureDefinition definition, IConformanceStore source)
         {
             // Default implementation: call event
             if (OnSnapshotNeeded != null)
