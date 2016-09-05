@@ -19,6 +19,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Rest;
+using System.Text;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -36,7 +37,7 @@ namespace Hl7.Fhir.Specification.Tests
             // MarkChanges = false,
             MergeTypeProfiles = true,
             // Throw on unresolved profile references; must include in TestData folder
-            IgnoreUnresolvedProfiles = false,
+            // IgnoreUnresolvedProfiles = false,
             ExpandExternalProfiles = false,
             // RewriteElementBase = false,
             NormalizeElementBase = false
@@ -63,6 +64,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
@@ -95,6 +97,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
 
         }
@@ -105,11 +108,13 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/measurereport");
             generateSnapshotAndCompare(sd, _testSource, out expanded);
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
 
             // [WMR 20160903] TODO: Second expansion fails, base paths are now normalized...? (e.g. DomainResource.text)
             sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/clinicaldocument");
             generateSnapshotAndCompare(sd, _testSource, out expanded);
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
@@ -158,6 +163,7 @@ namespace Hl7.Fhir.Specification.Tests
             try
             {
                 generateSnapshotAndCompare(sd, _testSource, out expanded);
+                dumpOutcome(_generator.Outcome);
                 dumpBasePaths(expanded);
             }
             catch (Exception ex)
@@ -182,6 +188,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
@@ -203,6 +210,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
@@ -222,11 +230,12 @@ namespace Hl7.Fhir.Specification.Tests
             _settings.NormalizeElementBase = true;
             _settings.MergeTypeProfiles = true;
             _settings.ExpandExternalProfiles = true;
-            _settings.IgnoreUnresolvedProfiles = false;
+            // _settings.IgnoreUnresolvedProfiles = false;
 
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
@@ -261,6 +270,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
@@ -273,30 +283,45 @@ namespace Hl7.Fhir.Specification.Tests
 
             dumpReferences(sd, true);
 
-            
-            _settings.IgnoreUnresolvedProfiles = true;  // On missing profile, aggregate information and continue
-            _settings.MergeTypeProfiles = true;         // Merge the external type/extension profiles
-            _settings.ExpandExternalProfiles = false;   // Don't generate missing snapshots
+            // _settings.IgnoreUnresolvedProfiles = true;   // On missing profile, aggregate information and continue
+            _settings.MergeTypeProfiles = true;             // Merge the external type/extension profiles
+            _settings.ExpandExternalProfiles = false;       // Don't generate missing snapshots
+            _settings.ExpandUnconstrainedElements = true;   // Force the external type profiles to be expanded (even w/o any diff constraints)
 
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
-            var invalidProfiles = _generator.InvalidProfiles;
-            Assert.AreEqual(3, invalidProfiles.Count);
+            var outcome = _generator.Outcome;
+            dumpOutcome(outcome);
 
-            assertProfileInfo(invalidProfiles, "http://example.org/fhir/StructureDefinition/MyExtensionNoSnapshot", SnapshotProfileStatus.NoSnapshot);
-            assertProfileInfo(invalidProfiles, "http://example.org/fhir/StructureDefinition/MyCodeableConcept", SnapshotProfileStatus.Missing);
-            assertProfileInfo(invalidProfiles, "http://example.org/fhir/StructureDefinition/MyIdentifier", SnapshotProfileStatus.Missing);
+            Assert.IsNotNull(outcome);
+            Assert.AreEqual(3, outcome.Issue.Count);
+
+            AssertProfileNotFoundIssue(outcome.Issue[0], Validation.Issue.UNAVAILABLE_NEED_SNAPSHOT, "http://example.org/fhir/StructureDefinition/MyExtensionNoSnapshot");
+            AssertProfileNotFoundIssue(outcome.Issue[1], Validation.Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, "http://example.org/fhir/StructureDefinition/MyIdentifier");
+            AssertProfileNotFoundIssue(outcome.Issue[2], Validation.Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, "http://example.org/fhir/StructureDefinition/MyCodeableConcept");
         }
 
-        private static void assertProfileInfo(IList<SnapshotProfileInfo> info, string url, SnapshotProfileStatus status)
+        private static void AssertProfileNotFoundIssue(OperationOutcome.IssueComponent issue, Validation.Issue expected, string profileUrl)
         {
-            Assert.AreEqual(1, info.Count(pi => pi.Url == url & pi.Status == status));
+            Assert.IsNotNull(issue);
+            Assert.AreEqual(issue.Code, expected.Type);
+            Assert.AreEqual(issue.Severity, expected.Severity);
+            Assert.AreEqual(issue.Details.Coding[0].Code, expected.Code.ToString());
+            Assert.IsNotNull(issue.Extension);
+            Assert.IsTrue(issue.Extension.Count == 1);
+            Assert.IsTrue(issue.Extension[0].Url == SnapshotGenerator.PROFILE_URL_EXT);
+            Assert.AreEqual(issue.GetProfileUrl(), profileUrl);
         }
+
+        //private static void assertProfileInfo(IList<SnapshotProfileInfo> info, string url, SnapshotProfileStatus status)
+        //{
+        //    Assert.AreEqual(1, info.Count(pi => pi.Url == url & pi.Status == status));
+        //}
 
         // [WMR 20160721] Following profiles are not yet handled (TODO)
         private readonly string[] skippedProfiles =
-		{
+        {
 			// Differential defines constraint on MedicationOrder.reason[x]
 			// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
 			// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
@@ -427,7 +452,7 @@ namespace Hl7.Fhir.Specification.Tests
             var tree = new DifferentialTreeConstructor(e).MakeTree();
             Assert.IsNotNull(tree);
 
-			var nav = new ElementDefinitionNavigator(tree);
+            var nav = new ElementDefinitionNavigator(tree);
             Assert.AreEqual(10, nav.Count);
 
             Assert.IsTrue(nav.MoveToChild("A"));
@@ -455,7 +480,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
             Assert.IsNotNull(sd.Snapshot);
 
-			var nav = new ElementDefinitionNavigator(sd.Snapshot.Element);
+            var nav = new ElementDefinitionNavigator(sd.Snapshot.Element);
 
             var generator = new SnapshotGenerator(_testSource, SnapshotGeneratorSettings.Default);
 
@@ -687,6 +712,38 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        [Conditional("DEBUG")]
+        private void dumpOutcome(OperationOutcome outcome)
+        {
+            if (outcome != null)
+            {
+                Debug.Print("OperationOutcome: {0} issues", outcome.Issue.Count);
+                for (int i = 0; i < outcome.Issue.Count; i++)
+                {
+                    dumpIssue(outcome.Issue[i], i);
+                }
+            }
+        }
+
+        [Conditional("DEBUG")]
+        private void dumpIssue(OperationOutcome.IssueComponent issue, int index)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("Issue #{0}: Severity = '{1}' Code = '{2}'", index, issue.Severity, issue.Code);
+            if (issue.Diagnostics != null) sb.AppendFormat(" Diagnostics = '{0}'", issue.Diagnostics);
+            if (issue.Details != null)
+            {
+                sb.AppendFormat(" Details: '{0}'", string.Join(" | ", issue.Details.Coding.Select(c => c.Code)));
+                if (issue.Details.Text != null) sb.AppendFormat(" : '{0}'", issue.Details.Text);
+            }
+            var url = issue.GetProfileUrl();
+            if (url != null)
+            {
+                sb.AppendFormat(" Profile: '{0}'", url);
+            }
+            Debug.Print(sb.ToString());
+        }
+
         // [WMR 20160816] Test custom annotations containing associated base definitions
         class BaseDefAnnotation
         {
@@ -764,6 +821,8 @@ namespace Hl7.Fhir.Specification.Tests
 
                 StructureDefinition expanded;
                 generateSnapshotAndCompare(sd, source, out expanded);
+
+                dumpOutcome(_generator.Outcome);
 
                 assertBaseDefs(expanded, settings);
 
@@ -974,6 +1033,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             var result = generateSnapshotAndCompare(sd, _testSource, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
 
             if (!result)

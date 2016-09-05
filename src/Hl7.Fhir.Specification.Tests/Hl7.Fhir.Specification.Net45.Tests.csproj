@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>5</LangVersion>
     <NoWarn>1591</NoWarn>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

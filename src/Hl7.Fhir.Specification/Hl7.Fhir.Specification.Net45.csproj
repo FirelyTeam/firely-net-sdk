@@ -78,6 +78,7 @@
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Specification\Snapshot\SnapshotElementBaseGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorExtensions.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorOutcome.cs" />
     <Compile Include="Specification\Source\ArtifactSourceExtentions.cs" />
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\ChildConstraintExtensions.cs" />
@@ -96,7 +97,6 @@
     <Compile Include="Specification\Navigation\ElementNavigatorMovementExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorEvents.cs" />
-    <Compile Include="Specification\Snapshot\SnapshotGeneratorProfileInfo.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
     <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
     <Compile Include="Specification\Source\MultiArtifactSource.cs" />

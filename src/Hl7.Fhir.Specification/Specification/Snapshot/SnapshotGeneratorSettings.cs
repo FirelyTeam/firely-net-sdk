@@ -14,7 +14,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
-            IgnoreUnresolvedProfiles = false,
+            // IgnoreUnresolvedProfiles = false,
             ExpandExternalProfiles = false,
             ExpandUnconstrainedElements = false,
             MarkChanges = false,
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Clone ctor. Generates a new instance with the same state as the specified instance.</summary>
         public SnapshotGeneratorSettings(SnapshotGeneratorSettings settings)
         {
-            IgnoreUnresolvedProfiles = settings.IgnoreUnresolvedProfiles;
+            // IgnoreUnresolvedProfiles = settings.IgnoreUnresolvedProfiles;
             ExpandExternalProfiles = settings.ExpandExternalProfiles;
             ExpandUnconstrainedElements = settings.ExpandUnconstrainedElements;
             MarkChanges = settings.MarkChanges;
@@ -41,11 +41,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             NormalizeElementBase = settings.NormalizeElementBase;
         }
 
-        /// <summary>
-        /// Enable this setting to ignore unknown or invalid element type profiles.
-        /// If disabled (default), throw an exception for unknown or invalid element type profiles.
-        /// </summary>
-        public bool IgnoreUnresolvedProfiles { get; set; }
+        // <summary>
+        // Enable this setting to ignore unknown or invalid element type profiles.
+        // If disabled (default), throw an exception for unknown or invalid element type profiles.
+        // </summary>
+        // public bool IgnoreUnresolvedProfiles { get; set; }
 
         /// <summary>
         /// Enable this setting to automatically generate the snapshot of external profiles on demand if necessary.

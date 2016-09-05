@@ -20,20 +20,30 @@ namespace Hl7.Fhir.Specification.Snapshot
 
     partial class SnapshotGenerator
     {
+        public void GenerateSnapshotElementsBase(StructureDefinition structureDef)
+        {
+            if (structureDef == null) { throw Error.ArgumentNull("structureDef"); }
+            if (structureDef.Snapshot == null) { throw Error.Argument("structureDef", "StructureDefinition.Snapshot component is null."); }
+            clearIssues();
+            GenerateSnapshotElementsBase(structureDef);
+        }
+
+        private void generateSnapshotElementsBase(StructureDefinition structureDef)
+        {
+            generateElementsBase(structureDef.Snapshot.Element, structureDef.Base);
+        }
+
         /// <summary>(Re-)generate the <see cref="ElementDefinition.Base"/> components.</summary>
         /// <param name="elements">A list of <see cref="ElementDefinition"/> instances.</param>
         /// <param name="baseProfileUrl">The canonical url of the base profile, as defined by the <see cref="StructureDefinition.Base"/> property.</param>
-        public void GenerateElementBase(IList<ElementDefinition> elements, string baseProfileUrl)
+        private void generateElementsBase(IList<ElementDefinition> elements, string baseProfileUrl)
         {
             var nav = new ElementDefinitionNavigator(elements);
             if (nav.MoveToFirstChild() && !string.IsNullOrEmpty(baseProfileUrl))
             {
                 var sd = _source.GetStructureDefinition(baseProfileUrl);
-                if (sd != null)
+                if (verifyStructureDef(sd, baseProfileUrl))
                 {
-                    ensureSnapshot(sd, true);
-                    GenerateElementBase(sd.Snapshot.Element, sd.Base);
-
                     var baseNav = new ElementDefinitionNavigator(sd);
                     if (baseNav.MoveToFirstChild())
                     {
@@ -44,27 +54,16 @@ namespace Hl7.Fhir.Specification.Snapshot
                         {
                             do
                             {
-                                generateElementBase(nav, baseNav);
+                                generateElementsBase(nav, baseNav);
                             } while (nav.MoveToNext());
                         }
                     }
 
                 }
-                else
-                {
-                    if (!_settings.IgnoreUnresolvedProfiles)
-                    {
-                        throw Error.ResourceReferenceNotFoundException(
-                            baseProfileUrl,
-                            "Unresolved profile reference. Cannot locate the type profile for element '{0}'.\r\nProfile url = '{1}'".FormatWith(nav.Path, baseProfileUrl)
-                        );
-                    }
-                    _invalidProfiles.Add(sd.Url, SnapshotProfileStatus.Missing);
-                }
             }
         }
 
-        private void generateElementBase(ElementDefinitionNavigator nav, ElementDefinitionNavigator baseNav)
+        private void generateElementsBase(ElementDefinitionNavigator nav, ElementDefinitionNavigator baseNav)
         {
             // Debug.Print("[generateElementBase] Path = {0}  Base = {1}".FormatWith(nav.Path, baseNav.Path));
             var elem = nav.Current;
@@ -85,7 +84,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     do
                     {
-                        generateElementBase(nav, baseNav);
+                        generateElementsBase(nav, baseNav);
                     } while (nav.MoveToNext());
 
                     nav.ReturnToBookmark(navBm);
@@ -104,15 +103,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (baseUrl != null)
                 {
                     var baseDef = _source.GetStructureDefinition(baseUrl);
-                    if (baseDef != null)
+                    if (verifyStructureDef(baseDef, baseUrl, ToNamedNode(elem)))
                     {
-                        ensureSnapshot(baseDef, true);
-                        GenerateElementBase(baseDef.Snapshot.Element, baseDef.Base);
-
                         baseNav = new ElementDefinitionNavigator(baseDef);
                         if (baseNav.MoveToFirstChild())
                         {
-                            generateElementBase(nav, baseNav);
+                            generateElementsBase(nav, baseNav);
                             return;
                         }
                     }
