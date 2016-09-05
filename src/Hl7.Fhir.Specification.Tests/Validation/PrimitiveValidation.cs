@@ -392,6 +392,12 @@ namespace Hl7.Fhir.Validation
             report = validator.Validate(p);
             Assert.IsFalse(report.Success);
 
+            validator.ValidationContext.SkipConstraintValidation = true;
+            report = validator.Validate(p);
+            Assert.IsTrue(report.Success);
+
+            validator.ValidationContext.SkipConstraintValidation = false;
+
             p.Contact.First().Address = new Address() { City = "Amsterdam" };
 
             report = validator.Validate(p);

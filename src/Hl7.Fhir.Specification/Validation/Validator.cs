@@ -246,23 +246,29 @@ namespace Hl7.Fhir.Validation
                 if(outcome.Verify(() => fpExpression != null, "Encountered an invariant ({0}) that has no FluentPath expression, skipping validation of this constraint"
                             .FormatWith(constraintElement.Key), Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance))
                 {
-                    bool success = false;
-                    try
+                    if (ValidationContext.SkipConstraintValidation)
+                        outcome.Verify(() => true, "Instance was not validated against invariant {0}, because constraint validation is disabled", Issue.PROCESSING_CONSTRAINT_VALIDATION_INACTIVE, instance);
+                    else
                     {
-                        success = instance.Predicate(fpExpression, context);
 
-                        var text = "Instance failed constraint " + constraintElement.ConstraintDescription();
+                        bool success = false;
+                        try
+                        {
+                            success = instance.Predicate(fpExpression, context);
 
-                        if (constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error)
-                            outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT, instance);
-                        else
-                            outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT, instance);
+                            var text = "Instance failed constraint " + constraintElement.ConstraintDescription();
 
-                    }
-                    catch (Exception e)
-                    {
-                        outcome.Verify(() => true, "Evaluation of FluentPath for constraint '{0}' failed: {1}"
-                                        .FormatWith(constraintElement.Key, e.Message), Issue.PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION, instance);
+                            if (constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error)
+                                outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT, instance);
+                            else
+                                outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT, instance);
+
+                        }
+                        catch (Exception e)
+                        {
+                            outcome.Verify(() => true, "Evaluation of FluentPath for constraint '{0}' failed: {1}"
+                                            .FormatWith(constraintElement.Key, e.Message), Issue.PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION, instance);
+                        }
                     }
                 }
             }
