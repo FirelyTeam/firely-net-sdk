@@ -21,6 +21,24 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         public OperationOutcome Outcome { get { return _outcome; } }
 
+        // [WMR 20160905] TODO
+        // Temporary adapter for ElementDefinition to support INamedNode
+        // TODO: ElementDefinition should properly implement INamedNode
+        // INamedNode.Path should also return indices, e.g. root.elem[0].elem[1]
+        class ElementDefinitionNamedNode : INamedNode
+        {
+            private readonly ElementDefinition _elemDef;
+            public ElementDefinitionNamedNode(ElementDefinition elementDef)
+            {
+                if (elementDef == null) { throw Error.ArgumentNull("elementDef"); }
+                _elemDef = elementDef;
+            }
+            public string Name { get { return _elemDef.Name; } }
+            public string Path { get { return _elemDef.Path; } }
+        }
+
+        static INamedNode ToNamedNode(ElementDefinition elementDef) { return new ElementDefinitionNamedNode(elementDef); }
+
         void clearIssues() { _outcome = null; }
 
         void addIssue(Issue issue, string message, INamedNode location)
@@ -47,6 +65,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // This is not allowed if an element supports multiple element types; must use slicing!
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT = Issue.Create(10000, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
+        void addIssueInvalidChoiceConstraint(ElementDefinition elementDef) { addIssueInvalidChoiceConstraint(ToNamedNode(elementDef)); }
         void addIssueInvalidChoiceConstraint(INamedNode location)
         {
             addIssue(
@@ -61,6 +80,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Differential specifies constraint on child element of a leaf node in the base, i.e. node without child elements
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHILD_CONSTRAINT = Issue.Create(10001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
+        void addIssueInvalidChildConstraint(ElementDefinition elementDef) { addIssueInvalidChildConstraint(ToNamedNode(elementDef)); }
         void addIssueInvalidChildConstraint(INamedNode location)
         {
             addIssue(
@@ -69,8 +89,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 location
             );
         }
-
-        void addIssueInvalidNameReference(string name, INamedNode location)
+        
+        void addIssueInvalidNameReference(ElementDefinition elementDef, string name) { addIssueInvalidNameReference(ToNamedNode(elementDef), name); }
+        void addIssueInvalidNameReference(INamedNode location, string name)
         {
             addIssue(
                 PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF,
@@ -79,6 +100,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             );
         }
 
+        void addIssueNoTypeOrNameReference(ElementDefinition elementDef) { addIssueNoTypeOrNameReference(ToNamedNode(elementDef)); }
         void addIssueNoTypeOrNameReference(INamedNode location)
         {
             addIssue(
@@ -91,7 +113,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         // "Type profile '{0}' has an invalid name reference. The base profile does not contain an element with name '{1}'"
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF = Issue.Create(10002, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
-        void addIssueInvalidProfileNameReference(string profileRef, string name, INamedNode location)
+        void addIssueInvalidProfileNameReference(ElementDefinition elementDef, string name, string profileRef) { addIssueInvalidProfileNameReference(ToNamedNode(elementDef), name, profileRef); }
+        void addIssueInvalidProfileNameReference(INamedNode location, string name, string profileRef)
         {
             addIssue(
                 PROFILE_ELEMENTDEF_INVALID_TYPEPROFILE_NAMEREF,
@@ -103,6 +126,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // "The slicing entry in the differential at '{0}' indicates an slice, but the base element is not a repeating or choice element"
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_SLICE = Issue.Create(10003, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
+        void addIssueInvalidSlice(ElementDefinition elementDef) { addIssueInvalidSlice(ToNamedNode(elementDef)); }
         void addIssueInvalidSlice(INamedNode location)
         {
             addIssue(
@@ -115,6 +139,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // "The slice group at '{0}' does not start with a slice entry element"
         public static readonly Issue PROFILE_ELEMENTDEF_MISSING_SLICE_ENTRY = Issue.Create(10004, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Required);
 
+        void addIssueMissingSliceEntry(ElementDefinition elementDef) { addIssueMissingSliceEntry(ToNamedNode(elementDef)); }
         void addIssueMissingSliceEntry(INamedNode location)
         {
             addIssue(
@@ -134,7 +159,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // "Unresolved profile reference. Cannot locate the type profile for element '{0}'.\r\nProfile url = '{1}'".FormatWith(diff.Path, primaryDiffTypeProfile)
         // Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE
-        void addIssueProfileNotFound(string profileUrl, INamedNode location)
+        void addIssueProfileNotFound(ElementDefinition elementDef, string profileUrl) { addIssueProfileNotFound(ToNamedNode(elementDef), profileUrl); }
+        void addIssueProfileNotFound(INamedNode location, string profileUrl)
         {
             if (profileUrl == null) { throw Error.ArgumentNull("profileUrl"); }
             var ext = new Extension(PROFILE_URL_EXT, new FhirUri(profileUrl));
@@ -156,7 +182,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         // "Resolved the external profile with url '{0}', but it does not contain a snapshot representation."
         // Issue.UNAVAILABLE_NEED_SNAPSHOT
 
-        void addIssueProfileHasNoSnapshot(string profileUrl, INamedNode location)
+        void addIssueProfileHasNoSnapshot(ElementDefinition elementDef, string profileUrl) { addIssueProfileHasNoSnapshot(ToNamedNode(elementDef), profileUrl); }
+        void addIssueProfileHasNoSnapshot(INamedNode location, string profileUrl)
         {
             if (profileUrl == null) { throw Error.ArgumentNull("profileUrl"); }
             var ext = new Extension(PROFILE_URL_EXT, new FhirUri(profileUrl));
@@ -181,4 +208,5 @@ namespace Hl7.Fhir.Specification.Snapshot
             return urlElem != null ? urlElem.Value : null;
         }
     }
+
 }

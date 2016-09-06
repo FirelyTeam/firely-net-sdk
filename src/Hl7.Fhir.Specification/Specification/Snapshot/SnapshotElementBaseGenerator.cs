@@ -135,7 +135,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         private void ensureElementBase(ElementDefinition elem, ElementDefinition baseElem, bool force = false)
         {
             Debug.Assert(elem != null);
-            if (force || elem.Base == null || (_settings.NormalizeElementBase && !isCreatedBySnapshotGenerator(elem.Base)))
+            var normalizeElementBase = _settings.NormalizeElementBase;
+            if (force || elem.Base == null || (normalizeElementBase && !isCreatedBySnapshotGenerator(elem.Base)))
             {
                 // [WMR 20160903] Explicitly exclude root types (Resource and Element), they have no base
                 if (isRootTypeElementPath(elem.Path))
@@ -145,7 +146,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 Debug.Assert(baseElem != null);
 
-                if (_settings.NormalizeElementBase && baseElem.Base != null) //  && !isRootElement
+                if (normalizeElementBase && baseElem.Base != null) //  && !isRootElement
                 {
                     // Inherit Base component from base element
                     elem.Base = createBaseComponent(

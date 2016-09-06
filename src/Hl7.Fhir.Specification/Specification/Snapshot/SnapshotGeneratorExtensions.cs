@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Removes a specific extension from the snapshot element definition and it's child elements.</summary>
         /// <param name="element">An <see cref="ElementDefinition"/> instance.</param>
         /// <param name="uri">The canonical url of the extension.</param>
-        public static void ClearAllExtensions(this ElementDefinition element, string uri)
+        internal static void ClearAllExtensions(this ElementDefinition element, string uri)
         {
             if (element == null) return;
             element.RemoveExtension(uri);
@@ -87,16 +87,16 @@ namespace Hl7.Fhir.Specification.Snapshot
             ClearAllExtensions(element.Type, uri);
         }
 
-        public static void ClearAllExtensions<T>(this IList<T> extendables, string uri) where T : IExtendable
+        internal static void ClearAllExtensions<T>(this IList<T> extendables, string uri) where T : IExtendable
         {
             if (extendables == null) return;
             foreach (var ext in extendables)
             {
-                if (ext != null) { ClearExtension(ext, uri); }
+                ClearExtension(ext, uri);
             }
         }
 
-        private static void ClearExtension(this IExtendable extendable, string uri)
+        static void ClearExtension(this IExtendable extendable, string uri)
         {
             if (extendable != null) { extendable.RemoveExtension(uri); }
         }

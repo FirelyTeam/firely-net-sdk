@@ -14,7 +14,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
-            // IgnoreUnresolvedProfiles = false,
             ExpandExternalProfiles = false,
             ExpandUnconstrainedElements = false,
             MarkChanges = false,
@@ -22,7 +21,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Following settings concern controversial aspects, behavior is not well defined
             // Needs discussion/decision from HL7 FHIR community
             MergeTypeProfiles = true,
-            // RewriteElementBase = false,
             NormalizeElementBase = false   // true in STU3
         };
 
@@ -32,20 +30,12 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Clone ctor. Generates a new instance with the same state as the specified instance.</summary>
         public SnapshotGeneratorSettings(SnapshotGeneratorSettings settings)
         {
-            // IgnoreUnresolvedProfiles = settings.IgnoreUnresolvedProfiles;
             ExpandExternalProfiles = settings.ExpandExternalProfiles;
             ExpandUnconstrainedElements = settings.ExpandUnconstrainedElements;
             MarkChanges = settings.MarkChanges;
             MergeTypeProfiles = settings.MergeTypeProfiles;
-            // RewriteElementBase = settings.RewriteElementBase;
             NormalizeElementBase = settings.NormalizeElementBase;
         }
-
-        // <summary>
-        // Enable this setting to ignore unknown or invalid element type profiles.
-        // If disabled (default), throw an exception for unknown or invalid element type profiles.
-        // </summary>
-        // public bool IgnoreUnresolvedProfiles { get; set; }
 
         /// <summary>
         /// Enable this setting to automatically generate the snapshot of external profiles on demand if necessary.
@@ -86,18 +76,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         /// <remarks>See GForge #9791</remarks>
         public bool MergeTypeProfiles { get; set; }
-
-#if false
-        /// <summary>
-        /// EXPERIMENTAL!
-        /// Enable this setting to rewrite all ElementDefinition.Base components by tracking the base hierarchy.
-        /// If disabled (default), the snapshot inherits existing Base components present in base resource.
-        /// </summary>
-        /// <remarks>
-        /// This setting is useful to correct errors in the core profile definitions.
-        /// </remarks>
-        public bool RewriteElementBase { get; set; }
-#endif
 
         /// <summary>
         /// EXPERIMENTAL!
