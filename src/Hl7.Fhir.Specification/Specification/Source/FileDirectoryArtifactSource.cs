@@ -139,9 +139,13 @@ namespace Hl7.Fhir.Specification.Source
             var doubles = _resourceInformation.Where(ci=>ci.Canonical != null).GroupBy(ci => ci.Canonical).Where(group => group.Count() > 1);
             if (doubles.Any())
             {
-                throw Error.InvalidOperation("The source has found multiple Conformance Resource artifacts with the same canonical url: {0} appears at {1}"
-                        .FormatWith(doubles.First().Key, String.Join(", ", doubles.First().Select(hit => hit.Origin))));                        
+                //throw Error.InvalidOperation("The source has found multiple Conformance Resource artifacts with the same canonical url: {0} appears at {1}"
+                //        .FormatWith(doubles.First().Key, String.Join(", ", doubles.First().Select(hit => hit.Origin))));
+                throw Error.CanonicalUrlConflictException(doubles.Select(d => new CanonicalUrlConflictException.CanonicalUrlConflict(d.Key, d.Select(ci => ci.Origin))));
             }
+
+            // var info = doubles.Select(g => new Tuple<string, IEnumerable<string>>(g.Key, g.Select(ci => ci.Origin)));
+            // var d = _resourceInformation.Select(ci => new Tuple<string, string>(ci.Url, ci.Origin)).GroupBy(t => t.Item1).Where(g => g.Count() > 1);
 
             _resourcesPrepared = true;
         }

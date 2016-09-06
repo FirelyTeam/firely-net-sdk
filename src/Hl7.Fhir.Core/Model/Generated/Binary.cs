@@ -169,7 +169,22 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// Binary elements
+				if (ContentTypeElement != null) yield return ContentTypeElement;
+				if (ContentElement != null) yield return ContentElement;
+            }
+        }
     }
     
 }

@@ -14,7 +14,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
-            IgnoreUnresolvedProfiles = false,
             ExpandExternalProfiles = false,
             ExpandUnconstrainedElements = false,
             MarkChanges = false,
@@ -22,21 +21,35 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Following settings concern controversial aspects, behavior is not well defined
             // Needs discussion/decision from HL7 FHIR community
             MergeTypeProfiles = true,
-            RewriteElementBase = false,
             NormalizeElementBase = false   // true in STU3
         };
 
-        /// <summary>
-        /// Enable this setting to ignore unknown or invalid element type profiles.
-        /// If disabled (default), throw an exception for unknown or invalid element type profiles.
-        /// </summary>
-        public bool IgnoreUnresolvedProfiles { get; set; }
+        /// <summary>Default ctor.</summary>
+        public SnapshotGeneratorSettings() { }
+
+        /// <summary>Clone ctor. Generates a new instance with the same state as the specified instance.</summary>
+        public SnapshotGeneratorSettings(SnapshotGeneratorSettings settings)
+        {
+            ExpandExternalProfiles = settings.ExpandExternalProfiles;
+            ExpandUnconstrainedElements = settings.ExpandUnconstrainedElements;
+            MarkChanges = settings.MarkChanges;
+            MergeTypeProfiles = settings.MergeTypeProfiles;
+            NormalizeElementBase = settings.NormalizeElementBase;
+        }
 
         /// <summary>
         /// Enable this setting to automatically generate the snapshot of external profiles on demand if necessary.
         /// If disabled (default), throw an exception for external type profiles without a snapshot component.
         /// </summary>
         public bool ExpandExternalProfiles { get; set; }
+
+        // TODO: Use (timestamp) annotation to mark & detect already (forceably) re-expanded profiles
+
+        // <summary>
+        // EXPERIMENTAL!
+        // Force expansion of all external profiles, disregarding any existing snapshot components.
+        // </summary>
+        // public bool ForceExpandAll { get; set; }
 
         /// <summary>
         /// Mark all elements in the snapshot that are constrained with respect to the base profile.
@@ -63,16 +76,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         /// <remarks>See GForge #9791</remarks>
         public bool MergeTypeProfiles { get; set; }
-
-        /// <summary>
-        /// EXPERIMENTAL!
-        /// Enable this setting to rewrite all ElementDefinition.Base components by tracking the base hierarchy.
-        /// If disabled (default), the snapshot inherits existing Base components present in base resource.
-        /// </summary>
-        /// <remarks>
-        /// This setting is useful to correct errors in the core profile definitions.
-        /// </remarks>
-        public bool RewriteElementBase { get; set; }
 
         /// <summary>
         /// EXPERIMENTAL!

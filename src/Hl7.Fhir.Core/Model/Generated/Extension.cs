@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
-using System.Linq;
 using System.Runtime.Serialization;
 
 /*
@@ -119,7 +118,19 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Element elements
+                foreach (var p in Extension) { if (p != null) yield return p; }
+                // Extension elements
+                if (Value != null) yield return Value;
+            }
+        }
+
     }
     
 }

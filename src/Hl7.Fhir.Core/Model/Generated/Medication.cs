@@ -147,6 +147,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ProductComponent elements
+                    if (Form != null) yield return Form;
+                    foreach (var elem in Ingredient) { if (elem != null) yield return elem; }
+                    foreach (var elem in Batch) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -228,6 +245,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // IngredientComponent elements
+                    if (Item != null) yield return Item;
+                    if (Amount != null) yield return Amount;
+                }
             }
             
         }
@@ -347,6 +380,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // BatchComponent elements
+                    if (LotNumberElement != null) yield return LotNumberElement;
+                    if (ExpirationDateElement != null) yield return ExpirationDateElement;
+                }
+            }
             
         }
         
@@ -427,6 +476,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // PackageComponent elements
+                    if (Container != null) yield return Container;
+                    foreach (var elem in Content) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -509,6 +574,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContentComponent elements
+                    if (Item != null) yield return Item;
+                    if (Amount != null) yield return Amount;
+                }
             }
             
         }
@@ -658,7 +739,30 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// Medication elements
+				if (Code != null) yield return Code;
+				if (IsBrandElement != null) yield return IsBrandElement;
+				if (Manufacturer != null) yield return Manufacturer;
+				if (Product != null) yield return Product;
+				if (Package != null) yield return Package;
+            }
+        }
     }
     
 }

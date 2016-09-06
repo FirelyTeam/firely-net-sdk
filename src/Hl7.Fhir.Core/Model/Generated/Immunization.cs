@@ -131,6 +131,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ExplanationComponent elements
+                    foreach (var elem in Reason) { if (elem != null) yield return elem; }
+                    foreach (var elem in ReasonNotGiven) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -265,6 +281,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ReportedElement, otherT.ReportedElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ReactionComponent elements
+                    if (DateElement != null) yield return DateElement;
+                    if (Detail != null) yield return Detail;
+                    if (ReportedElement != null) yield return ReportedElement;
+                }
             }
             
         }
@@ -521,6 +554,28 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(DoseStatusReason, otherT.DoseStatusReason)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // VaccinationProtocolComponent elements
+                    if (DoseSequenceElement != null) yield return DoseSequenceElement;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Authority != null) yield return Authority;
+                    if (SeriesElement != null) yield return SeriesElement;
+                    if (SeriesDosesElement != null) yield return SeriesDosesElement;
+                    foreach (var elem in TargetDisease) { if (elem != null) yield return elem; }
+                    if (DoseStatus != null) yield return DoseStatus;
+                    if (DoseStatusReason != null) yield return DoseStatusReason;
+                }
             }
             
         }
@@ -1055,7 +1110,46 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// Immunization elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (DateElement != null) yield return DateElement;
+				if (VaccineCode != null) yield return VaccineCode;
+				if (Patient != null) yield return Patient;
+				if (WasNotGivenElement != null) yield return WasNotGivenElement;
+				if (ReportedElement != null) yield return ReportedElement;
+				if (Performer != null) yield return Performer;
+				if (Requester != null) yield return Requester;
+				if (Encounter != null) yield return Encounter;
+				if (Manufacturer != null) yield return Manufacturer;
+				if (Location != null) yield return Location;
+				if (LotNumberElement != null) yield return LotNumberElement;
+				if (ExpirationDateElement != null) yield return ExpirationDateElement;
+				if (Site != null) yield return Site;
+				if (Route != null) yield return Route;
+				if (DoseQuantity != null) yield return DoseQuantity;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				if (Explanation != null) yield return Explanation;
+				foreach (var elem in Reaction) { if (elem != null) yield return elem; }
+				foreach (var elem in VaccinationProtocol) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

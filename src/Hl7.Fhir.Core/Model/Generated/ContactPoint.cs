@@ -323,6 +323,22 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Element elements
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                // ContactPoint elements
+                if (SystemElement != null) yield return SystemElement;
+                if (ValueElement != null) yield return ValueElement;
+                if (UseElement != null) yield return UseElement;
+                if (RankElement != null) yield return RankElement;
+                if (Period != null) yield return Period;
+            }
+        }
     
     
     }

@@ -177,6 +177,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // OutcomeComponent elements
+                    if (Result != null) yield return Result;
+                }
+            }
             
         }
         
@@ -518,7 +533,39 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// Goal elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				if (Start != null) yield return Start;
+				if (Target != null) yield return Target;
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (StatusDateElement != null) yield return StatusDateElement;
+				if (StatusReason != null) yield return StatusReason;
+				if (Author != null) yield return Author;
+				if (Priority != null) yield return Priority;
+				foreach (var elem in Addresses) { if (elem != null) yield return elem; }
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				foreach (var elem in Outcome) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -15,20 +15,6 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
-    // [WMR 20160802] NEW
-    public static class NamedNavigation
-    {
-        /// <summary>Determines if an element name matches a choice element name in the base profile.</summary>
-        /// <example>Match "value[x]" and "valueCodeableConcept"</example>
-        internal static bool IsRenamedChoiceElement(string baseName, string newName)
-        {
-            return baseName != null
-                && newName != null
-                && baseName.EndsWith("[x]")
-                && String.Compare(baseName, 0, newName, 0, baseName.Length - 3) == 0 && newName.Length > baseName.Length;
-        }
-    }
-
     public static class NamedNavigationExtensions
     {
         /// <summary>Move the navigator to the first child element with the specified name, if it exists.</summary>
@@ -76,7 +62,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
             while (nav.MoveToNext())
             {
-                if (NamedNavigation.IsRenamedChoiceElement(name, nav.PathName)) return true;
+                if (ElementDefinitionNavigator.IsRenamedChoiceElement(name, nav.PathName)) return true;
             }
 
             nav.ReturnToBookmark(bm);
@@ -88,7 +74,7 @@ namespace Hl7.Fhir.Specification.Navigation
         internal static bool IsCandidateTypeSlice(this ElementDefinitionNavigator nav, string diffName)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
-            return NamedNavigation.IsRenamedChoiceElement(nav.PathName, diffName);
+            return ElementDefinitionNavigator.IsRenamedChoiceElement(nav.PathName, diffName);
         }
 
         /// <summary>Move to last direct child element with same path as current element.</summary>
@@ -97,17 +83,17 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node is not set."); }
-            if (nav.Current.Base == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
+            // if (nav.Current.Base == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
 
             var bm = nav.Bookmark();
-            var basePath = nav.Current.Base.Path;
-            if (string.IsNullOrEmpty(basePath)) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
+            var basePath = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
+            // if (string.IsNullOrEmpty(basePath)) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
 
             var result = false;
             while (nav.MoveToNext())
             {
-                var baseComp = nav.Current.Base;
-                if (baseComp != null && baseComp.Path == basePath)
+                var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
+                if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp)))
                 {
                     // Match, advance cursor
                     bm = nav.Bookmark();

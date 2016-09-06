@@ -1,6 +1,7 @@
 ﻿<#@ template debug="true" hostSpecific="true" #>
 <#@ output extension=".cs" #>
 <#@ include file="TemplateFileManagerV2.1.ttinclude" #>
+<#@ include file="Template-Children.ttinclude" #>
 <#@ import namespace="System" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Diagnostics" #>
@@ -74,9 +75,12 @@
 		}
     }
 
-	foreach (System.Xml.XmlNode e in docResources.DocumentElement.SelectNodes(
-		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR))
-	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = 'Communication' or fhir:id/@value = 'Basic' or fhir:id/@value = 'Appointment' or fhir:id/@value = 'Patient']", nsR))
+	var sdNodes = docResources.DocumentElement.SelectNodes(
+		"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition", nsR);
+	//	"/fhir:Bundle/fhir:entry/fhir:resource/fhir:StructureDefinition[fhir:id/@value = 'Communication' or fhir:id/@value = 'Basic' or fhir:id/@value = 'Appointment' or fhir:id/@value = 'Patient']", nsR);
+	
+
+	foreach (System.Xml.XmlNode e in sdNodes)
     {
 		if (e is System.Xml.XmlElement)
         {
@@ -422,6 +426,24 @@ if(!abstractType) {
                 
                 return true;
             }
+
+<#
+		    // [WMR 20160818] START - implement generic properties collection
+#>
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+<#
+					YieldComponent(docTypes, componentName, "BackboneElement", component, nsR, enums, "                    ");
+#>
+                }
+            }
+<#
+		    // [WMR 20160818] END - implement generic properties collection
+#>
             
         }
         
@@ -587,9 +609,9 @@ if(!abstractType) {
 	foreach (PropertyDetails pd in props)
     {
 		if (pd.CardMax == "*")
-			WriteLine("            if( !DeepComparable.Matches({0}, otherT.{0})) return false;", pd.Name, pd.PropType, pd.CardMax);
+			WriteLine("            if( !DeepComparable.Matches({0}, otherT.{0})) return false;", pd.Name); // , pd.PropType, pd.CardMax);
 		else
-			WriteLine("            if( !DeepComparable.Matches({0}, otherT.{0})) return false;", pd.Name, pd.PropType, pd.CardMax);
+			WriteLine("            if( !DeepComparable.Matches({0}, otherT.{0})) return false;", pd.Name); // , pd.PropType, pd.CardMax);
     }
 #>
             
@@ -605,13 +627,29 @@ if(!abstractType) {
 <#
 	foreach (PropertyDetails pd in props)
     {
-		WriteLine("            if( !DeepComparable.IsExactly({0}, otherT.{0})) return false;", pd.Name, pd.PropType, pd.CardMax);
+		WriteLine("            if( !DeepComparable.IsExactly({0}, otherT.{0})) return false;", pd.Name); // , pd.PropType, pd.CardMax);
     }
 #>
             
             return true;
         }
-        
+
+<#
+		// [WMR 20160818] START - implement generic properties collection
+#>
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+<#
+				YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "				");
+#>
+            }
+        }
+<#
+		// [WMR 20160818] END - implement generic properties collection
+#>
     }
     
 }
@@ -665,6 +703,7 @@ if(!abstractType) {
 		public string AllowedTypes;
 		public string BackboneComponentType;
 		public string CodeRequiredBinding;
+		public bool isXmlAttribute;
 
 		public string PropTypeWithCard()
         {
@@ -754,6 +793,8 @@ if(!abstractType) {
 			PropertyDetails result = new PropertyDetails();
 			if (element.SelectSingleNode("fhir:isSummary[@value = 'true']", nsR) != null)
 				result.isSummaryProp = true;
+			if (element.SelectSingleNode("fhir:representation[@value = 'xmlAttr']", nsR) != null)
+				result.isXmlAttribute = true;
 			if (element.SelectSingleNode("fhir:short/@value", nsR) != null)
 				result.Summary = element.SelectSingleNode("fhir:short/@value", nsR).Value;
 			if (element.SelectSingleNode("fhir:type/fhir:code/@value", nsR) != null)
@@ -1236,5 +1277,6 @@ if(!abstractType) {
 
 			return result;
         }
+
     }
 #>

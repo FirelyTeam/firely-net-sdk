@@ -188,6 +188,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContactComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -760,7 +776,40 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// SearchParameter elements
+				if (UrlElement != null) yield return UrlElement;
+				if (NameElement != null) yield return NameElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (ExperimentalElement != null) yield return ExperimentalElement;
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (DateElement != null) yield return DateElement;
+				if (RequirementsElement != null) yield return RequirementsElement;
+				if (CodeElement != null) yield return CodeElement;
+				if (BaseElement != null) yield return BaseElement;
+				if (TypeElement != null) yield return TypeElement;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (XpathElement != null) yield return XpathElement;
+				if (XpathUsageElement != null) yield return XpathUsageElement;
+				foreach (var elem in TargetElement) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

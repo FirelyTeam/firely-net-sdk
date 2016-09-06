@@ -329,6 +329,122 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(iv.Value, 12345);
         }
 
+        [TestMethod]
+        public void TestChildren_EmptyPatient()
+        {
+            var patient = new Patient();
+            var children = patient.Children.ToArray();
+            Base[] expected = { };
+            Assert.IsTrue(expected.SequenceEqual(children));
+        }
+
+        [TestMethod]
+        public void TestChildren_EmptyTiming()
+        {
+            var timing = new Timing();
+            var children = timing.Children.ToArray();
+            Base[] expected = { };
+            Assert.IsTrue(expected.SequenceEqual(children));
+        }
+
+        [TestMethod]
+        public void TestChildren_Patient()
+        {
+            var patient = new Patient()
+            {
+                Name =
+                {
+                    new HumanName()
+                    {
+                        Given = new string[] { "John" },
+                        Family = new string[] { "Doe" }
+                    },
+                     new HumanName()
+                    {
+                        Given = new string[] { "Alias" },
+                        Family = new string[] { "Alternate" }
+                    }
+                },
+                Address =
+                {
+                    new Address()
+                    {
+                        City = "Amsterdam",
+                        Line = new string[] { "Rokin" }
+                    }
+                }
+            };
+            var children = patient.Children.ToArray();
+            Base[] expected =
+            {
+                // ===== Resource elements =====
+                // patient.IdElement, patient.Meta, patient.ImplicitRulesElement, patient.LanguageElement,
+                
+                // ===== DomainResource elements =====
+                // patient.Text,
+                // patient.Contained = empty collection
+                // patient.Extension = empty collection
+                // patient.ModifierExtension = empty collection
+
+                // ===== Patient elements =====
+                // patient.Identifier = empty collection
+                // patient.ActiveElement,
+                patient.Name[0],
+                patient.Name[1],
+                // patient.Telecom = empty collection
+                // patient.GenderElement,
+                // patient.BirthDateElement,
+                // patient.Deceased,
+                patient.Address[0],
+                // patient.MaritalStatus,
+                // patient.MultipleBirth,
+                // patient.Photo = empty collection
+                // patient.Contact = empty collection
+                // patient.Animal,
+                // patient.Communication = empty collection
+                // patient.CareProvider = empty collection
+                // patient.ManagingOrganization
+                // patient.Link = empty collection
+            };
+            Assert.IsTrue(expected.SequenceEqual(children));
+
+            var name = patient.Name[0];
+            children = name.Children.ToArray();
+            expected = new Base[]
+            {
+                // ===== Element elements =====
+                // name.Extension = empty collection
+
+                // ===== HumanName elements =====
+                // name.UseElement,
+                // name.TextElement,
+                name.FamilyElement[0],
+                name.GivenElement[0],
+                // name.Period
+            };
+            Assert.IsTrue(expected.SequenceEqual(children));
+
+            var address = patient.Address[0];
+            children = address.Children.ToArray();
+            expected = new Base[]
+            {
+                // ===== Element elements =====
+                // name.Extension = empty collection
+
+                // ===== Address elements =====
+                // address.UseElement,
+                // address.TypeElement,
+                // address.TextElement,
+                address.LineElement[0],
+                address.CityElement,
+                // address.DistrictElement,
+                // address.StateElement,
+                // address.PostalCodeElement,
+                // address.CountryElement,
+                // address.Period
+            };
+            Assert.IsTrue(expected.SequenceEqual(children));
+        }
 
     }
 }

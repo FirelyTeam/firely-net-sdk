@@ -443,6 +443,31 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // SeriesComponent elements
+                    if (NumberElement != null) yield return NumberElement;
+                    if (Modality != null) yield return Modality;
+                    if (UidElement != null) yield return UidElement;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (NumberOfInstancesElement != null) yield return NumberOfInstancesElement;
+                    if (AvailabilityElement != null) yield return AvailabilityElement;
+                    if (UrlElement != null) yield return UrlElement;
+                    if (BodySite != null) yield return BodySite;
+                    if (Laterality != null) yield return Laterality;
+                    if (StartedElement != null) yield return StartedElement;
+                    foreach (var elem in Instance) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -684,6 +709,26 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // InstanceComponent elements
+                    if (NumberElement != null) yield return NumberElement;
+                    if (UidElement != null) yield return UidElement;
+                    if (SopClassElement != null) yield return SopClassElement;
+                    if (TypeElement != null) yield return TypeElement;
+                    if (TitleElement != null) yield return TitleElement;
+                    foreach (var elem in Content) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -1136,7 +1181,41 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// ImagingStudy elements
+				if (StartedElement != null) yield return StartedElement;
+				if (Patient != null) yield return Patient;
+				if (UidElement != null) yield return UidElement;
+				if (Accession != null) yield return Accession;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				foreach (var elem in Order) { if (elem != null) yield return elem; }
+				foreach (var elem in ModalityList) { if (elem != null) yield return elem; }
+				if (Referrer != null) yield return Referrer;
+				if (AvailabilityElement != null) yield return AvailabilityElement;
+				if (UrlElement != null) yield return UrlElement;
+				if (NumberOfSeriesElement != null) yield return NumberOfSeriesElement;
+				if (NumberOfInstancesElement != null) yield return NumberOfInstancesElement;
+				foreach (var elem in Procedure) { if (elem != null) yield return elem; }
+				if (Interpreter != null) yield return Interpreter;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in Series) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

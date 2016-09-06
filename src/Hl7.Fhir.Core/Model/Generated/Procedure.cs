@@ -163,6 +163,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // PerformerComponent elements
+                    if (Actor != null) yield return Actor;
+                    if (Role != null) yield return Role;
+                }
+            }
             
         }
         
@@ -244,6 +260,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Manipulated, otherT.Manipulated)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // FocalDeviceComponent elements
+                    if (Action != null) yield return Action;
+                    if (Manipulated != null) yield return Manipulated;
+                }
             }
             
         }
@@ -698,7 +730,46 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// Procedure elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				if (StatusElement != null) yield return StatusElement;
+				if (Category != null) yield return Category;
+				if (Code != null) yield return Code;
+				if (NotPerformedElement != null) yield return NotPerformedElement;
+				foreach (var elem in ReasonNotPerformed) { if (elem != null) yield return elem; }
+				foreach (var elem in BodySite) { if (elem != null) yield return elem; }
+				if (Reason != null) yield return Reason;
+				foreach (var elem in Performer) { if (elem != null) yield return elem; }
+				if (Performed != null) yield return Performed;
+				if (Encounter != null) yield return Encounter;
+				if (Location != null) yield return Location;
+				if (Outcome != null) yield return Outcome;
+				foreach (var elem in Report) { if (elem != null) yield return elem; }
+				foreach (var elem in Complication) { if (elem != null) yield return elem; }
+				foreach (var elem in FollowUp) { if (elem != null) yield return elem; }
+				if (Request != null) yield return Request;
+				foreach (var elem in Notes) { if (elem != null) yield return elem; }
+				foreach (var elem in FocalDevice) { if (elem != null) yield return elem; }
+				foreach (var elem in Used) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

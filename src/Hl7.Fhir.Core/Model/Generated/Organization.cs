@@ -162,6 +162,24 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContactComponent elements
+                    if (Purpose != null) yield return Purpose;
+                    if (Name != null) yield return Name;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                    if (Address != null) yield return Address;
+                }
+            }
             
         }
         
@@ -411,7 +429,33 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// Organization elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (ActiveElement != null) yield return ActiveElement;
+				if (Type != null) yield return Type;
+				if (NameElement != null) yield return NameElement;
+				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+				foreach (var elem in Address) { if (elem != null) yield return elem; }
+				if (PartOf != null) yield return PartOf;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

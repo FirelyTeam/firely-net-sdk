@@ -336,6 +336,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // AttesterComponent elements
+                    foreach (var elem in ModeElement) { if (elem != null) yield return elem; }
+                    if (TimeElement != null) yield return TimeElement;
+                    if (Party != null) yield return Party;
+                }
+            }
             
         }
         
@@ -434,6 +451,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // EventComponent elements
+                    foreach (var elem in Code) { if (elem != null) yield return elem; }
+                    if (Period != null) yield return Period;
+                    foreach (var elem in Detail) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -651,6 +685,28 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Section, otherT.Section)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // SectionComponent elements
+                    if (TitleElement != null) yield return TitleElement;
+                    if (Code != null) yield return Code;
+                    if (Text != null) yield return Text;
+                    if (ModeElement != null) yield return ModeElement;
+                    if (OrderedBy != null) yield return OrderedBy;
+                    foreach (var elem in Entry) { if (elem != null) yield return elem; }
+                    if (EmptyReason != null) yield return EmptyReason;
+                    foreach (var elem in Section) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -1033,7 +1089,39 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// Composition elements
+				if (Identifier != null) yield return Identifier;
+				if (DateElement != null) yield return DateElement;
+				if (Type != null) yield return Type;
+				if (Class != null) yield return Class;
+				if (TitleElement != null) yield return TitleElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (ConfidentialityElement != null) yield return ConfidentialityElement;
+				if (Subject != null) yield return Subject;
+				foreach (var elem in Author) { if (elem != null) yield return elem; }
+				foreach (var elem in Attester) { if (elem != null) yield return elem; }
+				if (Custodian != null) yield return Custodian;
+				foreach (var elem in Event) { if (elem != null) yield return elem; }
+				if (Encounter != null) yield return Encounter;
+				foreach (var elem in Section) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

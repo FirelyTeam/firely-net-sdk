@@ -258,6 +258,27 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContactComponent elements
+                    foreach (var elem in Relationship) { if (elem != null) yield return elem; }
+                    if (Name != null) yield return Name;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                    if (Address != null) yield return Address;
+                    if (GenderElement != null) yield return GenderElement;
+                    if (Organization != null) yield return Organization;
+                    if (Period != null) yield return Period;
+                }
+            }
             
         }
         
@@ -354,6 +375,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(GenderStatus, otherT.GenderStatus)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // AnimalComponent elements
+                    if (Species != null) yield return Species;
+                    if (Breed != null) yield return Breed;
+                    if (GenderStatus != null) yield return GenderStatus;
+                }
             }
             
         }
@@ -454,6 +492,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(PreferredElement, otherT.PreferredElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // CommunicationComponent elements
+                    if (Language != null) yield return Language;
+                    if (PreferredElement != null) yield return PreferredElement;
+                }
             }
             
         }
@@ -556,6 +610,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // LinkComponent elements
+                    if (Other != null) yield return Other;
+                    if (TypeElement != null) yield return TypeElement;
+                }
             }
             
         }
@@ -957,7 +1027,42 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// Patient elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (ActiveElement != null) yield return ActiveElement;
+				foreach (var elem in Name) { if (elem != null) yield return elem; }
+				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+				if (GenderElement != null) yield return GenderElement;
+				if (BirthDateElement != null) yield return BirthDateElement;
+				if (Deceased != null) yield return Deceased;
+				foreach (var elem in Address) { if (elem != null) yield return elem; }
+				if (MaritalStatus != null) yield return MaritalStatus;
+				if (MultipleBirth != null) yield return MultipleBirth;
+				foreach (var elem in Photo) { if (elem != null) yield return elem; }
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (Animal != null) yield return Animal;
+				foreach (var elem in Communication) { if (elem != null) yield return elem; }
+				foreach (var elem in CareProvider) { if (elem != null) yield return elem; }
+				if (ManagingOrganization != null) yield return ManagingOrganization;
+				foreach (var elem in Link) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

@@ -322,6 +322,24 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // EventComponent elements
+                    if (StatusElement != null) yield return StatusElement;
+                    if (Description != null) yield return Description;
+                    if (DateTimeElement != null) yield return DateTimeElement;
+                    if (Actor != null) yield return Actor;
+                }
+            }
             
         }
         
@@ -472,6 +490,25 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Event, otherT.Event)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ItemComponent elements
+                    if (Code != null) yield return Code;
+                    foreach (var elem in Specimen) { if (elem != null) yield return elem; }
+                    if (BodySite != null) yield return BodySite;
+                    if (StatusElement != null) yield return StatusElement;
+                    foreach (var elem in Event) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -764,7 +801,37 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// DiagnosticOrder elements
+				if (Subject != null) yield return Subject;
+				if (Orderer != null) yield return Orderer;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Encounter != null) yield return Encounter;
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
+				foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
+				foreach (var elem in Specimen) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (PriorityElement != null) yield return PriorityElement;
+				foreach (var elem in Event) { if (elem != null) yield return elem; }
+				foreach (var elem in Item) { if (elem != null) yield return elem; }
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

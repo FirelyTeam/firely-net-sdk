@@ -293,6 +293,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // StatusHistoryComponent elements
+                    if (StatusElement != null) yield return StatusElement;
+                    if (Period != null) yield return Period;
+                }
+            }
             
         }
         
@@ -390,6 +406,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Individual, otherT.Individual)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ParticipantComponent elements
+                    foreach (var elem in Type) { if (elem != null) yield return elem; }
+                    if (Period != null) yield return Period;
+                    if (Individual != null) yield return Individual;
+                }
             }
             
         }
@@ -624,6 +657,31 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // HospitalizationComponent elements
+                    if (PreAdmissionIdentifier != null) yield return PreAdmissionIdentifier;
+                    if (Origin != null) yield return Origin;
+                    if (AdmitSource != null) yield return AdmitSource;
+                    foreach (var elem in AdmittingDiagnosis) { if (elem != null) yield return elem; }
+                    if (ReAdmission != null) yield return ReAdmission;
+                    foreach (var elem in DietPreference) { if (elem != null) yield return elem; }
+                    foreach (var elem in SpecialCourtesy) { if (elem != null) yield return elem; }
+                    foreach (var elem in SpecialArrangement) { if (elem != null) yield return elem; }
+                    if (Destination != null) yield return Destination;
+                    if (DischargeDisposition != null) yield return DischargeDisposition;
+                    foreach (var elem in DischargeDiagnosis) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -740,6 +798,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // LocationComponent elements
+                    if (Location != null) yield return Location;
+                    if (StatusElement != null) yield return StatusElement;
+                    if (Period != null) yield return Period;
+                }
             }
             
         }
@@ -1148,7 +1223,44 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// Encounter elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				foreach (var elem in StatusHistory) { if (elem != null) yield return elem; }
+				if (ClassElement != null) yield return ClassElement;
+				foreach (var elem in Type) { if (elem != null) yield return elem; }
+				if (Priority != null) yield return Priority;
+				if (Patient != null) yield return Patient;
+				foreach (var elem in EpisodeOfCare) { if (elem != null) yield return elem; }
+				foreach (var elem in IncomingReferral) { if (elem != null) yield return elem; }
+				foreach (var elem in Participant) { if (elem != null) yield return elem; }
+				if (Appointment != null) yield return Appointment;
+				if (Period != null) yield return Period;
+				if (Length != null) yield return Length;
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
+				foreach (var elem in Indication) { if (elem != null) yield return elem; }
+				if (Hospitalization != null) yield return Hospitalization;
+				foreach (var elem in Location) { if (elem != null) yield return elem; }
+				if (ServiceProvider != null) yield return ServiceProvider;
+				if (PartOf != null) yield return PartOf;
+            }
+        }
     }
     
 }

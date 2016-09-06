@@ -201,6 +201,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ImageComponent elements
+                    if (CommentElement != null) yield return CommentElement;
+                    if (Link != null) yield return Link;
+                }
+            }
             
         }
         
@@ -600,7 +616,42 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// DiagnosticReport elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Category != null) yield return Category;
+				if (Code != null) yield return Code;
+				if (Subject != null) yield return Subject;
+				if (Encounter != null) yield return Encounter;
+				if (Effective != null) yield return Effective;
+				if (IssuedElement != null) yield return IssuedElement;
+				if (Performer != null) yield return Performer;
+				foreach (var elem in Request) { if (elem != null) yield return elem; }
+				foreach (var elem in Specimen) { if (elem != null) yield return elem; }
+				foreach (var elem in Result) { if (elem != null) yield return elem; }
+				foreach (var elem in ImagingStudy) { if (elem != null) yield return elem; }
+				foreach (var elem in Image) { if (elem != null) yield return elem; }
+				if (ConclusionElement != null) yield return ConclusionElement;
+				foreach (var elem in CodedDiagnosis) { if (elem != null) yield return elem; }
+				foreach (var elem in PresentedForm) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

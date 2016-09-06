@@ -639,6 +639,35 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DispenseComponent elements
+                    if (Product != null) yield return Product;
+                    if (EyeElement != null) yield return EyeElement;
+                    if (SphereElement != null) yield return SphereElement;
+                    if (CylinderElement != null) yield return CylinderElement;
+                    if (AxisElement != null) yield return AxisElement;
+                    if (PrismElement != null) yield return PrismElement;
+                    if (BaseElement != null) yield return BaseElement;
+                    if (AddElement != null) yield return AddElement;
+                    if (PowerElement != null) yield return PowerElement;
+                    if (BackCurveElement != null) yield return BackCurveElement;
+                    if (DiameterElement != null) yield return DiameterElement;
+                    if (Duration != null) yield return Duration;
+                    if (ColorElement != null) yield return ColorElement;
+                    if (BrandElement != null) yield return BrandElement;
+                    if (NotesElement != null) yield return NotesElement;
+                }
+            }
             
         }
         
@@ -824,7 +853,32 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// VisionPrescription elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (DateWrittenElement != null) yield return DateWrittenElement;
+				if (Patient != null) yield return Patient;
+				if (Prescriber != null) yield return Prescriber;
+				if (Encounter != null) yield return Encounter;
+				if (Reason != null) yield return Reason;
+				foreach (var elem in Dispense) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

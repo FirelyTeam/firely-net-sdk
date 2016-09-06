@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Configurable default behavior: mark changed elements
             if (_settings.MarkChanges)
             {
-                element.SetExtension(CHANGED_BY_DIFF_EXT, new FhirBoolean(true));
+                element.SetChangedByDiff();
             }
 
             var handler = Constraint;
@@ -76,20 +76,20 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>
         /// An event that notifies clients when the generator initializes a new snapshot element.
         /// The specified element is cloned from the base profile and the base path has been fixed.
-        /// The event handler can inspect and optionally modify the base element clone.
-        /// After the event handler returns, the snapshot generator merges any associated
-        /// differential constraints and the result is included in the snapshot.
+        /// The event handler can inspect and optionally modify the element.
+        /// After the event handler returns, the snapshot generator merges the associated
+        /// differential constraints, if they exist.
         /// </summary>
-        public event SnapshotElementHandler PrepareBaseElement;
+        public event SnapshotElementHandler PrepareElement;
 
-        /// <summary>Raise the <see cref="PrepareBaseElement"/> event to notify the client when a base element definition is being prepared for merging.</summary>
-        internal void OnPrepareBaseElement(ElementDefinition element)
+        /// <summary>Raise the <see cref="PrepareElement"/> event to notify the client when an element definition is being prepared for merging.</summary>
+        internal void OnPrepareElement(ElementDefinition element, ElementDefinition baseElement)
         {
             if (element == null) { throw new ArgumentNullException("element"); }
-            var handler = PrepareBaseElement;
+            var handler = PrepareElement;
             if (handler != null)
             {
-                var args = new SnapshotElementEventArgs(element);
+                var args = new SnapshotElementEventArgs(element, baseElement);
                 handler(this, args);
             }
         }
@@ -141,14 +141,19 @@ namespace Hl7.Fhir.Specification.Snapshot
     public class SnapshotElementEventArgs : EventArgs
     {
         private readonly ElementDefinition _element;
+        private readonly ElementDefinition _baseElement;
 
-        public SnapshotElementEventArgs(ElementDefinition element) : base()
+        public SnapshotElementEventArgs(ElementDefinition element, ElementDefinition baseElement) : base()
         {
             _element = element;
+            _baseElement = baseElement;
         }
 
         /// <summary>Returns a reference to an element definition.</summary>
         public ElementDefinition Element { get { return _element; } }
+
+        /// <summary>Returns a reference to the associated base element definition.</summary>
+        public ElementDefinition BaseElement { get { return _baseElement; } }
     }
 
     public delegate void SnapshotElementHandler(object sender, SnapshotElementEventArgs e);

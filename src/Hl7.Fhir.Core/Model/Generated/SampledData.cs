@@ -319,6 +319,24 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Element elements
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                // SampledData elements
+                if (Origin != null) yield return Origin;
+                if (PeriodElement != null) yield return PeriodElement;
+                if (FactorElement != null) yield return FactorElement;
+                if (LowerLimitElement != null) yield return LowerLimitElement;
+                if (UpperLimitElement != null) yield return UpperLimitElement;
+                if (DimensionsElement != null) yield return DimensionsElement;
+                if (DataElement != null) yield return DataElement;
+            }
+        }
     
     
     }

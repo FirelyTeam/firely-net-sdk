@@ -154,6 +154,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // PayloadComponent elements
+                    if (Content != null) yield return Content;
+                }
+            }
             
         }
         
@@ -477,7 +492,38 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// Communication elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Category != null) yield return Category;
+				if (Sender != null) yield return Sender;
+				foreach (var elem in Recipient) { if (elem != null) yield return elem; }
+				foreach (var elem in Payload) { if (elem != null) yield return elem; }
+				foreach (var elem in Medium) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Encounter != null) yield return Encounter;
+				if (SentElement != null) yield return SentElement;
+				if (ReceivedElement != null) yield return ReceivedElement;
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				if (RequestDetail != null) yield return RequestDetail;
+            }
+        }
     }
     
 }

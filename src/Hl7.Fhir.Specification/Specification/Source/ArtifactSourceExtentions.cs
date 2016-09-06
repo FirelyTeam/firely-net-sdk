@@ -41,6 +41,30 @@ namespace Hl7.Fhir.Specification.Source
             return source.GetStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
         }
 
+        /// <summary>Resolve a <see cref="StructureDefinition"/> from a TypeRef.Code element, handle unknown/custom core types.</summary>
+        /// <param name="source">An <see cref="IArtifactSource"/> reference.</param>
+        /// <param name="typeCodeElement">A <see cref="ElementDefinition.TypeRefComponent.CodeElement"/> reference.</param>
+        /// <returns>A <see cref="StructureDefinition"/> instance, or <c>null</c>.</returns>
+        internal static StructureDefinition GetStructureDefinitionForTypeCode(this IArtifactSource source, Code<FHIRDefinedType> typeCodeElement)
+        {
+            StructureDefinition sd = null;
+            var typeCode = typeCodeElement.Value;
+            if (typeCode.HasValue)
+            {
+                sd = source.GetStructureDefinitionForCoreType(typeCode.Value);
+            }
+            else
+            {
+                // Unknown/custom core type; try to resolve from raw object value
+                var typeName = typeCodeElement.ObjectValue as string;
+                if (!string.IsNullOrEmpty(typeName))
+                {
+                    sd = source.GetStructureDefinitionForCoreType(typeName);
+                }
+            }
+            return sd;
+        }
+
         /// <summary>
         /// Return canonical urls of all the core Resource/datatype/primitive StructureDefinitions available in the IArtifactSource
         /// </summary>
