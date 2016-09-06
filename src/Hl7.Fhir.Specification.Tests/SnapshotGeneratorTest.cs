@@ -858,7 +858,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             var isConstraint = sd.ConstrainedType.HasValue;
 
-            Debug.Print("\r\n# | Constraint? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Invalid?");
+            Debug.Print("\r\nStructureDefinition '{0}' url = '{1}'", sd.Name, sd.Url);
+            Debug.Print("# | Constraint? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Invalid?");
             Debug.Print(new string('=', 100));
             foreach (var elem in elems)
             {

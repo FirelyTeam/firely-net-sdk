@@ -587,15 +587,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
-                if (!_settings.NormalizeElementBase)
-                {
-                    // Always regenerate! Cannot reuse cloned base components
-                    foreach (var elem in snapshot.Element)
-                    {
-                        elem.Base = null;
-                    }
-                }
-                generateElementsBase(snapshot.Element, structure.Base);
+                // Always regenerate Base component! Cannot reuse cloned values
+                generateElementsBase(snapshot.Element, structure.Base, true);
 
                 // Notify observers
                 for (int i = 0; i < snapshot.Element.Count; i++)
@@ -684,17 +677,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                         elem.ClearAllChangedByDiff();
 
                         // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
-                        // e.g. copy children from BackboneElement
-                        // => BackboneElement.modifierExtension has no base of it's own
-                        // => element is derived from BackboneElement
-                        // => [CurrentElement].modifierExtension.Base.Path = "BackboneElement.modifierExtension"
-                        // [WMR 20160903] Handle Resource base type
-                        if (!_settings.NormalizeElementBase)
-                        {
-                            // Always regenerate! Cannot reuse cloned base components
-                            elem.Base = null;
-                        }
-                        ensureElementBase(elem, baseElem);
+                        // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
+                        ensureElementBase(elem, baseElem, true);
 
                         OnPrepareElement(elem, baseElem);
                     }
