@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from directories with individual files
     /// </summary>
-    public class DirectorySource : IConformanceStore, IArtifactStore
+    public class DirectorySource : IConformanceSource, IArtifactSource
     {
         private readonly string _contentDirectory;
         private readonly bool _includeSubs;
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        public IEnumerable<string> CanonicalUris(ResourceType? filter = null)
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
         {
             prepareResources();
             IEnumerable<ResourceStreamScanner.ResourceScanInformation> scan = _resourceScanInformation;
@@ -234,14 +234,14 @@ namespace Hl7.Fhir.Specification.Source
             if (artifactXml != null)
             {
                 var resultResource = new FhirXmlParser().Parse<Resource>(artifactXml);
-                resultResource.AddAnnotation(info);
+                resultResource.AddAnnotation(new OriginInformation { Origin = info.Origin });
                 return resultResource;
             }
             else
                 return null;
         }
 
-        public ValueSet FindValuesetBySystem(string system)
+        public ValueSet FindValueSetBySystem(string system)
         {
             prepareResources();
 

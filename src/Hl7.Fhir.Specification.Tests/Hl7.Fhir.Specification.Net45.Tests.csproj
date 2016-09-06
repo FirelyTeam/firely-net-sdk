@@ -71,7 +71,8 @@
     <Compile Include="..\Hl7.Fhir.Core.Tests\XmlAssert.cs">
       <Link>XmlAssert.cs</Link>
     </Compile>
-    <Compile Include="ArtifactResolverTests.cs" />
+    <Compile Include="ResolverAndSourceExtensionTests.cs" />
+    <Compile Include="ConformanceSourceTests.cs" />
     <Compile Include="ArtifactSourceTests.cs" />
     <Compile Include="OutcomeReportingTest.cs" />
     <Compile Include="ProfileNavigationTest.cs" />

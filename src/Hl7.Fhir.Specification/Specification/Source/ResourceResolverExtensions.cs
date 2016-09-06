@@ -18,9 +18,9 @@ namespace Hl7.Fhir.Specification.Source
 {
     public static class ResourceResolverExtensions
     {
-        public static StructureDefinition FindExtensionDefinition(this IResourceResolver source, string uri, bool requireSnapshot = false)
+        public static StructureDefinition FindExtensionDefinition(this IResourceResolver resolver, string uri, bool requireSnapshot = false)
         {
-            var sd = source.ResolveByCanonicalUri(uri) as StructureDefinition;
+            var sd = resolver.ResolveByCanonicalUri(uri) as StructureDefinition;
             if (sd == null) return null;
 
             if (!sd.IsExtension)
@@ -32,9 +32,9 @@ namespace Hl7.Fhir.Specification.Source
             return sd;
         }
 
-        public static StructureDefinition FindStructureDefinition(this IResourceResolver source, string uri, bool requireSnapshot = false)
+        public static StructureDefinition FindStructureDefinition(this IResourceResolver resolver, string uri, bool requireSnapshot = false)
         {
-            var sd = source.ResolveByCanonicalUri(uri) as StructureDefinition;
+            var sd = resolver.ResolveByCanonicalUri(uri) as StructureDefinition;
             if (sd == null) return null;
 
             if (sd.Snapshot == null && requireSnapshot)
@@ -43,15 +43,15 @@ namespace Hl7.Fhir.Specification.Source
             return sd;
         }
 
-        public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver source, string typename)
+        public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, string typename)
         {
             var url = ModelInfo.CanonicalUriForFhirCoreType(typename);
-            return source.FindStructureDefinition(url);
+            return resolver.FindStructureDefinition(url);
         }
 
-        public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver source, FHIRDefinedType type)
+        public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, FHIRDefinedType type)
         {
-            return source.FindStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
+            return resolver.FindStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="source"></param>
         /// <param name="uri"></param>
         /// <returns></returns>
-        public static ValueSet FindValueSet(this IConformanceStore source, string uri)
+        public static ValueSet FindValueSet(this IConformanceSource source, string uri)
         {
-            var vs = source.FindValuesetBySystem(uri);
+            var vs = source.FindValueSetBySystem(uri);
 
             if (vs == null)
                 vs = source.ResolveByCanonicalUri(uri) as ValueSet;
@@ -73,6 +73,21 @@ namespace Hl7.Fhir.Specification.Source
                 vs = source.ResolveByUri(uri) as ValueSet;
 
             return vs;
+        }
+
+
+        public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T:Resource
+        {
+            var type = ModelInfo.GetFhirTypeNameForType(typeof(T));
+
+            if (type != null)
+            {
+                var resourceType = EnumUtility.ParseLiteral<ResourceType>(type);
+                var uris = source.ListResourceUris(resourceType);
+                return uris.Select(u => source.ResolveByCanonicalUri(u) as T).Where(r => r != null);
+            }
+            else
+                return null;
         }
     }
 }

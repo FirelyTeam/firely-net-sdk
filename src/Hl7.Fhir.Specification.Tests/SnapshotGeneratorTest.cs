@@ -30,7 +30,9 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
     {
         private SnapshotGenerator _generator;
-        private IArtifactSource _testSource;
+        private IResourceResolver _testResolver;
+        private IConformanceSource _source;
+
         private readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
         {
             // MarkChanges = false,
@@ -45,7 +47,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
-            _testSource = new SourceFactory(new CachedSource(new DirectorySource("TestData/snapshot-test", includeSubdirectories: true)));
+            _source = new DirectorySource("TestData/snapshot-test", includeSubdirectories: true);
+            _testResolver = new CachedResolver(_source);
         }
 
         // [WMR 20160718] Generate snapshot for extension definition fails with exception:
@@ -55,13 +58,13 @@ namespace Hl7.Fhir.Specification.Tests
         //[Ignore]
         public void GenerateExtensionSnapshot()
         {
-            var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
+            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
 
             StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, _testSource, out expanded);
+            generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
             dumpBasePaths(expanded);
         }
@@ -74,14 +77,14 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder");
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
 
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
 
             StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, _testSource, out expanded);
+            generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
             dumpBasePaths(expanded);
         }
@@ -97,7 +100,7 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-patient");
 
             // [WMR 20160818] Verify that full expansion does not hang on recursive named references
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
 
             Assert.IsNotNull(sd);
 
@@ -106,7 +109,7 @@ namespace Hl7.Fhir.Specification.Tests
             // StructureDefinition expanded;
             // generateSnapshotAndCompare(sd, _testSource, out expanded);
 
-            var expanded = generateSnapshot(sd, _testSource);
+            var expanded = generateSnapshot(sd, _testResolver);
             var areEqual = sd.IsExactly(expanded);
             Assert.IsFalse(areEqual);
 
@@ -121,7 +124,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Following structuredefinition has a recursive element type profile
             // Verify that the snapshot generator detects recursion and aborts with exception
 
-            var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBundle");
+            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBundle");
 
             Assert.IsNotNull(sd);
 
@@ -131,7 +134,7 @@ namespace Hl7.Fhir.Specification.Tests
             bool exceptionRaised = false;
             try
             {
-                generateSnapshotAndCompare(sd, _testSource, out expanded);
+                generateSnapshotAndCompare(sd, _testResolver, out expanded);
                 dumpBasePaths(expanded);
             }
             catch (Exception ex)
@@ -146,7 +149,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [Ignore] // For debugging purposes
         public void GenerateSingleSnapshotNormalizeBase()
         {
-            var sd = _testSource.GetStructureDefinition(@"http://example.org/StructureDefinition/MyBasic");
+            var sd = _testResolver.FindStructureDefinition(@"http://example.org/StructureDefinition/MyBasic");
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
@@ -154,7 +157,7 @@ namespace Hl7.Fhir.Specification.Tests
             _settings.NormalizeElementBase = true;
 
             StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, _testSource, out expanded);
+            generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
             dumpBasePaths(expanded);
         }
@@ -165,7 +168,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // cqif-guidanceartifact profile is derived from cqif-knowledgemodule
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-patient");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-encounter");
@@ -175,7 +178,7 @@ namespace Hl7.Fhir.Specification.Tests
             // dumpReferences(sd);
 
             StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, _testSource, out expanded);
+            generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
             dumpBasePaths(expanded);
         }
@@ -189,13 +192,13 @@ namespace Hl7.Fhir.Specification.Tests
             // Manually downgraded from FHIR v1.4.0 to v1.0.2
 
             // var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/SD/patient-with-extensions");
-            var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
+            var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
 
             StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, _testSource, out expanded);
+            generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
             dumpBasePaths(expanded);
         }
@@ -206,7 +209,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // Profile MyLocation references extension MyLocationExtension
             // MyLocationExtension extension profile does not have a snapshot component => expand on demand
-            var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
+            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
             Assert.IsNotNull(sd);
             Assert.IsNotNull(sd.Snapshot);
 
@@ -220,7 +223,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(extensionType.Profile);
             var extDefUrl = extensionType.Profile.FirstOrDefault();
             Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyLocationExtension", extDefUrl);
-            var ext = _testSource.GetStructureDefinition(extDefUrl);
+            var ext = _testResolver.FindStructureDefinition(extDefUrl);
             Assert.IsNotNull(ext);
             Assert.IsNull(ext.Snapshot);
 
@@ -229,7 +232,7 @@ namespace Hl7.Fhir.Specification.Tests
             _settings.ExpandExternalProfiles = true;
 
             StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, _testSource, out expanded);
+            generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
             dumpBasePaths(expanded);
         }
@@ -238,7 +241,7 @@ namespace Hl7.Fhir.Specification.Tests
         //[Ignore]
         public void GenerateSnapshotIgnoreMissingExternalProfile()
         {
-            var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyObservation");
+            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyObservation");
             Assert.IsNotNull(sd);
 
             dumpReferences(sd, true);
@@ -249,7 +252,7 @@ namespace Hl7.Fhir.Specification.Tests
             _settings.ExpandExternalProfiles = false;   // Don't generate missing snapshots
 
             StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, _testSource, out expanded);
+            generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
             var invalidProfiles = _generator.InvalidProfiles;
             Assert.AreEqual(3, invalidProfiles.Count);
@@ -289,7 +292,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 Debug.WriteLine("Generating Snapshot for " + original.Url);
 
-                generateSnapshotAndCompare(original, _testSource);
+                generateSnapshotAndCompare(original, _testResolver);
                 count++;
             }
 
@@ -318,12 +321,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 #endif
 
-        private StructureDefinition generateSnapshot(StructureDefinition original, IArtifactSource source)
+        private StructureDefinition generateSnapshot(StructureDefinition original, IResourceResolver source)
         {
             // var generator = new SnapshotGenerator(source, _settings);
             if (_generator == null)
             {
-                _generator = new SnapshotGenerator(_testSource, _settings);
+                _generator = new SnapshotGenerator(_testResolver, _settings);
             }
 
             var expanded = (StructureDefinition)original.DeepCopy();
@@ -334,13 +337,13 @@ namespace Hl7.Fhir.Specification.Tests
             return expanded;
         }
 
-        private bool generateSnapshotAndCompare(StructureDefinition original, IArtifactSource source)
+        private bool generateSnapshotAndCompare(StructureDefinition original, IResourceResolver source)
         {
             StructureDefinition expanded;
             return generateSnapshotAndCompare(original, source, out expanded);
         }
 
-        private bool generateSnapshotAndCompare(StructureDefinition original, IArtifactSource source, out StructureDefinition expanded)
+        private bool generateSnapshotAndCompare(StructureDefinition original, IResourceResolver source, out StructureDefinition expanded)
         {
             expanded = generateSnapshot(original, source);
 
@@ -360,21 +363,22 @@ namespace Hl7.Fhir.Specification.Tests
 
         private IEnumerable<StructureDefinition> findConstraintStrucDefs()
         {
-            var testSDs = _testSource.ListConformanceResources().Where(ci => ci.Type == ResourceType.StructureDefinition);
+            var testSDs = _source.FindAll<StructureDefinition>();
 
-            foreach (var sdInfo in testSDs)
+            foreach (var testSD in testSDs)
             {
+                var sdInfo = testSD.Annotation<OriginInformation>();
                 // [WMR 20160721] Select all profiles in profiles-others.xml
                 var fileName = Path.GetFileNameWithoutExtension(sdInfo.Origin);
                 if (fileName == "profiles-others")
                 {
-                    var sd = _testSource.GetStructureDefinition(sdInfo.Canonical);
+                    //var sd = _testResolver.FindStructureDefinition(sdInfo.Canonical);
 
-                    if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
-                        "but could not get structure definition by that url later on!").FormatWith(sdInfo.Canonical, sdInfo.Origin));
+                    //if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
+                    //    "but could not get structure definition by that url later on!").FormatWith(sdInfo.Canonical, sdInfo.Origin));
 
-                    if (sd.IsConstraint || sd.IsExtension)
-                        yield return sd;
+                    if (testSD.IsConstraint || testSD.IsExtension)
+                        yield return testSD;
                 }
             }
         }
@@ -418,13 +422,13 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestExpandChild()
         {
-            var qStructDef = _testSource.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            var qStructDef = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Questionnaire);
             Assert.IsNotNull(qStructDef);
             Assert.IsNotNull(qStructDef.Snapshot);
 
 			var nav = new ElementDefinitionNavigator(qStructDef.Snapshot.Element);
 
-            var generator = new SnapshotGenerator(_testSource, SnapshotGeneratorSettings.Default);
+            var generator = new SnapshotGenerator(_testResolver, SnapshotGeneratorSettings.Default);
 
             nav.JumpToFirst("Questionnaire.telecom");
             Assert.IsTrue(generator.expandElement(nav));
@@ -468,7 +472,7 @@ namespace Hl7.Fhir.Specification.Tests
             const string Indent = "  ";
 
             // Prepare...
-            var sd = _testSource.GetStructureDefinition(srcProfileUrl);
+            var sd = _testResolver.FindStructureDefinition(srcProfileUrl);
             Assert.IsNotNull(sd);
             Assert.IsNotNull(sd.Snapshot);
 
@@ -482,7 +486,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(elem);
 
             // Test...
-            _generator = new SnapshotGenerator(_testSource, _settings);
+            _generator = new SnapshotGenerator(_testResolver, _settings);
             var result = _generator.ExpandElement(elems, elem);
 
             // Verify results
@@ -499,8 +503,8 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(elemTypeCode);
                 var elemProfile = elemType.Profile.FirstOrDefault();
                 var sdType = elemProfile != null
-                    ? _testSource.GetStructureDefinition(elemProfile)
-                    : _testSource.GetStructureDefinitionForCoreType(elemTypeCode);
+                    ? _testResolver.FindStructureDefinition(elemProfile)
+                    : _testResolver.FindStructureDefinitionForCoreType(elemTypeCode);
 
                 Assert.IsNotNull(sdType);
                 Assert.IsNotNull(sdType.Snapshot);
@@ -606,7 +610,7 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
             // var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
 
             Assert.IsNotNull(sd);
@@ -615,7 +619,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             _settings.ExpandExternalProfiles = true;
             _settings.MarkChanges = true;
-            _generator = new SnapshotGenerator(_testSource, _settings);
+            _generator = new SnapshotGenerator(_testResolver, _settings);
 
             // [WMR 20160817] Attach custom event handlers
             SnapshotBaseProfileHandler profileHandler = (sender, args) =>
@@ -641,7 +645,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareBaseElement += elementHandler;
 
             StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, _testSource, out expanded);
+            generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
             assertBaseDefs(expanded);
 

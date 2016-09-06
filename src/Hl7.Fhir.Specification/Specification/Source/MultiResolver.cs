@@ -18,15 +18,15 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from a list of other IArtifactSources
     /// </summary>
-    public class MultiSource : IArtifactSource
+    public class MultiResolver : IResourceResolver
     {
-        private readonly List<IArtifactSource> _sources = new List<IArtifactSource>();
+        private readonly List<IResourceResolver> _sources = new List<IResourceResolver>();
 
         /// <summary>
         /// Custom implementation of the artifact resolver
         /// </summary>
         /// <param name="sources">A custom set of IArtifact sources. Resolving occurs in order of input</param>
-        public MultiSource(IEnumerable<IArtifactSource> sources)
+        public MultiResolver(IEnumerable<IResourceResolver> sources)
         {
             if (sources == null) throw Error.ArgumentNull("sources");
 
@@ -37,36 +37,49 @@ namespace Hl7.Fhir.Specification.Source
         /// Custom implementation of the artifact resolver
         /// </summary>
         /// <param name="sources">A custom set of IArtifact sources. Resolving occurs in order of input</param>
-        public MultiSource(params IArtifactSource[] sources)
+        public MultiResolver(params IResourceResolver[] sources)
         {
             if (sources == null) throw Error.ArgumentNull("sources");
 
             _sources.AddRange(sources);
         }
 
-        public void AddSource(IArtifactSource source)
+        public void AddSource(IResourceResolver source)
         {
-            _sources.Add(source);
+            Sources.Add(source);
         }
 
-        public void RemoveSource(IArtifactSource source)
+        public void RemoveSource(IResourceResolver source)
         {
-            _sources.Remove(source);
+            Sources.Remove(source);
         }
 
-        public IList<IArtifactSource> Sources
+
+        public void Push(IResourceResolver source)
+        {
+            Sources.Insert(0, source);
+        }
+
+        public void Pop()
+        {
+            if (Sources.Any()) _sources.RemoveAt(0);
+        }
+
+        public IList<IResourceResolver> Sources
         { 
             get { return _sources; } 
         }
 
    
-        public Stream LoadArtifactByName(string name)
+        public Resource ResolveByUri(string uri)
         {
+            if (uri == null) throw Error.ArgumentNull("uri");
+
             foreach (var source in Sources)
             {
                 try
                 {
-                    var result = source.LoadArtifactByName(name);
+                    var result = source.ResolveByUri(uri);
 
                     if (result != null) return result;
                 }
@@ -80,38 +93,20 @@ namespace Hl7.Fhir.Specification.Source
             return null;
         }
 
-        public IEnumerable<string> ListArtifactNames()
+
+        public Resource ResolveByCanonicalUri(string uri)
         {
-            var result = new List<string>();
+            if (uri == null) throw Error.ArgumentNull("uri");
 
             foreach (var source in Sources)
             {
                 try
                 {
-                    result.AddRange(source.ListArtifactNames());
-                }
-                catch (NotImplementedException)
-                {
-                    // Don't do anything, just try the next IArtifactSource
-                }
-            }
-
-            return result;
-        }
-
-        public Resource LoadConformanceResourceByUrl(string url)
-        {
-            if (url == null) throw Error.ArgumentNull("url");
-
-            foreach (var source in Sources)
-            {
-                try
-                {
-                    var result = source.LoadConformanceResourceByUrl(url);
+                    var result = source.ResolveByCanonicalUri(uri);
 
                     if (result != null) return result;
                 }
-                catch(NotImplementedException)
+                catch (NotImplementedException)
                 {
                     // Don't do anything, just try the next IArtifactSource
                 }
@@ -119,25 +114,6 @@ namespace Hl7.Fhir.Specification.Source
 
             // None of the IArtifactSources succeeded in returning a result
             return null;
-        }
-
-        public IEnumerable<ConformanceInformation> ListConformanceResources()
-        {
-            var result = new List<ConformanceInformation>();
-
-            foreach (var source in Sources)
-            {
-                try
-                {
-                    result.AddRange(source.ListConformanceResources());
-                }
-                catch (NotImplementedException)
-                {
-                    // Don't do anything, just try the next IArtifactSource
-                }
-            }
-
-            return result;
         }
     }
 }

@@ -15,42 +15,30 @@ using System.Net;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    public class WebSource : IArtifactSource
+    public class WebResolver : IResourceResolver
     {
         /// <summary>Default constructor.</summary>
-        public WebSource()  { }
+        public WebResolver()
+        {
+        }
 
         Func<Uri, FhirClient> _clientFactory;
 
-        /// <summary>Create a new <see cref="WebSource"/> instance that supports a custom <see cref="FhirClient"/> implementation.</summary>
+        /// <summary>Create a new <see cref="WebResolver"/> instance that supports a custom <see cref="FhirClient"/> implementation.</summary>
         /// <param name="fhirClientFactory">
         /// Factory function that should create a new <see cref="FhirClient"/> instance for the specified <see cref="Uri"/>.
         /// If this parameter equals <c>null</c>, then the new instance creates a default <see cref="FhirClient"/> instance.
         /// </param>
-        public WebSource(Func<Uri, FhirClient> fhirClientFactory) { _clientFactory = fhirClientFactory; }
+        public WebResolver(Func<Uri, FhirClient> fhirClientFactory) { _clientFactory = fhirClientFactory; }
 
-        public System.IO.Stream LoadArtifactByName(string name)
+
+        public Hl7.Fhir.Model.Resource ResolveByUri(string uri)
         {
-            throw new NotImplementedException();        // support only url-based artifacts
-        }
+            if (uri == null) throw Error.ArgumentNull("uri");
 
-        public IEnumerable<string> ListArtifactNames()
-        {
-            throw new NotImplementedException();
-        }
+            if (!ResourceIdentity.IsRestResourceIdentity(uri)) return null;     // Weakness in FhirClient, need to have the base :-(  So return null if we cannot determine it.
 
-        public IEnumerable<ConformanceInformation> ListConformanceResources()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Hl7.Fhir.Model.Resource LoadConformanceResourceByUrl(string url)
-        {
-            if (url == null) throw Error.ArgumentNull("identifier");
-
-            if (!ResourceIdentity.IsRestResourceIdentity(url)) return null;     // Weakness in FhirClient, need to have the base :-(  So return null if we cannot determine it.
-
-            var id = new ResourceIdentity(url);
+            var id = new ResourceIdentity(uri);
 
             // [WMR 20150810] Use custom FhirClient factory if specified
             var client = _clientFactory != null ? _clientFactory(id.BaseUri) : new FhirClient(id.BaseUri) { Timeout = 5000 };
@@ -58,8 +46,7 @@ namespace Hl7.Fhir.Specification.Source
             try
             {
                 var resultResource = client.Read<Resource>(id);
-                ConformanceInformation ci = ConformanceInformation.FromResource(resultResource, url);
-                resultResource.AddAnnotation(ci);
+                resultResource.AddAnnotation(new OriginInformation { Origin = uri });
                 return resultResource;
             }
             catch (FhirOperationException)
@@ -71,6 +58,11 @@ namespace Hl7.Fhir.Specification.Source
                 return null;
             }
 
+        }
+
+        public Resource ResolveByCanonicalUri(string uri)
+        {
+            return ResolveByUri(uri);
         }
     }
 }

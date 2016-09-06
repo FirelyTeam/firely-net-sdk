@@ -19,26 +19,26 @@ namespace Hl7.Fhir.Specification.Source
         /// Default only searches in the executable directory files and the core zip. 
         /// This non-cached resolver is primary for testing purposes.
         /// </summary>
-        public static IConformanceStore CreateDefault()
+        public static IResourceResolver CreateDefault()
         {
-            return new MultiSource(new DirectorySource(true), ZipSource.CreateValidationSource(), new WebSource());
+            return new MultiResolver(new DirectorySource(true), ZipSource.CreateValidationSource(), new WebResolver());
         }
 
         /// <summary>
         /// Creates an offline non-cached ArtifactResolver
         /// Default only searches in the executable directory files and the core zip. 
         /// </summary>
-        public static IConformanceStore CreateOffline()
+        public static IResourceResolver CreateOffline()
         {
             // Making requests to a WebArtifactSource is time consuming. So for performance we have an Offline Resolver.
-            return new MultiSource(new DirectorySource(true), ZipSource.CreateValidationSource());
+            return new MultiResolver(new DirectorySource(true), ZipSource.CreateValidationSource());
         }
 
         /// <summary>
         /// Creates a default cached ArtifactResolver
         /// Default only searches in the executable directory files and the core zip. 
         /// </summary>
-        public static IConformanceStore CreateCachedDefault()
+        public static IResourceResolver CreateCachedDefault()
         {
             return new CachedResolver(CreateDefault());
         }
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Creates a default cached ArtifactResolver
         /// Default only searches in the executable directory files and the core zip. 
         /// </summary>
-        public static IConformanceStore CreateCachedDefault()
+        public static IResourceResolver CreateCachedOffline()
         {
             return new CachedResolver(CreateOffline());
         }

@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>
     /// Reads FHIR artifacts (Profiles, ValueSets, ...) from validation.zip/validation-min.zip
     /// </summary>
-    public class ZipSource : IArtifactSource
+    public class ZipSource : IConformanceSource, IArtifactSource
     {
         public static ZipSource CreateValidationSource()
         {
@@ -75,25 +75,41 @@ namespace Hl7.Fhir.Specification.Source
         }
 
 
-        public IEnumerable<ConformanceInformation> ListConformanceResources()
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?))
         {
             prepare();
-            return _filesSource.ListConformanceResources();
+            return _filesSource.ListResourceUris(filter);
         }
 
-
-        /// <summary>
-        /// Locates the file belonging to the given artifactId on a filesystem (within the store directory given in the constructor)
-        /// and reads an artifact with the given id from it.
-        /// </summary>
-        /// <param name="url">identifying uri of the conformance resource to find</param>
-        /// <returns>An artifact (Profile, ValueSet, etc) or null if an artifact with the given uri could not be located</returns>
-        public Resource LoadConformanceResourceByUrl(string url)
+        public ValueSet FindValueSetBySystem(string system)
         {
             prepare();
+            return _filesSource.FindValueSetBySystem(system);
+        }
 
-            return _filesSource.LoadConformanceResourceByUrl(url);
-        }                
+        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
+        {
+            prepare();
+            return _filesSource.FindConceptMaps(sourceUri, targetUri);
+        }
+
+        public NamingSystem FindNamingSystem(string uniqueid)
+        {
+            prepare();
+            return _filesSource.FindNamingSystem(uniqueid);
+        }
+
+        public Resource ResolveByUri(string uri)
+        {
+            prepare();
+            return _filesSource.ResolveByUri(uri);
+        }
+
+        public Resource ResolveByCanonicalUri(string uri)
+        {
+            prepare();
+            return _filesSource.ResolveByCanonicalUri(uri);
+        }
     }
 
 #endif

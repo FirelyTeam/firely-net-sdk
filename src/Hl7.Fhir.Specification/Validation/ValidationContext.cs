@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Validation
 
     public class ValidationContext
     {
-        public IConformanceStore ArtifactSource { get; set; }
+        public IResourceResolver ResourceResolver { get; set; }
 
         /// <summary>
         /// The validator needs StructureDefinitions to have a snapshot form to function. If a StructureDefinition

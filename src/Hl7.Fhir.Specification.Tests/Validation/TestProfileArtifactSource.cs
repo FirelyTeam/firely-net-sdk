@@ -11,7 +11,7 @@ using Hl7.Fhir.Specification.Snapshot;
 
 namespace Hl7.Fhir.Validation
 {
-    internal class TestProfileArtifactSource : IArtifactSource
+    internal class TestProfileArtifactSource : IResourceResolver
     {
         List<StructureDefinition> TestProfiles = new List<StructureDefinition>
         {
@@ -24,25 +24,17 @@ namespace Hl7.Fhir.Validation
             buildWeightHeightObservation()
         };
 
-        public IEnumerable<string> ListArtifactNames()
+
+        public Resource ResolveByCanonicalUri(string uri)
         {
-            throw new NotImplementedException();
+            return TestProfiles.SingleOrDefault(p => p.Url == uri);
         }
 
-        public IEnumerable<ConformanceInformation> ListConformanceResources()
+        public Resource ResolveByUri(string uri)
         {
-            throw new NotImplementedException();
+            return ResolveByCanonicalUri(uri);
         }
 
-        public Stream LoadArtifactByName(string artifactName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Resource LoadConformanceResourceByUrl(string url)
-        {
-            return TestProfiles.SingleOrDefault(p => p.Url == url);
-        }
 
         private static StructureDefinition buildDutchPatient()
         {

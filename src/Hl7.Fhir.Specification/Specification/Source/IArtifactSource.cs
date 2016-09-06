@@ -14,7 +14,7 @@ using Hl7.Fhir.Model;
 namespace Hl7.Fhir.Specification.Source
 {
 
-    public interface IArtifactStore
+    public interface IArtifactSource
     {
         IEnumerable<string> ListArtifactNames();
         Stream LoadArtifactByName(string artifactName);

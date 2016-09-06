@@ -77,8 +77,12 @@
     </Compile>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Specification\Source\CachedResolver.cs" />
+    <Compile Include="Specification\Source\IConformanceSource.cs" />
+    <Compile Include="Specification\Source\MultiResolver.cs" />
+    <Compile Include="Specification\Source\OriginInformation.cs" />
     <Compile Include="Specification\Source\ResourceResolverExtensions.cs" />
-    <Compile Include="Specification\Source\IArtifactStore.cs" />
+    <Compile Include="Specification\Source\IArtifactSource.cs" />
+    <Compile Include="Specification\Source\WebResolver.cs" />
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\ChildConstraintExtensions.cs" />
     <Compile Include="Validation\FixedPatternExtensions.cs" />
@@ -99,15 +103,11 @@
     <Compile Include="Specification\Snapshot\SnapshotGeneratorProfileInfo.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
     <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
-    <Compile Include="Specification\Source\MultiSource.cs" />
     <Compile Include="Specification\Source\SourceFactory.cs" />
     <Compile Include="Specification\Source\ZipSource.cs" />
     <Compile Include="Specification\Source\DirectorySource.cs" />
     <Compile Include="Specification\Source\IResourceResolver.cs" />
     <Compile Include="Specification\Source\SchemaCollection.cs" />
-    <Compile Include="Specification\Source\WebSource.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Specification\Source\ResourceStreamScanner.cs" />
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

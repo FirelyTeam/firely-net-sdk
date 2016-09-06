@@ -21,74 +21,33 @@ namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
 #if PORTABLE45
-	public class PortableArtifactResolverTests
+	public class PortableResourceResolverTests
 #else
-    public class ArtifactResolverTests
+    public class ResolverTests
 #endif
     {
 #if !PORTABLE45
         [TestInitialize]
         public void SetupSource()
         {
-            source = SourceFactory.CreateOffline();
+            source = ZipSource.CreateValidationSource();
         }
 
-        IArtifactSource source = null;
+        IResourceResolver source = null;
 
-
-        [TestMethod]
-        public void GetConceptMaps()
-        {
-            var conceptMapUrls = source.ListConformanceResources().Where(info => info.Type == ResourceType.ConceptMap).Select(info => info.Canonical);
-            var conceptMaps = conceptMapUrls.Select( url => (ConceptMap)source.LoadConformanceResourceByUrl(url));
-
-            Assert.IsTrue(conceptMaps.Count() > 0);
-            Assert.IsTrue(conceptMaps.Any(cm => cm.Id == "v2-address-use"));
-        }
-
-        [TestMethod]
-        public void ResolveExtensions()
-        {
-            var extDefn = source.GetExtensionDefinition("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
-            Assert.IsNotNull(extDefn);
-            Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
-
-            try
-            {
-                extDefn = source.GetExtensionDefinition("http://hl7.org/fhir/StructureDefinition/Patient");
-                Assert.Fail();
-            }
-            catch
-            {
-                ;
-            }
-        }
 
         [TestMethod]
         public void ResolveStructures()
         {
-            var extDefn = source.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
+            var extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
-            extDefn = source.GetStructureDefinition("http://hl7.org/fhir/StructureDefinition/Patient");
+            extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient");
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
         }
 
-
-        [TestMethod]
-        public void ResolveValueSet()
-        {
-            var vsDICOM = source.GetValueSetBySystem("http://nema.org/dicom/dicm");
-            Assert.IsNotNull(vsDICOM);
-
-            vsDICOM = source.GetValueSet(vsDICOM.Url);
-            Assert.IsNotNull(vsDICOM);
-
-            vsDICOM = source.GetValueSetBySystem("http://nema.org/dicom/dicmQQQQ");
-            Assert.IsNull(vsDICOM);            
-        }
 
         [TestMethod]
         public void GetCoreModelTypeUrls()
