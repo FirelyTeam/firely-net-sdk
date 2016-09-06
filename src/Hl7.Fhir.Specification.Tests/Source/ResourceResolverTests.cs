@@ -196,26 +196,26 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.WriteLine(String.Format("First time {0}, second time {1}", sw.ElapsedMilliseconds, sw2.ElapsedMilliseconds));
         }
 
-        [TestMethod]
-        public void RemoveNarrativeFromSpecFiles()
-        {
-            var files = Directory.EnumerateFiles(@"C:\Git\fhir-net-api\src\Hl7.Fhir.Specification\data", "*.xml");
+        //[TestMethod]
+        //public void RemoveNarrativeFromSpecFiles()
+        //{
+        //    var files = Directory.EnumerateFiles(@"C:\Git\fhir-net-api\src\Hl7.Fhir.Specification\data", "*.xml");
 
-            foreach(var file in files)
-            {
-                var xdoc = XDocument.Load(file);
-                var narrative = xdoc.Elements(XmlNs.XFHIR + "Bundle").Elements(XmlNs.XFHIR + "entry").Elements(XmlNs.XFHIR + "resource")
-                        .Elements().Elements(XmlNs.XFHIR + "text").Elements(XmlNs.XHTMLNS + "div");
-                foreach(var narrativeElement in narrative)
-                {
-                    narrativeElement.RemoveNodes();
-                    narrativeElement.Add(new XElement(XmlNs.XHTMLNS + "p",
-                        new XText("The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library")));
-                }
+        //    foreach(var file in files)
+        //    {
+        //        var xdoc = XDocument.Load(file);
+        //        var narrative = xdoc.Elements(XmlNs.XFHIR + "Bundle").Elements(XmlNs.XFHIR + "entry").Elements(XmlNs.XFHIR + "resource")
+        //                .Elements().Elements(XmlNs.XFHIR + "text").Elements(XmlNs.XHTMLNS + "div");
+        //        foreach(var narrativeElement in narrative)
+        //        {
+        //            narrativeElement.RemoveNodes();
+        //            narrativeElement.Add(new XElement(XmlNs.XHTMLNS + "p",
+        //                new XText("The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library")));
+        //        }
 
-                xdoc.Save(file);
-            }
-        }
+        //        xdoc.Save(file);
+        //    }
+        //}
     }
 #endif
 }
