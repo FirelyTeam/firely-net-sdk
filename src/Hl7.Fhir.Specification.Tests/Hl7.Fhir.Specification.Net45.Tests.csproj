@@ -71,6 +71,8 @@
     <Compile Include="..\Hl7.Fhir.Core.Tests\XmlAssert.cs">
       <Link>XmlAssert.cs</Link>
     </Compile>
+    <Compile Include="JsonNavigatorTests.cs" />
+    <Compile Include="JTokenExtensionsTests.cs" />
     <Compile Include="Source\ResolverAndSourceExtensionTests.cs" />
     <Compile Include="Source\ConformanceSourceTests.cs" />
     <Compile Include="Source\ArtifactSourceTests.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Source\ResourceResolverTests.cs" />
     <Compile Include="Validation\PrimitiveValidation.cs" />
     <Compile Include="Validation\TestProfileArtifactSource.cs" />
+    <Compile Include="XsltContextTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestData\snapshot-test\ChrisGrenz\extension-structuredefinition-explicit-type-name.xml">

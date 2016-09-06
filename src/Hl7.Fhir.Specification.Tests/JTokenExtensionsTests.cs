@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var bd = children.Single(c => c.Name == "identifier");
             Assert.IsTrue(bd.Value is JObject);     // complex remains a complex
-            Assert.IsNotNull(((JObject)bd.Value)["label"]);
+            Assert.IsNotNull(((JObject)bd.Value)["system"]);
         }
 
 
