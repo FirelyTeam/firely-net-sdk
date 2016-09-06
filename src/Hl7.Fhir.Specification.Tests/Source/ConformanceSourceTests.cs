@@ -112,8 +112,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(sd.Contains("http://hl7.org/fhir/StructureDefinition/shareablevalueset"));
             Assert.IsTrue(de.Contains("http://hl7.org/fhir/DataElement/Device.manufactureDate"));
             Assert.IsTrue(sp.Contains("http://hl7.org/fhir/SearchParameter/Condition-onset-info"));
-            
-            // TODO: Are there any other conformance resources present in validation.zip?           
+            Assert.IsTrue(od.Contains("http://hl7.org/fhir/OperationDefinition/ValueSet-validate-code"));
+            Assert.IsTrue(cf.Contains("http://hl7.org/fhir/Conformance/base"));
         }
 
         [TestMethod]
