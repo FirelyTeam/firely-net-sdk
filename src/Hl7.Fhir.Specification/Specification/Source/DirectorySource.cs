@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Specification.Source
             if (filter != null)
                 scan = scan.Where(dsi => dsi.ResourceType == filter);
 
-            return scan.Select(dsi => dsi.Canonical);
+            return scan.Select(dsi => dsi.ResourceUri);
         }
 
 
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Specification.Source
             if(targetUri != null)
                 infoList = infoList.Where(ci =>ci.ConceptMapTarget.Contains(targetUri));
 
-            return infoList.Cast<ConceptMap>();
+            return infoList.Select(info => getResourceFromScannedSource(info)).Where(r => r != null).Cast<ConceptMap>();
         }
 
         public NamingSystem FindNamingSystem(string uniqueId)
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Specification.Source
             if (uniqueId == null) throw Error.ArgumentNull("uniqueId");
             prepareResources();
 
-            var info = _resourceScanInformation.SingleOrDefault(ci => ci.ValueSetSystem == uniqueId);
+            var info = _resourceScanInformation.SingleOrDefault(ci => ci.UniqueIds.Contains(uniqueId));
             if (info == null) return null;
 
             return getResourceFromScannedSource(info) as NamingSystem;

@@ -22,13 +22,13 @@ namespace Hl7.Fhir.Specification.Source
     {
         public static ZipSource CreateValidationSource()
         {
-            var path = Path.Combine(DirectorySource.SpecificationDirectory, "validation.xml.zip");
+            var path = Path.Combine(DirectorySource.SpecificationDirectory, "specification.zip");
             if(File.Exists(path)) return new ZipSource(path);
 
-            path = Path.Combine(DirectorySource.SpecificationDirectory, "validation-min.xml.zip");
-            if (File.Exists(path)) return new ZipSource(path);
+            //path = Path.Combine(DirectorySource.SpecificationDirectory, "validation-min.xml.zip");
+            //if (File.Exists(path)) return new ZipSource(path);
 
-            throw new FileNotFoundException("Cannot create a ZipArtifactSource for validation.xml.zip: neither validation.xml.zip nor validation-min.xml.zip was found");
+            throw new FileNotFoundException("Cannot create a ZipArtifactSource for the core specification: specification.zip was not found");
         }
 
         private readonly string CACHE_KEY = "FhirArtifactCache-" + typeof(ZipSource).Assembly.GetName().Version.ToString();

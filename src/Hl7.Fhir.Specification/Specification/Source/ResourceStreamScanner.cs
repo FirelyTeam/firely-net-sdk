@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Specification.Source
                         new ResourceScanInformation()
                         {
                             ResourceType = EnumUtility.ParseLiteral<ResourceType>(res.Name.LocalName).Value,
-                            ResourceUri = res.Attribute("scannerUrl").Value,
+                            ResourceUri =  fullUrl(res),
                             Canonical = getPrimitiveValueElement(res, "url"),
                             ValueSetSystem = getValueSetSystem(res),
                             UniqueIds = getUniqueIds(res),
@@ -92,11 +92,15 @@ namespace Hl7.Fhir.Specification.Source
 
         private string getPrimitiveValueElement(XElement element, string name)
         {
-            return element.Element(XmlNs.XFHIR + name)
+            return element.Elements(XmlNs.XFHIR + name)
                     .Attributes("value")
                     .Select(a => a.Value).SingleOrDefault();
         }
 
+        private class FullUrlAnnotation
+        {
+            public string FullUrl { get; set; }
+        }
 
         // Use a forward-only XmlReader to scan through a possibly huge bundled file,
         // and yield the feed entries, so only one entry is in memory at a time
@@ -121,7 +125,7 @@ namespace Hl7.Fhir.Specification.Source
                         {
                             var resourceNode = entryNode.Element(XName.Get("resource", XmlNs.FHIR));
                             var resource = resourceNode.Elements().First();
-                            resource.Add(new XAttribute("scannerUrl", fullUrl.Value));
+                            resource.AddAnnotation(new FullUrlAnnotation { FullUrl = fullUrl.Value } );
                             yield return resource;
                         }
                     }
@@ -163,9 +167,20 @@ namespace Hl7.Fhir.Specification.Source
 
             var resources = StreamResources();
 
-            return resources.Where(res => res.Attribute("scannerUrl").Value == uri).SingleOrDefault();
+            return resources.Where(res => fullUrl(res) == uri).SingleOrDefault();
         }
 
+        private static string fullUrl(XElement resourceElement)
+        {
+            var ann = resourceElement.Annotation<FullUrlAnnotation>();
+
+            if (ann != null)
+            {
+                return ann.FullUrl;
+            }
+            else
+                return null;
+        }
 
 
         internal class ResourceScanInformation
