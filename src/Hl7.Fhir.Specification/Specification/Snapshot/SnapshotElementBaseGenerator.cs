@@ -20,12 +20,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
     partial class SnapshotGenerator
     {
+        /// <summary>Initialize the <see cref="ElementDefinition.Base"/> components of the <see cref="StructureDefinition.Snapshot"/> component.</summary>
+        /// <param name="structureDef">A <see cref="StructureDefinition"/> instance with a valid snapshot component.</param>
         public void GenerateSnapshotElementsBase(StructureDefinition structureDef)
         {
             if (structureDef == null) { throw Error.ArgumentNull("structureDef"); }
-            if (structureDef.Snapshot == null) { throw Error.Argument("structureDef", "StructureDefinition.Snapshot component is null."); }
+            if (!structureDef.HasSnapshot) { throw Error.Argument("structureDef", "StructureDefinition.Snapshot component is null or empty."); }
             clearIssues();
-            GenerateSnapshotElementsBase(structureDef);
+            generateSnapshotElementsBase(structureDef);
         }
 
         private void generateSnapshotElementsBase(StructureDefinition structureDef)
@@ -131,31 +133,24 @@ namespace Hl7.Fhir.Specification.Snapshot
             Debug.Assert(elem != null);
             if (elem.Base == null || (_settings.NormalizeElementBase && !isCreatedBySnapshotGenerator(elem.Base)))
             {
-                Debug.Assert(baseElem != null);
-
-                if (!isRootElement && _settings.NormalizeElementBase)
+                // [WMR 20160903] Explicitly exclude root types (Resource and Element), they have no base
+                if (isRootTypeElementPath(elem.Path))
                 {
-                    if (baseElem.Base != null)
-                    {
-                        elem.Base = createBaseComponent(
-                            baseElem.Base.MaxElement,
-                            baseElem.Base.MinElement,
-                            baseElem.Base.PathElement
-                        );
-                    }
-                    // [WMR 20160903] Resource has no base
-                    else if (!elem.Path.StartsWith("Resource.") && !elem.Path.StartsWith("Element."))
-                    {
-                        // Generate base component from base element
-                        elem.Base = createBaseComponent(
-                            baseElem.MaxElement,
-                            baseElem.MinElement,
-                            baseElem.PathElement
-                        );
-                    }
+                    return;
+                }
+
+                if (_settings.NormalizeElementBase && baseElem.Base != null) //  && !isRootElement
+                {
+                    // Inherit Base component from base element
+                    elem.Base = createBaseComponent(
+                        baseElem.Base.MaxElement,
+                        baseElem.Base.MinElement,
+                        baseElem.Base.PathElement
+                    );
                 }
                 else
                 {
+                    // Initialize new Base component from base element
                     elem.Base = createBaseComponent(
                         baseElem.MaxElement,
                         baseElem.MinElement,
@@ -166,6 +161,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Debug.Print("[ensureElementBase] #{0} Path = {1}  Base = {2}".FormatWith(elem.GetHashCode(), elem.Path, elem.Base.Path));
                 Debug.Assert(elem.Base == null || isCreatedBySnapshotGenerator(elem.Base));
             }
+        }
+
+        bool isRootTypeElementPath(string path)
+        {
+            var root = ElementDefinitionNavigator.GetPathRoot(path);
+            // Note: the API could provide a utility method to determine if a type name represents a root type (StructureDef.Base == null)
+            return root == "Resource" || root == "Element";
         }
 
         private ElementDefinition.BaseComponent createBaseComponent(FhirString maxElement, Integer minElement, FhirString pathElement)

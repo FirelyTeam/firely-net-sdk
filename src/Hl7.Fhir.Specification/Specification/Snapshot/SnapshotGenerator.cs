@@ -574,19 +574,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
 
-                // [WMR 20160902] Rebase the base profile (e.g. DomainResource)
+                // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
                 if (!structure.IsConstraint)
                 {
-                    var rootElem = snapshot.Element.FirstOrDefault();
-                    if (!rootElem.IsRootElement())
-                    {
-                        // Fatal error...
-                        throw Error.Argument("structure", "Base profile '{0}' is invalid, snapshot component does not start at the root element definition.".FormatWith(baseStructure.Url));
-                    }
-                    // Always regenerate the root element base (don't inherit!)
-                    rootElem.Base = null;
-
-                    rootElem = differential.Element.FirstOrDefault();
+                    var rootElem = differential.Element.FirstOrDefault();
                     if (!rootElem.IsRootElement())
                     {
                         // Fatal error...
