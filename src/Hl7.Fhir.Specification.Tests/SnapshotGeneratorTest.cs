@@ -37,9 +37,7 @@ namespace Hl7.Fhir.Specification.Tests
             // MarkChanges = false,
             MergeTypeProfiles = true,
             // Throw on unresolved profile references; must include in TestData folder
-            // IgnoreUnresolvedProfiles = false,
             ExpandExternalProfiles = false,
-            // RewriteElementBase = false,
             NormalizeElementBase = false
         };
 
@@ -225,12 +223,18 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/SD/patient-with-extensions");
             var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
             Assert.IsNotNull(sd);
+            Assert.IsTrue(sd.HasSnapshot);
+
+            // [WMR 20160906] Remove ElementDefinition@id attributes (not supported yet)
+            foreach (var elem in sd.Snapshot.Element)
+            {
+                elem.ElementId = null;
+            }
 
             // dumpReferences(sd);
             _settings.NormalizeElementBase = true;
             _settings.MergeTypeProfiles = true;
             _settings.ExpandExternalProfiles = true;
-            // _settings.IgnoreUnresolvedProfiles = false;
 
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
@@ -283,7 +287,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             dumpReferences(sd, true);
 
-            // _settings.IgnoreUnresolvedProfiles = true;   // On missing profile, aggregate information and continue
             _settings.MergeTypeProfiles = true;             // Merge the external type/extension profiles
             _settings.ExpandExternalProfiles = false;       // Don't generate missing snapshots
             _settings.ExpandUnconstrainedElements = true;   // Force the external type profiles to be expanded (even w/o any diff constraints)

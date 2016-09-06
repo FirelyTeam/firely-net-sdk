@@ -61,15 +61,16 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // For extensions, the base definition is irrelevant since they describe infrastructure, and the diff should contain the real meaning for the elements
                 // In case the diff doesn't have these, give some generic defaults.
-                if (isExtensionConstraint)
-                {
-                    snap.Short = "Extension"; OnConstraint(snap.ShortElement);
-                    snap.Definition = "An Extension"; OnConstraint(snap.DefinitionElement);
-                    snap.Comments = null;
-                    snap.Requirements = null;
-                    snap.AliasElement = new List<FhirString>();
-                    snap.Mapping = new List<ElementDefinition.MappingComponent>();
-                }
+                // [WMR 20160906] Wrong! Merge extension element properties from base extension element
+                //if (isExtensionConstraint)
+                //{
+                //    snap.Short = "Extension"; OnConstraint(snap.ShortElement);
+                //    snap.Definition = "An Extension"; OnConstraint(snap.DefinitionElement);
+                //    snap.Comments = null;
+                //    snap.Requirements = null;
+                //    snap.AliasElement = new List<FhirString>();
+                //    snap.Mapping = new List<ElementDefinition.MappingComponent>();
+                //}
 
                 snap.ShortElement = mergePrimitiveAttribute(snap.ShortElement, diff.ShortElement);
                 snap.DefinitionElement = mergePrimitiveAttribute(snap.DefinitionElement, diff.DefinitionElement, allowAppend: true);

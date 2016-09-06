@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     // In this case we create a "prefab" extension slice (with just slicing info)
                     // that's simply merged with the original element in base
-                    slicingEntry = createExtensionSlicingEntry();
+                    slicingEntry = createExtensionSlicingEntry(snap.Current);
                 }
                 else
                 {
@@ -479,9 +479,20 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
 
-        static ElementDefinition createExtensionSlicingEntry()
+        static ElementDefinition createExtensionSlicingEntry(ElementDefinition baseExtensionElement)
         {
             // Create a pre-fab extension slice, filled with sensible defaults
+            // TODO: Derive from base extension element
+#if true
+            var elem = baseExtensionElement != null ? (ElementDefinition)baseExtensionElement.DeepCopy() : new ElementDefinition();
+            elem.Slicing = new ElementDefinition.SlicingComponent()
+            {
+                Discriminator = new[] { "url" },
+                Ordered = false,
+                Rules = ElementDefinition.SlicingRules.Open
+            };
+            return elem;
+#else
             return new ElementDefinition()
             {
                 Slicing = new ElementDefinition.SlicingComponent()
@@ -491,6 +502,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     Rules = ElementDefinition.SlicingRules.Open
                 }
             };
+#endif
         }
 
         /// <summary>
