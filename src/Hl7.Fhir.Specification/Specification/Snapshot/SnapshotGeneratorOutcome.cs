@@ -78,17 +78,17 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Snapshot's element turns out not to be expandable, so we can't move to the desired path
         // "Differential has nested constraints for node '{0}', but this is a leaf node in base"
         // Differential specifies constraint on child element of a leaf node in the base, i.e. node without child elements
-        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHILD_CONSTRAINT = Issue.Create(10001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        //public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHILD_CONSTRAINT = Issue.Create(10001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
-        void addIssueInvalidChildConstraint(ElementDefinition elementDef) { addIssueInvalidChildConstraint(ToNamedNode(elementDef)); }
-        void addIssueInvalidChildConstraint(INamedNode location)
-        {
-            addIssue(
-                PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT,
-                "Differential specifies invalid child constraints on leaf element '{0}'.".FormatWith(location != null ? location.Path : null),
-                location
-            );
-        }
+        //void addIssueInvalidChildConstraint(ElementDefinition elementDef) { addIssueInvalidChildConstraint(ToNamedNode(elementDef)); }
+        //void addIssueInvalidChildConstraint(INamedNode location)
+        //{
+        //    addIssue(
+        //        PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT,
+        //        "Differential specifies invalid child constraints on leaf element '{0}'.".FormatWith(location != null ? location.Path : null),
+        //        location
+        //    );
+        //}
         
         void addIssueInvalidNameReference(ElementDefinition elementDef, string name) { addIssueInvalidNameReference(ToNamedNode(elementDef), name); }
         void addIssueInvalidNameReference(INamedNode location, string name)

@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // EXPERIMENTAL!
         // Force expansion of all external profiles, disregarding any existing snapshot components.
         // </summary>
-        // public bool ForceExpandAll { get; set; }
+        public bool ForceExpandAll { get; set; }
 
         /// <summary>
         /// Mark all elements in the snapshot that are constrained with respect to the base profile.

@@ -102,6 +102,15 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             var result = new List<MatchInfo>();
 
+            // [WMR 20160906] DEBUG: http://example.com/fhir/StructureDefinition/patient-research-authorization
+            //if (diffNav.Elements.Count == 11
+            //    && snapNav.Elements.Count == 5
+            //    && diffNav.Elements[1].Path == "Extension.url"
+            //    && snapNav.Elements[1].Path == "Extension.id")
+            //{
+            //    Debug.Fail("");
+            //}
+
             try
             {
                 do
@@ -173,8 +182,16 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // [WMR 20160801] Only emit slicing entry for actual extension elements (with extension profile url)
             // Do not emit slicing entry for abstract Extension base element definition (inherited from external profiles)
+            // [WMR 20160906] WRONG! Also need to handle complex extensions
             // bool diffIsExtension = diffNav.Current.IsExtension();
-            bool diffIsExtension = diffNav.Current.IsMappedExtension();
+            bool diffIsExtension = // diffNav.Current.IsMappedExtension()
+                diffNav.Current.IsExtension() &&
+                (
+                    diffNav.Current.PrimaryTypeProfile() != null                            // Extension element in a profile
+                    || ElementDefinitionNavigator.GetPathRoot(diffNav.Path) == "Extension"  // Complex extension child element
+                );
+
+
             var nextDiffChildName = nextChildName(diffNav);
             bool diffIsSliced = diffIsExtension || nextDiffChildName == diffNav.PathName;
             bool diffIsTypeSlice = snapNav.Current.IsChoice() && snapNav.IsCandidateTypeSlice(diffNav.PathName);

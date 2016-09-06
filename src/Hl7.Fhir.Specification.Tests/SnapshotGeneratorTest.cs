@@ -54,16 +54,33 @@ namespace Hl7.Fhir.Specification.Tests
         //[Ignore]
         public void GenerateExtensionSnapshot()
         {
-            var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
+            // var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
+
+            // TODO
+            var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
+            // var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-legal-case");
+
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
+            _settings.NormalizeElementBase = true;
+            _settings.ExpandExternalProfiles = true;
+            _settings.ForceExpandAll = true;
 
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
+
+            //var sdExt = _testSource.GetStructureDefinitionForCoreType(FHIRDefinedType.Extension);
+            //Assert.IsNotNull(sdExt);
+            //Assert.IsTrue(sdExt.HasSnapshot);
+            //Assert.IsTrue(sdExt.Snapshot.Element[0].Condition.Contains("ele-1"));
+            //Assert.IsTrue(sdExt.Snapshot.Element[0].Condition.Contains("ext-1"));
+
+            //Assert.IsTrue(expanded.Snapshot.Element[0].Condition.Contains("ele-1"));
+            //Assert.IsTrue(expanded.Snapshot.Element[0].Condition.Contains("ext-1"));
         }
 
         [TestMethod]
@@ -235,12 +252,24 @@ namespace Hl7.Fhir.Specification.Tests
             _settings.NormalizeElementBase = true;
             _settings.MergeTypeProfiles = true;
             _settings.ExpandExternalProfiles = true;
+            _settings.ForceExpandAll = true;
 
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testSource, out expanded);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
+
+            // Verify internal recursive expansion of base types, e.g. DomainResource
+            //var resourceDef = _testSource.GetStructureDefinitionForCoreType(FHIRDefinedType.Resource);
+            //Assert.IsNotNull(resourceDef);
+            //Assert.IsTrue(resourceDef.HasSnapshot);
+
+            //var domainResourceDef = _testSource.GetStructureDefinitionForCoreType(FHIRDefinedType.DomainResource);
+            //Assert.IsNotNull(domainResourceDef);
+            //Assert.IsTrue(domainResourceDef.HasSnapshot);
+
+            // TODO: test inheritance of condition/constraint/mapping
         }
 
         [TestMethod]
@@ -1017,9 +1046,12 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/BackboneElement");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
 
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/integer");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/positiveInt");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/string");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/code");
 
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/HumanName");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Quantity");
@@ -1029,13 +1061,14 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
 
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
 
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
 
-            // _settings.NormalizeElementBase = true;
+            _settings.NormalizeElementBase = true;
+            _settings.ForceExpandAll = true;
 
             StructureDefinition expanded;
             var result = generateSnapshotAndCompare(sd, _testSource, out expanded);

@@ -46,11 +46,21 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // to one. The name can then be changed to choiceXXXX, where XXXX is the name of the type.
                 if (snap.Path != diff.Path && snap.IsChoice() && diff.Type.Count() == 1)
                 {
-                    if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.ToString().Capitalize() != diff.Path)
+                    // [WMR 20160906] WRONG! Must also handle snap.Path="Extension.value[x]" vs. diff.Path="Extension.extension.value[x]
+                    // if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.ToString().Capitalize() != diff.Path)
+                    if (!ElementDefinitionNavigator.IsCandidateBaseElementPath(snap.Path, diff.Path))
+                    {
                         throw Error.InvalidOperation("Path cannot be changed from '{0}' to '{1}', since the type is sliced to '{2}'"
                                 .FormatWith(snap.Path, diff.Path, diff.Type.First().Code));
+                    }
 
                     snap.PathElement = mergePrimitiveAttribute(snap.PathElement, diff.PathElement);
+                }
+
+                // [WMR 20160906] Also merge Element.Id
+                if (snap.ElementId == null)
+                {
+                    snap.ElementId = diff.ElementId;
                 }
 
                 // representation cannot be overridden
@@ -92,23 +102,26 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160805] Special handling for root element
                 // Core resource profiles have root element with type 'DomainResource'
                 // Derived profiles should replace this with the resource name / path of root element
-                if (snap.IsRootElement())
-                {
-                    var primaryType = snap.Type.FirstOrDefault();
-                    if (primaryType == null || primaryType.Code == FHIRDefinedType.DomainResource)
-                    {
-                        snap.Type = new List<ElementDefinition.TypeRefComponent>()
-                        {
-                            // Initialize root element type code from element path, e.g. "Patient"
-                            // Note: use ObjectValue in order to handle unknown resource types
-                            new ElementDefinition.TypeRefComponent() { CodeElement = new Code<FHIRDefinedType>() { ObjectValue = snap.Path } }
-                        };
-                        OnConstraint(snap.Type[0]);
-                    }
-                }
-                // Type is just overridden
-                // [WMR 20160826] Bugfix
-                else if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type)) // !diff.IsExactly(snap))
+                // [WMR 20160906] WRONG!
+                //if (snap.IsRootElement())
+                //{
+                //    var primaryType = snap.Type.FirstOrDefault();
+                //    if (primaryType == null || primaryType.Code == FHIRDefinedType.DomainResource)
+                //    {
+                //        snap.Type = new List<ElementDefinition.TypeRefComponent>()
+                //        {
+                //            // Initialize root element type code from element path, e.g. "Patient"
+                //            // Note: use ObjectValue in order to handle unknown resource types
+                //            new ElementDefinition.TypeRefComponent() { CodeElement = new Code<FHIRDefinedType>() { ObjectValue = snap.Path } }
+                //        };
+                //        OnConstraint(snap.Type[0]);
+                //    }
+                //}
+                //// Type is just overridden
+                //// [WMR 20160826] Bugfix
+                //else 
+
+                if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type)) // !diff.IsExactly(snap))
                 {
                     snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
                     foreach (var element in snap.Type) OnConstraint(snap);
