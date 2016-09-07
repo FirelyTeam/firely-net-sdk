@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Validation
             source = new CachedResolver(
                 new MultiResolver(
                     new TestProfileArtifactSource(),
-                    new DirectorySource("validation.xml", includeSubdirectories: false)));
+                    new ZipSource("specification.zip")));
 
             var ctx = new ValidationContext() { ResourceResolver = source, GenerateSnapshot = true, Trace = true };
             ctx.GenerateSnapshotSettings = Specification.Snapshot.SnapshotGeneratorSettings.Default;

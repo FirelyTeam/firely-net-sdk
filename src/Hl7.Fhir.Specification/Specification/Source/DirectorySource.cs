@@ -9,15 +9,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System.IO;
 using Hl7.Fhir.Serialization;
-using System.Xml.Linq;
 using System.Xml;
-using System.Diagnostics;
-using Newtonsoft.Json;
 using Hl7.Fhir.Rest;
 
 namespace Hl7.Fhir.Specification.Source
