@@ -103,6 +103,19 @@ namespace Hl7.Fhir.Specification.Tests
             var cmaps = source.FindAll<ConceptMap>();
             Assert.AreEqual(uris.Count(), cmaps.Count());
         }
+
+        [TestMethod]
+        public void GetCoreModelTypeByName()
+        {
+            var pat = source.FindStructureDefinitionForCoreType("Patient");
+            Assert.IsNotNull(pat);
+            Assert.AreEqual("Patient", pat.Snapshot.Element[0].Path);
+
+            var boolean = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
+            Assert.IsNotNull(boolean);
+            Assert.AreEqual("boolean", boolean.Snapshot.Element[0].Path);
+        }
+
     }
 #endif
 }

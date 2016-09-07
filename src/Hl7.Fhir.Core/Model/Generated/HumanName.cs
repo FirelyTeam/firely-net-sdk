@@ -370,6 +370,24 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Element elements
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                // HumanName elements
+                if (UseElement != null) yield return UseElement;
+                if (TextElement != null) yield return TextElement;
+                foreach (var elem in FamilyElement) { if (elem != null) yield return elem; }
+                foreach (var elem in GivenElement) { if (elem != null) yield return elem; }
+                foreach (var elem in PrefixElement) { if (elem != null) yield return elem; }
+                foreach (var elem in SuffixElement) { if (elem != null) yield return elem; }
+                if (Period != null) yield return Period;
+            }
+        }
     
     
     }

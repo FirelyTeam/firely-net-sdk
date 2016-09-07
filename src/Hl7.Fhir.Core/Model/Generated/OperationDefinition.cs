@@ -192,6 +192,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContactComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -504,6 +520,29 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ParameterComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    if (UseElement != null) yield return UseElement;
+                    if (MinElement != null) yield return MinElement;
+                    if (MaxElement != null) yield return MaxElement;
+                    if (DocumentationElement != null) yield return DocumentationElement;
+                    if (TypeElement != null) yield return TypeElement;
+                    if (Profile != null) yield return Profile;
+                    if (Binding != null) yield return Binding;
+                    foreach (var elem in Part) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -605,6 +644,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ValueSet, otherT.ValueSet)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // BindingComponent elements
+                    if (StrengthElement != null) yield return StrengthElement;
+                    if (ValueSet != null) yield return ValueSet;
+                }
             }
             
         }
@@ -1282,7 +1337,44 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// OperationDefinition elements
+				if (UrlElement != null) yield return UrlElement;
+				if (VersionElement != null) yield return VersionElement;
+				if (NameElement != null) yield return NameElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (KindElement != null) yield return KindElement;
+				if (ExperimentalElement != null) yield return ExperimentalElement;
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (DateElement != null) yield return DateElement;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (RequirementsElement != null) yield return RequirementsElement;
+				if (IdempotentElement != null) yield return IdempotentElement;
+				if (CodeElement != null) yield return CodeElement;
+				if (NotesElement != null) yield return NotesElement;
+				if (Base != null) yield return Base;
+				if (SystemElement != null) yield return SystemElement;
+				foreach (var elem in TypeElement) { if (elem != null) yield return elem; }
+				if (InstanceElement != null) yield return InstanceElement;
+				foreach (var elem in Parameter) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

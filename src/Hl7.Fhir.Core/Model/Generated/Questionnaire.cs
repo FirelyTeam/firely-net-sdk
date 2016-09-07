@@ -449,6 +449,28 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // GroupComponent elements
+                    if (LinkIdElement != null) yield return LinkIdElement;
+                    if (TitleElement != null) yield return TitleElement;
+                    foreach (var elem in Concept) { if (elem != null) yield return elem; }
+                    if (TextElement != null) yield return TextElement;
+                    if (RequiredElement != null) yield return RequiredElement;
+                    if (RepeatsElement != null) yield return RepeatsElement;
+                    foreach (var elem in Group) { if (elem != null) yield return elem; }
+                    foreach (var elem in Question) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -739,6 +761,29 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // QuestionComponent elements
+                    if (LinkIdElement != null) yield return LinkIdElement;
+                    foreach (var elem in Concept) { if (elem != null) yield return elem; }
+                    if (TextElement != null) yield return TextElement;
+                    if (TypeElement != null) yield return TypeElement;
+                    if (RequiredElement != null) yield return RequiredElement;
+                    if (RepeatsElement != null) yield return RepeatsElement;
+                    if (Options != null) yield return Options;
+                    foreach (var elem in Option) { if (elem != null) yield return elem; }
+                    foreach (var elem in Group) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -1056,7 +1101,33 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// Questionnaire elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (VersionElement != null) yield return VersionElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (DateElement != null) yield return DateElement;
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+				foreach (var elem in SubjectTypeElement) { if (elem != null) yield return elem; }
+				if (Group != null) yield return Group;
+            }
+        }
     }
     
 }

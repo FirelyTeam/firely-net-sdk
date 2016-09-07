@@ -89,5 +89,30 @@ namespace Hl7.Fhir.Specification.Source
             else
                 return null;
         }
+
+        /// <summary>Resolve a <see cref="StructureDefinition"/> from a TypeRef.Code element, handle unknown/custom core types.</summary>
+        /// <param name="resolver">An <see cref="IArtifactSource"/> reference.</param>
+        /// <param name="typeCodeElement">A <see cref="ElementDefinition.TypeRefComponent.CodeElement"/> reference.</param>
+        /// <returns>A <see cref="StructureDefinition"/> instance, or <c>null</c>.</returns>
+        internal static StructureDefinition GetStructureDefinitionForTypeCode(this IResourceResolver resolver, Code<FHIRDefinedType> typeCodeElement)
+        {
+            StructureDefinition sd = null;
+            var typeCode = typeCodeElement.Value;
+            if (typeCode.HasValue)
+            {
+                sd = resolver.FindStructureDefinitionForCoreType(typeCode.Value);
+            }
+            else
+            {
+                // Unknown/custom core type; try to resolve from raw object value
+                var typeName = typeCodeElement.ObjectValue as string;
+                if (!string.IsNullOrEmpty(typeName))
+                {
+                    sd = resolver.FindStructureDefinitionForCoreType(typeName);
+                }
+            }
+            return sd;
+        }
+
     }
 }

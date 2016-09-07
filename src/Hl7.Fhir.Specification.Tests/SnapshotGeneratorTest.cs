@@ -19,6 +19,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Rest;
+using System.Text;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -38,9 +39,7 @@ namespace Hl7.Fhir.Specification.Tests
             // MarkChanges = false,
             MergeTypeProfiles = true,
             // Throw on unresolved profile references; must include in TestData folder
-            IgnoreUnresolvedProfiles = false,
             ExpandExternalProfiles = false,
-            RewriteElementBase = false,
             NormalizeElementBase = false
         };
 
@@ -66,6 +65,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
@@ -73,11 +73,21 @@ namespace Hl7.Fhir.Specification.Tests
         // [Ignore] // For debugging purposes
         public void GenerateSingleSnapshot()
         {
+            // _settings.MergeTypeProfiles = false;
+
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
-            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder");
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-alternate");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-procedurerequest");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+
+            // [WMR 20160825] Examples by Simone Heckman - custom, free-form canonical url
+            // => ResourceIdentity is obsolete!
+            // var sd = _testSource.GetStructureDefinition(@"http://fhir.de/StructureDefinition/kbv/betriebsstaette");
+            // var sd = _testSource.GetStructureDefinition(@"http://fhir.de/StructureDefinition/kbv/istNebenbetriebsstaette");
 
             Assert.IsNotNull(sd);
 
@@ -86,9 +96,26 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
+
         }
 
+        [TestMethod]
+        public void GenerateRepeatedSnapshot()
+        {
+            StructureDefinition expanded;
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/measurereport");
+            generateSnapshotAndCompare(sd, _testResolver, out expanded);
+            dumpOutcome(_generator.Outcome);
+            dumpBasePaths(expanded);
+
+            // [WMR 20160903] TODO: Second expansion fails, base paths are now normalized...? (e.g. DomainResource.text)
+            sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/clinicaldocument");
+            generateSnapshotAndCompare(sd, _testResolver, out expanded);
+            dumpOutcome(_generator.Outcome);
+            dumpBasePaths(expanded);
+        }
 
         [TestMethod]
         // [Ignore] // For debugging purposes
@@ -135,6 +162,7 @@ namespace Hl7.Fhir.Specification.Tests
             try
             {
                 generateSnapshotAndCompare(sd, _testResolver, out expanded);
+                dumpOutcome(_generator.Outcome);
                 dumpBasePaths(expanded);
             }
             catch (Exception ex)
@@ -153,12 +181,13 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
-            _settings.RewriteElementBase = true;
+            // _settings.RewriteElementBase = true;
             _settings.NormalizeElementBase = true;
 
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
@@ -180,6 +209,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
@@ -194,12 +224,23 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/SD/patient-with-extensions");
             var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
             Assert.IsNotNull(sd);
+            Assert.IsTrue(sd.HasSnapshot);
+
+            // [WMR 20160906] Remove ElementDefinition@id attributes (not supported yet)
+            foreach (var elem in sd.Snapshot.Element)
+            {
+                elem.ElementId = null;
+            }
 
             // dumpReferences(sd);
+            _settings.NormalizeElementBase = true;
+            _settings.MergeTypeProfiles = true;
+            _settings.ExpandExternalProfiles = true;
 
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
@@ -234,6 +275,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
+            dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
@@ -246,30 +288,44 @@ namespace Hl7.Fhir.Specification.Tests
 
             dumpReferences(sd, true);
 
-            
-            _settings.IgnoreUnresolvedProfiles = true;  // On missing profile, aggregate information and continue
-            _settings.MergeTypeProfiles = true;         // Merge the external type/extension profiles
-            _settings.ExpandExternalProfiles = false;   // Don't generate missing snapshots
+            _settings.MergeTypeProfiles = true;             // Merge the external type/extension profiles
+            _settings.ExpandExternalProfiles = false;       // Don't generate missing snapshots
+            _settings.ExpandUnconstrainedElements = true;   // Force the external type profiles to be expanded (even w/o any diff constraints)
 
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, _testResolver, out expanded);
 
-            var invalidProfiles = _generator.InvalidProfiles;
-            Assert.AreEqual(3, invalidProfiles.Count);
+            var outcome = _generator.Outcome;
+            dumpOutcome(outcome);
 
-            assertProfileInfo(invalidProfiles, "http://example.org/fhir/StructureDefinition/MyExtensionNoSnapshot", SnapshotProfileStatus.NoSnapshot);
-            assertProfileInfo(invalidProfiles, "http://example.org/fhir/StructureDefinition/MyCodeableConcept", SnapshotProfileStatus.Missing);
-            assertProfileInfo(invalidProfiles, "http://example.org/fhir/StructureDefinition/MyIdentifier", SnapshotProfileStatus.Missing);
+            Assert.IsNotNull(outcome);
+            Assert.AreEqual(3, outcome.Issue.Count);
+
+            AssertProfileNotFoundIssue(outcome.Issue[0], Validation.Issue.UNAVAILABLE_NEED_SNAPSHOT, "http://example.org/fhir/StructureDefinition/MyExtensionNoSnapshot");
+            AssertProfileNotFoundIssue(outcome.Issue[1], Validation.Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, "http://example.org/fhir/StructureDefinition/MyIdentifier");
+            AssertProfileNotFoundIssue(outcome.Issue[2], Validation.Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, "http://example.org/fhir/StructureDefinition/MyCodeableConcept");
         }
 
-        private static void assertProfileInfo(IList<SnapshotProfileInfo> info, string url, SnapshotProfileStatus status)
+        private static void AssertProfileNotFoundIssue(OperationOutcome.IssueComponent issue, Validation.Issue expected, string profileUrl)
         {
-            Assert.AreEqual(1, info.Count(pi => pi.Url == url & pi.Status == status));
+            Assert.IsNotNull(issue);
+            Assert.AreEqual(issue.Code, expected.Type);
+            Assert.AreEqual(issue.Severity, expected.Severity);
+            Assert.AreEqual(issue.Details.Coding[0].Code, expected.Code.ToString());
+            Assert.IsNotNull(issue.Extension);
+            Assert.IsTrue(issue.Extension.Count == 1);
+            Assert.IsTrue(issue.Extension[0].Url == SnapshotGenerator.PROFILE_URL_EXT);
+            Assert.AreEqual(issue.GetProfileUrl(), profileUrl);
         }
+
+        //private static void assertProfileInfo(IList<SnapshotProfileInfo> info, string url, SnapshotProfileStatus status)
+        //{
+        //    Assert.AreEqual(1, info.Count(pi => pi.Url == url & pi.Status == status));
+        //}
 
         // [WMR 20160721] Following profiles are not yet handled (TODO)
         private readonly string[] skippedProfiles =
-		{
+        {
 			// Differential defines constraint on MedicationOrder.reason[x]
 			// Snapshot renames this element to MedicationOrder.reasonCodeableConcept - is this mandatory?
 			// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
@@ -357,6 +413,9 @@ namespace Hl7.Fhir.Specification.Tests
             File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), FhirSerializer.SerializeResourceToXml(expanded));
             // }
 
+            // Assert.IsTrue(areEqual);
+            Debug.WriteLineIf(!areEqual, "WARNING: '{0}' Expansion is not equal to original!".FormatWith(original.Name));
+
             return areEqual;
         }
 
@@ -398,7 +457,7 @@ namespace Hl7.Fhir.Specification.Tests
             var tree = new DifferentialTreeConstructor(e).MakeTree();
             Assert.IsNotNull(tree);
 
-			var nav = new ElementDefinitionNavigator(tree);
+            var nav = new ElementDefinitionNavigator(tree);
             Assert.AreEqual(10, nav.Count);
 
             Assert.IsTrue(nav.MoveToChild("A"));
@@ -422,11 +481,11 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestExpandChild()
         {
-            var qStructDef = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Questionnaire);
-            Assert.IsNotNull(qStructDef);
-            Assert.IsNotNull(qStructDef.Snapshot);
+            var sd = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Questionnaire);
+            Assert.IsNotNull(sd);
+            Assert.IsNotNull(sd.Snapshot);
 
-			var nav = new ElementDefinitionNavigator(qStructDef.Snapshot.Element);
+            var nav = new ElementDefinitionNavigator(sd.Snapshot.Element);
 
             var generator = new SnapshotGenerator(_testResolver, SnapshotGeneratorSettings.Default);
 
@@ -444,33 +503,53 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestExpandElement_PatientIdentifier()
         {
-            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.identifier");
+            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.identifier");
         }
 
         [TestMethod]
         public void TestExpandElement_PatientName()
         {
-            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.name");
+            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.name");
         }
 
         [TestMethod]
         public void TestExpandElement_QuestionnaireGroupGroup()
         {
             // Validate name reference expansion
-            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.group");
+            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.group");
         }
 
         [TestMethod]
         public void TestExpandElement_QuestionnaireGroupQuestionGroup()
         {
             // Validate name reference expansion
-            TestExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.question.group");
+            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.group.question.group");
         }
 
-        private void TestExpandElement(string srcProfileUrl, string expandElemPath)
+        [TestMethod]
+        public void TestExpandElement_Slice()
         {
-            const string Indent = "  ";
+            var sd = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/lipidprofile");
+            Assert.IsNotNull(sd);
+            Assert.IsNotNull(sd.Snapshot);
 
+            // DiagnosticReport.result is sliced
+            var nav = new ElementDefinitionNavigator(sd.Snapshot.Element);
+
+            // Move to slicing entry
+            nav.JumpToFirst("DiagnosticReport.result");
+            Assert.IsNotNull(nav.Current.Slicing);
+
+            // Move to first (named) slice
+            nav.MoveToNext();
+            Assert.AreEqual(nav.Path, "DiagnosticReport.result");
+            Assert.IsNotNull(nav.Current.Name);
+
+            testExpandElement(sd, nav.Current);
+        }
+
+        private void testExpandElement(string srcProfileUrl, string expandElemPath)
+        {
             // Prepare...
             var sd = _testResolver.FindStructureDefinition(srcProfileUrl);
             Assert.IsNotNull(sd);
@@ -480,10 +559,21 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(elems);
 
             Debug.WriteLine("Input:");
-            Debug.WriteLine(string.Join(Environment.NewLine, elems.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => Indent + e.Path)));
+            Debug.Indent();
+            Debug.WriteLine(string.Join(Environment.NewLine, elems.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => e.Path)));
+            Debug.Unindent();
 
             var elem = elems.FirstOrDefault(e => e.Path == expandElemPath);
+            testExpandElement(sd, elem);
+        }
+
+        private void testExpandElement(StructureDefinition sd, ElementDefinition elem)
+        {
             Assert.IsNotNull(elem);
+            var elems = sd.Snapshot.Element;
+            Assert.IsTrue(elems.Contains(elem));
+
+            var expandElemPath = elem.Path;
 
             // Test...
             _generator = new SnapshotGenerator(_testResolver, _settings);
@@ -491,7 +581,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify results
             Debug.WriteLine("\r\nOutput:");
-            Debug.WriteLine(string.Join(Environment.NewLine, result.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => Indent + e.Path)));
+            Debug.Indent();
+            Debug.WriteLine(string.Join(Environment.NewLine, result.Where(e => e.Path.StartsWith(expandElemPath)).Select(e => e.Path)));
+            Debug.Unindent();
 
             Assert.IsNotNull(elem.Type);
             var elemType = elem.Type.FirstOrDefault();
@@ -501,22 +593,43 @@ namespace Hl7.Fhir.Specification.Tests
                 // Validate type profile expansion
                 var elemTypeCode = elemType.Code.Value;
                 Assert.IsNotNull(elemTypeCode);
+
                 var elemProfile = elemType.Profile.FirstOrDefault();
-                var sdType = elemProfile != null
+                var sdType = elemProfile != null && elemTypeCode != FHIRDefinedType.Reference
                     ? _testResolver.FindStructureDefinition(elemProfile)
                     : _testResolver.FindStructureDefinitionForCoreType(elemTypeCode);
 
                 Assert.IsNotNull(sdType);
                 Assert.IsNotNull(sdType.Snapshot);
+                Assert.IsNotNull(sdType.Snapshot.Element);
+                Assert.IsTrue(sdType.Snapshot.Element.Count > 0);
 
                 Debug.WriteLine("\r\nType:");
-                Debug.WriteLine(string.Join(Environment.NewLine, sdType.Snapshot.Element.Select(e => Indent + e.Path)));
+                Debug.Indent();
+                Debug.WriteLine(string.Join(Environment.NewLine, sdType.Snapshot.Element.Select(e => e.Path)));
+                Debug.Unindent();
 
                 sdType.Snapshot.Rebase(expandElemPath);
                 var typeElems = sdType.Snapshot.Element;
 
                 Assert.IsTrue(result.Count == elems.Count + typeElems.Count - 1);
-                Assert.IsTrue(result.Where(e => e.Path.StartsWith(expandElemPath)).Count() == typeElems.Count);
+                if (elem.Name == null)
+                {
+                    Assert.IsTrue(result.Where(e => e.Path.StartsWith(expandElemPath)).Count() == typeElems.Count);
+                }
+                else
+                {
+                    // The expanded element represents a slice
+                    var nav = new ElementDefinitionNavigator(result);
+                    nav.JumpToNameReference(elem.Name);
+                    var cnt = 1;
+                    Assert.IsTrue(nav.MoveToFirstChild());
+                    do
+                    {
+                        Assert.AreEqual(typeElems[cnt++].Path, nav.Path);
+                    } while (nav.MoveToNext());
+                    Assert.AreEqual(typeElems.Count, cnt);
+                }
 
                 var startPos = result.IndexOf(elem);
                 for (int i = 0; i < typeElems.Count; i++)
@@ -524,6 +637,7 @@ namespace Hl7.Fhir.Specification.Tests
                     var path = typeElems[i].Path;
                     Assert.IsTrue(result[startPos + i].Path.EndsWith(path, StringComparison.OrdinalIgnoreCase));
                 }
+
             }
             else if (nameRef != null)
             {
@@ -535,13 +649,15 @@ namespace Hl7.Fhir.Specification.Tests
                 var pos = result.IndexOf(elem);
 
                 Debug.WriteLine("\r\nName Reference:");
+                Debug.Indent();
                 do
                 {
-                    Debug.WriteLine(Indent + nav.Path);
+                    Debug.WriteLine(nav.Path);
                     var srcPath = nav.Path.Substring(prefix.Length);
                     var tgtPath = result[++pos].Path.Substring(expandElemPath.Length);
                     Assert.AreEqual(srcPath, tgtPath);
                 } while (nav.MoveToNext());
+                Debug.Unindent();
             }
 
         }
@@ -595,10 +711,49 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.Print(new string('=', 100));
                 foreach (var elem in sd.Snapshot.Element)
                 {
-                    Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base.Path);
+                    Debug.WriteLine("{0}  |  {1}", elem.Path, elem.Base != null ? elem.Base.Path : null);
                 }
                 // Debug.Unindent();
             }
+        }
+
+        [Conditional("DEBUG")]
+        private void dumpOutcome(OperationOutcome outcome)
+        {
+            if (outcome != null)
+            {
+                Debug.Print("OperationOutcome: {0} issues", outcome.Issue.Count);
+                for (int i = 0; i < outcome.Issue.Count; i++)
+                {
+                    dumpIssue(outcome.Issue[i], i);
+                }
+            }
+        }
+
+        [Conditional("DEBUG")]
+        private void dumpIssue(OperationOutcome.IssueComponent issue, int index)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("Issue #{0}: Severity = '{1}' Code = '{2}'", index, issue.Severity, issue.Code);
+            if (issue.Diagnostics != null) sb.AppendFormat(" Diagnostics = '{0}'", issue.Diagnostics);
+            if (issue.Details != null)
+            {
+                sb.AppendFormat(" Details: '{0}'", string.Join(" | ", issue.Details.Coding.Select(c => c.Code)));
+                if (issue.Details.Text != null) sb.AppendFormat(" : '{0}'", issue.Details.Text);
+            }
+            var url = issue.GetProfileUrl();
+            if (url != null)
+            {
+                sb.AppendFormat(" Profile: '{0}'", url);
+            }
+            Debug.Print(sb.ToString());
+        }
+
+        // [WMR 20160816] Test custom annotations containing associated base definitions
+        class BaseDefAnnotation
+        {
+            public BaseDefAnnotation(ElementDefinition baseElemDef) { BaseElementDefinition = baseElemDef; }
+            public ElementDefinition BaseElementDefinition { get; private set; }
         }
 
         [TestMethod]
@@ -610,58 +765,104 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
             // var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
 
-            Assert.IsNotNull(sd);
+            var source = _testResolver;
 
+            var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatient");
+            Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
-            _settings.ExpandExternalProfiles = true;
-            _settings.MarkChanges = true;
-            _generator = new SnapshotGenerator(_testResolver, _settings);
+            var settings = new SnapshotGeneratorSettings(_settings);
+            settings.ExpandExternalProfiles = true;
+            settings.ExpandUnconstrainedElements = true;
+            settings.MergeTypeProfiles = true;
+            settings.MarkChanges = true;
+            //settings.NormalizeElementBase = true;
+            _generator = new SnapshotGenerator(source, settings);
 
             // [WMR 20160817] Attach custom event handlers
+            // Following event is called for each separate (external) profile that is being expanded
             SnapshotBaseProfileHandler profileHandler = (sender, args) =>
             {
                 var profile = args.Profile;
-                Assert.AreEqual(sd, profile);
+                Assert.IsTrue(sd.Url != profile.Url || sd.IsExactly(profile));
                 var baseProfile = args.BaseProfile;
                 Assert.IsNotNull(baseProfile);
-                Debug.WriteLine("StructureDefinition.Base = '{0}'".FormatWith(profile.Base));
-                Debug.Print("Base StructureDefinition.Url = '{0}'".FormatWith(baseProfile.Url));
+                Debug.WriteLine("[SnapshotBaseProfileHandler] Profile #{0} '{1}' Base = '{2}'".FormatWith(profile.GetHashCode(), profile.Url, profile.Base));
+                Debug.Print("[SnapshotBaseProfileHandler] Base Profile #{0} '{1}'".FormatWith(baseProfile.GetHashCode(), baseProfile.Url));
+                var rootElem = baseProfile.Snapshot.Element[0];
+                Debug.Print("[SnapshotBaseProfileHandler] Base Root element #{0} '{1}'".FormatWith(rootElem.GetHashCode(), rootElem.Path));
                 Assert.AreEqual(profile.Base, baseProfile.Url);
             };
-            _generator.PrepareBaseProfile += profileHandler;
 
             SnapshotElementHandler elementHandler = (sender, args) =>
             {
                 var elem = args.Element;
                 Assert.IsNotNull(elem);
-                var baseDef = (ElementDefinition)elem.DeepCopy();
-                elem.RemoveAnnotations<BaseDefInfo>();
-                elem.AddAnnotation(new BaseDefInfo { Data = baseDef });
+                var ann = elem.Annotation<BaseDefAnnotation>();
+                ElementDefinition baseDef;
+                // We want to annotate a reference to the matching base element from the (immediate) base profile.
+                // When the snapshot generator expands external profiles, then this handler is called once for each
+                // profile in the base hierarchy, starting at the root profile, e.g. Resource => DomainResource => Patient.
+                // Each time we recreate the annotation, so the final annotation contains a reference to the immediate base.
+                if (ann != null)
+                {
+                    elem.RemoveAnnotations<BaseDefAnnotation>();
+                }
+                baseDef = args.BaseElement;
+                elem.AddAnnotation(new BaseDefAnnotation(baseDef));
+                Debug.Write("[SnapshotElementHandler] #{0} '{1}' - Base: #{2} '{3}'".FormatWith(elem.GetHashCode(), elem.Path, baseDef.GetHashCode(), baseDef.Path));
+                Debug.WriteLine(ann != null && ann.BaseElementDefinition != null ? " (old Base: #{0} '{1}')".FormatWith(ann.BaseElementDefinition.GetHashCode(), ann.BaseElementDefinition.Path) : "");
             };
-            _generator.PrepareBaseElement += elementHandler;
 
-            StructureDefinition expanded;
-            generateSnapshotAndCompare(sd, _testResolver, out expanded);
+            SnapshotConstraintHandler constraintHandler = (sender, args) =>
+            {
+                var elem = args.Element as ElementDefinition;
+                if (elem != null)
+                {
+                    var changed = elem.GetChangedByDiff() == true;
+                    Debug.Print("[SnapshotConstraintHandler] #{0} '{1}'{2}".FormatWith(elem.GetHashCode(), elem.Path, changed ? " CHANGED!" : null));
+                }
+            };
 
-            assertBaseDefs(expanded);
+            try
+            {
+                _generator.PrepareBaseProfile += profileHandler;
+                _generator.PrepareElement += elementHandler;
+                _generator.Constraint += constraintHandler;
 
-            // Detach event handlers
-            _generator.PrepareBaseElement -= elementHandler;
-            _generator.PrepareBaseProfile -= profileHandler;
-            _generator = null;
+                StructureDefinition expanded;
+                generateSnapshotAndCompare(sd, source, out expanded);
+
+                dumpOutcome(_generator.Outcome);
+
+                assertBaseDefs(expanded, settings);
+
+                var sdBase = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
+                assertBaseDefs(sdBase, settings);
+
+                var sdExt = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
+                assertBaseDefs(sdExt, settings);
+
+                var sdExt1 = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension1");
+                assertBaseDefs(sdExt1, settings);
+
+                var sdExt2 = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension2");
+                assertBaseDefs(sdExt2, settings);
+
+            }
+            finally
+            {
+                // Detach event handlers
+                _generator.Constraint -= constraintHandler;
+                _generator.PrepareElement -= elementHandler;
+                _generator.PrepareBaseProfile -= profileHandler;
+            }
         }
 
-        class BaseDefInfo
-        {
-            public ElementDefinition Data { get; set; }
-        }
-
-
-        private static void assertBaseDefs(StructureDefinition sd)
+        private static void assertBaseDefs(StructureDefinition sd, SnapshotGeneratorSettings settings)
         {
             Assert.IsNotNull(sd);
             Assert.IsNotNull(sd.Snapshot);
@@ -669,46 +870,65 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(elems);
             Assert.IsTrue(elems.Count > 0);
 
-            Debug.Print("Constraint? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | Invalid?");
+            var isConstraint = sd.ConstrainedType.HasValue;
+
+            Debug.Print("\r\nStructureDefinition '{0}' url = '{1}'", sd.Name, sd.Url);
+            Debug.Print("# | Constraint? | Changed? | Element.Path | Element.Base.Path | BaseElement.Path | #Base | Invalid?");
             Debug.Print(new string('=', 100));
             foreach (var elem in elems)
             {
-                Assert.IsNotNull(elem.Base);
-                var baseDefInfo = elem.Annotation<BaseDefInfo>();
-                var baseDef = baseDefInfo != null ? baseDefInfo.Data : null;
-                Assert.IsNotNull(baseDef);
+                // Each element should have a valid Base component, unless the profile is a core type/resource definition (no base)
+                Assert.IsTrue(!isConstraint || elem.Base != null);
+
+                var ann = elem.Annotation<BaseDefAnnotation>();
+                var baseDef = ann != null ? ann.BaseElementDefinition : null;
                 Assert.AreNotEqual(elem, baseDef);
-                // Ignore Path differences
-                var equals = baseDef.IsExactly(elem);
-                if (elem.Path != elem.Base.Path)
-                {
-                    var clone = (ElementDefinition)baseDef.DeepCopy();
-                    clone.Path = elem.Path;
-                    equals = clone.IsExactly(elem);
-                }
+
                 var hasChanges = HasChanges(elem);
-                var isValid = hasChanges == !equals; // || elem.IsRootElement() || elem.Slicing != null;
-                Debug.WriteLine("{0}  |  {1}  |  {2}  |  {3}  |  {4}  |  {5}",
-                    equals ? "-" : "+",
-                    hasChanges ? "+" : "-",
+                var hasConstraints = false; // baseDef != null || elem.Base != null;
+                if (baseDef != null && elem.Base != null)
+                {
+                    // If normalizing, then elem.Base.Path refers to the defining profile (e.g. DomainResource),
+                    // whereas baseDef refers to the immediate base profile (e.g. Patient)
+                    Debug.Assert(settings.NormalizeElementBase || ElementDefinitionNavigator.IsCandidateBaseElementPath(elem.Base.Path, baseDef.Path));
+                    hasConstraints = HasConstraints(elem, baseDef);
+                }
+                var isValid = hasChanges == hasConstraints;
+                Debug.WriteLine("{0,10}  |  {1}  |  {2,-12}  |  {3,-50}  |  {4,-40}  |  {5,-40}  |  {6,10}  |  {7}",
+                    elem.GetHashCode(),
+                    hasConstraints ? "+" : "-",
+                    GetChangeDescription(elem),
                     elem.Path,
-                    elem.Base.Path,
-                    baseDef.Path,
+                    elem.Base != null ? elem.Base.Path : null,
+                    baseDef != null ? baseDef.Path : null,
+                    baseDef != null ? baseDef.GetHashCode().ToString() : null,
                     !isValid ? "!!!" : ""
                 );
-                Assert.AreEqual(elem.Base.Path, baseDef.Path);
-                // [WMR 20160816] WRONG! baseDef could be inherited from type profile and may further constrain original cardinality
-                // Assert.AreEqual(elem.Base.Min, baseDef.Min);
-                // Assert.AreEqual(elem.Base.Max, baseDef.Max);
-
-                // WRONG! ElementDefnMerger may fill in missing default Short & Definition properties for extensions
-                // The properties will be marked as changed, but their values are equal to base
-                // Debug.Assert(isValid);
-
+                //Assert.IsTrue(baseDef == null || isValid);
+                // Debug.Assert(baseDef == null || isValid);
             }
         }
 
-        // Returns true if the specified element or any of its' components contain the special change tracking extension
+        // Utility function to compare element and base element
+        // Path, Base and CHANGED_BY_DIFF_EXT extension are excluded from comparison
+        // Returns true if the element has any other constraints on base
+        private static bool HasConstraints(ElementDefinition elem, ElementDefinition baseElem)
+        {
+            var elemClone = (ElementDefinition)elem.DeepCopy();
+            var baseClone = (ElementDefinition)baseElem.DeepCopy();
+
+            // Path & Base are expected to differ
+            baseClone.Path = elem.Path;
+            baseClone.Base = elem.Base;
+            
+            // Also ignore any Changed extensions on base and diff
+            elemClone.ClearAllChangedByDiff();
+            baseClone.ClearAllChangedByDiff();
+
+            return !baseClone.IsExactly(elemClone);
+        }
+
+        // Returns true if the specified element or any of its' components contain the CHANGED_BY_DIFF_EXT extension
         private static bool HasChanges(ElementDefinition elem)
         {
             return IsChanged(elem)
@@ -747,6 +967,51 @@ namespace Hl7.Fhir.Specification.Tests
                 || HasChanges(elem.Type);
         }
 
+        private static string GetChangeDescription(ElementDefinition element)
+        {
+            if (IsChanged(element)) { return "Element"; }
+
+            
+            if (IsChanged(element.Slicing)) { return "Slicing"; }       // Moved to front
+            if (HasChanges(element.Type)) { return "Type"; }            // Moved to front
+            if (IsChanged(element.ShortElement)) { return "Short"; }    // Moved to front
+
+            if (HasChanges(element.AliasElement)) { return "Alias"; }
+            if (IsChanged(element.Base)) { return "Base"; }
+            if (IsChanged(element.Binding)) { return "Binding"; }
+            if (HasChanges(element.Code)) { return "Code"; }
+            if (IsChanged(element.CommentsElement)) { return "Comments"; }
+            if (HasChanges(element.ConditionElement)) { return "Condition"; }
+            if (HasChanges(element.Constraint)) { return "Constraint"; }
+            if (IsChanged(element.DefaultValue)) { return "DefaultValue"; }
+            if (IsChanged(element.DefinitionElement)) { return "Definition"; }
+            if (IsChanged(element.Example)) { return "Example"; }
+            if (HasChanges(element.Extension)) { return "Extension"; }
+            if (HasChanges(element.FhirCommentsElement)) { return "FhirComments"; }
+            if (IsChanged(element.Fixed)) { return "Fixed"; }
+            if (IsChanged(element.IsModifierElement)) { return "IsModifier"; }
+            if (IsChanged(element.IsSummaryElement)) { return "IsSummary"; }
+            if (IsChanged(element.LabelElement)) { return "Label"; }
+            if (HasChanges(element.Mapping)) { return "Mapping"; }
+            if (IsChanged(element.MaxElement)) { return "Max"; }
+            if (IsChanged(element.MaxLengthElement)) { return "MaxLength"; }
+            if (IsChanged(element.MaxValue)) { return "MaxValue"; }
+            if (IsChanged(element.MeaningWhenMissingElement)) { return "MeaningWhenMissing"; }
+            if (IsChanged(element.MinElement)) { return "Min"; }
+            if (IsChanged(element.MinValue)) { return "MinValue"; }
+            if (IsChanged(element.MustSupportElement)) { return "MustSupport"; }
+            if (IsChanged(element.NameElement)) { return "Name"; }
+            if (IsChanged(element.NameReferenceElement)) { return "NameReference"; }
+            if (IsChanged(element.PathElement)) { return "Path"; }
+            if (IsChanged(element.Pattern)) { return "Pattern"; }
+            if (HasChanges(element.RepresentationElement)) { return "Representation"; }
+            if (IsChanged(element.RequirementsElement)) { return "Requirements"; }
+            //if (IsChanged(element.ShortElement)) { return "Short"; }
+            //if (IsChanged(element.Slicing)) { return "Slicing"; }
+            //if (HasChanges(element.Type)) { return "Type"; }
+            return string.Empty;
+        }
+
         private static bool HasChanges<T>(IList<T> extendables) where T : IExtendable
         {
             return extendables != null ? extendables.Any(e => IsChanged(e)) : false;
@@ -754,26 +1019,198 @@ namespace Hl7.Fhir.Specification.Tests
 
         private static bool IsChanged(IExtendable extendable)
         {
-            if (extendable != null)
-            {
-                var ext = extendable.GetExtensionValue<FhirBoolean>(SnapshotGenerator.CHANGED_BY_DIFF_EXT);
-                return ext != null && ext.Value == true;
-            }
-            return false;
+            return extendable!= null && extendable.GetChangedByDiff() == true;
         }
-    }
 
-    static class DictionaryExtensions
-    {
-        public static TValue GetValueOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> collection, TKey key, TValue defaultValue = default(TValue))
+        // [WMR 20160902] NEW
+        [TestMethod]
+        public void TestExpandCoreResource()
         {
-            TValue result;
-            if (collection.TryGetValue(key, out result))
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/BackboneElement");
+
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/integer");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/positiveInt");
+
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/HumanName");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Quantity");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
+
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Resource");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
+
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
+
+            Assert.IsNotNull(sd);
+
+            // dumpReferences(sd);
+
+            // _settings.NormalizeElementBase = true;
+
+            StructureDefinition expanded;
+            var result = generateSnapshotAndCompare(sd, _testResolver, out expanded);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBasePaths(expanded);
+
+            if (!result)
             {
-                return result;
+                Debug.Print("Expanded is not exactly equal to original... verifying...");
+                result = verifyElementBase(sd, expanded);
             }
-            return defaultValue;
+
+            Assert.IsTrue(result);
+        }
+
+        // Verify ElementDefinition.Base components
+        bool verifyElementBase(StructureDefinition original, StructureDefinition expanded)
+        {
+            var originalElems = original.Snapshot.Element;
+            var expandedElems = expanded.Snapshot.Element;
+            var isConstraint = expanded.ConstrainedType.HasValue;
+            Debug.Print("Original has {0} elements, expanded has {1} elements...".FormatWith(originalElems.Count, expandedElems.Count));
+
+            // dumpBasePaths(original);
+
+            bool verified = false;
+            if (expandedElems.Count < originalElems.Count)
+            {
+                for (int i = 0; i < originalElems.Count; i++)
+                {
+                    var elem = originalElems[i];
+                    var match = expandedElems.Any(e => e.Path == elem.Path);
+                    if (!match)
+                    {
+                        Debug.Print("{0} has not been expanded...".FormatWith(elem.Path));
+                    }
+                }
+            }
+            else if (expandedElems.Count == originalElems.Count)
+            {
+                verified = true;
+                if (_settings.NormalizeElementBase)
+                {
+                    var rootElemName = expandedElems[0].Path;
+
+                    //var baseProfileUrl = expanded.Base;
+                    //var baseProfile = baseProfileUrl != null ? _testSource.GetStructureDefinition(baseProfileUrl) : null;
+                    //var baseRootElemName = baseProfile != null && baseProfile.Snapshot != null ? baseProfile.Snapshot.Element[0].Path : null;
+                    //if (expandedElems.Count > 0 && baseRootElemName != null)
+                    //{
+                    //    verified &= verifyBasePath(expandedElems[0], originalElems[0], baseRootElemName);
+                    //}
+
+                    if (expanded.Kind == StructureDefinition.StructureDefinitionKind.Datatype)
+                    {
+                        if (rootElemName != "Element")
+                        {
+                            verified &= verifyBasePath(expandedElems[0], originalElems[0], "Element");
+                        }
+
+                        if (rootElemName != "Element" && expandedElems.Count > 2)
+                        {
+                            verified &= verifyBasePath(expandedElems[1], originalElems[1], "Element.id");
+                            verified &= verifyBasePath(expandedElems[2], originalElems[2], "Element.extension");
+                        }
+                    }
+                    else if (expanded.Kind == StructureDefinition.StructureDefinitionKind.Resource)
+                    {
+                        if (rootElemName != "Resource")
+                        {
+                            verified &= verifyBasePath(expandedElems[0], originalElems[0], "Resource");
+                        }
+
+                        if (rootElemName != "Resource" && expandedElems.Count > 4)
+                        {
+                            verified &= verifyBasePath(expandedElems[1], originalElems[1], "Resource.id");
+                            verified &= verifyBasePath(expandedElems[2], originalElems[2], "Resource.meta");
+                            verified &= verifyBasePath(expandedElems[3], originalElems[3], "Resource.implicitRules");
+                            verified &= verifyBasePath(expandedElems[4], originalElems[4], "Resource.language");
+                        }
+                        if (rootElemName != "DomainResource" && expandedElems.Count > 8)
+                        {
+                            verified &= verifyBasePath(expandedElems[5], originalElems[5], "DomainResource.text");
+                            verified &= verifyBasePath(expandedElems[6], originalElems[6], "DomainResource.contained");
+                            verified &= verifyBasePath(expandedElems[7], originalElems[7], "DomainResource.extension");
+                            verified &= verifyBasePath(expandedElems[8], originalElems[8], "DomainResource.modifierExtension");
+                        }
+                        for (int i = 9; i < expandedElems.Count; i++)
+                        {
+                            var path = expandedElems[i].Path;
+                            if (path.EndsWith(".id"))
+                            {
+                                verified &= verifyBasePath(expandedElems[i], originalElems[i], "Element.id");
+                            }
+                            else if (path.EndsWith(".extension"))
+                            {
+                                verified &= verifyBasePath(expandedElems[i], originalElems[i], "Element.extension");
+                            }
+                            else if (path.EndsWith(".modifierExtension"))
+                            {
+                                verified &= verifyBasePath(expandedElems[i], originalElems[i], "BackboneElement.modifierExtension");
+                            }
+                            else
+                            {
+                                if (!isConstraint)
+                                {
+                                    // New resource element
+                                    verified &= verifyBasePath(expandedElems[i], originalElems[i], isConstraint ? expandedElems[i].Path : null);
+                                    verified &= verifyBasePath(originalElems[i], originalElems[i], isConstraint ? originalElems[i].Path : null);
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (isConstraint)
+                {
+                    for (int i = 0; i < expandedElems.Count; i++)
+                    {
+                        if (originalElems[i].Base == null) { verified = false; Debug.WriteLine("ORIGINAL: Path = {0}  => BASE IS MISSING".FormatWith(originalElems[i].Path)); }
+                        if (expandedElems[i].Base == null) { verified = false; Debug.WriteLine("EXPANDED: Path = {0}  => BASE IS MISSING".FormatWith(expandedElems[i].Path)); }
+                    }
+                }
+
+
+            }
+            return verified;
+        }
+
+        static bool verifyBasePath(ElementDefinition elem, ElementDefinition orgElem, string path = "")
+        {
+            bool result = false;
+            if (!string.IsNullOrEmpty(path))
+            {
+                // Assert.IsNotNull(elem.Base);
+                // Assert.AreEqual(path, elem.Base.Path);
+
+                // Assert.IsNotNull(baseElem.Base);
+                // Assert.AreEqual(path, baseElem.Base.Path);
+
+                result = elem.Base != null && path == elem.Base.Path;
+
+                Debug.WriteLineIf(elem.Base == null, "EXPANDED: Path = {0}  => BASE IS MISSING".FormatWith(elem.Path));
+                Debug.WriteLineIf(orgElem.Base == null, "ORIGINAL: Path = {0}  => BASE IS MISSING".FormatWith(orgElem.Path));
+
+                Debug.WriteLineIf(elem.Base != null && path != elem.Base.Path, "EXPANDED: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(elem.Path, elem.Base != null ? elem.Base.Path : null, path));
+                Debug.WriteLineIf(orgElem.Base != null && path != orgElem.Base.Path, "ORIGINAL: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(orgElem.Path, orgElem.Base != null ? orgElem.Base.Path : null, path));
+
+            }
+            else
+            {
+                // New resource element
+                // Assert.IsNull(elem.Base);
+                // Assert.IsNull(baseElem.Base);
+
+                result = elem.Base == null;
+
+                Debug.WriteLineIf(elem.Base != null, "EXPANDED: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(elem.Path, elem.Base != null ? elem.Base.Path : null, path));
+                Debug.WriteLineIf(orgElem.Base != null, "ORIGINAL: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(orgElem.Path, orgElem.Base != null ? orgElem.Base.Path : null, path));
+
+            }
+            return result;
         }
 
     }
+
 }

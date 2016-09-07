@@ -513,7 +513,38 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// DeviceUseRequest elements
+				if (BodySite != null) yield return BodySite;
+				if (StatusElement != null) yield return StatusElement;
+				if (Device != null) yield return Device;
+				if (Encounter != null) yield return Encounter;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				foreach (var elem in Indication) { if (elem != null) yield return elem; }
+				foreach (var elem in NotesElement) { if (elem != null) yield return elem; }
+				foreach (var elem in PrnReason) { if (elem != null) yield return elem; }
+				if (OrderedOnElement != null) yield return OrderedOnElement;
+				if (RecordedOnElement != null) yield return RecordedOnElement;
+				if (Subject != null) yield return Subject;
+				if (Timing != null) yield return Timing;
+				if (PriorityElement != null) yield return PriorityElement;
+            }
+        }
     }
     
 }

@@ -320,6 +320,30 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DosageInstructionComponent elements
+                    if (TextElement != null) yield return TextElement;
+                    if (AdditionalInstructions != null) yield return AdditionalInstructions;
+                    if (Timing != null) yield return Timing;
+                    if (AsNeeded != null) yield return AsNeeded;
+                    if (Site != null) yield return Site;
+                    if (Route != null) yield return Route;
+                    if (Method != null) yield return Method;
+                    if (Dose != null) yield return Dose;
+                    if (Rate != null) yield return Rate;
+                    if (MaxDosePerPeriod != null) yield return MaxDosePerPeriod;
+                }
+            }
             
         }
         
@@ -419,6 +443,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ResponsibleParty, otherT.ResponsibleParty)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // SubstitutionComponent elements
+                    if (Type != null) yield return Type;
+                    foreach (var elem in Reason) { if (elem != null) yield return elem; }
+                    foreach (var elem in ResponsibleParty) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -820,7 +861,41 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// MedicationDispense elements
+				if (Identifier != null) yield return Identifier;
+				if (StatusElement != null) yield return StatusElement;
+				if (Patient != null) yield return Patient;
+				if (Dispenser != null) yield return Dispenser;
+				foreach (var elem in AuthorizingPrescription) { if (elem != null) yield return elem; }
+				if (Type != null) yield return Type;
+				if (Quantity != null) yield return Quantity;
+				if (DaysSupply != null) yield return DaysSupply;
+				if (Medication != null) yield return Medication;
+				if (WhenPreparedElement != null) yield return WhenPreparedElement;
+				if (WhenHandedOverElement != null) yield return WhenHandedOverElement;
+				if (Destination != null) yield return Destination;
+				foreach (var elem in Receiver) { if (elem != null) yield return elem; }
+				if (NoteElement != null) yield return NoteElement;
+				foreach (var elem in DosageInstruction) { if (elem != null) yield return elem; }
+				if (Substitution != null) yield return Substitution;
+            }
+        }
     }
     
 }

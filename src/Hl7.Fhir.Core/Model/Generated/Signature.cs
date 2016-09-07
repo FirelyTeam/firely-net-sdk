@@ -232,6 +232,22 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Element elements
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                // Signature elements
+                foreach (var elem in Type) { if (elem != null) yield return elem; }
+                if (WhenElement != null) yield return WhenElement;
+                if (Who != null) yield return Who;
+                if (ContentTypeElement != null) yield return ContentTypeElement;
+                if (BlobElement != null) yield return BlobElement;
+            }
+        }
     
     
     }

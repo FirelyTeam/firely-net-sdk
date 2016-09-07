@@ -193,6 +193,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // MitigationComponent elements
+                    if (Action != null) yield return Action;
+                    if (DateElement != null) yield return DateElement;
+                    if (Author != null) yield return Author;
+                }
+            }
             
         }
         
@@ -482,7 +499,35 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// DetectedIssue elements
+				if (Patient != null) yield return Patient;
+				if (Category != null) yield return Category;
+				if (SeverityElement != null) yield return SeverityElement;
+				foreach (var elem in Implicated) { if (elem != null) yield return elem; }
+				if (DetailElement != null) yield return DetailElement;
+				if (DateElement != null) yield return DateElement;
+				if (Author != null) yield return Author;
+				if (Identifier != null) yield return Identifier;
+				if (ReferenceElement != null) yield return ReferenceElement;
+				foreach (var elem in Mitigation) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

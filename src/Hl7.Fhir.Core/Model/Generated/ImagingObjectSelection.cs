@@ -202,6 +202,24 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // StudyComponent elements
+                    if (UidElement != null) yield return UidElement;
+                    if (UrlElement != null) yield return UrlElement;
+                    if (ImagingStudy != null) yield return ImagingStudy;
+                    foreach (var elem in Series) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -336,6 +354,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Instance, otherT.Instance)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // SeriesComponent elements
+                    if (UidElement != null) yield return UidElement;
+                    if (UrlElement != null) yield return UrlElement;
+                    foreach (var elem in Instance) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -510,6 +545,24 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // InstanceComponent elements
+                    if (SopClassElement != null) yield return SopClassElement;
+                    if (UidElement != null) yield return UidElement;
+                    if (UrlElement != null) yield return UrlElement;
+                    foreach (var elem in Frames) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -629,6 +682,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // FramesComponent elements
+                    foreach (var elem in FrameNumbersElement) { if (elem != null) yield return elem; }
+                    if (UrlElement != null) yield return UrlElement;
+                }
             }
             
         }
@@ -853,7 +922,32 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// ImagingObjectSelection elements
+				if (UidElement != null) yield return UidElement;
+				if (Patient != null) yield return Patient;
+				if (Title != null) yield return Title;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (Author != null) yield return Author;
+				if (AuthoringTimeElement != null) yield return AuthoringTimeElement;
+				foreach (var elem in Study) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

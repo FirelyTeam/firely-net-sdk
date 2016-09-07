@@ -166,6 +166,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ItemsComponent elements
+                    if (SequenceLinkIdElement != null) yield return SequenceLinkIdElement;
+                }
+            }
             
         }
         
@@ -594,7 +609,41 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// ProcessRequest elements
+				if (ActionElement != null) yield return ActionElement;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Ruleset != null) yield return Ruleset;
+				if (OriginalRuleset != null) yield return OriginalRuleset;
+				if (CreatedElement != null) yield return CreatedElement;
+				if (Target != null) yield return Target;
+				if (Provider != null) yield return Provider;
+				if (Organization != null) yield return Organization;
+				if (Request != null) yield return Request;
+				if (Response != null) yield return Response;
+				if (NullifyElement != null) yield return NullifyElement;
+				if (ReferenceElement != null) yield return ReferenceElement;
+				foreach (var elem in Item) { if (elem != null) yield return elem; }
+				foreach (var elem in IncludeElement) { if (elem != null) yield return elem; }
+				foreach (var elem in ExcludeElement) { if (elem != null) yield return elem; }
+				if (Period != null) yield return Period;
+            }
+        }
     }
     
 }

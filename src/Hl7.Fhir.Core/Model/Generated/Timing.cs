@@ -606,6 +606,28 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // RepeatComponent elements
+                    if (Bounds != null) yield return Bounds;
+                    if (CountElement != null) yield return CountElement;
+                    if (DurationElement != null) yield return DurationElement;
+                    if (DurationMaxElement != null) yield return DurationMaxElement;
+                    if (DurationUnitsElement != null) yield return DurationUnitsElement;
+                    if (FrequencyElement != null) yield return FrequencyElement;
+                    if (FrequencyMaxElement != null) yield return FrequencyMaxElement;
+                    if (PeriodElement != null) yield return PeriodElement;
+                    if (PeriodMaxElement != null) yield return PeriodMaxElement;
+                    if (PeriodUnitsElement != null) yield return PeriodUnitsElement;
+                    if (WhenElement != null) yield return WhenElement;
+                }
+            }
             
         }
         
@@ -715,6 +737,20 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
             
             return true;
+        }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Element elements
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                // Timing elements
+                foreach (var elem in EventElement) { if (elem != null) yield return elem; }
+                if (Repeat != null) yield return Repeat;
+                if (Code != null) yield return Code;
+            }
         }
     
     

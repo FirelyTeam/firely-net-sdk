@@ -15,6 +15,8 @@ using System.Net;
 using Hl7.Fhir.Support;
 using System.Xml.Linq;
 using System.IO;
+using Hl7.Fhir.Serialization;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -196,26 +198,56 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.WriteLine(String.Format("First time {0}, second time {1}", sw.ElapsedMilliseconds, sw2.ElapsedMilliseconds));
         }
 
-        //[TestMethod]
-        //public void RemoveNarrativeFromSpecFiles()
-        //{
-        //    var files = Directory.EnumerateFiles(@"C:\Git\fhir-net-api\src\Hl7.Fhir.Specification\data", "*.xml");
 
-        //    foreach(var file in files)
-        //    {
-        //        var xdoc = XDocument.Load(file);
-        //        var narrative = xdoc.Elements(XmlNs.XFHIR + "Bundle").Elements(XmlNs.XFHIR + "entry").Elements(XmlNs.XFHIR + "resource")
-        //                .Elements().Elements(XmlNs.XFHIR + "text").Elements(XmlNs.XHTMLNS + "div");
-        //        foreach(var narrativeElement in narrative)
-        //        {
-        //            narrativeElement.RemoveNodes();
-        //            narrativeElement.Add(new XElement(XmlNs.XHTMLNS + "p",
-        //                new XText("The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library")));
-        //        }
+        // [WMR 20160823] NEW - Verify FileDirectoryArtifactSource & CanonicalUrlConflictException
+        [TestMethod]
+        public void TestCanonicalUrlConflicts()
+        {
+            const string srcFileName = "extension-definitions.xml";
+            const string dupFileName = "diagnosticorder-reason-duplicate";
+            const string url = "http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason";
 
-        //        xdoc.Save(file);
-        //    }
-        //}
+            var za = ZipSource.CreateValidationSource();
+
+            // Try to find a core extension
+            var ext = za.ResolveByCanonicalUri(url);
+            Assert.IsNotNull(ext);
+            Assert.IsTrue(ext is StructureDefinition);
+
+            // Save back to disk to create a conflicting duplicate
+            var b = new Bundle();
+            b.AddResourceEntry(ext, url);
+            var xml = FhirSerializer.SerializeToXml(b);
+            var filePath = Path.Combine(DirectorySource.SpecificationDirectory, dupFileName) + ".xml";
+            var filePath2 = Path.Combine(DirectorySource.SpecificationDirectory, dupFileName) + "2.xml";
+            File.WriteAllText(filePath, xml);
+            File.WriteAllText(filePath2, xml);
+
+            bool conflictException = false;
+            try
+            {
+                var fa = new DirectorySource();
+                var res = fa.ResolveByCanonicalUri(url);
+            }
+            catch (CanonicalUrlConflictException ex)
+            {
+                Debug.Print("{0}:\r\n{1}", ex.GetType().Name, ex.Message);
+                Assert.IsNotNull(ex.Conflicts);
+                Assert.AreEqual(1, ex.Conflicts.Length);
+                var conflict = ex.Conflicts[0];
+                Assert.AreEqual(url, conflict.Url);
+                Assert.IsTrue(conflict.FilePaths.Contains(filePath));
+                Assert.IsTrue(conflict.FilePaths.Contains(filePath2));
+                conflictException = true;
+            }
+            finally
+            {
+                try { File.Delete(filePath); } catch { }
+                File.Delete(filePath2);
+            }
+            Assert.IsTrue(conflictException);
+        }
+
     }
 #endif
 }

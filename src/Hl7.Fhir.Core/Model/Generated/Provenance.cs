@@ -197,6 +197,24 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // AgentComponent elements
+                    if (Role != null) yield return Role;
+                    if (Actor != null) yield return Actor;
+                    if (UserId != null) yield return UserId;
+                    foreach (var elem in RelatedAgent) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -297,6 +315,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(TargetElement, otherT.TargetElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // RelatedAgentComponent elements
+                    if (Type != null) yield return Type;
+                    if (TargetElement != null) yield return TargetElement;
+                }
             }
             
         }
@@ -485,6 +519,25 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // EntityComponent elements
+                    if (RoleElement != null) yield return RoleElement;
+                    if (Type != null) yield return Type;
+                    if (ReferenceElement != null) yield return ReferenceElement;
+                    if (DisplayElement != null) yield return DisplayElement;
+                    if (Agent != null) yield return Agent;
+                }
             }
             
         }
@@ -741,7 +794,35 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// Provenance elements
+				foreach (var elem in Target) { if (elem != null) yield return elem; }
+				if (Period != null) yield return Period;
+				if (RecordedElement != null) yield return RecordedElement;
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
+				if (Activity != null) yield return Activity;
+				if (Location != null) yield return Location;
+				foreach (var elem in PolicyElement) { if (elem != null) yield return elem; }
+				foreach (var elem in Agent) { if (elem != null) yield return elem; }
+				foreach (var elem in Entity) { if (elem != null) yield return elem; }
+				foreach (var elem in Signature) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

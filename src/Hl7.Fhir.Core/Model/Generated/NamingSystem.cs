@@ -209,6 +209,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContactComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -379,6 +395,24 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // UniqueIdComponent elements
+                    if (TypeElement != null) yield return TypeElement;
+                    if (ValueElement != null) yield return ValueElement;
+                    if (PreferredElement != null) yield return PreferredElement;
+                    if (Period != null) yield return Period;
+                }
             }
             
         }
@@ -826,7 +860,38 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// NamingSystem elements
+				if (NameElement != null) yield return NameElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (KindElement != null) yield return KindElement;
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (ResponsibleElement != null) yield return ResponsibleElement;
+				if (DateElement != null) yield return DateElement;
+				if (Type != null) yield return Type;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
+				if (UsageElement != null) yield return UsageElement;
+				foreach (var elem in UniqueId) { if (elem != null) yield return elem; }
+				if (ReplacedBy != null) yield return ReplacedBy;
+            }
+        }
     }
     
 }

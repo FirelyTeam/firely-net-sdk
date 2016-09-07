@@ -325,6 +325,30 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DosageInstructionComponent elements
+                    if (TextElement != null) yield return TextElement;
+                    if (AdditionalInstructions != null) yield return AdditionalInstructions;
+                    if (Timing != null) yield return Timing;
+                    if (AsNeeded != null) yield return AsNeeded;
+                    if (Site != null) yield return Site;
+                    if (Route != null) yield return Route;
+                    if (Method != null) yield return Method;
+                    if (Dose != null) yield return Dose;
+                    if (Rate != null) yield return Rate;
+                    if (MaxDosePerPeriod != null) yield return MaxDosePerPeriod;
+                }
+            }
             
         }
         
@@ -473,6 +497,25 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DispenseRequestComponent elements
+                    if (Medication != null) yield return Medication;
+                    if (ValidityPeriod != null) yield return ValidityPeriod;
+                    if (NumberOfRepeatsAllowedElement != null) yield return NumberOfRepeatsAllowedElement;
+                    if (Quantity != null) yield return Quantity;
+                    if (ExpectedSupplyDuration != null) yield return ExpectedSupplyDuration;
+                }
+            }
             
         }
         
@@ -553,6 +596,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // SubstitutionComponent elements
+                    if (Type != null) yield return Type;
+                    if (Reason != null) yield return Reason;
+                }
             }
             
         }
@@ -927,7 +986,40 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// MedicationOrder elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (DateWrittenElement != null) yield return DateWrittenElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (DateEndedElement != null) yield return DateEndedElement;
+				if (ReasonEnded != null) yield return ReasonEnded;
+				if (Patient != null) yield return Patient;
+				if (Prescriber != null) yield return Prescriber;
+				if (Encounter != null) yield return Encounter;
+				if (Reason != null) yield return Reason;
+				if (NoteElement != null) yield return NoteElement;
+				if (Medication != null) yield return Medication;
+				foreach (var elem in DosageInstruction) { if (elem != null) yield return elem; }
+				if (DispenseRequest != null) yield return DispenseRequest;
+				if (Substitution != null) yield return Substitution;
+				if (PriorPrescription != null) yield return PriorPrescription;
+            }
+        }
     }
     
 }

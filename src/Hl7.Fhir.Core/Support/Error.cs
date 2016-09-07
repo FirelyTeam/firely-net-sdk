@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace Hl7.Fhir.Support
@@ -161,6 +162,12 @@ namespace Hl7.Fhir.Support
         internal static ResourceReferenceNotFoundException ResourceReferenceNotFoundException(string url, string messageFormat, params object[] messageArgs)
         {
             return new ResourceReferenceNotFoundException(url, Error.formatMessage(messageFormat, messageArgs));
+        }
+
+        // [WMR 20160823] NEW - For FileDirectoryArtifactSource
+        internal static CanonicalUrlConflictException CanonicalUrlConflictException(IEnumerable<CanonicalUrlConflictException.CanonicalUrlConflict> conflicts)
+        {
+            return new Support.CanonicalUrlConflictException(conflicts);
         }
 
         /// <summary>

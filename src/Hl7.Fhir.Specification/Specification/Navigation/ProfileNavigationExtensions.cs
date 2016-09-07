@@ -83,83 +83,96 @@ namespace Hl7.Fhir.Specification.Navigation
             return defn.Max != "1" && defn.Max != "0";
         }
 
-        public static bool IsExtension(this ElementDefinition elem)
+        public static bool IsExtension(this ElementDefinition defn)
         {
-            return elem.Path.EndsWith(".extension") || elem.Path.EndsWith(".modifierExtension");
+            return defn.Path.EndsWith(".extension") || defn.Path.EndsWith(".modifierExtension");
         }
 
         // [WMR 20160805] New
-        public static bool IsRootElement(this ElementDefinition elem)
+        public static bool IsRootElement(this ElementDefinition defn)
         {
-            return !string.IsNullOrEmpty(elem.Path) && !elem.Path.Contains('.');
+            return !string.IsNullOrEmpty(defn.Path) && !defn.Path.Contains('.');
         }
 
-        // [WMR 20160801] NEW
+        /// <summary>Returns the primary element type, if it exists.</summary>
+        /// <param name="defn">An <see cref="ElementDefinition"/> instance.</param>
+        /// <returns>A <see cref="ElementDefinition.TypeRefComponent"/> instance, or <c>null</c>.</returns>
+        public static ElementDefinition.TypeRefComponent PrimaryType(this ElementDefinition defn)
+        {
+            return defn.Type != null ? defn.Type.FirstOrDefault() : null;
+        }
 
         /// <summary>Enumerates the type profile references of the primary element type.</summary>
-        public static IEnumerable<string> PrimaryTypeProfiles(this ElementDefinition elem)
+        public static IEnumerable<string> PrimaryTypeProfiles(this ElementDefinition defn)
         {
-            if (elem.Type != null)
+            var primaryType = defn.PrimaryType();
+            if (primaryType != null)
             {
-                var primaryType = elem.Type.FirstOrDefault();
-                if (primaryType != null)
-                {
-                    return primaryType.Profile;
-                }
+                return primaryType.Profile;
             }
             return Enumerable.Empty<string>();
         }
 
 
         /// <summary>Returns the first type profile reference of the primary element type, if it exists, or <c>null</c></summary>
-        public static string PrimaryTypeProfile(this ElementDefinition elem)
+        public static string PrimaryTypeProfile(this ElementDefinition defn)
         {
-            return elem.PrimaryTypeProfiles().FirstOrDefault();
+            return defn.PrimaryTypeProfiles().FirstOrDefault();
         }
 
         /// <summary>Returns the type code of the primary element type, or <c>null</c>.</summary>
-        public static FHIRDefinedType? PrimaryTypeCode(this ElementDefinition elem)
+        public static FHIRDefinedType? PrimaryTypeCode(this ElementDefinition defn)
         {
-            if (elem.Type != null)
+            var primaryType = defn.PrimaryType();
+            if (primaryType != null)
             {
-                var type = elem.Type.FirstOrDefault();
-                if (type != null)
-                {
-                    return type.Code;
-                }
+                return primaryType.Code;
             }
             return null;
         }
 
-
         /// <summary>Returns <c>true</c> if the element represents an extension with a custom extension profile url, or <c>false</c> otherwise.</summary>
-        public static bool IsMappedExtension(this ElementDefinition elem)
+        public static bool IsMappedExtension(this ElementDefinition defn)
         {
-            return elem.IsExtension() && elem.PrimaryTypeProfile() != null;
+            return defn.IsExtension() && defn.PrimaryTypeProfile() != null;
         }
 
-        // [WMR 20160720] NEW
-        public static bool IsReference(this ElementDefinition elem)
+        /// <summary>Determines if the specified element definition represents a <see cref="ResourceReference"/>.</summary>
+        /// <param name="defn">An <see cref="ElementDefinition"/> instance.</param>
+        /// <returns><c>true</c> if the instance defines a reference, or <c>false</c> otherwise.</returns>
+        public static bool IsReference(this ElementDefinition defn)
         {
-            var primaryType = elem.Type.FirstOrDefault();
-            return primaryType != null && primaryType.Code.HasValue && ModelInfo.IsReference(primaryType.Code.Value);
+            var primaryType = defn.Type.FirstOrDefault();
+            // return primaryType != null && primaryType.Code.HasValue && ModelInfo.IsReference(primaryType.Code.Value);
+            return primaryType != null && IsReference(primaryType);
         }
 
+        /// <summary>Determines if the specified type reference represents a <see cref="ResourceReference"/>.</summary>
+        /// <param name="typeRef">A <see cref="ElementDefinition.TypeRefComponent"/> instance.</param>
+        /// <returns><c>true</c> if the instance defines a reference, or <c>false</c> otherwise.</returns>
+        public static bool IsReference(this ElementDefinition.TypeRefComponent typeRef)
+        {
+            return typeRef.Code.HasValue && ModelInfo.IsReference(typeRef.Code.Value);
+        }
+
+        /// <summary>Determines if the specified element definition represents a type choice element by verifying that the element name ends with "[x]".</summary>
+        /// <param name="defn">An <see cref="ElementDefinition"/> instance.</param>
+        /// <returns><c>true</c> if the instance defines a type choice element, or <c>false</c> otherwise.</returns>
         public static bool IsChoice(this ElementDefinition defn)
         {
             return defn.Path.EndsWith("[x]");
         }
 
-        public static string GetNameFromPath(this ElementDefinition element)
+        public static string GetNameFromPath(this ElementDefinition defn)
         {
- 	        var pos = element.Path.LastIndexOf(".");
+ 	        var pos = defn.Path.LastIndexOf(".");
 
-            return pos != -1 ? element.Path.Substring(pos+1) : element.Path;
+            return pos != -1 ? defn.Path.Substring(pos+1) : defn.Path;
         }
 
-        public static string GetParentNameFromPath(this ElementDefinition element)
+        public static string GetParentNameFromPath(this ElementDefinition defn)
         {
-            return ElementDefinitionNavigator.GetParentPath(element.Path);
+            return ElementDefinitionNavigator.GetParentPath(defn.Path);
         }
     }
 }

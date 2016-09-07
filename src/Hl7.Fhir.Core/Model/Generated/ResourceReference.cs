@@ -159,6 +159,19 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Element elements
+                foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                // Reference elements
+                if (ReferenceElement != null) yield return ReferenceElement;
+                if (DisplayElement != null) yield return DisplayElement;
+            }
+        }
     
     
     }

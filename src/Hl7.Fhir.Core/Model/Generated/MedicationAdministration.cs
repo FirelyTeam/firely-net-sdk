@@ -214,6 +214,26 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DosageComponent elements
+                    if (TextElement != null) yield return TextElement;
+                    if (Site != null) yield return Site;
+                    if (Route != null) yield return Route;
+                    if (Method != null) yield return Method;
+                    if (Quantity != null) yield return Quantity;
+                    if (Rate != null) yield return Rate;
+                }
+            }
             
         }
         
@@ -588,7 +608,39 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// MedicationAdministration elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Patient != null) yield return Patient;
+				if (Practitioner != null) yield return Practitioner;
+				if (Encounter != null) yield return Encounter;
+				if (Prescription != null) yield return Prescription;
+				if (WasNotGivenElement != null) yield return WasNotGivenElement;
+				foreach (var elem in ReasonNotGiven) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonGiven) { if (elem != null) yield return elem; }
+				if (EffectiveTime != null) yield return EffectiveTime;
+				if (Medication != null) yield return Medication;
+				foreach (var elem in Device) { if (elem != null) yield return elem; }
+				if (NoteElement != null) yield return NoteElement;
+				if (Dosage != null) yield return Dosage;
+            }
+        }
     }
     
 }

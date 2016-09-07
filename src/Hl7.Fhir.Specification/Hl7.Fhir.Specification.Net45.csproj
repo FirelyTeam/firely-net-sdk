@@ -83,6 +83,9 @@
     <Compile Include="Specification\Source\ResourceResolverExtensions.cs" />
     <Compile Include="Specification\Source\IArtifactSource.cs" />
     <Compile Include="Specification\Source\WebResolver.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotElementBaseGenerator.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorExtensions.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorOutcome.cs" />
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\ChildConstraintExtensions.cs" />
     <Compile Include="Validation\FixedPatternExtensions.cs" />
@@ -100,7 +103,6 @@
     <Compile Include="Specification\Navigation\ElementNavigatorMovementExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorEvents.cs" />
-    <Compile Include="Specification\Snapshot\SnapshotGeneratorProfileInfo.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
     <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
     <Compile Include="Specification\Source\SourceFactory.cs" />
@@ -140,7 +142,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">
     <CleanSpecFiles DirectoryName="data" />
-    <ZipDir ZipFileName="specification.zip" DirectoryName="data" />	
+    <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
   </Target>
   <UsingTask TaskName="ZipDir" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
     <ParameterGroup>
@@ -171,11 +173,10 @@
       <DirectoryName ParameterType="System.String" Required="true" />
     </ParameterGroup>
     <Task>
-	  <Reference Include="System.XML" />
-	  <Reference Include="System.Xml.Linq" />
+      <Reference Include="System.XML" />
+      <Reference Include="System.Xml.Linq" />
       <Using Namespace="System.Xml.Linq" />
-	  <Using Namespace="System.IO" />
-
+      <Using Namespace="System.IO" />
       <Code Type="Fragment" Language="cs"><![CDATA[
 		  try
 		  {

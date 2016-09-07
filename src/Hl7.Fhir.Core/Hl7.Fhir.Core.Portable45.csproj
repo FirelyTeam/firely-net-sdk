@@ -620,6 +620,7 @@
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
+    <Compile Include="Support\CanonicalUrlConflictException.cs" />
     <Compile Include="Support\DateExtensions.cs" />
     <Compile Include="Support\EnumUtility.cs" />
     <Compile Include="Support\Error.cs" />

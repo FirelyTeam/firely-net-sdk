@@ -271,6 +271,28 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // RecommendationComponent elements
+                    if (DateElement != null) yield return DateElement;
+                    if (VaccineCode != null) yield return VaccineCode;
+                    if (DoseNumberElement != null) yield return DoseNumberElement;
+                    if (ForecastStatus != null) yield return ForecastStatus;
+                    foreach (var elem in DateCriterion) { if (elem != null) yield return elem; }
+                    if (Protocol != null) yield return Protocol;
+                    foreach (var elem in SupportingImmunization) { if (elem != null) yield return elem; }
+                    foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -371,6 +393,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DateCriterionComponent elements
+                    if (Code != null) yield return Code;
+                    if (ValueElement != null) yield return ValueElement;
+                }
             }
             
         }
@@ -542,6 +580,24 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ProtocolComponent elements
+                    if (DoseSequenceElement != null) yield return DoseSequenceElement;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Authority != null) yield return Authority;
+                    if (SeriesElement != null) yield return SeriesElement;
+                }
+            }
             
         }
         
@@ -642,7 +698,28 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Resource elements
+				if (IdElement != null) yield return IdElement;
+				if (Meta != null) yield return Meta;
+				if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+				if (LanguageElement != null) yield return LanguageElement;
+				// DomainResource elements
+				if (Text != null) yield return Text;
+				foreach (var elem in Contained) { if (elem != null) yield return elem; }
+				foreach (var elem in Extension) { if (elem != null) yield return elem; }
+				foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+				// ImmunizationRecommendation elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Patient != null) yield return Patient;
+				foreach (var elem in Recommendation) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }
