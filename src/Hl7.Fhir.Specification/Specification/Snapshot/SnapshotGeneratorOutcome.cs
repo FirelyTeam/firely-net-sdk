@@ -4,6 +4,9 @@ using Hl7.Fhir.Validation;
 using Hl7.ElementModel;
 using Hl7.Fhir.Support;
 
+// [WMR 20160907] TODO: Add StructureDefinition.url value to issue data
+// Requires global access to the current StructDef url - recursion checker could provide this
+
 namespace Hl7.Fhir.Specification.Snapshot
 {
     // Static OperationOutcome.IssueComponent definitions for the SnapshotGenerator

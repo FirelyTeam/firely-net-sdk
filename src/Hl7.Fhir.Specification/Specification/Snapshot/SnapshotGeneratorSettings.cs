@@ -14,14 +14,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
-            ExpandExternalProfiles = false,
+            ExpandExternalProfiles = true,
             ExpandUnconstrainedElements = false,
             MarkChanges = false,
 
             // Following settings concern controversial aspects, behavior is not well defined
             // Needs discussion/decision from HL7 FHIR community
             MergeTypeProfiles = true,
-            NormalizeElementBase = false   // true in STU3
+            NormalizeElementBase = true
         };
 
         /// <summary>Default ctor.</summary>
@@ -38,23 +38,28 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>
-        /// Enable this setting to automatically generate the snapshot of external profiles on demand if necessary.
-        /// If disabled (default), throw an exception for external type profiles without a snapshot component.
+        /// If enabled (default), the snapshot generator will automatically generate the snapshot component of any referenced external profiles on demand if necessary.
+        /// If disabled, then skip the merging of any external type profiles without a snapshot component.
         /// </summary>
         public bool ExpandExternalProfiles { get; set; }
 
-        // TODO: Use (timestamp) annotation to mark & detect already (forceably) re-expanded profiles
-
-        // <summary>
-        // EXPERIMENTAL!
-        // Force expansion of all external profiles, disregarding any existing snapshot components.
-        // </summary>
+        /// <summary>
+        /// EXPERIMENTAL!
+        /// Force expansion of all external profiles, disregarding any existing snapshot components.
+        /// If enabled, the snapshot generator will re-generate the snapshot components of all the core resource and datatype profiles
+        /// as well as of all other referenced external profiles.
+        /// Re-generated snapshots are annotated to prevent duplicate re-generation (assuming a CachedArtifactSource).
+        /// If disabled (default), then the snapshot generator relies on the existing snapshot components.
+        /// </summary>
         public bool ForceExpandAll { get; set; }
 
         /// <summary>
-        /// Mark all elements in the snapshot that are constrained with respect to the base profile.
+        /// Enable this setting to mark all elements in the snapshot that are constrained with respect to the base profile.
         /// The snapshot generator will decorate all changed elements with a special extension
         /// (canonical url "http://hl7.org/fhir/StructureDefinition/changedByDifferential").
+        /// <br />
+        /// Note that this extension only applies to the containing profile and should NOT be inherited by derived profiles.
+        /// The FHIR API snapshot generator explicitly removes and re-generates these extensions for each profile.
         /// </summary>
         public bool MarkChanges { get; set; }
 
@@ -79,10 +84,16 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>
         /// EXPERIMENTAL!
-        /// Enable this setting to normalize the ElementDefinition.Base component of inherited elements.
+        /// If enabled (default), then normalize the ElementDefinition.Base component of inherited elements in order to reference
+        /// the element definition in the defining profile that originally introduces the element.
+        /// If disabled, then the ElementDefinition.Base components are initialized from the associated element in the immediate base profile.
         /// </summary>
         /// <example>
-        /// Path = 'Patient.name.given' => Base.Path = 'HumanName.given' (derived from parent element type = 'HumanName')
+        /// <code>
+        /// Path = "Patient.meta" => Base.Path = "Resource.meta" (derived from parent element Resource)
+        /// <br />
+        /// Path = "Patient.name.given" => Base.Path = "HumanName.given" (derived from parent element type = 'HumanName')
+        /// </code>
         /// </example>
         public bool NormalizeElementBase { get; set; }
 

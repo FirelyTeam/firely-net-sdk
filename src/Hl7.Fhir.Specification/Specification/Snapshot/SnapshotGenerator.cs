@@ -754,30 +754,27 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return false;
             }
 
-            // Never try to regenerate the Element root type profile; this causes recursion...
-            if (sd.Name != "Element") // (sd.Base != null)
-            {
-
-                if ((sd.Snapshot == null && _settings.ExpandExternalProfiles)
-#if FORCE_EXPAND_ALL
-                || (
-                        _settings.ForceExpandAll
-                        && !isCreatedBySnapshotGenerator(sd.Snapshot)
-                    )
-#endif
-                )
-                {
-                    // Automatically expand external profiles on demand
-                    Debug.Print("Recursively expand snapshot of external profile with url: '{0}' ...".FormatWith(sd.Url));
-
 #if DETECT_RECURSION
-                    // Detect endless recursion
-                    // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
-                    _recursionChecker.OnBeforeExpandType(profileUrl, location != null ? location.Path : null);
+            // Detect endless recursion
+            // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
+            _recursionChecker.OnBeforeExpandType(profileUrl, location != null ? location.Path : null);
 #endif
+            try
+            {
+                // Never try to regenerate the Element root type profile; this causes recursion...
+                if (sd.Name != "Element") // (sd.Base != null)
+                {
 
-                    try
+                    if (
+                        (sd.Snapshot == null && _settings.ExpandExternalProfiles)
+#if FORCE_EXPAND_ALL
+                        || (_settings.ForceExpandAll && !isCreatedBySnapshotGenerator(sd.Snapshot))
+#endif
+                    )
                     {
+                        // Automatically expand external profiles on demand
+                        Debug.Print("Recursively expand snapshot of external profile with url: '{0}' ...".FormatWith(sd.Url));
+
                         // TODO: support SnapshotGeneratorSettings.ForceExpandAll
                         // Use (timestamp) annotation to mark & detect already (forceably) re-expanded profiles!
                         sd.Snapshot = new StructureDefinition.SnapshotComponent()
@@ -790,25 +787,25 @@ namespace Hl7.Fhir.Specification.Snapshot
                         setCreatedBySnapshotGenerator(sd.Snapshot);
 #endif
 
-
-                    }
-                    finally
-                    {
-#if DETECT_RECURSION
-                        _recursionChecker.OnAfterExpandType(profileUrl);
-#endif
                     }
                 }
+                if (!sd.HasSnapshot)
+                {
+                    addIssueProfileHasNoSnapshot(location, profileUrl);
+                    return false;
+                }
+
+                // Generating the element base components may also resolve StructureDefinitions and cause recursion!
+                generateSnapshotElementsBase(sd);
+
+                // [WMR 20160906] TODO: Generate ElementDefinition.id
             }
-            if (!sd.HasSnapshot)
+            finally
             {
-                addIssueProfileHasNoSnapshot(location, profileUrl);
-                return false;
+#if DETECT_RECURSION
+                _recursionChecker.OnAfterExpandType(profileUrl);
+#endif
             }
-
-            generateSnapshotElementsBase(sd);
-
-            // [WMR 20160906] TODO: Generate ElementDefinition.id
 
             return true;
         }
