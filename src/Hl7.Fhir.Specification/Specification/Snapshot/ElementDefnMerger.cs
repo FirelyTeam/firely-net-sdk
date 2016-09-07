@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
 
                 // [WMR 20160817] TODO: Merge extensions
-                Debug.WriteLineIf(diff.Extension != null && diff.GetChangedByDiff() == null, "[ElementDefnMerger] Warning: Extension merging is not supported yet...");
+                // Debug.WriteLineIf(diff.Extension != null && diff.GetChangedByDiff() == null, "[ElementDefnMerger] Warning: Extension merging is not supported yet...");
 
                 // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
                 // [WMR 20160907] Merge extensions... match on url, diff completely overrides snapshot

@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -162,8 +162,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        // [Ignore] // For debugging purposes
-        public void GenerateRecursiveSnapshot()
+        public void TestSnapshotRecursionChecker()
         {
             // Following structuredefinition has a recursive element type profile
             // Verify that the snapshot generator detects recursion and aborts with exception
@@ -347,11 +346,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(issue.GetProfileUrl(), profileUrl);
         }
 
-        //private static void assertProfileInfo(IList<SnapshotProfileInfo> info, string url, SnapshotProfileStatus status)
-        //{
-        //    Assert.AreEqual(1, info.Count(pi => pi.Url == url & pi.Status == status));
-        //}
-
         // [WMR 20160721] Following profiles are not yet handled (TODO)
         private readonly string[] skippedProfiles =
         {
@@ -443,7 +437,9 @@ namespace Hl7.Fhir.Specification.Tests
             // }
 
             // Assert.IsTrue(areEqual);
-            Debug.WriteLineIf(!areEqual, "WARNING: '{0}' Expansion is not equal to original!".FormatWith(original.Name));
+            Debug.WriteLineIf(!areEqual, "WARNING: '{0}' Expansion ({1} elements) is not equal to original ({2} elements)!".FormatWith(
+                original.Name, original.HasSnapshot ? original.Snapshot.Element.Count : 0, expanded.HasSnapshot ? expanded.Snapshot.Element.Count : 0)
+            );
 
             return areEqual;
         }

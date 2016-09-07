@@ -5,7 +5,12 @@ using Hl7.ElementModel;
 using Hl7.Fhir.Support;
 
 // [WMR 20160907] TODO: Add StructureDefinition.url value to issue data
-// Requires global access to the current StructDef url - recursion checker could provide this
+// Requires global access to the current StructDef url => now provided by recursion checker
+// TODO: Create unit tests to evaluate behavior for different kinds of errors, e.g.
+// - unresolved external (type/extension) profile
+// - invalid element order
+// - invalid constraint element (no base)
+// - ...
 
 namespace Hl7.Fhir.Specification.Snapshot
 {

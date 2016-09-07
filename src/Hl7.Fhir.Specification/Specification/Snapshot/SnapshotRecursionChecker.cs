@@ -17,7 +17,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         // private HashSet<string> _expandingProfiles;
         Stack<string> _expandingProfiles;
 
-        /// <summary>Call this method before expanding a profile.</summary>
+        /// <summary>
+        /// Call this method before generating a profile snapshot component. 
+        /// Call the <see cref="FinishExpansion"/> method when snapshot generation has completed.
+        /// </summary>
         /// <param name="profileUrl"></param>
         public void StartExpansion(string profileUrl)
         {
@@ -32,12 +35,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             _expandingProfiles.Push(profileUrl);
         }
 
-        public bool IsExpanding(string profileUrl)
-        {
-            return _expandingProfiles.Contains(profileUrl);
-        }
+        /// <summary>Determines if the snapshot of the specified profile is in the process of being generated.</summary>
+        /// <param name="profileUrl">The canonical url of a profile.</param>
+        /// <returns><c>true</c> if the profile snapshot is being generated, or <c>false</c> otherwise.</returns>
+        public bool IsExpanding(string profileUrl) { return _expandingProfiles.Contains(profileUrl); }
 
-        /// <summary>Call this method after the profile has been expanded.</summary>
+        /// <summary>Returns the url of the profile that is currently being processed by the snapshot generator.</summary>
+        public string CurrentProfileUrl { get { return _expandingProfiles.Peek(); } }
+
+        /// <summary>Call this method after profile snapshot generation has completed.</summary>
         public void FinishExpansion()
         {
             Debug.Assert(_expandingProfiles != null);
@@ -50,9 +56,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             get { return _expandingProfiles.Count == 1; }
         }
 
-        /// <summary>Call this method before expanding an element type profile.</summary>
-        /// <param name="profileUrl"></param>
-        /// <param name="path"></param>
+        /// <summary>
+        /// Call this method before generating the snapshot component of a referenced type profile.
+        /// Call the <see cref="OnAfterExpandType(string)"/> method on completion.
+        /// </summary>
+        /// <param name="profileUrl">The canonical url of the type profile.</param>
+        /// <param name="path">The path of the element that references the specified type profile.</param>
         public void OnBeforeExpandType(string profileUrl, string path)
         {
             Debug.Assert(_expandingProfiles != null);
@@ -66,7 +75,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             _expandingProfiles.Push(profileUrl);
         }
 
-        /// <summary>Call this method after an element type profile has been expanded.</summary>
+        /// <summary>Call this method after completing snapshot generation of a referenced type profile.</summary>
         public void OnAfterExpandType(string profileUrl)
         {
             Debug.Assert(_expandingProfiles != null);

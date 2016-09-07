@@ -1,4 +1,14 @@
-﻿using Hl7.Fhir.Model;
+﻿#define BASE_CHILDREN
+
+/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -40,29 +50,33 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Removes the <see cref="CHANGED_BY_DIFF_EXT"/> extension from all snapshot element definitions and child elements.</summary>
-        /// <param name="elements">A list of <see cref="ElementDefinition"/> instances.</param>
-        public static void ClearAllChangedByDiff(this IEnumerable<ElementDefinition> elements)
+        /// <param name="elemDefs">A list of <see cref="ElementDefinition"/> instances.</param>
+        public static void ClearAllChangedByDiff(this IEnumerable<ElementDefinition> elemDefs)
         {
-            foreach (var elem in elements ?? Enumerable.Empty<ElementDefinition>())
+            foreach (var elem in elemDefs ?? Enumerable.Empty<ElementDefinition>())
             {
                 ClearAllChangedByDiff(elem);
             }
         }
 
         /// <summary>Removes the <see cref="CHANGED_BY_DIFF_EXT"/> extension from the snapshot element definition and it's child elements.</summary>
-        /// <param name="element">An <see cref="ElementDefinition"/> instance.</param>
-        public static void ClearAllChangedByDiff(this ElementDefinition element)
+        /// <param name="elemDef">An <see cref="ElementDefinition"/> instance.</param>
+        public static void ClearAllChangedByDiff(this ElementDefinition elemDef)
         {
-            ClearAllExtensions(element, CHANGED_BY_DIFF_EXT);
+            ClearAllExtensions(elemDef, CHANGED_BY_DIFF_EXT);
         }
 
-        /// <summary>Removes a specific extension from the snapshot element definition and it's child elements.</summary>
-        /// <param name="element">An <see cref="ElementDefinition"/> instance.</param>
+        /// <summary>Removes a specific extension from the snapshot element definition and it's descendant elements, recursively.</summary>
+        /// <param name="elemDef">An <see cref="ElementDefinition"/> instance.</param>
         /// <param name="uri">The canonical url of the extension.</param>
-        internal static void ClearAllExtensions(this ElementDefinition element, string uri)
+        internal static void ClearAllExtensions(this ElementDefinition elemDef, string uri)
         {
-            if (element == null) return;
-            element.RemoveExtension(uri);
+            if (elemDef == null) return;
+
+#if BASE_CHILDREN
+            ClearExtensions(elemDef, uri);
+#else
+            elemDef.RemoveExtension(uri);
             ClearAllExtensions(element.AliasElement, uri);
             ClearExtension(element.Base, uri);
             ClearExtension(element.Binding, uri);
@@ -96,8 +110,30 @@ namespace Hl7.Fhir.Specification.Snapshot
             ClearExtension(element.Slicing, uri);
             ClearExtension(element.RequirementsElement, uri);
             ClearAllExtensions(element.Type, uri);
+#endif
         }
 
+#if BASE_CHILDREN
+        static void ClearExtensions<T>(this IEnumerable<T> elements, string uri) where T : Base
+        {
+            if (elements != null)
+            {
+                foreach (var child in elements)
+                {
+                    ClearExtensions(child, uri);
+                }
+            }
+        }
+
+        static void ClearExtensions<T>(this T element, string uri) where T : Base
+        {
+            if (element != null)
+            {
+                ClearExtension(element as IExtendable, uri);
+                ClearExtensions(element.Children, uri);
+            }
+        }
+#else
         internal static void ClearAllExtensions<T>(this IList<T> extendables, string uri) where T : IExtendable
         {
             if (extendables == null) return;
@@ -107,6 +143,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
+#endif
         static void ClearExtension(this IExtendable extendable, string uri)
         {
             if (extendable != null) { extendable.RemoveExtension(uri); }
