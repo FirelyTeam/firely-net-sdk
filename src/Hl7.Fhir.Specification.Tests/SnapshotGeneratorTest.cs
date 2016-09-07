@@ -57,8 +57,9 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testSource.GetStructureDefinition(@"http://example.org/fhir/StructureDefinition/string-translation");
 
             // TODO
-            var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
+            // var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
             // var sd = _testSource.GetStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-legal-case");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/us-core-religion");
 
             Assert.IsNotNull(sd);
 
@@ -794,10 +795,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             var settings = new SnapshotGeneratorSettings(_settings);
             settings.ExpandExternalProfiles = true;
-            settings.ExpandUnconstrainedElements = true;
             settings.MergeTypeProfiles = true;
             settings.MarkChanges = true;
-            //settings.NormalizeElementBase = true;
+            settings.NormalizeElementBase = true;
+            _settings.ForceExpandAll = true;
             _generator = new SnapshotGenerator(source, settings);
 
             // [WMR 20160817] Attach custom event handlers
@@ -1046,13 +1047,15 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/BackboneElement");
-            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
 
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/integer");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/positiveInt");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/string");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/code");
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/id");
 
+            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Meta");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/HumanName");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Quantity");
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
@@ -1061,7 +1064,7 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
 
             // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
-            // var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            var sd = _testSource.GetStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
 
             Assert.IsNotNull(sd);
 
@@ -1069,6 +1072,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             _settings.NormalizeElementBase = true;
             _settings.ForceExpandAll = true;
+            _settings.MergeTypeProfiles = true;
+            _settings.ExpandExternalProfiles = true;
 
             StructureDefinition expanded;
             var result = generateSnapshotAndCompare(sd, _testSource, out expanded);

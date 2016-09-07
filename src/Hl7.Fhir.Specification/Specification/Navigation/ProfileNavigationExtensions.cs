@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns>A <see cref="ElementDefinition.TypeRefComponent"/> instance, or <c>null</c>.</returns>
         public static ElementDefinition.TypeRefComponent PrimaryType(this ElementDefinition defn)
         {
-            return defn.Type != null ? defn.Type.FirstOrDefault() : null;
+            return defn.Type != null && defn.Type.Count > 0 ? defn.Type[0] : null;
         }
 
         /// <summary>Enumerates the type profile references of the primary element type.</summary>

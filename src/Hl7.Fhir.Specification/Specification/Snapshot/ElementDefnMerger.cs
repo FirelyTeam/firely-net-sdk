@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             private void merge(ElementDefinition snap, ElementDefinition diff)
             {
-                bool isExtensionConstraint = snap.Path == "Extension" || snap.IsExtension();
+                // bool isExtensionConstraint = snap.Path == "Extension" || snap.IsExtension();
 
                 // paths can be changed under one circumstance: the snap is a choice[x] element, and diff limits the type choices
                 // to one. The name can then be changed to choiceXXXX, where XXXX is the name of the type.
@@ -58,10 +58,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 // [WMR 20160906] Also merge Element.Id
-                if (snap.ElementId == null)
-                {
-                    snap.ElementId = diff.ElementId;
-                }
+                // Tricky... like ElementDefinition.Base, this value depends on the position in the tree => can't inherit
+                //if (snap.ElementId == null)
+                //{
+                //    snap.ElementId = diff.ElementId;
+                //}
 
                 // representation cannot be overridden
                 snap.NameElement = mergePrimitiveAttribute(snap.NameElement, diff.NameElement);
@@ -99,28 +100,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // snap.base should already be there, and is not changed by the diff
 
-                // [WMR 20160805] Special handling for root element
-                // Core resource profiles have root element with type 'DomainResource'
-                // Derived profiles should replace this with the resource name / path of root element
-                // [WMR 20160906] WRONG!
-                //if (snap.IsRootElement())
-                //{
-                //    var primaryType = snap.Type.FirstOrDefault();
-                //    if (primaryType == null || primaryType.Code == FHIRDefinedType.DomainResource)
-                //    {
-                //        snap.Type = new List<ElementDefinition.TypeRefComponent>()
-                //        {
-                //            // Initialize root element type code from element path, e.g. "Patient"
-                //            // Note: use ObjectValue in order to handle unknown resource types
-                //            new ElementDefinition.TypeRefComponent() { CodeElement = new Code<FHIRDefinedType>() { ObjectValue = snap.Path } }
-                //        };
-                //        OnConstraint(snap.Type[0]);
-                //    }
-                //}
-                //// Type is just overridden
-                //// [WMR 20160826] Bugfix
-                //else 
-
                 if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type)) // !diff.IsExactly(snap))
                 {
                     snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
@@ -142,13 +121,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Constraints are cumulative, so they are always "new" (hence a constant false for the comparer)
                 snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
 
+                // [WMR 20160907] merge conditions
+                snap.ConditionElement = mergeCollection(snap.ConditionElement, diff.ConditionElement, (a, b) => a.Value == b.Value);
+
                 snap.MustSupportElement = mergePrimitiveAttribute(snap.MustSupportElement, diff.MustSupportElement);
 
+                // [WMR 20160907] Validator should catch this
                 // ElementDefinition.isModifier can only be overridden by a derived extension
-                if (isExtensionConstraint)
-                {
-                    snap.IsModifierElement = mergePrimitiveAttribute(snap.IsModifierElement, diff.IsModifierElement);
-                }
+                // if (isExtensionConstraint)
+                // {
+                snap.IsModifierElement = mergePrimitiveAttribute(snap.IsModifierElement, diff.IsModifierElement);
+                // }
 
                 snap.IsSummaryElement = mergePrimitiveAttribute(snap.IsSummaryElement, diff.IsSummaryElement);
 
@@ -157,10 +140,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
 
                 // [WMR 20160817] TODO: Merge extensions
-                // snap.Extension = mergeCollection(snap.Extension, diff.Extension, (s, d) => s.Url == d.Url);
-                Debug.WriteLineIf(snap.Extension == null, "[ElementDefnMerger] Warning: Extension merging is not supported yet...");
+                Debug.WriteLineIf(diff.Extension != null && diff.GetChangedByDiff() == null, "[ElementDefnMerger] Warning: Extension merging is not supported yet...");
 
                 // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
+                // [WMR 20160907] Merge extensions... match on url, diff completely overrides snapshot
+                snap.Extension = mergeCollection(snap.Extension, diff.Extension, (s, d) => s.Url == d.Url);
             }
 
             /// <summary>Notify clients about a snapshot element with differential constraints.</summary>

@@ -2,6 +2,7 @@
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -36,6 +37,16 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             if (element == null) { throw Error.ArgumentNull("element"); }
             element.RemoveExtension(CHANGED_BY_DIFF_EXT);
+        }
+
+        /// <summary>Removes the <see cref="CHANGED_BY_DIFF_EXT"/> extension from all snapshot element definitions and child elements.</summary>
+        /// <param name="elements">A list of <see cref="ElementDefinition"/> instances.</param>
+        public static void ClearAllChangedByDiff(this IEnumerable<ElementDefinition> elements)
+        {
+            foreach (var elem in elements ?? Enumerable.Empty<ElementDefinition>())
+            {
+                ClearAllChangedByDiff(elem);
+            }
         }
 
         /// <summary>Removes the <see cref="CHANGED_BY_DIFF_EXT"/> extension from the snapshot element definition and it's child elements.</summary>
