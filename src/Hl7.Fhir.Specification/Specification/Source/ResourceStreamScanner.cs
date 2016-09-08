@@ -16,6 +16,7 @@ using System.Xml.Linq;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Introspection;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -133,6 +134,9 @@ namespace Hl7.Fhir.Specification.Source
                         reader.Read();
                 }
             }
+
+#if true
+            // [WMR 20160908] Originally commented out logic
             //else if (root != null)
             //{
             //    var resourceNode = (XElement)XElement.ReadFrom(reader);
@@ -144,6 +148,32 @@ namespace Hl7.Fhir.Specification.Source
             //        yield return resourceNode;
             //    }
             //}
+
+            // [WMR 20160908] Fixed, parse stand-alone (conformance) resources
+            else if (root != null)
+            {
+                var resourceNode = (XElement)XElement.ReadFrom(reader);
+                // First try to initialize from canonical url (conformance resources)
+                var canonicalUrl = resourceNode.Elements(XmlNs.XFHIR + "url").Attributes("value").SingleOrDefault();
+                if (canonicalUrl != null)
+                {
+                    resourceNode.AddAnnotation(new FullUrlAnnotation { FullUrl = canonicalUrl.Value });
+                    yield return resourceNode;
+                }
+                else
+                {
+                    // Otherwise try to initialize from resource id
+                    var resourceId = resourceNode.Elements(XmlNs.XFHIR + "id").Attributes("value").SingleOrDefault();
+                    if (resourceId != null)
+                    {
+                        var fullUrl = resourceNode.Name.LocalName + "/" + resourceId.Value;
+                        resourceNode.AddAnnotation(new FullUrlAnnotation { FullUrl = fullUrl });
+                        yield return resourceNode;
+                    }
+                }
+            }
+#endif
+
             else
                 yield break;
         }
