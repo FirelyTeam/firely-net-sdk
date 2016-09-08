@@ -765,15 +765,16 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (sd.Name != "Element") // (sd.Base != null)
                 {
 
-                    if (
-                        (sd.Snapshot == null && _settings.ExpandExternalProfiles)
+                    if (_settings.ExpandExternalProfiles
+                        && (sd.Snapshot == null 
 #if FORCE_EXPAND_ALL
-                        || (_settings.ForceExpandAll && !isCreatedBySnapshotGenerator(sd.Snapshot))
+                            || (_settings.ForceExpandAll && !isCreatedBySnapshotGenerator(sd.Snapshot))
 #endif
+                            )
                     )
                     {
                         // Automatically expand external profiles on demand
-                        Debug.Print("Recursively expand snapshot of external profile with url: '{0}' ...".FormatWith(sd.Url));
+                        Debug.Print("Recursively generate snapshot for type profile with url: '{0}' ...".FormatWith(sd.Url));
 
                         // TODO: support SnapshotGeneratorSettings.ForceExpandAll
                         // Use (timestamp) annotation to mark & detect already (forceably) re-expanded profiles!
@@ -786,6 +787,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // Add in-memory annotation to prevent repeated expansion
                         setCreatedBySnapshotGenerator(sd.Snapshot);
 #endif
+                        if (!sd.HasSnapshot)
+                        {
+                            addIssueSnapshotGenerationFailed(profileUrl);
+                            return false;
+                        }
 
                     }
                 }

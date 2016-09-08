@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type)) // !diff.IsExactly(snap))
                 {
                     snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
-                    foreach (var element in snap.Type) OnConstraint(snap);
+                    foreach (var element in snap.Type) { OnConstraint(snap); }
                 }
 
                 // ElementDefinition.nameReference cannot be overridden by a derived profile

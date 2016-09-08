@@ -337,13 +337,11 @@ namespace Hl7.Fhir.Specification.Tests
         private static void AssertProfileNotFoundIssue(OperationOutcome.IssueComponent issue, Validation.Issue expected, string profileUrl)
         {
             Assert.IsNotNull(issue);
-            Assert.AreEqual(issue.Code, expected.Type);
-            Assert.AreEqual(issue.Severity, expected.Severity);
-            Assert.AreEqual(issue.Details.Coding[0].Code, expected.Code.ToString());
+            Assert.AreEqual(expected.Type, issue.Code);
+            Assert.AreEqual(expected.Severity, issue.Severity);
+            Assert.AreEqual(expected.Code.ToString(), issue.Details.Coding[0].Code);
             Assert.IsNotNull(issue.Extension);
-            Assert.IsTrue(issue.Extension.Count == 1);
-            Assert.IsTrue(issue.Extension[0].Url == SnapshotGenerator.PROFILE_URL_EXT);
-            Assert.AreEqual(issue.GetProfileUrl(), profileUrl);
+            Assert.AreEqual(profileUrl, issue.Diagnostics);
         }
 
         // [WMR 20160721] Following profiles are not yet handled (TODO)
@@ -759,17 +757,14 @@ namespace Hl7.Fhir.Specification.Tests
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("Issue #{0}: Severity = '{1}' Code = '{2}'", index, issue.Severity, issue.Code);
-            if (issue.Diagnostics != null) sb.AppendFormat(" Diagnostics = '{0}'", issue.Diagnostics);
             if (issue.Details != null)
             {
                 sb.AppendFormat(" Details: '{0}'", string.Join(" | ", issue.Details.Coding.Select(c => c.Code)));
-                if (issue.Details.Text != null) sb.AppendFormat(" : '{0}'", issue.Details.Text);
+                if (issue.Details.Text != null) sb.AppendFormat(" Text : '{0}'", issue.Details.Text);
             }
-            var url = issue.GetProfileUrl();
-            if (url != null)
-            {
-                sb.AppendFormat(" Profile: '{0}'", url);
-            }
+            if (issue.Diagnostics != null) { sb.AppendFormat(" Profile: '{0}'", issue.Diagnostics); }
+            if (issue.Location != null) { sb.AppendFormat(" Path: '{0}'", string.Join(" | ", issue.Location)); }
+            
             Debug.Print(sb.ToString());
         }
 
