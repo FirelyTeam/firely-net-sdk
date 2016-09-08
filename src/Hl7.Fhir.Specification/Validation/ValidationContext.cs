@@ -17,17 +17,40 @@ namespace Hl7.Fhir.Validation
 
     public class ValidationContext
     {
-        public IArtifactSource ArtifactSource { get; set; }
+        public IResourceResolver ResourceResolver { get; set; }
 
+        /// <summary>
+        /// The validator needs StructureDefinitions to have a snapshot form to function. If a StructureDefinition
+        /// without a snapshot is encountered, should the validator generate the snapshot from the differential
+        /// present in the StructureDefinition? Default is 'false'.
+        /// </summary>
         public bool GenerateSnapshot { get; set; }
+
+        /// <summary>
+        /// If GenerateSnapshot is set to 'true', these settings will allow the user to configure how
+        /// snapshot generation is done.
+        /// </summary>
         public SnapshotGeneratorSettings GenerateSnapshotSettings { get; set; }
 
+        /// <summary>
+        /// Include informational tracing information in the validation output. Useful for debugging purposes. Default is 'false'.
+        /// </summary>
         public bool Trace { get; set; }
 
-        public ReferenceKind ValidateReferencedResources { get; set; }
         // Containing Bundle, parent Resource?
         // Options: validate extension urls
         // FP SymbolTable
+
+        public ReferenceKind ValidateReferencedResources { get; set; }
+
+        /// <summary>
+        /// StructureDefinition may contain FluentPath constraints to enfore invariants in the data that cannot
+        /// be expresses using StructureDefinition alone. This validation can be turned off for performance or
+        /// debugging purposes. Default is 'false'.
+        /// </summary>
+        public bool SkipConstraintValidation { get; set; }
+
+        // Use external server for some referenced resources
     }
 
     [Flags]

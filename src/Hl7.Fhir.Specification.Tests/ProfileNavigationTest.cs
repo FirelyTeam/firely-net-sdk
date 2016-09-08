@@ -29,12 +29,12 @@ namespace Hl7.Fhir.Specification.Tests
     public class ProfileNavigationTest
 #endif
     {
-        private IArtifactSource _source;
+        private IResourceResolver _source;
 
         [TestInitialize]
         public void Setup()
         {
-            _source = new ArtifactResolver(new CachedArtifactSource(new FileDirectoryArtifactSource("TestData/validation")));
+            _source = new CachedResolver(new DirectorySource("TestData/validation"));
         }
 
 

@@ -25,15 +25,15 @@ namespace Hl7.Fhir.Validation
 {
     public class OnSnapshotNeededEventArgs : EventArgs
     {
-        public OnSnapshotNeededEventArgs(StructureDefinition definition, IArtifactSource source)
+        public OnSnapshotNeededEventArgs(StructureDefinition definition, IResourceResolver resolver)
         {
             Definition = definition;
-            Source = source;
+            Resolver = resolver;
         }
 
         public StructureDefinition Definition { get; private set; }
 
-        public IArtifactSource Source { get; private set; }
+        public IResourceResolver Resolver { get; private set; }
     }
 
 
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Validation
 
             var outcome = new OperationOutcome();
 
-            StructureDefinition structureDefinition = ValidationContext.ArtifactSource.LoadConformanceResourceByUrl(definitionUri) as StructureDefinition;
+            StructureDefinition structureDefinition = ValidationContext.ResourceResolver.FindStructureDefinition(definitionUri);
 
             if (outcome.Verify(() => structureDefinition != null, "Unable to resolve reference to profile '{0}'".FormatWith(definitionUri), Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance))
                 outcome.Add(Validate(structureDefinition, instance));
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            if (!structureDefinition.HasSnapshot && ValidationContext.ArtifactSource != null)
+            if (!structureDefinition.HasSnapshot && ValidationContext.ResourceResolver != null)
             {
                 // Note: this modifies an SD that is passed to us. If this comes from a cache that's
                 // kept across processes, this could mean trouble, so clone it first
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Validation
                 // We'll call out to an external component, so catch any exceptions and include them in our report
                 try
                 {
-                    SnapshotNeeded(structureDefinition, ValidationContext.ArtifactSource);
+                    SnapshotNeeded(structureDefinition, ValidationContext.ResourceResolver);
                 }
                 catch (Exception e)
                 {
@@ -246,23 +246,29 @@ namespace Hl7.Fhir.Validation
                 if(outcome.Verify(() => fpExpression != null, "Encountered an invariant ({0}) that has no FluentPath expression, skipping validation of this constraint"
                             .FormatWith(constraintElement.Key), Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance))
                 {
-                    bool success = false;
-                    try
+                    if (ValidationContext.SkipConstraintValidation)
+                        outcome.Verify(() => true, "Instance was not validated against invariant {0}, because constraint validation is disabled", Issue.PROCESSING_CONSTRAINT_VALIDATION_INACTIVE, instance);
+                    else
                     {
-                        success = instance.Predicate(fpExpression, context);
 
-                        var text = "Instance failed constraint " + constraintElement.ConstraintDescription();
+                        bool success = false;
+                        try
+                        {
+                            success = instance.Predicate(fpExpression, context);
 
-                        if (constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error)
-                            outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT, instance);
-                        else
-                            outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT, instance);
+                            var text = "Instance failed constraint " + constraintElement.ConstraintDescription();
 
-                    }
-                    catch (Exception e)
-                    {
-                        outcome.Verify(() => true, "Evaluation of FluentPath for constraint '{0}' failed: {1}"
-                                        .FormatWith(constraintElement.Key, e.Message), Issue.PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION, instance);
+                            if (constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error)
+                                outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT, instance);
+                            else
+                                outcome.Verify(() => success, text, Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT, instance);
+
+                        }
+                        catch (Exception e)
+                        {
+                            outcome.Verify(() => true, "Evaluation of FluentPath for constraint '{0}' failed: {1}"
+                                            .FormatWith(constraintElement.Key, e.Message), Issue.PROFILE_ELEMENTDEF_INVALID_FLUENTPATH_EXPRESSION, instance);
+                        }
                     }
                 }
             }
@@ -511,12 +517,12 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal void SnapshotNeeded(StructureDefinition definition, IArtifactSource source)
+        internal void SnapshotNeeded(StructureDefinition definition, IResourceResolver resolver)
         {
             // Default implementation: call event
             if (OnSnapshotNeeded != null)
             {
-                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, source));
+                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, resolver));
                 return;
             }
 
@@ -528,7 +534,7 @@ namespace Hl7.Fhir.Validation
                 if (settings == null)
                     settings = SnapshotGeneratorSettings.Default;
 
-                var gen = new SnapshotGenerator(source, settings);
+                var gen = new SnapshotGenerator(resolver, settings);
                 gen.Update(definition);
             }
         }

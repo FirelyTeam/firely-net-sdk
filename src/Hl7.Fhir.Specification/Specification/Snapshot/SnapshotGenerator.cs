@@ -25,21 +25,21 @@ namespace Hl7.Fhir.Specification.Snapshot
     public sealed partial class SnapshotGenerator
     {
         // [WMR] Note: instance data is reused over multiple snapshot generations
-        private readonly IArtifactSource _source;
+        private readonly IResourceResolver _resolver;
         private readonly SnapshotGeneratorSettings _settings;
 #if DETECT_RECURSION
         private readonly SnapshotRecursionChecker _recursionChecker = new SnapshotRecursionChecker();
 #endif
 
-        public SnapshotGenerator(IArtifactSource source, SnapshotGeneratorSettings settings) // : this()
+        public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings) // : this()
         {
-            if (source == null) { throw Error.ArgumentNull("source"); }
+            if (resolver == null) { throw Error.ArgumentNull("source"); }
             if (settings == null) { throw Error.ArgumentNull("settings"); }
-            _source = source;
+            _resolver = resolver;
             _settings = settings;
         }
 
-        public SnapshotGenerator(IArtifactSource source) : this(source, SnapshotGeneratorSettings.Default)
+        public SnapshotGenerator(IResourceResolver source) : this(source, SnapshotGeneratorSettings.Default)
         {
             // ...
         }
@@ -387,8 +387,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 primaryDiffTypeProfile = profileRef.CanonicalUrl;
             }
 
-            var baseStructure = _source.GetStructureDefinition(primaryDiffTypeProfile);
-
+            var baseStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
             if (verifyStructureDef(baseStructure, primaryDiffTypeProfile, ToNamedNode(diff.Current)))
             {
                 // Clone and rebase
@@ -566,7 +565,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             StructureDefinition.SnapshotComponent snapshot = null;
             if (structure.Base != null)
             {
-                var baseStructure = _source.GetStructureDefinition(structure.Base);
+                var baseStructure = _resolver.FindStructureDefinition(structure.Base);
                 if (!verifyStructureDef(baseStructure, structure.Base))
                 {
                     // Fatal error...
@@ -724,7 +723,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // && !defn.IsExtension()
             {
                 // Try to resolve the custom element type profile reference
-                baseStructure = _source.GetStructureDefinition(typeProfile);
+                baseStructure = _resolver.FindStructureDefinition(typeProfile);
                 isValidProfile = verifyStructureDef(baseStructure, typeProfile, location);
             }
 
@@ -733,9 +732,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             string typeName;
             if (!isValidProfile && typeCodeElem != null && (typeName = typeCodeElem.ObjectValue as string) != null)
             {
-                baseStructure = _source.GetStructureDefinitionForTypeCode(typeCodeElem);
+                baseStructure = _resolver.GetStructureDefinitionForTypeCode(typeCodeElem);
                 // [WMR 20160906] Check if element type equals path (e.g. Resource root element), prevent endless recursion
                 isValidProfile = (typeName == location.Path) || verifyStructureDef(baseStructure, typeName, location);
+
             }
 
             return baseStructure;

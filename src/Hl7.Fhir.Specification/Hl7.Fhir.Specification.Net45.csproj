@@ -76,10 +76,16 @@
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
+    <Compile Include="Specification\Source\CachedResolver.cs" />
+    <Compile Include="Specification\Source\IConformanceSource.cs" />
+    <Compile Include="Specification\Source\MultiResolver.cs" />
+    <Compile Include="Specification\Source\OriginInformation.cs" />
+    <Compile Include="Specification\Source\ResourceResolverExtensions.cs" />
+    <Compile Include="Specification\Source\IArtifactSource.cs" />
+    <Compile Include="Specification\Source\WebResolver.cs" />
     <Compile Include="Specification\Snapshot\SnapshotElementBaseGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorOutcome.cs" />
-    <Compile Include="Specification\Source\ArtifactSourceExtentions.cs" />
     <Compile Include="Validation\Cardinality.cs" />
     <Compile Include="Validation\ChildConstraintExtensions.cs" />
     <Compile Include="Validation\FixedPatternExtensions.cs" />
@@ -99,17 +105,12 @@
     <Compile Include="Specification\Snapshot\SnapshotGeneratorEvents.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
     <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
-    <Compile Include="Specification\Source\MultiArtifactSource.cs" />
-    <Compile Include="Specification\Source\ArtifactResolver.cs" />
-    <Compile Include="Specification\Source\CachedArtifactSource.cs" />
-    <Compile Include="Specification\Source\ZipArtifactSource.cs" />
-    <Compile Include="Specification\Source\FileDirectoryArtifactSource.cs" />
-    <Compile Include="Specification\Source\IArtifactSource.cs" />
+    <Compile Include="Specification\Source\SourceFactory.cs" />
+    <Compile Include="Specification\Source\ZipSource.cs" />
+    <Compile Include="Specification\Source\DirectorySource.cs" />
+    <Compile Include="Specification\Source\IResourceResolver.cs" />
     <Compile Include="Specification\Source\SchemaCollection.cs" />
-    <Compile Include="Specification\Source\WebArtifactSource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Specification\Source\ConformanceArtifactScanner.cs" />
+    <Compile Include="Specification\Source\ResourceStreamScanner.cs" />
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\OperationOutcomeValidationExtensions.cs" />
@@ -134,27 +135,78 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="validation.xml.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="specification.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="validation.xml\profiles-others.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="validation.xml\profiles-resources.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="validation.xml\profiles-types.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
+    <CleanSpecFiles DirectoryName="data" />
+    <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <UsingTask TaskName="ZipDir" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
+    <ParameterGroup>
+      <ZipFileName ParameterType="System.String" Required="true" />
+      <DirectoryName ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.IO.Compression.FileSystem" />
+      <Using Namespace="System.IO.Compression" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+		  try
+		  {
+			Log.LogMessage(string.Format("Zipping Directory {0} to {1}", DirectoryName, ZipFileName));
+			if(File.Exists(ZipFileName)) File.Delete(ZipFileName);
+			ZipFile.CreateFromDirectory( DirectoryName, ZipFileName );
+			return true;
+		  }
+		  catch(Exception ex)
+		  {
+			Log.LogErrorFromException(ex);
+			return false;
+		  }
+		]]></Code>
+    </Task>
+  </UsingTask>
+  <UsingTask TaskName="CleanSpecFiles" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
+    <ParameterGroup>
+      <DirectoryName ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.XML" />
+      <Reference Include="System.Xml.Linq" />
+      <Using Namespace="System.Xml.Linq" />
+      <Using Namespace="System.IO" />
+      <Code Type="Fragment" Language="cs"><![CDATA[
+		  try
+		  {
+		    Log.LogMessage(string.Format("Cleaning spec files in directory {0}", DirectoryName));
+
+			var fhirns = XNamespace.Get("http://hl7.org/fhir");
+			var xmlns = XNamespace.Xmlns;
+			var files = Directory.EnumerateFiles(DirectoryName, "*.xml");
+
+            foreach(var file in files)
+            {
+                var xdoc = XDocument.Load(file);
+                var narrative = xdoc.Elements(fhirns + "Bundle").Elements(fhirns + "entry").Elements(fhirns + "resource")
+                        .Elements().Elements(fhirns + "text").Elements(xmlns + "div");
+                foreach(var narrativeElement in narrative)
+                {
+                    narrativeElement.RemoveNodes();
+                    narrativeElement.Add(new XElement(xmlns + "p",
+                        new XText("The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library")));
+                }
+
+                xdoc.Save(file);
+            }
+		  }
+		  catch(Exception ex)
+		  {
+			Log.LogErrorFromException(ex);
+			return false;
+		  }
+		]]></Code>
+    </Task>
+  </UsingTask>
 </Project>

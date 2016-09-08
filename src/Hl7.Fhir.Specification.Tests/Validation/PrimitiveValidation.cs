@@ -22,24 +22,24 @@ namespace Hl7.Fhir.Validation
         [TestInitialize]
         public void SetupSource()
         {
-            source = new CachedArtifactSource(
-                new MultiArtifactSource(
+            source = new CachedResolver(
+                new MultiResolver(
                     new TestProfileArtifactSource(),
-                    new FileDirectoryArtifactSource("validation.xml", includeSubdirectories: false)));
+                    new ZipSource("specification.zip")));
 
-            var ctx = new ValidationContext() { ArtifactSource = source, GenerateSnapshot = true, Trace = true };
+            var ctx = new ValidationContext() { ResourceResolver = source, GenerateSnapshot = true, Trace = true };
             ctx.GenerateSnapshotSettings = Specification.Snapshot.SnapshotGeneratorSettings.Default;
             ctx.GenerateSnapshotSettings.ExpandExternalProfiles = true;
             validator = new Validator(ctx);
         }
 
-        IArtifactSource source;
+        IResourceResolver source;
         Validator validator;
 
         [TestMethod]
         public void TestEmptyElement()
         {
-            var boolSD = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
+            var boolSD = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
             var data = ElementNode.Node("active").ToNavigator();
 
             var result = validator.Validate(boolSD, data);
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void PrimitiveChildMatching()
         {
-            var boolean = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
+            var boolean = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
             var boolDefNav = ElementDefinitionNavigator.ForSnapshot(boolean);
             boolDefNav.MoveToFirstChild();
 
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void ValidatePrimitiveValue()
         {
-            var def = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Oid);
+            var def = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Oid);
 
             var instance = new Oid("1.2.3.4.q");
             var report = validator.Validate(def, instance);
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void ValidateCardinality()
         {
-            var boolSD = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
+            var boolSD = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
             var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral(),
                         ElementNode.Valued("id", "myId1"),
                         ElementNode.Valued("id", "myId2"),
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void ValidateChoiceElement()
         {
-            var extensionSD = (StructureDefinition)source.GetStructureDefinitionForCoreType(FHIRDefinedType.Extension).DeepCopy();
+            var extensionSD = (StructureDefinition)source.FindStructureDefinitionForCoreType(FHIRDefinedType.Extension).DeepCopy();
 
             var extensionInstance = new Extension("http://some.org/testExtension", new Oid("1.2.3.4.5"));
 
@@ -147,12 +147,12 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void AutoGeneratesDifferential()
         {
-            var identifierBSN = source.GetStructureDefinition("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN");
+            var identifierBSN = source.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN");
             Assert.IsNotNull(identifierBSN);
 
             var instance = new Identifier("http://clearly.incorrect.nl/definition", "1234");
 
-            var validationContext = new ValidationContext { ArtifactSource = source, GenerateSnapshot = false };
+            var validationContext = new ValidationContext { ResourceResolver = source, GenerateSnapshot = false };
             var automatedValidator = new Validator(validationContext);
 
             var report = automatedValidator.Validate(identifierBSN, instance);
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void ValidatesFixedValue()
         {
-            var patientSD = (StructureDefinition)source.GetStructureDefinitionForCoreType(FHIRDefinedType.Patient);
+            var patientSD = (StructureDefinition)source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
 
             var instance1 = new CodeableConcept("http://this.isa.test.nl/definition", "1234");
             instance1.Text = "This is fixed too";
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void ValidatesPatternValue()
         {
-            var patientSD = (StructureDefinition)source.GetStructureDefinitionForCoreType(FHIRDefinedType.Patient);
+            var patientSD = (StructureDefinition)source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
 
             var instance1 = new CodeableConcept("http://this.isa.test.nl/definition", "1234");
 
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Validation
 
             var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
             Assert.IsNotNull(questionnaire);
-            var questionnaireSD = source.GetStructureDefinitionForCoreType(FHIRDefinedType.Questionnaire);
+            var questionnaireSD = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Questionnaire);
 
             var report = validator.Validate(questionnaireSD, questionnaire);
             Assert.IsTrue(report.Success);
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Validation
 
             var careplan = (new FhirXmlParser()).Parse<CarePlan>(careplanXml);
             Assert.IsNotNull(careplan);
-            var careplanSD = source.GetStructureDefinitionForCoreType(FHIRDefinedType.CarePlan);
+            var careplanSD = source.FindStructureDefinitionForCoreType(FHIRDefinedType.CarePlan);
 
             var report = validator.Validate(careplanSD, careplan);
             Assert.IsTrue(report.Success);
@@ -391,6 +391,12 @@ namespace Hl7.Fhir.Validation
 
             report = validator.Validate(p);
             Assert.IsFalse(report.Success);
+
+            validator.ValidationContext.SkipConstraintValidation = true;
+            report = validator.Validate(p);
+            Assert.IsTrue(report.Success);
+
+            validator.ValidationContext.SkipConstraintValidation = false;
 
             p.Contact.First().Address = new Address() { City = "Amsterdam" };
 

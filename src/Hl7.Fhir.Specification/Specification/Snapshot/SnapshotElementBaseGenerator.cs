@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             var nav = new ElementDefinitionNavigator(elements);
             if (nav.MoveToFirstChild() && !string.IsNullOrEmpty(baseProfileUrl))
             {
-                var sd = _source.GetStructureDefinition(baseProfileUrl);
+                var sd = _resolver.FindStructureDefinition(baseProfileUrl);
                 if (verifyStructureDef(sd, baseProfileUrl))
                 {
                     var baseNav = new ElementDefinitionNavigator(sd);
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var baseUrl = baseNav.StructureDefinition.Base;
                 if (baseUrl != null)
                 {
-                    var baseDef = _source.GetStructureDefinition(baseUrl);
+                    var baseDef = _resolver.FindStructureDefinition(baseUrl);
                     if (verifyStructureDef(baseDef, baseUrl, ToNamedNode(elem)))
                     {
                         baseNav = new ElementDefinitionNavigator(baseDef);
