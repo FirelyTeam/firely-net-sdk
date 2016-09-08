@@ -700,7 +700,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // if (!Directory.Exists(folderPath)) { Directory.CreateDirectory(folderPath); }
 
                 var component = differential ? sd.Differential.Element : sd.Snapshot.Element;
-                var profiles = component.EnumerateTypeProfiles().Distinct();
+                var profiles = EnumerateDistinctTypeProfiles(component);
 
                 Debug.Indent();
                 foreach (var profile in profiles)
@@ -721,6 +721,11 @@ namespace Hl7.Fhir.Specification.Tests
                 }
                 Debug.Unindent();
             }
+        }
+
+        static IEnumerable<string> EnumerateDistinctTypeProfiles(IList<ElementDefinition> elements)
+        {
+            return elements.SelectMany(e => e.Type).SelectMany(t => t.Profile).Distinct();
         }
 
         [Conditional("DEBUG")]
@@ -823,7 +828,6 @@ namespace Hl7.Fhir.Specification.Tests
                 var elem = args.Element;
                 Assert.IsNotNull(elem);
                 var ann = elem.Annotation<BaseDefAnnotation>();
-                ElementDefinition baseDef;
                 // We want to annotate a reference to the matching base element from the (immediate) base profile.
                 // When the snapshot generator expands external profiles, then this handler is called once for each
                 // profile in the base hierarchy, starting at the root profile, e.g. Resource => DomainResource => Patient.
@@ -832,7 +836,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     elem.RemoveAnnotations<BaseDefAnnotation>();
                 }
-                baseDef = args.BaseElement;
+                var baseDef = args.BaseElement;
                 elem.AddAnnotation(new BaseDefAnnotation(baseDef));
                 Debug.Write("[SnapshotElementHandler] #{0} '{1}' - Base: #{2} '{3}'".FormatWith(elem.GetHashCode(), elem.Path, baseDef.GetHashCode(), baseDef.Path));
                 Debug.WriteLine(ann != null && ann.BaseElementDefinition != null ? " (old Base: #{0} '{1}')".FormatWith(ann.BaseElementDefinition.GetHashCode(), ann.BaseElementDefinition.Path) : "");
