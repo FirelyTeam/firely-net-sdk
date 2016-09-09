@@ -222,16 +222,19 @@ namespace Hl7.Fhir.Specification.Snapshot
             StructureDefinition typeStructure = getStructureForElementType(diff.Current);
             if (typeStructure != null)
             {
-                var clonedSnapshot = (StructureDefinition.SnapshotComponent)typeStructure.Snapshot.DeepCopy();
-                clonedSnapshot.Rebase(diff.Path);
-                var typeRootElem = clonedSnapshot.Element[0];
-                typeRootElem.Base = null;
-                var typeNav = new ElementDefinitionNavigator(clonedSnapshot.Element);
-                if (typeNav.MoveToFirstChild())
-                {
-                    mergeElementDefinition(typeRootElem, diff.Current);
-                }
-                snap.AppendChild(typeRootElem);
+                // var clonedSnapshot = (StructureDefinition.SnapshotComponent)typeStructure.Snapshot.DeepCopy();
+                // clonedSnapshot.Rebase(diff.Path);
+                // var newElement = clonedSnapshot.Element[0];
+                var newElement = (ElementDefinition)typeStructure.Snapshot.Element[0].DeepCopy();
+                Debug.Assert(newElement.IsRootElement());
+                newElement.Path = ElementDefinitionNavigator.ReplacePathRoot(newElement.Path, diff.Path);
+
+                newElement.Base = null;
+                mergeElementDefinition(newElement, diff.Current);
+
+                // [WMR 20160909] TODO: Fix AppendChild on Resource.id, calls InsertAfter instead of InsertFirstChild ?
+                // Then remove unnecessary "fixes" in InsertAfter/InsertBefore
+                snap.AppendChild(newElement);
             }
             else
             {
