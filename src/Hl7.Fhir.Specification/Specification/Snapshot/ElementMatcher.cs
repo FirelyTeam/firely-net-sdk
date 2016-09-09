@@ -143,6 +143,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     if (isNewElement)
                     {
+                        // Note: this loop consumes all new diffNav elements when processing the first element from snapNav
+                        // When Match is called for remaining snapNav (base) elements, all new diffNav elements will already have been merged
                         result.Add(constructNew(snapNav, diffNav));
                     }
                     else
@@ -373,9 +375,15 @@ namespace Hl7.Fhir.Specification.Snapshot
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
         private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
+            // Called by Match when the current diffNav does not match any following sibling of snapNav (base)
+            // This happens when merging a core definition (e.g. Patient) with a base type (e.g. Resource)
             // Return reference to *parent* element as BaseBookmark!
+            // Exception: when snapNav = {} | {Resource} e.g. Resource & Element
             var bm = snapNav.Bookmark();
-            snapNav.MoveToParent();
+            if (!string.IsNullOrEmpty(snapNav.ParentPath))
+            {
+                snapNav.MoveToParent();
+            }
             var match = new MatchInfo() { BaseBookmark = snapNav.Bookmark(), DiffBookmark = diffNav.Bookmark(), Action = MatchAction.New };
             snapNav.ReturnToBookmark(bm);
             return match;

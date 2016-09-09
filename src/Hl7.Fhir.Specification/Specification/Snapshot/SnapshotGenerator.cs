@@ -232,8 +232,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 newElement.Base = null;
                 mergeElementDefinition(newElement, diff.Current);
 
-                // [WMR 20160909] TODO: Fix AppendChild on Resource.id, calls InsertAfter instead of InsertFirstChild ?
-                // Then remove unnecessary "fixes" in InsertAfter/InsertBefore
                 snap.AppendChild(newElement);
             }
             else

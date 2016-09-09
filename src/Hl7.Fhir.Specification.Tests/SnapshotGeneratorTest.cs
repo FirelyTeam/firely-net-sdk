@@ -928,7 +928,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
             // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
@@ -937,7 +937,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var source = _testResolver;
 
-            var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatient");
+            // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatient");
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
@@ -1006,17 +1006,17 @@ namespace Hl7.Fhir.Specification.Tests
 
                 assertBaseDefs(expanded, settings);
 
-                var sdBase = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
-                assertBaseDefs(sdBase, settings);
+                //var sdBase = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
+                //assertBaseDefs(sdBase, settings);
 
-                var sdExt = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
-                assertBaseDefs(sdExt, settings);
+                //var sdExt = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
+                //assertBaseDefs(sdExt, settings);
 
-                var sdExt1 = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension1");
-                assertBaseDefs(sdExt1, settings);
+                //var sdExt1 = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension1");
+                //assertBaseDefs(sdExt1, settings);
 
-                var sdExt2 = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension2");
-                assertBaseDefs(sdExt2, settings);
+                //var sdExt2 = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension2");
+                //assertBaseDefs(sdExt2, settings);
 
             }
             finally

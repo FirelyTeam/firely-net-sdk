@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -391,8 +392,7 @@ namespace Hl7.Fhir.Specification.Navigation
             if (OrdinalPosition == null) return false;
 
             // Cannot insert a sibling to the unique root element
-            // [WMR 20160902] This is allowed for core resource/datatype definitions!
-            // if (OrdinalPosition == 0) return false;
+            if (OrdinalPosition == 0) return false;
 
             return true;
         }
@@ -409,9 +409,7 @@ namespace Hl7.Fhir.Specification.Navigation
             if (!canInsertSiblingHere()) return false;
 
             var insertPosition = positionAfter();
-            // [WMR 20160903] Core resource or datatype definitions may introduce new children of the root element
-            var parentPath = OrdinalPosition == 0 ? Path : ParentPath;
-            var newSiblingPath = parentPath + "." + sibling.GetNameFromPath();
+            var newSiblingPath = ParentPath + "." + sibling.GetNameFromPath();
 
             if (insertPosition == Count) // At last position
                 Elements.Add(sibling);
