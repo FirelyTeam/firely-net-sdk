@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             ExpandExternalProfiles = true,
-            ExpandUnconstrainedElements = false,
+            //ExpandUnconstrainedElements = false,
             MarkChanges = false,
 
             // Following settings concern controversial aspects, behavior is not well defined
@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         public SnapshotGeneratorSettings(SnapshotGeneratorSettings settings)
         {
             ExpandExternalProfiles = settings.ExpandExternalProfiles;
-            ExpandUnconstrainedElements = settings.ExpandUnconstrainedElements;
+            //ExpandUnconstrainedElements = settings.ExpandUnconstrainedElements;
             MarkChanges = settings.MarkChanges;
             MergeTypeProfiles = settings.MergeTypeProfiles;
             NormalizeElementBase = settings.NormalizeElementBase;
@@ -63,15 +63,15 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         public bool MarkChanges { get; set; }
 
-        /// <summary>
-        /// EXPERIMENTAL!
-        /// Enable this setting to recursively expand all profile elements, regardless of wether differential constraints exist.
-        /// By default, the snapshot generator only expands elements with matching differential constraints.
-        /// </summary>
-        /// <remarks>
-        /// If you enable this setting, the size of the resulting snapshot component may grow significantly due to the additional redundant information.
-        /// </remarks>
-        public bool ExpandUnconstrainedElements { get; set; }
+        // /// <summary>
+        // /// EXPERIMENTAL!
+        // /// Enable this setting to recursively expand all profile elements, regardless of wether differential constraints exist.
+        // /// By default, the snapshot generator only expands elements with matching differential constraints.
+        // /// </summary>
+        // /// <remarks>
+        // /// If you enable this setting, the size of the resulting snapshot component may grow significantly due to the additional redundant information.
+        // /// </remarks>
+        // public bool ExpandUnconstrainedElements { get; set; }
 
         /// <summary>
         /// EXPERIMENTAL!

@@ -29,8 +29,18 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Call this method before generating a profile snapshot component. 
         /// Call the <see cref="FinishExpansion"/> method when snapshot generation has completed.
         /// </summary>
-        /// <param name="profileUrl"></param>
+        /// <param name="profileUrl">The canonical url of the base profile.</param>
         public void StartExpansion(string profileUrl)
+        {
+            StartExpansion();
+            _expandingProfiles.Push(profileUrl);
+        }
+
+        /// <summary>
+        /// Call this method before expanding a single snapshot element.
+        /// Call the <see cref="FinishExpansion"/> method when snapshot generation has completed.
+        /// </summary>
+        public void StartExpansion()
         {
             if (_expandingProfiles != null)
             {
@@ -40,7 +50,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             // _expandingProfiles = new HashSet<string>();
             // _expandingProfiles.Add(profileUrl);
             _expandingProfiles = new Stack<string>();
-            _expandingProfiles.Push(profileUrl);
         }
 
         /// <summary>Determines if the snapshot of the specified profile is in the process of being generated.</summary>

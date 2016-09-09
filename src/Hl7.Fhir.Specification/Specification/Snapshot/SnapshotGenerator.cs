@@ -132,8 +132,20 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             clearIssues();
 
+#if DETECT_RECURSION
+            // Must initialize recursion checker, because element expansion may recurse on external type profile
+            _recursionChecker.StartExpansion();
+            try
+            {
+                expandElement(nav);
+            }
+            finally
+            {
+                _recursionChecker.FinishExpansion();
+            }
+#else
             expandElement(nav);
-
+#endif
             return nav.Elements;
         }
 
@@ -296,29 +308,32 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => snapshot generator should add this
                 fixExtensionUrl(snap);
             }
-            else if (_settings.ExpandUnconstrainedElements)
-            {
-                var types = snap.Current.Type;
-                if (types.Count == 1)
-                {
-                    var primaryType = types[0];
-                    var typeCode = primaryType.Code;
-                    if (typeCode.HasValue && ModelInfo.IsDataType(typeCode.Value))
-                    {
-                        expandElement(snap);
-                    }
-                    // [WMR 20160903] Handle unknown/custom core types
-                    else if (!typeCode.HasValue && primaryType.CodeElement != null)
-                    {
-                        var typeName = primaryType.CodeElement.ObjectValue as string;
-                        if (!string.IsNullOrEmpty(typeName))
-                        {
-                            // Assume DataType; no way to determine...
-                            expandElement(snap);
-                        }
-                    }
-                }
-            }
+
+            // [WMR 20160909] WRONG! This function is only called on differential element constraints
+            // So all other elements with complex types are NOT expanded...!!!
+            //else if (_settings.ExpandUnconstrainedElements)
+            //{
+            //    var types = snap.Current.Type;
+            //    if (types.Count == 1)
+            //    {
+            //        var primaryType = types[0];
+            //        var typeCode = primaryType.Code;
+            //        if (typeCode.HasValue && ModelInfo.IsDataType(typeCode.Value))
+            //        {
+            //            expandElement(snap);
+            //        }
+            //        // [WMR 20160903] Handle unknown/custom core types
+            //        else if (!typeCode.HasValue && primaryType.CodeElement != null)
+            //        {
+            //            var typeName = primaryType.CodeElement.ObjectValue as string;
+            //            if (!string.IsNullOrEmpty(typeName))
+            //            {
+            //                // Assume DataType; no way to determine...
+            //                expandElement(snap);
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         void mergeElementDefinition(ElementDefinition snap, ElementDefinition diff)
