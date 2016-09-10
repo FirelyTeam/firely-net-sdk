@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return Hl7.FluentPath.Time.Parse("T"+a.Value) > Hl7.FluentPath.Time.Parse("T"+b.Value);
+            return Hl7.FluentPath.Time.Parse(a.Value) > Hl7.FluentPath.Time.Parse(b.Value);
         }
 
         public static bool operator >=(Time a, Time b)
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return Hl7.FluentPath.Time.Parse("T"+a.Value) >= Hl7.FluentPath.Time.Parse("T"+b.Value);
+            return Hl7.FluentPath.Time.Parse(a.Value) >= Hl7.FluentPath.Time.Parse(b.Value);
         }
 
         public static bool operator <(Time a, Time b)
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return Hl7.FluentPath.Time.Parse("T"+a.Value) < Hl7.FluentPath.Time.Parse("T"+b.Value);
+            return Hl7.FluentPath.Time.Parse(a.Value) < Hl7.FluentPath.Time.Parse(b.Value);
         }
 
         public static bool operator <=(Time a, Time b)
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
             if (aValue == null) return bValue == null;
             if (bValue == null) return false;
 
-            return Hl7.FluentPath.Time.Parse("T"+a.Value) <= Hl7.FluentPath.Time.Parse("T"+b.Value);
+            return Hl7.FluentPath.Time.Parse(a.Value) <= Hl7.FluentPath.Time.Parse(b.Value);
         }
 
         /// <summary>
@@ -127,8 +127,8 @@ namespace Hl7.Fhir.Model
 
                 if (this.Value == otherValue) return true; // Default reference/string comparison works in most cases
 
-                var left = Hl7.FluentPath.Time.Parse("T"+Value);
-                var right = Hl7.FluentPath.Time.Parse("T"+otherValue);
+                var left = Hl7.FluentPath.Time.Parse(Value);
+                var right = Hl7.FluentPath.Time.Parse(otherValue);
 
                 return left == right;
             }
