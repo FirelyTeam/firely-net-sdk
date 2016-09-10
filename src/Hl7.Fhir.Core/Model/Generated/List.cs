@@ -124,8 +124,8 @@ namespace Hl7.Fhir.Model
                 get { return DeletedElement != null ? DeletedElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      DeletedElement = null; 
+                    if (!value.HasValue)
+                        DeletedElement = null; 
                     else
                         DeletedElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Deleted");
@@ -156,8 +156,8 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DateElement = null; 
+                    if (value == null)
+                        DateElement = null; 
                     else
                         DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Date");
@@ -227,6 +227,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // EntryComponent elements
+                    if (Flag != null) yield return Flag;
+                    if (DeletedElement != null) yield return DeletedElement;
+                    if (DateElement != null) yield return DateElement;
+                    if (Item != null) yield return Item;
+                }
             }
             
         }
@@ -588,7 +604,28 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// List elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (ModeElement != null) yield return ModeElement;
+				if (TitleElement != null) yield return TitleElement;
+				if (Code != null) yield return Code;
+				if (Subject != null) yield return Subject;
+				if (Encounter != null) yield return Encounter;
+				if (DateElement != null) yield return DateElement;
+				if (Source != null) yield return Source;
+				if (OrderedBy != null) yield return OrderedBy;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				foreach (var elem in Entry) { if (elem != null) yield return elem; }
+				if (EmptyReason != null) yield return EmptyReason;
+            }
+        }
     }
     
 }

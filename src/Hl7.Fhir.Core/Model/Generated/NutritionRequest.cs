@@ -217,8 +217,8 @@ namespace Hl7.Fhir.Model
                 get { return InstructionElement != null ? InstructionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      InstructionElement = null; 
+                    if (value == null)
+                        InstructionElement = null; 
                     else
                         InstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Instruction");
@@ -279,6 +279,24 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(InstructionElement, otherT.InstructionElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // OralDietComponent elements
+                    foreach (var elem in Type) { if (elem != null) yield return elem; }
+                    foreach (var elem in Schedule) { if (elem != null) yield return elem; }
+                    foreach (var elem in Nutrient) { if (elem != null) yield return elem; }
+                    foreach (var elem in Texture) { if (elem != null) yield return elem; }
+                    foreach (var elem in FluidConsistencyType) { if (elem != null) yield return elem; }
+                    if (InstructionElement != null) yield return InstructionElement;
+                }
             }
             
         }
@@ -360,6 +378,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // NutrientComponent elements
+                    if (Modifier != null) yield return Modifier;
+                    if (Amount != null) yield return Amount;
+                }
+            }
             
         }
         
@@ -440,6 +472,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // TextureComponent elements
+                    if (Modifier != null) yield return Modifier;
+                    if (FoodType != null) yield return FoodType;
+                }
+            }
             
         }
         
@@ -488,8 +534,8 @@ namespace Hl7.Fhir.Model
                 get { return ProductNameElement != null ? ProductNameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      ProductNameElement = null; 
+                    if (value == null)
+                        ProductNameElement = null; 
                     else
                         ProductNameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("ProductName");
@@ -547,8 +593,8 @@ namespace Hl7.Fhir.Model
                 get { return InstructionElement != null ? InstructionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      InstructionElement = null; 
+                    if (value == null)
+                        InstructionElement = null; 
                     else
                         InstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Instruction");
@@ -607,6 +653,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // SupplementComponent elements
+                    if (Type != null) yield return Type;
+                    if (ProductNameElement != null) yield return ProductNameElement;
+                    foreach (var elem in Schedule) { if (elem != null) yield return elem; }
+                    if (Quantity != null) yield return Quantity;
+                    if (InstructionElement != null) yield return InstructionElement;
+                }
+            }
             
         }
         
@@ -655,8 +718,8 @@ namespace Hl7.Fhir.Model
                 get { return BaseFormulaProductNameElement != null ? BaseFormulaProductNameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      BaseFormulaProductNameElement = null; 
+                    if (value == null)
+                        BaseFormulaProductNameElement = null; 
                     else
                         BaseFormulaProductNameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("BaseFormulaProductName");
@@ -700,8 +763,8 @@ namespace Hl7.Fhir.Model
                 get { return AdditiveProductNameElement != null ? AdditiveProductNameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      AdditiveProductNameElement = null; 
+                    if (value == null)
+                        AdditiveProductNameElement = null; 
                     else
                         AdditiveProductNameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("AdditiveProductName");
@@ -785,8 +848,8 @@ namespace Hl7.Fhir.Model
                 get { return AdministrationInstructionElement != null ? AdministrationInstructionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      AdministrationInstructionElement = null; 
+                    if (value == null)
+                        AdministrationInstructionElement = null; 
                     else
                         AdministrationInstructionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("AdministrationInstruction");
@@ -856,6 +919,27 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(AdministrationInstructionElement, otherT.AdministrationInstructionElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // EnteralFormulaComponent elements
+                    if (BaseFormulaType != null) yield return BaseFormulaType;
+                    if (BaseFormulaProductNameElement != null) yield return BaseFormulaProductNameElement;
+                    if (AdditiveType != null) yield return AdditiveType;
+                    if (AdditiveProductNameElement != null) yield return AdditiveProductNameElement;
+                    if (CaloricDensity != null) yield return CaloricDensity;
+                    if (RouteofAdministration != null) yield return RouteofAdministration;
+                    foreach (var elem in Administration) { if (elem != null) yield return elem; }
+                    if (MaxVolumeToDeliver != null) yield return MaxVolumeToDeliver;
+                    if (AdministrationInstructionElement != null) yield return AdministrationInstructionElement;
+                }
             }
             
         }
@@ -953,6 +1037,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Rate, otherT.Rate)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // AdministrationComponent elements
+                    if (Schedule != null) yield return Schedule;
+                    if (Quantity != null) yield return Quantity;
+                    if (Rate != null) yield return Rate;
+                }
             }
             
         }
@@ -1253,7 +1352,27 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// NutritionRequest elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Patient != null) yield return Patient;
+				if (Encounter != null) yield return Encounter;
+				if (DateTimeElement != null) yield return DateTimeElement;
+				if (Orderer != null) yield return Orderer;
+				foreach (var elem in AllergyIntolerance) { if (elem != null) yield return elem; }
+				foreach (var elem in FoodPreferenceModifier) { if (elem != null) yield return elem; }
+				foreach (var elem in ExcludeFoodModifier) { if (elem != null) yield return elem; }
+				if (OralDiet != null) yield return OralDiet;
+				foreach (var elem in Supplement) { if (elem != null) yield return elem; }
+				if (EnteralFormula != null) yield return EnteralFormula;
+            }
+        }
     }
     
 }

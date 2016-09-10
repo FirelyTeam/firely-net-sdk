@@ -144,8 +144,8 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
@@ -176,8 +176,8 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
@@ -298,6 +298,26 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // BenefitsComponent elements
+                    if (Category != null) yield return Category;
+                    if (SubCategory != null) yield return SubCategory;
+                    if (NameElement != null) yield return NameElement;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Network != null) yield return Network;
+                    if (Unit != null) yield return Unit;
+                    if (Term != null) yield return Term;
+                    foreach (var elem in Financial) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -397,6 +417,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // BenefitComponent elements
+                    if (Type != null) yield return Type;
+                    if (Benefit != null) yield return Benefit;
+                    if (BenefitUsed != null) yield return BenefitUsed;
+                }
+            }
             
         }
         
@@ -461,6 +496,19 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ErrorsComponent elements
+                    if (Code != null) yield return Code;
+                }
             }
             
         }
@@ -870,7 +918,31 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// EligibilityResponse elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Request != null) yield return Request;
+				if (OutcomeElement != null) yield return OutcomeElement;
+				if (DispositionElement != null) yield return DispositionElement;
+				if (Ruleset != null) yield return Ruleset;
+				if (OriginalRuleset != null) yield return OriginalRuleset;
+				if (CreatedElement != null) yield return CreatedElement;
+				if (Organization != null) yield return Organization;
+				if (RequestProvider != null) yield return RequestProvider;
+				if (RequestOrganization != null) yield return RequestOrganization;
+				if (InforceElement != null) yield return InforceElement;
+				if (Contract != null) yield return Contract;
+				if (Form != null) yield return Form;
+				foreach (var elem in BenefitBalance) { if (elem != null) yield return elem; }
+				foreach (var elem in Error) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

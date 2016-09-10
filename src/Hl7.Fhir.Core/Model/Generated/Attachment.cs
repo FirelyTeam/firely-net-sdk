@@ -369,6 +369,23 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Attachment elements
+                if (ContentTypeElement != null) yield return ContentTypeElement;
+                if (LanguageElement != null) yield return LanguageElement;
+                if (DataElement != null) yield return DataElement;
+                if (UrlElement != null) yield return UrlElement;
+                if (SizeElement != null) yield return SizeElement;
+                if (HashElement != null) yield return HashElement;
+                if (TitleElement != null) yield return TitleElement;
+                if (CreationElement != null) yield return CreationElement;
+            }
+        }
     
     
     }

@@ -3,9 +3,9 @@ using System.Runtime.CompilerServices;
 
 // Version information, see:
 // http://blogs.msdn.com/b/jjameson/archive/2009/04/03/best-practices-for-net-assembly-versioning.aspx
-[assembly: AssemblyVersion("0.90.5.0")]
-[assembly: AssemblyFileVersion("0.90.5.0")]
-[assembly: AssemblyInformationalVersion("Hl7.Fhir .Net Library 0.90.5-ConnectathonMay2016")]
+[assembly: AssemblyVersion("0.90.6.5")]
+[assembly: AssemblyFileVersion("0.90.6.5")]
+[assembly: AssemblyInformationalVersion("Hl7.Fhir .Net Library 0.90.6-alpha5")]
 
 #if !SIGNED
 [assembly: InternalsVisibleTo("Hl7.Fhir.Core.Tests")]
@@ -13,5 +13,5 @@ using System.Runtime.CompilerServices;
 // Enable execution of unit tests on Release Assembly. See: https://msdn.microsoft.com/en-us/library/0tke9fxk.aspx
 // Sign with a confidential key. Make internals visible to unit tests signed with a unit-test key.
 [assembly:AssemblyKeyFileAttribute("..\\FhirNetApi.snk")]
-[assembly: InternalsVisibleTo("Hl7.Fhir.Core.Tests, PublicKey=00240000048000009400000006020000002400005253413100040000010001001D2AEF340F7477EC77CC2C7A25283D3AB9A6A22D90EF9A9FC137B30CB022024580E78078971087B0B0DFE21EE72661BEE667A4B6E869CB02F12E0B94EE45DC80F6BEB694E604D69BD612522AA084136C232ACC72E3236D442E7945B935BE7EBE734B0665F4B7A05F0CCEE78D5D493E9233F231F98B13800F16BC533FF758EF8D")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Core.Tests, PublicKey=00240000048000009400000006020000002400005253413100040000010001001717D77343870ECA52515A2FF9BA7EF2FF314F2F1E651F4A069401E35193D4D5124B33379A6380D510239044F012F720D395064192157EAE8F67B3E4D524B79DAADEBD4E65CE67DB327949B77BF26CA6C0F97C4CA1A578811202A537E4D112FFFB2E42E852AFDD71C3295C694911CDF0535F709B72BA172C40A2B1F2B607FFDC")]
 #endif

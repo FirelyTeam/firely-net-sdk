@@ -151,8 +151,8 @@ namespace Hl7.Fhir.Model
                 get { return SequenceLinkIdElement != null ? SequenceLinkIdElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      SequenceLinkIdElement = null; 
+                    if (!value.HasValue)
+                        SequenceLinkIdElement = null; 
                     else
                         SequenceLinkIdElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("SequenceLinkId");
@@ -198,6 +198,19 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(SequenceLinkIdElement, otherT.SequenceLinkIdElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ItemsComponent elements
+                    if (SequenceLinkIdElement != null) yield return SequenceLinkIdElement;
+                }
             }
             
         }
@@ -663,7 +676,32 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// ProcessRequest elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Ruleset != null) yield return Ruleset;
+				if (OriginalRuleset != null) yield return OriginalRuleset;
+				if (ActionElement != null) yield return ActionElement;
+				if (CreatedElement != null) yield return CreatedElement;
+				if (Target != null) yield return Target;
+				if (Provider != null) yield return Provider;
+				if (Organization != null) yield return Organization;
+				if (Request != null) yield return Request;
+				if (Response != null) yield return Response;
+				if (NullifyElement != null) yield return NullifyElement;
+				if (ReferenceElement != null) yield return ReferenceElement;
+				foreach (var elem in Item) { if (elem != null) yield return elem; }
+				foreach (var elem in IncludeElement) { if (elem != null) yield return elem; }
+				foreach (var elem in ExcludeElement) { if (elem != null) yield return elem; }
+				if (Period != null) yield return Period;
+            }
+        }
     }
     
 }

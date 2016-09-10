@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -15,25 +15,11 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
-    // [WMR 20160802] NEW
-    public static class NamedNavigation
-    {
-        /// <summary>Determines if an element name matches a choice element name in the base profile.</summary>
-        /// <example>Match "value[x]" and "valueCodeableConcept"</example>
-        internal static bool IsRenamedChoiceElement(string baseName, string newName)
-        {
-            return baseName != null
-                && newName != null
-                && baseName.EndsWith("[x]")
-                && String.Compare(baseName, 0, newName, 0, baseName.Length - 3) == 0 && newName.Length > baseName.Length;
-        }
-    }
-
     public static class NamedNavigationExtensions
     {
         /// <summary>Move the navigator to the first child element with the specified name, if it exists.</summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveToChild(this BaseElementNavigator nav, string name)
+        public static bool MoveToChild(this ElementDefinitionNavigator nav, string name)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             if (nav.MoveToFirstChild())
@@ -51,7 +37,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Move the navigator to the first following sibling element with the specified name, if it exists.</summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveToNext(this BaseElementNavigator nav, string name)
+        public static bool MoveToNext(this ElementDefinitionNavigator nav, string name)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             var bm = nav.Bookmark();
@@ -69,14 +55,14 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Move the navigator to the next type slice of the (choice) element with the specified name, if it exists.</summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveToNextTypeSlice(this BaseElementNavigator nav, string name)
+        public static bool MoveToNextTypeSlice(this ElementDefinitionNavigator nav, string name)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             var bm = nav.Bookmark();
 
             while (nav.MoveToNext())
             {
-                if (NamedNavigation.IsRenamedChoiceElement(name, nav.PathName)) return true;
+                if (ElementDefinitionNavigator.IsRenamedChoiceElement(name, nav.PathName)) return true;
             }
 
             nav.ReturnToBookmark(bm);
@@ -85,29 +71,29 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Determines if the element with the specified name represents a type slice for the current (choice) element.</summary>
         /// <returns><c>true</c> if the element name represents a type slice of the current element, <c>false</c> otherwise.</returns>
-        public static bool IsCandidateTypeSlice(this BaseElementNavigator nav, string diffName)
+        internal static bool IsCandidateTypeSlice(this ElementDefinitionNavigator nav, string diffName)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
-            return NamedNavigation.IsRenamedChoiceElement(nav.PathName, diffName);
+            return ElementDefinitionNavigator.IsRenamedChoiceElement(nav.PathName, diffName);
         }
 
         /// <summary>Move to last direct child element with same path as current element.</summary>
         /// <returns><c>true</c> if the cursor has moved at least a single element, <c>false</c> otherwise</returns>
-        public static bool MoveToLastSlice(this BaseElementNavigator nav)
+        public static bool MoveToLastSlice(this ElementDefinitionNavigator nav)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node is not set."); }
-            if (nav.Current.Base == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
+            // if (nav.Current.Base == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
 
             var bm = nav.Bookmark();
-            var basePath = nav.Current.Base.Path;
-            if (string.IsNullOrEmpty(basePath)) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
+            var basePath = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
+            // if (string.IsNullOrEmpty(basePath)) { throw Error.Argument("nav", "Cannot move to last slice. Current node has no Base.path component (path '{0}').".FormatWith(nav.Path)); }
 
             var result = false;
             while (nav.MoveToNext())
             {
-                var baseComp = nav.Current.Base;
-                if (baseComp != null && baseComp.Path == basePath)
+                var baseComp = nav.Current.Base != null ? nav.Current.Base.Path : nav.Path;
+                if (baseComp != null && (baseComp == basePath || ElementDefinitionNavigator.IsRenamedChoiceElement(basePath, baseComp)))
                 {
                     // Match, advance cursor
                     bm = nav.Bookmark();
@@ -125,7 +111,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Move the navigator to the first preceding sibling element with the specified name, if it exists.</summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveToPrevious(this BaseElementNavigator nav, string name)
+        public static bool MoveToPrevious(this ElementDefinitionNavigator nav, string name)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             var bm = nav.Bookmark();
@@ -142,7 +128,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Move the navigator to the first preceding or following sibling element with the specified name, if it exists.</summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveTo(this BaseElementNavigator nav, string name)
+        public static bool MoveTo(this ElementDefinitionNavigator nav, string name)
         {
             // MoveNext method performs parameter validation
             return MoveToNext(nav, name) || MoveToPrevious(nav,name);
@@ -152,7 +138,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Move the navigator to the specified element.</summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool MoveTo(this BaseElementNavigator nav, ElementDefinition element)
+        public static bool MoveTo(this ElementDefinitionNavigator nav, ElementDefinition element)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             // Validated by Bookmark.FromElement
@@ -163,7 +149,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Move the navigator to the first element with the specified path.</summary>
         /// <returns><c>true</c> if succesful, <c>false</c> otherwise.</returns>
-        public static bool JumpToFirst(this BaseElementNavigator nav, string path)
+        public static bool JumpToFirst(this ElementDefinitionNavigator nav, string path)
         {
             // Find method performs parameter validation
             // if (nav == null) { throw Error.ArgumentNull(nameof(nav)); }
@@ -183,7 +169,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Find all existing elements with the specified path.</summary>
         /// <returns>A sequence of <see cref="Bookmark"/> values.</returns>
-        public static IEnumerable<Bookmark> Find(this BaseElementNavigator nav, string path)
+        public static IEnumerable<Bookmark> Find(this ElementDefinitionNavigator nav, string path)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             if (path == null) { throw Error.ArgumentNull("path"); }
@@ -199,7 +185,7 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-        public static IEnumerable<Bookmark> Approach(this BaseElementNavigator nav, string path)
+        public static IEnumerable<Bookmark> Approach(this ElementDefinitionNavigator nav, string path)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             if (path == null) { throw Error.ArgumentNull("path"); }
@@ -214,7 +200,7 @@ namespace Hl7.Fhir.Specification.Navigation
             return result;
         }
 
-        private static IEnumerable<Bookmark> locateChildren(BaseElementNavigator nav, IEnumerable<string> path, bool partial)
+        private static IEnumerable<Bookmark> locateChildren(ElementDefinitionNavigator nav, IEnumerable<string> path, bool partial)
         {
             Debug.Assert(nav != null); // Caller should validate
 

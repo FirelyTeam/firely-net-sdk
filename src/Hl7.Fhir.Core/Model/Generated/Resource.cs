@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
 using System.Runtime.Serialization;
 
 /*
@@ -224,7 +222,19 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
             
             return true;
-        }        
+        }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get {
+                if (IdElement != null) yield return IdElement;
+                if (Meta != null) yield return Meta;
+                if (ImplicitRulesElement != null) yield return ImplicitRulesElement;
+                if (LanguageElement != null) yield return LanguageElement;
+            }
+        }
+
     }
-    
+
 }

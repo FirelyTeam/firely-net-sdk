@@ -722,7 +722,38 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// DecisionSupportServiceModule elements
+				if (UrlElement != null) yield return UrlElement;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (VersionElement != null) yield return VersionElement;
+				if (NameElement != null) yield return NameElement;
+				if (TitleElement != null) yield return TitleElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (ExperimentalElement != null) yield return ExperimentalElement;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (PurposeElement != null) yield return PurposeElement;
+				if (UsageElement != null) yield return UsageElement;
+				if (PublicationDateElement != null) yield return PublicationDateElement;
+				if (LastReviewDateElement != null) yield return LastReviewDateElement;
+				if (EffectivePeriod != null) yield return EffectivePeriod;
+				foreach (var elem in Coverage) { if (elem != null) yield return elem; }
+				foreach (var elem in Topic) { if (elem != null) yield return elem; }
+				foreach (var elem in Contributor) { if (elem != null) yield return elem; }
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (CopyrightElement != null) yield return CopyrightElement;
+				foreach (var elem in RelatedResource) { if (elem != null) yield return elem; }
+				foreach (var elem in Trigger) { if (elem != null) yield return elem; }
+				foreach (var elem in Parameter) { if (elem != null) yield return elem; }
+				foreach (var elem in DataRequirement) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

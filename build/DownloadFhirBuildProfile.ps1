@@ -5,8 +5,7 @@
 
 # Script to be run from 'build' directory
 
-$server = "http://hl7-fhir.github.io";
-# $server = "http://hl7.org/fhir/2016May";
+$server = "http://hl7.org/fhir/2016Sep";
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
@@ -40,6 +39,7 @@ PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json" "$server/j
 
 PowerCurl "$srcdir\Hl7.Fhir.Specification\validation.xml.zip" "$server/definitions.xml.zip"
 PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\profiles-others.xml" "$server/profiles-others.xml"
+
 copy "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-resources.xml" "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test"
 copy "$srcdir\Hl7.Fhir.Core\Model\Source\profiles-types.xml" "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test"
 

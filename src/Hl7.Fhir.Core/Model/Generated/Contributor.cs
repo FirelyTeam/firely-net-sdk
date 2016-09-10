@@ -211,6 +211,18 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Contributor elements
+                if (TypeElement != null) yield return TypeElement;
+                if (NameElement != null) yield return NameElement;
+                foreach (var elem in Contact) { if (elem != null) yield return elem; }
+            }
+        }
     
     
     }

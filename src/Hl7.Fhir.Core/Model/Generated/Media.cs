@@ -475,7 +475,27 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Media elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (TypeElement != null) yield return TypeElement;
+				if (Subtype != null) yield return Subtype;
+				if (View != null) yield return View;
+				if (Subject != null) yield return Subject;
+				if (Operator != null) yield return Operator;
+				if (DeviceNameElement != null) yield return DeviceNameElement;
+				if (HeightElement != null) yield return HeightElement;
+				if (WidthElement != null) yield return WidthElement;
+				if (FramesElement != null) yield return FramesElement;
+				if (DurationElement != null) yield return DurationElement;
+				if (Content != null) yield return Content;
+            }
+        }
     }
     
 }

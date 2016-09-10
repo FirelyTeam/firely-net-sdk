@@ -195,8 +195,8 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      CodeElement = null; 
+                    if (!value.HasValue)
+                        CodeElement = null; 
                     else
                         CodeElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanRelationship>(value);
                     OnPropertyChanged("Code");
@@ -260,6 +260,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Plan, otherT.Plan)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // RelatedPlanComponent elements
+                    if (CodeElement != null) yield return CodeElement;
+                    if (Plan != null) yield return Plan;
+                }
             }
             
         }
@@ -393,6 +407,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ActivityComponent elements
+                    foreach (var elem in ActionResulting) { if (elem != null) yield return elem; }
+                    if (Outcome != null) yield return Outcome;
+                    foreach (var elem in Progress) { if (elem != null) yield return elem; }
+                    if (Reference != null) yield return Reference;
+                    if (Detail != null) yield return Detail;
+                }
+            }
             
         }
         
@@ -512,8 +543,8 @@ namespace Hl7.Fhir.Model
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      StatusElement = null; 
+                    if (!value.HasValue)
+                        StatusElement = null; 
                     else
                         StatusElement = new Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>(value);
                     OnPropertyChanged("Status");
@@ -558,8 +589,8 @@ namespace Hl7.Fhir.Model
                 get { return ProhibitedElement != null ? ProhibitedElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      ProhibitedElement = null; 
+                    if (!value.HasValue)
+                        ProhibitedElement = null; 
                     else
                         ProhibitedElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Prohibited");
@@ -673,8 +704,8 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
@@ -765,6 +796,34 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DetailComponent elements
+                    if (Category != null) yield return Category;
+                    if (Definition != null) yield return Definition;
+                    if (Code != null) yield return Code;
+                    foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
+                    foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+                    foreach (var elem in Goal) { if (elem != null) yield return elem; }
+                    if (StatusElement != null) yield return StatusElement;
+                    if (StatusReason != null) yield return StatusReason;
+                    if (ProhibitedElement != null) yield return ProhibitedElement;
+                    if (Scheduled != null) yield return Scheduled;
+                    if (Location != null) yield return Location;
+                    foreach (var elem in Performer) { if (elem != null) yield return elem; }
+                    if (Product != null) yield return Product;
+                    if (DailyAmount != null) yield return DailyAmount;
+                    if (Quantity != null) yield return Quantity;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                }
             }
             
         }
@@ -1154,7 +1213,31 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// CarePlan elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				if (StatusElement != null) yield return StatusElement;
+				if (Context != null) yield return Context;
+				if (Period != null) yield return Period;
+				foreach (var elem in Author) { if (elem != null) yield return elem; }
+				if (ModifiedElement != null) yield return ModifiedElement;
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in Addresses) { if (elem != null) yield return elem; }
+				foreach (var elem in Support) { if (elem != null) yield return elem; }
+				foreach (var elem in RelatedPlan) { if (elem != null) yield return elem; }
+				foreach (var elem in CareTeam) { if (elem != null) yield return elem; }
+				foreach (var elem in Goal) { if (elem != null) yield return elem; }
+				foreach (var elem in Activity) { if (elem != null) yield return elem; }
+				if (Note != null) yield return Note;
+            }
+        }
     }
     
 }

@@ -180,8 +180,8 @@ namespace Hl7.Fhir.Model
                 get { return RepetitionsElement != null ? RepetitionsElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      RepetitionsElement = null; 
+                    if (!value.HasValue)
+                        RepetitionsElement = null; 
                     else
                         RepetitionsElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("Repetitions");
@@ -261,6 +261,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Recipients, otherT.Recipients)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // FulfillmentComponent elements
+                    if (RepetitionsElement != null) yield return RepetitionsElement;
+                    if (Period != null) yield return Period;
+                    foreach (var elem in Recipients) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -345,6 +360,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ParameterComponent elements
+                    if (Type != null) yield return Type;
+                    if (Value != null) yield return Value;
+                }
+            }
             
         }
         
@@ -427,6 +456,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // OutputComponent elements
+                    if (Type != null) yield return Type;
+                    if (Value != null) yield return Value;
+                }
             }
             
         }
@@ -1018,7 +1061,40 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Task elements
+				if (Identifier != null) yield return Identifier;
+				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
+				if (Requisition != null) yield return Requisition;
+				foreach (var elem in Parent) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (StatusReason != null) yield return StatusReason;
+				if (BusinessStatus != null) yield return BusinessStatus;
+				if (Stage != null) yield return Stage;
+				if (Code != null) yield return Code;
+				if (PriorityElement != null) yield return PriorityElement;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (Focus != null) yield return Focus;
+				if (For != null) yield return For;
+				if (Context != null) yield return Context;
+				if (CreatedElement != null) yield return CreatedElement;
+				if (LastModifiedElement != null) yield return LastModifiedElement;
+				if (Requester != null) yield return Requester;
+				if (Owner != null) yield return Owner;
+				foreach (var elem in PerformerType) { if (elem != null) yield return elem; }
+				if (Reason != null) yield return Reason;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				if (Fulfillment != null) yield return Fulfillment;
+				if (DefinitionElement != null) yield return DefinitionElement;
+				foreach (var elem in Input) { if (elem != null) yield return elem; }
+				foreach (var elem in Output) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

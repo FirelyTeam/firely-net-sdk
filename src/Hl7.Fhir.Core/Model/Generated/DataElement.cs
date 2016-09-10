@@ -129,8 +129,8 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
@@ -194,6 +194,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContactComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -230,8 +244,8 @@ namespace Hl7.Fhir.Model
                 get { return IdentityElement != null ? IdentityElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      IdentityElement = null; 
+                    if (value == null)
+                        IdentityElement = null; 
                     else
                         IdentityElement = new Hl7.Fhir.Model.Id(value);
                     OnPropertyChanged("Identity");
@@ -262,8 +276,8 @@ namespace Hl7.Fhir.Model
                 get { return UriElement != null ? UriElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      UriElement = null; 
+                    if (value == null)
+                        UriElement = null; 
                     else
                         UriElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Uri");
@@ -294,8 +308,8 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
@@ -326,8 +340,8 @@ namespace Hl7.Fhir.Model
                 get { return CommentElement != null ? CommentElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      CommentElement = null; 
+                    if (value == null)
+                        CommentElement = null; 
                     else
                         CommentElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Comment");
@@ -382,6 +396,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // MappingComponent elements
+                    if (IdentityElement != null) yield return IdentityElement;
+                    if (UriElement != null) yield return UriElement;
+                    if (NameElement != null) yield return NameElement;
+                    if (CommentElement != null) yield return CommentElement;
+                }
             }
             
         }
@@ -852,7 +882,29 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// DataElement elements
+				if (UrlElement != null) yield return UrlElement;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (VersionElement != null) yield return VersionElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (ExperimentalElement != null) yield return ExperimentalElement;
+				if (PublisherElement != null) yield return PublisherElement;
+				if (DateElement != null) yield return DateElement;
+				if (NameElement != null) yield return NameElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
+				if (CopyrightElement != null) yield return CopyrightElement;
+				if (StringencyElement != null) yield return StringencyElement;
+				foreach (var elem in Mapping) { if (elem != null) yield return elem; }
+				foreach (var elem in Element) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

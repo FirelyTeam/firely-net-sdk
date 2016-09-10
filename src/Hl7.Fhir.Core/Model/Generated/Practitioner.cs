@@ -251,6 +251,27 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // RoleComponent elements
+                    if (Organization != null) yield return Organization;
+                    if (Code != null) yield return Code;
+                    foreach (var elem in Specialty) { if (elem != null) yield return elem; }
+                    foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                    if (Period != null) yield return Period;
+                    foreach (var elem in Location) { if (elem != null) yield return elem; }
+                    foreach (var elem in HealthcareService) { if (elem != null) yield return elem; }
+                    foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -365,6 +386,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Issuer, otherT.Issuer)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // QualificationComponent elements
+                    foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+                    if (Code != null) yield return Code;
+                    if (Period != null) yield return Period;
+                    if (Issuer != null) yield return Issuer;
+                }
             }
             
         }
@@ -655,7 +692,26 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Practitioner elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (ActiveElement != null) yield return ActiveElement;
+				foreach (var elem in Name) { if (elem != null) yield return elem; }
+				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+				foreach (var elem in Address) { if (elem != null) yield return elem; }
+				if (GenderElement != null) yield return GenderElement;
+				if (BirthDateElement != null) yield return BirthDateElement;
+				foreach (var elem in Photo) { if (elem != null) yield return elem; }
+				foreach (var elem in Role) { if (elem != null) yield return elem; }
+				foreach (var elem in Qualification) { if (elem != null) yield return elem; }
+				foreach (var elem in Communication) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

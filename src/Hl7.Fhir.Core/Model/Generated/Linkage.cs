@@ -112,8 +112,8 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      TypeElement = null; 
+                    if (!value.HasValue)
+                        TypeElement = null; 
                     else
                         TypeElement = new Code<Hl7.Fhir.Model.Linkage.LinkageType>(value);
                     OnPropertyChanged("Type");
@@ -176,6 +176,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ItemComponent elements
+                    if (TypeElement != null) yield return TypeElement;
+                    if (Resource != null) yield return Resource;
+                }
             }
             
         }
@@ -259,7 +273,17 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Linkage elements
+				if (Author != null) yield return Author;
+				foreach (var elem in Item) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

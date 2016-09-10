@@ -131,6 +131,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ExplanationComponent elements
+                    foreach (var elem in Reason) { if (elem != null) yield return elem; }
+                    foreach (var elem in ReasonNotGiven) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -166,8 +180,8 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DateElement = null; 
+                    if (value == null)
+                        DateElement = null; 
                     else
                         DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Date");
@@ -212,8 +226,8 @@ namespace Hl7.Fhir.Model
                 get { return ReportedElement != null ? ReportedElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      ReportedElement = null; 
+                    if (!value.HasValue)
+                        ReportedElement = null; 
                     else
                         ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Reported");
@@ -266,6 +280,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ReactionComponent elements
+                    if (DateElement != null) yield return DateElement;
+                    if (Detail != null) yield return Detail;
+                    if (ReportedElement != null) yield return ReportedElement;
+                }
+            }
             
         }
         
@@ -301,8 +330,8 @@ namespace Hl7.Fhir.Model
                 get { return DoseSequenceElement != null ? DoseSequenceElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      DoseSequenceElement = null; 
+                    if (!value.HasValue)
+                        DoseSequenceElement = null; 
                     else
                         DoseSequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("DoseSequence");
@@ -333,8 +362,8 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
@@ -379,8 +408,8 @@ namespace Hl7.Fhir.Model
                 get { return SeriesElement != null ? SeriesElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      SeriesElement = null; 
+                    if (value == null)
+                        SeriesElement = null; 
                     else
                         SeriesElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Series");
@@ -411,8 +440,8 @@ namespace Hl7.Fhir.Model
                 get { return SeriesDosesElement != null ? SeriesDosesElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      SeriesDosesElement = null; 
+                    if (!value.HasValue)
+                        SeriesDosesElement = null; 
                     else
                         SeriesDosesElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("SeriesDoses");
@@ -520,6 +549,26 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(DoseStatusReason, otherT.DoseStatusReason)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // VaccinationProtocolComponent elements
+                    if (DoseSequenceElement != null) yield return DoseSequenceElement;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Authority != null) yield return Authority;
+                    if (SeriesElement != null) yield return SeriesElement;
+                    if (SeriesDosesElement != null) yield return SeriesDosesElement;
+                    foreach (var elem in TargetDisease) { if (elem != null) yield return elem; }
+                    if (DoseStatus != null) yield return DoseStatus;
+                    if (DoseStatusReason != null) yield return DoseStatusReason;
+                }
             }
             
         }
@@ -1054,7 +1103,36 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Immunization elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (DateElement != null) yield return DateElement;
+				if (VaccineCode != null) yield return VaccineCode;
+				if (Patient != null) yield return Patient;
+				if (WasNotGivenElement != null) yield return WasNotGivenElement;
+				if (ReportedElement != null) yield return ReportedElement;
+				if (Performer != null) yield return Performer;
+				if (Requester != null) yield return Requester;
+				if (Encounter != null) yield return Encounter;
+				if (Manufacturer != null) yield return Manufacturer;
+				if (Location != null) yield return Location;
+				if (LotNumberElement != null) yield return LotNumberElement;
+				if (ExpirationDateElement != null) yield return ExpirationDateElement;
+				if (Site != null) yield return Site;
+				if (Route != null) yield return Route;
+				if (DoseQuantity != null) yield return DoseQuantity;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				if (Explanation != null) yield return Explanation;
+				foreach (var elem in Reaction) { if (elem != null) yield return elem; }
+				foreach (var elem in VaccinationProtocol) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

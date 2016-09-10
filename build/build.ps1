@@ -1,11 +1,11 @@
 properties {
   $productName = "Hl7.Fhir .Net Library" 
-  $productVersion = "0.90.5"             # Update this for a new release
-  $nugetPrelease = "alpha4"              # Set this to something like "alpha", if desired
+  $productVersion = "0.90.6"             # Update this for a new release
+  $nugetPrelease = "alpha5"              # Set this to something like "alpha", if desired
 
   $ignoreTestFailure = $true             # Report build success, even though tests failed. Useful for alpha versions
 
-  $localNugetPath = "\\karoo\Develop\Running\Furore\NUGET"    # Optional: Set this to a path where your local NuGet server resides (this is used by the "Redeploy" task)
+  $localNugetPath = "c:\temp\fhir-net-api-NUGET"    # Optional: Set this to a path where your local NuGet server resides (this is used by the "Redeploy" task)
 
   $ProgressColor = "Magenta"
 
@@ -22,7 +22,7 @@ properties {
 # See the following for some explanations: http://blogs.msdn.com/b/jjameson/archive/2009/04/03/best-practices-for-net-assembly-versioning.aspx 
 #  $assemblyVersion = "1.0"               # Update this according to the assembly version scheme, with Major.Minor. DO NOT INCLUDE BUILD OR REVISION here! 
 
-  $assemblyVersion = "0.90.5.0"           # This is a violation of the assembly version scheme, but the Fhir .Net library wants to go with this for all 0.x releases.
+  $assemblyVersion = "0.90.6.5"    # This is a violation of the assembly version scheme, but the Fhir .Net library wants to go with this for all 0.x releases.
 
   $nugetPkgs = @(                        # Update this for new specification version
     @{CsProj="Hl7.Fhir.Core"; AssemblyPattern="Hl7.Fhir.*.Core"; PkgId="Hl7.Fhir.STU3"},
@@ -576,7 +576,7 @@ function Update-NuspecFile ([string] $nuspecPath, [string] $packageId, [string] 
       {
         $dependencyId = $depNode.id;
         Write-Verbose $dependencyId
-        if ($dependencyId -like "Hl7.Fhir.*")
+        if ($dependencyId -eq "Hl7.Fhir.STU3")   # TODO: Do not hard-code this?
         {
           Write-Host "Replacing dependency version for '$dependencyId' with $nugetVersion"          
           $depNode.version = $nugetVersion

@@ -196,8 +196,8 @@ namespace Hl7.Fhir.Model
                 get { return RequiredElement != null ? RequiredElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      RequiredElement = null; 
+                    if (!value.HasValue)
+                        RequiredElement = null; 
                     else
                         RequiredElement = new Code<Hl7.Fhir.Model.Appointment.ParticipantRequired>(value);
                     OnPropertyChanged("Required");
@@ -229,8 +229,8 @@ namespace Hl7.Fhir.Model
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      StatusElement = null; 
+                    if (!value.HasValue)
+                        StatusElement = null; 
                     else
                         StatusElement = new Code<Hl7.Fhir.Model.ParticipationStatus>(value);
                     OnPropertyChanged("Status");
@@ -285,6 +285,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ParticipantComponent elements
+                    foreach (var elem in Type) { if (elem != null) yield return elem; }
+                    if (Actor != null) yield return Actor;
+                    if (RequiredElement != null) yield return RequiredElement;
+                    if (StatusElement != null) yield return StatusElement;
+                }
             }
             
         }
@@ -779,7 +795,31 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Appointment elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (ServiceCategory != null) yield return ServiceCategory;
+				foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
+				foreach (var elem in Specialty) { if (elem != null) yield return elem; }
+				if (AppointmentType != null) yield return AppointmentType;
+				if (Reason != null) yield return Reason;
+				if (PriorityElement != null) yield return PriorityElement;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (StartElement != null) yield return StartElement;
+				if (EndElement != null) yield return EndElement;
+				if (MinutesDurationElement != null) yield return MinutesDurationElement;
+				foreach (var elem in Slot) { if (elem != null) yield return elem; }
+				if (CreatedElement != null) yield return CreatedElement;
+				if (CommentElement != null) yield return CommentElement;
+				foreach (var elem in Participant) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

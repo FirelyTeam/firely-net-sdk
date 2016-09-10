@@ -141,6 +141,17 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // ContactDetail elements
+                if (NameElement != null) yield return NameElement;
+                foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+            }
+        }
     
     
     }

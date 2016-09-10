@@ -33,15 +33,15 @@ namespace Hl7.Fhir.Rest
             { JSON_CONTENT_HEADER,
                 "text/json",
                 "application/json",
-                "application/json+fhir" };
+                "application/json+fhir" }; // for backward compatability/tolerance
 
         public const string XML_CONTENT_HEADER = "application/fhir+xml";   // The formal FHIR mime type (still to be registered).
         public static readonly string[] XML_CONTENT_HEADERS = new string[]
             { XML_CONTENT_HEADER,
                 "text/xml",
-                "text/xml+fhir",
+                "text/xml+fhir", // for backward compatability / tolerance
                 "application/xml",
-                "application/xml+fhir" };
+                "application/xml+fhir" }; // for backward compatability / tolerance
 
         public const string FORMAT_PARAM_XML = "xml";
         public const string FORMAT_PARAM_JSON = "json";

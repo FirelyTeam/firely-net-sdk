@@ -2337,7 +2337,7 @@
                 </td>
                 <td style="vertical-align: top; text-align : left; background-color: white; padding:0px 4px 0px 4px" class="hierarchy">A reference from one resource to another
                   <br />
-                  <span style="font-style: italic" title="ref-1">SHALL have a local reference if the resource is provided inline</span>
+                  <span style="font-style: italic" title="ref-1">SHALL have a contained resource if a local reference is provided</span>
                 </td>
               </tr>
 
@@ -2430,7 +2430,7 @@
             <constraint>
               <key value="ref-1" />
               <severity value="error" />
-              <human value="SHALL have a local reference if the resource is provided inline" />
+              <human value="SHALL have a contained resource if a local reference is provided" />
               <expression value="reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))" />
               <xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
             </constraint>
@@ -2529,7 +2529,7 @@
             <constraint>
               <key value="ref-1" />
               <severity value="error" />
-              <human value="SHALL have a local reference if the resource is provided inline" />
+              <human value="SHALL have a contained resource if a local reference is provided" />
               <expression value="reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))" />
               <xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
             </constraint>
@@ -8221,7 +8221,7 @@
               <key value="rat-1" />
               <severity value="error" />
               <human value="Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present" />
-              <expression value="(numerator.exists() and denominator.exists()) or extension.exists()" />
+              <expression value="(numerator.empty() xor denominator.exists()) and (numerator.exists() or extension.exists())" />
               <xpath value="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))" />
             </constraint>
             <mapping>
@@ -8321,7 +8321,7 @@
               <key value="rat-1" />
               <severity value="error" />
               <human value="Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present" />
-              <expression value="(numerator.exists() and denominator.exists()) or extension.exists()" />
+              <expression value="(numerator.empty() xor denominator.exists()) and (numerator.exists() or extension.exists())" />
               <xpath value="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))" />
             </constraint>
             <mapping>
@@ -20753,7 +20753,7 @@
               <key value="eld-12" />
               <severity value="error" />
               <human value="URI SHALL start with http:// or https:// urn:" />
-              <expression value="startsWith('http:') or startsWith('https') or startsWith('urn:')" />
+              <expression value="is(uri).not() or as(uri).startsWith('http:') or as(uri).startsWith('https') or as(uri).startsWith('urn:')" />
               <xpath value="starts-with(string(@value), 'http:') or starts-with(string(@value), 'https:') or starts-with(string(@value), 'urn:')" />
             </constraint>
             <isSummary value="true" />
@@ -22597,7 +22597,7 @@
               <key value="eld-12" />
               <severity value="error" />
               <human value="URI SHALL start with http:// or https:// urn:" />
-              <expression value="startsWith('http:') or startsWith('https') or startsWith('urn:')" />
+              <expression value="is(uri).not() or as(uri).startsWith('http:') or as(uri).startsWith('https') or as(uri).startsWith('urn:')" />
               <xpath value="starts-with(string(@value), 'http:') or starts-with(string(@value), 'https:') or starts-with(string(@value), 'urn:')" />
             </constraint>
             <isSummary value="true" />

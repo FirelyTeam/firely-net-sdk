@@ -129,8 +129,8 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
                         TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
@@ -325,6 +325,28 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(MaxDosePerPeriod, otherT.MaxDosePerPeriod)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DosageComponent elements
+                    if (TextElement != null) yield return TextElement;
+                    foreach (var elem in AdditionalInstructions) { if (elem != null) yield return elem; }
+                    if (Timing != null) yield return Timing;
+                    if (AsNeeded != null) yield return AsNeeded;
+                    if (Site != null) yield return Site;
+                    if (Route != null) yield return Route;
+                    if (Method != null) yield return Method;
+                    if (Dose != null) yield return Dose;
+                    if (Rate != null) yield return Rate;
+                    if (MaxDosePerPeriod != null) yield return MaxDosePerPeriod;
+                }
             }
             
         }
@@ -736,7 +758,30 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// MedicationStatement elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Medication != null) yield return Medication;
+				if (Patient != null) yield return Patient;
+				if (Effective != null) yield return Effective;
+				if (InformationSource != null) yield return InformationSource;
+				foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
+				if (DateAssertedElement != null) yield return DateAssertedElement;
+				if (NotTakenElement != null) yield return NotTakenElement;
+				foreach (var elem in ReasonNotTaken) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonForUseCode) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonForUseReference) { if (elem != null) yield return elem; }
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				if (CategoryElement != null) yield return CategoryElement;
+				foreach (var elem in Dosage) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

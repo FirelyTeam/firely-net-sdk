@@ -276,6 +276,21 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Identifier elements
+                if (UseElement != null) yield return UseElement;
+                if (Type != null) yield return Type;
+                if (SystemElement != null) yield return SystemElement;
+                if (ValueElement != null) yield return ValueElement;
+                if (Period != null) yield return Period;
+                if (Assigner != null) yield return Assigner;
+            }
+        }
     
     
     }

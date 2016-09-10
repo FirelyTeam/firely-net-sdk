@@ -147,6 +147,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ProductComponent elements
+                    if (Form != null) yield return Form;
+                    foreach (var elem in Ingredient) { if (elem != null) yield return elem; }
+                    foreach (var elem in Batch) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -229,6 +244,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // IngredientComponent elements
+                    if (Item != null) yield return Item;
+                    if (Amount != null) yield return Amount;
+                }
+            }
             
         }
         
@@ -264,8 +293,8 @@ namespace Hl7.Fhir.Model
                 get { return LotNumberElement != null ? LotNumberElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      LotNumberElement = null; 
+                    if (value == null)
+                        LotNumberElement = null; 
                     else
                         LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("LotNumber");
@@ -296,8 +325,8 @@ namespace Hl7.Fhir.Model
                 get { return ExpirationDateElement != null ? ExpirationDateElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      ExpirationDateElement = null; 
+                    if (value == null)
+                        ExpirationDateElement = null; 
                     else
                         ExpirationDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("ExpirationDate");
@@ -346,6 +375,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ExpirationDateElement, otherT.ExpirationDateElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // BatchComponent elements
+                    if (LotNumberElement != null) yield return LotNumberElement;
+                    if (ExpirationDateElement != null) yield return ExpirationDateElement;
+                }
             }
             
         }
@@ -428,6 +471,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // PackageComponent elements
+                    if (Container != null) yield return Container;
+                    foreach (var elem in Content) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -509,6 +566,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContentComponent elements
+                    if (Item != null) yield return Item;
+                    if (Amount != null) yield return Amount;
+                }
             }
             
         }
@@ -658,7 +729,20 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Medication elements
+				if (Code != null) yield return Code;
+				if (IsBrandElement != null) yield return IsBrandElement;
+				if (Manufacturer != null) yield return Manufacturer;
+				if (Product != null) yield return Product;
+				if (Package != null) yield return Package;
+            }
+        }
     }
     
 }

@@ -209,6 +209,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // StageComponent elements
+                    if (Summary != null) yield return Summary;
+                    foreach (var elem in Assessment) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -290,6 +304,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Detail, otherT.Detail)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // EvidenceComponent elements
+                    if (Code != null) yield return Code;
+                    foreach (var elem in Detail) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -684,7 +712,31 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Condition elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (ClinicalStatusElement != null) yield return ClinicalStatusElement;
+				if (VerificationStatusElement != null) yield return VerificationStatusElement;
+				if (Category != null) yield return Category;
+				if (Severity != null) yield return Severity;
+				if (Code != null) yield return Code;
+				foreach (var elem in BodySite) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				if (Context != null) yield return Context;
+				if (Onset != null) yield return Onset;
+				if (Abatement != null) yield return Abatement;
+				if (DateRecordedElement != null) yield return DateRecordedElement;
+				if (Asserter != null) yield return Asserter;
+				if (Stage != null) yield return Stage;
+				foreach (var elem in Evidence) { if (elem != null) yield return elem; }
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

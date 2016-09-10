@@ -133,8 +133,8 @@ namespace Hl7.Fhir.Model
                 get { return LongitudeElement != null ? LongitudeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      LongitudeElement = null; 
+                    if (!value.HasValue)
+                        LongitudeElement = null; 
                     else
                         LongitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Longitude");
@@ -166,8 +166,8 @@ namespace Hl7.Fhir.Model
                 get { return LatitudeElement != null ? LatitudeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      LatitudeElement = null; 
+                    if (!value.HasValue)
+                        LatitudeElement = null; 
                     else
                         LatitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Latitude");
@@ -198,8 +198,8 @@ namespace Hl7.Fhir.Model
                 get { return AltitudeElement != null ? AltitudeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      AltitudeElement = null; 
+                    if (!value.HasValue)
+                        AltitudeElement = null; 
                     else
                         AltitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Altitude");
@@ -251,6 +251,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(AltitudeElement, otherT.AltitudeElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // PositionComponent elements
+                    if (LongitudeElement != null) yield return LongitudeElement;
+                    if (LatitudeElement != null) yield return LatitudeElement;
+                    if (AltitudeElement != null) yield return AltitudeElement;
+                }
             }
             
         }
@@ -626,7 +641,29 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Location elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (NameElement != null) yield return NameElement;
+				foreach (var elem in AliasElement) { if (elem != null) yield return elem; }
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (ModeElement != null) yield return ModeElement;
+				if (Type != null) yield return Type;
+				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+				if (Address != null) yield return Address;
+				if (PhysicalType != null) yield return PhysicalType;
+				if (Position != null) yield return Position;
+				if (ManagingOrganization != null) yield return ManagingOrganization;
+				if (PartOf != null) yield return PartOf;
+				foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

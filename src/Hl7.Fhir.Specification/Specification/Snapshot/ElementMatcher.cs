@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Specification.Snapshot
     {
         // [WMR 20160719] Add conditional compilation attribute
         [Conditional("DEBUG")]
-        public static void DumpMatches(this IEnumerable<ElementMatcher.MatchInfo> matches, ElementNavigator snapNav, ElementNavigator diffNav)
+        public static void DumpMatches(this IEnumerable<ElementMatcher.MatchInfo> matches, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             var sbm = snapNav.Bookmark();
             var dbm = diffNav.Bookmark();
@@ -29,14 +29,16 @@ namespace Hl7.Fhir.Specification.Snapshot
             foreach (var match in matches)
             {
                 if (!snapNav.ReturnToBookmark(match.BaseBookmark) || !diffNav.ReturnToBookmark(match.DiffBookmark))
+                {
                     throw Error.InvalidOperation("Found unreachable bookmark in matches");
+                }
 
                 var bPos = snapNav.Path + "[{0}]".FormatWith(snapNav.OrdinalPosition);
                 var dPos = diffNav.Path + "[{0}]".FormatWith(diffNav.OrdinalPosition);
 
                 // [WMR 20160719] Add name, if not null
-                if (snapNav.Current.Name != null) bPos += " '{0}'".FormatWith(snapNav.Current.Name);
-                if (diffNav.Current.Name != null) dPos += " '{0}'".FormatWith(diffNav.Current.Name);
+                if (snapNav.Current != null && snapNav.Current.Name != null) bPos += " '{0}'".FormatWith(snapNav.Current.Name);
+                if (diffNav.Current != null && diffNav.Current.Name != null) dPos += " '{0}'".FormatWith(diffNav.Current.Name);
 
                 Debug.WriteLine("B:{0} <--{1}--> D:{2}".FormatWith(bPos, match.Action.ToString(), dPos));
             }
@@ -47,7 +49,7 @@ namespace Hl7.Fhir.Specification.Snapshot
     }
 
 
-    internal class ElementMatcher
+    internal static class ElementMatcher
     {
         public struct MatchInfo
         {
@@ -67,7 +69,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// <summary>Add the elementdefinition to slice (with diff merged to the slicing entry base definition)</summary>
             Add,
             /// <summary>Begin a new slice with this slice as slicing entry</summary>
-            Slice
+            Slice,
+            /// <summary>Introduce a new element (for core resource and datatype definitions).</summary>
+            New
         }
 
         /// <summary>
@@ -82,9 +86,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// of one of snap's elements.  (NO NEED, it just has to match direct children, not deeper)
         /// This function assumes the differential is not sparse: it must have parent nodes for all child constraint paths.
         /// </remarks>
-        public List<MatchInfo> Match(ElementNavigator snapNav, ElementNavigator diffNav)
+        public static List<MatchInfo> Match(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
-            if (!snapNav.HasChildren) throw Error.Argument("snapNav", "Cannot match base to diff: element '{0}' in snap has no children".FormatWith(snapNav.Path));
+            // if (!snapNav.HasChildren) throw Error.Argument("snapNav", "Cannot match base to diff: element '{0}' in snap has no children".FormatWith(snapNav.Path));
             if (!diffNav.HasChildren) throw Error.Argument("diffNav", "Cannot match base to diff: element '{0}' in diff has no children".FormatWith(diffNav.Path));
 
             // These bookmarks are used only in the finally {} to make sure we don't alter the position of the navs when leaving the merger
@@ -102,6 +106,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 do
                 {
+                    bool isNewElement = false;
+
                     // First, match directly -> try to find the child in base with the same name as the path in the diff
                     if (snapNav.PathName != diffNav.PathName && !snapNav.MoveToNext(diffNav.PathName))
                     {
@@ -109,15 +115,32 @@ namespace Hl7.Fhir.Specification.Snapshot
                         var typeSliceShorthand = diffNav.PathName;
 
                         // Try to match nameXXXXX to name[x]
-                        var matchingChoice = choiceNames.SingleOrDefault(prefix => NamedNavigation.IsRenamedChoiceElement(prefix, typeSliceShorthand));
+                        var matchingChoice = choiceNames.SingleOrDefault(xName => ElementDefinitionNavigator.IsRenamedChoiceElement(xName, typeSliceShorthand));
 
                         if (matchingChoice != null)
+                        {
                             snapNav.MoveToNext(matchingChoice);
+                        }
                         else
-                            throw Error.InvalidOperation("Differential has a constraint for path '{0}', which does not exist in its base".FormatWith(diffNav.Path));
+                        {
+                            // No match; consider this to be a new element definition
+                            // This is allowed for core resource & datatype definitions
+                            // Note that the SnapshotGenerator does not verify correctness; that is the responsibility of the Validator!
+                            // SnapshotGenerator should never throw, unless there is faulty logic
+                            // Instead, emit a list of OperationDefinitions to describe issues (TODO)
+                            // Ewout: also annotate ElementDefinitions with associated OperationDefinitions
+                            // Validator is responsible for verifying correctness
+                            isNewElement = true;
+                        }
                     }
-
-                    result.AddRange(constructMatch(snapNav, diffNav));
+                    if (isNewElement)
+                    {
+                        result.Add(constructNew(snapNav, diffNav));
+                    }
+                    else
+                    {
+                        result.AddRange(constructMatch(snapNav, diffNav));
+                    }
                 }
                 while (diffNav.MoveToNext());
             }
@@ -137,7 +160,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="snapNav"></param>
         /// <param name="diffNav"></param>
         /// <returns></returns>
-        private static List<MatchInfo> constructMatch(ElementNavigator snapNav, ElementNavigator diffNav)
+        private static List<MatchInfo> constructMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             // [WMR 20160802] snapNav and diffNav point to matching elements
             // Determine the associated action (Add, Merge, Slice)
@@ -190,7 +213,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         }
 
-        private static List<MatchInfo> constructSliceMatch(ElementNavigator snapNav, ElementNavigator diffNav)
+        private static List<MatchInfo> constructSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             var result = new List<MatchInfo>();
 
@@ -218,7 +241,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     // If the differential contains a slicing entry, then it should also define at least a single slice.
                     if (!diffNav.MoveToNext())
+                    {
                         throw Error.InvalidOperation("Differential has a slicing entry for path '{0}', but no first actual slice", diffNav.Path);
+                    }
                 }
             }
 
@@ -271,7 +296,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Returns true when match is found, matchingSlice points to match in base (merge here)
         // Returns false otherwise, matchingSlice points to current node in base
         // Maintain snapNav current position
-        private static bool findBaseSlice(ElementNavigator snapNav, ElementNavigator diffNav, out Bookmark matchingSlice)
+        private static bool findBaseSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, out Bookmark matchingSlice)
         {
             var slicing = snapNav.Current.Slicing;
             Debug.Assert(slicing != null);
@@ -325,6 +350,17 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
+        // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
+        private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        {
+            // Return reference to *parent* element as BaseBookmark!
+            var bm = snapNav.Bookmark();
+            snapNav.MoveToParent();
+            var match = new MatchInfo() { BaseBookmark = snapNav.Bookmark(), DiffBookmark = diffNav.Bookmark(), Action = MatchAction.New };
+            snapNav.ReturnToBookmark(bm);
+            return match;
+        }
+
         // [WMR 20160801]
         // Determine if the specified discriminator(s) match on type/profile
         private static bool IsTypeProfileDiscriminator(IEnumerable<string> discriminators)
@@ -350,7 +386,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Difference with regular slices:
         // - Don't need to handle extensions
         // - Match renamed elements, i.e. value[x] => valueBoolean
-        private static List<MatchInfo> constructTypeSliceMatch(ElementNavigator snapNav, ElementNavigator diffNav)
+        private static List<MatchInfo> constructTypeSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             var result = new List<MatchInfo>();
 
@@ -372,7 +408,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 });
 
                 if (!diffNav.MoveToNext())
+                {
                     throw Error.InvalidOperation("Differential has a slicing entry {0}, but no first actual slice", diffNav.Path);
+                }
             }
 
             // Then, generate a match between the base's unsliced element and the slicing entries in the diff
@@ -395,14 +433,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         /// <param name="snapNav"></param>
         /// <returns></returns>
-        private List<string> listChoiceElements(ElementNavigator snapNav)
+        private static List<string> listChoiceElements(ElementDefinitionNavigator snapNav)
         {
             var bm = snapNav.Bookmark();
             var result = new List<string>();
 
             do
             {
-                if (snapNav.Current.IsChoice())
+                if (snapNav.Current != null && snapNav.Current.IsChoice())
                 {
                     result.Add(snapNav.PathName);
                 }
@@ -413,7 +451,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
-        private static string nextChildName(ElementNavigator nav)
+        private static string nextChildName(ElementDefinitionNavigator nav)
         {
             string result = null;
 

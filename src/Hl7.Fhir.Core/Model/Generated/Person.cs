@@ -132,8 +132,8 @@ namespace Hl7.Fhir.Model
                 get { return AssuranceElement != null ? AssuranceElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      AssuranceElement = null; 
+                    if (!value.HasValue)
+                        AssuranceElement = null; 
                     else
                         AssuranceElement = new Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel>(value);
                     OnPropertyChanged("Assurance");
@@ -182,6 +182,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(AssuranceElement, otherT.AssuranceElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // LinkComponent elements
+                    if (Target != null) yield return Target;
+                    if (AssuranceElement != null) yield return AssuranceElement;
+                }
             }
             
         }
@@ -454,7 +468,25 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Person elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				foreach (var elem in Name) { if (elem != null) yield return elem; }
+				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+				if (GenderElement != null) yield return GenderElement;
+				if (BirthDateElement != null) yield return BirthDateElement;
+				foreach (var elem in Address) { if (elem != null) yield return elem; }
+				if (Photo != null) yield return Photo;
+				if (ManagingOrganization != null) yield return ManagingOrganization;
+				if (ActiveElement != null) yield return ActiveElement;
+				foreach (var elem in Link) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

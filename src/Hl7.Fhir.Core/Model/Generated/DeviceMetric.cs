@@ -267,8 +267,8 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      TypeElement = null; 
+                    if (!value.HasValue)
+                        TypeElement = null; 
                     else
                         TypeElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType>(value);
                     OnPropertyChanged("Type");
@@ -299,8 +299,8 @@ namespace Hl7.Fhir.Model
                 get { return StateElement != null ? StateElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      StateElement = null; 
+                    if (!value.HasValue)
+                        StateElement = null; 
                     else
                         StateElement = new Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState>(value);
                     OnPropertyChanged("State");
@@ -331,8 +331,8 @@ namespace Hl7.Fhir.Model
                 get { return TimeElement != null ? TimeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      TimeElement = null; 
+                    if (!value.HasValue)
+                        TimeElement = null; 
                     else
                         TimeElement = new Hl7.Fhir.Model.Instant(value);
                     OnPropertyChanged("Time");
@@ -384,6 +384,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(TimeElement, otherT.TimeElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // CalibrationComponent elements
+                    if (TypeElement != null) yield return TypeElement;
+                    if (StateElement != null) yield return StateElement;
+                    if (TimeElement != null) yield return TimeElement;
+                }
             }
             
         }
@@ -656,7 +671,25 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// DeviceMetric elements
+				if (Type != null) yield return Type;
+				if (Identifier != null) yield return Identifier;
+				if (Unit != null) yield return Unit;
+				if (Source != null) yield return Source;
+				if (Parent != null) yield return Parent;
+				if (OperationalStatusElement != null) yield return OperationalStatusElement;
+				if (ColorElement != null) yield return ColorElement;
+				if (CategoryElement != null) yield return CategoryElement;
+				if (MeasurementPeriod != null) yield return MeasurementPeriod;
+				foreach (var elem in Calibration) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

@@ -654,7 +654,34 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Coverage elements
+				if (StatusElement != null) yield return StatusElement;
+				if (Issuer != null) yield return Issuer;
+				if (IsAgreementElement != null) yield return IsAgreementElement;
+				if (BinElement != null) yield return BinElement;
+				if (Period != null) yield return Period;
+				if (Type != null) yield return Type;
+				if (Planholder != null) yield return Planholder;
+				if (Beneficiary != null) yield return Beneficiary;
+				if (Relationship != null) yield return Relationship;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (GroupElement != null) yield return GroupElement;
+				if (SubGroupElement != null) yield return SubGroupElement;
+				if (PlanElement != null) yield return PlanElement;
+				if (SubPlanElement != null) yield return SubPlanElement;
+				if (ClassElement != null) yield return ClassElement;
+				if (DependentElement != null) yield return DependentElement;
+				if (SequenceElement != null) yield return SequenceElement;
+				if (NetworkElement != null) yield return NetworkElement;
+				foreach (var elem in Contract) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

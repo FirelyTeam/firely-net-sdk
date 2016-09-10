@@ -123,8 +123,8 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
@@ -187,6 +187,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContactComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -792,7 +806,33 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// SearchParameter elements
+				if (UrlElement != null) yield return UrlElement;
+				if (NameElement != null) yield return NameElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (ExperimentalElement != null) yield return ExperimentalElement;
+				if (DateElement != null) yield return DateElement;
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
+				if (Requirements != null) yield return Requirements;
+				if (CodeElement != null) yield return CodeElement;
+				if (BaseElement != null) yield return BaseElement;
+				if (TypeElement != null) yield return TypeElement;
+				if (Description != null) yield return Description;
+				if (ExpressionElement != null) yield return ExpressionElement;
+				if (XpathElement != null) yield return XpathElement;
+				if (XpathUsageElement != null) yield return XpathUsageElement;
+				foreach (var elem in TargetElement) { if (elem != null) yield return elem; }
+				foreach (var elem in Component) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

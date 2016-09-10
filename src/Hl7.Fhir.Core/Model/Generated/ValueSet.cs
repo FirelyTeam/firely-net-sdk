@@ -84,8 +84,8 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
@@ -149,6 +149,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContactComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -185,8 +199,8 @@ namespace Hl7.Fhir.Model
                 get { return ImportElement != null ? ImportElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                if (value == null)
-                      ImportElement = null; 
+                    if (value == null)
+                        ImportElement = null; 
                     else
                         ImportElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem=>new Hl7.Fhir.Model.FhirUri(elem)));
                     OnPropertyChanged("Import");
@@ -267,6 +281,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ComposeComponent elements
+                    foreach (var elem in ImportElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in Include) { if (elem != null) yield return elem; }
+                    foreach (var elem in Exclude) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -303,8 +332,8 @@ namespace Hl7.Fhir.Model
                 get { return SystemElement != null ? SystemElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      SystemElement = null; 
+                    if (value == null)
+                        SystemElement = null; 
                     else
                         SystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("System");
@@ -335,8 +364,8 @@ namespace Hl7.Fhir.Model
                 get { return VersionElement != null ? VersionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      VersionElement = null; 
+                    if (value == null)
+                        VersionElement = null; 
                     else
                         VersionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Version");
@@ -420,6 +449,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ConceptSetComponent elements
+                    if (SystemElement != null) yield return SystemElement;
+                    if (VersionElement != null) yield return VersionElement;
+                    foreach (var elem in Concept) { if (elem != null) yield return elem; }
+                    foreach (var elem in Filter) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -456,8 +501,8 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      CodeElement = null; 
+                    if (value == null)
+                        CodeElement = null; 
                     else
                         CodeElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Code");
@@ -488,8 +533,8 @@ namespace Hl7.Fhir.Model
                 get { return DisplayElement != null ? DisplayElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DisplayElement = null; 
+                    if (value == null)
+                        DisplayElement = null; 
                     else
                         DisplayElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Display");
@@ -556,6 +601,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ConceptReferenceComponent elements
+                    if (CodeElement != null) yield return CodeElement;
+                    if (DisplayElement != null) yield return DisplayElement;
+                    foreach (var elem in Designation) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -591,8 +651,8 @@ namespace Hl7.Fhir.Model
                 get { return LanguageElement != null ? LanguageElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      LanguageElement = null; 
+                    if (value == null)
+                        LanguageElement = null; 
                     else
                         LanguageElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Language");
@@ -637,8 +697,8 @@ namespace Hl7.Fhir.Model
                 get { return ValueElement != null ? ValueElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      ValueElement = null; 
+                    if (value == null)
+                        ValueElement = null; 
                     else
                         ValueElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Value");
@@ -691,6 +751,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DesignationComponent elements
+                    if (LanguageElement != null) yield return LanguageElement;
+                    if (Use != null) yield return Use;
+                    if (ValueElement != null) yield return ValueElement;
+                }
+            }
             
         }
         
@@ -727,8 +802,8 @@ namespace Hl7.Fhir.Model
                 get { return PropertyElement != null ? PropertyElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      PropertyElement = null; 
+                    if (value == null)
+                        PropertyElement = null; 
                     else
                         PropertyElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Property");
@@ -760,8 +835,8 @@ namespace Hl7.Fhir.Model
                 get { return OpElement != null ? OpElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      OpElement = null; 
+                    if (!value.HasValue)
+                        OpElement = null; 
                     else
                         OpElement = new Code<Hl7.Fhir.Model.FilterOperator>(value);
                     OnPropertyChanged("Op");
@@ -793,8 +868,8 @@ namespace Hl7.Fhir.Model
                 get { return ValueElement != null ? ValueElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      ValueElement = null; 
+                    if (value == null)
+                        ValueElement = null; 
                     else
                         ValueElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Value");
@@ -847,6 +922,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // FilterComponent elements
+                    if (PropertyElement != null) yield return PropertyElement;
+                    if (OpElement != null) yield return OpElement;
+                    if (ValueElement != null) yield return ValueElement;
+                }
+            }
             
         }
         
@@ -883,8 +973,8 @@ namespace Hl7.Fhir.Model
                 get { return IdentifierElement != null ? IdentifierElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      IdentifierElement = null; 
+                    if (value == null)
+                        IdentifierElement = null; 
                     else
                         IdentifierElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Identifier");
@@ -916,8 +1006,8 @@ namespace Hl7.Fhir.Model
                 get { return TimestampElement != null ? TimestampElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      TimestampElement = null; 
+                    if (value == null)
+                        TimestampElement = null; 
                     else
                         TimestampElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Timestamp");
@@ -948,8 +1038,8 @@ namespace Hl7.Fhir.Model
                 get { return TotalElement != null ? TotalElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      TotalElement = null; 
+                    if (!value.HasValue)
+                        TotalElement = null; 
                     else
                         TotalElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("Total");
@@ -980,8 +1070,8 @@ namespace Hl7.Fhir.Model
                 get { return OffsetElement != null ? OffsetElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      OffsetElement = null; 
+                    if (!value.HasValue)
+                        OffsetElement = null; 
                     else
                         OffsetElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("Offset");
@@ -1071,6 +1161,24 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ExpansionComponent elements
+                    if (IdentifierElement != null) yield return IdentifierElement;
+                    if (TimestampElement != null) yield return TimestampElement;
+                    if (TotalElement != null) yield return TotalElement;
+                    if (OffsetElement != null) yield return OffsetElement;
+                    foreach (var elem in Parameter) { if (elem != null) yield return elem; }
+                    foreach (var elem in Contains) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -1107,8 +1215,8 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
@@ -1172,6 +1280,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ParameterComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    if (Value != null) yield return Value;
+                }
+            }
             
         }
         
@@ -1207,8 +1329,8 @@ namespace Hl7.Fhir.Model
                 get { return SystemElement != null ? SystemElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      SystemElement = null; 
+                    if (value == null)
+                        SystemElement = null; 
                     else
                         SystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("System");
@@ -1239,8 +1361,8 @@ namespace Hl7.Fhir.Model
                 get { return AbstractElement != null ? AbstractElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      AbstractElement = null; 
+                    if (!value.HasValue)
+                        AbstractElement = null; 
                     else
                         AbstractElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Abstract");
@@ -1271,8 +1393,8 @@ namespace Hl7.Fhir.Model
                 get { return VersionElement != null ? VersionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      VersionElement = null; 
+                    if (value == null)
+                        VersionElement = null; 
                     else
                         VersionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Version");
@@ -1303,8 +1425,8 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      CodeElement = null; 
+                    if (value == null)
+                        CodeElement = null; 
                     else
                         CodeElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Code");
@@ -1335,8 +1457,8 @@ namespace Hl7.Fhir.Model
                 get { return DisplayElement != null ? DisplayElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DisplayElement = null; 
+                    if (value == null)
+                        DisplayElement = null; 
                     else
                         DisplayElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Display");
@@ -1411,6 +1533,24 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Contains, otherT.Contains)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContainsComponent elements
+                    if (SystemElement != null) yield return SystemElement;
+                    if (AbstractElement != null) yield return AbstractElement;
+                    if (VersionElement != null) yield return VersionElement;
+                    if (CodeElement != null) yield return CodeElement;
+                    if (DisplayElement != null) yield return DisplayElement;
+                    foreach (var elem in Contains) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -2031,7 +2171,33 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// ValueSet elements
+				if (UrlElement != null) yield return UrlElement;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (VersionElement != null) yield return VersionElement;
+				if (NameElement != null) yield return NameElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (ExperimentalElement != null) yield return ExperimentalElement;
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (DateElement != null) yield return DateElement;
+				if (LockedDateElement != null) yield return LockedDateElement;
+				if (Description != null) yield return Description;
+				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
+				if (ImmutableElement != null) yield return ImmutableElement;
+				if (Requirements != null) yield return Requirements;
+				if (CopyrightElement != null) yield return CopyrightElement;
+				if (ExtensibleElement != null) yield return ExtensibleElement;
+				if (Compose != null) yield return Compose;
+				if (Expansion != null) yield return Expansion;
+            }
+        }
     }
     
 }

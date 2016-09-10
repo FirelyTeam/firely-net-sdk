@@ -43,6 +43,10 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha4\lib\net45\Hl7.FluentPath.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -60,8 +64,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Hl7.Fhir.Core\Support\Logging.cs">
-      <Link>Support\Logging.cs</Link>
+    <Compile Include="..\Hl7.Fhir.Core\Support\Error.cs">
+      <Link>Support\Error.cs</Link>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="..\Hl7.Fhir.Core\Support\ReflectionHelper.cs">
@@ -72,32 +76,56 @@
       <Link>Support\StringExtensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
+    <Compile Include="Specification\Source\CachedResolver.cs" />
+    <Compile Include="Specification\Source\IConformanceSource.cs" />
+    <Compile Include="Specification\Source\MultiResolver.cs" />
+    <Compile Include="Specification\Source\OriginInformation.cs" />
+    <Compile Include="Specification\Source\ResourceResolverExtensions.cs" />
+    <Compile Include="Specification\Source\IArtifactSource.cs" />
+    <Compile Include="Specification\Source\WebResolver.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotElementBaseGenerator.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorExtensions.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorOutcome.cs" />
+    <Compile Include="Validation\Cardinality.cs" />
+    <Compile Include="Validation\ChildConstraintExtensions.cs" />
+    <Compile Include="Validation\FixedPatternExtensions.cs" />
+    <Compile Include="Validation\InstanceToProfileMatcher.cs" />
+    <Compile Include="Validation\Issue.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorTypeExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileReference.cs" />
     <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
     <Compile Include="Specification\Snapshot\ElementMatcher.cs" />
     <Compile Include="Specification\Snapshot\ElementDefnMerger.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGenerator.cs" />
-    <Compile Include="Specification\Navigation\BaseElementNavigator.cs" />
-    <Compile Include="Specification\Navigation\ElementNavigator.cs" />
+    <Compile Include="Specification\Navigation\Bookmark.cs" />
+    <Compile Include="Specification\Navigation\ElementDefinitionNavigator.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorModificationExtensions.cs" />
     <Compile Include="Specification\Navigation\ElementNavigatorMovementExtensions.cs" />
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorEvents.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
     <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
-    <Compile Include="Specification\Source\MultiArtifactSource.cs" />
-    <Compile Include="Specification\Source\ArtifactResolver.cs" />
-    <Compile Include="Specification\Source\CachedArtifactSource.cs" />
-    <Compile Include="Specification\Source\ZipArtifactSource.cs" />
-    <Compile Include="Specification\Source\FileDirectoryArtifactSource.cs" />
-    <Compile Include="Specification\Source\IArtifactSource.cs" />
+    <Compile Include="Specification\Source\SourceFactory.cs" />
+    <Compile Include="Specification\Source\ZipSource.cs" />
+    <Compile Include="Specification\Source\DirectorySource.cs" />
+    <Compile Include="Specification\Source\IResourceResolver.cs" />
     <Compile Include="Specification\Source\SchemaCollection.cs" />
-    <Compile Include="Specification\Source\WebArtifactSource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Specification\Source\ConformanceArtifactScanner.cs" />
+    <Compile Include="Specification\Source\ResourceStreamScanner.cs" />
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\OperationOutcomeValidationExtensions.cs" />
+    <Compile Include="Validation\PocoValidationExtensions.cs" />
+    <Compile Include="Validation\ValidationContext.cs" />
+    <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
+    <Compile Include="Validation\TypeRefExtensions.cs" />
+    <Compile Include="Validation\Validator.cs" />
+    <Compile Include="XPath\CustomXsltFunction.cs" />
+    <Compile Include="XPath\FhirNamespaceManager.cs" />
+    <Compile Include="XPath\JsonReaderExtensions.cs" />
+    <Compile Include="XPath\JsonXPathNavigator.cs" />
+    <Compile Include="XPath\JTokenExtensions.cs" />
+    <Compile Include="XPath\NavigatorState.cs" />
+    <Compile Include="XPath\XPath2Context.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.Net45.csproj">
@@ -106,9 +134,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="validation.xml.zip">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

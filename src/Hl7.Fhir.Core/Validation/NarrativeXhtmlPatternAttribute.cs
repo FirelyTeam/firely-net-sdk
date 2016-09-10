@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Validation
             if (value.GetType() != typeof(string))
                 throw new ArgumentException("CodePatternAttribute can only be applied to string properties");
 
-            if(XHtml.IsValidValue(value as string))
+            if(XHtmlUtilities.IsValidValue(value as string))
                 return ValidationResult.Success;
             else 
                 return DotNetAttributeValidation.BuildResult(validationContext, "Xml can not be parsed or is not valid according to the (limited) FHIR scheme");

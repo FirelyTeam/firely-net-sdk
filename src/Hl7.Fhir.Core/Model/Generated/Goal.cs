@@ -195,6 +195,19 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // OutcomeComponent elements
+                    if (Result != null) yield return Result;
+                }
+            }
             
         }
         
@@ -518,7 +531,29 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Goal elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				if (Start != null) yield return Start;
+				if (Target != null) yield return Target;
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
+				if (Description != null) yield return Description;
+				if (StatusElement != null) yield return StatusElement;
+				if (StatusDateElement != null) yield return StatusDateElement;
+				foreach (var elem in StatusReason) { if (elem != null) yield return elem; }
+				if (ExpressedBy != null) yield return ExpressedBy;
+				if (Priority != null) yield return Priority;
+				foreach (var elem in Addresses) { if (elem != null) yield return elem; }
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				foreach (var elem in Outcome) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

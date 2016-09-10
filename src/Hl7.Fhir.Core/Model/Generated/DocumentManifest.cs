@@ -115,6 +115,19 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContentComponent elements
+                    if (P != null) yield return P;
+                }
+            }
             
         }
         
@@ -195,6 +208,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Ref, otherT.Ref)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // RelatedComponent elements
+                    if (Identifier != null) yield return Identifier;
+                    if (Ref != null) yield return Ref;
+                }
             }
             
         }
@@ -521,7 +548,27 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// DocumentManifest elements
+				if (MasterIdentifier != null) yield return MasterIdentifier;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				foreach (var elem in Recipient) { if (elem != null) yield return elem; }
+				if (Type != null) yield return Type;
+				foreach (var elem in Author) { if (elem != null) yield return elem; }
+				if (CreatedElement != null) yield return CreatedElement;
+				if (SourceElement != null) yield return SourceElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in Content) { if (elem != null) yield return elem; }
+				foreach (var elem in Related) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

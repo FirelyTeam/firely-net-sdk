@@ -118,8 +118,8 @@ namespace Hl7.Fhir.Model
                 get { return CodeElement != null ? CodeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      CodeElement = null; 
+                    if (!value.HasValue)
+                        CodeElement = null; 
                     else
                         CodeElement = new Code<Hl7.Fhir.Model.DocumentReference.DocumentRelationshipType>(value);
                     OnPropertyChanged("Code");
@@ -183,6 +183,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // RelatesToComponent elements
+                    if (CodeElement != null) yield return CodeElement;
+                    if (Target != null) yield return Target;
+                }
             }
             
         }
@@ -265,6 +279,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Format, otherT.Format)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContentComponent elements
+                    if (Attachment != null) yield return Attachment;
+                    foreach (var elem in Format) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -430,6 +458,25 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContextComponent elements
+                    if (Encounter != null) yield return Encounter;
+                    foreach (var elem in Event) { if (elem != null) yield return elem; }
+                    if (Period != null) yield return Period;
+                    if (FacilityType != null) yield return FacilityType;
+                    if (PracticeSetting != null) yield return PracticeSetting;
+                    if (SourcePatientInfo != null) yield return SourcePatientInfo;
+                    foreach (var elem in Related) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -510,6 +557,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Ref, otherT.Ref)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // RelatedComponent elements
+                    if (Identifier != null) yield return Identifier;
+                    if (Ref != null) yield return Ref;
+                }
             }
             
         }
@@ -919,7 +980,32 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// DocumentReference elements
+				if (MasterIdentifier != null) yield return MasterIdentifier;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				if (Type != null) yield return Type;
+				if (Class != null) yield return Class;
+				foreach (var elem in Author) { if (elem != null) yield return elem; }
+				if (Custodian != null) yield return Custodian;
+				if (Authenticator != null) yield return Authenticator;
+				if (CreatedElement != null) yield return CreatedElement;
+				if (IndexedElement != null) yield return IndexedElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (DocStatus != null) yield return DocStatus;
+				foreach (var elem in RelatesTo) { if (elem != null) yield return elem; }
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in SecurityLabel) { if (elem != null) yield return elem; }
+				foreach (var elem in Content) { if (elem != null) yield return elem; }
+				if (Context != null) yield return Context;
+            }
+        }
     }
     
 }

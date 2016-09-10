@@ -165,8 +165,8 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
@@ -230,6 +230,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContactComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -266,8 +280,8 @@ namespace Hl7.Fhir.Model
                 get { return IdentityElement != null ? IdentityElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      IdentityElement = null; 
+                    if (value == null)
+                        IdentityElement = null; 
                     else
                         IdentityElement = new Hl7.Fhir.Model.Id(value);
                     OnPropertyChanged("Identity");
@@ -298,8 +312,8 @@ namespace Hl7.Fhir.Model
                 get { return UriElement != null ? UriElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      UriElement = null; 
+                    if (value == null)
+                        UriElement = null; 
                     else
                         UriElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Uri");
@@ -330,8 +344,8 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
@@ -362,8 +376,8 @@ namespace Hl7.Fhir.Model
                 get { return CommentsElement != null ? CommentsElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      CommentsElement = null; 
+                    if (value == null)
+                        CommentsElement = null; 
                     else
                         CommentsElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Comments");
@@ -418,6 +432,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(CommentsElement, otherT.CommentsElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // MappingComponent elements
+                    if (IdentityElement != null) yield return IdentityElement;
+                    if (UriElement != null) yield return UriElement;
+                    if (NameElement != null) yield return NameElement;
+                    if (CommentsElement != null) yield return CommentsElement;
+                }
             }
             
         }
@@ -484,6 +514,19 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // SnapshotComponent elements
+                    foreach (var elem in Element) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -548,6 +591,19 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Element, otherT.Element)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DifferentialComponent elements
+                    foreach (var elem in Element) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -1283,7 +1339,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "derivation = 'constraint' or snapshot.element.select(path).distinct()",
+            Expression = "derivation = 'constraint' or snapshot.element.select(path).isDistinct()",
             Key = "sdf-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "Element paths must be unique unless the structure is a constraint",
@@ -1292,7 +1348,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent StructureDefinition_SDF_7 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "(derivation = 'constraint') or (url = 'http://hl7.org/fhir/StructureDefinition/'+id)",
+            Expression = "(derivation = 'constraint') or (kind = 'logical') or (url = 'http://hl7.org/fhir/StructureDefinition/'+id)",
             Key = "sdf-7",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "If the structure describes a base Resource or Type, the URL has to start with \"http://hl7.org/fhir/StructureDefinition/\" and the tail must match the id",
@@ -1518,7 +1574,41 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// StructureDefinition elements
+				if (UrlElement != null) yield return UrlElement;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (VersionElement != null) yield return VersionElement;
+				if (NameElement != null) yield return NameElement;
+				if (DisplayElement != null) yield return DisplayElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (ExperimentalElement != null) yield return ExperimentalElement;
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (DateElement != null) yield return DateElement;
+				if (Description != null) yield return Description;
+				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
+				if (Requirements != null) yield return Requirements;
+				if (CopyrightElement != null) yield return CopyrightElement;
+				foreach (var elem in Code) { if (elem != null) yield return elem; }
+				if (FhirVersionElement != null) yield return FhirVersionElement;
+				foreach (var elem in Mapping) { if (elem != null) yield return elem; }
+				if (KindElement != null) yield return KindElement;
+				if (AbstractElement != null) yield return AbstractElement;
+				if (ContextTypeElement != null) yield return ContextTypeElement;
+				foreach (var elem in ContextElement) { if (elem != null) yield return elem; }
+				if (TypeElement != null) yield return TypeElement;
+				if (BaseDefinitionElement != null) yield return BaseDefinitionElement;
+				if (DerivationElement != null) yield return DerivationElement;
+				if (Snapshot != null) yield return Snapshot;
+				if (Differential != null) yield return Differential;
+            }
+        }
     }
     
 }

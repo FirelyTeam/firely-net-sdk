@@ -539,7 +539,31 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Device elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (UdiCarrier != null) yield return UdiCarrier;
+				if (StatusElement != null) yield return StatusElement;
+				if (Type != null) yield return Type;
+				if (LotNumberElement != null) yield return LotNumberElement;
+				if (ManufacturerElement != null) yield return ManufacturerElement;
+				if (ManufactureDateElement != null) yield return ManufactureDateElement;
+				if (ExpirationDateElement != null) yield return ExpirationDateElement;
+				if (ModelElement != null) yield return ModelElement;
+				if (VersionElement != null) yield return VersionElement;
+				if (Patient != null) yield return Patient;
+				if (Owner != null) yield return Owner;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (Location != null) yield return Location;
+				if (UrlElement != null) yield return UrlElement;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

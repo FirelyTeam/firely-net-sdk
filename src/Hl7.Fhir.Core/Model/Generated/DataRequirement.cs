@@ -218,6 +218,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // CodeFilterComponent elements
+                    if (PathElement != null) yield return PathElement;
+                    if (ValueSet != null) yield return ValueSet;
+                    foreach (var elem in ValueCodeElement) { if (elem != null) yield return elem; }
+                    foreach (var elem in ValueCoding) { if (elem != null) yield return elem; }
+                    foreach (var elem in ValueCodeableConcept) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -318,6 +334,19 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 
                 return true;
+            }
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // Element elements
+                    foreach (var elem in Extension) { if (elem != null) yield return elem; }
+                    // DateFilterComponent elements
+                    if (PathElement != null) yield return PathElement;
+                    if (Value != null) yield return Value;
+                }
             }
             
         }
@@ -484,6 +513,20 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DateFilter, otherT.DateFilter)) return false;
             
             return true;
+        }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // DataRequirement elements
+                if (TypeElement != null) yield return TypeElement;
+                foreach (var elem in Profile) { if (elem != null) yield return elem; }
+                foreach (var elem in MustSupportElement) { if (elem != null) yield return elem; }
+                foreach (var elem in CodeFilter) { if (elem != null) yield return elem; }
+                foreach (var elem in DateFilter) { if (elem != null) yield return elem; }
+            }
         }
     
     

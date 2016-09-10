@@ -162,6 +162,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // WhenComponent elements
+                    if (Code != null) yield return Code;
+                    if (Schedule != null) yield return Schedule;
+                }
+            }
             
         }
         
@@ -414,7 +428,25 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// SupplyRequest elements
+				if (Patient != null) yield return Patient;
+				if (Source != null) yield return Source;
+				if (DateElement != null) yield return DateElement;
+				if (Identifier != null) yield return Identifier;
+				if (StatusElement != null) yield return StatusElement;
+				if (Kind != null) yield return Kind;
+				if (OrderedItem != null) yield return OrderedItem;
+				foreach (var elem in Supplier) { if (elem != null) yield return elem; }
+				if (Reason != null) yield return Reason;
+				if (When != null) yield return When;
+            }
+        }
     }
     
 }

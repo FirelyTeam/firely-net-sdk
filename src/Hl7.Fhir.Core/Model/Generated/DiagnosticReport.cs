@@ -135,8 +135,8 @@ namespace Hl7.Fhir.Model
                 get { return CommentElement != null ? CommentElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      CommentElement = null; 
+                    if (value == null)
+                        CommentElement = null; 
                     else
                         CommentElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Comment");
@@ -200,6 +200,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Link, otherT.Link)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ImageComponent elements
+                    if (CommentElement != null) yield return CommentElement;
+                    if (Link != null) yield return Link;
+                }
             }
             
         }
@@ -600,7 +614,32 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// DiagnosticReport elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Category != null) yield return Category;
+				if (Code != null) yield return Code;
+				if (Subject != null) yield return Subject;
+				if (Encounter != null) yield return Encounter;
+				if (Effective != null) yield return Effective;
+				if (IssuedElement != null) yield return IssuedElement;
+				foreach (var elem in Performer) { if (elem != null) yield return elem; }
+				foreach (var elem in Request) { if (elem != null) yield return elem; }
+				foreach (var elem in Specimen) { if (elem != null) yield return elem; }
+				foreach (var elem in Result) { if (elem != null) yield return elem; }
+				foreach (var elem in ImagingStudy) { if (elem != null) yield return elem; }
+				foreach (var elem in Image) { if (elem != null) yield return elem; }
+				if (ConclusionElement != null) yield return ConclusionElement;
+				foreach (var elem in CodedDiagnosis) { if (elem != null) yield return elem; }
+				foreach (var elem in PresentedForm) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

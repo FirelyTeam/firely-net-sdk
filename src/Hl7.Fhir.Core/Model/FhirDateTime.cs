@@ -28,6 +28,7 @@
 
 */
 
+using Hl7.FluentPath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -107,69 +108,94 @@ namespace Hl7.Fhir.Model
 
         public static bool operator >(FhirDateTime a, FhirDateTime b)
         {
-            if (object.ReferenceEquals(a, null))
-                throw new ArgumentNullException("a");
-            if (object.ReferenceEquals(b, null))
-                throw new ArgumentNullException("b");
-            return String.Compare(a.Value, b.Value) > 0;
+            var aValue = !Object.ReferenceEquals(a, null) ? a.Value : null;
+            var bValue = !Object.ReferenceEquals(b, null) ? b.Value : null;
+
+            if (aValue == null) return bValue == null;
+            if (bValue == null) return false;
+
+            return PartialDateTime.Parse(a.Value) > PartialDateTime.Parse(b.Value);
         }
 
         public static bool operator >=(FhirDateTime a, FhirDateTime b)
         {
-            if (object.ReferenceEquals(a, null))
-                throw new ArgumentNullException("a");
-            if (object.ReferenceEquals(b, null))
-                throw new ArgumentNullException("b");
-            return String.Compare(a.Value, b.Value) >= 0;
+            var aValue = !Object.ReferenceEquals(a, null) ? a.Value : null;
+            var bValue = !Object.ReferenceEquals(b, null) ? b.Value : null;
+
+            if (aValue == null) return bValue == null;
+            if (bValue == null) return false;
+
+            return PartialDateTime.Parse(a.Value) >= PartialDateTime.Parse(b.Value);
         }
 
         public static bool operator <(FhirDateTime a, FhirDateTime b)
         {
-            if (object.ReferenceEquals(a, null))
-                throw new ArgumentNullException("a");
-            if (object.ReferenceEquals(b, null))
-                throw new ArgumentNullException("b");
-            return String.Compare(a.Value, b.Value) < 0;
+            var aValue = !Object.ReferenceEquals(a, null) ? a.Value : null;
+            var bValue = !Object.ReferenceEquals(b, null) ? b.Value : null;
+
+            if (aValue == null) return bValue == null;
+            if (bValue == null) return false;
+
+            return PartialDateTime.Parse(a.Value) < PartialDateTime.Parse(b.Value);
         }
 
         public static bool operator <=(FhirDateTime a, FhirDateTime b)
         {
-            if (object.ReferenceEquals(a, null))
-                throw new ArgumentNullException("a");
-            if (object.ReferenceEquals(b, null))
-                throw new ArgumentNullException("b");
-            return String.Compare(a.Value, b.Value) <= 0;
+            var aValue = !Object.ReferenceEquals(a, null) ? a.Value : null;
+            var bValue = !Object.ReferenceEquals(b, null) ? b.Value : null;
+
+            if (aValue == null) return bValue == null;
+            if (bValue == null) return false;
+
+            return PartialDateTime.Parse(a.Value) <= PartialDateTime.Parse(b.Value);
         }
 
         /// <summary>
-        /// Equality needs to consider both timezones and precision
+        /// If you use this operator, you should check that a modifierExtension isn't changing the meaning
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
         public static bool operator ==(FhirDateTime a, FhirDateTime b)
         {
-            // If both are null then the are the same
-            if (object.ReferenceEquals(a, null) && object.ReferenceEquals(b, null))
-                return true;
-            if (object.ReferenceEquals(a, null) || object.ReferenceEquals(b, null))
-                return false;
-
-            if (string.IsNullOrEmpty(a.Value) && string.IsNullOrEmpty(b.Value))
-                return true;
-            if (string.IsNullOrEmpty(a.Value) || string.IsNullOrEmpty(b.Value))
-                return false;
-
-            // If the precisions are not the same, then they are not equal (except timezone)
-            if (a.Value.Length != b.Value.Length && a.Value.Length <= 19)
-                return false;
-            // otherwise we need to compare the times
-            return a.ToDateTimeOffset() == b.ToDateTimeOffset();
+            return Object.Equals(a, b);
         }
 
+        /// <summary>
+        /// If you use this operator, you should check that a modifierExtension isn't changing the meaning
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public static bool operator !=(FhirDateTime a, FhirDateTime b)
         {
-            return !(a == b);
+            return !Object.Equals(a, b);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is FhirDateTime)
+            {
+                var other = (FhirDateTime)obj;
+                var otherValue = !Object.ReferenceEquals(other, null) ? other.Value : null;
+
+                if (Value == null) return otherValue == null;
+                if (otherValue == null) return false;
+
+                if (this.Value == otherValue) return true; // Default reference/string comparison works in most cases
+
+                var left = PartialDateTime.Parse(Value);
+                var right = PartialDateTime.Parse(otherValue);
+
+                return left == right;
+            }
+            else
+                return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
         }
     }
 }

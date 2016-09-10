@@ -100,6 +100,16 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // BackboneElement elements
+                foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+            }
+        }
     
     
     }

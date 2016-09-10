@@ -146,6 +146,21 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ParticipantComponent elements
+                    if (Role != null) yield return Role;
+                    if (Member != null) yield return Member;
+                    if (Period != null) yield return Period;
+                }
+            }
             
         }
         
@@ -346,7 +361,23 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// CareTeam elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Status != null) yield return Status;
+				foreach (var elem in Type) { if (elem != null) yield return elem; }
+				if (NameElement != null) yield return NameElement;
+				if (Subject != null) yield return Subject;
+				if (Period != null) yield return Period;
+				foreach (var elem in Participant) { if (elem != null) yield return elem; }
+				if (ManagingOrganization != null) yield return ManagingOrganization;
+            }
+        }
     }
     
 }

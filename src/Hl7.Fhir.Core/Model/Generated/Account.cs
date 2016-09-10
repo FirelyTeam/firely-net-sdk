@@ -375,7 +375,27 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Account elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (NameElement != null) yield return NameElement;
+				if (Type != null) yield return Type;
+				if (StatusElement != null) yield return StatusElement;
+				if (Active != null) yield return Active;
+				if (Currency != null) yield return Currency;
+				if (Balance != null) yield return Balance;
+				foreach (var elem in Coverage) { if (elem != null) yield return elem; }
+				if (CoveragePeriod != null) yield return CoveragePeriod;
+				if (Subject != null) yield return Subject;
+				if (Owner != null) yield return Owner;
+				if (DescriptionElement != null) yield return DescriptionElement;
+            }
+        }
     }
     
 }

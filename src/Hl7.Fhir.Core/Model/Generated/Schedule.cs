@@ -268,7 +268,23 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Schedule elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (ActiveElement != null) yield return ActiveElement;
+				if (ServiceCategory != null) yield return ServiceCategory;
+				foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
+				foreach (var elem in Specialty) { if (elem != null) yield return elem; }
+				if (Actor != null) yield return Actor;
+				if (PlanningHorizon != null) yield return PlanningHorizon;
+				if (CommentElement != null) yield return CommentElement;
+            }
+        }
     }
     
 }

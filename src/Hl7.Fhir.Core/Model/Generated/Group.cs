@@ -159,8 +159,8 @@ namespace Hl7.Fhir.Model
                 get { return ExcludeElement != null ? ExcludeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      ExcludeElement = null; 
+                    if (!value.HasValue)
+                        ExcludeElement = null; 
                     else
                         ExcludeElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Exclude");
@@ -229,6 +229,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // CharacteristicComponent elements
+                    if (Code != null) yield return Code;
+                    if (Value != null) yield return Value;
+                    if (ExcludeElement != null) yield return ExcludeElement;
+                    if (Period != null) yield return Period;
+                }
+            }
             
         }
         
@@ -292,8 +308,8 @@ namespace Hl7.Fhir.Model
                 get { return InactiveElement != null ? InactiveElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      InactiveElement = null; 
+                    if (!value.HasValue)
+                        InactiveElement = null; 
                     else
                         InactiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("Inactive");
@@ -345,6 +361,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(InactiveElement, otherT.InactiveElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // MemberComponent elements
+                    if (Entity != null) yield return Entity;
+                    if (Period != null) yield return Period;
+                    if (InactiveElement != null) yield return InactiveElement;
+                }
             }
             
         }
@@ -648,7 +679,24 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Group elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (TypeElement != null) yield return TypeElement;
+				if (ActualElement != null) yield return ActualElement;
+				if (ActiveElement != null) yield return ActiveElement;
+				if (Code != null) yield return Code;
+				if (NameElement != null) yield return NameElement;
+				if (QuantityElement != null) yield return QuantityElement;
+				foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
+				foreach (var elem in Member) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

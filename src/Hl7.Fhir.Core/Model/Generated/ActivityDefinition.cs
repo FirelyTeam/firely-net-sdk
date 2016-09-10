@@ -171,8 +171,8 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
@@ -203,8 +203,8 @@ namespace Hl7.Fhir.Model
                 get { return PathElement != null ? PathElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      PathElement = null; 
+                    if (value == null)
+                        PathElement = null; 
                     else
                         PathElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Path");
@@ -235,8 +235,8 @@ namespace Hl7.Fhir.Model
                 get { return LanguageElement != null ? LanguageElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      LanguageElement = null; 
+                    if (value == null)
+                        LanguageElement = null; 
                     else
                         LanguageElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Language");
@@ -267,8 +267,8 @@ namespace Hl7.Fhir.Model
                 get { return ExpressionElement != null ? ExpressionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      ExpressionElement = null; 
+                    if (value == null)
+                        ExpressionElement = null; 
                     else
                         ExpressionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Expression");
@@ -323,6 +323,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DynamicValueComponent elements
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (PathElement != null) yield return PathElement;
+                    if (LanguageElement != null) yield return LanguageElement;
+                    if (ExpressionElement != null) yield return ExpressionElement;
+                }
             }
             
         }
@@ -1152,7 +1168,45 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// ActivityDefinition elements
+				if (UrlElement != null) yield return UrlElement;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (VersionElement != null) yield return VersionElement;
+				if (NameElement != null) yield return NameElement;
+				if (TitleElement != null) yield return TitleElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (ExperimentalElement != null) yield return ExperimentalElement;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (PurposeElement != null) yield return PurposeElement;
+				if (UsageElement != null) yield return UsageElement;
+				if (PublicationDateElement != null) yield return PublicationDateElement;
+				if (LastReviewDateElement != null) yield return LastReviewDateElement;
+				if (EffectivePeriod != null) yield return EffectivePeriod;
+				foreach (var elem in Coverage) { if (elem != null) yield return elem; }
+				foreach (var elem in Topic) { if (elem != null) yield return elem; }
+				foreach (var elem in Contributor) { if (elem != null) yield return elem; }
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (CopyrightElement != null) yield return CopyrightElement;
+				foreach (var elem in RelatedResource) { if (elem != null) yield return elem; }
+				foreach (var elem in Library) { if (elem != null) yield return elem; }
+				if (CategoryElement != null) yield return CategoryElement;
+				if (Code != null) yield return Code;
+				if (Timing != null) yield return Timing;
+				if (Location != null) yield return Location;
+				foreach (var elem in ParticipantTypeElement) { if (elem != null) yield return elem; }
+				if (Product != null) yield return Product;
+				if (Quantity != null) yield return Quantity;
+				if (Transform != null) yield return Transform;
+				foreach (var elem in DynamicValue) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

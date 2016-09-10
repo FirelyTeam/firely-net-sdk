@@ -200,7 +200,20 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Basic elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Code != null) yield return Code;
+				if (Subject != null) yield return Subject;
+				if (CreatedElement != null) yield return CreatedElement;
+				if (Author != null) yield return Author;
+            }
+        }
     }
     
 }

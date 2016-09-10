@@ -217,7 +217,21 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// BodySite elements
+				if (Patient != null) yield return Patient;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Code != null) yield return Code;
+				foreach (var elem in Modifier) { if (elem != null) yield return elem; }
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in Image) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

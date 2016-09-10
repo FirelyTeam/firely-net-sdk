@@ -468,7 +468,28 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Endpoint elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (NameElement != null) yield return NameElement;
+				if (ManagingOrganization != null) yield return ManagingOrganization;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (ConnectionType != null) yield return ConnectionType;
+				foreach (var elem in Method) { if (elem != null) yield return elem; }
+				if (Period != null) yield return Period;
+				if (AddressElement != null) yield return AddressElement;
+				if (PayloadFormatElement != null) yield return PayloadFormatElement;
+				foreach (var elem in PayloadType) { if (elem != null) yield return elem; }
+				foreach (var elem in HeaderElement) { if (elem != null) yield return elem; }
+				if (PublicKeyElement != null) yield return PublicKeyElement;
+            }
+        }
     }
     
 }

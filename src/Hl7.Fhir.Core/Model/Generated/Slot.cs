@@ -415,7 +415,26 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Slot elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (ServiceCategory != null) yield return ServiceCategory;
+				foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
+				foreach (var elem in Specialty) { if (elem != null) yield return elem; }
+				if (AppointmentType != null) yield return AppointmentType;
+				if (Schedule != null) yield return Schedule;
+				if (StatusElement != null) yield return StatusElement;
+				if (StartElement != null) yield return StartElement;
+				if (EndElement != null) yield return EndElement;
+				if (OverbookedElement != null) yield return OverbookedElement;
+				if (CommentElement != null) yield return CommentElement;
+            }
+        }
     }
     
 }

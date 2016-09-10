@@ -159,6 +159,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // InvestigationsComponent elements
+                    if (Code != null) yield return Code;
+                    foreach (var elem in Item) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -209,8 +223,8 @@ namespace Hl7.Fhir.Model
                 get { return CauseElement != null ? CauseElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      CauseElement = null; 
+                    if (value == null)
+                        CauseElement = null; 
                     else
                         CauseElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Cause");
@@ -259,6 +273,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(CauseElement, otherT.CauseElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // FindingComponent elements
+                    if (Item != null) yield return Item;
+                    if (CauseElement != null) yield return CauseElement;
+                }
             }
             
         }
@@ -744,7 +772,35 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// ClinicalImpression elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Code != null) yield return Code;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				if (Subject != null) yield return Subject;
+				if (Assessor != null) yield return Assessor;
+				if (DateElement != null) yield return DateElement;
+				if (Effective != null) yield return Effective;
+				if (Context != null) yield return Context;
+				if (Previous != null) yield return Previous;
+				foreach (var elem in Problem) { if (elem != null) yield return elem; }
+				foreach (var elem in Investigations) { if (elem != null) yield return elem; }
+				foreach (var elem in ProtocolElement) { if (elem != null) yield return elem; }
+				if (SummaryElement != null) yield return SummaryElement;
+				foreach (var elem in Finding) { if (elem != null) yield return elem; }
+				foreach (var elem in PrognosisCodeableConcept) { if (elem != null) yield return elem; }
+				foreach (var elem in PrognosisReference) { if (elem != null) yield return elem; }
+				foreach (var elem in Plan) { if (elem != null) yield return elem; }
+				foreach (var elem in Action) { if (elem != null) yield return elem; }
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

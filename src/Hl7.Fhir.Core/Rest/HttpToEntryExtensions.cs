@@ -209,22 +209,23 @@ namespace Hl7.Fhir.Rest
                 return null;
         }
 
+
+        private class Body
+        {
+            public byte[] Data;
+        }
+
+
         public static byte[] GetBody(this Bundle.ResponseComponent interaction)
         {
-            // [WMR 20160421] Optimization
-            //if (interaction.UserData.ContainsKey(USERDATA_BODY))
-            //    return (byte[])interaction.UserData[USERDATA_BODY];
-            //else
-            //    return null;
-            object result;
-            interaction.UserData.TryGetValue(USERDATA_BODY, out result);
-            return (byte[])result;
-
+            var body = interaction.Annotation<Body>();
+            return body != null ? body.Data : null;
         }
 
         internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)
         {
-            interaction.UserData[USERDATA_BODY] = data;
+            interaction.RemoveAnnotations<Body>();
+            interaction.AddAnnotation(new Body { Data = data });
         }
 
         internal static void SetHeaders(this Bundle.ResponseComponent interaction, WebHeaderCollection headers)

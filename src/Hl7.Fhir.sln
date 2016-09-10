@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Core.Net45", "Hl7.Fhir.Core\Hl7.Fhir.Core.Net45.csproj", "{92CC9186-0A21-4E06-B11F-907584FBFD81}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Specification.Net40", "Hl7.Fhir.Specification\Hl7.Fhir.Specification.Net40.csproj", "{C19A8686-2DCA-4C00-A2E5-3CEC9D27EA8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Specification.Net45.Tests", "Hl7.Fhir.Specification.Tests\Hl7.Fhir.Specification.Net45.Tests.csproj", "{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4D651AFD-CDC8-4836-8EDE-B30B51EB6FC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

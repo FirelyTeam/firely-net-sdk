@@ -185,8 +185,8 @@ namespace Hl7.Fhir.Model
                 get { return ProductionSpecElement != null ? ProductionSpecElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      ProductionSpecElement = null; 
+                    if (value == null)
+                        ProductionSpecElement = null; 
                     else
                         ProductionSpecElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("ProductionSpec");
@@ -238,6 +238,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ProductionSpecElement, otherT.ProductionSpecElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ProductionSpecificationComponent elements
+                    if (SpecType != null) yield return SpecType;
+                    if (ComponentId != null) yield return ComponentId;
+                    if (ProductionSpecElement != null) yield return ProductionSpecElement;
+                }
             }
             
         }
@@ -492,7 +507,25 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// DeviceComponent elements
+				if (Type != null) yield return Type;
+				if (Identifier != null) yield return Identifier;
+				if (LastSystemChangeElement != null) yield return LastSystemChangeElement;
+				if (Source != null) yield return Source;
+				if (Parent != null) yield return Parent;
+				foreach (var elem in OperationalStatus) { if (elem != null) yield return elem; }
+				if (ParameterGroup != null) yield return ParameterGroup;
+				if (MeasurementPrincipleElement != null) yield return MeasurementPrincipleElement;
+				foreach (var elem in ProductionSpecification) { if (elem != null) yield return elem; }
+				if (LanguageCode != null) yield return LanguageCode;
+            }
+        }
     }
     
 }

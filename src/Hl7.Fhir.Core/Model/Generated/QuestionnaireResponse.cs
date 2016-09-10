@@ -111,8 +111,8 @@ namespace Hl7.Fhir.Model
                 get { return LinkIdElement != null ? LinkIdElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      LinkIdElement = null; 
+                    if (value == null)
+                        LinkIdElement = null; 
                     else
                         LinkIdElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("LinkId");
@@ -143,8 +143,8 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
                         TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
@@ -245,6 +245,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ItemComponent elements
+                    if (LinkIdElement != null) yield return LinkIdElement;
+                    if (TextElement != null) yield return TextElement;
+                    if (Subject != null) yield return Subject;
+                    foreach (var elem in Answer) { if (elem != null) yield return elem; }
+                    foreach (var elem in Item) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -326,6 +343,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Item, otherT.Item)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // AnswerComponent elements
+                    if (Value != null) yield return Value;
+                    foreach (var elem in Item) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -600,7 +631,26 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// QuestionnaireResponse elements
+				if (Identifier != null) yield return Identifier;
+				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
+				foreach (var elem in Parent) { if (elem != null) yield return elem; }
+				if (Questionnaire != null) yield return Questionnaire;
+				if (StatusElement != null) yield return StatusElement;
+				if (Subject != null) yield return Subject;
+				if (Context != null) yield return Context;
+				if (Author != null) yield return Author;
+				if (AuthoredElement != null) yield return AuthoredElement;
+				if (Source != null) yield return Source;
+				foreach (var elem in Item) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

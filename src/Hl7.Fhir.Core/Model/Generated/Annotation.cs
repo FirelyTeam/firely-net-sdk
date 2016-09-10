@@ -177,6 +177,18 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Annotation elements
+                if (Author != null) yield return Author;
+                if (TimeElement != null) yield return TimeElement;
+                if (TextElement != null) yield return TextElement;
+            }
+        }
     
     
     }

@@ -85,8 +85,8 @@ namespace Hl7.Fhir.Model
                 get { return DaysOfWeekElement != null ? DaysOfWeekElement.Select(elem => elem.Value) : null; }
                 set
                 {
-                if (value == null)
-                      DaysOfWeekElement = null; 
+                    if (value == null)
+                        DaysOfWeekElement = null; 
                     else
                         DaysOfWeekElement = new List<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>(value.Select(elem=>new Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>(elem)));
                     OnPropertyChanged("DaysOfWeek");
@@ -117,8 +117,8 @@ namespace Hl7.Fhir.Model
                 get { return AllDayElement != null ? AllDayElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      AllDayElement = null; 
+                    if (!value.HasValue)
+                        AllDayElement = null; 
                     else
                         AllDayElement = new Hl7.Fhir.Model.FhirBoolean(value);
                     OnPropertyChanged("AllDay");
@@ -149,8 +149,8 @@ namespace Hl7.Fhir.Model
                 get { return AvailableStartTimeElement != null ? AvailableStartTimeElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      AvailableStartTimeElement = null; 
+                    if (value == null)
+                        AvailableStartTimeElement = null; 
                     else
                         AvailableStartTimeElement = new Hl7.Fhir.Model.Time(value);
                     OnPropertyChanged("AvailableStartTime");
@@ -181,8 +181,8 @@ namespace Hl7.Fhir.Model
                 get { return AvailableEndTimeElement != null ? AvailableEndTimeElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      AvailableEndTimeElement = null; 
+                    if (value == null)
+                        AvailableEndTimeElement = null; 
                     else
                         AvailableEndTimeElement = new Hl7.Fhir.Model.Time(value);
                     OnPropertyChanged("AvailableEndTime");
@@ -238,6 +238,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // AvailableTimeComponent elements
+                    foreach (var elem in DaysOfWeekElement) { if (elem != null) yield return elem; }
+                    if (AllDayElement != null) yield return AllDayElement;
+                    if (AvailableStartTimeElement != null) yield return AvailableStartTimeElement;
+                    if (AvailableEndTimeElement != null) yield return AvailableEndTimeElement;
+                }
+            }
             
         }
         
@@ -274,8 +290,8 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
@@ -337,6 +353,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(During, otherT.During)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // NotAvailableComponent elements
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (During != null) yield return During;
+                }
             }
             
         }
@@ -956,7 +986,39 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// HealthcareService elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (ActiveElement != null) yield return ActiveElement;
+				if (ProvidedBy != null) yield return ProvidedBy;
+				if (ServiceCategory != null) yield return ServiceCategory;
+				foreach (var elem in ServiceType) { if (elem != null) yield return elem; }
+				foreach (var elem in Specialty) { if (elem != null) yield return elem; }
+				foreach (var elem in Location) { if (elem != null) yield return elem; }
+				if (ServiceNameElement != null) yield return ServiceNameElement;
+				if (CommentElement != null) yield return CommentElement;
+				if (ExtraDetailsElement != null) yield return ExtraDetailsElement;
+				if (Photo != null) yield return Photo;
+				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+				foreach (var elem in CoverageArea) { if (elem != null) yield return elem; }
+				foreach (var elem in ServiceProvisionCode) { if (elem != null) yield return elem; }
+				if (Eligibility != null) yield return Eligibility;
+				if (EligibilityNoteElement != null) yield return EligibilityNoteElement;
+				foreach (var elem in ProgramNameElement) { if (elem != null) yield return elem; }
+				foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
+				foreach (var elem in ReferralMethod) { if (elem != null) yield return elem; }
+				if (PublicKeyElement != null) yield return PublicKeyElement;
+				if (AppointmentRequiredElement != null) yield return AppointmentRequiredElement;
+				foreach (var elem in AvailableTime) { if (elem != null) yield return elem; }
+				foreach (var elem in NotAvailable) { if (elem != null) yield return elem; }
+				if (AvailabilityExceptionsElement != null) yield return AvailabilityExceptionsElement;
+            }
+        }
     }
     
 }

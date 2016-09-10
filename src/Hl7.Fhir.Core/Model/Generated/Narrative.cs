@@ -169,7 +169,20 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Element elements
+                foreach (var p in Extension) { if (p != null) yield return p; }
+                // Narrative elements
+                if (StatusElement != null) yield return StatusElement;
+                // Div property does not implement Base...
+            }
+        }
+
     }
     
 }

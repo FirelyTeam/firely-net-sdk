@@ -285,7 +285,24 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// DeviceUseStatement elements
+				if (BodySite != null) yield return BodySite;
+				if (WhenUsed != null) yield return WhenUsed;
+				if (Device != null) yield return Device;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				foreach (var elem in Indication) { if (elem != null) yield return elem; }
+				foreach (var elem in NotesElement) { if (elem != null) yield return elem; }
+				if (RecordedOnElement != null) yield return RecordedOnElement;
+				if (Subject != null) yield return Subject;
+				if (Timing != null) yield return Timing;
+            }
+        }
     }
     
 }

@@ -196,6 +196,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ConditionComponent elements
+                    if (Code != null) yield return Code;
+                    if (Outcome != null) yield return Outcome;
+                    if (Onset != null) yield return Onset;
+                    if (Note != null) yield return Note;
+                }
+            }
             
         }
         
@@ -576,7 +592,28 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// FamilyMemberHistory elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Patient != null) yield return Patient;
+				if (DateElement != null) yield return DateElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (NameElement != null) yield return NameElement;
+				if (Relationship != null) yield return Relationship;
+				if (GenderElement != null) yield return GenderElement;
+				if (Born != null) yield return Born;
+				if (Age != null) yield return Age;
+				if (EstimatedAgeElement != null) yield return EstimatedAgeElement;
+				if (Deceased != null) yield return Deceased;
+				if (Note != null) yield return Note;
+				foreach (var elem in Condition) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

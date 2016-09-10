@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void SerializeMeta()
         {
-            var xml = FhirSerializer.SerializeToXml(metaPoco, root: "meta");
+            var xml = FhirSerializer.SerializeToXml(metaPoco,root:"meta");
             Assert.AreEqual(metaXml, xml);
         }
 

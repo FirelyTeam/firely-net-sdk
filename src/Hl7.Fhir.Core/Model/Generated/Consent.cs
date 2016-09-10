@@ -178,8 +178,8 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      TypeElement = null; 
+                    if (!value.HasValue)
+                        TypeElement = null; 
                     else
                         TypeElement = new Code<Hl7.Fhir.Model.Consent.ConsentExceptType>(value);
                     OnPropertyChanged("Type");
@@ -361,6 +361,27 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ExceptComponent elements
+                    if (TypeElement != null) yield return TypeElement;
+                    if (Period != null) yield return Period;
+                    foreach (var elem in Actor) { if (elem != null) yield return elem; }
+                    foreach (var elem in Action) { if (elem != null) yield return elem; }
+                    foreach (var elem in SecurityLabel) { if (elem != null) yield return elem; }
+                    foreach (var elem in Purpose) { if (elem != null) yield return elem; }
+                    foreach (var elem in Class) { if (elem != null) yield return elem; }
+                    foreach (var elem in Code) { if (elem != null) yield return elem; }
+                    foreach (var elem in Data) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -444,6 +465,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ActorComponent elements
+                    if (Role != null) yield return Role;
+                    if (Reference != null) yield return Reference;
+                }
+            }
             
         }
         
@@ -480,8 +515,8 @@ namespace Hl7.Fhir.Model
                 get { return MeaningElement != null ? MeaningElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      MeaningElement = null; 
+                    if (!value.HasValue)
+                        MeaningElement = null; 
                     else
                         MeaningElement = new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
                     OnPropertyChanged("Meaning");
@@ -545,6 +580,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DataComponent elements
+                    if (MeaningElement != null) yield return MeaningElement;
+                    if (Reference != null) yield return Reference;
+                }
             }
             
         }
@@ -872,7 +921,28 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Consent elements
+				if (Identifier != null) yield return Identifier;
+				if (StatusElement != null) yield return StatusElement;
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
+				if (DateTimeElement != null) yield return DateTimeElement;
+				if (Period != null) yield return Period;
+				if (Patient != null) yield return Patient;
+				foreach (var elem in Consentor) { if (elem != null) yield return elem; }
+				if (Organization != null) yield return Organization;
+				if (Source != null) yield return Source;
+				if (PolicyElement != null) yield return PolicyElement;
+				foreach (var elem in Recipient) { if (elem != null) yield return elem; }
+				foreach (var elem in Purpose) { if (elem != null) yield return elem; }
+				foreach (var elem in Except) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

@@ -187,8 +187,8 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DateElement = null; 
+                    if (value == null)
+                        DateElement = null; 
                     else
                         DateElement = new Hl7.Fhir.Model.Date(value);
                     OnPropertyChanged("Date");
@@ -266,6 +266,25 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DetailsComponent elements
+                    if (Type != null) yield return Type;
+                    if (Request != null) yield return Request;
+                    if (Response != null) yield return Response;
+                    if (Submitter != null) yield return Submitter;
+                    if (Payee != null) yield return Payee;
+                    if (DateElement != null) yield return DateElement;
+                    if (Amount != null) yield return Amount;
+                }
+            }
             
         }
         
@@ -314,8 +333,8 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
                         TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
@@ -364,6 +383,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // NotesComponent elements
+                    if (Type != null) yield return Type;
+                    if (TextElement != null) yield return TextElement;
+                }
             }
             
         }
@@ -754,7 +787,31 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// PaymentReconciliation elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Request != null) yield return Request;
+				if (OutcomeElement != null) yield return OutcomeElement;
+				if (DispositionElement != null) yield return DispositionElement;
+				if (Ruleset != null) yield return Ruleset;
+				if (OriginalRuleset != null) yield return OriginalRuleset;
+				if (CreatedElement != null) yield return CreatedElement;
+				if (Period != null) yield return Period;
+				if (Organization != null) yield return Organization;
+				if (RequestProvider != null) yield return RequestProvider;
+				if (RequestOrganization != null) yield return RequestOrganization;
+				foreach (var elem in Detail) { if (elem != null) yield return elem; }
+				if (Form != null) yield return Form;
+				if (Total != null) yield return Total;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

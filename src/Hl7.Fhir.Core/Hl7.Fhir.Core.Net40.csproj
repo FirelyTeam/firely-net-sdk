@@ -50,8 +50,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hl7.FluentPath, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3-alpha1\lib\net40\Hl7.FluentPath.dll</HintPath>
+    <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha4\lib\net40\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -70,17 +70,58 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DSTU1compatibility.cs" />
-    <Compile Include="FluentPath\ElementNavigator.cs" />
-    <Compile Include="FluentPath\NavigatorPOCO.cs" />
+    <Compile Include="FluentPath\PocoElementNavigator.cs" />
+    <Compile Include="FluentPath\PocoNavigator.cs" />
+    <Compile Include="FluentPath\PocoNavigatorExtensions.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
-    <Compile Include="Introspection\EnumUtility.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />
     <Compile Include="Introspection\FhirEnumerationAttribute.cs" />
     <Compile Include="Introspection\FhirTypeAttribute.cs" />
     <Compile Include="Introspection\NotMappedAttribute.cs" />
     <Compile Include="Introspection\ReferencesAttribute.cs" />
     <Compile Include="Introspection\XmlSerializationHint.cs" />
+    <Compile Include="Model\ElementDefinitionExtensions.cs" />
+    <Compile Include="Model\Generated\Measure.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\MeasureReport.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\NutritionRequest.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\ParameterDefinition.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\PlanDefinition.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\PractitionerRole.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\RelatedResource.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Sequence.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\StructureMap.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Task.cs">
+      <DependentUpon>Template-Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\TriggerDefinition.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\UsageContext.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Generated\Xhtml.cs">
+      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Support\ObjectList.cs" />
     <Compile Include="Model\Base.cs" />
     <Compile Include="Model\Binary.cs" />
     <Compile Include="Model\Bundle.cs" />
@@ -257,12 +298,6 @@
     <Compile Include="Model\Generated\Markdown.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\Measure.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\MeasureReport.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\MedicationOrder.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -272,14 +307,8 @@
     <Compile Include="Model\Generated\NamingSystem.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\NutritionRequest.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\OperationDefinition.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\ParameterDefinition.cs">
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Parameters.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
@@ -293,14 +322,8 @@
     <Compile Include="Model\Generated\Person.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\PlanDefinition.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\PositiveInt.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\PractitionerRole.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\ProcedureRequest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
@@ -317,9 +340,6 @@
     <Compile Include="Model\Generated\ReferralRequest.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\RelatedResource.cs">
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\Resource.cs" />
     <Compile Include="Model\Generated\RiskAssessment.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
@@ -328,9 +348,6 @@
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\SearchParameter.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\Sequence.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Signature.cs">
@@ -345,9 +362,6 @@
     <Compile Include="Model\Generated\StructureDefinition.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\StructureMap.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\Subscription.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
@@ -355,9 +369,6 @@
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\SupplyRequest.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\Task.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\Template-DataTypeModel.cs">
@@ -389,20 +400,11 @@
     <Compile Include="Model\Generated\Timing.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\Generated\TriggerDefinition.cs">
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Generated\UnsignedInt.cs">
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\UsageContext.cs">
       <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Generated\VisionPrescription.cs">
       <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Generated\Xhtml.cs">
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\HumanName.cs" />
     <Compile Include="Model\IConformanceResource.cs" />
@@ -622,7 +624,6 @@
     <Compile Include="Model\ModelInfo.cs" />
     <Compile Include="Model\Oid.cs" />
     <Compile Include="Model\OperationOutcome.cs" />
-    <Compile Include="Model\OperationOutcomeExtensions.cs" />
     <Compile Include="Model\PositiveInt.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
     <Compile Include="Model\Generated\Template-Bindings.cs">
@@ -689,10 +690,12 @@
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
+    <Compile Include="Support\CanonicalUrlConflictException.cs" />
     <Compile Include="Support\DateExtensions.cs" />
+    <Compile Include="Support\EnumUtility.cs" />
+    <Compile Include="Support\Error.cs" />
     <Compile Include="Support\GuidExtensions.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
-    <Compile Include="Support\Logging.cs" />
     <Compile Include="Serialization\ModelFactoryList.cs" />
     <Compile Include="Introspection\ModelInspector.cs" />
     <Compile Include="Serialization\PrimitiveTypeConverter.cs" />
@@ -741,6 +744,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Model\Generated\Template-Children.ttinclude" />
     <None Include="Model\Generated\TemplateFileManagerV2.1.ttinclude" />
     <None Include="packages.config" />
   </ItemGroup>

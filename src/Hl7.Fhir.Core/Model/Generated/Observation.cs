@@ -182,8 +182,8 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
                         TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
@@ -242,6 +242,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ReferenceRangeComponent elements
+                    if (Low != null) yield return Low;
+                    if (High != null) yield return High;
+                    foreach (var elem in Meaning) { if (elem != null) yield return elem; }
+                    if (Age != null) yield return Age;
+                    if (TextElement != null) yield return TextElement;
+                }
+            }
             
         }
         
@@ -277,8 +294,8 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      TypeElement = null; 
+                    if (!value.HasValue)
+                        TypeElement = null; 
                     else
                         TypeElement = new Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>(value);
                     OnPropertyChanged("Type");
@@ -342,6 +359,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // RelatedComponent elements
+                    if (TypeElement != null) yield return TypeElement;
+                    if (Target != null) yield return Target;
+                }
             }
             
         }
@@ -473,6 +504,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ReferenceRange, otherT.ReferenceRange)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ComponentComponent elements
+                    if (Code != null) yield return Code;
+                    if (Value != null) yield return Value;
+                    if (DataAbsentReason != null) yield return DataAbsentReason;
+                    if (Interpretation != null) yield return Interpretation;
+                    foreach (var elem in ReferenceRange) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -944,7 +992,35 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Observation elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
+				if (Code != null) yield return Code;
+				if (Subject != null) yield return Subject;
+				if (Encounter != null) yield return Encounter;
+				if (Effective != null) yield return Effective;
+				if (IssuedElement != null) yield return IssuedElement;
+				foreach (var elem in Performer) { if (elem != null) yield return elem; }
+				if (Value != null) yield return Value;
+				if (DataAbsentReason != null) yield return DataAbsentReason;
+				if (Interpretation != null) yield return Interpretation;
+				if (CommentElement != null) yield return CommentElement;
+				if (BodySite != null) yield return BodySite;
+				if (Method != null) yield return Method;
+				if (Specimen != null) yield return Specimen;
+				if (Device != null) yield return Device;
+				foreach (var elem in ReferenceRange) { if (elem != null) yield return elem; }
+				foreach (var elem in Related) { if (elem != null) yield return elem; }
+				foreach (var elem in Component) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

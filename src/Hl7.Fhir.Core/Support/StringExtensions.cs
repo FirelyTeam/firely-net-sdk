@@ -58,6 +58,14 @@ namespace Hl7.Fhir.Support
             return char.ToUpper(s[0]) + s.Substring(1);
         }
 
+        public static string Uncapitalize(this string s)
+        {
+            if (string.IsNullOrEmpty(s)) return string.Empty;
+
+            // Return char and concat substring.
+            return char.ToLower(s[0]) + s.Substring(1);
+        }
+
         internal static string[] SplitNotInQuotes(this string value, char separator)
         {
             var parts = Regex.Split(value, separator + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")

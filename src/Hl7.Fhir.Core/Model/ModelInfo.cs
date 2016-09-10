@@ -381,6 +381,62 @@ namespace Hl7.Fhir.Model
         {
             return IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
         }
+
+        /// <summary>
+        /// Returns whether the type has subclasses in the core spec
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        /// <remarks>Quantity is not listed here, since its subclasses are
+        /// actually profiles on Quantity. Likewise, there is no real inheritance
+        /// in the primitives, so string is not a superclass for markdown</remarks>
+        public static bool IsCoreSuperType(FHIRAllTypes type)
+        {
+            return
+                type == FHIRAllTypes.Resource ||
+                type == FHIRAllTypes.DomainResource ||
+                type == FHIRAllTypes.Element ||
+                type == FHIRAllTypes.BackboneElement;
+        }
+
+        public static bool IsProfiledQuantity(FHIRAllTypes type)
+        {
+            return
+                type == FHIRAllTypes.Age ||
+                type == FHIRAllTypes.Distance ||
+                type == FHIRAllTypes.SimpleQuantity ||
+                type == FHIRAllTypes.Duration ||
+                type == FHIRAllTypes.Count ||
+                type == FHIRAllTypes.Money;
+        }
+
+        public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass)
+        {
+            if (superclass == subclass) return true;
+
+            if (IsKnownResource(subclass))
+            {
+                if (superclass == FHIRAllTypes.Resource)
+                    return true;
+                else if (superclass == FHIRAllTypes.DomainResource)
+                    return subclass != FHIRAllTypes.Parameters && subclass != FHIRAllTypes.Bundle && subclass != FHIRAllTypes.Binary;
+                else
+                    return false;
+            }
+            else
+                return superclass == FHIRAllTypes.Element;
+        }
+
+        public static string CanonicalUriForFhirCoreType(string typename)
+        {
+            return "http://hl7.org/fhir/StructureDefinition/" + typename;
+        }
+
+        public static string CanonicalUriForFhirCoreType(FHIRAllTypes type)
+        {
+            return CanonicalUriForFhirCoreType(type.GetLiteral());
+        }
+
     }
 
     public static class ModelInfoExtensions

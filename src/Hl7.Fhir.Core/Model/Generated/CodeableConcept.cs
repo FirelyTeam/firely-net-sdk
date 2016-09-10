@@ -141,6 +141,17 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // CodeableConcept elements
+                foreach (var elem in Coding) { if (elem != null) yield return elem; }
+                if (TextElement != null) yield return TextElement;
+            }
+        }
     
     
     }

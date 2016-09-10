@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]//returns 500: validation of slices is not done yet.
-        [TestCategory("IntegrationTest"), Ignore]
+        [TestCategory("IntegrationTest")]
         public void InvokeResourceValidation()
         {
             var client = new FhirClient(testEndpoint);

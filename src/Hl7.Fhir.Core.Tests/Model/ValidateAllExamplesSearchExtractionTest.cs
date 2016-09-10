@@ -22,6 +22,7 @@ using Hl7.Fhir.Serialization;
 using System.IO.Compression;
 using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
+using Hl7.FluentPath;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -90,7 +91,7 @@ namespace Hl7.Fhir.Tests.Model
                 errorCount++;
             }
 
-            Assert.IsTrue(216 >= errorCount, String.Format("Failed Validating, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
+            Assert.IsTrue(216 >= errorCount, String.Format("Failed search parameter data extraction, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
         }
 
         private static void ExtractValuesForSearchParameterFromFile(Dictionary<string, int> exampleSearchValues, Resource resource)
@@ -123,43 +124,50 @@ namespace Hl7.Fhir.Tests.Model
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var resourceModel = FluentPath.ModelNavigator.CreateInput(resource);
-            var navigator = FluentPath.ModelNavigator.CreateInput(resource);
-            var results = Hl7.FluentPath.PathExpression.Select(index.Expression, resourceModel, navigator);
-            if (results.Count() > 0)
+            var resourceModel = new FluentPath.PocoNavigator(resource);
+            var navigator = new FluentPath.PocoNavigator(resource);
+
+            try
             {
-                foreach (var t2 in results)
+                var results = resourceModel.Select(index.Expression, navigator);
+                if (results.Count() > 0)
                 {
-                    if (t2 != null)
+                    foreach (var t2 in results)
                     {
-                        if (t2 is FluentPath.ModelNavigator && (t2 as FluentPath.ModelNavigator).FhirValue != null)
+                        if (t2 != null)
                         {
-                            // Validate the type of data returned against the type of search parameter
-                       //     Debug.Write(index.Resource + "." + index.Name + ": ");
-                       //     Debug.WriteLine((t2 as FluentPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
-                            exampleSearchValues[key]++;
-                            // System.Diagnostics.Trace.WriteLine(string.Format("{0}: {1}", xpath.Value, t2.AsStringRepresentation()));
-                        }
-                        else if (t2.Value is Hl7.FluentPath.ConstantValue)
-                        {
-                       //     Debug.Write(index.Resource + "." + index.Name + ": ");
-                       //     Debug.WriteLine((t2.Value as Hl7.FluentPath.ConstantValue).Value);
-                            exampleSearchValues[key]++;
-                        }
-                        else if (t2.Value is bool)
-                        {
-                       //     Debug.Write(index.Resource + "." + index.Name + ": ");
-                       //     Debug.WriteLine((bool)t2.Value);
-                            exampleSearchValues[key]++;
-                        }
-                        else
-                        {
-                            Debug.Write(index.Resource + "." + index.Name + ": ");
-                            Debug.WriteLine(t2.Value);
-                            exampleSearchValues[key]++;
+                            if (t2 is FluentPath.PocoNavigator && (t2 as FluentPath.PocoNavigator).FhirValue != null)
+                            {
+                                // Validate the type of data returned against the type of search parameter
+                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                            //    Debug.WriteLine((t2 as FluentPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
+                                exampleSearchValues[key]++;
+                            }
+                            else if (t2.Value is Hl7.FluentPath.ConstantValue)
+                            {
+                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                            //    Debug.WriteLine((t2.Value as Hl7.FluentPath.ConstantValue).Value);
+                                exampleSearchValues[key]++;
+                            }
+                            else if (t2.Value is bool)
+                            {
+                            //    Debug.Write(index.Resource + "." + index.Name + ": ");
+                            //    Debug.WriteLine((bool)t2.Value);
+                                exampleSearchValues[key]++;
+                            }
+                            else
+                            {
+                                Debug.Write(index.Resource + "." + index.Name + ": ");
+                                Debug.WriteLine(t2.Value);
+                                exampleSearchValues[key]++;
+                            }
                         }
                     }
                 }
+            }
+            catch(ArgumentException ex)
+            {
+                Debug.WriteLine("FATAL: Error parsing expression in search index {0}.{1} {2}\r\n\t{3}", index.Resource, index.Name, index.Expression, ex.Message);
             }
         }
     }

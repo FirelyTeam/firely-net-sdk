@@ -51,32 +51,64 @@ namespace Hl7.Fhir.Model
                 return Text.Div;
             }
 
-            var text = String.Empty;
-            if (Issue != null)
+            if (Issue.Any())
             {
+                var text = "";
+
+                // When this is a summary report (e.g. just showing errors), it might well be informational 
+                // parents are missing in the hierarchy above their error children. In this case, don't
+                // try to use indentation.
+                bool useIndentation = Issue.First().HierarchyLevel == 0;
+
                 foreach (var issue in Issue)
                 {
-                    if (!String.IsNullOrEmpty(text))
-                        text += " ------------- ";  // Add divider after each issue
-
-                    if (issue.Severity != null)
-                    {
-                        text += issue.Severity.ToString() + ": ";
-                    }
-
-                    if (issue.Diagnostics != null)
-                    {
-                        text += issue.Diagnostics;
-                    }
-                    else
-                    {
-                        text += "No diagnostics";
-                    }
+                    var indent = useIndentation ? new string(' ', issue.HierarchyLevel * 2) : "";
+                    text += indent + issue.ToString() + Environment.NewLine;
                 }
+
+                return text;
             }
 
-            return text;
+            return "(no outcomes to report)";
         }
+
+        [NotMapped]
+        public bool Success
+        {
+            get
+            {
+                return !Issue.Any(i => !i.Success);
+            }
+        }
+
+
+        [NotMapped]
+        public int Fatals
+        {
+            get
+            {
+                return Issue.Where(i => i.Severity == IssueSeverity.Fatal).Count();
+            }
+        }
+
+        [NotMapped]
+        public int Errors
+        {
+            get
+            {
+                return Issue.Where(i => i.Severity == IssueSeverity.Error).Count();
+            }
+        }
+
+        [NotMapped]
+        public int Warnings
+        {
+            get
+            {
+                return Issue.Where(i => i.Severity == IssueSeverity.Warning).Count();
+            }
+        }
+
 
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public partial class IssueComponent
@@ -88,6 +120,57 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     return String.Format("Code=\"{0}\" {1}", this.Code, _Details.DebuggerDisplay("Details."));
+                }
+            }
+
+            [NotMapped]
+            public bool Success
+            {
+                get
+                {
+                    return Severity != null && (Severity.Value == IssueSeverity.Information || Severity.Value == IssueSeverity.Warning);
+                }
+            }
+
+            public override string ToString()
+            {
+                string text = "";
+
+                if (Severity != null)
+                {
+                    text += "[" + Severity.ToString().ToUpper() + "] ";
+                }
+
+                if (Diagnostics != null)
+                {
+                    text += Diagnostics;
+                }
+                else
+                {
+                    text += "(no diagnostics)";
+                }
+
+                if (Location.Any())
+                {
+                    text += " (at " + String.Join(", ", Location) + ")";
+                }
+
+                return text;
+            }
+
+            public const string OPERATIONOUTCOME_ISSUE_HIERARCHY = "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-hierarchy";
+
+            [NotMapped]
+            public int HierarchyLevel
+            {
+                get
+                {
+                    return this.GetIntegerExtension(OPERATIONOUTCOME_ISSUE_HIERARCHY).GetValueOrDefault(0);
+                }
+
+                set
+                {
+                    this.SetIntegerExtension(OPERATIONOUTCOME_ISSUE_HIERARCHY, value);
                 }
             }
         }

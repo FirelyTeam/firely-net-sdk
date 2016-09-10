@@ -244,6 +244,19 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // TriggerDefinition elements
+                if (TypeElement != null) yield return TypeElement;
+                if (EventNameElement != null) yield return EventNameElement;
+                if (EventTiming != null) yield return EventTiming;
+                if (EventData != null) yield return EventData;
+            }
+        }
     
     
     }

@@ -277,8 +277,8 @@ namespace Hl7.Fhir.Model
                 get { return CertaintyElement != null ? CertaintyElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      CertaintyElement = null; 
+                    if (!value.HasValue)
+                        CertaintyElement = null; 
                     else
                         CertaintyElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCertainty>(value);
                     OnPropertyChanged("Certainty");
@@ -323,8 +323,8 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
@@ -355,8 +355,8 @@ namespace Hl7.Fhir.Model
                 get { return OnsetElement != null ? OnsetElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      OnsetElement = null; 
+                    if (value == null)
+                        OnsetElement = null; 
                     else
                         OnsetElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Onset");
@@ -387,8 +387,8 @@ namespace Hl7.Fhir.Model
                 get { return SeverityElement != null ? SeverityElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      SeverityElement = null; 
+                    if (!value.HasValue)
+                        SeverityElement = null; 
                     else
                         SeverityElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity>(value);
                     OnPropertyChanged("Severity");
@@ -482,6 +482,26 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ReactionComponent elements
+                    if (Substance != null) yield return Substance;
+                    if (CertaintyElement != null) yield return CertaintyElement;
+                    foreach (var elem in Manifestation) { if (elem != null) yield return elem; }
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (OnsetElement != null) yield return OnsetElement;
+                    if (SeverityElement != null) yield return SeverityElement;
+                    if (ExposureRoute != null) yield return ExposureRoute;
+                    foreach (var elem in Note) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -895,7 +915,29 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// AllergyIntolerance elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (TypeElement != null) yield return TypeElement;
+				if (CategoryElement != null) yield return CategoryElement;
+				if (CriticalityElement != null) yield return CriticalityElement;
+				if (Code != null) yield return Code;
+				if (Patient != null) yield return Patient;
+				if (AttestedDateElement != null) yield return AttestedDateElement;
+				if (Recorder != null) yield return Recorder;
+				if (Reporter != null) yield return Reporter;
+				if (OnsetElement != null) yield return OnsetElement;
+				if (LastOccurrenceElement != null) yield return LastOccurrenceElement;
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				foreach (var elem in Reaction) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

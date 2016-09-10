@@ -159,6 +159,17 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Period elements
+                if (StartElement != null) yield return StartElement;
+                if (EndElement != null) yield return EndElement;
+            }
+        }
     
     
     }

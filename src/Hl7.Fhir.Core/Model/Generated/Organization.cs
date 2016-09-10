@@ -162,6 +162,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContactComponent elements
+                    if (Purpose != null) yield return Purpose;
+                    if (Name != null) yield return Name;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                    if (Address != null) yield return Address;
+                }
+            }
             
         }
         
@@ -465,7 +481,25 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Organization elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (ActiveElement != null) yield return ActiveElement;
+				if (Type != null) yield return Type;
+				if (NameElement != null) yield return NameElement;
+				foreach (var elem in AliasElement) { if (elem != null) yield return elem; }
+				foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+				foreach (var elem in Address) { if (elem != null) yield return elem; }
+				if (PartOf != null) yield return PartOf;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				foreach (var elem in Endpoint) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

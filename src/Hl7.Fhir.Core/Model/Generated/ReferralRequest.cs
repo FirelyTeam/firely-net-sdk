@@ -540,7 +540,33 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// ReferralRequest elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
+				if (Parent != null) yield return Parent;
+				if (StatusElement != null) yield return StatusElement;
+				if (CategoryElement != null) yield return CategoryElement;
+				if (Type != null) yield return Type;
+				if (Priority != null) yield return Priority;
+				if (Patient != null) yield return Patient;
+				if (Context != null) yield return Context;
+				if (FulfillmentTime != null) yield return FulfillmentTime;
+				if (AuthoredElement != null) yield return AuthoredElement;
+				if (Requester != null) yield return Requester;
+				if (Specialty != null) yield return Specialty;
+				foreach (var elem in Recipient) { if (elem != null) yield return elem; }
+				if (Reason != null) yield return Reason;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in ServiceRequested) { if (elem != null) yield return elem; }
+				foreach (var elem in SupportingInformation) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

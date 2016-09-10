@@ -1,6 +1,7 @@
 ﻿<#@ template debug="true" hostSpecific="true" #>
 <#@ output extension=".cs" #>
 <#@ include file="TemplateFileManagerV2.1.ttinclude" #>
+<#@ include file="Template-Children.ttinclude" #>
 <#@ import namespace="System" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Diagnostics" #>
@@ -552,6 +553,23 @@ if (!abstractType){
                 
                 return true;
             }
+<#
+		    // [WMR 20160818] START - implement generic properties collection
+#>
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+<#
+					YieldComponent(docTypes, componentName, "Element", component, nsR, enums, "                    ");
+#>
+                }
+            }
+<#
+		    // [WMR 20160818] END - implement generic properties collection
+#>
             
         }
         
@@ -718,6 +736,23 @@ if (!abstractType){
             
             return true;
         }
+<#
+		// [WMR 20160818] START - implement generic properties collection
+#>
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+<#
+                YieldChildren(docResources, e as System.Xml.XmlElement, nsR, enums, "                ");
+#>
+            }
+        }
+<#
+		// [WMR 20160818] END - implement generic properties collection
+#>
     
 <# } #>    
     }
@@ -773,6 +808,7 @@ if (!abstractType){
 		public string AllowedTypes;
 		public string BackboneComponentType;
 		public string CodeRequiredBinding;
+		public bool isXmlAttribute;
 
 		public string PropTypeWithCard()
         {
@@ -861,6 +897,8 @@ if (!abstractType){
 			PropertyDetails result = new PropertyDetails();
 			if (element.SelectSingleNode("fhir:isSummary[@value = 'true']", nsR) != null)
 				result.isSummaryProp = true;
+			if (element.SelectSingleNode("fhir:representation[@value = 'xmlAttr']", nsR) != null)
+				result.isXmlAttribute = true;
 			if (element.SelectSingleNode("fhir:short/@value", nsR) != null)
 				result.Summary = element.SelectSingleNode("fhir:short/@value", nsR).Value;
 			if (element.SelectSingleNode("fhir:type/fhir:code/@value", nsR) != null)

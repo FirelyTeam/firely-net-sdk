@@ -225,6 +225,23 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // UsageContext elements
+                foreach (var elem in PatientGender) { if (elem != null) yield return elem; }
+                foreach (var elem in PatientAgeGroup) { if (elem != null) yield return elem; }
+                foreach (var elem in ClinicalFocus) { if (elem != null) yield return elem; }
+                foreach (var elem in TargetUser) { if (elem != null) yield return elem; }
+                foreach (var elem in WorkflowSetting) { if (elem != null) yield return elem; }
+                foreach (var elem in WorkflowTask) { if (elem != null) yield return elem; }
+                foreach (var elem in ClinicalVenue) { if (elem != null) yield return elem; }
+                foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
+            }
+        }
     
     
     }

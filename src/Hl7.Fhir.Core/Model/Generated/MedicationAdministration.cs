@@ -84,8 +84,8 @@ namespace Hl7.Fhir.Model
                 get { return TextElement != null ? TextElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      TextElement = null; 
+                    if (value == null)
+                        TextElement = null; 
                     else
                         TextElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Text");
@@ -214,6 +214,24 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DosageComponent elements
+                    if (TextElement != null) yield return TextElement;
+                    if (Site != null) yield return Site;
+                    if (Route != null) yield return Route;
+                    if (Method != null) yield return Method;
+                    if (Dose != null) yield return Dose;
+                    if (Rate != null) yield return Rate;
+                }
+            }
             
         }
         
@@ -250,8 +268,8 @@ namespace Hl7.Fhir.Model
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      StatusElement = null; 
+                    if (!value.HasValue)
+                        StatusElement = null; 
                     else
                         StatusElement = new Code<Hl7.Fhir.Model.MedicationAdministrationStatus>(value);
                     OnPropertyChanged("Status");
@@ -296,8 +314,8 @@ namespace Hl7.Fhir.Model
                 get { return DateTimeElement != null ? DateTimeElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DateTimeElement = null; 
+                    if (value == null)
+                        DateTimeElement = null; 
                     else
                         DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("DateTime");
@@ -382,6 +400,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // EventHistoryComponent elements
+                    if (StatusElement != null) yield return StatusElement;
+                    if (Action != null) yield return Action;
+                    if (DateTimeElement != null) yield return DateTimeElement;
+                    if (Actor != null) yield return Actor;
+                    if (Reason != null) yield return Reason;
+                }
             }
             
         }
@@ -756,7 +791,30 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// MedicationAdministration elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Medication != null) yield return Medication;
+				if (Patient != null) yield return Patient;
+				if (Encounter != null) yield return Encounter;
+				if (EffectiveTime != null) yield return EffectiveTime;
+				if (Performer != null) yield return Performer;
+				if (Prescription != null) yield return Prescription;
+				if (WasNotGivenElement != null) yield return WasNotGivenElement;
+				foreach (var elem in ReasonNotGiven) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonGiven) { if (elem != null) yield return elem; }
+				foreach (var elem in Device) { if (elem != null) yield return elem; }
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+				if (Dosage != null) yield return Dosage;
+				foreach (var elem in EventHistory) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

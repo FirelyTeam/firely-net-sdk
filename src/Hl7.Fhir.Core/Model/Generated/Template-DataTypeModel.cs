@@ -1,6 +1,7 @@
 ﻿
+
 //
-// Model Generated on Sat, 13 Aug 2016 10:07:57 GMT for FHIR v1.6.0
+// Model Generated on Fri, 09 Sep 2016 22:27:35 GMT for FHIR v1.6.0
 //
 // Generated Shared Enumeration: ResourceType
 

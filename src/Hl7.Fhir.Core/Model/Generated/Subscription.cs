@@ -157,8 +157,8 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      TypeElement = null; 
+                    if (!value.HasValue)
+                        TypeElement = null; 
                     else
                         TypeElement = new Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType>(value);
                     OnPropertyChanged("Type");
@@ -189,8 +189,8 @@ namespace Hl7.Fhir.Model
                 get { return EndpointElement != null ? EndpointElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      EndpointElement = null; 
+                    if (value == null)
+                        EndpointElement = null; 
                     else
                         EndpointElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Endpoint");
@@ -221,8 +221,8 @@ namespace Hl7.Fhir.Model
                 get { return PayloadElement != null ? PayloadElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      PayloadElement = null; 
+                    if (value == null)
+                        PayloadElement = null; 
                     else
                         PayloadElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Payload");
@@ -253,8 +253,8 @@ namespace Hl7.Fhir.Model
                 get { return HeaderElement != null ? HeaderElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      HeaderElement = null; 
+                    if (value == null)
+                        HeaderElement = null; 
                     else
                         HeaderElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Header");
@@ -309,6 +309,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(HeaderElement, otherT.HeaderElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ChannelComponent elements
+                    if (TypeElement != null) yield return TypeElement;
+                    if (EndpointElement != null) yield return EndpointElement;
+                    if (PayloadElement != null) yield return PayloadElement;
+                    if (HeaderElement != null) yield return HeaderElement;
+                }
             }
             
         }
@@ -587,7 +603,23 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Subscription elements
+				if (CriteriaElement != null) yield return CriteriaElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (ReasonElement != null) yield return ReasonElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (ErrorElement != null) yield return ErrorElement;
+				if (Channel != null) yield return Channel;
+				if (EndElement != null) yield return EndElement;
+				foreach (var elem in Tag) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

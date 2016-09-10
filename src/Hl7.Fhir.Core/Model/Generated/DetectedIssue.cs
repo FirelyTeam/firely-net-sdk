@@ -125,8 +125,8 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DateElement = null; 
+                    if (value == null)
+                        DateElement = null; 
                     else
                         DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Date");
@@ -192,6 +192,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // MitigationComponent elements
+                    if (Action != null) yield return Action;
+                    if (DateElement != null) yield return DateElement;
+                    if (Author != null) yield return Author;
+                }
             }
             
         }
@@ -482,7 +497,25 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// DetectedIssue elements
+				if (Patient != null) yield return Patient;
+				if (Category != null) yield return Category;
+				if (SeverityElement != null) yield return SeverityElement;
+				foreach (var elem in Implicated) { if (elem != null) yield return elem; }
+				if (DetailElement != null) yield return DetailElement;
+				if (DateElement != null) yield return DateElement;
+				if (Author != null) yield return Author;
+				if (Identifier != null) yield return Identifier;
+				if (ReferenceElement != null) yield return ReferenceElement;
+				foreach (var elem in Mitigation) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

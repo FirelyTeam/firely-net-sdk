@@ -85,8 +85,8 @@ namespace Hl7.Fhir.Model
                 get { return DateElement != null ? DateElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DateElement = null; 
+                    if (value == null)
+                        DateElement = null; 
                     else
                         DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Date");
@@ -131,8 +131,8 @@ namespace Hl7.Fhir.Model
                 get { return DoseNumberElement != null ? DoseNumberElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      DoseNumberElement = null; 
+                    if (!value.HasValue)
+                        DoseNumberElement = null; 
                     else
                         DoseNumberElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("DoseNumber");
@@ -271,6 +271,26 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // RecommendationComponent elements
+                    if (DateElement != null) yield return DateElement;
+                    if (VaccineCode != null) yield return VaccineCode;
+                    if (DoseNumberElement != null) yield return DoseNumberElement;
+                    if (ForecastStatus != null) yield return ForecastStatus;
+                    foreach (var elem in DateCriterion) { if (elem != null) yield return elem; }
+                    if (Protocol != null) yield return Protocol;
+                    foreach (var elem in SupportingImmunization) { if (elem != null) yield return elem; }
+                    foreach (var elem in SupportingPatientInformation) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -321,8 +341,8 @@ namespace Hl7.Fhir.Model
                 get { return ValueElement != null ? ValueElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      ValueElement = null; 
+                    if (value == null)
+                        ValueElement = null; 
                     else
                         ValueElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Value");
@@ -372,6 +392,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DateCriterionComponent elements
+                    if (Code != null) yield return Code;
+                    if (ValueElement != null) yield return ValueElement;
+                }
+            }
             
         }
         
@@ -407,8 +441,8 @@ namespace Hl7.Fhir.Model
                 get { return DoseSequenceElement != null ? DoseSequenceElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      DoseSequenceElement = null; 
+                    if (!value.HasValue)
+                        DoseSequenceElement = null; 
                     else
                         DoseSequenceElement = new Hl7.Fhir.Model.PositiveInt(value);
                     OnPropertyChanged("DoseSequence");
@@ -439,8 +473,8 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
@@ -485,8 +519,8 @@ namespace Hl7.Fhir.Model
                 get { return SeriesElement != null ? SeriesElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      SeriesElement = null; 
+                    if (value == null)
+                        SeriesElement = null; 
                     else
                         SeriesElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Series");
@@ -541,6 +575,22 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(SeriesElement, otherT.SeriesElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ProtocolComponent elements
+                    if (DoseSequenceElement != null) yield return DoseSequenceElement;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Authority != null) yield return Authority;
+                    if (SeriesElement != null) yield return SeriesElement;
+                }
             }
             
         }
@@ -642,7 +692,18 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// ImmunizationRecommendation elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Patient != null) yield return Patient;
+				foreach (var elem in Recommendation) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

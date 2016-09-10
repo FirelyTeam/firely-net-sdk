@@ -163,6 +163,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // PerformerComponent elements
+                    if (Actor != null) yield return Actor;
+                    if (Role != null) yield return Role;
+                }
+            }
             
         }
         
@@ -244,6 +258,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Manipulated, otherT.Manipulated)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // FocalDeviceComponent elements
+                    if (Action != null) yield return Action;
+                    if (Manipulated != null) yield return Manipulated;
+                }
             }
             
         }
@@ -751,7 +779,39 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Procedure elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Subject != null) yield return Subject;
+				if (StatusElement != null) yield return StatusElement;
+				if (Category != null) yield return Category;
+				if (Code != null) yield return Code;
+				if (NotPerformedElement != null) yield return NotPerformedElement;
+				foreach (var elem in ReasonNotPerformed) { if (elem != null) yield return elem; }
+				foreach (var elem in BodySite) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+				foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
+				foreach (var elem in Performer) { if (elem != null) yield return elem; }
+				if (Performed != null) yield return Performed;
+				if (Encounter != null) yield return Encounter;
+				if (Location != null) yield return Location;
+				if (Outcome != null) yield return Outcome;
+				foreach (var elem in Report) { if (elem != null) yield return elem; }
+				foreach (var elem in Complication) { if (elem != null) yield return elem; }
+				foreach (var elem in FollowUp) { if (elem != null) yield return elem; }
+				if (Request != null) yield return Request;
+				foreach (var elem in Notes) { if (elem != null) yield return elem; }
+				foreach (var elem in FocalDevice) { if (elem != null) yield return elem; }
+				foreach (var elem in UsedReference) { if (elem != null) yield return elem; }
+				foreach (var elem in UsedCode) { if (elem != null) yield return elem; }
+				foreach (var elem in Component) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

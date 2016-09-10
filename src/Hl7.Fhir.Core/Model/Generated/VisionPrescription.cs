@@ -152,8 +152,8 @@ namespace Hl7.Fhir.Model
                 get { return EyeElement != null ? EyeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      EyeElement = null; 
+                    if (!value.HasValue)
+                        EyeElement = null; 
                     else
                         EyeElement = new Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes>(value);
                     OnPropertyChanged("Eye");
@@ -184,8 +184,8 @@ namespace Hl7.Fhir.Model
                 get { return SphereElement != null ? SphereElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      SphereElement = null; 
+                    if (!value.HasValue)
+                        SphereElement = null; 
                     else
                         SphereElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Sphere");
@@ -216,8 +216,8 @@ namespace Hl7.Fhir.Model
                 get { return CylinderElement != null ? CylinderElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      CylinderElement = null; 
+                    if (!value.HasValue)
+                        CylinderElement = null; 
                     else
                         CylinderElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Cylinder");
@@ -248,8 +248,8 @@ namespace Hl7.Fhir.Model
                 get { return AxisElement != null ? AxisElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      AxisElement = null; 
+                    if (!value.HasValue)
+                        AxisElement = null; 
                     else
                         AxisElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("Axis");
@@ -280,8 +280,8 @@ namespace Hl7.Fhir.Model
                 get { return PrismElement != null ? PrismElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      PrismElement = null; 
+                    if (!value.HasValue)
+                        PrismElement = null; 
                     else
                         PrismElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Prism");
@@ -312,8 +312,8 @@ namespace Hl7.Fhir.Model
                 get { return BaseElement != null ? BaseElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      BaseElement = null; 
+                    if (!value.HasValue)
+                        BaseElement = null; 
                     else
                         BaseElement = new Code<Hl7.Fhir.Model.VisionPrescription.VisionBase>(value);
                     OnPropertyChanged("Base");
@@ -344,8 +344,8 @@ namespace Hl7.Fhir.Model
                 get { return AddElement != null ? AddElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      AddElement = null; 
+                    if (!value.HasValue)
+                        AddElement = null; 
                     else
                         AddElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Add");
@@ -376,8 +376,8 @@ namespace Hl7.Fhir.Model
                 get { return PowerElement != null ? PowerElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      PowerElement = null; 
+                    if (!value.HasValue)
+                        PowerElement = null; 
                     else
                         PowerElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Power");
@@ -408,8 +408,8 @@ namespace Hl7.Fhir.Model
                 get { return BackCurveElement != null ? BackCurveElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      BackCurveElement = null; 
+                    if (!value.HasValue)
+                        BackCurveElement = null; 
                     else
                         BackCurveElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("BackCurve");
@@ -440,8 +440,8 @@ namespace Hl7.Fhir.Model
                 get { return DiameterElement != null ? DiameterElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      DiameterElement = null; 
+                    if (!value.HasValue)
+                        DiameterElement = null; 
                     else
                         DiameterElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("Diameter");
@@ -485,8 +485,8 @@ namespace Hl7.Fhir.Model
                 get { return ColorElement != null ? ColorElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      ColorElement = null; 
+                    if (value == null)
+                        ColorElement = null; 
                     else
                         ColorElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Color");
@@ -517,8 +517,8 @@ namespace Hl7.Fhir.Model
                 get { return BrandElement != null ? BrandElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      BrandElement = null; 
+                    if (value == null)
+                        BrandElement = null; 
                     else
                         BrandElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Brand");
@@ -549,8 +549,8 @@ namespace Hl7.Fhir.Model
                 get { return NotesElement != null ? NotesElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NotesElement = null; 
+                    if (value == null)
+                        NotesElement = null; 
                     else
                         NotesElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Notes");
@@ -638,6 +638,33 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(NotesElement, otherT.NotesElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DispenseComponent elements
+                    if (Product != null) yield return Product;
+                    if (EyeElement != null) yield return EyeElement;
+                    if (SphereElement != null) yield return SphereElement;
+                    if (CylinderElement != null) yield return CylinderElement;
+                    if (AxisElement != null) yield return AxisElement;
+                    if (PrismElement != null) yield return PrismElement;
+                    if (BaseElement != null) yield return BaseElement;
+                    if (AddElement != null) yield return AddElement;
+                    if (PowerElement != null) yield return PowerElement;
+                    if (BackCurveElement != null) yield return BackCurveElement;
+                    if (DiameterElement != null) yield return DiameterElement;
+                    if (Duration != null) yield return Duration;
+                    if (ColorElement != null) yield return ColorElement;
+                    if (BrandElement != null) yield return BrandElement;
+                    if (NotesElement != null) yield return NotesElement;
+                }
             }
             
         }
@@ -824,7 +851,22 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// VisionPrescription elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (DateWrittenElement != null) yield return DateWrittenElement;
+				if (Patient != null) yield return Patient;
+				if (Prescriber != null) yield return Prescriber;
+				if (Encounter != null) yield return Encounter;
+				if (Reason != null) yield return Reason;
+				foreach (var elem in Dispense) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

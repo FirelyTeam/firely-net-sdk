@@ -97,8 +97,8 @@ namespace Hl7.Fhir.Model
                 get { return ExpiryElement != null ? ExpiryElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      ExpiryElement = null; 
+                    if (value == null)
+                        ExpiryElement = null; 
                     else
                         ExpiryElement = new Hl7.Fhir.Model.FhirDateTime(value);
                     OnPropertyChanged("Expiry");
@@ -163,6 +163,21 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // InstanceComponent elements
+                    if (Identifier != null) yield return Identifier;
+                    if (ExpiryElement != null) yield return ExpiryElement;
+                    if (Quantity != null) yield return Quantity;
+                }
             }
             
         }
@@ -245,6 +260,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Substance, otherT.Substance)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // IngredientComponent elements
+                    if (Quantity != null) yield return Quantity;
+                    if (Substance != null) yield return Substance;
+                }
             }
             
         }
@@ -414,7 +443,21 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Substance elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				foreach (var elem in Category) { if (elem != null) yield return elem; }
+				if (Code != null) yield return Code;
+				if (DescriptionElement != null) yield return DescriptionElement;
+				foreach (var elem in Instance) { if (elem != null) yield return elem; }
+				foreach (var elem in Ingredient) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

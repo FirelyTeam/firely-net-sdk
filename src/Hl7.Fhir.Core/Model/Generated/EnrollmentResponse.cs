@@ -388,7 +388,26 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// EnrollmentResponse elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				if (Request != null) yield return Request;
+				if (OutcomeElement != null) yield return OutcomeElement;
+				if (DispositionElement != null) yield return DispositionElement;
+				if (Ruleset != null) yield return Ruleset;
+				if (OriginalRuleset != null) yield return OriginalRuleset;
+				if (CreatedElement != null) yield return CreatedElement;
+				if (Organization != null) yield return Organization;
+				if (RequestProvider != null) yield return RequestProvider;
+				if (RequestOrganization != null) yield return RequestOrganization;
+            }
+        }
     }
     
 }

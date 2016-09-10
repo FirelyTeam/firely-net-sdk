@@ -318,6 +318,22 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // ParameterDefinition elements
+                if (NameElement != null) yield return NameElement;
+                if (UseElement != null) yield return UseElement;
+                if (MinElement != null) yield return MinElement;
+                if (MaxElement != null) yield return MaxElement;
+                if (DocumentationElement != null) yield return DocumentationElement;
+                if (TypeElement != null) yield return TypeElement;
+                if (Profile != null) yield return Profile;
+            }
+        }
     
     
     }

@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Tests.Model
 #if PORTABLE45
 	public class PortableModelTests
 #else
-	public class ModelTests
+    public class ModelTests
 #endif
     {
         [TestMethod]
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual("123", identifier.Value);
             Assert.AreEqual("http://nhi.health.nz", identifier.System);
         }
-       
+
 
         [TestMethod]
         public void SimpleValueSupport()
@@ -137,14 +137,14 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(2, ew.Count());
 
             Assert.AreEqual(0, p.ModifierExtension.Count());
-            var me = p.AddExtension("http://fhir.org/ext/ext-test3", new FhirString("bla"), isModifier:true);
+            var me = p.AddExtension("http://fhir.org/ext/ext-test3", new FhirString("bla"), isModifier: true);
             Assert.AreEqual(1, p.ModifierExtension.Count());
             Assert.AreEqual(me, p.GetExtension("http://fhir.org/ext/ext-test3"));
             Assert.AreEqual(me, p.GetExtensions("http://fhir.org/ext/ext-test3").Single());
             Assert.AreEqual(3, p.AllExtensions().Count());
 
             var code = new Code("test");
-            p.AddExtension("http://fhir.org/ext/code", code);            
+            p.AddExtension("http://fhir.org/ext/code", code);
             Assert.AreEqual(code, p.GetExtensionValue<Code>("http://fhir.org/ext/code"));
 
             var text = new FhirString("test");
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Tests.Model
             var fhirbool = new FhirBoolean(true);
             p.AddExtension("http://fhir.org/ext/bool", fhirbool);
             Assert.AreEqual(fhirbool, p.GetExtensionValue<FhirBoolean>("http://fhir.org/ext/bool"));
-            
+
         }
 
 
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Tests.Model
 
         //    Assert.IsNotNull(pat.FindContainedResource(rref));
         //    Assert.IsNotNull(pat.FindContainedResource(rref.Url));
-            
+
         //    rref.Reference = "#pat3";
         //    Assert.IsNull(pat.FindContainedResource(rref));
         //}
@@ -210,8 +210,8 @@ namespace Hl7.Fhir.Tests.Model
         {
             var p = new Patient();
             p.Name.Add(new HumanName());
-        }  
-    
+        }
+
 
         [TestMethod]
         public void TestModelInfoTypeSelectors()
@@ -245,8 +245,8 @@ namespace Hl7.Fhir.Tests.Model
                 Assert.AreEqual(type, type2, String.Format("Failed: '{0}' != '{1}' ?!", type, type2));
                 var typeName2 = ModelInfo.FhirTypeToFhirTypeName(type2.Value);
                 Assert.AreEqual(typeName, typeName2, String.Format("Failed: '{0}' != '{1}' ?!", typeName, typeName2));
-		    }
-		}
+            }
+        }
 
         [TestMethod]
         public void TestStringValueInterface()
@@ -291,7 +291,24 @@ namespace Hl7.Fhir.Tests.Model
             sv.Value = "20161201 23:59:00";
             Assert.AreEqual(sv.Value, "20161201 23:59:00");
 
-    }
+        }
+
+
+        [TestMethod]
+        public void TestSubclassInfo()
+        {
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Resource, FHIRAllTypes.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.DomainResource, FHIRAllTypes.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Patient, FHIRAllTypes.Patient));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Observation, FHIRAllTypes.Patient));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Resource, FHIRAllTypes.Bundle));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.DomainResource, FHIRAllTypes.Bundle));
+
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.HumanName));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Patient));
+            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Element, FHIRAllTypes.Oid));
+        }
 
         [TestMethod]
         public void TestIntegerValueInterface()
@@ -310,8 +327,124 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsNotNull(iv);
             iv.Value = 12345;
             Assert.AreEqual(iv.Value, 12345);
-}
+        }
 
+        [TestMethod]
+        public void TestChildren_EmptyPatient()
+        {
+            var patient = new Patient();
+            var children = patient.Children.ToArray();
+            Base[] expected = { };
+            Assert.IsTrue(expected.SequenceEqual(children));
+        }
+
+        [TestMethod]
+        public void TestChildren_EmptyTiming()
+        {
+            var timing = new Timing();
+            var children = timing.Children.ToArray();
+            Base[] expected = { };
+            Assert.IsTrue(expected.SequenceEqual(children));
+        }
+
+        [TestMethod]
+        public void TestChildren_Patient()
+        {
+            var patient = new Patient()
+            {
+                Name =
+                {
+                    new HumanName()
+                    {
+                        Given = new string[] { "John" },
+                        Family = new string[] { "Doe" }
+                    },
+                     new HumanName()
+                    {
+                        Given = new string[] { "Alias" },
+                        Family = new string[] { "Alternate" }
+                    }
+                },
+                Address =
+                {
+                    new Address()
+                    {
+                        City = "Amsterdam",
+                        Line = new string[] { "Rokin" }
+                    }
+                }
+            };
+            var children = patient.Children.ToArray();
+            Base[] expected =
+            {
+                // ===== Resource elements =====
+                // patient.IdElement, patient.Meta, patient.ImplicitRulesElement, patient.LanguageElement,
+                
+                // ===== DomainResource elements =====
+                // patient.Text,
+                // patient.Contained = empty collection
+                // patient.Extension = empty collection
+                // patient.ModifierExtension = empty collection
+
+                // ===== Patient elements =====
+                // patient.Identifier = empty collection
+                // patient.ActiveElement,
+                patient.Name[0],
+                patient.Name[1],
+                // patient.Telecom = empty collection
+                // patient.GenderElement,
+                // patient.BirthDateElement,
+                // patient.Deceased,
+                patient.Address[0],
+                // patient.MaritalStatus,
+                // patient.MultipleBirth,
+                // patient.Photo = empty collection
+                // patient.Contact = empty collection
+                // patient.Animal,
+                // patient.Communication = empty collection
+                // patient.CareProvider = empty collection
+                // patient.ManagingOrganization
+                // patient.Link = empty collection
+            };
+            Assert.IsTrue(expected.SequenceEqual(children));
+
+            var name = patient.Name[0];
+            children = name.Children.ToArray();
+            expected = new Base[]
+            {
+                // ===== Element elements =====
+                // name.Extension = empty collection
+
+                // ===== HumanName elements =====
+                // name.UseElement,
+                // name.TextElement,
+                name.FamilyElement[0],
+                name.GivenElement[0],
+                // name.Period
+            };
+            Assert.IsTrue(expected.SequenceEqual(children));
+
+            var address = patient.Address[0];
+            children = address.Children.ToArray();
+            expected = new Base[]
+            {
+                // ===== Element elements =====
+                // name.Extension = empty collection
+
+                // ===== Address elements =====
+                // address.UseElement,
+                // address.TypeElement,
+                // address.TextElement,
+                address.LineElement[0],
+                address.CityElement,
+                // address.DistrictElement,
+                // address.StateElement,
+                // address.PostalCodeElement,
+                // address.CountryElement,
+                // address.Period
+            };
+            Assert.IsTrue(expected.SequenceEqual(children));
+        }
 
     }
 }

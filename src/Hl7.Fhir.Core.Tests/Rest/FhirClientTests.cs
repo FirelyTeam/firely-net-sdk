@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Tests.Rest
             FhirClient client = new FhirClient(testEndpoint);
             client.ReturnFullResource = true;       // which is also the default
 
-            var pat = client.Read<Patient>("Patient/example");
+            var pat = client.Read<Patient>("Patient/glossy");
             ResourceIdentity ri = pat.ResourceIdentity().WithBase(client.Endpoint);
             pat.Id = null;
             pat.Identifier.Clear();
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void CreateEditDelete()
         {
             FhirClient client = new FhirClient(testEndpoint);
-            var pat = client.Read<Patient>("Patient/example");
+            var pat = client.Read<Patient>("Patient/glossy");
             pat.Id = null;
             pat.Identifier.Clear();
             pat.Identifier.Add(new Identifier("http://hl7.org/test/2", "99999"));
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Tests.Rest
                     status = e.RawResponse.StatusCode;
                 };
 
-            var pat = client.Read<Patient>("Patient/example");
+            var pat = client.Read<Patient>("Patient/glossy");
             Assert.IsTrue(calledBefore);
             Assert.IsNotNull(status);
             Assert.IsNotNull(body);
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Tests.Rest
             var minimal = false;
             client.OnBeforeRequest += (object s, BeforeRequestEventArgs e) => e.RawRequest.Headers["Prefer"] = minimal ? "return=minimal" : "return=representation";
 
-            var result = client.Read<Patient>("Patient/example");
+            var result = client.Read<Patient>("Patient/glossy");
             Assert.IsNotNull(result);
             result.Id = null;
             result.Meta = null;
@@ -901,7 +901,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient")]
         public void TestReceiveErrorStatusWithOperationOutcomeIsHandled()
         {
-            var client = new FhirClient(testEndpoint);  // an address that returns Status 404 with an OperationOutcome
+            var client = new FhirClient("http://fhir3.healthintersections.com.au/open");  // an address that returns Status 404 with an OperationOutcome
 
             try
             {

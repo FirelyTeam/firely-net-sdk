@@ -121,6 +121,17 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Range elements
+                if (Low != null) yield return Low;
+                if (High != null) yield return High;
+            }
+        }
     
     
     }

@@ -32,6 +32,12 @@ namespace Hl7.Fhir.Support
             if (element.ObjectValue == null) return true;
 
             return false;
-        }                
+        } 
+        
+        public static bool IsNullOrEmpty(this Base element)
+        {
+            // Actually, we shoud really check all members...
+            return element == null;
+        }
     }
 }

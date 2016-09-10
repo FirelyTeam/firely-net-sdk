@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
         string Publisher { get; set; }
         FhirString PublisherElement { get; set; }
 
-        Hl7.Fhir.Model.Markdown Description { get; set; }
-        // FhirString DescriptionElement { get; set; }
+        Markdown Description { get; set; }
+        //FhirString DescriptionElement { get; set; }
 
         ConformanceResourceStatus? Status { get; set; }
         Code<Hl7.Fhir.Model.ConformanceResourceStatus> StatusElement { get; set; }
@@ -87,28 +87,12 @@ namespace Hl7.Fhir.Model
 
     public partial class OperationDefinition : IVersionableConformanceResource
     {
-        //Should have UseContext too
-        //[NotMapped]
-        //public List<CodeableConcept> UseContext
-        //{
-        //    get { return null; }
-        //    set {; }
-        //}
-
         public partial class ContactComponent : IConformanceResourceContact
         { }
     }
 
     public partial class SearchParameter : IConformanceResource
     {
-        ////Should have UseContext too
-        //[NotMapped]
-        //public List<CodeableConcept> UseContext
-        //{
-        //    get { return null; }
-        //    set {; }
-        //}
-
         public partial class ContactComponent : IConformanceResourceContact
         { }
     }
@@ -124,6 +108,13 @@ namespace Hl7.Fhir.Model
             set { ; }
         }
 
+        //[NotMapped]
+        //public FhirString DescriptionElement
+        //{
+        //    get { return null; }
+        //    set {; }
+        //}
+
         public partial class ContactComponent : IConformanceResourceContact
         { }
     }
@@ -136,13 +127,6 @@ namespace Hl7.Fhir.Model
 
     public partial class Conformance : IVersionableConformanceResource
     {
-        ////Should have UseContext too
-        //[NotMapped]
-        //public List<CodeableConcept> UseContext
-        //{
-        //    get { return null; }
-        //    set {; }
-        //}
         public partial class ContactComponent : IConformanceResourceContact
         { }
     }

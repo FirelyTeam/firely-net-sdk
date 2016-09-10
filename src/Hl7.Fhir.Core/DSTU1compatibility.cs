@@ -3,12 +3,37 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Model
 {
     #region << DSTU2 Compatability >>
+    public partial class StructureDefinition
+    {
+        /// <summary>
+        /// Type defined or constrained by this structure
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        [Obsolete("The ConstrainedType property was renamed, please change to use the Type", true)]
+        public string ConstrainedType
+        {
+            get { return TypeElement != null ? TypeElement.Value : null; }
+            set
+            {
+                if (value == null)
+                    TypeElement = null;
+                else
+                    TypeElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("Type");
+            }
+        }
+
+    }
+
     [Obsolete("The FHIRDefinedType enumeration was renamed, please change to FHIRAllTypes", true)]
     public enum FHIRDefinedType
     {

@@ -203,6 +203,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // AgentComponent elements
+                    if (Role != null) yield return Role;
+                    if (Actor != null) yield return Actor;
+                    if (UserId != null) yield return UserId;
+                    foreach (var elem in RelatedAgent) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -253,8 +269,8 @@ namespace Hl7.Fhir.Model
                 get { return TargetElement != null ? TargetElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      TargetElement = null; 
+                    if (value == null)
+                        TargetElement = null; 
                     else
                         TargetElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Target");
@@ -304,6 +320,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // RelatedAgentComponent elements
+                    if (Type != null) yield return Type;
+                    if (TargetElement != null) yield return TargetElement;
+                }
+            }
             
         }
         
@@ -340,8 +370,8 @@ namespace Hl7.Fhir.Model
                 get { return RoleElement != null ? RoleElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      RoleElement = null; 
+                    if (!value.HasValue)
+                        RoleElement = null; 
                     else
                         RoleElement = new Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>(value);
                     OnPropertyChanged("Role");
@@ -387,8 +417,8 @@ namespace Hl7.Fhir.Model
                 get { return ReferenceElement != null ? ReferenceElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      ReferenceElement = null; 
+                    if (value == null)
+                        ReferenceElement = null; 
                     else
                         ReferenceElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("Reference");
@@ -419,8 +449,8 @@ namespace Hl7.Fhir.Model
                 get { return DisplayElement != null ? DisplayElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DisplayElement = null; 
+                    if (value == null)
+                        DisplayElement = null; 
                     else
                         DisplayElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Display");
@@ -492,6 +522,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // EntityComponent elements
+                    if (RoleElement != null) yield return RoleElement;
+                    if (Type != null) yield return Type;
+                    if (ReferenceElement != null) yield return ReferenceElement;
+                    if (DisplayElement != null) yield return DisplayElement;
+                    foreach (var elem in Agent) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -748,7 +795,25 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Provenance elements
+				foreach (var elem in Target) { if (elem != null) yield return elem; }
+				if (Period != null) yield return Period;
+				if (RecordedElement != null) yield return RecordedElement;
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
+				if (Activity != null) yield return Activity;
+				if (Location != null) yield return Location;
+				foreach (var elem in PolicyElement) { if (elem != null) yield return elem; }
+				foreach (var elem in Agent) { if (elem != null) yield return elem; }
+				foreach (var elem in Entity) { if (elem != null) yield return elem; }
+				foreach (var elem in Signature) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

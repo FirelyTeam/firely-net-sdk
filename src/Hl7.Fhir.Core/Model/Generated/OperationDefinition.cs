@@ -105,8 +105,8 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
@@ -170,6 +170,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContactComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -206,8 +220,8 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Name");
@@ -239,8 +253,8 @@ namespace Hl7.Fhir.Model
                 get { return UseElement != null ? UseElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      UseElement = null; 
+                    if (!value.HasValue)
+                        UseElement = null; 
                     else
                         UseElement = new Code<Hl7.Fhir.Model.OperationParameterUse>(value);
                     OnPropertyChanged("Use");
@@ -272,8 +286,8 @@ namespace Hl7.Fhir.Model
                 get { return MinElement != null ? MinElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      MinElement = null; 
+                    if (!value.HasValue)
+                        MinElement = null; 
                     else
                         MinElement = new Hl7.Fhir.Model.Integer(value);
                     OnPropertyChanged("Min");
@@ -305,8 +319,8 @@ namespace Hl7.Fhir.Model
                 get { return MaxElement != null ? MaxElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      MaxElement = null; 
+                    if (value == null)
+                        MaxElement = null; 
                     else
                         MaxElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Max");
@@ -337,8 +351,8 @@ namespace Hl7.Fhir.Model
                 get { return DocumentationElement != null ? DocumentationElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DocumentationElement = null; 
+                    if (value == null)
+                        DocumentationElement = null; 
                     else
                         DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Documentation");
@@ -369,8 +383,8 @@ namespace Hl7.Fhir.Model
                 get { return TypeElement != null ? TypeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      TypeElement = null; 
+                    if (!value.HasValue)
+                        TypeElement = null; 
                     else
                         TypeElement = new Code<Hl7.Fhir.Model.FHIRAllTypes>(value);
                     OnPropertyChanged("Type");
@@ -401,8 +415,8 @@ namespace Hl7.Fhir.Model
                 get { return SearchTypeElement != null ? SearchTypeElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      SearchTypeElement = null; 
+                    if (!value.HasValue)
+                        SearchTypeElement = null; 
                     else
                         SearchTypeElement = new Code<Hl7.Fhir.Model.SearchParamType>(value);
                     OnPropertyChanged("SearchType");
@@ -517,6 +531,28 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ParameterComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    if (UseElement != null) yield return UseElement;
+                    if (MinElement != null) yield return MinElement;
+                    if (MaxElement != null) yield return MaxElement;
+                    if (DocumentationElement != null) yield return DocumentationElement;
+                    if (TypeElement != null) yield return TypeElement;
+                    if (SearchTypeElement != null) yield return SearchTypeElement;
+                    if (Profile != null) yield return Profile;
+                    if (Binding != null) yield return Binding;
+                    foreach (var elem in Part) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -553,8 +589,8 @@ namespace Hl7.Fhir.Model
                 get { return StrengthElement != null ? StrengthElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      StrengthElement = null; 
+                    if (!value.HasValue)
+                        StrengthElement = null; 
                     else
                         StrengthElement = new Code<Hl7.Fhir.Model.BindingStrength>(value);
                     OnPropertyChanged("Strength");
@@ -618,6 +654,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(ValueSet, otherT.ValueSet)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // BindingComponent elements
+                    if (StrengthElement != null) yield return StrengthElement;
+                    if (ValueSet != null) yield return ValueSet;
+                }
             }
             
         }
@@ -1284,7 +1334,35 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// OperationDefinition elements
+				if (UrlElement != null) yield return UrlElement;
+				if (VersionElement != null) yield return VersionElement;
+				if (NameElement != null) yield return NameElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (KindElement != null) yield return KindElement;
+				if (ExperimentalElement != null) yield return ExperimentalElement;
+				if (DateElement != null) yield return DateElement;
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (Description != null) yield return Description;
+				foreach (var elem in UseContext) { if (elem != null) yield return elem; }
+				if (Requirements != null) yield return Requirements;
+				if (IdempotentElement != null) yield return IdempotentElement;
+				if (CodeElement != null) yield return CodeElement;
+				if (CommentElement != null) yield return CommentElement;
+				if (Base != null) yield return Base;
+				if (SystemElement != null) yield return SystemElement;
+				foreach (var elem in TypeElement) { if (elem != null) yield return elem; }
+				if (InstanceElement != null) yield return InstanceElement;
+				foreach (var elem in Parameter) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

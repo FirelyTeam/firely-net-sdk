@@ -41,7 +41,7 @@ using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Model
 {
-    public static class XHtml
+    public static class XHtmlUtilities
     {
         public static bool IsValidValue(string value)
         {
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Model
 
         private static XmlSchemaSet compileXhtmlSchema()
         {
-            var assembly = typeof(XHtml).Assembly;
+            var assembly = typeof(XHtmlUtilities).Assembly;
             XmlSchemaSet schemas = new XmlSchemaSet();
 
             var schema = new StringReader(Properties.Resources.fhir_xhtml);

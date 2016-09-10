@@ -320,6 +320,21 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // RelatedResource elements
+                if (TypeElement != null) yield return TypeElement;
+                if (DisplayElement != null) yield return DisplayElement;
+                if (CitationElement != null) yield return CitationElement;
+                if (UrlElement != null) yield return UrlElement;
+                if (Document != null) yield return Document;
+                if (Resource != null) yield return Resource;
+            }
+        }
     
     
     }

@@ -12,14 +12,14 @@ using System.Security;
 #elif PORTABLE45
 [assembly: AssemblyTitle("Hl7.Fhir.STU3.Core Portable .Net 4.5")]
 #elif NET45
-[assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core .Net 4.5")]
+[assembly: AssemblyTitle("Hl7.Fhir.STU3.Core .Net 4.5")]
 #elif NET40
-[assembly: AssemblyTitle("Hl7.Fhir.DSTU2.Core .Net 4.0")]
+[assembly: AssemblyTitle("Hl7.Fhir.STU3.Core .Net 4.0")]
 #else
 #error No valid constant for target framework defined (NET40, NET45, or PORTABLE45)
 #endif
 
-[assembly: AssemblyDescription("Core .NET support for working with HL7 FHIR. Supports FHIR STU3")]
+[assembly: AssemblyDescription("Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (1.6)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("FHIR")]
 [assembly: AssemblyCopyright("Copyright Ewout Kramer and collaborators 2016")]

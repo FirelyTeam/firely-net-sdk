@@ -121,6 +121,17 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Ratio elements
+                if (Numerator != null) yield return Numerator;
+                if (Denominator != null) yield return Denominator;
+            }
+        }
     
     
     }

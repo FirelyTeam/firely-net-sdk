@@ -229,6 +229,20 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Meta elements
+                if (VersionIdElement != null) yield return VersionIdElement;
+                if (LastUpdatedElement != null) yield return LastUpdatedElement;
+                foreach (var elem in ProfileElement) { if (elem != null) yield return elem; }
+                foreach (var elem in Security) { if (elem != null) yield return elem; }
+                foreach (var elem in Tag) { if (elem != null) yield return elem; }
+            }
+        }
     
     
     }

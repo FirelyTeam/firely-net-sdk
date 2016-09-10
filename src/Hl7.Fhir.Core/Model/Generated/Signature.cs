@@ -247,6 +247,21 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+                // Signature elements
+                foreach (var elem in Type) { if (elem != null) yield return elem; }
+                if (WhenElement != null) yield return WhenElement;
+                if (Who != null) yield return Who;
+                if (OnBehalfOf != null) yield return OnBehalfOf;
+                if (ContentTypeElement != null) yield return ContentTypeElement;
+                if (BlobElement != null) yield return BlobElement;
+            }
+        }
     
     
     }

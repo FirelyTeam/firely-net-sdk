@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Support
 {
-    internal static class DateExtensions
+    public static class DateExtensions
     {
         public static DateTime? ToDateTime(this Model.FhirDateTime me)
         {

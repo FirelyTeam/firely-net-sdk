@@ -344,7 +344,26 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// SupplyDelivery elements
+				if (Identifier != null) yield return Identifier;
+				if (StatusElement != null) yield return StatusElement;
+				if (Patient != null) yield return Patient;
+				if (Type != null) yield return Type;
+				if (Quantity != null) yield return Quantity;
+				if (SuppliedItem != null) yield return SuppliedItem;
+				if (Supplier != null) yield return Supplier;
+				if (WhenPrepared != null) yield return WhenPrepared;
+				if (TimeElement != null) yield return TimeElement;
+				if (Destination != null) yield return Destination;
+				foreach (var elem in Receiver) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

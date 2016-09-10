@@ -85,8 +85,8 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
@@ -184,6 +184,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ParameterComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    if (Value != null) yield return Value;
+                    if (Resource != null) yield return Resource;
+                    foreach (var elem in Part) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -259,7 +275,16 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Parameters elements
+				foreach (var elem in Parameter) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

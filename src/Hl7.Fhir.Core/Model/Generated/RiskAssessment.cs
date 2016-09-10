@@ -112,8 +112,8 @@ namespace Hl7.Fhir.Model
                 get { return RelativeRiskElement != null ? RelativeRiskElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      RelativeRiskElement = null; 
+                    if (!value.HasValue)
+                        RelativeRiskElement = null; 
                     else
                         RelativeRiskElement = new Hl7.Fhir.Model.FhirDecimal(value);
                     OnPropertyChanged("RelativeRisk");
@@ -158,8 +158,8 @@ namespace Hl7.Fhir.Model
                 get { return RationaleElement != null ? RationaleElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      RationaleElement = null; 
+                    if (value == null)
+                        RationaleElement = null; 
                     else
                         RationaleElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Rationale");
@@ -217,6 +217,23 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(RationaleElement, otherT.RationaleElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // PredictionComponent elements
+                    if (Outcome != null) yield return Outcome;
+                    if (Probability != null) yield return Probability;
+                    if (RelativeRiskElement != null) yield return RelativeRiskElement;
+                    if (When != null) yield return When;
+                    if (RationaleElement != null) yield return RationaleElement;
+                }
             }
             
         }
@@ -492,7 +509,7 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent RiskAssessment_RAS_1 = new ElementDefinition.ConstraintComponent()
         {
-            Expression = "prediction.probability[x].all((low.empty() or ((low.code = '%') and (low.system = %ucum))) and (high.empty() or ((high.code = '%') and (high.system = %ucum))))",
+            Expression = "prediction.probability.all((low.empty() or ((low.code = '%') and (low.system = %ucum))) and (high.empty() or ((high.code = '%') and (high.system = %ucum))))",
             Key = "ras-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "low and high must be percentages, if present",
@@ -592,7 +609,31 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// RiskAssessment elements
+				if (Identifier != null) yield return Identifier;
+				if (BasedOn != null) yield return BasedOn;
+				if (Parent != null) yield return Parent;
+				if (StatusElement != null) yield return StatusElement;
+				if (Code != null) yield return Code;
+				if (Subject != null) yield return Subject;
+				if (Context != null) yield return Context;
+				if (Occurrence != null) yield return Occurrence;
+				if (Condition != null) yield return Condition;
+				if (Performer != null) yield return Performer;
+				if (Reason != null) yield return Reason;
+				if (Method != null) yield return Method;
+				foreach (var elem in Basis) { if (elem != null) yield return elem; }
+				foreach (var elem in Prediction) { if (elem != null) yield return elem; }
+				if (MitigationElement != null) yield return MitigationElement;
+				if (Note != null) yield return Note;
+            }
+        }
     }
     
 }

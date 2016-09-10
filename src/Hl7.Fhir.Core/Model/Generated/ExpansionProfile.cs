@@ -84,8 +84,8 @@ namespace Hl7.Fhir.Model
                 get { return NameElement != null ? NameElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      NameElement = null; 
+                    if (value == null)
+                        NameElement = null; 
                     else
                         NameElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Name");
@@ -148,6 +148,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContactComponent elements
+                    if (NameElement != null) yield return NameElement;
+                    foreach (var elem in Telecom) { if (elem != null) yield return elem; }
+                }
             }
             
         }
@@ -229,6 +243,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // CodeSystemComponent elements
+                    if (Include != null) yield return Include;
+                    if (Exclude != null) yield return Exclude;
+                }
+            }
             
         }
         
@@ -294,6 +322,19 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // CodeSystemIncludeComponent elements
+                    foreach (var elem in CodeSystem) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -330,8 +371,8 @@ namespace Hl7.Fhir.Model
                 get { return SystemElement != null ? SystemElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      SystemElement = null; 
+                    if (value == null)
+                        SystemElement = null; 
                     else
                         SystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("System");
@@ -362,8 +403,8 @@ namespace Hl7.Fhir.Model
                 get { return VersionElement != null ? VersionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      VersionElement = null; 
+                    if (value == null)
+                        VersionElement = null; 
                     else
                         VersionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Version");
@@ -412,6 +453,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // CodeSystemIncludeCodeSystemComponent elements
+                    if (SystemElement != null) yield return SystemElement;
+                    if (VersionElement != null) yield return VersionElement;
+                }
             }
             
         }
@@ -478,6 +533,19 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // CodeSystemExcludeComponent elements
+                    foreach (var elem in CodeSystem) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -514,8 +582,8 @@ namespace Hl7.Fhir.Model
                 get { return SystemElement != null ? SystemElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      SystemElement = null; 
+                    if (value == null)
+                        SystemElement = null; 
                     else
                         SystemElement = new Hl7.Fhir.Model.FhirUri(value);
                     OnPropertyChanged("System");
@@ -546,8 +614,8 @@ namespace Hl7.Fhir.Model
                 get { return VersionElement != null ? VersionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      VersionElement = null; 
+                    if (value == null)
+                        VersionElement = null; 
                     else
                         VersionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Version");
@@ -596,6 +664,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // CodeSystemExcludeCodeSystemComponent elements
+                    if (SystemElement != null) yield return SystemElement;
+                    if (VersionElement != null) yield return VersionElement;
+                }
             }
             
         }
@@ -677,6 +759,20 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DesignationComponent elements
+                    if (Include != null) yield return Include;
+                    if (Exclude != null) yield return Exclude;
+                }
+            }
             
         }
         
@@ -742,6 +838,19 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DesignationIncludeComponent elements
+                    foreach (var elem in Designation) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -777,8 +886,8 @@ namespace Hl7.Fhir.Model
                 get { return LanguageElement != null ? LanguageElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      LanguageElement = null; 
+                    if (value == null)
+                        LanguageElement = null; 
                     else
                         LanguageElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Language");
@@ -840,6 +949,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Use, otherT.Use)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DesignationIncludeDesignationComponent elements
+                    if (LanguageElement != null) yield return LanguageElement;
+                    if (Use != null) yield return Use;
+                }
             }
             
         }
@@ -906,6 +1029,19 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DesignationExcludeComponent elements
+                    foreach (var elem in Designation) { if (elem != null) yield return elem; }
+                }
+            }
             
         }
         
@@ -941,8 +1077,8 @@ namespace Hl7.Fhir.Model
                 get { return LanguageElement != null ? LanguageElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      LanguageElement = null; 
+                    if (value == null)
+                        LanguageElement = null; 
                     else
                         LanguageElement = new Hl7.Fhir.Model.Code(value);
                     OnPropertyChanged("Language");
@@ -1004,6 +1140,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Use, otherT.Use)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // DesignationExcludeDesignationComponent elements
+                    if (LanguageElement != null) yield return LanguageElement;
+                    if (Use != null) yield return Use;
+                }
             }
             
         }
@@ -1700,7 +1850,35 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// ExpansionProfile elements
+				if (UrlElement != null) yield return UrlElement;
+				if (Identifier != null) yield return Identifier;
+				if (VersionElement != null) yield return VersionElement;
+				if (NameElement != null) yield return NameElement;
+				if (StatusElement != null) yield return StatusElement;
+				if (ExperimentalElement != null) yield return ExperimentalElement;
+				if (PublisherElement != null) yield return PublisherElement;
+				foreach (var elem in Contact) { if (elem != null) yield return elem; }
+				if (DateElement != null) yield return DateElement;
+				if (Description != null) yield return Description;
+				if (CodeSystem != null) yield return CodeSystem;
+				if (IncludeDesignationsElement != null) yield return IncludeDesignationsElement;
+				if (Designation != null) yield return Designation;
+				if (IncludeDefinitionElement != null) yield return IncludeDefinitionElement;
+				if (IncludeInactiveElement != null) yield return IncludeInactiveElement;
+				if (ExcludeNestedElement != null) yield return ExcludeNestedElement;
+				if (ExcludeNotForUIElement != null) yield return ExcludeNotForUIElement;
+				if (ExcludePostCoordinatedElement != null) yield return ExcludePostCoordinatedElement;
+				if (DisplayLanguageElement != null) yield return DisplayLanguageElement;
+				if (LimitedExpansionElement != null) yield return LimitedExpansionElement;
+            }
+        }
     }
     
 }

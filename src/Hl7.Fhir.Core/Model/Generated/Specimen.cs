@@ -212,6 +212,23 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // CollectionComponent elements
+                    if (Collector != null) yield return Collector;
+                    if (Collected != null) yield return Collected;
+                    if (Quantity != null) yield return Quantity;
+                    if (Method != null) yield return Method;
+                    if (BodySite != null) yield return BodySite;
+                }
+            }
             
         }
         
@@ -247,8 +264,8 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
@@ -346,6 +363,22 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // TreatmentComponent elements
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Procedure != null) yield return Procedure;
+                    foreach (var elem in Additive) { if (elem != null) yield return elem; }
+                    if (Time != null) yield return Time;
+                }
+            }
             
         }
         
@@ -395,8 +428,8 @@ namespace Hl7.Fhir.Model
                 get { return DescriptionElement != null ? DescriptionElement.Value : null; }
                 set
                 {
-                if (value == null)
-                      DescriptionElement = null; 
+                    if (value == null)
+                        DescriptionElement = null; 
                     else
                         DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
                     OnPropertyChanged("Description");
@@ -510,6 +543,24 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Additive, otherT.Additive)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // ContainerComponent elements
+                    foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Type != null) yield return Type;
+                    if (Capacity != null) yield return Capacity;
+                    if (SpecimenQuantity != null) yield return SpecimenQuantity;
+                    if (Additive != null) yield return Additive;
+                }
             }
             
         }
@@ -799,7 +850,27 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// Specimen elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (AccessionIdentifier != null) yield return AccessionIdentifier;
+				if (StatusElement != null) yield return StatusElement;
+				if (Type != null) yield return Type;
+				if (Subject != null) yield return Subject;
+				if (ReceivedTimeElement != null) yield return ReceivedTimeElement;
+				foreach (var elem in Parent) { if (elem != null) yield return elem; }
+				foreach (var elem in Request) { if (elem != null) yield return elem; }
+				if (Collection != null) yield return Collection;
+				foreach (var elem in Treatment) { if (elem != null) yield return elem; }
+				foreach (var elem in Container) { if (elem != null) yield return elem; }
+				foreach (var elem in Note) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

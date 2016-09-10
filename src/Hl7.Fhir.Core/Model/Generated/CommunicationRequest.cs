@@ -184,6 +184,19 @@ namespace Hl7.Fhir.Model
                 
                 return true;
             }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // PayloadComponent elements
+                    if (Content != null) yield return Content;
+                }
+            }
             
         }
         
@@ -505,7 +518,29 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// CommunicationRequest elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (Category != null) yield return Category;
+				if (Sender != null) yield return Sender;
+				foreach (var elem in Recipient) { if (elem != null) yield return elem; }
+				foreach (var elem in Payload) { if (elem != null) yield return elem; }
+				foreach (var elem in Medium) { if (elem != null) yield return elem; }
+				if (Requester != null) yield return Requester;
+				if (StatusElement != null) yield return StatusElement;
+				if (Encounter != null) yield return Encounter;
+				if (Scheduled != null) yield return Scheduled;
+				foreach (var elem in Reason) { if (elem != null) yield return elem; }
+				if (RequestedOnElement != null) yield return RequestedOnElement;
+				if (Subject != null) yield return Subject;
+				if (Priority != null) yield return Priority;
+            }
+        }
     }
     
 }

@@ -60,7 +60,17 @@ namespace Hl7.Fhir.Model
 
             if (dest != null)
             {
-                if (UserData != null) dest.UserData = new Dictionary<string,object>(UserData);
+                // if (UserData != null) dest.UserData = new Dictionary<string, object>(UserData);
+                if (_annotations.IsValueCreated)
+                {
+                    dest.annotations.Clear();
+                    dest.annotations.AddRange(annotations);
+                }
+
+#pragma warning disable 618,620            
+                if (UserData != null) dest.UserData = new Dictionary<string, object>(UserData);
+#pragma warning restore 618
+
                 if (FhirComments != null) dest.FhirComments = new List<string>(FhirComments);
                 return dest;
             }
@@ -78,11 +88,53 @@ namespace Hl7.Fhir.Model
         private Dictionary<string, object> _userData = new Dictionary<string, object>();
 
         [NotMapped]
+        [Obsolete("Use the typed interface provided by IAnnotatable instead")]
         public Dictionary<string, object> UserData
         {
             get { return _userData; }
             private set { _userData = value; }
         }
+
+
+        private Lazy<List<object>> _annotations = new Lazy<List<object>>(() => new List<object>());
+        private List<object> annotations { get { return _annotations.Value; } }
+
+        public object Annotation(Type type)
+        {
+            return annotations.OfType(type).FirstOrDefault();
+        }
+
+        public A Annotation<A>() where A : class
+        {
+            return (A)Annotation(typeof(A));
+        }
+
+        public IEnumerable<object> Annotations(Type type)
+        {
+            return annotations.OfType(type);
+        }
+
+        public IEnumerable<A> Annotations<A>() where A : class
+        {
+            return annotations.OfType(typeof(A)).Cast<A>();
+        }
+
+        public void AddAnnotation(object annotation)
+        {
+            annotations.Add(annotation);
+        }
+
+        public void RemoveAnnotations(Type type)
+        {
+            annotations.RemoveOfType(type);
+        }
+
+        public void RemoveAnnotations<A>() where A : class
+        {
+            annotations.RemoveOfType(typeof(A));
+        }
+
+
 
 
         /// <summary>
@@ -127,7 +179,15 @@ namespace Hl7.Fhir.Model
 
 
         public abstract string TypeName { get; }
+
+        /// <summary>
+        /// Enumerate all child nodes.
+        /// Return a sequence of child elements, components and/or properties.
+        /// Child nodes are returned in the order defined by the FHIR specification.
+        /// First returns child nodes inherited from any base class(es), recursively.
+        /// Finally returns child nodes defined by the current class.
+        /// </summary>
+        [NotMapped]
+        public virtual IEnumerable<Base> Children { get { return Enumerable.Empty<Base>(); } }
     }
 }
-
-

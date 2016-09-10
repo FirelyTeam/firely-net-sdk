@@ -136,8 +136,8 @@ namespace Hl7.Fhir.Model
                 get { return StatusElement != null ? StatusElement.Value : null; }
                 set
                 {
-                if (!value.HasValue)
-                      StatusElement = null; 
+                    if (!value.HasValue)
+                        StatusElement = null; 
                     else
                         StatusElement = new Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus>(value);
                     OnPropertyChanged("Status");
@@ -200,6 +200,20 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
                 
                 return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    // BackboneElement elements
+                    foreach (var elem in ModifierExtension) { if (elem != null) yield return elem; }
+                    // StatusHistoryComponent elements
+                    if (StatusElement != null) yield return StatusElement;
+                    if (Period != null) yield return Period;
+                }
             }
             
         }
@@ -476,7 +490,27 @@ namespace Hl7.Fhir.Model
             
             return true;
         }
-        
+
+        [NotMapped]
+        public override IEnumerable<Base> Children
+        {
+            get
+            {
+				// EpisodeOfCare elements
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (StatusElement != null) yield return StatusElement;
+				foreach (var elem in StatusHistory) { if (elem != null) yield return elem; }
+				foreach (var elem in Type) { if (elem != null) yield return elem; }
+				foreach (var elem in Condition) { if (elem != null) yield return elem; }
+				if (Patient != null) yield return Patient;
+				if (ManagingOrganization != null) yield return ManagingOrganization;
+				if (Period != null) yield return Period;
+				foreach (var elem in ReferralRequest) { if (elem != null) yield return elem; }
+				if (CareManager != null) yield return CareManager;
+				foreach (var elem in Team) { if (elem != null) yield return elem; }
+				foreach (var elem in Account) { if (elem != null) yield return elem; }
+            }
+        }
     }
     
 }

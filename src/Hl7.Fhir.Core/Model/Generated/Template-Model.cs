@@ -1,6 +1,7 @@
 ﻿
+
 //
-// Model Generated on Mon, 15 Aug 2016 14:35:40 GMT for FHIR v1.6.0
+// Model Generated on Fri, 09 Sep 2016 22:27:42 GMT for FHIR v1.6.0
 //
 // Generated Shared Enumeration: ResourceType
 	// Used in model class (resource): CompartmentDefinition.resource.code
