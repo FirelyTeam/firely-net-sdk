@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (IsExpanding(profileUrl))
             {
                 throw Error.NotSupported(
-                    "Recursive profile snapshot generation detected on element '{0}'.\r\nProfile url stack:\r\n{1}", path, string.Join("\r\n", _expandingProfiles)
+                    "Recursive profile snapshot generation detected for profile '{0}' on element '{1}'.\r\nProfile url stack:\r\n{2}", profileUrl, path, string.Join("\r\n", _expandingProfiles)
                 );
             }
             _expandingProfiles.Push(profileUrl);

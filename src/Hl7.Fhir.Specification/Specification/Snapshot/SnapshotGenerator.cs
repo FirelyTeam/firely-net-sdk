@@ -58,6 +58,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 Element = Generate(structure)
             };
+            setCreatedBySnapshotGenerator(structure.Snapshot);
         }
 
         /// <summary>
@@ -771,46 +772,46 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
 #if DETECT_RECURSION
+            // Prevent endless recursion on root type Element
+            const string elemUrl = "http://hl7.org/fhir/StructureDefinition/Element";
+            if (profileUrl == elemUrl) { return true; }
+
             // Detect endless recursion
             // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
             _recursionChecker.OnBeforeExpandType(profileUrl, location != null ? location.Path : null);
 #endif
             try
             {
-                // Never try to regenerate the Element root type profile; this causes recursion...
-                if (sd.Name != "Element") // (sd.Base != null)
+                if (_settings.ExpandExternalProfiles
+                    && (sd.Snapshot == null 
+#if FORCE_EXPAND_ALL
+                        || (_settings.ForceExpandAll && !isCreatedBySnapshotGenerator(sd.Snapshot))
+#endif
+                        )
+                )
                 {
+                    // Automatically expand external profiles on demand
+                    Debug.Print("Recursively generate snapshot for type profile with url: '{0}' ...".FormatWith(sd.Url));
 
-                    if (_settings.ExpandExternalProfiles
-                        && (sd.Snapshot == null 
-#if FORCE_EXPAND_ALL
-                            || (_settings.ForceExpandAll && !isCreatedBySnapshotGenerator(sd.Snapshot))
-#endif
-                            )
-                    )
+                    // TODO: support SnapshotGeneratorSettings.ForceExpandAll
+                    // Use (timestamp) annotation to mark & detect already (forceably) re-expanded profiles!
+                    sd.Snapshot = new StructureDefinition.SnapshotComponent()
                     {
-                        // Automatically expand external profiles on demand
-                        Debug.Print("Recursively generate snapshot for type profile with url: '{0}' ...".FormatWith(sd.Url));
-
-                        // TODO: support SnapshotGeneratorSettings.ForceExpandAll
-                        // Use (timestamp) annotation to mark & detect already (forceably) re-expanded profiles!
-                        sd.Snapshot = new StructureDefinition.SnapshotComponent()
-                        {
-                            Element = generate(sd)
-                        };
+                        Element = generate(sd)
+                    };
 
 #if FORCE_EXPAND_ALL
-                        // Add in-memory annotation to prevent repeated expansion
-                        setCreatedBySnapshotGenerator(sd.Snapshot);
+                    // Add in-memory annotation to prevent repeated expansion
+                    setCreatedBySnapshotGenerator(sd.Snapshot);
 #endif
-                        if (!sd.HasSnapshot)
-                        {
-                            addIssueSnapshotGenerationFailed(profileUrl);
-                            return false;
-                        }
-
+                    if (!sd.HasSnapshot)
+                    {
+                        addIssueSnapshotGenerationFailed(profileUrl);
+                        return false;
                     }
+
                 }
+
                 if (!sd.HasSnapshot)
                 {
                     addIssueProfileHasNoSnapshot(location, profileUrl);
