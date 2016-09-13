@@ -92,7 +92,11 @@ namespace Hl7.Fhir.Specification.Tests
         // [Ignore] // For debugging purposes
         public void GenerateSingleSnapshot()
         {
-            // _settings.MergeTypeProfiles = false;
+            _settings.MergeTypeProfiles = true;
+            _settings.NormalizeElementBase = true;
+            _settings.ExpandExternalProfiles = true;
+            _settings.MarkChanges = false;
+            _settings.ForceExpandAll = true; // TEST
 
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
@@ -101,12 +105,14 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-alternate");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-procedurerequest");
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
 
             // [WMR 20160825] Examples by Simone Heckman - custom, free-form canonical url
             // => ResourceIdentity is obsolete!
             // var sd = _testResolver.FindStructureDefinition(@"http://fhir.de/StructureDefinition/kbv/betriebsstaette");
             // var sd = _testResolver.FindStructureDefinition(@"http://fhir.de/StructureDefinition/kbv/istNebenbetriebsstaette");
+
+            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBasic");
 
             Assert.IsNotNull(sd);
 
@@ -326,7 +332,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [Ignore] // For debugging purposes
         public void GenerateSingleSnapshotNormalizeBase()
         {
-            var sd = _testResolver.FindStructureDefinition(@"http://example.org/StructureDefinition/MyBasic");
+            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBasic");
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
@@ -1281,8 +1287,9 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Resource");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
 
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Basic");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
 
             Assert.IsNotNull(sd);
 
