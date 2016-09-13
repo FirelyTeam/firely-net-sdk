@@ -17,17 +17,13 @@ namespace Hl7.Fhir.FluentPath
 {
     public static class PocoNavigatorExtensions
     {
-        public static IEnumerable<Base> Select(this Base input, string expression, Resource resource = null)
+        public static IEnumerable<Base> ToFhirValues(this IEnumerable<ElementModel.IValueProvider> results)
         {
-            var inputNav = new PocoNavigator(input);
-            var resourceNav = resource != null ? new PocoNavigator(resource) : null;
-
-            var results = inputNav.Select(expression, resourceNav);
-            return results.Select(r => 
+            return results.Select(r =>
             {
                 if (r == null)
                     return null;
-            
+
                 if (r is Hl7.Fhir.FluentPath.PocoNavigator && (r as Hl7.Fhir.FluentPath.PocoNavigator).FhirValue != null)
                 {
                     return ((PocoNavigator)r).FhirValue;
@@ -68,7 +64,16 @@ namespace Hl7.Fhir.FluentPath
                     // This will throw an exception if the type isn't one of the FHIR types!
                     return (Base)result;
                 }
-            });            
+            });
+        }
+
+        public static IEnumerable<Base> Select(this Base input, string expression, Resource resource = null)
+        {
+            var inputNav = new PocoNavigator(input);
+            var resourceNav = resource != null ? new PocoNavigator(resource) : null;
+
+            var results = inputNav.Select(expression, resourceNav);
+            return results.ToFhirValues();
         }
 
         public static object Scalar(this Base input, string expression, Resource resource = null)
