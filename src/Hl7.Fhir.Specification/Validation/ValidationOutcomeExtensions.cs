@@ -21,6 +21,12 @@ namespace Hl7.Fhir.Validation
 
     public static class ValidationOutcomeExtensions
     {
+        public static OperationOutcome.IssueComponent AddIssue(this OperationOutcome outcome, OperationOutcome.IssueComponent issue)
+        {
+            outcome.Issue.Add(issue);
+            return issue;
+        }
+
         public static void AddIssue(this OperationOutcome outcome, params OperationOutcome.IssueComponent[] issue)
         {
             outcome.AddIssue((IEnumerable<OperationOutcome.IssueComponent>)issue);

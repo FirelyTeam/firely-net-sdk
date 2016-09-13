@@ -29,6 +29,11 @@ namespace Hl7.Fhir.Specification.Source
 
         private string _mask;
 
+        /// <summary>
+        /// Gets or sets the search string to match against the names of files in the content directory.
+        /// The source will only provide resources from files that match the specified mask.
+        /// The source will ignore all files that don't match the specified mask.
+        /// </summary>
         public string Mask
         {
             get { return _mask; }

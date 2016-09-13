@@ -34,8 +34,27 @@ namespace Hl7.Fhir.Specification.Source
         private readonly string CACHE_KEY = "FhirArtifactCache-" + typeof(ZipSource).Assembly.GetName().Version.ToString();
        
         private bool _prepared = false;
+        private string _mask;
 
         public string ZipPath { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the search string to match against the names of files in the ZIP archive.
+        /// The source will only provide resources from files that match the specified mask.
+        /// The source will ignore all files that don't match the specified mask.
+        /// </summary>
+        public string Mask
+        {
+            get { return _mask; }
+            set {
+                _mask = value;
+                if (_filesSource != null)
+                {
+                    _filesSource.Mask = Mask;
+                }
+                _prepared = false;
+            }
+        }
 
         public ZipSource(string zipPath)
         {
@@ -58,7 +77,10 @@ namespace Hl7.Fhir.Specification.Source
            
             var zc = new ZipCacher(ZipPath, CACHE_KEY);
             _filesSource = new DirectorySource(zc.GetContentDirectory(), includeSubdirectories: false);
-
+            if (!string.IsNullOrEmpty(Mask))
+            {
+                _filesSource.Mask = Mask;
+            }
             _prepared = true;
         }
 
