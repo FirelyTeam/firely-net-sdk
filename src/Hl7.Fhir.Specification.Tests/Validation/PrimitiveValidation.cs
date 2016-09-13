@@ -403,5 +403,38 @@ namespace Hl7.Fhir.Validation
             report = validator.Validate(p);
             Assert.IsTrue(report.Success);
         }
+
+        [TestMethod]
+        public void HarvestScopedIdentifiers()
+        {
+            var bundleXml = File.ReadAllText("TestData\\validation\\bundle-contained-references.xml");
+
+            var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
+            Assert.IsNotNull(bundle);
+            var cpNav = new PocoNavigator(bundle);
+
+            var references = ReferenceHarvester.Harvest(cpNav);
+            Assert.AreEqual(7, references.Count());
+            Assert.IsTrue(references.All(r => r.Kind == ReferenceKind.Bundled));
+            Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else
+
+            // Get one of the entries with no contained resources, an Organization
+            var orgNav = references.Single(r => r.Reference == "urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d");
+            Assert.AreEqual("Organization", orgNav.Instance.TypeName);
+            var orgReferences = ReferenceHarvester.Harvest(orgNav.Instance);
+            Assert.AreEqual(0, orgReferences.Count());
+            Assert.AreEqual("Organization", orgNav.Instance.TypeName);      // should not have navigated somewhere else
+
+            // Get one of the entries with contained resources, a Patient
+            var patNav = references.First(r => r.Reference == "http://example.org/fhir/Patient/e");
+            Assert.AreEqual("Patient", patNav.Instance.TypeName);
+            var patReferences = ReferenceHarvester.Harvest(patNav.Instance);
+            Assert.AreEqual(1, patReferences.Count());
+            Assert.AreEqual("orgX", patReferences.Single().Reference);
+            Assert.IsTrue(patReferences.All(r => r.Kind == ReferenceKind.Contained));
+
+            Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else
+        }
     }
 }
+
