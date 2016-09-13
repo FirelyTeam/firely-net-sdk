@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.FluentPath
 {
@@ -30,6 +31,7 @@ namespace Hl7.Fhir.FluentPath
 
             //_current = new PocoElementNavigator(model.TypeName, model);
             _parentPath = "";
+            _parentCommonPath = "";
 
             var me = new PocoElementNavigator(model.TypeName, model);
             _siblings = new List<PocoElementNavigator> { me };
@@ -43,6 +45,7 @@ namespace Hl7.Fhir.FluentPath
         private IList<PocoElementNavigator> _siblings;
         private int _index;
         private string _parentPath;
+        private string _parentCommonPath;
 
         private PocoElementNavigator Current
         {
@@ -116,8 +119,94 @@ namespace Hl7.Fhir.FluentPath
                 }
                 else
                 {
-                    int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
-                    return _parentPath + ".{0}[{1}]".FormatWith(Current.Name, myIndex);
+                    // Needs to consider that the index might be irrelevant
+                    if (Current.PropMap.IsCollection)
+                    {
+                        int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
+                        return _parentPath + ".{0}[{1}]".FormatWith(Current.Name, myIndex);
+                    }
+                    return _parentPath + ".{0}".FormatWith(Current.Name);
+                }
+            }
+        }
+
+        /// <summary>
+        /// This is different to the explicit path as it considers what is
+        /// usually used to reference the item, rather than explicitly
+        /// e.g. Questionnaire Items are referenced through LinkId,
+        ///      Telecoms are referenced through use/system
+        ///      Codes are referenced through system
+        ///      Identifiers are referenced through system
+        /// others all revert back to the normal Path indexing
+        /// </summary>
+        public string CommonPath
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_parentCommonPath))
+                {
+                    return Current.Name;
+                }
+                else
+                {
+                    // Needs to consider that the index might be irrelevant
+                    if (Current.PropMap.IsCollection)
+                    {
+                        if (Current.FhirValue is Identifier)
+                        {
+                            // Need to construct a where clause for this property
+                            Identifier ident = Current.FhirValue as Identifier;
+                            if (!string.IsNullOrEmpty(ident.System))
+                                return _parentCommonPath + ".{0}.where(system='{1}')".FormatWith(Current.Name, ident.System);
+                        }
+                        if (Current.FhirValue is ContactPoint)
+                        {
+                            // Need to construct a where clause for this property
+                            var cp = Current.FhirValue as ContactPoint;
+                            if (cp.System.HasValue)
+                                return _parentCommonPath + ".{0}.where(system='{1}')".FormatWith(Current.Name, cp.System.Value.GetLiteral());
+                        }
+                        if (Current.FhirValue is Coding)
+                        {
+                            // Need to construct a where clause for this property
+                            var item = Current.FhirValue as Coding;
+                            if (!string.IsNullOrEmpty(item.System))
+                                return _parentCommonPath + ".{0}.where(system='{1}')".FormatWith(Current.Name, item.System);
+                        }
+                        if (Current.FhirValue is Address)
+                        {
+                            // Need to construct a where clause for this property
+                            var addr = Current.FhirValue as Address;
+                            if (addr.Use.HasValue)
+                                return _parentCommonPath + ".{0}.where(use='{1}')".FormatWith(Current.Name, addr.Use.Value.GetLiteral());
+                        }
+                        if (Current.FhirValue is Questionnaire.ItemComponent)
+                        {
+                            // Need to construct a where clause for this property
+                            var item = Current.FhirValue as Questionnaire.ItemComponent;
+                            if (!string.IsNullOrEmpty(item.LinkId))
+                                return _parentCommonPath + ".{0}.where(linkId='{1}')".FormatWith(Current.Name, item.LinkId);
+                        }
+                        if (Current.FhirValue is QuestionnaireResponse.ItemComponent)
+                        {
+                            // Need to construct a where clause for this property
+                            var item = Current.FhirValue as QuestionnaireResponse.ItemComponent;
+                            if (!string.IsNullOrEmpty(item.LinkId))
+                                return _parentCommonPath + ".{0}.where(linkId='{1}')".FormatWith(Current.Name, item.LinkId);
+                        }
+                        if (Current.FhirValue is Extension)
+                        {
+                            // Need to construct a where clause for this property
+                            // The extension is different as with fluentpath there
+                            // is a shortcut format of .extension('url'), and since
+                            // all extensions have a property name of extension, can just at the brackets and string name
+                            var item = Current.FhirValue as Extension;
+                            return _parentCommonPath + ".{0}('{1}')".FormatWith(Current.Name, item.Url);
+                        }
+                        int myIndex = _siblings.Where(s => s.Name == Current.Name).ToList().IndexOf(Current);
+                        return _parentCommonPath + ".{0}[{1}]".FormatWith(Current.Name, myIndex);
+                    }
+                    return _parentCommonPath + ".{0}".FormatWith(Current.Name);
                 }
             }
         }
@@ -127,6 +216,7 @@ namespace Hl7.Fhir.FluentPath
             if (Current.Children().Any())
             {
                 _parentPath = Path;
+                _parentCommonPath = CommonPath;
                 _siblings = Current.Children().ToList();
                 _index = 0;
                 return true;
@@ -166,6 +256,7 @@ namespace Hl7.Fhir.FluentPath
             result._siblings = this._siblings;
             result._index = this._index;
             result._parentPath = this._parentPath;
+            result._parentCommonPath = this._parentCommonPath;
             // Console.WriteLine("Cloning: {0}", this.GetName());
             return result;
         }
