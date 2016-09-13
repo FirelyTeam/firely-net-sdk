@@ -15,10 +15,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             ExpandExternalProfiles = true,
+            ForceExpandAll = false,
             MarkChanges = false,
-
-            // Following settings concern controversial aspects, behavior is not well defined
-            // Needs discussion/decision from HL7 FHIR community
+            // Following settings are proposed and await approval from HL7 WGM
             MergeTypeProfiles = true,
             NormalizeElementBase = true
         };
@@ -33,6 +32,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             MarkChanges = settings.MarkChanges;
             MergeTypeProfiles = settings.MergeTypeProfiles;
             NormalizeElementBase = settings.NormalizeElementBase;
+            ForceExpandAll = settings.ForceExpandAll;
         }
 
         /// <summary>
