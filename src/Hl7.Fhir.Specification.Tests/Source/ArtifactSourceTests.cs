@@ -29,9 +29,9 @@ namespace Hl7.Fhir.Specification.Tests
         public void ZipCacherShouldCache()
         {
             var cacheKey = Guid.NewGuid().ToString();
-            var zipFile = Path.Combine(Directory.GetCurrentDirectory(),"specification.zip");
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
 
-            var fa = new ZipCacher(zipFile,cacheKey);
+            var fa = new ZipCacher(zipFile, cacheKey);
 
             Assert.IsFalse(fa.IsActual());
 
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsTrue(firstRun > secondRun);
 
-            fa = new ZipCacher(zipFile,cacheKey);
+            fa = new ZipCacher(zipFile, cacheKey);
 
             Assert.IsTrue(fa.IsActual());
 
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void SetupExampleDir()
         {
-           _testPath = prepareExampleDirectory();
+            _testPath = prepareExampleDirectory();
         }
 
         [TestMethod]
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var pat = new FhirXmlParser().Parse<Resource>(SerializationUtil.XmlReaderFromStream(stream));
                 Assert.IsNotNull(pat);
-            }         
+            }
         }
 
         [TestMethod]
@@ -145,10 +145,10 @@ namespace Hl7.Fhir.Specification.Tests
         public void ReadsSubdirectories()
         {
             var testPath = prepareExampleDirectory();
-            var fa = new DirectorySource(testPath, includeSubdirectories:true);
+            var fa = new DirectorySource(testPath, includeSubdirectories: true);
             var names = fa.ListArtifactNames();
 
-            Assert.AreEqual(5,names.Count());
+            Assert.AreEqual(5, names.Count());
             Assert.IsTrue(names.Contains("TestPatient.json"));
         }
 
@@ -172,6 +172,45 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(a);
             }
         }
-   
+
+        [TestMethod]
+        public void TestZipSourceMask()
+        {
+            var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
+            Assert.IsTrue(File.Exists(zipFile), "Error! specification.zip is not available.");
+            var za = new ZipSource(zipFile);
+            za.Mask = "profiles-types.xml";
+
+            var artifacts = za.ListArtifactNames().ToArray();
+            Assert.AreEqual(1, artifacts.Length);
+            Assert.AreEqual("profiles-types.xml", artifacts[0]);
+
+            var resourceIds = za.ListResourceUris(ResourceType.StructureDefinition).ToArray();
+            Assert.IsNotNull(resourceIds);
+            Assert.IsTrue(resourceIds.Length > 0);
+            Assert.IsTrue(resourceIds.All(url => url.StartsWith("http://hl7.org/fhir/StructureDefinition/")));
+
+            // + total number of known FHIR core types
+            // - total number of known (concrete) resources
+            // - 1 for abstract type Resource
+            // - 1 for abstract type DomainResource
+            // =======================================
+            //   total number of known FHIR (complex & primitive) datatypes
+            var coreDataTypes = ModelInfo.FhirCsTypeToString.Where(kvp => !ModelInfo.IsKnownResource(kvp.Key)
+                                                                            && kvp.Value != "Resource"
+                                                                            && kvp.Value != "DomainResource")
+                                                            .Select(kvp => kvp.Value);
+            var numCoreDataTypes = coreDataTypes.Count();
+            Assert.AreEqual(resourceIds.Length, numCoreDataTypes);
+
+            // Assert.IsTrue(resourceIds.All(url => ModelInfo.CanonicalUriForFhirCoreType));
+            var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName)).ToArray();
+            // Boths arrays should contains same urls, possibly in different order
+            Assert.AreEqual(coreTypeUris.Length, resourceIds.Length);
+            Assert.IsTrue(coreTypeUris.All(url => resourceIds.Contains(url)));
+            Assert.IsTrue(resourceIds.All(url => coreTypeUris.Contains(url)));
+
+        }
+
     }
 }
