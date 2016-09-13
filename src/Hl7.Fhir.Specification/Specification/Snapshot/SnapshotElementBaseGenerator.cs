@@ -17,7 +17,8 @@ using System.Diagnostics;
 namespace Hl7.Fhir.Specification.Snapshot
 {
     // Methods to (re-)generate the ElementDefinition.Base components from the associated base profile
-    // Controlled by _settings.NormalizeElementBase
+    // Uses annotations on ElementDefinition.Base to suppress duplicate (re-)generation
+    // Behavior is controlled by _settings.NormalizeElementBase
 
     partial class SnapshotGenerator
     {
