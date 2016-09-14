@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Notify observers
                 for (int i = 0; i < snapshot.Element.Count; i++)
                 {
-                    OnPrepareElement(snapshot.Element[i], baseStructure.Snapshot.Element[i]);
+                    OnPrepareElement(snapshot.Element[i], baseStructure, baseStructure.Snapshot.Element[i]);
                 }
             }
             else
@@ -689,7 +689,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
                         ensureElementBase(elem, baseElem, true);
 
-                        OnPrepareElement(elem, baseElem);
+                        OnPrepareElement(elem, baseStructure, baseElem);
                     }
                 }
             }

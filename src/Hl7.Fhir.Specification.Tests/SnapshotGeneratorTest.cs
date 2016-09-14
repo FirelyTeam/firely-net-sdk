@@ -347,7 +347,6 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        // [Ignore] // For debugging purposes
         public void GenerateDerivedProfileSnapshot()
         {
             // cqif-guidanceartifact profile is derived from cqif-knowledgemodule
@@ -369,7 +368,6 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        //[Ignore]
         public void GeneratePatientWithExtensionsSnapshot()
         {
             // Example by Chris Grenz
@@ -1087,7 +1085,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             var baseDef = e.BaseElement;
             elem.AddAnnotation(new BaseDefAnnotation(baseDef));
-            Debug.Write("[SnapshotElementHandler] #{0} '{1}' - Base: #{2} '{3}'".FormatWith(elem.GetHashCode(), elem.Path, baseDef.GetHashCode(), baseDef.Path));
+            Debug.Write("[SnapshotElementHandler] #{0} '{1}' - Base: #{2} '{3}' - Base Structure '{4}'".FormatWith(elem.GetHashCode(), elem.Path, baseDef.GetHashCode(), baseDef.Path, e.BaseStructure.Url));
             Debug.WriteLine(ann != null && ann.BaseElementDefinition != null ? " (old Base: #{0} '{1}')".FormatWith(ann.BaseElementDefinition.GetHashCode(), ann.BaseElementDefinition.Path) : "");
         }
 
