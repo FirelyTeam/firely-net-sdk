@@ -8,6 +8,7 @@
 
 using Hl7.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -25,11 +26,23 @@ namespace Hl7.Fhir.Validation
 
         public bool IsBundle { get; private set; }
 
+        private Lazy<List<Scope>> _children;
+
+        public List<Scope> Children { get { return _children.Value; } }
+
         public Scope(IElementNavigator container, string uri)
         {
-            Container = container;
+            Container = container.Clone();
             Path = container.Path;
             IsBundle = ModelInfo.FhirTypeNameToFhirType(container.TypeName) == FHIRDefinedType.Bundle;
+            Uri = uri;
+
+           _children = new Lazy<List<Scope>>(() => new List<Scope>(ReferenceHarvester.Harvest(Container)));
+        }
+
+        public Scope FindChild(string uri)
+        {
+            return Children.SingleOrDefault(s => s.Uri == uri);
         }
     }
 
@@ -38,65 +51,57 @@ namespace Hl7.Fhir.Validation
     {
         public void Append(IElementNavigator container)
         {
-            if(this.Any())
+            Scope scope = null;
+
+            if (this.Any())
             {
                 // If this was not the first scope to be added, we should normally find the container already present in the list of scopes, since
                 // when adding a parent container, we add the children to the list of scopes as well
-                var scope = this.SingleOrDefault(s => s.Path == container.Path);
-                if(scope == null)
+                scope = this.SingleOrDefault(s => s.Path == container.Path);
+                if (scope == null)
                     throw Error.Argument("Tried to append an orphan scope with path '{0}'".FormatWith(container.Path));
             }
+            else
+                scope = new Scope(container, "#");
 
-            AddRange(ReferenceHarvester.Harvest(container));
+            // Add the children to the list, but keep pointers to the entries in the parent too
+            AddRange(scope.Children);
         }
 
-        public void Remove(string path)
+        public void Remove(IElementNavigator container)
         {
-            var scopeToRemove = Find(path);
+            var scopeToRemove = Find(container.Path);
             if (scopeToRemove == null)
-                throw Error.Argument("There is no known scope for path '{0}'".FormatWith(path));
+                throw Error.Argument("There is no known scope for path '{0}'".FormatWith(container.Path));
 
             Remove(scopeToRemove);
         }
 
         public Scope FindParent(string path)
         {
-            return this.Where(s => path.StartsWith(s.Path + ".")).OrderBy(s => s.Path.Length).Reverse().FirstOrDefault();
-        }
-
-        public Scope FindParent(Scope child)
-        {
-            return FindParent(child.Path);
+            return this.Where(s => path.StartsWith(s.Path + "."))
+                .OrderBy(s => s.Path.Length).Reverse().FirstOrDefault();
         }
 
         public Scope Find(string path)
         {
-            return this.SingleOrDefault(s => s.Path == path);
+            return this.Where(s => s.Path == path).SingleOrDefault();
         }
-        public Scope NearestResource(string path)
+
+        public IEnumerable<Scope> Containers(string path)
         {
-            var result = Find(path);
+            Scope scan = Find(path);
+            if (scan == null)
+                scan = FindParent(path);
 
-            if (result == null)
-                result = FindParent(path);
+            while(scan != null)
+            {
+                yield return scan;
 
-            return result;
+                scan = FindParent(scan.Path);
+            }
         }
 
-        public Scope NearestBundle(string path)
-        {
-            var result = NearestResource(path);
-
-            while (result != null && !result.IsBundle)
-                result = FindParent(result);
-
-            return result;
-        }
-
-        public IdentifiedChildResource Resolve(string uri)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 
@@ -108,14 +113,16 @@ namespace Hl7.Fhir.Validation
         {
             if (isContainer(instance))
             {
-                var newScope = new Scope(instance.Clone(), ReferenceHarvester.Harvest(instance));
-                _scopes.Append(newScope);
+                _scopes.Append(instance);
             }
         }
 
         public void Pop(IElementNavigator instance)
         {
-            _scopes.Remove(instance.Path);
+            if (isContainer(instance))
+            {
+                _scopes.Remove(instance);
+            }
         }
 
         private static bool isContainer(IElementNavigator instance)
@@ -126,13 +133,29 @@ namespace Hl7.Fhir.Validation
 
         public IElementNavigator ResourceContext(IElementNavigator instance)
         {
-            var container = _scopes.NearestResource(instance.Path);
-            return container != null ? container.Container : null;
+            return _scopes.Containers(instance.Path).Take(1).Select(s => s.Container).SingleOrDefault();
         }
 
-        public IElementNavigator FindTarget(IElementNavigator me, string uri)
+        public string ContextFullUrl(IElementNavigator instance)
         {
-            var parent = Parent()
+            foreach (var container in _scopes.Containers(instance.Path))
+            {
+                if (!container.Uri.StartsWith("#"))
+                    return container.Uri;
+            }
+
+            return null;
+        }
+
+        public IElementNavigator Resolve(IElementNavigator instance, string uri)
+        {
+            foreach (var container in _scopes.Containers(instance.Path))
+            {
+                var result = container.FindChild(uri);
+                if (result != null) return result.Container;
+            }
+
+            return null;
         }
     }
 
@@ -167,8 +190,8 @@ namespace Hl7.Fhir.Validation
         {
             return instance.GetChildrenByName("contained")
                     .Select(child =>
-                        new Scope(child.Clone(),
-                            getStringValue(child.GetChildrenByName("id").FirstOrDefault())));                            
+                        new Scope(child,
+                            "#" + getStringValue(child.GetChildrenByName("id").FirstOrDefault())));                            
         }
 
         public static IEnumerable<Scope> HarvestBundle(IElementNavigator instance)
@@ -177,7 +200,7 @@ namespace Hl7.Fhir.Validation
                     .SelectMany(entry =>
                         entry.GetChildrenByName("resource").Take(1)
                             .Select(res =>
-                                new Scope(res.Clone(),
+                                new Scope(res,
                                     getStringValue(entry.GetChildrenByName("fullUrl").FirstOrDefault()))));
         }
     }
