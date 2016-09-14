@@ -152,6 +152,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // ***** Private Interface *****
 
+        // Merge children of the currently selected element from differential into snapshot
         void merge(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             var snapPos = snap.Bookmark();
@@ -218,6 +219,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
+        // Create a new resource element without a base element definition (for core type & resource profiles)
         void createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             StructureDefinition typeStructure = getStructureForElementType(diff.Current);
@@ -246,6 +248,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             mergeElement(snap, diff);
         }
 
+        // Recursively merge the currently selected element and (grand)children from differential into snapshot
         void mergeElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             // [WMR 20160816] Multiple inheritance - diamond problem
@@ -310,34 +313,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => snapshot generator should add this
                 fixExtensionUrl(snap);
             }
-
-            // [WMR 20160909] WRONG! This function is only called on differential element constraints
-            // So all other elements with complex types are NOT expanded...!!!
-            //else if (_settings.ExpandUnconstrainedElements)
-            //{
-            //    var types = snap.Current.Type;
-            //    if (types.Count == 1)
-            //    {
-            //        var primaryType = types[0];
-            //        var typeCode = primaryType.Code;
-            //        if (typeCode.HasValue && ModelInfo.IsDataType(typeCode.Value))
-            //        {
-            //            expandElement(snap);
-            //        }
-            //        // [WMR 20160903] Handle unknown/custom core types
-            //        else if (!typeCode.HasValue && primaryType.CodeElement != null)
-            //        {
-            //            var typeName = primaryType.CodeElement.ObjectValue as string;
-            //            if (!string.IsNullOrEmpty(typeName))
-            //            {
-            //                // Assume DataType; no way to determine...
-            //                expandElement(snap);
-            //            }
-            //        }
-            //    }
-            //}
         }
 
+        // Merge a differential ElementDefinition constraint into a snapshot ElementDefinition instance.
         void mergeElementDefinition(ElementDefinition snap, ElementDefinition diff)
         {
             ElementDefnMerger.Merge(this, snap, diff);
@@ -364,8 +342,15 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Following logic is configurable
         // By default, use strategy (A): ignore custom type profile, merge from base
         // If mergeTypeProfiles is enabled, then first merge custom type profile before merging base
+
+        // Resolve the type profile of the currently selected element and merge into snapshot
         bool mergeTypeProfiles(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
+            // Debug.Print("[mergeTypeProfiles] {0} : {1}", diff.Path, diff.Current.Type != null && diff.Current.Type.Count == 1 ? diff.Current.PrimaryTypeCode() : null);
+            // [WMR 20160913] Possible improvements:
+            // Don't recurse on special terminator elements, e.g. url, value, id
+            // Note that all these element definitions are marked with: <representation value="xmlAttr"/>
+
             var primaryDiffType = diff.Current.PrimaryType();
             if (primaryDiffType == null || primaryDiffType.IsReference())
             {
@@ -404,8 +389,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 primaryDiffTypeProfile = profileRef.CanonicalUrl;
             }
 
-            var baseStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
-            if (verifyStructureDef(baseStructure, primaryDiffTypeProfile, ToNamedNode(diff.Current)))
+            var typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
+            if (verifyStructureDef(typeStructure, primaryDiffTypeProfile, ToNamedNode(diff.Current)))
             {
                 // Clone and rebase
                 var rebasePath = diff.Path;
@@ -413,21 +398,21 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     rebasePath = ElementDefinitionNavigator.GetParentPath(rebasePath);
                 }
-                var rebasedBaseSnapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
-                rebasedBaseSnapshot.Rebase(rebasePath);
+                var rebasedTypeSnapshot = (StructureDefinition.SnapshotComponent)typeStructure.Snapshot.DeepCopy();
+                rebasedTypeSnapshot.Rebase(rebasePath);
 
                 // [WMR 20160907] Obsolete; performed by verifyStructureDef
                 // generateElementsBase(rebasedBaseSnapshot.Element, baseStructure.Base);
 
-                var baseNav = new ElementDefinitionNavigator(rebasedBaseSnapshot.Element);
+                var typeNav = new ElementDefinitionNavigator(rebasedTypeSnapshot.Element);
 
                 if (!profileRef.IsComplex)
                 {
-                    baseNav.MoveToFirstChild();
+                    typeNav.MoveToFirstChild();
                 }
                 else
                 {
-                    if (!baseNav.JumpToNameReference(profileRef.ElementName))
+                    if (!typeNav.JumpToNameReference(profileRef.ElementName))
                     {
                         addIssueInvalidProfileNameReference(diff.Current, profileRef.ElementName, primaryDiffTypeProfile);
                         return false;
@@ -438,12 +423,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (diff.HasChildren)
                 {
                     // Recursively merge the full profile, then merge overriding constraints from differential
-                    mergeElement(snap, baseNav);
+                    mergeElement(snap, typeNav);
                 }
                 else
                 {
                     // Only merge the profile root element; no need to expand children
-                    mergeElementDefinition(snap.Current, baseNav.Current);
+                    mergeElementDefinition(snap.Current, typeNav.Current);
                 }
 
                 return true;
@@ -613,7 +598,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Notify observers
                 for (int i = 0; i < snapshot.Element.Count; i++)
                 {
-                    OnPrepareElement(snapshot.Element[i], baseStructure.Snapshot.Element[i]);
+                    OnPrepareElement(snapshot.Element[i], baseStructure, baseStructure.Snapshot.Element[i]);
                 }
             }
             else
@@ -704,7 +689,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
                         ensureElementBase(elem, baseElem, true);
 
-                        OnPrepareElement(elem, baseElem);
+                        OnPrepareElement(elem, baseStructure, baseElem);
                     }
                 }
             }
@@ -800,16 +785,16 @@ namespace Hl7.Fhir.Specification.Snapshot
                         Element = generate(sd)
                     };
 
-#if FORCE_EXPAND_ALL
-                    // Add in-memory annotation to prevent repeated expansion
-                    setCreatedBySnapshotGenerator(sd.Snapshot);
-#endif
                     if (!sd.HasSnapshot)
                     {
                         addIssueSnapshotGenerationFailed(profileUrl);
                         return false;
                     }
 
+#if FORCE_EXPAND_ALL
+                    // Add in-memory annotation to prevent repeated expansion
+                    setCreatedBySnapshotGenerator(sd.Snapshot);
+#endif
                 }
 
                 if (!sd.HasSnapshot)

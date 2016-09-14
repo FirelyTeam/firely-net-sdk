@@ -15,11 +15,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             ExpandExternalProfiles = true,
-            //ExpandUnconstrainedElements = false,
+            ForceExpandAll = false,
             MarkChanges = false,
-
-            // Following settings concern controversial aspects, behavior is not well defined
-            // Needs discussion/decision from HL7 FHIR community
+            // Following settings are proposed and await approval from HL7 WGM
             MergeTypeProfiles = true,
             NormalizeElementBase = true
         };
@@ -31,10 +29,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         public SnapshotGeneratorSettings(SnapshotGeneratorSettings settings)
         {
             ExpandExternalProfiles = settings.ExpandExternalProfiles;
-            //ExpandUnconstrainedElements = settings.ExpandUnconstrainedElements;
             MarkChanges = settings.MarkChanges;
             MergeTypeProfiles = settings.MergeTypeProfiles;
             NormalizeElementBase = settings.NormalizeElementBase;
+            ForceExpandAll = settings.ForceExpandAll;
         }
 
         /// <summary>
@@ -62,16 +60,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// The FHIR API snapshot generator explicitly removes and re-generates these extensions for each profile.
         /// </summary>
         public bool MarkChanges { get; set; }
-
-        // /// <summary>
-        // /// EXPERIMENTAL!
-        // /// Enable this setting to recursively expand all profile elements, regardless of wether differential constraints exist.
-        // /// By default, the snapshot generator only expands elements with matching differential constraints.
-        // /// </summary>
-        // /// <remarks>
-        // /// If you enable this setting, the size of the resulting snapshot component may grow significantly due to the additional redundant information.
-        // /// </remarks>
-        // public bool ExpandUnconstrainedElements { get; set; }
 
         /// <summary>
         /// EXPERIMENTAL!

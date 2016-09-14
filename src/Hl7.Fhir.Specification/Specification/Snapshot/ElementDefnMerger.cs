@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // snap.base should already be there, and is not changed by the diff
 
-                if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type)) // !diff.IsExactly(snap))
+                if (!diff.Type.IsNullOrEmpty() && !diff.Type.IsExactly(snap.Type))
                 {
                     snap.Type = new List<ElementDefinition.TypeRefComponent>(diff.Type.DeepCopy());
                     foreach (var element in snap.Type) { OnConstraint(snap); }

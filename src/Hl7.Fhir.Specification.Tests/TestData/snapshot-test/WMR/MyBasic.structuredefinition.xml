@@ -3,7 +3,7 @@
   <meta>
     <lastUpdated value="2016-08-03T18:00:18.565+02:00" />
   </meta>
-  <url value="http://example.org/StructureDefinition/MyBasic" />
+  <url value="http://example.org/fhir/StructureDefinition/MyBasic" />
   <name value="MyBasic" />
   <status value="draft" />
   <fhirVersion value="1.0.2" />
