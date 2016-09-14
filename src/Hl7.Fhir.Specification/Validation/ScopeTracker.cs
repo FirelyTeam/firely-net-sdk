@@ -7,93 +7,133 @@
  */
 
 using Hl7.ElementModel;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Validation
 {
-    internal class ScopeTracker
+    internal class Scope
     {
-        private class Scope
+        public string Uri;
+
+        public IElementNavigator Container { get; private set; }
+        public string Path { get; private set; }
+
+        public bool IsBundle { get; private set; }
+
+        public Scope(IElementNavigator container, string uri)
         {
-            public Scope Parent;
-            public string Path;
-            public List<ScopedReference> References;
-            public IElementNavigator Container;
+            Container = container;
+            Path = container.Path;
+            IsBundle = ModelInfo.FhirTypeNameToFhirType(container.TypeName) == FHIRDefinedType.Bundle;
+        }
+    }
 
-            public ScopedReference Locate(string uri)
+
+    internal class ScopeList : List<Scope>
+    {
+        public void Append(IElementNavigator container)
+        {
+            if(this.Any())
             {
+                // If this was not the first scope to be added, we should normally find the container already present in the list of scopes, since
+                // when adding a parent container, we add the children to the list of scopes as well
+                var scope = this.SingleOrDefault(s => s.Path == container.Path);
+                if(scope == null)
+                    throw Error.Argument("Tried to append an orphan scope with path '{0}'".FormatWith(container.Path));
             }
 
-            public void Append(Scope child)
-            {
-                if (!child.Path.StartsWith(Path))
-                    throw Error.Argument("Instance with path '{0}' is not a child scope for path '{1}'".FormatWith(child.Path, Path));
-
-                if (child.Path == Path)
-                    throw Error.Argument("There is already a scope for path '{0}'".FormatWith(child.Path));
-
-                // Scope is a true child
-                child.Parent = this;
-            }
+            AddRange(ReferenceHarvester.Harvest(container));
         }
 
-        private Scope _root = null;
+        public void Remove(string path)
+        {
+            var scopeToRemove = Find(path);
+            if (scopeToRemove == null)
+                throw Error.Argument("There is no known scope for path '{0}'".FormatWith(path));
+
+            Remove(scopeToRemove);
+        }
+
+        public Scope FindParent(string path)
+        {
+            return this.Where(s => path.StartsWith(s.Path + ".")).OrderBy(s => s.Path.Length).Reverse().FirstOrDefault();
+        }
+
+        public Scope FindParent(Scope child)
+        {
+            return FindParent(child.Path);
+        }
+
+        public Scope Find(string path)
+        {
+            return this.SingleOrDefault(s => s.Path == path);
+        }
+        public Scope NearestResource(string path)
+        {
+            var result = Find(path);
+
+            if (result == null)
+                result = FindParent(path);
+
+            return result;
+        }
+
+        public Scope NearestBundle(string path)
+        {
+            var result = NearestResource(path);
+
+            while (result != null && !result.IsBundle)
+                result = FindParent(result);
+
+            return result;
+        }
+
+        public IdentifiedChildResource Resolve(string uri)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+    internal class ScopeTracker
+    {
+        private ScopeList _scopes = new ScopeList();
 
         public void Push(IElementNavigator instance)
         {
-            var isContainer = ModelInfo.FhirTypeNameToFhirType(instance.TypeName) == FHIRDefinedType.Bundle ||
-                                    ModelInfo.IsKnownResource(instance.TypeName);
-
-            var newScope = new Scope { Path = instance.Path };
-
-            if (isContainer)
+            if (isContainer(instance))
             {
-                var idList = ReferenceHarvester.Harvest(instance);
-                newScope.References = idList;
-                newScope.Container = instance.Clone();
+                var newScope = new Scope(instance.Clone(), ReferenceHarvester.Harvest(instance));
+                _scopes.Append(newScope);
             }
-
-            if (_root == null)
-                _root = newScope;
-            else
-                _root.Append(newScope);
         }
 
         public void Pop(IElementNavigator instance)
         {
-            var isBundle = ModelInfo.FhirTypeNameToFhirType(instance.TypeName) == FHIRDefinedType.Bundle);
-            var isResource = ModelInfo.IsKnownResource(instance.TypeName);
-
-            if (isBundle || isResource)
-            {
-                var path = instance.Path;
-                var scopeToRemove = _scopes.SingleOrDefault(s => s.Path == path);
-                if (scopeToRemove == null)
-                    throw Error.Argument("There is no known scope for path '{0}'".FormatWith(path));
-
-                _scopes.Remove(scopeToRemove);
-            }
+            _scopes.Remove(instance.Path);
         }
 
-
-        public Scope FindScopeFor(IElementNavigator instance)
+        private static bool isContainer(IElementNavigator instance)
         {
-                        
+            return ModelInfo.FhirTypeNameToFhirType(instance.TypeName) == FHIRDefinedType.Bundle ||
+                                    ModelInfo.IsKnownResource(instance.TypeName);
         }
-    }
 
-    internal struct ScopedReference
-    {
-        public ReferenceKind Kind;
-        public string Reference;
-        public IElementNavigator Instance;
+        public IElementNavigator ResourceContext(IElementNavigator instance)
+        {
+            var container = _scopes.NearestResource(instance.Path);
+            return container != null ? container.Container : null;
+        }
+
+        public IElementNavigator FindTarget(IElementNavigator me, string uri)
+        {
+            var parent = Parent()
+        }
     }
 
     internal class ReferenceHarvester
@@ -107,7 +147,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        public static List<ScopedReference> Harvest(IElementNavigator instance)
+        public static IEnumerable<Scope> Harvest(IElementNavigator instance)
         {
             var scanner = instance.Clone();
 
@@ -120,35 +160,25 @@ namespace Hl7.Fhir.Validation
                 return HarvestResource(instance);
             }
             else
-                return new List<ScopedReference>();
+                return Enumerable.Empty<Scope>();
         }
 
-        public static List<ScopedReference> HarvestResource(IElementNavigator instance)
+        public static IEnumerable<Scope> HarvestResource(IElementNavigator instance)
         {
             return instance.GetChildrenByName("contained")
                     .Select(child =>
-                        new ScopedReference
-                        {
-                            Instance = child.Clone(),
-                            Reference = getStringValue(child.GetChildrenByName("id").FirstOrDefault()),
-                            Kind = ReferenceKind.Contained
-                        })
-                    .ToList();
+                        new Scope(child.Clone(),
+                            getStringValue(child.GetChildrenByName("id").FirstOrDefault())));                            
         }
 
-        public static List<ScopedReference> HarvestBundle(IElementNavigator scanner)
+        public static IEnumerable<Scope> HarvestBundle(IElementNavigator instance)
         {
-            return scanner.GetChildrenByName("entry")
+            return instance.GetChildrenByName("entry")
                     .SelectMany(entry =>
                         entry.GetChildrenByName("resource").Take(1)
                             .Select(res =>
-                                new ScopedReference
-                                {
-                                    Instance = res.Clone(),
-                                    Reference = getStringValue(entry.GetChildrenByName("fullUrl").FirstOrDefault()),
-                                    Kind = ReferenceKind.Bundled
-                                }))
-                    .ToList();
+                                new Scope(res.Clone(),
+                                    getStringValue(entry.GetChildrenByName("fullUrl").FirstOrDefault()))));
         }
     }
 }

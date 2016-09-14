@@ -419,18 +419,18 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else
 
             // Get one of the entries with no contained resources, an Organization
-            var orgNav = references.Single(r => r.Reference == "urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d");
+            var orgNav = references.Single(r => r.Identifier == "urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d");
             Assert.AreEqual("Organization", orgNav.Instance.TypeName);
             var orgReferences = ReferenceHarvester.Harvest(orgNav.Instance);
             Assert.AreEqual(0, orgReferences.Count());
             Assert.AreEqual("Organization", orgNav.Instance.TypeName);      // should not have navigated somewhere else
 
             // Get one of the entries with contained resources, a Patient
-            var patNav = references.First(r => r.Reference == "http://example.org/fhir/Patient/e");
+            var patNav = references.First(r => r.Identifier == "http://example.org/fhir/Patient/e");
             Assert.AreEqual("Patient", patNav.Instance.TypeName);
             var patReferences = ReferenceHarvester.Harvest(patNav.Instance);
             Assert.AreEqual(1, patReferences.Count());
-            Assert.AreEqual("orgX", patReferences.Single().Reference);
+            Assert.AreEqual("orgX", patReferences.Single().Identifier);
             Assert.IsTrue(patReferences.All(r => r.Kind == ReferenceKind.Contained));
 
             Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else

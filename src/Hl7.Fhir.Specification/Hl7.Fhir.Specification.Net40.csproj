@@ -122,6 +122,7 @@
     <Compile Include="Validation\Issue.cs" />
     <Compile Include="Validation\OperationOutcomeValidationExtensions.cs" />
     <Compile Include="Validation\PocoValidationExtensions.cs" />
+    <Compile Include="Validation\ScopeTracker.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />
     <Compile Include="Validation\ValidationContext.cs" />
     <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
