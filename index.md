@@ -24,18 +24,21 @@ Get started by reading the [online documentation][3] or downloading the NuGet pa
 
 |Spec version|Core|Specification|
 |---|---|---|
-|DSTU 2.1|https://www.nuget.org/packages/Hl7.Fhir.DSTU21/|https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU21/|
+|STU 3 (Baltimore)|https://www.nuget.org/packages/Hl7.Fhir.STU3/|https://www.nuget.org/packages/Hl7.Fhir.Specification.STU3/|
 |DSTU2 | https://www.nuget.org/packages/Hl7.Fhir.DSTU2/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU2/ |
-|DSTU1| https://www.nuget.org/packages/Hl7.Fhir.DSTU/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU/ |
+|DSTU 2.1* (Montreal)|https://www.nuget.org/packages/Hl7.Fhir.DSTU21/|https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU21/|
+|DSTU1*| https://www.nuget.org/packages/Hl7.Fhir.DSTU/ | https://www.nuget.org/packages/Hl7.Fhir.Specification.DSTU/ |
  
-**Please note that the DSTU1 release is not maintained anymore.**
+** * The STU3 build is a connectathon build intended for use at the Sept 2016 Balitmore Connectathon. **
+** * Please note that the DSTU2.1 release was an interim build only intended for the May 2016 Montreal Connectathon, and is no longer maintained.**
+** * Please note that the DSTU1 release is not maintained anymore.**
 
 ## Support 
 We actively monitor the issues coming in through the GitHub repository at [https://github.com/ewoutkramer/fhir-net-api/issues](https://github.com/ewoutkramer/fhir-net-api/issues). You are welcome to register your bugs and feature suggestions there!
 
 For broader discussions, there's a ["FHIR on .NET" Google group](https://groups.google.com/forum/#!forum/fhir-dotnet).
 
-We are also members of the FHIR Skype Implementers chat.
+We are also members of the [FHIR Implementers chat](https://chat.fhir.org).
 
 
 ## Contributing ##
