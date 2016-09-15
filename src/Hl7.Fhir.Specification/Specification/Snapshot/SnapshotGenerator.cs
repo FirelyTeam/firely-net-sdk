@@ -1,13 +1,13 @@
-﻿// WORK IN PROGRESS
-// #define MERGE_PRIMITIVE_TYPES
-
-/* 
+﻿/* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
+
+// WORK IN PROGRESS
+// #define MERGE_PRIMITIVE_TYPES
 
 using System;
 using System.Collections.Generic;

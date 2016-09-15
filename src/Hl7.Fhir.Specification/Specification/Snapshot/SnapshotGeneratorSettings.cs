@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             ExpandExternalProfiles = true,
-            ForceExpandAll = false,
+            ForceExpandAll = false, // Only enable this when using a cached source...
             MarkChanges = false,
             // Following settings are proposed and await approval from HL7 WGM
             MergeTypeProfiles = true,
