@@ -1166,11 +1166,13 @@
 			<path value="Extension" />
 			<definition value="Record of the patients general research authorization status." />
 		</element>
+    <!-- [WMR 20160906] WRONG! Extension.url belongs *after* Extension.extension
 		<element id="Extension.url">
 			<path value="Extension.url" />
 			<fixedUri value="http://example.com/fhir/StructureDefinition/patient-research-authorization" />
 		</element>
-		<element id="Extension.extension:type">
+    -->
+    <element id="Extension.extension:type">
 			<path value="Extension.extension" />
 			<name value="type" />
 			<min value="1" />
@@ -1219,5 +1221,12 @@
 			<name value="date.value[x]" />
 			<min value="1" />
 		</element>
+
+    <!-- [WMR 20160906] CORRECTED: Extension.url belongs *after* Extension.extension! -->
+		<element id="Extension.url">
+			<path value="Extension.url" />
+			<fixedUri value="http://example.com/fhir/StructureDefinition/patient-research-authorization" />
+		</element>
+    
 	</differential>
 </StructureDefinition>

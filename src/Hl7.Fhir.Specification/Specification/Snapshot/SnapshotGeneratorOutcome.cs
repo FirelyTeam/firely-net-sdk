@@ -1,8 +1,24 @@
-﻿using System;
+﻿/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using System;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Validation;
 using Hl7.ElementModel;
 using Hl7.Fhir.Support;
+
+// [WMR 20160907] TODO: Add StructureDefinition.url value to issue data
+// Requires global access to the current StructDef url => now provided by recursion checker
+// TODO: Create unit tests to evaluate behavior for different kinds of errors, e.g.
+// - unresolved external (type/extension) profile
+// - invalid element order
+// - invalid constraint element (no base)
+// - ...
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -41,21 +57,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         void clearIssues() { _outcome = null; }
 
-        void addIssue(Issue issue, string message, INamedNode location)
+        OperationOutcome.IssueComponent addIssue(Issue issue, string message, INamedNode location = null, string profileUrl = null)
         {
             if (issue == null) { throw Error.ArgumentNull("issue"); }
             if (_outcome == null) { _outcome = new OperationOutcome(); }
-            _outcome.AddIssue(issue.ToIssueComponent(message, location));
-        }
-
-        void addIssue(Issue issue, string message, INamedNode location, Extension extension)
-        {
-            if (issue == null) { throw Error.ArgumentNull("issue"); }
-            if (extension == null) { throw Error.ArgumentNull("extension"); }
-            if (_outcome == null) { _outcome = new OperationOutcome(); }
-            var component = issue.ToIssueComponent(message, location);
-            component.Extension.Add(extension);
-            _outcome.AddIssue(component);
+            var component = _outcome.AddIssue(issue.ToIssueComponent(message, location));
+            // Return current profile url in Diagnostics field
+            component.Diagnostics = profileUrl ?? _recursionChecker.CurrentProfileUrl;
+            return component;
         }
 
         // Content errors
@@ -78,17 +87,17 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Snapshot's element turns out not to be expandable, so we can't move to the desired path
         // "Differential has nested constraints for node '{0}', but this is a leaf node in base"
         // Differential specifies constraint on child element of a leaf node in the base, i.e. node without child elements
-        public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHILD_CONSTRAINT = Issue.Create(10001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        //public static readonly Issue PROFILE_ELEMENTDEF_INVALID_CHILD_CONSTRAINT = Issue.Create(10001, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
-        void addIssueInvalidChildConstraint(ElementDefinition elementDef) { addIssueInvalidChildConstraint(ToNamedNode(elementDef)); }
-        void addIssueInvalidChildConstraint(INamedNode location)
-        {
-            addIssue(
-                PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT,
-                "Differential specifies invalid child constraints on leaf element '{0}'.".FormatWith(location != null ? location.Path : null),
-                location
-            );
-        }
+        //void addIssueInvalidChildConstraint(ElementDefinition elementDef) { addIssueInvalidChildConstraint(ToNamedNode(elementDef)); }
+        //void addIssueInvalidChildConstraint(INamedNode location)
+        //{
+        //    addIssue(
+        //        PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT,
+        //        "Differential specifies invalid child constraints on leaf element '{0}'.".FormatWith(location != null ? location.Path : null),
+        //        location
+        //    );
+        //}
         
         void addIssueInvalidNameReference(ElementDefinition elementDef, string name) { addIssueInvalidNameReference(ToNamedNode(elementDef), name); }
         void addIssueInvalidNameReference(INamedNode location, string name)
@@ -163,21 +172,15 @@ namespace Hl7.Fhir.Specification.Snapshot
         void addIssueProfileNotFound(INamedNode location, string profileUrl)
         {
             if (profileUrl == null) { throw Error.ArgumentNull("profileUrl"); }
-            var ext = new Extension(PROFILE_URL_EXT, new FhirUri(profileUrl));
             if (location != null)
             {
-                addIssue(Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, "Unable to resolve reference to profile '{0}' for element '{1}'".FormatWith(profileUrl, location.Path), location, ext);
+                addIssue(Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, "Unable to resolve reference to profile '{0}' for element '{1}'".FormatWith(profileUrl, location.Path), location, profileUrl);
             }
             else
             {
-                addIssue(Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, "Unable to resolve reference to profile '{0}'".FormatWith(profileUrl), location, ext);
+                addIssue(Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, "Unable to resolve reference to profile '{0}'".FormatWith(profileUrl), null, profileUrl);
             }
         }
-
-        /// <summary>
-        /// Canonical url of custom extension definition for OperationOutcome.IssueComponent; specifies the canonical url of an unresolved profile
-        /// </summary>
-        public static readonly string PROFILE_URL_EXT = "http://hl7.org/fhir/StructureDefinition/profileUrl";
 
         // "Resolved the external profile with url '{0}', but it does not contain a snapshot representation."
         // Issue.UNAVAILABLE_NEED_SNAPSHOT
@@ -186,26 +189,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         void addIssueProfileHasNoSnapshot(INamedNode location, string profileUrl)
         {
             if (profileUrl == null) { throw Error.ArgumentNull("profileUrl"); }
-            var ext = new Extension(PROFILE_URL_EXT, new FhirUri(profileUrl));
-            addIssue(Issue.UNAVAILABLE_NEED_SNAPSHOT, "The resolved external profile with url '{0}' has no snapshot.".FormatWith(profileUrl), location, ext);
+            addIssue(Issue.UNAVAILABLE_NEED_SNAPSHOT, "The resolved external profile with url '{0}' has no snapshot.".FormatWith(profileUrl), location, profileUrl);
         }
 
         // Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED
-    }
-
-    public static class SnapshotGeneratorOperationOutcomeIssueExtensions
-    {
-        /// <summary>
-        /// Extract the target profile url from the specified <see cref="OperationOutcome.IssueComponent"/> instance, if specified.
-        /// The value is resolved from a custom extension with a canonical url defined by <see cref="SnapshotGenerator.PROFILE_URL_EXT"/>.
-        /// </summary>
-        /// <param name="issue"></param>
-        /// <returns></returns>
-        public static string GetProfileUrl(this OperationOutcome.IssueComponent issue)
+        void addIssueSnapshotGenerationFailed(string profileUrl = null)
         {
-            if (issue == null) { return null; } // { throw Error.ArgumentNull(nameof(issue)); }
-            var urlElem = issue.GetExtensionValue<FhirUri>(SnapshotGenerator.PROFILE_URL_EXT);
-            return urlElem != null ? urlElem.Value : null;
+            if (profileUrl == null) { profileUrl = _recursionChecker.CurrentProfileUrl; } // throw Error.ArgumentNull("profileUrl");
+            addIssue(Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, "Snapshot generation failed for profile with url '{0}'.".FormatWith(profileUrl), null, profileUrl);
         }
     }
 

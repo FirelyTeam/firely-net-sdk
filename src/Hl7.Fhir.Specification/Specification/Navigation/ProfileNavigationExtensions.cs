@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Navigation
@@ -30,13 +31,16 @@ namespace Hl7.Fhir.Specification.Navigation
                 var newPaths = new List<string>() { path };
 
                 rebaseChildren(nav, path, newPaths);
+                Debug.Assert(root.Element.Count == newPaths.Count);
 
                 var snapshot = root.Element;
 
                 // Can only change the paths after navigating the tree, otherwise the
                 // navigation functions (which are based on the paths) won't function correctly
                 for (var i = 0; i < root.Element.Count; i++)
+                {
                     root.Element[i].Path = newPaths[i];
+                }
             }
         }
 
@@ -99,7 +103,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns>A <see cref="ElementDefinition.TypeRefComponent"/> instance, or <c>null</c>.</returns>
         public static ElementDefinition.TypeRefComponent PrimaryType(this ElementDefinition defn)
         {
-            return defn.Type != null ? defn.Type.FirstOrDefault() : null;
+            return defn.Type != null && defn.Type.Count > 0 ? defn.Type[0] : null;
         }
 
         /// <summary>Enumerates the type profile references of the primary element type.</summary>
