@@ -179,17 +179,21 @@
       <Using Namespace="System.Xml.Linq" />
       <Using Namespace="System.IO" />
       <Code Type="Fragment" Language="cs"><![CDATA[
-		  try
-		  {
-		    Log.LogMessage(string.Format("Cleaning spec files in directory {0}", DirectoryName));
+          try
+          {
+            Log.LogMessage(string.Format("Cleaning spec files in directory {0}", DirectoryName));
 
-			var fhirns = XNamespace.Get("http://hl7.org/fhir");
-			var xmlns = XNamespace.Xmlns;
-			var files = Directory.EnumerateFiles(DirectoryName, "*.xml");
+            var fhirns = XNamespace.Get("http://hl7.org/fhir");
+            var xmlns = XNamespace.Get("http://www.w3.org/1999/xhtml");
+            
+            var files = Directory.EnumerateFiles(DirectoryName, "*.xml");
 
+            Log.LogMessage(string.Format("Cleaning {0} files", files.Count()));
             foreach(var file in files)
             {
                 var xdoc = XDocument.Load(file);
+                var sizeBefore = xdoc.ToString().Length;
+                
                 var narrative = xdoc.Elements(fhirns + "Bundle").Elements(fhirns + "entry").Elements(fhirns + "resource")
                         .Elements().Elements(fhirns + "text").Elements(xmlns + "div");
                 foreach(var narrativeElement in narrative)
@@ -199,15 +203,19 @@
                         new XText("The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library")));
                 }
 
+                var sizeAfter = xdoc.ToString().Length;
+                Log.LogMessage(string.Format("File {0} shrunk from {1} to {2} bytes", file, sizeBefore, sizeAfter));
                 xdoc.Save(file);
             }
-		  }
-		  catch(Exception ex)
-		  {
-			Log.LogErrorFromException(ex);
-			return false;
-		  }
-		]]></Code>
+          }
+          catch(Exception ex)
+          {
+            Log.LogMessage("Crap!");
+            Log.LogErrorFromException(ex);
+            return false;
+          }
+        ]]></Code>
     </Task>
   </UsingTask>
+
 </Project>

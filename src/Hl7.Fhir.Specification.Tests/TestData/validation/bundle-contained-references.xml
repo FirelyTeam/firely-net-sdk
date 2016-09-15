@@ -91,9 +91,14 @@
             <id value="orgX" />
           </Organization>
         </contained>
+        <contained>
+          <Organization>
+            <id value="orgY" />
+          </Organization>
+        </contained>
         <careProvider>
           <!-- reference to the contained organization -->
-          <reference value="#orgX"/>
+          <reference value="#orgY"/>
         </careProvider>
       </Patient>
     </resource>

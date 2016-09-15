@@ -62,7 +62,10 @@ namespace Hl7.Fhir.Validation
                     throw Error.Argument("Tried to append an orphan scope with path '{0}'".FormatWith(container.Path));
             }
             else
+            {
                 scope = new Scope(container, "#");
+                this.Add(scope);
+            }
 
             // Add the children to the list, but keep pointers to the entries in the parent too
             AddRange(scope.Children);
@@ -109,7 +112,7 @@ namespace Hl7.Fhir.Validation
     {
         private ScopeList _scopes = new ScopeList();
 
-        public void Push(IElementNavigator instance)
+        public void Enter(IElementNavigator instance)
         {
             if (isContainer(instance))
             {
@@ -117,7 +120,7 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        public void Pop(IElementNavigator instance)
+        public void Leave(IElementNavigator instance)
         {
             if (isContainer(instance))
             {

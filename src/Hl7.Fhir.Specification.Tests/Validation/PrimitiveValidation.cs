@@ -464,6 +464,50 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else
         }
 
+        [TestMethod]
+        public void BuildScopeList()
+        {
+            var bundleXml = File.ReadAllText("TestData\\validation\\bundle-contained-references.xml");
+
+            var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
+            Assert.IsNotNull(bundle);
+            IElementNavigator cpNav = new PocoNavigator(bundle);
+
+            var tracker = new ScopeTracker();
+            tracker.Enter(cpNav);
+
+            var entries = cpNav.GetChildrenByName("entry").GetChildrenByName("resource");
+
+            int index = 0;
+            foreach (var entry in entries)
+            {
+                tracker.Enter(entry);
+
+                if (index == 6)
+                {
+                    var orgX =  entry.GetChildrenByName("contained").First();
+
+                    tracker.Enter(orgX);
+                    Assert.AreEqual("http://example.org/fhir/Patient/e", tracker.ContextFullUrl(orgX));
+                    Assert.AreEqual("Bundle.entry[6].resource[0].contained[0]", tracker.ResourceContext(orgX).Path);
+                    tracker.Leave(orgX);
+
+                    var careProvRef = entry.GetChildrenByName("careProvider").GetChildrenByName("reference").Single();
+                    Assert.AreEqual("Bundle.entry[6].resource[0]", tracker.ResourceContext(careProvRef).Path);
+
+                    tracker.Enter(careProvRef);
+                    Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", tracker.Resolve(careProvRef, "#orgY").Path);
+                    Assert.AreEqual("Bundle.entry[2].resource[0]", tracker.Resolve(careProvRef, "http://example.org/fhir/Patient/a").Path);
+                    tracker.Leave(careProvRef);
+                }
+
+                tracker.Leave(entry);
+
+                index++;
+            }
+
+            tracker.Leave(cpNav);
+        }
     }
 }
 
