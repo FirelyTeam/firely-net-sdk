@@ -40,6 +40,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             private void merge(ElementDefinition snap, ElementDefinition diff)
             {
+                // [WMR 20160915] Important! Derived profiles should never inherit the ChangedByDiff extension
+                // Caller should make sure that existing extensions have been removed from snap,
+                // otherwise associated diff elems will be considered as changed (because they don't have the extension yet).
+
                 // bool isExtensionConstraint = snap.Path == "Extension" || snap.IsExtension();
 
                 // paths can be changed under one circumstance: the snap is a choice[x] element, and diff limits the type choices
@@ -232,7 +236,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     // [WMR 20160915] Never inherit Changed extension from base profile!
                     // Remove before comparing
-                    result.RemoveAllChangedByDiff();
+                    // result.RemoveAllChangedByDiff();
 
                     // Just add new elements to the result, never replace existing ones
                     foreach (var element in diff)

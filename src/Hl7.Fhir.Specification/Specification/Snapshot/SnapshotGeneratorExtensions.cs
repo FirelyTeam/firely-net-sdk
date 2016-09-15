@@ -78,16 +78,16 @@ namespace Hl7.Fhir.Specification.Snapshot
         //    }
         //}
 
-        ///// <summary>Removes the <see cref="CHANGED_BY_DIFF_EXT"/> extension from the snapshot element definition and it's child elements.</summary>
-        ///// <param name="elemDef">An <see cref="ElementDefinition"/> instance.</param>
-        //public static void ClearAllChangedByDiff(this ElementDefinition elemDef)
-        //{
-        //    ClearAllExtensions(elemDef, CHANGED_BY_DIFF_EXT);
-        //}
+            ///// <summary>Removes the <see cref="CHANGED_BY_DIFF_EXT"/> extension from the snapshot element definition and it's child elements.</summary>
+            ///// <param name="elemDef">An <see cref="ElementDefinition"/> instance.</param>
+            //public static void ClearAllChangedByDiff(this ElementDefinition elemDef)
+            //{
+            //    ClearAllExtensions(elemDef, CHANGED_BY_DIFF_EXT);
+            //}
 
-        /// <summary>Removes a specific extension from the snapshot element definition and it's descendant elements, recursively.</summary>
-        /// <param name="elemDef">An <see cref="ElementDefinition"/> instance.</param>
-        /// <param name="uri">The canonical url of the extension.</param>
+            /// <summary>Removes a specific extension from the snapshot element definition and it's descendant elements, recursively.</summary>
+            /// <param name="elemDef">An <see cref="ElementDefinition"/> instance.</param>
+            /// <param name="uri">The canonical url of the extension.</param>
         internal static void ClearAllExtensions(this ElementDefinition elemDef, string uri)
         {
             if (elemDef == null) return;

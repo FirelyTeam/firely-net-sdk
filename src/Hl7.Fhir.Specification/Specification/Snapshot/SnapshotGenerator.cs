@@ -1,9 +1,7 @@
 ﻿#define DETECT_RECURSION
 #define FORCE_EXPAND_ALL
 #define MERGE_NEW_ELEMS
-#define MERGE_PRIMITIVE_TYPES
-
-// TODO
+// WORK IN PROGRESS
 // #define MERGE_PRIMITIVE_TYPES
 
 /* 
@@ -229,14 +227,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             StructureDefinition typeStructure = getStructureForElementType(diff.Current);
             if (typeStructure != null)
             {
-                // var clonedSnapshot = (StructureDefinition.SnapshotComponent)typeStructure.Snapshot.DeepCopy();
-                // clonedSnapshot.Rebase(diff.Path);
-                // var newElement = clonedSnapshot.Element[0];
-                var newElement = (ElementDefinition)typeStructure.Snapshot.Element[0].DeepCopy();
-                Debug.Assert(newElement.IsRootElement());
+                var baseElement = typeStructure.Snapshot.Element[0];
+                Debug.Assert(baseElement.IsRootElement());
+                var newElement = (ElementDefinition)baseElement.DeepCopy();
                 newElement.Path = ElementDefinitionNavigator.ReplacePathRoot(newElement.Path, diff.Path);
-
                 newElement.Base = null;
+
+                // [WMR 20160915] NEW: Notify subscribers
+                OnPrepareElement(newElement, typeStructure, baseElement);
+
                 mergeElementDefinition(newElement, diff.Current);
 
                 snap.AppendChild(newElement);
@@ -244,10 +243,16 @@ namespace Hl7.Fhir.Specification.Snapshot
             else
             {
                 var clonedElem = (ElementDefinition)diff.Current.DeepCopy();
+
+                // [WMR 20160915] NEW: Notify subscribers
+                OnPrepareElement(clonedElem, null, null);
+
                 snap.AppendChild(clonedElem);
             }
+
             // Notify clients about a snapshot element with differential constraints
             OnConstraint(snap.Current);
+
             // Merge children
             mergeElement(snap, diff);
         }
@@ -368,17 +373,22 @@ namespace Hl7.Fhir.Specification.Snapshot
             // TODO: If the differential overrides base type code, then merge primitive type profile (root elem only)
             // e.g. Extension.url : uri => Element : Element
             // Not necessary to expand the primitive structure, merge root differential element
-            var primaryDiffTypeCode = primaryDiffType != null ? primaryDiffType.Code : null;
-            var primarySnapTypeCode = primarySnapType != null ? primarySnapType.Code : null;
-            if (string.IsNullOrEmpty(primaryDiffTypeProfile) && primaryDiffTypeCode.HasValue)
+            // Exclude root element, base has already been merged via StructureDef.Base
+            if (!snap.Current.IsRootElement())
             {
-                primaryDiffTypeProfile = ModelInfo.CanonicalUriForFhirCoreType(primaryDiffTypeCode.Value);
-            }
-            if (string.IsNullOrEmpty(primarySnapTypeProfile) && primarySnapTypeCode.HasValue)
-            {
-                primarySnapTypeProfile = ModelInfo.CanonicalUriForFhirCoreType(primarySnapTypeCode.Value);
+                var primaryDiffTypeCode = primaryDiffType != null ? primaryDiffType.Code : null;
+                var primarySnapTypeCode = primarySnapType != null ? primarySnapType.Code : null;
+                if (string.IsNullOrEmpty(primaryDiffTypeProfile) && primaryDiffTypeCode.HasValue)
+                {
+                    primaryDiffTypeProfile = ModelInfo.CanonicalUriForFhirCoreType(primaryDiffTypeCode.Value);
+                }
+                if (string.IsNullOrEmpty(primarySnapTypeProfile) && primarySnapTypeCode.HasValue)
+                {
+                    primarySnapTypeProfile = ModelInfo.CanonicalUriForFhirCoreType(primarySnapTypeCode.Value);
+                }
             }
 #endif
+
             if (string.IsNullOrEmpty(primaryDiffTypeProfile) || primaryDiffTypeProfile == primarySnapTypeProfile) { return true; }
 
             // cf. ExpandElement
@@ -398,34 +408,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             var typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
-
-#if MERGE_PRIMITIVE_TYPES
-            if (typeStructure != null && ModelInfo.IsPrimitive(typeStructure.Name))
-            {
-                // No need to expand the type structure, simply merge the root element definition from differential
-                IList<ElementDefinition> typeElems;
-                if (typeStructure.HasSnapshot && isCreatedBySnapshotGenerator(typeStructure.Snapshot))
-                {
-                    typeElems = typeStructure.Snapshot.Element;
-                }
-                else if (typeStructure.Differential != null && typeStructure.Differential.Element != null && typeStructure.Differential.Element.Count > 0)
-                {
-                    typeElems = typeStructure.Differential.Element;
-                }
-                else
-                {
-                    addIssueProfileHasNoSnapshot(snap.Current, primaryDiffTypeProfile);
-                    return true;
-                }
-                var typeNav = new ElementDefinitionNavigator(typeStructure.Differential.Element);
-                typeNav.MoveToFirstChild();
-
-                // Only merge the profile root element; no need to expand children
-                mergeElementDefinition(snap.Current, typeNav.Current);
-                return true;
-            }
-#endif
-
             if (verifyStructureDef(typeStructure, primaryDiffTypeProfile, ToNamedNode(diff.Current)))
             {
                 // [WMR 20160915] Also notify about type profiles?
@@ -542,7 +524,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             ////TODO: update / check the slice entry's min/max property to match what we've found in the slice group
         }
 
-        private void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, Bookmark baseBookmark)
+        void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, Bookmark baseBookmark)
         {
             // Add new slice after the last existing slice in base profile
             snap.MoveToLastSlice();
@@ -561,7 +543,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             mergeElement(snap, diff);
         }
 
-
         static ElementDefinition createExtensionSlicingEntry(ElementDefinition baseExtensionElement)
         {
             // Create the slicing entry by cloning the base Extension element
@@ -574,6 +555,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Rules = ElementDefinition.SlicingRules.Open
             };
             return elem;
+        }
+
+        void markChangedByDiff(Element element)
+        {
+            if (_settings.MarkChanges)
+            {
+                element.SetChangedByDiff();
+            }
         }
 
         /// <summary>
@@ -617,6 +606,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 OnPrepareBaseProfile(structure, baseStructure);
 
                 snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
+
+                // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
+                snapshot.Element.RemoveAllChangedByDiff();
 
                 // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
                 if (!structure.IsConstraint)
