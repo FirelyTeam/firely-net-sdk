@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright (c) 2011+, HL7, Inc.
+  All rights reserved.
+  
+  Redistribution and use in source and binary forms, with or without modification, 
+  are permitted provided that the following conditions are met:
+  
+   * Redistributions of source code must retain the above copyright notice, this 
+     list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright notice, 
+     this list of conditions and the following disclaimer in the documentation 
+     and/or other materials provided with the distribution.
+   * Neither the name of HL7 nor the names of its contributors may be used to 
+     endorse or promote products derived from this software without specific 
+     prior written permission.
+  
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+  POSSIBILITY OF SUCH DAMAGE.
+  
+
+  Generated on Thu, Aug 11, 2016 03:44+0000 for FHIR v1.6.0 
+
+  Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
+  valid. Implementers will still need to be familiar with the content of the specification and with
+  any profiles that apply to the resources in order to make a conformant implementation.
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://hl7.org/fhir" xmlns:xhtml="http://www.w3.org/1999/xhtml" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified" version="1.0">
+  <xs:include schemaLocation="fhir-base.xsd"/>
+  <xs:element name="Sequence" type="Sequence">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Raw data describing a biological sequence.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="Sequence">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Raw data describing a biological sequence.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="DomainResource">
+        <xs:sequence>
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A unique identifier for this particular sequence instance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="type" minOccurs="1" maxOccurs="1" type="sequenceType">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Amino acid / cDNA transcript / RNA variant.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="coordinateSystem" minOccurs="1" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Whether the sequence is numbered starting at 0 (0-based numbering or coordinates) or starting at 1 (1-based numbering). Values are &quot;0&quot; for 0-based numbering and &quot;1&quot; for one-based.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="patient" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The patient whose sequencing results are described by this resource.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="specimen" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Specimen used for sequencing.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="device" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The method for sequencing, for example, chip information.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="quantity" minOccurs="0" maxOccurs="1" type="Quantity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Quantity of the sequence.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="referenceSeq" type="Sequence.ReferenceSeq" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A reference sequence is a sequence that is used to represent an allele or variant.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="variant" type="Sequence.Variant" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A' is a variant (mutation) of A = definition every instance of A' is either an immediate mutation of some instance of A, or there is a chain of immediate mutation processes linking A' to some instance of A ([variant_of](http://www.sequenceontology.org/browser/current_svn/term/variant_of)).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="observedSeq" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Sequence that was observed.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="quality" type="Sequence.Quality" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An experimental feature attribute that defines the quality of the feature in a quantitative way, such as a phred quality score ([SO:0001686](http://www.sequenceontology.org/browser/current_svn/term/SO:0001686)).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="readCoverage" minOccurs="0" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Coverage (read depth or depth) is the average number of reads representing a given nucleotide in the reconstructed sequence.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="repository" type="Sequence.Repository" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Configurations of the external repository.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="pointer" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Pointer to next atomic sequence which at most contains one variant.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="structureVariant" type="Sequence.StructureVariant" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Structural variant.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Sequence.ReferenceSeq">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Raw data describing a biological sequence.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="chromosome" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Structural unit composed of a nucleic acid molecule which controls its own replication through the interaction of specific proteins at one or more origins of replication ([SO:0000340](http://www.sequenceontology.org/browser/current_svn/term/SO:0000340)).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="genomeBuild" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The Genome Build used for reference, following GRCh build versions e.g. 'GRCh 37'.  Version number must be included if a versioned release of a primary build was used.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="referenceSeqId" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Reference identifier of reference sequence submitted to NCBI. It must match the type in the Sequence.type field. For example, the prefix, “NG_” identifies reference sequence for genes, “NM_” for messenger RNA transcripts, and “NP_” for amino acid sequences.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="referenceSeqPointer" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A Pointer to another Sequence entity as refence sequence.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="referenceSeqString" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A Reference Sequence string.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="strand" minOccurs="1" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Strand of DNA. Available values are &quot;1&quot; for the plus strand and &quot;-1&quot; for the minus strand.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="windowStart" minOccurs="1" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Start position (inclusive) of the window on the reference sequence.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="windowEnd" minOccurs="1" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">End position (exclusive) of the window on the reference sequence.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Sequence.Variant">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Raw data describing a biological sequence.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="start" minOccurs="0" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Start position (inclusive) of the variant on the  reference sequence.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="end" minOccurs="0" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">End position (exclusive) of the variant on the reference sequence.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="observedAllele" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An allele is one of a set of coexisting sequence variants of a gene ([SO:0001023](http://www.sequenceontology.org/browser/current_svn/term/SO:0001023)). Nucleotide(s)/amino acids from start position of sequence to stop position of sequence on the positive (+) strand of the observed sequence. When the sequence  type is DNA, it should be the sequence on the positive (+) strand.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="referenceAllele" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An allele is one of a set of coexisting sequence variants of a gene ([SO:0001023](http://www.sequenceontology.org/browser/current_svn/term/SO:0001023)). Nucleotide(s)/amino acids from start position of sequence to stop position of sequence on the positive (+) strand of the reference sequence. When the sequence  type is DNA, it should be the sequence on the positive (+) strand.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="cigar" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Extended CIGAR string for aligning the sequence with reference bases. See detailed documentation [here](http://support.illumina.com/help/SequencingAnalysisWorkflow/Content/Vault/Informatics/Sequencing_Analysis/CASAVA/swSEQ_mCA_ExtendedCIGARFormat.htm).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="variantPointer" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A pointer to an Observation containing variant information.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Sequence.Quality">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Raw data describing a biological sequence.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="standardSequence" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Gold standard sequence used for comparing against.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="start" minOccurs="0" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Start position (inclusive) of the sequence.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="end" minOccurs="0" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">End position (exclusive) of the sequence.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="score" minOccurs="0" maxOccurs="1" type="Quantity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The score of an experimentally derived feature such as a p-value ([SO:0001685](http://www.sequenceontology.org/browser/current_svn/term/SO:0001685)).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="method" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Method for quality.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="truthTP" minOccurs="0" maxOccurs="1" type="decimal">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">True positives, from the perspective of the truth data, i.e. the number of sites in the Truth Call Set for which there are paths through the Query Call Set that are consistent with all of the alleles at this site, and for which there is an accurate genotype call for the event.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="queryTP" minOccurs="0" maxOccurs="1" type="decimal">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">True positives, from the perspective of the query data, i.e. the number of sites in the Query Call Set for which there are paths through the Truth Call Set that are consistent with all of the alleles at this site, and for which there is an accurate genotype call for the event.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="truthFN" minOccurs="0" maxOccurs="1" type="decimal">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">False negatives, i.e. the number of sites in the Truth Call Set for which there is no path through the Query Call Set that is consistent with all of the alleles at this site, or sites for which there is an inaccurate genotype call for the event. Sites with correct variant but incorrect genotype are counted here.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="queryFP" minOccurs="0" maxOccurs="1" type="decimal">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">False positives, i.e. the number of sites in the Query Call Set for which there is no path through the Truth Call Set that is consistent with this site. Sites with correct variant but incorrect genotype are counted here.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="gtFP" minOccurs="0" maxOccurs="1" type="decimal">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The number of false positives where the non-REF alleles in the Truth and Query Call Sets match (i.e. cases where the truth is 1/1 and the query is 0/1 or similar).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="precision" minOccurs="0" maxOccurs="1" type="decimal">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">QUERY.TP / (QUERY.TP + QUERY.FP).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="recall" minOccurs="0" maxOccurs="1" type="decimal">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">TRUTH.TP / (TRUTH.TP + TRUTH.FN).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="fScore" minOccurs="0" maxOccurs="1" type="decimal">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Harmonic mean of Recall and Precision, computed as: 2 * precision * recall / (precision + recall).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Sequence.Repository">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Raw data describing a biological sequence.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">URI of an external repository which contains further details about the genetics data.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">URI of an external repository which contains further details about the genetics data.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="variantId" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Id of the variant in this external repository.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="readId" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Id of the read in this external repository.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Sequence.StructureVariant">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Raw data describing a biological sequence.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="precisionOfBoundaries" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Precision of boundaries.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="reportedaCGHRatio" minOccurs="0" maxOccurs="1" type="decimal">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Structural Variant reported aCGH ratio.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="length" minOccurs="0" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Structural Variant Length.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="outer" type="Sequence.Outer" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Structural variant outer.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="inner" type="Sequence.Inner" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Structural variant inner.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Sequence.Outer">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Raw data describing a biological sequence.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="start" minOccurs="0" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Structural Variant Outer Start-End.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="end" minOccurs="0" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Structural Variant Outer Start-End.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Sequence.Inner">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Raw data describing a biological sequence.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="start" minOccurs="0" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Structural Variant Inner Start-End.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="end" minOccurs="0" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Structural Variant Inner Start-End.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="sequenceType-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="AA">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">AA Sequence</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DNA">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DNA Sequence</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RNA">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">RNA Sequence</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="sequenceType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Type if a sequence -- DNA, RNA, or amino acid sequence</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="sequenceType-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

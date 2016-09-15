@@ -16,6 +16,7 @@ using System.IO;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
+using System.Xml.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -82,18 +83,47 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
+        //[TestMethod]
+        //public void ReduceFiles()
+        //{
+        //    var fhirns = XNamespace.Get("http://hl7.org/fhir");
+        //    var xmlns = XNamespace.Get("http://www.w3.org/1999/xhtml");
+
+        //    var files = Directory.EnumerateFiles(@"C:\Git\fhir-net-api\src\Hl7.Fhir.Specification\data", "*.xml");
+
+        //    foreach (var file in files)
+        //    {
+        //        var xdoc = XDocument.Load(file);
+        //        var sizeBefore = xdoc.ToString().Length;
+
+        //        var narrative = xdoc.Elements(fhirns + "Bundle").Elements(fhirns + "entry").Elements(fhirns + "resource")
+        //                .Elements().Elements(fhirns + "text").Elements(xmlns + "div");
+        //        foreach (var narrativeElement in narrative)
+        //        {
+        //            narrativeElement.RemoveNodes();
+        //            narrativeElement.Add(new XElement(xmlns + "p",
+        //                new XText("The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library")));
+        //        }
+
+        //        var sizeAfter = xdoc.ToString().Length;
+        //        xdoc.Save(file);
+        //    }
+
+        //}
+
         [TestMethod]
         public void FindValueSet()
         {
             // As defined in the spec here: http://hl7.org/fhir/2016Sep/valueset-contact-point-system.html
-
+           
             var vs = source.FindValueSet("http://hl7.org/fhir/ValueSet/contact-point-system");
             Assert.IsNotNull(vs);
 
-            var vs2 = source.FindValueSetBySystem("http://hl7.org/fhir/contact-point-system");
-            Assert.IsNotNull(vs2);
+            // STU3: Relationship between ValueSet and CodingSystem changed, so we need to make some fundamental changes here
+            //var vs2 = source.FindValueSetBySystem("http://hl7.org/fhir/contact-point-system");
+            //Assert.IsNotNull(vs2);
 
-            Assert.AreEqual(vs.Url, vs2.Url);
+            //Assert.AreEqual(vs.Url, vs2.Url);
         }
 
         [TestMethod]

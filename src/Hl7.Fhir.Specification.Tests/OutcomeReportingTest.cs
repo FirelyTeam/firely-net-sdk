@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Specification.Tests
             CollectionAssert.AreEquivalent(new int[] { 0, 1, 2, 2, 0 }, _report.Issue.Select(i=>i.GetHierarchyLevel()).ToArray());
         }
 
-        [TestMethod]
+        [TestMethod,Ignore]
         public void IssueCategorization()
         {
             Assert.AreEqual(2, _report.ListErrors().Count());
