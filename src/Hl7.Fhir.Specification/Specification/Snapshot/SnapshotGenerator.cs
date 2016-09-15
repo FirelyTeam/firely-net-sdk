@@ -1,7 +1,4 @@
-﻿#define DETECT_RECURSION
-#define FORCE_EXPAND_ALL
-#define MERGE_NEW_ELEMS
-// WORK IN PROGRESS
+﻿// WORK IN PROGRESS
 // #define MERGE_PRIMITIVE_TYPES
 
 /* 
@@ -29,9 +26,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // [WMR] Note: instance data is reused over multiple snapshot generations
         private readonly IResourceResolver _resolver;
         private readonly SnapshotGeneratorSettings _settings;
-#if DETECT_RECURSION
         private readonly SnapshotRecursionChecker _recursionChecker = new SnapshotRecursionChecker();
-#endif
 
         public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings) // : this()
         {
@@ -84,7 +79,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Clear the OperationOutcome issues
             clearIssues();
 
-#if DETECT_RECURSION
             List<ElementDefinition> result = null;
             _recursionChecker.StartExpansion(structure.Url);
             try
@@ -97,9 +91,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Debug.Assert(_recursionChecker.IsCompleted || result == null);
                 _recursionChecker.FinishExpansion();
             }
-#else
-            result = generate(structure);
-#endif
             return result;
         }
 
@@ -135,7 +126,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             clearIssues();
 
-#if DETECT_RECURSION
             // Must initialize recursion checker, because element expansion may recurse on external type profile
             _recursionChecker.StartExpansion();
             try
@@ -146,9 +136,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 _recursionChecker.FinishExpansion();
             }
-#else
-            expandElement(nav);
-#endif
             return nav.Elements;
         }
 
@@ -195,21 +182,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         // No matching base element; this is a new element definition
                         // snap is positioned at the associated parent element
-#if MERGE_NEW_ELEMS
                         // [WMR 20160907] NEW: For new elements, use the associated type profile as the base for each element type
                         createNewElement(snap, diff);
-#else
-                        // Copy the element definition from differential to snapshot
-                        var clone = (ElementDefinition)diff.Current.DeepCopy();
-
-                        snap.AppendChild(clone);
-
-                        // Notify clients about a snapshot element with differential constraints
-                        OnConstraint(snap.Current);
-
-                        // Merge children
-                        mergeElement(snap, diff);
-#endif
                     }
 
                 }
@@ -787,7 +761,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return false;
             }
 
-#if DETECT_RECURSION
             // Prevent endless recursion on root type Element
             const string elemUrl = "http://hl7.org/fhir/StructureDefinition/Element";
             if (profileUrl == elemUrl) { return true; }
@@ -795,15 +768,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Detect endless recursion
             // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
             _recursionChecker.OnBeforeExpandType(profileUrl, location != null ? location.Path : null);
-#endif
+
             try
             {
                 if (_settings.ExpandExternalProfiles
-                    && (sd.Snapshot == null 
-#if FORCE_EXPAND_ALL
-                        || (_settings.ForceExpandAll && !isCreatedBySnapshotGenerator(sd.Snapshot))
-#endif
-                        )
+                    && (sd.Snapshot == null || (_settings.ForceExpandAll && !isCreatedBySnapshotGenerator(sd.Snapshot)))
                 )
                 {
                     // Automatically expand external profiles on demand
@@ -822,10 +791,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                         return false;
                     }
 
-#if FORCE_EXPAND_ALL
                     // Add in-memory annotation to prevent repeated expansion
                     setCreatedBySnapshotGenerator(sd.Snapshot);
-#endif
                 }
 
                 if (!sd.HasSnapshot)
@@ -841,9 +808,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             finally
             {
-#if DETECT_RECURSION
                 _recursionChecker.OnAfterExpandType(profileUrl);
-#endif
             }
 
             return true;
