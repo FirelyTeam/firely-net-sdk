@@ -1,6 +1,10 @@
 ﻿#define DETECT_RECURSION
 #define FORCE_EXPAND_ALL
 #define MERGE_NEW_ELEMS
+#define MERGE_PRIMITIVE_TYPES
+
+// TODO
+// #define MERGE_PRIMITIVE_TYPES
 
 /* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
@@ -352,26 +356,30 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Note that all these element definitions are marked with: <representation value="xmlAttr"/>
 
             var primaryDiffType = diff.Current.PrimaryType();
-            if (primaryDiffType == null || primaryDiffType.IsReference())
-            {
-                return true;
-            }
+            if (primaryDiffType == null || primaryDiffType.IsReference()) { return true; }
 
             var primarySnapType = snap.Current.PrimaryType();
-            if (primarySnapType == null)
-            {
-                return true;
-            }
+            // if (primarySnapType == null) { return true; }
 
             var primaryDiffTypeProfile = primaryDiffType.Profile.FirstOrDefault();
-            var primarySnapTypeProfile = primarySnapType.Profile.FirstOrDefault();
+            var primarySnapTypeProfile = primarySnapType != null ? primarySnapType.Profile.FirstOrDefault() : null;
 
-            var primaryDiffTypeName = primaryDiffType.CodeElement != null ? primaryDiffType.CodeElement.ObjectValue as string : null;
-
-            if (string.IsNullOrEmpty(primaryDiffTypeProfile) || primaryDiffTypeProfile == primarySnapTypeProfile)
+#if MERGE_PRIMITIVE_TYPES
+            // TODO: If the differential overrides base type code, then merge primitive type profile (root elem only)
+            // e.g. Extension.url : uri => Element : Element
+            // Not necessary to expand the primitive structure, merge root differential element
+            var primaryDiffTypeCode = primaryDiffType != null ? primaryDiffType.Code : null;
+            var primarySnapTypeCode = primarySnapType != null ? primarySnapType.Code : null;
+            if (string.IsNullOrEmpty(primaryDiffTypeProfile) && primaryDiffTypeCode.HasValue)
             {
-                return true;
+                primaryDiffTypeProfile = ModelInfo.CanonicalUriForFhirCoreType(primaryDiffTypeCode.Value);
             }
+            if (string.IsNullOrEmpty(primarySnapTypeProfile) && primarySnapTypeCode.HasValue)
+            {
+                primarySnapTypeProfile = ModelInfo.CanonicalUriForFhirCoreType(primarySnapTypeCode.Value);
+            }
+#endif
+            if (string.IsNullOrEmpty(primaryDiffTypeProfile) || primaryDiffTypeProfile == primarySnapTypeProfile) { return true; }
 
             // cf. ExpandElement
 
@@ -390,8 +398,39 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             var typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
+
+#if MERGE_PRIMITIVE_TYPES
+            if (typeStructure != null && ModelInfo.IsPrimitive(typeStructure.Name))
+            {
+                // No need to expand the type structure, simply merge the root element definition from differential
+                IList<ElementDefinition> typeElems;
+                if (typeStructure.HasSnapshot && isCreatedBySnapshotGenerator(typeStructure.Snapshot))
+                {
+                    typeElems = typeStructure.Snapshot.Element;
+                }
+                else if (typeStructure.Differential != null && typeStructure.Differential.Element != null && typeStructure.Differential.Element.Count > 0)
+                {
+                    typeElems = typeStructure.Differential.Element;
+                }
+                else
+                {
+                    addIssueProfileHasNoSnapshot(snap.Current, primaryDiffTypeProfile);
+                    return true;
+                }
+                var typeNav = new ElementDefinitionNavigator(typeStructure.Differential.Element);
+                typeNav.MoveToFirstChild();
+
+                // Only merge the profile root element; no need to expand children
+                mergeElementDefinition(snap.Current, typeNav.Current);
+                return true;
+            }
+#endif
+
             if (verifyStructureDef(typeStructure, primaryDiffTypeProfile, ToNamedNode(diff.Current)))
             {
+                // [WMR 20160915] Also notify about type profiles?
+                // OnPrepareElement(snap.Current, typeStructure, typeStructure.Snapshot.Element[0]);
+
                 // Clone and rebase
                 var rebasePath = diff.Path;
                 if (profileRef.IsComplex)
@@ -414,7 +453,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     if (!typeNav.JumpToNameReference(profileRef.ElementName))
                     {
-                        addIssueInvalidProfileNameReference(diff.Current, profileRef.ElementName, primaryDiffTypeProfile);
+                        addIssueInvalidProfileNameReference(snap.Current, profileRef.ElementName, primaryDiffTypeProfile);
                         return false;
                     }
                 }
@@ -683,7 +722,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         var baseElem = baseSnap.Element[i];
 
                         // [WMR 20160826] Never inherit Changed extension from base profile!
-                        elem.ClearAllChangedByDiff();
+                        elem.RemoveAllChangedByDiff();
 
                         // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
                         // [WMR 20160906] Always regenerate! Cannot reuse cloned base components

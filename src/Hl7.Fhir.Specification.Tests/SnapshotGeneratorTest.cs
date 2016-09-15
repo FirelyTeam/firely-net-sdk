@@ -952,6 +952,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void GenerateSnapshotEmitBaseData()
         {
+            var source = _testResolver;
+
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
             // var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
@@ -960,10 +962,12 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
             // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
+            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatient");
 
-            var source = _testResolver;
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Meta");
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-basic-guidance-action");
 
-            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatient");
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
@@ -1032,20 +1036,23 @@ namespace Hl7.Fhir.Specification.Tests
 
                 assertBaseDefs(expanded, settings);
 
-                var sdBase = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
-                assertBaseDefs(sdBase, settings);
+                if (sd.Url == @"http://example.org/fhir/StructureDefinition/MyPatient")
+                {
+                    var sdBase = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
+                    assertBaseDefs(sdBase, settings);
 
-                var sdElem = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
-                assertBaseDefs(sdElem, settings);
+                    var sdElem = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
+                    assertBaseDefs(sdElem, settings);
 
-                var sdExt = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
-                assertBaseDefs(sdExt, settings);
+                    var sdExt = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
+                    assertBaseDefs(sdExt, settings);
 
-                var sdExt1 = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension1");
-                assertBaseDefs(sdExt1, settings);
+                    var sdExt1 = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension1");
+                    assertBaseDefs(sdExt1, settings);
 
-                var sdExt2 = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension2");
-                assertBaseDefs(sdExt2, settings);
+                    var sdExt2 = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension2");
+                    assertBaseDefs(sdExt2, settings);
+                }
 
             }
             finally
@@ -1159,8 +1166,8 @@ namespace Hl7.Fhir.Specification.Tests
             baseClone.Base = elem.Base;
 
             // Also ignore any Changed extensions on base and diff
-            elemClone.ClearAllChangedByDiff();
-            baseClone.ClearAllChangedByDiff();
+            elemClone.RemoveAllChangedByDiff();
+            baseClone.RemoveAllChangedByDiff();
 
             return !baseClone.IsExactly(elemClone);
         }
@@ -1269,7 +1276,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/BackboneElement");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
 
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/integer");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/positiveInt");
@@ -1285,7 +1292,7 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Resource");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
 
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Basic");
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Basic");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
 
