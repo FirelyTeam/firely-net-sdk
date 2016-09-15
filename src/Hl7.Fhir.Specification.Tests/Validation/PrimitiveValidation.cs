@@ -456,11 +456,10 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual("Bundle", bundleScope.Container.TypeName);          
 
             // Get one of the entries with contained resources, a Patient
-            var patNav = bundleScope.FindChild("http://example.org/fhir/Patient/e");
-            Assert.AreEqual("Patient", patNav.Container.TypeName);
-            var patReferences = ReferenceHarvester.Harvest(patNav.Container);
-            Assert.AreEqual(1, patReferences.Count());
-            Assert.AreEqual("#orgX", patReferences.Single().Uri);
+            var patScope = bundleScope.FindChild("http://example.org/fhir/Patient/e");
+            Assert.AreEqual("Patient", patScope.Container.TypeName);
+            Assert.AreEqual(1, patScope.Children.Count());
+            Assert.AreEqual("#orgX", patScope.Children.Single().Uri);
 
             Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else
         }
