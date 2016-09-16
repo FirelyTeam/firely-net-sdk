@@ -428,8 +428,8 @@ namespace Hl7.Fhir.Validation
             var patNav = references.First(r => r.Uri == "http://example.org/fhir/Patient/e");
             Assert.AreEqual("Patient", patNav.Container.TypeName);
             var patReferences = ReferenceHarvester.Harvest(patNav.Container);
-            Assert.AreEqual(1, patReferences.Count());
-            Assert.AreEqual("#orgX", patReferences.Single().Uri);
+            Assert.AreEqual(2, patReferences.Count());
+            Assert.AreEqual("#orgX", patReferences.First().Uri);
 
             Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else
         }
@@ -449,17 +449,17 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else
 
             // Get one of the entries with no contained resources, an Organization
-            var orgScope = bundleScope.FindChild("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d");
+            var orgScope = bundleScope.ResolveChild("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d");
             Assert.AreEqual("Organization", orgScope.Container.TypeName);
             Assert.AreEqual(0, orgScope.Children.Count());
             Assert.AreEqual("Organization", orgScope.Container.TypeName);
             Assert.AreEqual("Bundle", bundleScope.Container.TypeName);          
 
             // Get one of the entries with contained resources, a Patient
-            var patScope = bundleScope.FindChild("http://example.org/fhir/Patient/e");
+            var patScope = bundleScope.ResolveChild("http://example.org/fhir/Patient/e");
             Assert.AreEqual("Patient", patScope.Container.TypeName);
-            Assert.AreEqual(1, patScope.Children.Count());
-            Assert.AreEqual("#orgX", patScope.Children.Single().Uri);
+            Assert.AreEqual(2, patScope.Children.Count());
+            Assert.AreEqual("#orgX", patScope.Children.First().Uri);
 
             Assert.AreEqual("Bundle", cpNav.TypeName);      // should not have navigated somewhere else
         }
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Validation
                     tracker.Leave(careProvRef);
                 }
 
-                tracker.Leave(entry);
+                tracker.Leave(entry);              
 
                 index++;
             }

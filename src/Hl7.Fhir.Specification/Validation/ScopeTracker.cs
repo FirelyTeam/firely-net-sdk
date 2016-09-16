@@ -19,10 +19,14 @@ namespace Hl7.Fhir.Validation
 {
     internal class Scope
     {
+        public Scope Parent { get; private set; }
+
         public string Uri;
 
         public IElementNavigator Container { get; private set; }
         public string Path { get; private set; }
+
+        public int UseCount { get; private set; }
 
         public bool IsBundle { get; private set; }
 
@@ -37,86 +41,149 @@ namespace Hl7.Fhir.Validation
             IsBundle = ModelInfo.FhirTypeNameToFhirType(container.TypeName) == FHIRDefinedType.Bundle;
             Uri = uri;
 
-           _children = new Lazy<List<Scope>>(() => new List<Scope>(ReferenceHarvester.Harvest(Container)));
+           _children = new Lazy<List<Scope>>(createScopeListForContainer);
         }
 
-        public Scope FindChild(string uri)
+        private List<Scope> createScopeListForContainer()
         {
-            return Children.SingleOrDefault(s => s.Uri == uri);
-        }
-    }
-
-
-    internal class ScopeList : List<Scope>
-    {
-        public void Append(IElementNavigator container)
-        {
-            Scope scope = null;
-
-            if (this.Any())
+            var children = ReferenceHarvester.Harvest(Container).ToList();
+            foreach (var child in children)
             {
-                // If this was not the first scope to be added, we should normally find the container already present in the list of scopes, since
-                // when adding a parent container, we add the children to the list of scopes as well
-                scope = this.SingleOrDefault(s => s.Path == container.Path);
-                if (scope == null)
-                    throw Error.Argument("Tried to append an orphan scope with path '{0}'".FormatWith(container.Path));
+                child.Parent = this;
+                child.UseCount = 1;
+            }
+
+            return children;
+        }
+
+        public Scope FindNearestScope(string path)
+        {
+            if (!path.StartsWith(Path)) return null;
+
+            if (path == Path) return this;
+
+            var candidateParent = Children.SingleOrDefault(c => path.StartsWith(c.Path));
+
+            if (candidateParent != null)
+                return candidateParent.FindNearestScope(path);
+            else
+                return this;
+        }
+
+        public Scope FindScope(string path)
+        {
+            var result = FindNearestScope(path);
+
+            return result.Path == path ? result : null;
+        }
+
+        public bool Add(Scope child)
+        {
+            var nearestChild = FindNearestScope(child.Path);
+
+            if(nearestChild == null)
+                throw Error.Argument("child",
+                      "Tried to add a child with path '{0}' which is not part of this tree ('{1}')".FormatWith(child.Path, Path));
+
+            if (nearestChild.Path == child.Path)
+            {
+                nearestChild.UseCount += 1;
+                return false;
+            }
+
+            if (!nearestChild.Children.Any(c => c.Path == child.Path))
+            {
+                child.Parent = nearestChild;
+                child.UseCount = 1;
+                nearestChild.Children.Add(child);
+                return true;
             }
             else
+                return false;
+        }
+
+        public bool Remove(string path)
+        {
+            var scope = FindNearestScope(path);
+
+            if (scope == null)
+                throw Error.Argument("child",
+                      "Tried to remove a child with path '{0}' which is not part of this tree ('{1}')".FormatWith(path, Path));
+
+            if(scope.Path == path && scope.Parent != null)
             {
-                scope = new Scope(container, "#");
-                this.Add(scope);
+                var child = scope.Parent.Children.Single(s => s.Path == path);
+                child.UseCount -= 1;
+
+                if (child.UseCount < 0)
+                    throw Error.InvalidOperation("Usecount went below 0 for path '{0}'".FormatWith(child.Path));
+
+                if(child.UseCount == 0)
+                    scope.Parent.Children.Remove(child);
+
+                return true;
             }
 
-            // Add the children to the list, but keep pointers to the entries in the parent too
-            AddRange(scope.Children);
+            return false;
         }
 
-        public void Remove(IElementNavigator container)
+        public IEnumerable<Scope> Containers()
         {
-            var scopeToRemove = Find(container.Path);
-            if (scopeToRemove == null)
-                throw Error.Argument("There is no known scope for path '{0}'".FormatWith(container.Path));
+            var scan = this;
 
-            Remove(scopeToRemove);
-        }
-
-        public Scope FindParent(string path)
-        {
-            return this.Where(s => path.StartsWith(s.Path + "."))
-                .OrderBy(s => s.Path.Length).Reverse().FirstOrDefault();
-        }
-
-        public Scope Find(string path)
-        {
-            return this.Where(s => s.Path == path).SingleOrDefault();
-        }
-
-        public IEnumerable<Scope> Containers(string path)
-        {
-            Scope scan = Find(path);
-            if (scan == null)
-                scan = FindParent(path);
-
-            while(scan != null)
+            while (scan != null)
             {
                 yield return scan;
 
-                scan = FindParent(scan.Path);
+                scan = scan.Parent;
             }
         }
 
+
+        public Scope ResolveChild(string uri)
+        {
+            return Children.SingleOrDefault(s => s.Uri == uri);
+        }
+
+
+
+        //public bool Remove(Scope node)
+        //{
+        //    if (!node.Path.StartsWith(Path))
+        //        throw Error.Argument("node",
+        //            "Tried to remove a node with path '{0}' that is not part of this tree ('{1}')".FormatWith(node.Path, Path));
+
+        //    var childToRemove = Children.SingleOrDefault(c => node.Path == c.Path);
+        //    if (childToRemove != null)
+        //    {
+        //        Children.Remove(childToRemove);
+        //        return true;
+        //    }
+
+        //    var candidateParent = Children.SingleOrDefault(c => node.Path.StartsWith(c.Path));
+
+        //    if (candidateParent != null)
+        //        return candidateParent.Remove(node);
+        //    else
+        //        throw Error.Argument("node",
+        //            "Tried to remove an orphan child with path '{0}' from scope at path '{1}'".FormatWith(node.Path, Path));
+
+        //}
     }
 
 
     internal class ScopeTracker
     {
-        private ScopeList _scopes = new ScopeList();
-
+        private Scope _root = null;
         public void Enter(IElementNavigator instance)
         {
             if (isContainer(instance))
             {
-                _scopes.Append(instance);
+                var newScope = new Scope(instance, null);
+                if (_root == null)
+                    _root = newScope;
+                else
+                    _root.Add(newScope);
             }
         }
 
@@ -124,7 +191,10 @@ namespace Hl7.Fhir.Validation
         {
             if (isContainer(instance))
             {
-                _scopes.Remove(instance);
+                if (_root.Path == instance.Path)
+                    _root = null;
+                else
+                    _root.Remove(instance.Path);
             }
         }
 
@@ -136,14 +206,18 @@ namespace Hl7.Fhir.Validation
 
         public IElementNavigator ResourceContext(IElementNavigator instance)
         {
-            return _scopes.Containers(instance.Path).Take(1).Select(s => s.Container).SingleOrDefault();
+            var parent = _root.FindNearestScope(instance.Path);
+            return parent != null ? parent.Container : null;
         }
 
         public string ContextFullUrl(IElementNavigator instance)
         {
-            foreach (var container in _scopes.Containers(instance.Path))
+            var scope = _root.FindNearestScope(instance.Path);
+            if (scope == null) return null;
+
+            foreach (var container in scope.Containers())
             {
-                if (!container.Uri.StartsWith("#"))
+                if (container.Uri != null && !container.Uri.StartsWith("#"))
                     return container.Uri;
             }
 
@@ -152,9 +226,12 @@ namespace Hl7.Fhir.Validation
 
         public IElementNavigator Resolve(IElementNavigator instance, string uri)
         {
-            foreach (var container in _scopes.Containers(instance.Path))
+            var scope = _root.FindNearestScope(instance.Path);
+            if (scope == null) return null;
+
+            foreach (var container in scope.Containers())
             {
-                var result = container.FindChild(uri);
+                var result = container.ResolveChild(uri);
                 if (result != null) return result.Container;
             }
 
