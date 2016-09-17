@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Rest
         private const string USERDATA_BODY = "$body";
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";      
 
-        internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body, ParserSettings parserSettings)
+        internal static Bundle.EntryComponent ToBundleEntry(this HttpWebResponse response, byte[] body, ParserSettings parserSettings, bool throwOnFormatException)
         {
             var result = new Bundle.EntryComponent();
 
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Rest
                 else
                 {
                     var bodyText = DecodeBody(body, charEncoding);
-                    var resource = parseResource(bodyText, contentType, parserSettings);
+                    var resource = parseResource(bodyText, contentType, parserSettings, throwOnFormatException);
                     result.Resource = resource;
 
                     if (result.Response.Location != null)
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }      
 
-        private static Resource parseResource(string bodyText, string contentType, ParserSettings settings)
+        private static Resource parseResource(string bodyText, string contentType, ParserSettings settings, bool throwOnFormatException)
         {           
             Resource result= null;
 
@@ -142,10 +142,18 @@ namespace Hl7.Fhir.Rest
                 throw new UnsupportedBodyTypeException(
                         "Endpoint said it returned '{0}', but the body is not recognized as either xml or json.".FormatWith(contentType), contentType, bodyText);
 
-            if (fhirType == ResourceFormat.Json)
-                result = new FhirJsonParser(settings).Parse<Resource>(bodyText);
-            else
-                result = new FhirXmlParser(settings).Parse<Resource>(bodyText);
+            try
+            {
+                if (fhirType == ResourceFormat.Json)
+                    result = new FhirJsonParser(settings).Parse<Resource>(bodyText);
+                else
+                    result = new FhirXmlParser(settings).Parse<Resource>(bodyText);
+            }
+            catch(FormatException fe)
+            {
+                if (throwOnFormatException) throw fe;
+                return null;
+            }
 
             return result;
         }
