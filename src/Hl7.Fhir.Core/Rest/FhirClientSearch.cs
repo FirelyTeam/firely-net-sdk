@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle WholeSystemSearch(string[] criteria = null, string[] includes = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+        public Bundle WholeSystemSearch(string[] criteria = null, string[] includes = null, int? pageSize = null, SummaryType? summary = null)
         {
             return Search(toQuery(criteria, includes, pageSize, summary));
         }
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Rest
             if (id == null) throw Error.ArgumentNull("id");
 
             string criterium = "_id=" + id;
-            return Search(toQuery(new string[] { criterium }, includes, pageSize, SummaryType.False), resource);
+            return Search(toQuery(new string[] { criterium }, includes, pageSize, summary: null), resource);
         }
 
         private SearchParams toQuery(string[] criteria, string[] includes, int? pageSize, SummaryType? summary)
