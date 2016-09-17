@@ -56,6 +56,18 @@ namespace Hl7.Fhir.Test.Rest
         }
 
         [TestMethod]
+        public void MinimalParams()
+        {
+            var q = new SearchParams();
+
+            q.Add("name", "ewout");
+            
+            // Validate no "Default" search parameters are added except for the ones the user added
+            Assert.AreEqual("name=ewout", q.ToUriParamList().ToQueryString());
+        }
+
+
+        [TestMethod]
         public void TestProperties()
         {
             var q = new SearchParams();

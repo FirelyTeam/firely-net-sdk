@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+        public Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null, SummaryType? summary = null)
             where TResource : Resource, new()
         {
             // [WMR 20160421] GetResourceNameForType is obsolete
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle Search(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+        public Bundle Search(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null, SummaryType? summary = null)
         {
             if (resource == null) throw Error.ArgumentNull("resource");
 
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Rest
             return Search(toQuery(new string[] { criterium }, includes, pageSize, SummaryType.False), resource);
         }
 
-        private SearchParams toQuery(string[] criteria, string[] includes, int? pageSize, SummaryType summary)
+        private SearchParams toQuery(string[] criteria, string[] includes, int? pageSize, SummaryType? summary)
         {
             var q = new SearchParams();
             
@@ -169,7 +169,8 @@ namespace Hl7.Fhir.Rest
                 }
             }
 
-            q.Summary = summary;
+            if (summary != null)
+                q.Summary = summary.Value;
 
             return q;
         }
