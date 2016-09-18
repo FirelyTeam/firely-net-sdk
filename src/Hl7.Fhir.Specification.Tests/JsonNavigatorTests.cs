@@ -12,7 +12,6 @@ using System.IO;
 using System.Xml;
 using System.Xml.XPath;
 using System.Xml.Xsl;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.XPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

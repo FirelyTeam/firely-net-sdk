@@ -621,6 +621,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             merge(snap, diff);
 
             result = snap.ToListOfElements();
+
+            // [WMR 20160917] NEW: Re-generate all ElementId values
+            generateElementsId(result, true);
+
             return result;
         }
 
@@ -762,8 +766,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Prevent endless recursion on root type Element
-            const string elemUrl = "http://hl7.org/fhir/StructureDefinition/Element";
-            if (profileUrl == elemUrl) { return true; }
+            const string ELEMENT_STRUCTURE_URL = "http://hl7.org/fhir/StructureDefinition/Element";
+            if (profileUrl == ELEMENT_STRUCTURE_URL) { return true; }
 
             // Detect endless recursion
             // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy

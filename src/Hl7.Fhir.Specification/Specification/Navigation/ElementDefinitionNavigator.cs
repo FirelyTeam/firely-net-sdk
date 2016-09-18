@@ -632,6 +632,13 @@ namespace Hl7.Fhir.Specification.Navigation
             return count;
         }
 
+        // [WMR 20160917] New
+        public static string GetLastPathComponent(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return string.Empty;
+            var pos = path.LastIndexOf(".");
+            return pos > -1 ? path.Substring(pos + 1) : path;
+        }
 
         public override string ToString()
         {

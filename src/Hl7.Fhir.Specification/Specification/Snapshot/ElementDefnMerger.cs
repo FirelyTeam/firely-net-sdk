@@ -129,6 +129,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // TODO: [GG] what to do about conditions?  [EK] We have key, so merge Constraint and condition based on that?
                 // Constraints are cumulative, so they are always "new" (hence a constant false for the comparer)
+                // [WMR 20160917] Note: constraint keys must be unique. The validator will detect duplicate keys, so the derived
+                // profile author can correct the conflicting constraint key.
                 snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
 
                 // [WMR 20160907] merge conditions
