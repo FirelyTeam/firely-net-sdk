@@ -41,35 +41,9 @@ namespace Hl7.Fhir.Introspection
         private static Dictionary<Type, EnumMapping> _cache = new Dictionary<Type, EnumMapping>();
         private static Object _cacheLock = new Object();
 
-
         public static object ParseLiteral(string rawValue, Type enumType)
         {
-            EnumMapping fieldInfo = null;
-
-            lock (_cacheLock)
-            {
-                if (!_cache.TryGetValue(enumType, out fieldInfo))
-                {
-                    fieldInfo = EnumMapping.Create(enumType);
-                    _cache.Add(enumType, fieldInfo);
-                }
-            }
-
-            return (object)fieldInfo.ParseLiteral(rawValue);
-            
-            //foreach (var enumValue in fieldInfo)
-            //{
-            //    var attr = ReflectionHelper.GetAttribute<EnumLiteralAttribute>(enumValue);
-            //    if (attr != null)
-            //    {
-            //        if (attr.Literal == rawValue)
-            //        {
-            //            return (T)enumValue.GetValue(null);
-            //        }
-            //    }
-            //}
-
-            //return null;
+            return GetEnumMapping(enumType).ParseLiteral(rawValue);
         }
 
         public static T? ParseLiteral<T>(string rawValue) where T : struct
@@ -77,7 +51,33 @@ namespace Hl7.Fhir.Introspection
             return (T?)ParseLiteral(rawValue, typeof(T));
         }
 
-        internal class EnumMapping
+		public static string GetName( Type enumType )
+		{
+			return GetEnumMapping(enumType).Name;
+		}
+
+		public static string GetName<T>() where T : struct
+		{
+			return GetName(typeof(T));
+		}
+
+		private static EnumMapping GetEnumMapping( Type enumType )
+		{
+			EnumMapping fieldInfo = null;
+
+			lock ( _cacheLock )
+			{
+				if ( !_cache.TryGetValue( enumType, out fieldInfo ) )
+				{
+					fieldInfo = EnumMapping.Create( enumType );
+					_cache.Add( enumType, fieldInfo );
+				}
+			}
+
+			return fieldInfo;
+		}
+
+		internal class EnumMapping
         {
             // Symbolic name of the enumeration
             public string Name { get; private set; }
