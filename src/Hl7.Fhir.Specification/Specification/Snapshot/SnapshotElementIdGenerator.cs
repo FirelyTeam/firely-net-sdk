@@ -65,7 +65,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             var pathPart = ElementDefinitionNavigator.GetLastPathComponent(element.Path);
             id = addIdComponent(id, ".", pathPart);
             // Add element slice name (user defined), if present
-            if (!string.IsNullOrEmpty(element.Name))
+            // [WMR 20160922] Except for root element, e.g. SimpleQuantity
+            if (!string.IsNullOrEmpty(element.Name) && parent != null)
             {
                 // Chris Grenz generates compound names, e.g. [slice-name].[child-element-name]
                 // Only use the last part, and only if it differs from the xml element name
