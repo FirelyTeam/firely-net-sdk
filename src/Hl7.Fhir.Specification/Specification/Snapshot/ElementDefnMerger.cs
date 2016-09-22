@@ -12,7 +12,6 @@ using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
-using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -131,7 +130,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Constraints are cumulative, so they are always "new" (hence a constant false for the comparer)
                 // [WMR 20160917] Note: constraint keys must be unique. The validator will detect duplicate keys, so the derived
                 // profile author can correct the conflicting constraint key.
-                snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
+                // [WMR 20160918] MUST merge indentical constraints, otherwise each derived profile accumulates
+                // additional identical constraints inherited from e.g. BackboneElement.
+                // snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
+                snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => a.IsExactly(b));
 
                 // [WMR 20160907] merge conditions
                 snap.ConditionElement = mergeCollection(snap.ConditionElement, diff.ConditionElement, (a, b) => a.Value == b.Value);
