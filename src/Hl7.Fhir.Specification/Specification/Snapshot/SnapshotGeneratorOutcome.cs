@@ -168,6 +168,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // "Unresolved profile reference. Cannot locate the type profile for element '{0}'.\r\nProfile url = '{1}'".FormatWith(diff.Path, primaryDiffTypeProfile)
         // Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE
+        void addIssueProfileNotFound(string profileUrl) { addIssueProfileNotFound((INamedNode)null, profileUrl); }
         void addIssueProfileNotFound(ElementDefinition elementDef, string profileUrl) { addIssueProfileNotFound(ToNamedNode(elementDef), profileUrl); }
         void addIssueProfileNotFound(INamedNode location, string profileUrl)
         {
