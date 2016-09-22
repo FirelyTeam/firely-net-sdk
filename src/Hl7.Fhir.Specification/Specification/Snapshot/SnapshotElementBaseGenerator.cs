@@ -182,9 +182,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             var result = new ElementDefinition.BaseComponent()
             {
-                MaxElement = (FhirString)maxElement.DeepCopy(),
-                MinElement = (Integer)minElement.DeepCopy(),
-                PathElement = (FhirString)pathElement.DeepCopy(),
+                MaxElement = maxElement != null ? (FhirString)maxElement.DeepCopy() : null,
+                MinElement = minElement != null ? (Integer)minElement.DeepCopy() : null,
+                PathElement = pathElement != null ? (FhirString)pathElement.DeepCopy() : null
             };
             setCreatedBySnapshotGenerator(result);
             return result;
