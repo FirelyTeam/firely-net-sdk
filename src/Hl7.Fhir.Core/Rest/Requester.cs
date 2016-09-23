@@ -73,12 +73,18 @@ namespace Hl7.Fhir.Rest
                     // Do this call after AfterResponse, so AfterResponse will be called, even if exceptions are thrown by ToBundleEntry()
                     try
                     {
-                        LastResult = webResponse.ToBundleEntry(inBody, ParserSettings);
+                        Bundle.EntryComponent LastResult = null;
 
                         if (webResponse.StatusCode.IsSuccessful())
+                        {
+                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: true);
                             return LastResult;
+                        }
                         else
+                        {
+                            LastResult = webResponse.ToBundleEntry(inBody, ParserSettings, throwOnFormatException: false);
                             throw httpNonSuccessStatusToException(webResponse.StatusCode, LastResult.Resource);
+                        }
                     }
                     catch(UnsupportedBodyTypeException bte)
                     {

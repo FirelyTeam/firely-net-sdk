@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         /// <summary>Move to last direct child element with same path as current element.</summary>
         /// <returns><c>true</c> if the cursor has moved at least a single element, <c>false</c> otherwise</returns>
-        public static bool MoveToLastSlice(this ElementDefinitionNavigator nav)
+        internal static bool MoveToLastSlice(this ElementDefinitionNavigator nav)
         {
             if (nav == null) { throw Error.ArgumentNull("nav"); }
             if (nav.Current == null) { throw Error.Argument("nav", "Cannot move to last slice. Current node is not set."); }

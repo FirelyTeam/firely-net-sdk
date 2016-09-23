@@ -83,13 +83,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         public event SnapshotElementHandler PrepareElement;
 
         /// <summary>Raise the <see cref="PrepareElement"/> event to notify the client when an element definition is being prepared for merging.</summary>
-        internal void OnPrepareElement(ElementDefinition element, ElementDefinition baseElement)
+        internal void OnPrepareElement(ElementDefinition element, StructureDefinition baseStructure, ElementDefinition baseElement)
         {
             if (element == null) { throw new ArgumentNullException("element"); }
             var handler = PrepareElement;
             if (handler != null)
             {
-                var args = new SnapshotElementEventArgs(element, baseElement);
+                var args = new SnapshotElementEventArgs(element, baseStructure, baseElement);
                 handler(this, args);
             }
         }
@@ -142,11 +142,13 @@ namespace Hl7.Fhir.Specification.Snapshot
     {
         private readonly ElementDefinition _element;
         private readonly ElementDefinition _baseElement;
+        private readonly StructureDefinition _baseStructure;
 
-        public SnapshotElementEventArgs(ElementDefinition element, ElementDefinition baseElement) : base()
+        public SnapshotElementEventArgs(ElementDefinition element, StructureDefinition baseStructure, ElementDefinition baseElement) : base()
         {
             _element = element;
             _baseElement = baseElement;
+            _baseStructure = baseStructure;
         }
 
         /// <summary>Returns a reference to an element definition.</summary>
@@ -154,6 +156,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Returns a reference to the associated base element definition.</summary>
         public ElementDefinition BaseElement { get { return _baseElement; } }
+
+        /// <summary>Returns a reference to the associated base structure definition. The snapshot component contains the <see cref="BaseElement"/> instance.</summary>
+        public StructureDefinition BaseStructure { get { return _baseStructure; } }
     }
 
     public delegate void SnapshotElementHandler(object sender, SnapshotElementEventArgs e);

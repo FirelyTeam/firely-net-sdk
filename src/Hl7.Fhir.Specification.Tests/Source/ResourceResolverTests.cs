@@ -63,9 +63,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
-            extDefn = source.ResolveByUri("http://hl7.org/fhir/NamingSystem/tx-rxnorm");
-            Assert.IsNotNull(extDefn);
-            Assert.IsInstanceOfType(extDefn, typeof(NamingSystem));
+            // namingsystems have disappeared in STU3?
+            //extDefn = source.ResolveByUri("http://hl7.org/fhir/NamingSystem/tx-rxnorm");
+            //Assert.IsNotNull(extDefn);
+            //Assert.IsInstanceOfType(extDefn, typeof(NamingSystem));
         }
 
 
@@ -203,7 +204,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestCanonicalUrlConflicts()
         {
-            const string srcFileName = "extension-definitions.xml";
+            //const string srcFileName = "extension-definitions.xml";
             const string dupFileName = "diagnosticorder-reason-duplicate";
             const string url = "http://hl7.org/fhir/StructureDefinition/diagnosticrequest-reasonRejected";
 
