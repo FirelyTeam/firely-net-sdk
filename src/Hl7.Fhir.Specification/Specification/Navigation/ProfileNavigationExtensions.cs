@@ -24,26 +24,35 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <param name="path">The path to rebase the structure on</param>
         public static void Rebase(this IElementList root, string path)
         {
-            var nav = new ElementDefinitionNavigator(root.Element);
+            Rebase(root.Element, path);
+        }
+
+
+        /// <summary>
+        /// Rewrites the Path's of the elements in a structure so they are based on the given path: the root
+        /// of the given structure will become the given path, it's children will be relocated below that path
+        /// </summary>
+        /// <param name="elements">A list of element definitions that will be rebased on the path.</param>
+        /// <param name="path">The path to rebase the structure on.</param>
+        public static void Rebase(this IList<ElementDefinition> elements, string path)
+        {
+            var nav = new ElementDefinitionNavigator(elements);
 
             if (nav.MoveToFirstChild())
             {
                 var newPaths = new List<string>() { path };
 
                 rebaseChildren(nav, path, newPaths);
-                Debug.Assert(root.Element.Count == newPaths.Count);
-
-                var snapshot = root.Element;
+                Debug.Assert(elements.Count == newPaths.Count);
 
                 // Can only change the paths after navigating the tree, otherwise the
                 // navigation functions (which are based on the paths) won't function correctly
-                for (var i = 0; i < root.Element.Count; i++)
+                for (var i = 0; i < elements.Count; i++)
                 {
-                    root.Element[i].Path = newPaths[i];
+                    elements[i].Path = newPaths[i];
                 }
             }
         }
-
 
         private static void rebaseChildren(ElementDefinitionNavigator nav, string path, List<string> newPaths)
         {

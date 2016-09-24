@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     "Recursive profile snapshot generation detected for profile '{0}' on element '{1}'.\r\nProfile url stack:\r\n{2}", profileUrl, path, string.Join("\r\n", _expandingProfiles)
                 );
             }
+            Debug.Print("OnBeforeExpandType: " + profileUrl);
             _expandingProfiles.Push(profileUrl);
         }
 
@@ -96,12 +97,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         public void OnAfterExpandType(string profileUrl)
         {
             Debug.Assert(_expandingProfiles != null);
+            Debug.Print("OnAfterExpandType: " + profileUrl);
             // if (!_expandingProfiles.Remove(profileUrl))
-            if (_expandingProfiles.Pop() != profileUrl)
+            var currentProfile = _expandingProfiles.Pop();
+            if (currentProfile != profileUrl)
             {
                 // _expandingProfiles.Push(profileUrl);
                 // Shouldn't happen... indicates an error in the snapshot expansion logic
-                throw Error.InvalidOperation("Invalid operation. The completed snapshot profile url '{0}' is not equal to the currently generating snapshot profile url '{1}'.", profileUrl, _expandingProfiles.Peek());
+                throw Error.InvalidOperation("Invalid operation. The completed snapshot profile url '{0}' is not equal to the currently generating snapshot profile url '{1}'.", profileUrl, currentProfile);
             }
         }
     }

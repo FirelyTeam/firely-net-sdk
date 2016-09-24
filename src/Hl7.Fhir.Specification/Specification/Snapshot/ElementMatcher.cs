@@ -1,4 +1,6 @@
-﻿/* 
+﻿// #define CHRIS_GRENZ
+
+/* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -260,7 +262,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // If the differential contains a slicing entry, then it should also define at least a single slice.
                     if (!diffNav.MoveToNext())
                     {
+#if CHRIS_GRENZ
+                        // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
+#else
                         throw Error.InvalidOperation("Differential has a slicing entry for path '{0}', but no first actual slice", diffNav.Path);
+#endif
                     }
                 }
             }
@@ -322,6 +328,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             var slicingIntro = matchingSlice = snapNav.Bookmark();
             var result = false;
 
+#if CHRIS_GRENZ
+            var reslice = false;
+#endif
+
             // url, type@profile, @type + @profile
             if (IsTypeProfileDiscriminator(slicing.Discriminator))
             {
@@ -332,16 +342,31 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => Match to base profile on child element with name 'question'
 
                 var diffProfiles = diffNav.Current.PrimaryTypeProfiles().ToArray();
+                // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
                 if (diffProfiles == null || diffProfiles.Length == 0)
                 {
+#if CHRIS_GRENZ
+                    reslice = true;
+#else
                     throw Error.InvalidOperation("Differential is reslicing on url, but resliced element has no type profile (path = '{0}').", diffNav.Path);
+#endif
                 }
-                if (diffProfiles.Length > 1)
+                if (diffProfiles != null && diffProfiles.Length > 1)
                 {
                     throw Error.NotSupported("Reslicing on complex discriminator is not supported (path = '{0}').", diffNav.Path);
                 }
 
+
+#if CHRIS_GRENZ
+                // TOOO: Resolve profile from element Type
+                // => Needs a reference to the calling SnapshotGenerator
+                // var diffProfile = generator.getStructureForElementType(diffNav.Current).Url;
+
+                var diffProfile = diffProfiles.FirstOrDefault() ?? Validation.TypeRefExtensions.ProfileUri(snapNav.Current.PrimaryType());
+                
+#else
                 var diffProfile = diffProfiles.FirstOrDefault();
+#endif
                 var profileRef = ProfileReference.FromUrl(diffProfile);
                 while (snapNav.MoveToNext(snapNav.PathName))
                 {
@@ -349,7 +374,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                     result = profileRef.IsComplex
                         // Match on element name
                         ? snapNav.Current.Name == profileRef.ElementName
-                        // Match on profile(s)
+#if CHRIS_GRENZ
+                        // Match reslice on name
+                        : reslice ? snapNav.Current.Name == diffNav.Current.Name
+#endif
+                        // Match on type profile(s)
                         : baseProfiles.SequenceEqual(diffProfiles);
                     if (result)
                     {
@@ -398,7 +427,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var ar = discriminators.ToArray();
                 if (ar.Length == 1)
                 {
-                    return ar[0] == "url" || ar[0] == "type@profile";
+                    return ar[0] == "url" || ar[0] == "type@profile"
+#if CHRIS_GRENZ
+                        // [WMR 20160919] Added to handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
+                        || ar[0] == "@profile"
+#endif
+                        ;
                 }
                 else if (ar.Length == 2)
                 {

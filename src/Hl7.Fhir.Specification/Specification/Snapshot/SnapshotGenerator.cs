@@ -9,6 +9,16 @@
 // WORK IN PROGRESS
 // #define MERGE_PRIMITIVE_TYPES
 
+#define PREPARE_CORE
+
+// Known issues:
+// - Element.id and Element.extension are not expanded
+//   Only works if top-level call expands Element
+//   Does not work if Element is recursively expanded...
+// - Reslicing is only supported for complex extensions
+// - Only supports a few hardcoded discriminator paths (url, @type, @profile)
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +33,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 {
     public sealed partial class SnapshotGenerator
     {
+        static readonly string ELEMENT_STRUCTURE_URI = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Element);
+#if PREPARE_CORE
+        static readonly string EXTENSION_STRUCTURE_URI = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Extension);
+#endif
+
         // [WMR] Note: instance data is reused over multiple snapshot generations
         private readonly IResourceResolver _resolver;
         private readonly SnapshotGeneratorSettings _settings;
@@ -75,6 +90,26 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 throw Error.Argument("structure", "The specified StructureDefinition resource has no canonical url.");
             }
+
+#if PREPARE_CORE
+            if (structure.Url != ELEMENT_STRUCTURE_URI)
+            {
+                if (structure.Url != EXTENSION_STRUCTURE_URI)
+                {
+                    var extensionStructure = _resolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Extension);
+                    Debug.Print("[SnapshotGenerator.Generate] elementStructure: #{0}", extensionStructure.GetHashCode());
+                    prepareCoreSnapshot(extensionStructure);
+                }
+                else
+                {
+                    var elementStructure = _resolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Element);
+                    Debug.Print("[SnapshotGenerator.Generate] elementStructure: #{0}", elementStructure.GetHashCode());
+                    prepareCoreSnapshot(elementStructure);
+                }
+            }
+
+#endif
+
 
             // Clear the OperationOutcome issues
             clearIssues();
@@ -330,8 +365,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         bool mergeTypeProfiles(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
             // Debug.Print("[mergeTypeProfiles] {0} : {1}", diff.Path, diff.Current.Type != null && diff.Current.Type.Count == 1 ? diff.Current.PrimaryTypeCode() : null);
+
             // [WMR 20160913] Possible improvements:
-            // Don't recurse on special terminator elements, e.g. url, value, id
+            // Don't recurse on special terminator elements, e.g. id, url, value
             // Note that all these element definitions are marked with: <representation value="xmlAttr"/>
 
             var primaryDiffType = diff.Current.PrimaryType();
@@ -382,6 +418,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             var typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
+
             if (verifyStructureDef(typeStructure, primaryDiffTypeProfile, ToNamedNode(diff.Current)))
             {
                 // [WMR 20160915] Also notify about type profiles?
@@ -570,7 +607,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (structure.Base != null)
             {
                 var baseStructure = _resolver.FindStructureDefinition(structure.Base);
-                if (!verifyStructureDef(baseStructure, structure.Base))
+                if (!verifyStructureDef(baseStructure, structure.Base, ToNamedNode(differential.Element[0])))
                 {
                     // Fatal error...
                     return null;
@@ -764,13 +801,18 @@ namespace Hl7.Fhir.Specification.Snapshot
                 addIssueProfileNotFound(location, profileUrl);
                 return false;
             }
+            profileUrl = sd.Url;
 
-            // Prevent endless recursion on root type Element
-            const string ELEMENT_STRUCTURE_URL = "http://hl7.org/fhir/StructureDefinition/Element";
-            if (profileUrl == ELEMENT_STRUCTURE_URL) { return true; }
+            // Prevent endless recursion on root Element type definition
+            if (profileUrl == ELEMENT_STRUCTURE_URI)
+            {
+                Debug.Print("verifyStructureDef: skip recursive Element expansion...");
+                return true;
+            }
 
             // Detect endless recursion
             // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
+            // Special case: when recursing on Element, simply return true and continue; otherwise throw an exception
             _recursionChecker.OnBeforeExpandType(profileUrl, location != null ? location.Path : null);
 
             try
@@ -782,8 +824,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // Automatically expand external profiles on demand
                     Debug.Print("Recursively generate snapshot for type profile with url: '{0}' ...".FormatWith(sd.Url));
 
-                    // TODO: support SnapshotGeneratorSettings.ForceExpandAll
-                    // Use (timestamp) annotation to mark & detect already (forceably) re-expanded profiles!
                     sd.Snapshot = new StructureDefinition.SnapshotComponent()
                     {
                         Element = generate(sd)
@@ -817,6 +857,19 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             return true;
         }
+
+#if PREPARE_CORE
+        void prepareCoreSnapshot(StructureDefinition sd)
+        {
+            if (_settings.ExpandExternalProfiles
+                && (sd.Snapshot == null || (_settings.ForceExpandAll && !isCreatedBySnapshotGenerator(sd.Snapshot)))
+            )
+            {
+                Debug.Print("[SnapshotGenerator.internalPrepareSnapshot] Generate snapshot for '{0}'", sd.Url);
+                Update(sd);
+            }
+        }
+#endif
 
     }
 }
