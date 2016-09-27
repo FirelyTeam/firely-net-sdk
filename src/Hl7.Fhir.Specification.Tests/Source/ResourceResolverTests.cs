@@ -203,6 +203,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestCanonicalUrlConflicts()
         {
+            //const string srcFileName = "extension-definitions.xml";
             const string dupFileName = "diagnosticorder-reason-duplicate";
             const string url = "http://hl7.org/fhir/StructureDefinition/diagnosticorder-reason";
 

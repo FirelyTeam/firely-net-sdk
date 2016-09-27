@@ -17,7 +17,8 @@ using System.Diagnostics;
 namespace Hl7.Fhir.Specification.Snapshot
 {
     // Methods to (re-)generate the ElementDefinition.Base components from the associated base profile
-    // Controlled by _settings.NormalizeElementBase
+    // Uses annotations on ElementDefinition.Base to suppress duplicate (re-)generation
+    // Behavior is controlled by _settings.NormalizeElementBase
 
     partial class SnapshotGenerator
     {
@@ -185,7 +186,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 MinElement = (Integer)minElement.DeepCopy(),
                 PathElement = (FhirString)pathElement.DeepCopy(),
             };
-            result.AddAnnotation(new CreatedBySnapshotGeneratorAnnotation());
+            setCreatedBySnapshotGenerator(result);
             return result;
         }
 
@@ -195,6 +196,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             private readonly DateTime _created;
             public DateTime Created { get { return _created; } }
             public CreatedBySnapshotGeneratorAnnotation() { _created = DateTime.Now; }
+        }
+
+        static void setCreatedBySnapshotGenerator(Element elem)
+        {
+            if (elem != null) { elem.AddAnnotation(new CreatedBySnapshotGeneratorAnnotation()); }
         }
 
         /// <summary>Determines if the specified element was created by the <see cref="SnapshotGenerator"/> class.</summary>

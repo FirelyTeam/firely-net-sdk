@@ -20,14 +20,14 @@ namespace Hl7.Fhir.Validation
         public OperationOutcome.IssueSeverity Severity;
         public OperationOutcome.IssueType Type;
 
-        public CodeableConcept ToCodeableConcept()
+        public CodeableConcept ToCodeableConcept(string text = null)
         {
-            return ToCodeableConcept(Code);
+            return ToCodeableConcept(Code, text);
         }
 
-        public static CodeableConcept ToCodeableConcept(int issueCode)
+        public static CodeableConcept ToCodeableConcept(int issueCode, string text = null)
         {
-            return new CodeableConcept("http://hl7.org/fhir/validation-operation-outcome", issueCode.ToString());
+            return new CodeableConcept("http://hl7.org/fhir/validation-operation-outcome", issueCode.ToString(), text);
         }
 
         public OperationOutcome.IssueComponent ToIssueComponent(string message, INamedNode location = null)
@@ -35,10 +35,14 @@ namespace Hl7.Fhir.Validation
             return ToIssueComponent(message, location != null ? location.Path : null);
         }
 
-        public OperationOutcome.IssueComponent ToIssueComponent(string message, string path=null)
+        public OperationOutcome.IssueComponent ToIssueComponent(string message, string path = null)
         {
-            var ic = new OperationOutcome.IssueComponent() { Severity = this.Severity, Code = this.Type, Diagnostics = message };
-            ic.Details = ToCodeableConcept();
+            // https://www.hl7.org/fhir/operationoutcome-definitions.html#OperationOutcome.issue.details
+            // Comments: "A human readable description of the error issue SHOULD be placed in details.text."
+
+            // var ic = new OperationOutcome.IssueComponent() { Severity = this.Severity, Code = this.Type, Diagnostics = message };
+            var ic = new OperationOutcome.IssueComponent() { Severity = this.Severity, Code = this.Type };
+            ic.Details = ToCodeableConcept(message);
 
             if (path != null) ic.Location = new List<string> { path };
 

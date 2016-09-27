@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2015, Furore (info@furore.com) and contributors
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -10,7 +10,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System.Diagnostics;
@@ -102,6 +101,15 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             var result = new List<MatchInfo>();
 
+            // [WMR 20160906] DEBUG: http://example.com/fhir/StructureDefinition/patient-research-authorization
+            //if (diffNav.Elements.Count == 11
+            //    && snapNav.Elements.Count == 5
+            //    && diffNav.Elements[1].Path == "Extension.url"
+            //    && snapNav.Elements[1].Path == "Extension.id")
+            //{
+            //    Debug.Fail("");
+            //}
+
             try
             {
                 do
@@ -135,6 +143,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     if (isNewElement)
                     {
+                        // Note: this loop consumes all new diffNav elements when processing the first element from snapNav
+                        // When Match is called for remaining snapNav (base) elements, all new diffNav elements will already have been merged
                         result.Add(constructNew(snapNav, diffNav));
                     }
                     else
@@ -173,8 +183,16 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // [WMR 20160801] Only emit slicing entry for actual extension elements (with extension profile url)
             // Do not emit slicing entry for abstract Extension base element definition (inherited from external profiles)
+            // [WMR 20160906] WRONG! Also need to handle complex extensions
             // bool diffIsExtension = diffNav.Current.IsExtension();
-            bool diffIsExtension = diffNav.Current.IsMappedExtension();
+            bool diffIsExtension = // diffNav.Current.IsMappedExtension()
+                diffNav.Current.IsExtension() &&
+                (
+                    diffNav.Current.PrimaryTypeProfile() != null                            // Extension element in a profile
+                    || ElementDefinitionNavigator.GetPathRoot(diffNav.Path) == "Extension"  // Complex extension child element
+                );
+
+
             var nextDiffChildName = nextChildName(diffNav);
             bool diffIsSliced = diffIsExtension || nextDiffChildName == diffNav.PathName;
             bool diffIsTypeSlice = snapNav.Current.IsChoice() && snapNav.IsCandidateTypeSlice(diffNav.PathName);
@@ -357,9 +375,15 @@ namespace Hl7.Fhir.Specification.Snapshot
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
         private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
+            // Called by Match when the current diffNav does not match any following sibling of snapNav (base)
+            // This happens when merging a core definition (e.g. Patient) with a base type (e.g. Resource)
             // Return reference to *parent* element as BaseBookmark!
+            // Exception: when snapNav = {} | {Resource} e.g. Resource & Element
             var bm = snapNav.Bookmark();
-            snapNav.MoveToParent();
+            if (!string.IsNullOrEmpty(snapNav.ParentPath))
+            {
+                snapNav.MoveToParent();
+            }
             var match = new MatchInfo() { BaseBookmark = snapNav.Bookmark(), DiffBookmark = diffNav.Bookmark(), Action = MatchAction.New };
             snapNav.ReturnToBookmark(bm);
             return match;

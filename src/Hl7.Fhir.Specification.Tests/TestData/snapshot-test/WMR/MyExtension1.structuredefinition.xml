@@ -21,7 +21,6 @@
     </element>
     <element>
       <path value="Extension.url" />
-      <representation value="xmlAttr" />
       <fixedUri value="http://example.org/fhir/StructureDefinition/MyExtension1" />
     </element>
     <element>
