@@ -200,18 +200,24 @@ namespace Hl7.Fhir.Validation
 
         private static bool isContainer(IElementNavigator instance)
         {
+            if (instance.TypeName == null) return false;
+
             return ModelInfo.FhirTypeNameToFhirType(instance.TypeName) == FHIRDefinedType.Bundle ||
                                     ModelInfo.IsKnownResource(instance.TypeName);
         }
 
         public IElementNavigator ResourceContext(IElementNavigator instance)
         {
+            if (_root == null) return null;     // No parent scope found yet (i.e. validating an isolated datatype instance)
+
             var parent = _root.FindNearestScope(instance.Path);
             return parent != null ? parent.Container : null;
         }
 
         public string ContextFullUrl(IElementNavigator instance)
         {
+            if (_root == null) return null;   // No parent scope found yet (i.e. validating an isolated datatype instance)
+
             var scope = _root.FindNearestScope(instance.Path);
             if (scope == null) return null;
 
@@ -226,6 +232,8 @@ namespace Hl7.Fhir.Validation
 
         public IElementNavigator Resolve(IElementNavigator instance, string uri)
         {
+            if (_root == null) return null;   // No parent scope found yet (i.e. validating an isolated datatype instance)
+
             var scope = _root.FindNearestScope(instance.Path);
             if (scope == null) return null;
 

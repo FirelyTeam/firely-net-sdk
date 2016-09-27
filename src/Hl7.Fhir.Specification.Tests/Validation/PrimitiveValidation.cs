@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Validation
                     new TestProfileArtifactSource(),
                     new ZipSource("specification.zip")));
 
-            var ctx = new ValidationContext() { ResourceResolver = source, GenerateSnapshot = true, Trace = true };
+            var ctx = new ValidationSettings() { ResourceResolver = source, GenerateSnapshot = true, Trace = true };
             ctx.GenerateSnapshotSettings = Specification.Snapshot.SnapshotGeneratorSettings.Default;
             ctx.GenerateSnapshotSettings.ExpandExternalProfiles = true;
             validator = new Validator(ctx);
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Validation
 
             var instance = new Identifier("http://clearly.incorrect.nl/definition", "1234");
 
-            var validationContext = new ValidationContext { ResourceResolver = source, GenerateSnapshot = false };
+            var validationContext = new ValidationSettings { ResourceResolver = source, GenerateSnapshot = false };
             var automatedValidator = new Validator(validationContext);
 
             var report = automatedValidator.Validate(identifierBSN, instance);
@@ -392,11 +392,11 @@ namespace Hl7.Fhir.Validation
             report = validator.Validate(p);
             Assert.IsFalse(report.Success);
 
-            validator.ValidationContext.SkipConstraintValidation = true;
+            validator.Settings.SkipConstraintValidation = true;
             report = validator.Validate(p);
             Assert.IsTrue(report.Success);
 
-            validator.ValidationContext.SkipConstraintValidation = false;
+            validator.Settings.SkipConstraintValidation = false;
 
             p.Contact.First().Address = new Address() { City = "Amsterdam" };
 

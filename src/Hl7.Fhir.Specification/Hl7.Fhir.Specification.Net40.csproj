@@ -126,8 +126,8 @@
     <Compile Include="Validation\PocoValidationExtensions.cs" />
     <Compile Include="Validation\ScopeTracker.cs" />
     <Compile Include="Validation\TypeRefExtensions.cs" />
-    <Compile Include="Validation\ValidationContext.cs" />
     <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
+    <Compile Include="Validation\ValidationSettings.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="XPath\CustomXsltFunction.cs" />
     <Compile Include="XPath\FhirNamespaceManager.cs" />

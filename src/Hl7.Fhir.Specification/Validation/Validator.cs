@@ -10,6 +10,7 @@ using Hl7.ElementModel;
 using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
@@ -23,36 +24,17 @@ using System.Xml;
 
 namespace Hl7.Fhir.Validation
 {
-    public class OnSnapshotNeededEventArgs : EventArgs
-    {
-        public OnSnapshotNeededEventArgs(StructureDefinition definition, IResourceResolver resolver)
-        {
-            Definition = definition;
-            Resolver = resolver;
-        }
-
-        public StructureDefinition Definition { get; private set; }
-
-        public IResourceResolver Resolver { get; private set; }
-    }
-
-
-    /// <summary>
-    /// TODO: When an extension is used in an instance (not necessarily mandated by the profile I am validating against), I should still trace
-    /// the Extension.url to validate it
-    /// </summary>
     public class Validator
     {
-        public ValidationContext ValidationContext { get; private set;  }
-            
+        public ValidationSettings Settings { get; private set; }
+
         public event EventHandler<OnSnapshotNeededEventArgs> OnSnapshotNeeded;
 
-        private Stack<IElementNavigator> FluentPathContext = new Stack<IElementNavigator>();
+        private ScopeTracker _scopeTracker = new ScopeTracker();
 
-
-        public Validator(ValidationContext context)
+        public Validator(ValidationSettings settings)
         {
-            ValidationContext = context;
+            Settings = settings;
         }
 
         public OperationOutcome Validate(string definitionUri, IElementNavigator instance)
@@ -61,7 +43,7 @@ namespace Hl7.Fhir.Validation
 
             var outcome = new OperationOutcome();
 
-            StructureDefinition structureDefinition = ValidationContext.ResourceResolver.FindStructureDefinition(definitionUri);
+            StructureDefinition structureDefinition = Settings.ResourceResolver.FindStructureDefinition(definitionUri);
 
             if (outcome.Verify(() => structureDefinition != null, "Unable to resolve reference to profile '{0}'".FormatWith(definitionUri), Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance))
                 outcome.Add(Validate(structureDefinition, instance));
@@ -102,7 +84,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            if (!structureDefinition.HasSnapshot && ValidationContext.ResourceResolver != null)
+            if (!structureDefinition.HasSnapshot && Settings.ResourceResolver != null)
             {
                 // Note: this modifies an SD that is passed to us. If this comes from a cache that's
                 // kept across processes, this could mean trouble, so clone it first
@@ -111,12 +93,12 @@ namespace Hl7.Fhir.Validation
                 // We'll call out to an external component, so catch any exceptions and include them in our report
                 try
                 {
-                    SnapshotNeeded(structureDefinition, ValidationContext.ResourceResolver);
+                    SnapshotNeeded(structureDefinition, Settings.ResourceResolver);
                 }
                 catch (Exception e)
                 {
-                    Trace(outcome, "Snapshot generation failed for {0}. Message: {1}"
-                           .FormatWith(structureDefinition.Url, e.Message), Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, instance);
+                    Trace(outcome, $"Snapshot generation failed for {structureDefinition.Url}. Message: {e.Message}",
+                           Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, instance);
                 }
             }
 
@@ -154,18 +136,12 @@ namespace Hl7.Fhir.Validation
         internal OperationOutcome ValidateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
-            bool isNewFPContext = definition.StructureDefinition.Kind == StructureDefinition.StructureDefinitionKind.Resource &&
-                                        definition.Current.IsRootElement();
 
             try
             {
                 Trace(outcome, "Start validation of ElementDefinition at path '{0}'".FormatWith(definition.QualifiedDefinitionPath()), Issue.PROCESSING_PROGRESS, instance);
 
-                if (isNewFPContext)
-                {
-                    Trace(outcome, "Enter validation context (type {0})".FormatWith(instance.TypeName), Issue.PROCESSING_PROGRESS, instance);
-                    FluentPathContext.Push(instance);
-                }
+                _scopeTracker.Enter(instance);
 
                 // Any node must either have a value, or children, or both (e.g. extensions on primitives)
                 if (!outcome.Verify(() => instance.Value != null || instance.HasChildren(), "Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance))
@@ -213,11 +189,7 @@ namespace Hl7.Fhir.Validation
             }
             finally
             {
-                if (isNewFPContext)
-                {
-                    var context = FluentPathContext.Pop();
-                    Trace(outcome, "Leave validation context (type {0})".FormatWith(context.TypeName), Issue.PROCESSING_PROGRESS, instance);                    
-                }
+                _scopeTracker.Leave(instance);
             }
         }
 
@@ -226,8 +198,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            var context = FluentPathContext.Any() ? FluentPathContext.Peek() : null;
-
+            var context = _scopeTracker.ResourceContext(instance);
 
             // <constraint>
             //  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
@@ -243,10 +214,10 @@ namespace Hl7.Fhir.Validation
             foreach (var constraintElement in definition.Constraint)
             {
                 var fpExpression = constraintElement.GetFluentPathConstraint();
-                if(outcome.Verify(() => fpExpression != null, "Encountered an invariant ({0}) that has no FluentPath expression, skipping validation of this constraint"
+                if (outcome.Verify(() => fpExpression != null, "Encountered an invariant ({0}) that has no FluentPath expression, skipping validation of this constraint"
                             .FormatWith(constraintElement.Key), Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance))
                 {
-                    if (ValidationContext.SkipConstraintValidation)
+                    if (Settings.SkipConstraintValidation)
                         outcome.Verify(() => true, "Instance was not validated against invariant {0}, because constraint validation is disabled", Issue.PROCESSING_CONSTRAINT_VALIDATION_INACTIVE, instance);
                     else
                     {
@@ -272,7 +243,7 @@ namespace Hl7.Fhir.Validation
                     }
                 }
             }
-        
+
             return outcome;
         }
 
@@ -374,24 +345,113 @@ namespace Hl7.Fhir.Validation
 
         internal OperationOutcome ValidateTypeReferences(IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, IElementNavigator instance)
         {
+            var normalUris = typeRefs.Where(tr => tr.Code != FHIRDefinedType.Reference).Select(tr => tr.ProfileUri());
+            var references = typeRefs.Where(tr => tr.Code == FHIRDefinedType.Reference);
+
+            // TODO: Need to combine outcomes
+            // Or is validating a reference something that should be promoted to a higher-level function (i.e. part of just validating
+            // a single ResoureReference instance, not necessarily a subtask of TypeRef validation?)
+
+            var outcomes = new List<OperationOutcome>();
+
+            foreach (var typeRef in typeRefs)
+            {
+                if (typeRef.Code == FHIRDefinedType.Reference)
+                    outcomes.Add(ValidateResourceReference(typeRef, instance));
+                else
+                    outcomes.Add(Validate(typeRef.Profile.First(), instance));
+            }
+
             var outcome = new OperationOutcome();
-            var normalUris = typeRefs.Where(tr => tr.Code !=  FHIRDefinedType.Reference).Select(tr => tr.ProfileUri());
-            var referenceUris = typeRefs.Where(tr => tr.Code == FHIRDefinedType.Reference).Select(tr => tr.ProfileUri());
+            outcome.Combine(outcomes, instance, BatchValidationMode.Any);
 
-            if(referenceUris.Any() && ValidationContext.ValidateReferencedResources != ReferenceKind.None)
+            return outcome;
+        }
+
+        internal OperationOutcome ValidateResourceReference(ElementDefinition.TypeRefComponent typeRefs, IElementNavigator instance)
+        {
+            var outcome = new OperationOutcome();
+
+            var references = instance.GetChildrenByName("reference").GetChildrenByName("value");
+            var reference = references.FirstOrDefault()?.Value as string;
+
+            if (reference == null)       // No reference found -> this is always valid
+                return outcome;
+
+            outcome.Verify(() => references.Count() > 1,
+                    $"Encountered multiple references, just using first ({reference})", Issue.CONTENT_REFERENCE_HAS_MULTIPLE_REFERENCES, instance);
+
+            var identity = new ResourceIdentity(reference);
+            IElementNavigator referencedResource = null;
+            ElementDefinition.AggregationMode? referenceKindEncountered = null;
+
+            if (identity.Form == ResourceIdentityForm.Local)
             {
-                //TODO: 1) Create a new Validator, pass it our context
-                // 2) Use an event or resolution mechanism to fetch the resource and determine the kind of reference
-                // 3) Validate the kind of reference to the aggregation mode
-                // 4) Start validation of the referenced resource
-                outcome.Verify(() => true, "Validator does not yet support following references", Issue.UNSUPPORTED_FOLLOWING_REFERENCES, instance);
+                referenceKindEncountered = ElementDefinition.AggregationMode.Contained;
+                referencedResource = _scopeTracker.Resolve(instance, reference);
+                outcome.Verify(() => referencedResource != null, $"Contained reference ({reference}) is not resolvable", Issue.CONTENT_CONTAINED_REFERENCE_NOT_RESOLVABLE, instance);
             }
- 
-            if(normalUris.Any())
+            else if (identity.Form == ResourceIdentityForm.RelativeRestUrl)
             {
-                outcome.Add(Validate(normalUris, instance, BatchValidationMode.Any));
+                // Relocate the relative url on the base given in the fullUrl of the entry (if applicable)
+                var fullUrl = _scopeTracker.ContextFullUrl(instance);
+                if (outcome.Verify(() => fullUrl != null, $"Encountered a relative reference ({reference}) that is not contained in a Bundle entry with a full url", Issue.CONTENT_RELATIVE_REFERENCE_WITHOUT_FULLURL, instance))
+                {
+                    var parentIdentity = new ResourceIdentity(fullUrl);
+                    if (parentIdentity.BaseUri != null)
+                    {
+                        var absoluteIdentity = identity.WithBase(parentIdentity.BaseUri);
+                        referencedResource = _scopeTracker.Resolve(instance, absoluteIdentity.ToString());
+                    }
+                }
+
+                if (referencedResource != null)
+                    referenceKindEncountered = ElementDefinition.AggregationMode.Bundled;
+                else
+                    referenceKindEncountered = ElementDefinition.AggregationMode.Referenced;
+
+            }
+            else if (identity.Form == ResourceIdentityForm.AbsoluteRestUrl)
+            {
+                referencedResource = _scopeTracker.Resolve(instance, reference);
+                if (referencedResource != null)
+                    referenceKindEncountered = ElementDefinition.AggregationMode.Bundled;
+                else
+                    referenceKindEncountered = ElementDefinition.AggregationMode.Referenced;
+            }
+            else if(identity.Form == ResourceIdentityForm.Urn)
+            {
+                referencedResource = _scopeTracker.Resolve(instance, reference);
+                if (referencedResource != null)
+                    referenceKindEncountered = ElementDefinition.AggregationMode.Bundled;
+                else
+                    referenceKindEncountered = ElementDefinition.AggregationMode.Referenced;
+            }
+            else
+            {
+                outcome.Verify(() => true, $"Encountered an unparseable reference ({reference})", Issue.CONTENT_UNPARSEABLE_REFERENCE, instance);
+                return outcome;
             }
 
+            bool hasAggregation = typeRefs.Aggregation != null && typeRefs.Aggregation.Count() != 0;
+
+            outcome.Verify(() => !hasAggregation || typeRefs.Aggregation.Any(a => a == referenceKindEncountered),
+                    $"Encountered a reference ({reference}) of kind '{referenceKindEncountered }' that is not allowed", Issue.CONTENT_REFERENCE_OF_INVALID_KIND, instance);
+
+            if (referencedResource == null && referenceKindEncountered == ElementDefinition.AggregationMode.Referenced)
+            {
+                outcome.Verify(() => true, "Validator does not yet support following external references", Issue.UNSUPPORTED_FOLLOWING_REFERENCES, instance);
+
+                //TODO: If settings allow you to do so, try to resolve the url using some external mechanism, 
+                // create a NEW validator, and run the validation of the external reference, .Include() the result
+                // Settings.ValidateReferencedResources != ReferenceKind.None
+            }
+            else if (referencedResource != null)
+            {
+                // Reference was resolved within the instance
+                outcome.Add(Validate(typeRefs.Profile.First(), referencedResource));
+            }
+          
             return outcome;
         }
 
@@ -433,7 +493,7 @@ namespace Hl7.Fhir.Validation
 
         internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
         {
-            if (ValidationContext.Trace)
+            if (Settings.Trace)
                 outcome.Info(message, issue, location);
         }
 
@@ -527,9 +587,9 @@ namespace Hl7.Fhir.Validation
             }
 
             // Else, expand, depending on our configuration
-            if (ValidationContext.GenerateSnapshot)
+            if (Settings.GenerateSnapshot)
             {
-                SnapshotGeneratorSettings settings = ValidationContext.GenerateSnapshotSettings;
+                SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings;
 
                 if (settings == null)
                     settings = SnapshotGeneratorSettings.Default;
@@ -596,6 +656,21 @@ namespace Hl7.Fhir.Validation
             return path;
         }
     }
+
+
+    public class OnSnapshotNeededEventArgs : EventArgs
+    {
+        public OnSnapshotNeededEventArgs(StructureDefinition definition, IResourceResolver resolver)
+        {
+            Definition = definition;
+            Resolver = resolver;
+        }
+
+        public StructureDefinition Definition { get; private set; }
+
+        public IResourceResolver Resolver { get; private set; }
+    }
+
 
     public enum BatchValidationMode
     {

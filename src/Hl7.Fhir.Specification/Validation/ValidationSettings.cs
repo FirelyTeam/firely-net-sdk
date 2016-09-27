@@ -15,7 +15,7 @@ using System;
 namespace Hl7.Fhir.Validation
 {
 
-    public class ValidationContext
+    public class ValidationSettings
     {
         public IResourceResolver ResourceResolver { get; set; }
 
