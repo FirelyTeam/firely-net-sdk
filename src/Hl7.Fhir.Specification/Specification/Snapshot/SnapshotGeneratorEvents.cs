@@ -29,12 +29,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         internal void OnConstraint(Element element)
         {
             if (element == null) { throw new ArgumentNullException("element"); }
-            
+
             // Configurable default behavior: mark changed elements
-            if (_settings.MarkChanges)
-            {
-                element.SetChangedByDiff();
-            }
+            // [WMR 20160915] Mark element as chaged
+            markChangedByDiff(element);
 
             var handler = Constraint;
             if (handler != null)

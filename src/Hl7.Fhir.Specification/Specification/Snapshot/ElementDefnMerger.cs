@@ -40,6 +40,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             private void merge(ElementDefinition snap, ElementDefinition diff)
             {
+                // [WMR 20160915] Important! Derived profiles should never inherit the ChangedByDiff extension
+                // Caller should make sure that existing extensions have been removed from snap,
+                // otherwise associated diff elems will be considered as changed (because they don't have the extension yet).
+
                 // bool isExtensionConstraint = snap.Path == "Extension" || snap.IsExtension();
 
                 // paths can be changed under one circumstance: the snap is a choice[x] element, and diff limits the type choices
@@ -125,6 +129,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // TODO: [GG] what to do about conditions?  [EK] We have key, so merge Constraint and condition based on that?
                 // Constraints are cumulative, so they are always "new" (hence a constant false for the comparer)
+                // [WMR 20160917] Note: constraint keys must be unique. The validator will detect duplicate keys, so the derived
+                // profile author can correct the conflicting constraint key.
                 snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
 
                 // [WMR 20160907] merge conditions
@@ -222,11 +228,17 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             private List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> elemComparer) where T : Element
             {
-                //TODO: The next != null should be IsNullOrEmpty(), but we don't have that yet for complex types
-                // if (diff != null && !diff.IsExactly(snap))
+                // [WMR 20160915] Handle ChangedByDiff extension
+                // - Should not affect equality testing
+                // - Should not be inherited by derived profiles
+                
                 if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
                 {
                     var result = snap == null ? new List<T>() : new List<T>((IEnumerable<T>)snap.DeepCopy());
+
+                    // [WMR 20160915] Never inherit Changed extension from base profile!
+                    // Remove before comparing
+                    // result.RemoveAllChangedByDiff();
 
                     // Just add new elements to the result, never replace existing ones
                     foreach (var element in diff)

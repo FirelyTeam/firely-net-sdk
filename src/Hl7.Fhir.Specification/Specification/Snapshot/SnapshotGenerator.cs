@@ -1,14 +1,13 @@
-﻿#define DETECT_RECURSION
-#define FORCE_EXPAND_ALL
-#define MERGE_NEW_ELEMS
-
-/* 
+﻿/* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
+
+// WORK IN PROGRESS
+// #define MERGE_PRIMITIVE_TYPES
 
 using System;
 using System.Collections.Generic;
@@ -27,9 +26,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // [WMR] Note: instance data is reused over multiple snapshot generations
         private readonly IResourceResolver _resolver;
         private readonly SnapshotGeneratorSettings _settings;
-#if DETECT_RECURSION
         private readonly SnapshotRecursionChecker _recursionChecker = new SnapshotRecursionChecker();
-#endif
 
         public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings) // : this()
         {
@@ -82,7 +79,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Clear the OperationOutcome issues
             clearIssues();
 
-#if DETECT_RECURSION
             List<ElementDefinition> result = null;
             _recursionChecker.StartExpansion(structure.Url);
             try
@@ -95,9 +91,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Debug.Assert(_recursionChecker.IsCompleted || result == null);
                 _recursionChecker.FinishExpansion();
             }
-#else
-            result = generate(structure);
-#endif
             return result;
         }
 
@@ -133,7 +126,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             clearIssues();
 
-#if DETECT_RECURSION
             // Must initialize recursion checker, because element expansion may recurse on external type profile
             _recursionChecker.StartExpansion();
             try
@@ -144,9 +136,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 _recursionChecker.FinishExpansion();
             }
-#else
-            expandElement(nav);
-#endif
             return nav.Elements;
         }
 
@@ -193,21 +182,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         // No matching base element; this is a new element definition
                         // snap is positioned at the associated parent element
-#if MERGE_NEW_ELEMS
                         // [WMR 20160907] NEW: For new elements, use the associated type profile as the base for each element type
                         createNewElement(snap, diff);
-#else
-                        // Copy the element definition from differential to snapshot
-                        var clone = (ElementDefinition)diff.Current.DeepCopy();
-
-                        snap.AppendChild(clone);
-
-                        // Notify clients about a snapshot element with differential constraints
-                        OnConstraint(snap.Current);
-
-                        // Merge children
-                        mergeElement(snap, diff);
-#endif
                     }
 
                 }
@@ -225,14 +201,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             StructureDefinition typeStructure = getStructureForElementType(diff.Current);
             if (typeStructure != null)
             {
-                // var clonedSnapshot = (StructureDefinition.SnapshotComponent)typeStructure.Snapshot.DeepCopy();
-                // clonedSnapshot.Rebase(diff.Path);
-                // var newElement = clonedSnapshot.Element[0];
-                var newElement = (ElementDefinition)typeStructure.Snapshot.Element[0].DeepCopy();
-                Debug.Assert(newElement.IsRootElement());
+                var baseElement = typeStructure.Snapshot.Element[0];
+                Debug.Assert(baseElement.IsRootElement());
+                var newElement = (ElementDefinition)baseElement.DeepCopy();
                 newElement.Path = ElementDefinitionNavigator.ReplacePathRoot(newElement.Path, diff.Path);
-
                 newElement.Base = null;
+
+                // [WMR 20160915] NEW: Notify subscribers
+                OnPrepareElement(newElement, typeStructure, baseElement);
+
                 mergeElementDefinition(newElement, diff.Current);
 
                 snap.AppendChild(newElement);
@@ -240,10 +217,16 @@ namespace Hl7.Fhir.Specification.Snapshot
             else
             {
                 var clonedElem = (ElementDefinition)diff.Current.DeepCopy();
+
+                // [WMR 20160915] NEW: Notify subscribers
+                OnPrepareElement(clonedElem, null, null);
+
                 snap.AppendChild(clonedElem);
             }
+
             // Notify clients about a snapshot element with differential constraints
             OnConstraint(snap.Current);
+
             // Merge children
             mergeElement(snap, diff);
         }
@@ -352,26 +335,35 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Note that all these element definitions are marked with: <representation value="xmlAttr"/>
 
             var primaryDiffType = diff.Current.PrimaryType();
-            if (primaryDiffType == null || primaryDiffType.IsReference())
-            {
-                return true;
-            }
+            if (primaryDiffType == null || primaryDiffType.IsReference()) { return true; }
 
             var primarySnapType = snap.Current.PrimaryType();
-            if (primarySnapType == null)
-            {
-                return true;
-            }
+            // if (primarySnapType == null) { return true; }
 
             var primaryDiffTypeProfile = primaryDiffType.Profile.FirstOrDefault();
-            var primarySnapTypeProfile = primarySnapType.Profile.FirstOrDefault();
+            var primarySnapTypeProfile = primarySnapType != null ? primarySnapType.Profile.FirstOrDefault() : null;
 
-            var primaryDiffTypeName = primaryDiffType.CodeElement != null ? primaryDiffType.CodeElement.ObjectValue as string : null;
-
-            if (string.IsNullOrEmpty(primaryDiffTypeProfile) || primaryDiffTypeProfile == primarySnapTypeProfile)
+#if MERGE_PRIMITIVE_TYPES
+            // TODO: If the differential overrides base type code, then merge primitive type profile (root elem only)
+            // e.g. Extension.url : uri => Element : Element
+            // Not necessary to expand the primitive structure, merge root differential element
+            // Exclude root element, base has already been merged via StructureDef.Base
+            if (!snap.Current.IsRootElement())
             {
-                return true;
+                var primaryDiffTypeCode = primaryDiffType != null ? primaryDiffType.Code : null;
+                var primarySnapTypeCode = primarySnapType != null ? primarySnapType.Code : null;
+                if (string.IsNullOrEmpty(primaryDiffTypeProfile) && primaryDiffTypeCode.HasValue)
+                {
+                    primaryDiffTypeProfile = ModelInfo.CanonicalUriForFhirCoreType(primaryDiffTypeCode.Value);
+                }
+                if (string.IsNullOrEmpty(primarySnapTypeProfile) && primarySnapTypeCode.HasValue)
+                {
+                    primarySnapTypeProfile = ModelInfo.CanonicalUriForFhirCoreType(primarySnapTypeCode.Value);
+                }
             }
+#endif
+
+            if (string.IsNullOrEmpty(primaryDiffTypeProfile) || primaryDiffTypeProfile == primarySnapTypeProfile) { return true; }
 
             // cf. ExpandElement
 
@@ -392,6 +384,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             var typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
             if (verifyStructureDef(typeStructure, primaryDiffTypeProfile, ToNamedNode(diff.Current)))
             {
+                // [WMR 20160915] Also notify about type profiles?
+                // OnPrepareElement(snap.Current, typeStructure, typeStructure.Snapshot.Element[0]);
+
                 // Clone and rebase
                 var rebasePath = diff.Path;
                 if (profileRef.IsComplex)
@@ -414,7 +409,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     if (!typeNav.JumpToNameReference(profileRef.ElementName))
                     {
-                        addIssueInvalidProfileNameReference(diff.Current, profileRef.ElementName, primaryDiffTypeProfile);
+                        addIssueInvalidProfileNameReference(snap.Current, profileRef.ElementName, primaryDiffTypeProfile);
                         return false;
                     }
                 }
@@ -503,7 +498,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             ////TODO: update / check the slice entry's min/max property to match what we've found in the slice group
         }
 
-        private void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, Bookmark baseBookmark)
+        void addSlice(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, Bookmark baseBookmark)
         {
             // Add new slice after the last existing slice in base profile
             snap.MoveToLastSlice();
@@ -522,7 +517,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             mergeElement(snap, diff);
         }
 
-
         static ElementDefinition createExtensionSlicingEntry(ElementDefinition baseExtensionElement)
         {
             // Create the slicing entry by cloning the base Extension element
@@ -535,6 +529,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Rules = ElementDefinition.SlicingRules.Open
             };
             return elem;
+        }
+
+        void markChangedByDiff(Element element)
+        {
+            if (_settings.MarkChanges)
+            {
+                element.SetChangedByDiff();
+            }
         }
 
         /// <summary>
@@ -579,6 +581,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
 
+                // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
+                snapshot.Element.RemoveAllChangedByDiff();
+
                 // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
                 if (!structure.IsConstraint)
                 {
@@ -616,6 +621,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             merge(snap, diff);
 
             result = snap.ToListOfElements();
+
+            // [WMR 20160917] NEW: Re-generate all ElementId values
+            generateElementsId(result, true);
+
             return result;
         }
 
@@ -683,7 +692,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         var baseElem = baseSnap.Element[i];
 
                         // [WMR 20160826] Never inherit Changed extension from base profile!
-                        elem.ClearAllChangedByDiff();
+                        elem.RemoveAllChangedByDiff();
 
                         // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
                         // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
@@ -756,23 +765,18 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return false;
             }
 
-#if DETECT_RECURSION
             // Prevent endless recursion on root type Element
-            const string elemUrl = "http://hl7.org/fhir/StructureDefinition/Element";
-            if (profileUrl == elemUrl) { return true; }
+            const string ELEMENT_STRUCTURE_URL = "http://hl7.org/fhir/StructureDefinition/Element";
+            if (profileUrl == ELEMENT_STRUCTURE_URL) { return true; }
 
             // Detect endless recursion
             // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
             _recursionChecker.OnBeforeExpandType(profileUrl, location != null ? location.Path : null);
-#endif
+
             try
             {
                 if (_settings.ExpandExternalProfiles
-                    && (sd.Snapshot == null 
-#if FORCE_EXPAND_ALL
-                        || (_settings.ForceExpandAll && !isCreatedBySnapshotGenerator(sd.Snapshot))
-#endif
-                        )
+                    && (sd.Snapshot == null || (_settings.ForceExpandAll && !isCreatedBySnapshotGenerator(sd.Snapshot)))
                 )
                 {
                     // Automatically expand external profiles on demand
@@ -791,10 +795,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                         return false;
                     }
 
-#if FORCE_EXPAND_ALL
                     // Add in-memory annotation to prevent repeated expansion
                     setCreatedBySnapshotGenerator(sd.Snapshot);
-#endif
                 }
 
                 if (!sd.HasSnapshot)
@@ -810,9 +812,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             finally
             {
-#if DETECT_RECURSION
                 _recursionChecker.OnAfterExpandType(profileUrl);
-#endif
             }
 
             return true;
