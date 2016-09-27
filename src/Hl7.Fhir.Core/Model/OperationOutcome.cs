@@ -141,13 +141,11 @@ namespace Hl7.Fhir.Model
                     text += "[" + Severity.ToString().ToUpper() + "] ";
                 }
 
+                text += Details?.Text ?? "(no details)";
+
                 if (Diagnostics != null)
                 {
-                    text += Diagnostics;
-                }
-                else
-                {
-                    text += "(no diagnostics)";
+                    text += $"(further diagnostics: {Diagnostics})";
                 }
 
                 if (Location.Any())
