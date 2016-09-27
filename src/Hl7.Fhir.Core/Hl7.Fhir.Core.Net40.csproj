@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
     <NoWarn>3016,1591</NoWarn>
     <DocumentationFile>bin\Debug\Net40\Hl7.Fhir.DSTU2.Core.xml</DocumentationFile>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
