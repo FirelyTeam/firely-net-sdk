@@ -149,6 +149,22 @@ namespace Hl7.Fhir.Validation
 
                 var elementConstraints = definition.Current;
 
+                // First, a basic check: is the instance type equal to the defined type
+                // Only do this when the underlying navigator has supplied a type (from the serialization)
+                if (instance.TypeName != null && elementConstraints.IsRootElement() && definition.StructureDefinition != null && definition.StructureDefinition.Id != null)
+                {
+                    var expected = definition.StructureDefinition.Id;
+
+                    if (!ModelInfo.IsCoreModelType(expected) || ModelInfo.IsProfiledQuantity(expected))
+                        expected = definition.StructureDefinition.ConstrainedType?.ToString();
+
+                    if (expected != null)
+                    {
+                        outcome.Verify(() => instance.TypeName == expected, $"Type mismatch: instance value is of type '{instance.TypeName}', " +
+                                $"expected type '{expected}'", Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance);
+                    }
+                }
+
                 if (elementConstraints.IsPrimitiveValueConstraint())
                 {
                     // The "value" property of a FHIR Primitive is the bottom of our recursion chain, it does not have a nameReference
@@ -325,7 +341,6 @@ namespace Hl7.Fhir.Validation
                                 // abstract super type, e.g. validate Patient, not Resource if the instance is a Patient.
                                 actualChoices = applicableChoices
                                     .Select(tr => new ElementDefinition.TypeRefComponent { Code = instanceType, Profile = tr.Profile });
-
                             }
 
                             outcome.Include(ValidateTypeReferences(actualChoices, instance));
@@ -367,13 +382,13 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            var references = instance.GetChildrenByName("reference").GetChildrenByName("value");
+            var references = instance.GetChildrenByName("reference");
             var reference = references.FirstOrDefault()?.Value as string;
 
             if (reference == null)       // No reference found -> this is always valid
                 return outcome;
 
-            outcome.Verify(() => references.Count() > 1,
+            outcome.Verify(() => references.Count() == 1,
                     $"Encountered multiple references, just using first ({reference})", Issue.CONTENT_REFERENCE_HAS_MULTIPLE_REFERENCES, instance);
 
             ElementDefinition.AggregationMode? encounteredKind;
@@ -385,20 +400,21 @@ namespace Hl7.Fhir.Validation
 
             if (referencedResource == null && encounteredKind == ElementDefinition.AggregationMode.Referenced)
             {
-                outcome.Verify(() => true, "Validator does not yet support following external references", Issue.UNSUPPORTED_FOLLOWING_REFERENCES, instance);
+                outcome.Verify(() => true, "Validator does not yet support following external references", Issue.UNSUPPORTED_FOLLOWING_EXTERNAL_REFERENCES, instance);
 
                 //TODO: If settings allow you to do so, try to resolve the url using some external mechanism, 
                 // create a NEW validator, and run the validation of the external reference, .Include() the result
                 // Settings.ValidateReferencedResources != ReferenceKind.None
             }
-            else if (referencedResource != null)
+
+            if (outcome.Verify(()=>referencedResource != null, $"Cannot resolve reference {reference}", Issue.CONTENT_REFERENCE_NOT_RESOLVABLE, instance))
             {
-                Trace(outcome, $"Starting validation of referenced resource {reference}", Issue.PROCESSING_START_NESTED_VALIDATION, instance);
+                Trace(outcome, $"Starting validation of referenced resource {reference} ({encounteredKind})", Issue.PROCESSING_START_NESTED_VALIDATION, instance);
                 // Reference was resolved within the instance
                 if(typeRef.ProfileUri() != null)
                     outcome.Include(Validate(typeRef.ProfileUri(), referencedResource));
             }
-          
+
             return outcome;
         }
 
@@ -408,9 +424,12 @@ namespace Hl7.Fhir.Validation
 
             if (identity.Form == ResourceIdentityForm.Undetermined)
             {
-                outcome.Verify(() => true, $"Encountered an unparseable reference ({reference})", Issue.CONTENT_UNPARSEABLE_REFERENCE, instance);
-                referenceKind = null;
-                return null;
+                if (!Uri.IsWellFormedUriString(reference, UriKind.RelativeOrAbsolute))
+                {
+                    outcome.Verify(() => true, $"Encountered an unparseable reference ({reference})", Issue.CONTENT_UNPARSEABLE_REFERENCE, instance);
+                    referenceKind = null;
+                    return null;
+                }
             }
            
             var result = _scopeTracker.Resolve(instance, reference);

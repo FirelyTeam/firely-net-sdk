@@ -104,7 +104,16 @@ namespace Hl7.Fhir.FluentPath
                 Console.WriteLine("Read TypeName '{0}' for Element '{1}' (value '{2}')".FormatWith(_mapping.Name, Name, Value ?? "(nothing)"));
 #endif
                 if (_string != null)
-                    return "string";
+                {
+                    if (Name == "url")
+                        return "uri";
+                    else if (Name == "id")
+                        return "id";
+                    else if (Name == "div")
+                        return "xhtml";
+                    else
+                        throw new NotSupportedException($"Don't know about primitive with name '{Name}'");
+                }
                 else
                 {
 

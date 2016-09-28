@@ -91,8 +91,8 @@ namespace Hl7.Fhir.Validation
 
         // Unsupported 
         public static readonly Issue UNSUPPORTED_SLICING_NOT_SUPPORTED = Create(3000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
-        public static readonly Issue UNSUPPORTED_NESTED_BUNDLES = Create(3001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
-        public static readonly Issue UNSUPPORTED_FOLLOWING_REFERENCES = Create(3002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
+        //public static readonly Issue UNSUPPORTED_NESTED_BUNDLES = Create(3001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
+        public static readonly Issue UNSUPPORTED_FOLLOWING_EXTERNAL_REFERENCES = Create(3002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
         public static readonly Issue UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH = Create(3003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Non-availability, incomplete data

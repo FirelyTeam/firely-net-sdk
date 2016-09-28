@@ -38,18 +38,19 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        public static ElementDefinition OfType(this ElementDefinition ed, FHIRDefinedType type, string profile=null)
+        public static ElementDefinition OfType(this ElementDefinition ed, FHIRDefinedType type, string profile=null, IEnumerable<ElementDefinition.AggregationMode> aggs=null)
         {
             ed.Type.Clear();
-            ed.OrType(type, profile);
+            ed.OrType(type, profile, aggs);
 
             return ed;
         }
 
-        public static ElementDefinition OrType(this ElementDefinition ed, FHIRDefinedType type, string profile = null)
+        public static ElementDefinition OrType(this ElementDefinition ed, FHIRDefinedType type, string profile = null, IEnumerable<ElementDefinition.AggregationMode> aggs = null)
         {
             var newType = new ElementDefinition.TypeRefComponent { Code = type };
             if (profile != null) newType.Profile = new[] { profile };
+            if(aggs != null) newType.Aggregation = aggs.Cast<ElementDefinition.AggregationMode?>();
 
             ed.Type.Add(newType);
 

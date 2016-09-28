@@ -96,10 +96,10 @@
             <id value="orgY" />
           </Organization>
         </contained>
-        <careProvider>
+        <managingOrganization>
           <!-- reference to the contained organization -->
           <reference value="#orgY"/>
-        </careProvider>
+        </managingOrganization>
       </Patient>
     </resource>
   </entry>

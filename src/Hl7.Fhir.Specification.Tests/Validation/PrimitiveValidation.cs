@@ -404,6 +404,42 @@ namespace Hl7.Fhir.Validation
             Assert.IsTrue(report.Success);
         }
 
+
+        [TestMethod]
+        public void ValidateBundle()
+        {
+            var bundleXml = File.ReadAllText("TestData\\validation\\bundle-contained-references.xml");
+
+            var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
+            Assert.IsNotNull(bundle);
+            
+            var report = validator.Validate(bundle);
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(1, report.Warnings);            // 1 unresolvable reference
+
+            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/BundleWithContainedEntries", bundle);
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(1, report.Warnings);            // 1 unresolvable reference
+            Assert.AreEqual(4, report.Errors);            // 4 non-contained references
+
+            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/BundleWithContainedBundledEntries", bundle);
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(1, report.Warnings);            // 1 unresolvable reference
+            Assert.AreEqual(1, report.Errors);            // 1 external reference
+
+            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/BundleWithBundledEntries", bundle);
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(1, report.Warnings);            // 1 unresolvable reference
+            Assert.AreEqual(2, report.Errors);            // 1 external reference, 1 contained reference
+
+            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/BundleWithReferencedEntries", bundle);
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(1, report.Warnings);            // 1 unresolvable reference
+            Assert.AreEqual(4, report.Errors);            // 3 bundled reference, 1 contained reference
+        }
+
+
+
         [TestMethod]
         public void HarvestScopedIdentifiers()
         {
@@ -492,7 +528,7 @@ namespace Hl7.Fhir.Validation
                     Assert.AreEqual("Bundle.entry[6].resource[0].contained[0]", tracker.ResourceContext(orgX).Path);
                     tracker.Leave(orgX);
 
-                    var careProvRef = entry.GetChildrenByName("careProvider").GetChildrenByName("reference").Single();
+                    var careProvRef = entry.GetChildrenByName("managingOrganization").GetChildrenByName("reference").Single();
                     Assert.AreEqual("Bundle.entry[6].resource[0]", tracker.ResourceContext(careProvRef).Path);
 
                     tracker.Enter(careProvRef);
@@ -532,7 +568,7 @@ namespace Hl7.Fhir.Validation
                 var resource = entry.GetChildrenByName("resource").First();
                 tracker.Enter(resource);
 
-                if(index == 2 || index == 3 || index == 4)
+                if(index == 2 || index == 3 || index == 4 || index == 6)
                 {
                     var refr = resource.GetChildrenByName("managingOrganization").GetChildrenByName("reference").First();
                     var res = tracker.Resolve(refr, refr.Value as string);
@@ -543,12 +579,6 @@ namespace Hl7.Fhir.Validation
                     var refr = resource.GetChildrenByName("managingOrganization").GetChildrenByName("reference").First();
                     var res = tracker.Resolve(refr, refr.Value as string);
                     Assert.IsNull(res);
-                }
-                else if (index == 6)
-                {
-                    var refr = resource.GetChildrenByName("careProvider").GetChildrenByName("reference").First();
-                    var res = tracker.Resolve(refr, refr.Value as string);
-                    Assert.IsNotNull(res);
                 }
 
                 tracker.Leave(resource);

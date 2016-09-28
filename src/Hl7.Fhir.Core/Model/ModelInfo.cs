@@ -410,6 +410,12 @@ namespace Hl7.Fhir.Model
                 type == FHIRDefinedType.Money;
         }
 
+        public static bool IsProfiledQuantity(string type)
+        {
+            return IsPrimitive(type) && IsProfiledQuantity(FhirTypeNameToFhirType(type).Value);
+        }
+
+
         public static bool IsInstanceTypeFor(FHIRDefinedType superclass, FHIRDefinedType subclass)
         {
             if (superclass == subclass) return true;
