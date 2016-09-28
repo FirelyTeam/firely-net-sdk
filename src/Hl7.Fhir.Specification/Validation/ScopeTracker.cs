@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Validation
             return null;
         }
 
-        public IElementNavigator Resolve(IElementNavigator instance, string uri)
+        private IElementNavigator findUri(IElementNavigator instance, string uri)
         {
             if (_root == null) return null;   // No parent scope found yet (i.e. validating an isolated datatype instance)
 
@@ -244,6 +244,32 @@ namespace Hl7.Fhir.Validation
             }
 
             return null;
+        }
+
+
+        public IElementNavigator Resolve(IElementNavigator instance, string reference)
+        {
+            var identity = new ResourceIdentity(reference);
+
+            if (identity.Form == ResourceIdentityForm.RelativeRestUrl)
+            {
+                // Relocate the relative url on the base given in the fullUrl of the entry (if applicable)
+                var fullUrl = ContextFullUrl(instance);
+
+                if (fullUrl != null)
+                {
+                    var parentIdentity = new ResourceIdentity(fullUrl);
+                    if (parentIdentity.BaseUri != null)
+                        identity = identity.WithBase(parentIdentity.BaseUri);
+                }
+            }
+
+            IElementNavigator referencedResource = null;
+
+            if (identity.Form == ResourceIdentityForm.Local || identity.Form == ResourceIdentityForm.AbsoluteRestUrl || identity.Form == ResourceIdentityForm.Urn)
+                referencedResource = findUri(instance, identity.ToString());
+
+            return referencedResource;
         }
     }
 

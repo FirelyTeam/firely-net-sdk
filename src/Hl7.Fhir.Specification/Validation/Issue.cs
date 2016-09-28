@@ -72,11 +72,9 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT = Create(1013, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_REFERENCE_HAS_MULTIPLE_REFERENCES = Create(1014, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_REFERENCE_OF_INVALID_KIND = Create(1015, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_REFERENCE_NOT_RESOLVABLE = Create(1016, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_CONTAINED_REFERENCE_NOT_RESOLVABLE = Create(1017, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_RELATIVE_REFERENCE_WITHOUT_FULLURL = Create(1018, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-        public static readonly Issue CONTENT_UNPARSEABLE_REFERENCE = Create(1019, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
-
+        public static readonly Issue CONTENT_CONTAINED_REFERENCE_NOT_RESOLVABLE = Create(1016, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_UNPARSEABLE_REFERENCE = Create(1017, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_REFERENCE_NOT_RESOLVABLE = Create(1018, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
 
         // Profile problems
         public static readonly Issue PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE = Create(2000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
@@ -106,6 +104,7 @@ namespace Hl7.Fhir.Validation
         // Processing information
         public static readonly Issue PROCESSING_PROGRESS = Create(5000, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);
         public static readonly Issue PROCESSING_CONSTRAINT_VALIDATION_INACTIVE = Create(5001, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);
+        public static readonly Issue PROCESSING_START_NESTED_VALIDATION = Create(5002, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);
     }
 
 }

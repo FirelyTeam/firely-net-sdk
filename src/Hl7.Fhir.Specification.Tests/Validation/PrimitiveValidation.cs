@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Validation
             var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral(),
                     ElementNode.Node("extension",
                         ElementNode.Valued("value", 4, "integer")),
-                    ElementNode.Node("nonExistant")                                             
+                    ElementNode.Node("nonExistant")
                         ).ToNavigator();
 
             var matches = ChildNameMatcher.Match(boolDefNav, data);
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Validation
             report = validator.Validate(patientSD, patient);
             Assert.AreEqual(0, report.Errors);
 
-            patient.MaritalStatus.Coding.Insert(0,new Coding("http://this.isa.test.nl/definition", "5678"));
+            patient.MaritalStatus.Coding.Insert(0, new Coding("http://this.isa.test.nl/definition", "5678"));
             report = validator.Validate(patientSD, patient);
             Assert.AreEqual(0, report.Errors);
 
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual("Organization", orgScope.Container.TypeName);
             Assert.AreEqual(0, orgScope.Children.Count());
             Assert.AreEqual("Organization", orgScope.Container.TypeName);
-            Assert.AreEqual("Bundle", bundleScope.Container.TypeName);          
+            Assert.AreEqual("Bundle", bundleScope.Container.TypeName);
 
             // Get one of the entries with contained resources, a Patient
             var patScope = bundleScope.ResolveChild("http://example.org/fhir/Patient/e");
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Validation
 
                 if (index == 6)
                 {
-                    var orgX =  entry.GetChildrenByName("contained").First();
+                    var orgX = entry.GetChildrenByName("contained").First();
 
                     tracker.Enter(orgX);
                     Assert.AreEqual("http://example.org/fhir/Patient/e", tracker.ContextFullUrl(orgX));
@@ -501,12 +501,63 @@ namespace Hl7.Fhir.Validation
                     tracker.Leave(careProvRef);
                 }
 
-                tracker.Leave(entry);              
+                tracker.Leave(entry);
 
                 index++;
             }
 
             tracker.Leave(cpNav);
+        }
+
+
+        [TestMethod]
+        public void TestResolution()
+        {
+            var bundleXml = File.ReadAllText("TestData\\validation\\bundle-contained-references.xml");
+
+            var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
+            Assert.IsNotNull(bundle);
+            IElementNavigator cpNav = new PocoNavigator(bundle);
+
+            var tracker = new ScopeTracker();
+            tracker.Enter(cpNav);
+
+            var entries = cpNav.GetChildrenByName("entry");
+
+            var index = 0;
+            foreach(var entry in entries)
+            {
+                tracker.Enter(entry);
+
+                var resource = entry.GetChildrenByName("resource").First();
+                tracker.Enter(resource);
+
+                if(index == 2 || index == 3 || index == 4)
+                {
+                    var refr = resource.GetChildrenByName("managingOrganization").GetChildrenByName("reference").First();
+                    var res = tracker.Resolve(refr, refr.Value as string);
+                    Assert.IsNotNull(res);
+                }
+                else if (index == 5)
+                {
+                    var refr = resource.GetChildrenByName("managingOrganization").GetChildrenByName("reference").First();
+                    var res = tracker.Resolve(refr, refr.Value as string);
+                    Assert.IsNull(res);
+                }
+                else if (index == 6)
+                {
+                    var refr = resource.GetChildrenByName("careProvider").GetChildrenByName("reference").First();
+                    var res = tracker.Resolve(refr, refr.Value as string);
+                    Assert.IsNotNull(res);
+                }
+
+                tracker.Leave(resource);
+
+
+                tracker.Leave(entry);
+
+                index += 1;
+            }
         }
     }
 }

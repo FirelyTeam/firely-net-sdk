@@ -345,21 +345,16 @@ namespace Hl7.Fhir.Validation
 
         internal OperationOutcome ValidateTypeReferences(IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, IElementNavigator instance)
         {
-            var normalUris = typeRefs.Where(tr => tr.Code != FHIRDefinedType.Reference).Select(tr => tr.ProfileUri());
-            var references = typeRefs.Where(tr => tr.Code == FHIRDefinedType.Reference);
-
-            // TODO: Need to combine outcomes
-            // Or is validating a reference something that should be promoted to a higher-level function (i.e. part of just validating
-            // a single ResoureReference instance, not necessarily a subtask of TypeRef validation?)
-
             var outcomes = new List<OperationOutcome>();
 
             foreach (var typeRef in typeRefs)
             {
+                //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
+                //and validating non-references is cheaper
                 if (typeRef.Code == FHIRDefinedType.Reference)
                     outcomes.Add(ValidateResourceReference(typeRef, instance));
                 else
-                    outcomes.Add(Validate(typeRef.Profile.First(), instance));
+                    outcomes.Add(Validate(typeRef.ProfileUri(), instance));
             }
 
             var outcome = new OperationOutcome();
@@ -368,7 +363,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal OperationOutcome ValidateResourceReference(ElementDefinition.TypeRefComponent typeRefs, IElementNavigator instance)
+        internal OperationOutcome ValidateResourceReference(ElementDefinition.TypeRefComponent typeRef, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
 
@@ -381,64 +376,14 @@ namespace Hl7.Fhir.Validation
             outcome.Verify(() => references.Count() > 1,
                     $"Encountered multiple references, just using first ({reference})", Issue.CONTENT_REFERENCE_HAS_MULTIPLE_REFERENCES, instance);
 
-            var identity = new ResourceIdentity(reference);
-            IElementNavigator referencedResource = null;
-            ElementDefinition.AggregationMode? referenceKindEncountered = null;
+            ElementDefinition.AggregationMode? encounteredKind;
+            var referencedResource = resolveReference(instance, reference, out encounteredKind, outcome);
 
-            if (identity.Form == ResourceIdentityForm.Local)
-            {
-                referenceKindEncountered = ElementDefinition.AggregationMode.Contained;
-                referencedResource = _scopeTracker.Resolve(instance, reference);
-                outcome.Verify(() => referencedResource != null, $"Contained reference ({reference}) is not resolvable", Issue.CONTENT_CONTAINED_REFERENCE_NOT_RESOLVABLE, instance);
-            }
-            else if (identity.Form == ResourceIdentityForm.RelativeRestUrl)
-            {
-                // Relocate the relative url on the base given in the fullUrl of the entry (if applicable)
-                var fullUrl = _scopeTracker.ContextFullUrl(instance);
-                if (outcome.Verify(() => fullUrl != null, $"Encountered a relative reference ({reference}) that is not contained in a Bundle entry with a full url", Issue.CONTENT_RELATIVE_REFERENCE_WITHOUT_FULLURL, instance))
-                {
-                    var parentIdentity = new ResourceIdentity(fullUrl);
-                    if (parentIdentity.BaseUri != null)
-                    {
-                        var absoluteIdentity = identity.WithBase(parentIdentity.BaseUri);
-                        referencedResource = _scopeTracker.Resolve(instance, absoluteIdentity.ToString());
-                    }
-                }
+            bool hasAggregation = typeRef.Aggregation != null && typeRef.Aggregation.Count() != 0;
+            outcome.Verify(() => !hasAggregation || typeRef.Aggregation.Any(a => a == encounteredKind),
+                    $"Encountered a reference ({reference}) of kind '{encounteredKind}' that is not allowed", Issue.CONTENT_REFERENCE_OF_INVALID_KIND, instance);
 
-                if (referencedResource != null)
-                    referenceKindEncountered = ElementDefinition.AggregationMode.Bundled;
-                else
-                    referenceKindEncountered = ElementDefinition.AggregationMode.Referenced;
-
-            }
-            else if (identity.Form == ResourceIdentityForm.AbsoluteRestUrl)
-            {
-                referencedResource = _scopeTracker.Resolve(instance, reference);
-                if (referencedResource != null)
-                    referenceKindEncountered = ElementDefinition.AggregationMode.Bundled;
-                else
-                    referenceKindEncountered = ElementDefinition.AggregationMode.Referenced;
-            }
-            else if(identity.Form == ResourceIdentityForm.Urn)
-            {
-                referencedResource = _scopeTracker.Resolve(instance, reference);
-                if (referencedResource != null)
-                    referenceKindEncountered = ElementDefinition.AggregationMode.Bundled;
-                else
-                    referenceKindEncountered = ElementDefinition.AggregationMode.Referenced;
-            }
-            else
-            {
-                outcome.Verify(() => true, $"Encountered an unparseable reference ({reference})", Issue.CONTENT_UNPARSEABLE_REFERENCE, instance);
-                return outcome;
-            }
-
-            bool hasAggregation = typeRefs.Aggregation != null && typeRefs.Aggregation.Count() != 0;
-
-            outcome.Verify(() => !hasAggregation || typeRefs.Aggregation.Any(a => a == referenceKindEncountered),
-                    $"Encountered a reference ({reference}) of kind '{referenceKindEncountered }' that is not allowed", Issue.CONTENT_REFERENCE_OF_INVALID_KIND, instance);
-
-            if (referencedResource == null && referenceKindEncountered == ElementDefinition.AggregationMode.Referenced)
+            if (referencedResource == null && encounteredKind == ElementDefinition.AggregationMode.Referenced)
             {
                 outcome.Verify(() => true, "Validator does not yet support following external references", Issue.UNSUPPORTED_FOLLOWING_REFERENCES, instance);
 
@@ -448,11 +393,42 @@ namespace Hl7.Fhir.Validation
             }
             else if (referencedResource != null)
             {
+                Trace(outcome, $"Starting validation of referenced resource {reference}", Issue.PROCESSING_START_NESTED_VALIDATION, instance);
                 // Reference was resolved within the instance
-                outcome.Add(Validate(typeRefs.Profile.First(), referencedResource));
+                if(typeRef.ProfileUri() != null)
+                    outcome.Include(Validate(typeRef.ProfileUri(), referencedResource));
             }
           
             return outcome;
+        }
+
+        private IElementNavigator resolveReference(IElementNavigator instance, string reference, out ElementDefinition.AggregationMode? referenceKind, OperationOutcome outcome)
+        {
+            var identity = new ResourceIdentity(reference);
+
+            if (identity.Form == ResourceIdentityForm.Undetermined)
+            {
+                outcome.Verify(() => true, $"Encountered an unparseable reference ({reference})", Issue.CONTENT_UNPARSEABLE_REFERENCE, instance);
+                referenceKind = null;
+                return null;
+            }
+           
+            var result = _scopeTracker.Resolve(instance, reference);
+
+            if (identity.Form == ResourceIdentityForm.Local)
+            {
+                referenceKind = ElementDefinition.AggregationMode.Contained;
+                outcome.Verify(() => result != null, $"Contained reference ({reference}) is not resolvable", Issue.CONTENT_CONTAINED_REFERENCE_NOT_RESOLVABLE, instance);
+            }
+            else
+            {
+                if (result != null)
+                    referenceKind = ElementDefinition.AggregationMode.Bundled;
+                else
+                    referenceKind = ElementDefinition.AggregationMode.Referenced;
+            }
+
+            return result;
         }
 
         public OperationOutcome VerifyPrimitiveContents(ElementDefinition definition, IElementNavigator instance)
