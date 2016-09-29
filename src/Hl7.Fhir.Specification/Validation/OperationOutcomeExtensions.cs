@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Validation
 
     internal delegate bool Condition();
 
-    internal static class OperationOutcomeValidationExtensions
+    internal static class OperationOutcomeExtensions
     {
         public static bool Verify(this OperationOutcome outcome, Condition condition, string message, Issue issue, INamedNode location)
         {

@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Validation
 {
-    internal static class ChildConstraintExtensions
+    internal static class ChildConstraintValidationExtensions
     {
         internal static OperationOutcome ValidateChildConstraints(this Validator validator, ElementDefinitionNavigator definition, IElementNavigator instance)
         {

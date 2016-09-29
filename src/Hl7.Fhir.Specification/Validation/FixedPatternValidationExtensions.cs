@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Validation
 {
-    internal static class FixedPatternExtensions
+    internal static class FixedPatternValidationExtensions
     {
         public static OperationOutcome ValidateFixed(this Validator v, ElementDefinition definition, IElementNavigator instance)
         {
