@@ -52,9 +52,15 @@ namespace Hl7.Fhir.Validation
         /// If a reference is encountered that references to a resource outside of the current instance being validated,
         /// this setting controls whether the validator will call out to the ResourceResolver to try to resolve the
         /// external reference. Note: References that refer to resources inside the current instance (i.e.
-        /// contained resources, Bundle entries) will always be followed and validated
+        /// contained resources, Bundle entries) will always be followed and validated.
         /// </summary>
         public bool ResolveExteralReferences { get; set; }
+
+        /// <summary>
+        /// If set to true (and the XDocument specific overloads of validate() are used), the validator will run
+        /// .NET XSD validation prior to running profile validation
+        /// </summary>
+        public bool EnableXsdValidation { get; set; }
     }
 
     [Flags]

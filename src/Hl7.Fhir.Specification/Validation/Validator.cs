@@ -38,50 +38,65 @@ namespace Hl7.Fhir.Validation
             Settings = settings;
         }
 
-        public OperationOutcome Validate(string definitionUri, IElementNavigator instance)
+
+        public OperationOutcome Validate(IElementNavigator instance)
         {
-            if (definitionUri == null) throw Error.ArgumentNull("definitionUri");
+            var profiles = instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>();
 
-            var outcome = new OperationOutcome();
-
-            StructureDefinition structureDefinition = Settings.ResourceResolver.FindStructureDefinition(definitionUri);
-
-            if (outcome.Verify(() => structureDefinition != null, "Unable to resolve reference to profile '{0}'".FormatWith(definitionUri), Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance))
-                outcome.Add(Validate(structureDefinition, instance));
-
-            return outcome;
+            // If the Meta.profile specifies any profiles, use those, else use the base FHIR core profile for the type
+            if (profiles.Any())
+            {
+                return Validate(instance, profiles);
+            }
+            else
+            {
+                var uri = ModelInfo.CanonicalUriForFhirCoreType(instance.TypeName);
+                return Validate(instance, uri);
+            }
         }
 
-        public OperationOutcome Validate(IEnumerable<string> definitionUris, IElementNavigator instance, BatchValidationMode mode)
+        public OperationOutcome Validate(IElementNavigator instance, params string[] definitionUris)
         {
-            List<OperationOutcome> outcomes = new List<OperationOutcome>();
+            return Validate(instance, (IEnumerable<string>)definitionUris);
+        }
+
+        public OperationOutcome Validate(IElementNavigator instance, IEnumerable<string> definitionUris)
+        {
+            var result = new OperationOutcome();
+            var sds = new List<StructureDefinition>();
 
             foreach (var uri in definitionUris)
-                outcomes.Add(Validate(uri, instance));
+            {
+                StructureDefinition structureDefinition = Settings.ResourceResolver.FindStructureDefinition(uri);
 
-            var outcome = new OperationOutcome();
-            outcome.Combine(outcomes, instance, mode);
+                if (result.Verify(() => structureDefinition != null, $"Unable to resolve reference to profile '{uri}'", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance))
+                    sds.Add(structureDefinition);
+            }
 
-            return outcome;
+            result.Add(Validate(instance, sds));
+            return result;
         }
 
-
-
-        public OperationOutcome Validate(IEnumerable<StructureDefinition> structureDefinitions, IElementNavigator instance, BatchValidationMode mode)
+        public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            List<OperationOutcome> outcomes = new List<OperationOutcome>();
+            if (structureDefinitions.Count() == 1)
+                return Validate(instance, structureDefinitions.Single());
+            else
+            {
+                List<OperationOutcome> result = new List<OperationOutcome>();
 
-            foreach (var sd in structureDefinitions)
-                outcomes.Add(Validate(sd, instance));
+                foreach (var sd in structureDefinitions)
+                    result.Add(Validate(instance, sd));
 
-            var outcome = new OperationOutcome();
-            outcome.Combine(outcomes, instance, mode);
+                var outcome = new OperationOutcome();
+                outcome.Combine(result, instance, BatchValidationMode.All);
 
-            return outcome;
+                return outcome;
+            }
         }
 
 
-        public OperationOutcome Validate(StructureDefinition structureDefinition, IElementNavigator instance)
+        public OperationOutcome Validate(IElementNavigator instance, StructureDefinition structureDefinition)
         {
             var outcome = new OperationOutcome();
 

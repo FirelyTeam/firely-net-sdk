@@ -85,9 +85,9 @@ namespace Hl7.Fhir.Validation
                 //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
                 //and validating non-references is cheaper
                 if (typeRef.Code == FHIRDefinedType.Reference)
-                    outcomes.Add(validator.ValidateResourceReference(typeRef, instance));
+                    outcomes.Add(validator.ValidateResourceReference(instance, typeRef));
                 else
-                    outcomes.Add(validator.Validate(typeRef.ProfileUri(), instance));
+                    outcomes.Add(validator.Validate(instance, typeRef.ProfileUri()));
             }
 
             var outcome = new OperationOutcome();
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal static OperationOutcome ValidateResourceReference(this Validator validator, ElementDefinition.TypeRefComponent typeRef, IElementNavigator instance)
+        internal static OperationOutcome ValidateResourceReference(this Validator validator, IElementNavigator instance, ElementDefinition.TypeRefComponent typeRef)
         {
             var outcome = new OperationOutcome();
 
@@ -144,12 +144,12 @@ namespace Hl7.Fhir.Validation
                 // In both cases, the outcome is included in the result.
                 if (encounteredKind != ElementDefinition.AggregationMode.Referenced)
                 {
-                    outcome.Include(validator.Validate(typeRef.ProfileUri(), referencedResource));
+                    outcome.Include(validator.Validate(referencedResource, typeRef.ProfileUri()));
                 }
                 else
                 {
                     var newValidator = new Validator(validator.Settings);
-                    outcome.Include(newValidator.Validate(typeRef.ProfileUri(), referencedResource));
+                    outcome.Include(newValidator.Validate(referencedResource, typeRef.ProfileUri()));
                 }
             }
 

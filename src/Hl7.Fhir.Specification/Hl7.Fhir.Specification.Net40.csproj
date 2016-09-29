@@ -130,6 +130,7 @@
     <Compile Include="Validation\ValidationOutcomeExtensions.cs" />
     <Compile Include="Validation\ValidationSettings.cs" />
     <Compile Include="Validation\Validator.cs" />
+    <Compile Include="Validation\XmlValidationExtensions.cs" />
     <Compile Include="XPath\CustomXsltFunction.cs" />
     <Compile Include="XPath\FhirNamespaceManager.cs" />
     <Compile Include="XPath\JsonReaderExtensions.cs" />

@@ -115,6 +115,7 @@
     <Compile Include="Specification\Source\ZipCacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\OperationOutcomeExtensions.cs" />
+    <Compile Include="Validation\XmlValidationExtensions.cs" />
     <Compile Include="Validation\PocoValidationExtensions.cs" />
     <Compile Include="Validation\ScopeTracker.cs" />
     <Compile Include="Validation\TypeRefValidationExtensions.cs" />

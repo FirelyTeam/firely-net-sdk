@@ -30,12 +30,12 @@ namespace Hl7.Fhir.Validation
             return new CodeableConcept("http://hl7.org/fhir/validation-operation-outcome", issueCode.ToString(), text);
         }
 
-        public OperationOutcome.IssueComponent ToIssueComponent(string message, INamedNode location = null)
+        public OperationOutcome.IssueComponent ToIssueComponent(string message, INamedNode location)
         {
-            return ToIssueComponent(message, location != null ? location.Path : null);
+            return ToIssueComponent(message, location.Path);
         }
 
-        public OperationOutcome.IssueComponent ToIssueComponent(string message, string path = null)
+        public OperationOutcome.IssueComponent ToIssueComponent(string message, string location)
         {
             // https://www.hl7.org/fhir/operationoutcome-definitions.html#OperationOutcome.issue.details
             // Comments: "A human readable description of the error issue SHOULD be placed in details.text."
@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Validation
             var ic = new OperationOutcome.IssueComponent() { Severity = this.Severity, Code = this.Type };
             ic.Details = ToCodeableConcept(message);
 
-            if (path != null) ic.Location = new List<string> { path };
+            ic.Location = new List<string> { location };
 
             return ic;
         }
@@ -75,6 +75,9 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue CONTENT_CONTAINED_REFERENCE_NOT_RESOLVABLE = Create(1016, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_UNPARSEABLE_REFERENCE = Create(1017, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_REFERENCE_NOT_RESOLVABLE = Create(1018, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
+
+        public static readonly Issue XSD_VALIDATION_ERROR = Create(1019, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue XSD_VALIDATION_WARNING = Create(1020, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
 
         // Profile problems
         public static readonly Issue PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE = Create(2000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
