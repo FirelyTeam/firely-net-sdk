@@ -29,6 +29,7 @@ namespace Hl7.Fhir.Validation
         public ValidationSettings Settings { get; private set; }
 
         public event EventHandler<OnSnapshotNeededEventArgs> OnSnapshotNeeded;
+        public event EventHandler<OnResolveResourceReferenceEventArgs> OnExternalResolutionNeeded;
 
         private ScopeTracker _scopeTracker = new ScopeTracker();
 
@@ -84,7 +85,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            if (!structureDefinition.HasSnapshot && Settings.ResourceResolver != null)
+            if (!structureDefinition.HasSnapshot)
             {
                 // Note: this modifies an SD that is passed to us. If this comes from a cache that's
                 // kept across processes, this could mean trouble, so clone it first
@@ -93,7 +94,7 @@ namespace Hl7.Fhir.Validation
                 // We'll call out to an external component, so catch any exceptions and include them in our report
                 try
                 {
-                    SnapshotNeeded(structureDefinition, Settings.ResourceResolver);
+                    SnapshotNeeded(structureDefinition);
                 }
                 catch (Exception e)
                 {
@@ -391,28 +392,48 @@ namespace Hl7.Fhir.Validation
             outcome.Verify(() => references.Count() == 1,
                     $"Encountered multiple references, just using first ({reference})", Issue.CONTENT_REFERENCE_HAS_MULTIPLE_REFERENCES, instance);
 
+            // Try to resolve the reference *within* the current instance (Bundle, resource with contained resources) first
             ElementDefinition.AggregationMode? encounteredKind;
             var referencedResource = resolveReference(instance, reference, out encounteredKind, outcome);
 
+            // Validate the kind of aggregation.
+            // If no aggregation is given, all kinds of aggregation are allowed, otherwise only allow
+            // those aggregation types that are given in the Aggregation element
             bool hasAggregation = typeRef.Aggregation != null && typeRef.Aggregation.Count() != 0;
             outcome.Verify(() => !hasAggregation || typeRef.Aggregation.Any(a => a == encounteredKind),
-                    $"Encountered a reference ({reference}) of kind '{encounteredKind}' that is not allowed", Issue.CONTENT_REFERENCE_OF_INVALID_KIND, instance);
+                    $"Encountered a reference ({reference}) of kind '{encounteredKind}' which is not allowed", Issue.CONTENT_REFERENCE_OF_INVALID_KIND, instance);
 
+            // If we failed to find a referenced resource within the current instance, try to resolve it using an external method
             if (referencedResource == null && encounteredKind == ElementDefinition.AggregationMode.Referenced)
             {
-                outcome.Verify(() => true, "Validator does not yet support following external references", Issue.UNSUPPORTED_FOLLOWING_EXTERNAL_REFERENCES, instance);
-
-                //TODO: If settings allow you to do so, try to resolve the url using some external mechanism, 
-                // create a NEW validator, and run the validation of the external reference, .Include() the result
-                // Settings.ValidateReferencedResources != ReferenceKind.None
+                try
+                {
+                    referencedResource = ExternalReferenceResolutionNeeded(reference);
+                }
+                catch (Exception e)
+                {
+                    Trace(outcome, $"Resolution of external reference {reference} failed. Message: {e.Message}",
+                           Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
+                }
             }
 
-            if (outcome.Verify(()=>referencedResource != null, $"Cannot resolve reference {reference}", Issue.CONTENT_REFERENCE_NOT_RESOLVABLE, instance))
+            // If the reference was resolved (either internally or externally, validate it
+            if (outcome.Verify(()=>referencedResource != null, $"Cannot resolve reference {reference}", Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance))
             {
                 Trace(outcome, $"Starting validation of referenced resource {reference} ({encounteredKind})", Issue.PROCESSING_START_NESTED_VALIDATION, instance);
-                // Reference was resolved within the instance
-                if(typeRef.ProfileUri() != null)
+
+                // References within the instance are dealt with within the same validator,
+                // references to external entities will operate within a new instance of a validator (and hence a new tracking context).
+                // In both cases, the outcome is included in the result.
+                if (encounteredKind != ElementDefinition.AggregationMode.Referenced)
+                {
                     outcome.Include(Validate(typeRef.ProfileUri(), referencedResource));
+                }
+                else
+                {
+                    var newValidator = new Validator(this.Settings);
+                    outcome.Include(newValidator.Validate(typeRef.ProfileUri(), referencedResource));
+                }
             }
 
             return outcome;
@@ -572,24 +593,49 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal void SnapshotNeeded(StructureDefinition definition, IResourceResolver resolver)
+
+        internal IElementNavigator ExternalReferenceResolutionNeeded(string reference)
         {
+            if (!Settings.ResolveExteralReferences) return null;
+
+
+            // Default implementation: call event
+            if (OnExternalResolutionNeeded != null)
+            {
+                var args = new OnResolveResourceReferenceEventArgs(reference);
+                OnExternalResolutionNeeded(this, args);
+                return args.Result;
+            }
+
+            // Else, try to resolve using the given ResourceResolver
+            if (Settings.ResourceResolver != null)
+            {
+                return new PocoNavigator(Settings.ResourceResolver.ResolveByUri(reference));
+            }
+
+            return null;        // Sorry, nothing worked
+        }
+
+        internal void SnapshotNeeded(StructureDefinition definition)
+        {
+            if (!Settings.GenerateSnapshot) return;
+
             // Default implementation: call event
             if (OnSnapshotNeeded != null)
             {
-                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, resolver));
+                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, Settings.ResourceResolver));
                 return;
             }
 
             // Else, expand, depending on our configuration
-            if (Settings.GenerateSnapshot)
+            if (Settings.ResourceResolver != null)
             {
                 SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings;
 
                 if (settings == null)
                     settings = SnapshotGeneratorSettings.Default;
 
-                var gen = new SnapshotGenerator(resolver, settings);
+                var gen = new SnapshotGenerator(Settings.ResourceResolver, settings);
                 gen.Update(definition);
             }
         }
@@ -661,9 +707,21 @@ namespace Hl7.Fhir.Validation
             Resolver = resolver;
         }
 
-        public StructureDefinition Definition { get; private set; }
+        public StructureDefinition Definition { get; }
 
-        public IResourceResolver Resolver { get; private set; }
+        public IResourceResolver Resolver { get; }
+    }
+
+    public class OnResolveResourceReferenceEventArgs : EventArgs
+    {
+        public OnResolveResourceReferenceEventArgs(string reference)
+        {
+            Reference = reference;
+        }
+
+        public string Reference { get; }
+
+        public IElementNavigator Result { get; set; }
     }
 
 

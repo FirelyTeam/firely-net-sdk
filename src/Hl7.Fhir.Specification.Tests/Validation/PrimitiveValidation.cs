@@ -27,9 +27,8 @@ namespace Hl7.Fhir.Validation
                     new TestProfileArtifactSource(),
                     new ZipSource("specification.zip")));
 
-            var ctx = new ValidationSettings() { ResourceResolver = source, GenerateSnapshot = true, Trace = true };
-            ctx.GenerateSnapshotSettings = Specification.Snapshot.SnapshotGeneratorSettings.Default;
-            ctx.GenerateSnapshotSettings.ExpandExternalProfiles = true;
+            var ctx = new ValidationSettings() { ResourceResolver = source, GenerateSnapshot = true, Trace = false };
+
             validator = new Validator(ctx);
         }
 
@@ -412,10 +411,17 @@ namespace Hl7.Fhir.Validation
 
             var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
             Assert.IsNotNull(bundle);
-            
+
+            var ctx = new ValidationSettings() { ResourceResolver = source, GenerateSnapshot = true, ResolveExteralReferences=true, Trace = false };
+            bool hitResolution = false;
+
+            validator = new Validator(ctx);
+            validator.OnExternalResolutionNeeded += (s, a) => hitResolution = true;
+
             var report = validator.Validate(bundle);
             Assert.IsTrue(report.Success);
             Assert.AreEqual(1, report.Warnings);            // 1 unresolvable reference
+            Assert.IsTrue(hitResolution);
 
             report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/BundleWithContainedEntries", bundle);
             Assert.IsFalse(report.Success);
@@ -437,8 +443,6 @@ namespace Hl7.Fhir.Validation
             Assert.AreEqual(1, report.Warnings);            // 1 unresolvable reference
             Assert.AreEqual(4, report.Errors);            // 3 bundled reference, 1 contained reference
         }
-
-
 
         [TestMethod]
         public void HarvestScopedIdentifiers()

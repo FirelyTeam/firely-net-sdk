@@ -37,11 +37,8 @@ namespace Hl7.Fhir.Validation
         /// </summary>
         public bool Trace { get; set; }
 
-        // Containing Bundle, parent Resource?
         // Options: validate extension urls
         // FP SymbolTable
-
-        public ReferenceKind ValidateReferencedResources { get; set; }
 
         /// <summary>
         /// StructureDefinition may contain FluentPath constraints to enfore invariants in the data that cannot
@@ -50,7 +47,14 @@ namespace Hl7.Fhir.Validation
         /// </summary>
         public bool SkipConstraintValidation { get; set; }
 
-        // Use external server for some referenced resources
+
+        /// <summary>
+        /// If a reference is encountered that references to a resource outside of the current instance being validated,
+        /// this setting controls whether the validator will call out to the ResourceResolver to try to resolve the
+        /// external reference. Note: References that refer to resources inside the current instance (i.e.
+        /// contained resources, Bundle entries) will always be followed and validated
+        /// </summary>
+        public bool ResolveExteralReferences { get; set; }
     }
 
     [Flags]
