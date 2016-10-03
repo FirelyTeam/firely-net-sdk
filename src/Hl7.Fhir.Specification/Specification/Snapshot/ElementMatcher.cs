@@ -34,14 +34,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                     throw Error.InvalidOperation("Found unreachable bookmark in matches");
                 }
 
-                var bPos = snapNav.Path + "[{0}]".FormatWith(snapNav.OrdinalPosition);
-                var dPos = diffNav.Path + "[{0}]".FormatWith(diffNav.OrdinalPosition);
+                var bPos = snapNav.Path + $"[{snapNav.OrdinalPosition}]";
+                var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
 
                 // [WMR 20160719] Add name, if not null
-                if (snapNav.Current != null && snapNav.Current.Name != null) bPos += " '{0}'".FormatWith(snapNav.Current.Name);
-                if (diffNav.Current != null && diffNav.Current.Name != null) dPos += " '{0}'".FormatWith(diffNav.Current.Name);
+                if (snapNav.Current != null && snapNav.Current.Name != null) bPos += $" '{snapNav.Current.Name}'";
+                if (diffNav.Current != null && diffNav.Current.Name != null) dPos += $" '{diffNav.Current.Name}'";
 
-                Debug.WriteLine("B:{0} <--{1}--> D:{2}".FormatWith(bPos, match.Action.ToString(), dPos));
+                Debug.WriteLine($"B:{bPos} <--{match.Action.ToString()}--> D:{dPos}");
             }
 
             snapNav.ReturnToBookmark(sbm);
@@ -89,8 +89,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </remarks>
         public static List<MatchInfo> Match(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
-            // if (!snapNav.HasChildren) throw Error.Argument("snapNav", "Cannot match base to diff: element '{0}' in snap has no children".FormatWith(snapNav.Path));
-            if (!diffNav.HasChildren) throw Error.Argument("diffNav", "Cannot match base to diff: element '{0}' in diff has no children".FormatWith(diffNav.Path));
+            // if (!snapNav.HasChildren) throw Error.Argument(nameof(snapNav), $"Cannot match base to diff: element '{snapNav.Path}' in snap has no children");
+            if (!diffNav.HasChildren) throw Error.Argument(nameof(diffNav), $"Cannot match base to diff: element '{diffNav.Path}' in diff has no children");
 
             // These bookmarks are used only in the finally {} to make sure we don't alter the position of the navs when leaving the merger
             var baseStartBM = snapNav.Bookmark();
@@ -348,12 +348,12 @@ namespace Hl7.Fhir.Specification.Snapshot
 #if CHRIS_GRENZ
                     reslice = true;
 #else
-                    throw Error.InvalidOperation("Differential is reslicing on url, but resliced element has no type profile (path = '{0}').", diffNav.Path);
+                    throw Error.InvalidOperation($"Differential is reslicing on url, but resliced element has no type profile (path = '{diffNav.Path}').");
 #endif
                 }
                 if (diffProfiles != null && diffProfiles.Length > 1)
                 {
-                    throw Error.NotSupported("Reslicing on complex discriminator is not supported (path = '{0}').", diffNav.Path);
+                    throw Error.NotSupported($"Reslicing on complex discriminator is not supported (path = '{diffNav.Path}').");
                 }
 
 
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             else
             {
-                throw Error.NotSupported("Reslicing on discriminator '{0}' is not supported yet (path = '{1}').", string.Join("|", slicing.Discriminator), snapNav.Path);
+                throw Error.NotSupported($"Reslicing on discriminator '{string.Join("|", slicing.Discriminator)}' is not supported yet (path = '{snapNav.Path}').");
             }
 
             snapNav.ReturnToBookmark(slicingIntro);
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 if (!diffNav.MoveToNext())
                 {
-                    throw Error.InvalidOperation("Differential has a slicing entry {0}, but no first actual slice", diffNav.Path);
+                    throw Error.InvalidOperation($"Differential has a slicing entry {diffNav.Path}, but no first actual slice");
                 }
             }
 

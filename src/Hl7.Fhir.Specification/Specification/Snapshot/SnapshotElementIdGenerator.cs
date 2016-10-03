@@ -1,12 +1,17 @@
-﻿using Hl7.Fhir.Model;
+﻿/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -17,8 +22,8 @@ namespace Hl7.Fhir.Specification.Snapshot
     {
         public void GenerateSnapshotElementsId(StructureDefinition structureDef, bool force = false)
         {
-            if (structureDef == null) { throw Error.ArgumentNull("structureDef"); }
-            if (!structureDef.HasSnapshot) { throw Error.Argument("structureDef", "StructureDefinition.Snapshot component is null or empty."); }
+            if (structureDef == null) { throw Error.ArgumentNull(nameof(structureDef)); }
+            if (!structureDef.HasSnapshot) { throw Error.Argument(nameof(structureDef), "The StructureDefinition.Snapshot component is null or empty."); }
             clearIssues();
             generateSnapshotElementsId(structureDef, force);
         }
@@ -38,7 +43,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         void generateChildElementsId(ElementDefinitionNavigator nav, bool force = false)
         {
             var parent = nav.Current;
-            Debug.Print("generateChildElementsId: '{0}'", parent != null ? parent.Path : "[root]");
+            Debug.Print($"[{nameof(generateChildElementsId)}] '{(parent != null ? parent.Path : "[root]")}'");
             var bm = nav.Bookmark();
             if (nav.MoveToFirstChild())
             {
@@ -58,7 +63,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Generate an ElementId for the specified element and parent element
         string generateElementId(ElementDefinition element, ElementDefinition parent)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
+            if (element == null) { throw new ArgumentNullException(nameof(element)); }
             // parent is null for the resource root element
             var id = parent != null ? parent.ElementId : null;
             // Add element name (last path component)
@@ -79,9 +84,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return id;
         }
 
-        string addIdComponent(string id, string separator, string component)
-        {
-            return string.IsNullOrEmpty(id) ? component : id + separator + component;
-        }
+        string addIdComponent(string id, string separator, string component) => string.IsNullOrEmpty(id) ? component : id + separator + component;
+
     }
 }

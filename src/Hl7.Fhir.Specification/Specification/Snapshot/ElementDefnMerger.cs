@@ -53,10 +53,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.ToString().Capitalize() != diff.Path)
                     if (!ElementDefinitionNavigator.IsCandidateBaseElementPath(snap.Path, diff.Path))
                     {
-                        throw Error.InvalidOperation(
-                            "Path cannot be changed from '{0}' to '{1}', since the type is sliced to '{2}'",
-                            snap.Path, diff.Path, diff.Type.First().Code
-                        );
+                        throw Error.InvalidOperation($"Invalid operation in snapshot generator. Path cannot be changed from '{snap.Path}' to '{diff.Path}', since the type is sliced to '{diff.Type.First().Code}'");
                     }
 
                     snap.PathElement = mergePrimitiveAttribute(snap.PathElement, diff.PathElement);

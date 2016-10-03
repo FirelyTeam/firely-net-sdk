@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <remarks>Sets the <see cref="CHANGED_BY_DIFF_EXT"/> extension to store the boolean flag.</remarks>
         public static void SetChangedByDiff(this IExtendable element, bool value = true)
         {
-            if (element == null) { throw Error.ArgumentNull("element"); }
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.SetBoolExtension(CHANGED_BY_DIFF_EXT, value);
         }
 
@@ -43,14 +43,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="element">An <see cref="IExtendable"/> instance.</param>
         public static void RemoveChangedByDiff(this IExtendable element)
         {
-            if (element == null) { throw Error.ArgumentNull("element"); }
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveExtension(CHANGED_BY_DIFF_EXT);
         }
 
         /// <summary>Removes all instances of the <see cref="CHANGED_BY_DIFF_EXT"/> extension from the specified element and it's child elements, recursively.</summary>
         public static void RemoveAllChangedByDiff(this Element element)
         {
-            if (element == null) { throw Error.ArgumentNull("element"); }
+            if (element == null) { throw Error.ArgumentNull(nameof(element)); }
             element.RemoveChangedByDiff();
             foreach (var child in element.Children.OfType<Element>())
             {
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Removes all instances of the <see cref="CHANGED_BY_DIFF_EXT"/> extension from all the specified elements and their children, recursively.</summary>
         public static void RemoveAllChangedByDiff<T>(this IList<T> elements) where T : Element
         {
-            if (elements == null) { throw Error.ArgumentNull("elements"); }
+            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
             foreach (var elem in elements)
             {
                 elem.RemoveAllChangedByDiff();

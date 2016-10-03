@@ -32,8 +32,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
         public void GenerateSnapshotElementsBase(StructureDefinition structureDef, bool force = false)
         {
-            if (structureDef == null) { throw Error.ArgumentNull("structureDef"); }
-            if (!structureDef.HasSnapshot) { throw Error.Argument("structureDef", "StructureDefinition.Snapshot component is null or empty."); }
+            if (structureDef == null) { throw Error.ArgumentNull(nameof(structureDef)); }
+            if (!structureDef.HasSnapshot) { throw Error.Argument(nameof(structureDef), "The StructureDefinition.Snapshot component is null or empty."); }
             clearIssues();
             generateSnapshotElementsBase(structureDef, force);
         }
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         private void generateElementsBase(ElementDefinitionNavigator nav, ElementDefinitionNavigator baseNav, bool force = false)
         {
-            // Debug.Print("[generateElementBase] Path = {0}  Base = {1}".FormatWith(nav.Path, baseNav.Path));
+            // Debug.Print($"[nameof(generateElementBase)}] Path = '{nav.Path}'  Base = '{baseNav.Path}'");
             var elem = nav.Current;
             Debug.Assert(elem != null);
 
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // No match... try base profile
-            // Debug.Print("[generateElementBase] Path = {0}  (no base)".FormatWith(nav.Path));
+            // Debug.Print($"[nameof(generateElementBase)}] Path = '{nav.Path}'  (no base)");
         }
 
         /// <summary>Assign the <see cref="ElementDefinition.Base"/> component if necessary.</summary>
@@ -206,10 +206,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Determines if the specified element was created by the <see cref="SnapshotGenerator"/> class.</summary>
         /// <param name="elem">A FHIR <see cref="Element"/>.</param>
         /// <returns><c>true</c> if the element was created by the <see cref="SnapshotGenerator"/> class, or <c>false</c> otherwise.</returns>
-        static bool isCreatedBySnapshotGenerator(Element elem)
-        {
-            return elem != null && elem.Annotation<CreatedBySnapshotGeneratorAnnotation>() != null;
-        }
+        static bool isCreatedBySnapshotGenerator(Element elem) => elem != null && elem.Annotation<CreatedBySnapshotGeneratorAnnotation>() != null;
 
     }
 }
