@@ -55,16 +55,16 @@ namespace Hl7.Fhir.Model
             {
                 var text = "";
 
-                // When this is a summary report (e.g. just showing errors), it might well be informational 
-                // parents are missing in the hierarchy above their error children. In this case, don't
-                // try to use indentation.
-                bool useIndentation = Issue.First().HierarchyLevel == 0;
-
                 foreach (var issue in Issue)
                 {
-                    var indent = useIndentation ? new string(' ', issue.HierarchyLevel * 2) : "";
+                    var indent = new string(' ', issue.HierarchyLevel * 2);
                     text += indent + issue.ToString() + Environment.NewLine;
                 }
+
+                if (Success)
+                    text += "Overall result: SUCCESS" + Environment.NewLine;
+                else
+                    text += $"Overall result: FAILURE ({Errors} errors and {Warnings} warnings)" + Environment.NewLine;
 
                 return text;
             }

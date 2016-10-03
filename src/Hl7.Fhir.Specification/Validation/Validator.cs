@@ -83,18 +83,15 @@ namespace Hl7.Fhir.Validation
                 return Validate(instance, structureDefinitions.Single());
             else
             {
-                List<OperationOutcome> result = new List<OperationOutcome>();
-
-                foreach (var sd in structureDefinitions)
-                    result.Add(Validate(instance, sd));
-
-                var outcome = new OperationOutcome();
-                outcome.Combine(result, instance, BatchValidationMode.All);
-
-                return outcome;
+                var validators = structureDefinitions.Select(sd => createValidator(sd, instance));
+                return this.Combine(BatchValidationMode.All, instance, validators);
             }
         }
 
+        private Func<OperationOutcome> createValidator(StructureDefinition sd, IElementNavigator instance)
+        {
+            return () => Validate(instance, sd);
+        }
 
         public OperationOutcome Validate(IElementNavigator instance, StructureDefinition structureDefinition)
         {
@@ -135,20 +132,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal OperationOutcome ValidateElement(IEnumerable<ElementDefinitionNavigator> definitions, IElementNavigator instance, BatchValidationMode mode)
-        {
-            List<OperationOutcome> outcomes = new List<OperationOutcome>();
-
-            foreach (var def in definitions)
-                outcomes.Add(ValidateElement(def, instance));
-
-            var outcome = new OperationOutcome();
-            outcome.Combine(outcomes, instance, mode);
-
-            return outcome;
-        }
-
-
+     
         internal OperationOutcome ValidateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
@@ -176,8 +160,9 @@ namespace Hl7.Fhir.Validation
 
                     if (expected != null)
                     {
-                        outcome.Verify(() => instance.TypeName == expected, $"Type mismatch: instance value is of type '{instance.TypeName}', " +
-                                $"expected type '{expected}'", Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance);
+                        if (!outcome.Verify(() => instance.TypeName == expected, $"Type mismatch: instance value is of type '{instance.TypeName}', " +
+                                $"expected type '{expected}'", Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance))
+                            return outcome;     // Type mismatch, no use continuing validation
                     }
                 }
 
@@ -216,6 +201,9 @@ namespace Hl7.Fhir.Validation
                 // Validate Binding
 
                 outcome.Add(ValidateConstraints(elementConstraints, instance));
+
+                // If the report only has partial information, no use to show the hierarchy, so flatten it.
+                if (Settings.Trace == false) outcome.Flatten();
 
                 return outcome;
             }
@@ -576,6 +564,7 @@ namespace Hl7.Fhir.Validation
     public enum BatchValidationMode
     {
         All,
-        Any
+        Any,
+        Once
     }
 }

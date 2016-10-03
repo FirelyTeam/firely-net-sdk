@@ -1,18 +1,13 @@
 ﻿using Hl7.ElementModel;
-using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Hl7.Fhir.Validation
@@ -446,7 +441,7 @@ namespace Hl7.Fhir.Validation
         public void RunXsdValidation()
         {
             var careplanXml = File.ReadAllText("TestData\\validation\\careplan-example-integrated.xml");
-            var cpDoc = XDocument.Parse(careplanXml);
+            var cpDoc = XDocument.Parse(careplanXml, LoadOptions.SetLineInfo);
 
             var report = validator.Validate(cpDoc.CreateReader());
             Assert.IsTrue(report.Success);

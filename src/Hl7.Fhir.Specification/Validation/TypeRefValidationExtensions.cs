@@ -78,22 +78,20 @@ namespace Hl7.Fhir.Validation
      
         internal static OperationOutcome ValidateTypeReferences(this Validator validator, IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, IElementNavigator instance)
         {
-            var outcomes = new List<OperationOutcome>();
+            //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
+            //and validating non-references is cheaper
 
-            foreach (var typeRef in typeRefs)
-            {
-                //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
-                //and validating non-references is cheaper
-                if (typeRef.Code == FHIRDefinedType.Reference)
-                    outcomes.Add(validator.ValidateResourceReference(instance, typeRef));
-                else
-                    outcomes.Add(validator.Validate(instance, typeRef.ProfileUri()));
-            }
+            IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTypeRef(validator, instance,tr));
 
-            var outcome = new OperationOutcome();
-            outcome.Combine(outcomes, instance, BatchValidationMode.Any);
+            return validator.Combine(BatchValidationMode.Any, instance, validations);
+        }
 
-            return outcome;
+        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, IElementNavigator instance, ElementDefinition.TypeRefComponent tr)
+        {
+            if (tr.Code == FHIRDefinedType.Reference)
+                return () => validator.ValidateResourceReference(instance, tr);
+            else
+                return () => validator.Validate(instance, tr.ProfileUri());
         }
 
         internal static OperationOutcome ValidateResourceReference(this Validator validator, IElementNavigator instance, ElementDefinition.TypeRefComponent typeRef)
