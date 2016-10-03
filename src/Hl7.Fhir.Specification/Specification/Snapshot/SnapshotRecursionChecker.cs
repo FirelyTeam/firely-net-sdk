@@ -6,6 +6,9 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+// [WMR 20161003] OBSOLETE - replaced by SnapshotRecursionStack
+#if false
+
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -109,3 +112,5 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
     }
 }
+
+#endif

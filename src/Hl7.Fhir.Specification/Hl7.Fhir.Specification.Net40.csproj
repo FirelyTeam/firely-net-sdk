@@ -101,6 +101,7 @@
     <Compile Include="Specification\Snapshot\SnapshotGeneratorOutcome.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
     <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotRecursionStack.cs" />
     <Compile Include="Specification\Source\CachedResolver.cs" />
     <Compile Include="Specification\Source\DirectorySource.cs" />
     <Compile Include="Specification\Source\IArtifactSource.cs" />

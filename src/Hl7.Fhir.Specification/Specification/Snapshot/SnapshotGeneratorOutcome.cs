@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (_outcome == null) { _outcome = new OperationOutcome(); }
             var component = _outcome.AddIssue(issue.ToIssueComponent(message, location));
             // Return current profile url in Diagnostics field
-            component.Diagnostics = profileUrl ?? _recursionChecker.CurrentProfileUrl;
+            component.Diagnostics = profileUrl ?? CurrentProfileUri;
             return component;
         }
 
@@ -196,9 +196,17 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED
         void addIssueSnapshotGenerationFailed(string profileUrl = null)
         {
-            if (profileUrl == null) { profileUrl = _recursionChecker.CurrentProfileUrl; } // throw Error.ArgumentNull("profileUrl");
+            if (profileUrl == null) { profileUrl = CurrentProfileUri; } // throw Error.ArgumentNull("profileUrl");
             addIssue(Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, "Snapshot generation failed for profile with url '{0}'.".FormatWith(profileUrl), null, profileUrl);
         }
+
+        void addIssueProfileHasNoDifferential(ElementDefinition elementDef, string profileUrl) { addIssueProfileHasNoDifferential(ToNamedNode(elementDef), profileUrl); }
+        void addIssueProfileHasNoDifferential(INamedNode location, string profileUrl)
+        {
+            if (profileUrl == null) { throw Error.ArgumentNull("profileUrl"); }
+            addIssue(Issue.UNAVAILABLE_NEED_DIFFERENTIAL, "The resolved external profile with url '{0}' has no differential.".FormatWith(profileUrl), location, profileUrl);
+        }
+
     }
 
 }

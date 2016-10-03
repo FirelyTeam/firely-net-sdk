@@ -1201,15 +1201,15 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestExpandCoreArtifacts()
         {
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Element");
+            // testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Element");
             // testExpandResource(@"http://hl7.org/fhir/StructureDefinition/BackboneElement");
-            // testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Extension");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Extension");
 
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/integer");
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/positiveInt");
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/string");
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/code");
-            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/id");
+            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/id");
 
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Meta");
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/HumanName");
@@ -1221,7 +1221,7 @@ namespace Hl7.Fhir.Specification.Tests
             // testExpandResource(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
 
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Basic");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Patient");
+            //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Patient");
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
             //testExpandResource(@"http://hl7.org/fhir/StructureDefinition/AuditEvent");
 
