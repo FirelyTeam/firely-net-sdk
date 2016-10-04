@@ -47,10 +47,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         static readonly string ELEMENT_STRUCTURE_URI = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Element);
 #endif
 
-        // [WMR] Note: instance data is reused over multiple snapshot generations
         private readonly IResourceResolver _resolver;
         private readonly SnapshotGeneratorSettings _settings;
-        private readonly SnapshotRecursionStack _state = new SnapshotRecursionStack();
+        private readonly SnapshotRecursionStack _stack = new SnapshotRecursionStack();
 
         public SnapshotGenerator(IResourceResolver resolver, SnapshotGeneratorSettings settings) // : this()
         {
@@ -69,7 +68,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         public SnapshotGeneratorSettings Settings => _settings;
 
         /// <summary>Returns a reference to the profile uri of the currently generating snapshot, or <c>null</c>.</summary>
-        string CurrentProfileUri => _state.CurrentProfileUri;
+        string CurrentProfileUri => _stack.CurrentProfileUri;
 
         /// <summary>
         /// (Re-)generate the <see cref="StructureDefinition.Snapshot"/> component of the specified <see cref="StructureDefinition"/> instance.
@@ -104,7 +103,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             clearIssues();
 
             List<ElementDefinition> result = null;
-            _state.OnBeforeGenerateSnapshot(structure.Url);
+            _stack.OnBeforeGenerateSnapshot(structure.Url);
             try
             {
                 result = generate(structure);
@@ -112,8 +111,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             finally
             {
                 // On complete expansion, the recursion stack should be empty
-                Debug.Assert(result == null || _state.RecursionDepth == 1);
-                _state.OnAfterGenerateSnapshot(structure.Url);
+                Debug.Assert(result == null || _stack.Count == 1);
+                _stack.OnAfterGenerateSnapshot(structure.Url);
             }
             return result;
         }
@@ -148,14 +147,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             clearIssues();
 
             // Must initialize recursion checker, because element expansion may recurse on external type profile
-            _state.OnStartRecursion();
+            _stack.OnStartRecursion();
             try
             {
                 expandElement(nav);
             }
             finally
             {
-                _state.OnFinishRecursion();
+                _stack.OnFinishRecursion();
             }
             return nav.Elements;
         }
@@ -843,7 +842,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
             // Special case: when recursing on Element, simply return true and continue; otherwise throw an exception
             var path = location != null ? location.Path : null;
-            _state.OnBeforeExpandTypeProfile(profileUri, path);
+            _stack.OnBeforeExpandTypeProfile(profileUri, path);
 
             try
             {
@@ -882,7 +881,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
             finally
             {
-                _state.OnAfterExpandTypeProfile(profileUri, path);
+                _stack.OnAfterExpandTypeProfile(profileUri, path);
             }
 
             return true;

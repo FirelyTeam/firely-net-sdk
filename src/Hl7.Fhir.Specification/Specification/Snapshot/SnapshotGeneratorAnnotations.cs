@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         #region Annotation: Created By Snapshot Generator
 
         /// <summary>Annotation to mark generated elements, so we can prevent duplicate re-generation.</summary>
-        class CreatedBySnapshotGeneratorAnnotation
+        sealed class CreatedBySnapshotGeneratorAnnotation
         {
             public DateTime Created { get; }
             public CreatedBySnapshotGeneratorAnnotation() { Created = DateTime.Now; }
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         #region Annotation: Snapshot ElementDefinition
 
         /// <summary>For annotating a differential element definition with a reference to the associated generated snapshot element definition.</summary>
-        class SnapshotElementDefinitionAnnotation
+        sealed class SnapshotElementDefinitionAnnotation
         {
             public ElementDefinition SnapshotElement { get; }
             public SnapshotElementDefinitionAnnotation(ElementDefinition snapshotElement)

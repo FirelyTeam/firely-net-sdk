@@ -1189,11 +1189,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // Generate snapshots for all core types
             var coreArtifactNames = ModelInfo.FhirCsTypeToString.Values;
-            var coreTypeUrls = coreArtifactNames.Where(t => !ModelInfo.IsKnownResource(t)).Select(t => "http://hl7.org/fhir/StructureDefinition/" + t);
-            foreach (var url in coreTypeUrls)
-            {
-                testExpandResource(url);
-            }
+            var coreTypeUrls = coreArtifactNames.Where(t => !ModelInfo.IsKnownResource(t)).Select(t => "http://hl7.org/fhir/StructureDefinition/" + t).ToArray();
+            testExpandResources(coreTypeUrls.ToArray());
         }
 
         [TestMethod]
@@ -1201,10 +1198,22 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // Generate snapshots for all core resources
             var coreResourceUrls = ModelInfo.SupportedResources.Select(t => "http://hl7.org/fhir/StructureDefinition/" + t);
-            foreach (var url in coreResourceUrls)
+            testExpandResources(coreResourceUrls.ToArray());
+        }
+
+        void testExpandResources(string[] profileUris)
+        {
+            int count = profileUris.Length;
+            var start = DateTime.Now;
+
+            for (int i = 0; i < count; i++)
             {
-                testExpandResource(url);
+                testExpandResource(profileUris[i]);
             }
+
+            var duration = DateTime.Now.Subtract(start).TotalMilliseconds;
+            var avg = duration / count;
+            Debug.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
         }
 
         bool testExpandResource(string url)

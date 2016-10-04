@@ -14,43 +14,40 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
-    class SnapshotRecursionStack
+    /// <summary>Internal helper class to detect and prevent recursive snapshot generation.</summary>
+    sealed class SnapshotRecursionStack : Stack<string>
     {
-        Stack<string> _stack;
-
-        /// <summary>Call this method to initialize the recursion stack before generating a single snapshot element.</summary>
+        /// <summary>Initialize the recursion stack before generating a single snapshot element.</summary>
         public void OnStartRecursion()
         {
-            if (_stack != null) { throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(OnStartRecursion)}). Cannot re-initialize while there are remaining snapshots to be generated."); }
-            _stack = new Stack<string>();
+            if (Count > 0)
+            {
+                throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(OnStartRecursion)}). Cannot re-initialize while there are remaining snapshots to be generated.");
+            }
         }
 
-        /// <summary>Call this method to verify and clear the recursion stack after generating a single snapshot element.</summary>
+        /// <summary>Verify and clear the recursion stack after generating a single snapshot element.</summary>
         public void OnFinishRecursion()
         {
-            if (_stack == null)
-            {
-                throw Error.InvalidOperation($"Invalid operation in snapshot generator ({nameof(OnFinishRecursion)}). Cannot finish recursion on idle instance.");
-            }
-            if (RecursionDepth > 0)
+            if (Count > 0)
             {
                 throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(OnFinishRecursion)}). Cannot finish recursion when the snapshot stack is not empty.");
             }
-            _stack = null;
+            Clear();
         }
 
-        /// <summary>Call this method to initialize the recursion stack before generating a full snapshot.</summary>
+        /// <summary>Initialize the recursion stack before generating a full snapshot.</summary>
         public void OnBeforeGenerateSnapshot(string profileUri)
         {
             Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnBeforeGenerateSnapshot)}] '{profileUri}'");
             OnStartRecursion();
-            _stack.Push(profileUri);
+            Push(profileUri);
         }
 
-        /// <summary>Call this method to verify and clear the recursion stack after generating a full snapshot.</summary>
+        /// <summary>Verify and clear the recursion stack after generating a full snapshot.</summary>
         public void OnAfterGenerateSnapshot(string profileUri)
         {
-            var currentProfileUri = _stack.Pop();
+            var currentProfileUri = Pop();
             Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnAfterGenerateSnapshot)}] '{profileUri}'");
             if (profileUri != currentProfileUri)
             {
@@ -59,25 +56,26 @@ namespace Hl7.Fhir.Specification.Snapshot
             OnFinishRecursion();
         }
 
-        /// <summary>Call this method before recursively generating the snapshot of an external element type profile.</summary>
+        /// <summary>Verify recursive snapshot generation of the external profile with the specified url.</summary>
+        /// <exception cref="NotSupportedException">Thrown when detecting recursive snapshot generation.</exception>
         public void OnBeforeExpandTypeProfile(string typeProfileUri, string path)
         {
             if (IsGenerating(typeProfileUri))
             {
                 throw Error.NotSupported(
-                    $"Error generating snapshot. Recursive profile dependency detected for profile '{typeProfileUri}' on element '{path}'.\r\nProfile url stack:\r\n{string.Join("\r\n", _stack)}"
+                    $"Error generating snapshot. Recursive profile dependency detected for profile '{typeProfileUri}' on element '{path}'.\r\nProfile url stack:\r\n{string.Join("\r\n", this)}"
                 );
             }
             Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnBeforeExpandTypeProfile)}] '{typeProfileUri}'");
-            _stack.Push(typeProfileUri);
+            Push(typeProfileUri);
 
         }
 
-        /// <summary>Call this method after recursively generating the snapshot of an external element type profile.</summary>
+        /// <summary>Signal that recursive snapshot generation of an external profile has finished.</summary>
         public void OnAfterExpandTypeProfile(string typeProfileUri, string path)
         {
             Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnAfterExpandTypeProfile)}] '{typeProfileUri}'");
-            var currentProfileUri = _stack.Pop();
+            var currentProfileUri = Pop();
             if (currentProfileUri != typeProfileUri)
             {
                 throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(OnAfterExpandTypeProfile)}). The profile url '{typeProfileUri}' of the completed snapshot does not match the current state '{currentProfileUri}'.");
@@ -85,14 +83,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         }
 
-        /// <summary>Returns the profile uri of the currently generating snapshot.</summary>
-        public string CurrentProfileUri { get { return RecursionDepth > 0 ? _stack.Peek() : null; } }
+        /// <summary>Returns the uri of the profile for which the snapshot component is currently being generated, or <c>null</c>.</summary>
+        public string CurrentProfileUri => Count > 0 ? Peek() : null;
 
         /// <summary>Determines if the snapshot of the profile with the specified uri is being generated.</summary>
-        public bool IsGenerating(string profileUri) { return _stack != null && _stack.Any(uri => uri == profileUri); }
-
-        /// <summary>Returns the current recursion depth, i.e. the number of partially generated snapshots on the stack.</summary>
-        public int RecursionDepth { get { return _stack != null ? _stack.Count : 0; } }
-
+        public bool IsGenerating(string profileUri) => this.Any(uri => uri == profileUri);
     }
 }

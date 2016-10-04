@@ -6,10 +6,13 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Support;
+using System;
+
 namespace Hl7.Fhir.Specification.Snapshot
 {
     /// <summary>Configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
-    public sealed class SnapshotGeneratorSettings
+    public sealed class SnapshotGeneratorSettings : ICloneable
     {
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
@@ -26,10 +29,21 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Clone ctor. Generates a new instance with the same state as the specified instance.</summary>
         public SnapshotGeneratorSettings(SnapshotGeneratorSettings settings)
         {
-            ExpandExternalProfiles = settings.ExpandExternalProfiles;
-            ForceExpandAll = settings.ForceExpandAll;
-            MarkChanges = settings.MarkChanges;
-            // MergeTypeProfiles = settings.MergeTypeProfiles;
+            if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
+            settings.CopyTo(this);
+        }
+
+        /// <summary>Returns an exact clone of the current configuration settings instance.</summary>
+        public object Clone() => new SnapshotGeneratorSettings(this);
+
+        /// <summary>Copy all configuration settings to another instance.</summary>
+        public void CopyTo(SnapshotGeneratorSettings other)
+        {
+            if (other == null) { throw Error.ArgumentNull(nameof(other)); }
+            other.ExpandExternalProfiles = ExpandExternalProfiles;
+            other.ForceExpandAll = ForceExpandAll;
+            other.MarkChanges = MarkChanges;
+            // other.MergeTypeProfiles = MergeTypeProfiles;
         }
 
         /// <summary>

@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        // Following method is for internal use only
+        // ========== For internal use only ==========
 
         /// <summary>Removes a specific extension from the snapshot element definition and it's descendant elements, recursively.</summary>
         /// <param name="elemDef">An <see cref="ElementDefinition"/> instance.</param>

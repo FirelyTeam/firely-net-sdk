@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Temporary adapter for ElementDefinition to support INamedNode
         // TODO: ElementDefinition should properly implement INamedNode
         // INamedNode.Path should also return indices, e.g. root.elem[0].elem[1]
-        class ElementDefinitionNamedNode : INamedNode
+        sealed class ElementDefinitionNamedNode : INamedNode
         {
             private readonly ElementDefinition _elemDef;
             public ElementDefinitionNamedNode(ElementDefinition elementDef)
