@@ -6,12 +6,17 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-// WRONG - type properties should not override
-// #define MERGE_PRIMITIVE_TYPES
+// [WMR 20161004] OBSOLETE
+// Full snapshot expansion of external type profiles may trigger recursion, so only perform when necessary
+// Only expand the external profile root element, unless we actually need to merge the children
+// i.e. if the referencing profile has differential constraints on child elements.
+// e.g. Patient.identifier : Identifier => expand Identifier type profile root element and merge with Patient.identifier diff constraints
+// #define PREVENT_ELEMENT_RECURSION
 
-// HACK: first ensure snapshots for Element & Extension, to prevent recursion
-// #define PREPARE_CORE
-
+// Cache pre-generated snapshot root ElementDefinition instance as an annotation on the associated differential root ElementDefinition
+// When subsequently expanding the full type profile snapshot, re-use the cached root ElementDefinition instance
+// This ensures that the snapshot ElementDefinition instances are stable (and equal to OnPrepareBaseProfile event parameters)
+// Without caching, the root element in the type profile snapshot would be a different instance as the reference specified by the OnPrepareBaseProfile event
 #define CACHE_ROOT_ELEMDEF
 // [WMR 20161004] Only enable this for debugging & verification (costly...)
 // #define CACHE_ROOT_ELEMDEF_ASSERT
@@ -38,9 +43,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
     public sealed partial class SnapshotGenerator
     {
+#if PREVENT_ELEMENT_RECURSION
         static readonly string ELEMENT_STRUCTURE_URI = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Element);
-#if PREPARE_CORE
-        static readonly string EXTENSION_STRUCTURE_URI = ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Extension);
 #endif
 
         // [WMR] Note: instance data is reused over multiple snapshot generations
@@ -95,26 +99,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 throw Error.Argument(nameof(structure), "The url of the specified StructureDefinition is missing or empty.");
             }
-
-#if PREPARE_CORE
-            if (structure.Url != ELEMENT_STRUCTURE_URI)
-            {
-                if (structure.Url != EXTENSION_STRUCTURE_URI)
-                {
-                    var extensionStructure = _resolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Extension);
-                    Debug.Print("[SnapshotGenerator.Generate] elementStructure: #{0}", extensionStructure.GetHashCode());
-                    prepareCoreSnapshot(extensionStructure);
-                }
-                else
-                {
-                    var elementStructure = _resolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Element);
-                    Debug.Print("[SnapshotGenerator.Generate] elementStructure: #{0}", elementStructure.GetHashCode());
-                    prepareCoreSnapshot(elementStructure);
-                }
-            }
-
-#endif
-
 
             // Clear the OperationOutcome issues
             clearIssues();
@@ -176,7 +160,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             return nav.Elements;
         }
 
+
         // ***** Private Interface *****
+
 
         // Merge children of the currently selected element from differential into snapshot
         void merge(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
@@ -422,30 +408,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             var primaryDiffTypeProfile = primaryDiffType.Profile.FirstOrDefault();
             var primarySnapTypeProfile = primarySnapType != null ? primarySnapType.Profile.FirstOrDefault() : null;
-
-#if MERGE_PRIMITIVE_TYPES
-            // [WMR 20161004] WRONG! The inherited type profile does NOT override existing snapshot constraints...!
-            // Assuming that external type snapshots are 100% valid (or forceably regenerated), then the associated
-            // type constraints should already have been merged from the underlying type profile by createNewElement.
-
-            // If the differential overrides base type code, then merge primitive type profile (root elem only)
-            // e.g. Extension.url : uri => Element : Element
-            // Not necessary to expand the primitive structure, merge root differential element
-            // Exclude root element, base has already been merged via StructureDef.Base
-            if (!snap.Current.IsRootElement())
-            {
-                var primaryDiffTypeCode = primaryDiffType != null ? primaryDiffType.Code : null;
-                var primarySnapTypeCode = primarySnapType != null ? primarySnapType.Code : null;
-                if (string.IsNullOrEmpty(primaryDiffTypeProfile) && primaryDiffTypeCode.HasValue)
-                {
-                    primaryDiffTypeProfile = ModelInfo.CanonicalUriForFhirCoreType(primaryDiffTypeCode.Value);
-                }
-                if (string.IsNullOrEmpty(primarySnapTypeProfile) && primarySnapTypeCode.HasValue)
-                {
-                    primarySnapTypeProfile = ModelInfo.CanonicalUriForFhirCoreType(primarySnapTypeCode.Value);
-                }
-            }
-#endif
 
             if (string.IsNullOrEmpty(primaryDiffTypeProfile) || primaryDiffTypeProfile == primarySnapTypeProfile) { return true; }
 
@@ -868,12 +830,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (!verifyStructure(sd, profileUri, location)) { return false; }
             profileUri = sd.Url;
 
+#if PREVENT_ELEMENT_RECURSION
             // Prevent endless recursion on root Element type definition
-            //if (profileUri == ELEMENT_STRUCTURE_URI)
-            //{
-            //    Debug.Print("[SnapshotGenerator.ensureSnapshot] skip recursive Element expansion...");
-            //    return true;
-            //}
+            if (profileUri == ELEMENT_STRUCTURE_URI)
+            {
+                Debug.Print("[SnapshotGenerator.ensureSnapshot] skip recursive Element expansion...");
+                return true;
+            }
+#endif
 
             // Detect endless recursion
             // Verify that the type profile is not already being expanded by a parent call higher up the call stack hierarchy
@@ -923,19 +887,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             return true;
         }
-
-#if PREPARE_CORE
-        void prepareCoreSnapshot(StructureDefinition sd)
-        {
-            if (_settings.ExpandExternalProfiles
-                && (sd.Snapshot == null || (_settings.ForceExpandAll && !isCreatedBySnapshotGenerator(sd.Snapshot)))
-            )
-            {
-                Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(prepareCoreSnapshot)}] Generate snapshot for '{0}'", sd.Url);
-                Update(sd);
-            }
-        }
-#endif
 
         // Resolve the base element definition for the specified element = the snapshot root element of the associated type profile
         ElementDefinition getBaseElementForElementType(ElementDefinition elementDef, out StructureDefinition typeProfile)

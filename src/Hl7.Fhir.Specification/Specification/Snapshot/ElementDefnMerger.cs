@@ -18,10 +18,10 @@ namespace Hl7.Fhir.Specification.Snapshot
     public partial class SnapshotGenerator
     {
         /// <summary>
-        /// Private helper class for <see cref="SnapshotGenerator"/>.
+        /// Private static helper for <see cref="SnapshotGenerator"/>.
         /// Merge two <see cref="ElementDefinition"/> instances and all their properties.
         /// </summary>
-        private class ElementDefnMerger
+        struct ElementDefnMerger
         {
             /// <summary>Merges two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
             public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff)
