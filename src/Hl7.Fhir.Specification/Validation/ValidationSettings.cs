@@ -17,6 +17,8 @@ namespace Hl7.Fhir.Validation
 
     public class ValidationSettings
     {
+        public static readonly ValidationSettings Default = new ValidationSettings();
+
         public IResourceResolver ResourceResolver { get; set; }
 
         /// <summary>

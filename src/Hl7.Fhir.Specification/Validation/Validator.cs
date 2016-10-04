@@ -36,6 +36,10 @@ namespace Hl7.Fhir.Validation
             Settings = settings;
         }
 
+        public Validator() : this(ValidationSettings.Default)
+        {
+
+        }
 
         public OperationOutcome Validate(IElementNavigator instance)
         {
@@ -195,8 +199,7 @@ namespace Hl7.Fhir.Validation
                 // Min/max (cardinality) has been validated by parent, we cannot know down here
                 outcome.Add(this.ValidateFixed(elementConstraints, instance));
                 outcome.Add(this.ValidatePattern(elementConstraints, instance));
-                outcome.Add(ValidateMinValue(elementConstraints, instance));
-                // outcome.Add(ValidateMaxValue(elementConstraints, instance));
+                outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
                 outcome.Add(ValidateMaxLength(elementConstraints, instance));
 
                 // Validate Binding
@@ -308,7 +311,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
         
-        public OperationOutcome VerifyPrimitiveContents(ElementDefinition definition, IElementNavigator instance)
+        internal OperationOutcome VerifyPrimitiveContents(ElementDefinition definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
 
@@ -344,6 +347,33 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
+
+        internal OperationOutcome ValidateMaxLength(ElementDefinition definition, IElementNavigator instance)
+        {
+            var outcome = new OperationOutcome();
+
+            if (definition.MaxLength != null)
+            {
+                var maxLength = definition.MaxLength.Value;
+
+                if (outcome.Verify(() => maxLength > 0, "MaxLength was given in ElementDefinition, but it has a negative value ({0})".FormatWith(maxLength),
+                                Issue.PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE, instance))
+                {
+                    if (instance.Value != null)
+                    {
+                        //TODO: Is ToString() really the right way to turn (Fhir?) Primitives back into their original representation?
+                        //If the source is POCO, hopefully FHIR types have all overloaded ToString() 
+                        var serializedValue = instance.Value.ToString();
+                        outcome.Verify(() => serializedValue.Length <= maxLength, "Value '{0}' is too long (maximum length is {1})".FormatWith(serializedValue, maxLength),
+                            Issue.CONTENT_ELEMENT_VALUE_TOO_LONG, instance);
+                    }
+                }
+            }
+
+            return outcome;
+        }
+
+
         internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
         {
             if (Settings.Trace)
@@ -371,84 +401,6 @@ namespace Hl7.Fhir.Validation
             else
                 return val.ToString();
         }
-
-
-        internal OperationOutcome ValidateMinValue(ElementDefinition definition, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-
-            if (definition.MinValue != null)
-            {
-                var defType = definition.MinValue.GetType();
-
-                if (defType == typeof(Model.Quantity))
-                    outcome.Info("Comparing Quantities is not yet implemented", Issue.UNSUPPORTED_MIN_MAX_QUANTITY, instance);
-
-                if (instance.Value != null)
-                {              
-                    // Min/max are only defined for ordered types
-                    if (outcome.Verify(() => defType.IsOrderedFhirType(),
-                        "MinValue was given in ElementDefinition, but type '{0}' is not an ordered type".FormatWith(definition.MinValue.TypeName),
-                        Issue.PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE, instance))
-                    {
-                        if (defType == typeof(FhirDateTime) && instance.Value is PartialDateTime)
-                            messageSmallerThan(outcome, () => (PartialDateTime)instance.Value >= ((FhirDateTime)definition.MinValue).ToPartialDateTime(), instance, definition);
-                        else if (defType == typeof(Date) && instance.Value is PartialDateTime)
-                            messageSmallerThan(outcome, () => (PartialDateTime)instance.Value >= ((Date)definition.MinValue).ToPartialDateTime(), instance, definition);
-                        else if (defType == typeof(Instant) && instance.Value is PartialDateTime)
-                            messageSmallerThan(outcome, () => (PartialDateTime)instance.Value >= ((Instant)definition.MinValue).ToPartialDateTime(), instance, definition);
-                        else if (defType == typeof(Model.Time) && instance.Value is Hl7.FluentPath.Time)
-                            messageSmallerThan(outcome, () => (Hl7.FluentPath.Time)instance.Value >= ((Model.Time)definition.MinValue).ToTime(), instance, definition);
-                        else if (defType == typeof(FhirDecimal) && instance.Value is decimal)
-                            messageSmallerThan(outcome, () => (decimal)instance.Value >= ((FhirDecimal)definition.MinValue).Value, instance, definition);
-                        else if (defType == typeof(Integer) && instance.Value is long)
-                            messageSmallerThan(outcome, () => (long)instance.Value >= ((Integer)definition.MinValue).Value, instance, definition);
-                        else if (defType == typeof(FhirString) && instance.Value is string)
-                            messageSmallerThan(outcome, () => String.Compare((string)instance.Value, ((FhirString)definition.MinValue).Value) != -1, instance, definition);
-                        else
-                        {
-                            outcome.Info($"Min value '{definition.MinValue}' and instance value '{instance.Value}' are of incompatible types and can not be compared", Issue.CONTENT_ELEMENT_PRIMITIVE_VALUE_NOT_COMPARABLE, instance);
-                        }
-                    }
-                }
-            }
-
-            return outcome;
-        }
-
-        private static void messageSmallerThan(OperationOutcome outcome, Condition comparer, IElementNavigator instance, ElementDefinition min)
-        {
-            outcome.Verify(comparer, 
-                    $"Instance value '{instance.Value}' is smaller than the minimal value '{min.MinValue}'", Issue.CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_SMALL, instance);
-        }
-
-        //  t == typeof(FhirString);
-
-        internal OperationOutcome ValidateMaxLength(ElementDefinition definition, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-
-            if (definition.MaxLength != null)
-            {
-                var maxLength = definition.MaxLength.Value;
-
-                if (outcome.Verify(() => maxLength > 0, "MaxLength was given in ElementDefinition, but it has a negative value ({0})".FormatWith(maxLength),
-                                Issue.PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE, instance))
-                {
-                    if (instance.Value != null)
-                    {
-                        //TODO: Is ToString() really the right way to turn (Fhir?) Primitives back into their original representation?
-                        //If the source is POCO, hopefully FHIR types have all overloaded ToString() 
-                        var serializedValue = instance.Value.ToString();
-                        outcome.Verify(() => serializedValue.Length <= maxLength, "Value '{0}' is too long (maximum length is {1})".FormatWith(serializedValue, maxLength),
-                            Issue.CONTENT_ELEMENT_VALUE_TOO_LONG, instance);
-                    }
-                }
-            }
-
-            return outcome;
-        }
-
 
         internal IElementNavigator ExternalReferenceResolutionNeeded(string reference)
         {
@@ -512,45 +464,6 @@ namespace Hl7.Fhir.Validation
                    t == typeof(Integer) ||
                    t == typeof(Model.Quantity) ||
                    t == typeof(FhirString);
-        }
-    }
-
-    internal static class ElementDefinitionNavigatorExtensions
-    {
-        public static string GetFluentPathConstraint(this ElementDefinition.ConstraintComponent cc)
-        {
-            return cc.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
-        }
-
-        public static bool IsPrimitiveValueConstraint(this ElementDefinition ed)
-        {
-            var path = ed.Path;
-            return path.Count(c => c == '.') == 1 &&
-                        path.EndsWith(".value") &&
-                        Char.IsLower(path[0]);
-        }
-
-        public static string ConstraintDescription(this ElementDefinition.ConstraintComponent cc)
-        {
-            var desc = cc.Key;
-
-            if (cc.Human != null)
-                desc += " \"" + cc.Human + "\"";
-
-            return desc;
-        }
-
-
-        public static string QualifiedDefinitionPath(this ElementDefinitionNavigator nav)
-        {
-            string path = "";
-
-            if (nav.StructureDefinition != null && nav.StructureDefinition.Url != null)
-                path = "{" + nav.StructureDefinition.Url + "}";
-
-            path += nav.Path;
-
-            return path;
         }
     }
 

@@ -34,16 +34,20 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 
 
 namespace Hl7.Fhir.Model
 {
     public partial class Quantity
     {
-        public Hl7.FluentPath.Quantity ToQuantity()
+        public Hl7.FluentPath.Quantity? ToQuantity()
         {
             if (Value != null)
             {
+                if (Comparator != null)
+                    throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FluentPath Quantity");
+
                 return new Hl7.FluentPath.Quantity(Value.Value, Code);
             }
             else
