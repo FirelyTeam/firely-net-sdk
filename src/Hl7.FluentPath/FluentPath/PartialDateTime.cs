@@ -16,7 +16,7 @@ namespace Hl7.FluentPath
 {
 
     //TODO: Merge with FhirDateTime from Model namespace?
-    public struct PartialDateTime
+    public struct PartialDateTime : IComparable
     {
         private string _value;
 
@@ -124,8 +124,6 @@ namespace Hl7.FluentPath
             return _value.GetHashCode();
         }
 
-
-
         public override string ToString()
         {
             return _value;
@@ -158,5 +156,20 @@ namespace Hl7.FluentPath
 
         }
 
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+
+            if(obj is PartialDateTime)
+            {
+                var p = (PartialDateTime)obj;
+
+                if (this < p) return -1;
+                if (this > p) return 1;
+                return 0;
+            }
+            else
+                throw Error.Argument(nameof(obj), "Must be a PartialDateTime");
+        }
     }
 }

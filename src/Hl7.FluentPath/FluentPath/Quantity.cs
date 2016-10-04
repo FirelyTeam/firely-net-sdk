@@ -14,20 +14,24 @@ using Hl7.FluentPath.Support;
 
 namespace Hl7.FluentPath
 {
-    public class Quantity
+    public struct Quantity : IComparable
     {
+        public const string UCUM = "http://unitsofmeasure.org";
+
         public decimal Value { get; }
         public string Unit { get; }
+        public string System { get; }
 
-        public Quantity(double value, string unit) : this((decimal)value, unit)
+        public Quantity(double value, string unit, string system = UCUM) : this((decimal)value, unit, system)
         {
             // call other constructor
         }
 
-        public Quantity(decimal value, string unit)
+        public Quantity(decimal value, string unit, string system = UCUM)
         {
             Value = value;
             Unit = unit;
+            System = system;
         }
 
         public static bool operator <(Quantity a, Quantity b)
@@ -77,25 +81,45 @@ namespace Hl7.FluentPath
 
         private static void enforceSameUnits(Quantity a, Quantity b)
         {
-            if (a.Unit != b.Unit)
+            if (a.Unit + a.System != b.Unit + b.System)
                 throw Error.NotSupported("Comparing quantities with different units is not yet supported");
         }
 
         public override bool Equals(object obj)
         {
-            if (Object.ReferenceEquals(this, obj)) return true;
+            if (obj == null) return false;
 
-            var q = obj as Quantity;
-            if (Object.ReferenceEquals(q,null)) return false;
-
-            return q.Unit == this.Unit && q.Value == this.Value;
+            if (obj is Quantity)
+            {
+                Quantity q = (Quantity)obj;
+                return q.Unit == this.Unit
+                        && q.Value == this.Value
+                        && q.System == this.System;
+            }
+            else
+                return false;
         }
 
         public override int GetHashCode()
         {
-            return Unit.GetHashCode() ^ Value.GetHashCode();
+            return Unit.GetHashCode() ^ Value.GetHashCode() ^ System.GetHashCode();
         }
 
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+
+            if (obj is Quantity)
+            {
+                var p = (Quantity)obj;
+
+                if (this < p) return -1;
+                if (this > p) return 1;
+                return 0;
+            }
+            else
+                throw Error.Argument(nameof(obj), "Must be a Quantity");
+        }
 
     }
 }

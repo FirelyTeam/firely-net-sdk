@@ -24,6 +24,7 @@ using System.IO;
 using Hl7.Fhir.Serialization;
 using Hl7.FluentPath.Support;
 using Xunit.Abstractions;
+using Hl7.Fhir.FluentPath;
 
 namespace Hl7.FluentPath.Tests
 {

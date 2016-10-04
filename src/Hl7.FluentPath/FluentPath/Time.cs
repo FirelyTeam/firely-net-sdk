@@ -7,12 +7,13 @@
  */
 
 
+using Hl7.FluentPath.Support;
 using System;
 using System.Xml;
 
 namespace Hl7.FluentPath
 {
-    public struct Time
+    public struct Time : IComparable
     {
         private string _value;
 
@@ -130,5 +131,22 @@ namespace Hl7.FluentPath
         {
             return new Time { _value = XmlConvert.ToString(DateTimeOffset.Now).Substring(10) };
         }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+
+            if (obj is Time)
+            {
+                var p = (Time)obj;
+
+                if (this < p) return -1;
+                if (this > p) return 1;
+                return 0;
+            }
+            else
+                throw Error.Argument(nameof(obj), "Must be a Time");
+        }
+
     }
 }

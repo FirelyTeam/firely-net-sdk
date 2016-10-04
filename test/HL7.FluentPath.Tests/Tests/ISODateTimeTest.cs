@@ -84,5 +84,17 @@ namespace Hl7.FluentPath.Tests
             Assert.True(Time.Parse("13:45:02+01:00") == Time.Parse("13:45:02+01:00"));
             Assert.True(Time.Parse("13:45:02+00:00") != Time.Parse("13:45:02+01:00"));
         }
+
+        [Fact]
+        public void CheckOrdering()
+        {
+            Assert.Equal(1, PartialDateTime.Parse("2012-03-04T13:00:00Z").CompareTo(PartialDateTime.Parse("2012-03-04T12:00:00Z")));
+            Assert.Equal(-1, PartialDateTime.Parse("2012-03-04T13:00:00Z").CompareTo(PartialDateTime.Parse("2012-03-04T18:00:00+02:00")));
+            Assert.Equal(0,  PartialDateTime.Parse("2015-01-01").CompareTo(PartialDateTime.Parse("2015-01-01")));
+
+            Assert.Equal(1, Time.Parse("12:34:00+00:00").CompareTo(Time.Parse("12:33:55+00:00")));
+            Assert.Equal(-1, Time.Parse("13:00:00+00:00").CompareTo(Time.Parse("15:01:00+02:00")));
+            Assert.Equal(0, Time.Parse("13:45:02+01:00").CompareTo(Time.Parse("13:45:02+01:00")));
+        }
     }
 }
