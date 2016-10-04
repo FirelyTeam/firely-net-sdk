@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     $"Error generating snapshot. Recursive profile dependency detected for profile '{typeProfileUri}' on element '{path}'.\r\nProfile url stack:\r\n{string.Join("\r\n", _stack)}"
                 );
             }
-            Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnBeforeExpandTypeProfile)}] '{0}'", typeProfileUri);
+            Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnBeforeExpandTypeProfile)}] '{typeProfileUri}'");
             _stack.Push(typeProfileUri);
 
         }
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Call this method after recursively generating the snapshot of an external element type profile.</summary>
         public void OnAfterExpandTypeProfile(string typeProfileUri, string path)
         {
-            Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnAfterExpandTypeProfile)}] '{0}'", typeProfileUri);
+            Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnAfterExpandTypeProfile)}] '{typeProfileUri}'");
             var currentProfileUri = _stack.Pop();
             if (currentProfileUri != typeProfileUri)
             {

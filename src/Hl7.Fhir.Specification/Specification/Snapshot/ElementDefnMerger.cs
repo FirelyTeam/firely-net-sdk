@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         private class ElementDefnMerger
         {
-            /// <summary>Merge the two specified <see cref="ElementDefinition"/> instances.</summary>
+            /// <summary>Merges two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
             public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff)
             {
                 var merger = new ElementDefnMerger(generator);

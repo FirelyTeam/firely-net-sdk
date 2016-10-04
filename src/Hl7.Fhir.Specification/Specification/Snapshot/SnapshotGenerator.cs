@@ -6,11 +6,15 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-// WORK IN PROGRESS
+// WRONG - type properties should not override
 // #define MERGE_PRIMITIVE_TYPES
 
 // HACK: first ensure snapshots for Element & Extension, to prevent recursion
 // #define PREPARE_CORE
+
+#define CACHE_ROOT_ELEMDEF
+// [WMR 20161004] Only enable this for debugging & verification (costly...)
+// #define CACHE_ROOT_ELEMDEF_ASSERT
 
 // Known issues:
 // - Reslicing is only supported for complex extensions
@@ -74,7 +78,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 Element = Generate(structure)
             };
-            setCreatedBySnapshotGenerator(structure.Snapshot);
+            structure.Snapshot.SetCreatedBySnapshotGenerator();
         }
 
         /// <summary>
@@ -272,8 +276,48 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Ewout: not defined yet, under discussion; use cases exist for both options
             // In this implementation, constraints from type profiles get priority over base
 
-            // TODO: Merge multiple base element definitions...
+            // [WMR 20161003] Re-use any previously generated and annotated root element definition, if it exists
+#if CACHE_ROOT_ELEMDEF
+            var isValid = true;
+            ElementDefinition cachedRootElemDef = null;
+            if (diff.Current.IsRootElement() && (cachedRootElemDef = diff.Current.GetSnapshotElementAnnotation()) != null)
+            {
 
+#if CACHE_ROOT_ELEMDEF_ASSERT
+                // DEBUG / VERIFY: merge results should be equal to cached ElemDef instance
+                if (_settings.MergeTypeProfiles)
+                {
+                    isValid = mergeTypeProfiles(snap, diff);
+                }
+
+                mergeElementDefinition(snap.Current, diff.Current);
+                var currentRootClone = (ElementDefinition)snap.Current.DeepCopy();
+                var cachedRootClone = (ElementDefinition)cachedRootElemDef.DeepCopy();
+                // Ignore Id, Path, Base and ChangedByDiff extension - they are expected to differ
+                currentRootClone.ElementId = cachedRootClone.ElementId;
+                currentRootClone.Path = cachedRootClone.Path;
+                currentRootClone.Base = cachedRootClone.Base;
+                currentRootClone.RemoveAllChangedByDiff();
+                cachedRootClone.RemoveAllChangedByDiff();
+                Debug.Assert(cachedRootClone.IsExactly(currentRootClone));
+#endif
+
+                Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(mergeElement)}] Re-use cached root element definition: '{cachedRootElemDef.Path}'  #{cachedRootElemDef.GetHashCode()}");
+                snap.Elements[snap.OrdinalPosition.Value] = cachedRootElemDef;
+                diff.Current.ClearSnapshotElementAnnotations();
+            }
+            else
+            {
+                // First merge constraints from element type profile, if it exists
+                if (_settings.MergeTypeProfiles)
+                {
+                    isValid = mergeTypeProfiles(snap, diff);
+                }
+
+                // Then merge constraints from base profile
+                mergeElementDefinition(snap.Current, diff.Current);
+            }
+#else
             // First merge constraints from element type profile, if it exists
             var isValid = true;
             if (_settings.MergeTypeProfiles)
@@ -283,6 +327,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Then merge constraints from base profile
             mergeElementDefinition(snap.Current, diff.Current);
+
+#endif
 
             if (!isValid)
             {
@@ -377,7 +423,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             var primarySnapTypeProfile = primarySnapType != null ? primarySnapType.Profile.FirstOrDefault() : null;
 
 #if MERGE_PRIMITIVE_TYPES
-            // TODO: If the differential overrides base type code, then merge primitive type profile (root elem only)
+            // [WMR 20161004] WRONG! The inherited type profile does NOT override existing snapshot constraints...!
+            // Assuming that external type snapshots are 100% valid (or forceably regenerated), then the associated
+            // type constraints should already have been merged from the underlying type profile by createNewElement.
+
+            // If the differential overrides base type code, then merge primitive type profile (root elem only)
             // e.g. Extension.url : uri => Element : Element
             // Not necessary to expand the primitive structure, merge root differential element
             // Exclude root element, base has already been merged via StructureDef.Base
@@ -832,7 +882,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             try
             {
                 if (_settings.ExpandExternalProfiles
-                    && (sd.Snapshot == null || (_settings.ForceExpandAll && !isCreatedBySnapshotGenerator(sd.Snapshot)))
+                    && (sd.Snapshot == null || (_settings.ForceExpandAll && !sd.Snapshot.IsCreatedBySnapshotGenerator()))
                 )
                 {
                     // Automatically expand external profiles on demand
@@ -850,7 +900,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
 
                     // Add in-memory annotation to prevent repeated expansion
-                    setCreatedBySnapshotGenerator(sd.Snapshot);
+                    sd.Snapshot.SetCreatedBySnapshotGenerator();
                 }
 
                 if (!sd.HasSnapshot)
@@ -931,8 +981,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return null;
             }
 
+            // Return previously generated, cached root element definition, if present
+            var cachedRoot = sd.GetSnapshotRootElementAnnotation();
+            if (cachedRoot != null) { return cachedRoot; }
+
             // Return root element definition from existing snapshot, if it exists
-            if (sd.HasSnapshot && (isCreatedBySnapshotGenerator(sd.Snapshot) || !_settings.ForceExpandAll))
+            if (sd.HasSnapshot && (sd.Snapshot.IsCreatedBySnapshotGenerator() || !_settings.ForceExpandAll))
             {
                 Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from snapshot");
                 return sd.Snapshot.Element[0];
@@ -944,10 +998,14 @@ namespace Hl7.Fhir.Specification.Snapshot
             var baseProfileUri = sd.Base;
             if (baseProfileUri == null)
             {
-                // Structure has no base, i.e. core type definition
-                // => differential introduces & defines the root element
+                // Structure has no base, i.e. core type definition => differential introduces & defines the root element
                 Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use root element definition from differential");
-                return diffRoot;
+                var clonedDiffRoot = (ElementDefinition)diffRoot.DeepCopy();
+#if CACHE_ROOT_ELEMDEF
+                ensureElementBase(clonedDiffRoot, null, true);
+                sd.SetSnapshotRootElementAnnotation(clonedDiffRoot);
+#endif
+                return clonedDiffRoot;
             }
 
             // Resolve root element definition from base profile
@@ -967,9 +1025,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Merge differential constraints onto base root element definition
             mergeElementDefinition(rebasedRoot, diffRoot);
 
-            Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - succesfully resolved root element definition", profileUri);
-            return rebasedRoot;
+            // TODO: Save the generated snapshot root element definition as annotation on StructureDefinition.Snapshot component
+            // When generating the full snapshot, re-use the previously generated root element definition
 
+            Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - succesfully resolved root element definition: #{rebasedRoot.GetHashCode()}");
+#if CACHE_ROOT_ELEMDEF
+            ensureElementBase(rebasedRoot, baseRoot, true);
+            sd.SetSnapshotRootElementAnnotation(rebasedRoot);
+#endif
+            return rebasedRoot;
         }
 
     }

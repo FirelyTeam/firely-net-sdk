@@ -77,6 +77,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyVersionInfo.cs" />
     <Compile Include="Specification\Snapshot\SnapshotElementIdGenerator.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorAnnotations.cs" />
     <Compile Include="Specification\Snapshot\SnapshotRecursionStack.cs" />
     <Compile Include="Specification\Source\CachedResolver.cs" />
     <Compile Include="Specification\Source\IConformanceSource.cs" />
@@ -106,7 +107,6 @@
     <Compile Include="Specification\Navigation\ProfileNavigationExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorEvents.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
-    <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
     <Compile Include="Specification\Source\SourceFactory.cs" />
     <Compile Include="Specification\Source\ZipSource.cs" />
     <Compile Include="Specification\Source\DirectorySource.cs" />

@@ -15,11 +15,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             ExpandExternalProfiles = true,
-            ForceExpandAll = false, // Only enable this when using a cached source...
-            MarkChanges = false,
-            // Following settings are proposed and await approval from HL7 WGM
-            MergeTypeProfiles = true,
-            NormalizeElementBase = true
+            ForceExpandAll = false,             // Only enable this when using a cached source...
+            MarkChanges = false,                // Enabled by Simplifier
+
+            MergeTypeProfiles = true
         };
 
         /// <summary>Default ctor.</summary>
@@ -29,10 +28,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         public SnapshotGeneratorSettings(SnapshotGeneratorSettings settings)
         {
             ExpandExternalProfiles = settings.ExpandExternalProfiles;
+            ForceExpandAll = settings.ForceExpandAll;
             MarkChanges = settings.MarkChanges;
             MergeTypeProfiles = settings.MergeTypeProfiles;
-            NormalizeElementBase = settings.NormalizeElementBase;
-            ForceExpandAll = settings.ForceExpandAll;
         }
 
         /// <summary>
@@ -69,21 +67,5 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         /// <remarks>See GForge #9791</remarks>
         public bool MergeTypeProfiles { get; set; }
-
-        /// <summary>
-        /// EXPERIMENTAL!
-        /// If enabled (default), then normalize the ElementDefinition.Base component of inherited elements in order to reference
-        /// the element definition in the defining profile that originally introduces the element.
-        /// If disabled, then the ElementDefinition.Base components are initialized from the associated element in the immediate base profile.
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// Path = "Patient.meta" => Base.Path = "Resource.meta" (derived from parent element Resource)
-        /// <br />
-        /// Path = "Patient.name.given" => Base.Path = "HumanName.given" (derived from parent element type = 'HumanName')
-        /// </code>
-        /// </example>
-        public bool NormalizeElementBase { get; set; }
-
     }
 }
