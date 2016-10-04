@@ -6,34 +6,62 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
     /// <summary>Internal helper class to detect and prevent recursive snapshot generation.</summary>
-    sealed class SnapshotRecursionStack : Stack<string>
+    sealed class SnapshotRecursionStack
     {
+        private Stack<SnapshotRecursionStackState> _stack;
+
+        sealed class SnapshotRecursionStackState
+        {
+            public SnapshotRecursionStackState(string profileUri)
+            {
+                if (profileUri == null) { throw Error.ArgumentNull(nameof(profileUri)); }
+                ProfileUri = profileUri;
+                Navigator = null;
+            }
+            /// <summary>Canonical uri of a profile for which the snapshot is being generated.</summary>
+            public readonly string ProfileUri;
+
+            /// <summary>
+            /// Reference to the <see cref="ElementDefinitionNavigator"/> that is generating the snapshot.
+            /// Allows access to already generated elements.
+            /// </summary>
+            public ElementDefinitionNavigator Navigator { get; internal set; }
+        }
+
         /// <summary>Initialize the recursion stack before generating a single snapshot element.</summary>
         public void OnStartRecursion()
         {
-            if (Count > 0)
+            if (_stack != null)
             {
-                throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(OnStartRecursion)}). Cannot re-initialize while there are remaining snapshots to be generated.");
+                throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(OnStartRecursion)}). Cannot start a new snapshot generation. The previous operation has not finished.");
             }
+            _stack = new Stack<SnapshotRecursionStackState>();
         }
 
         /// <summary>Verify and clear the recursion stack after generating a single snapshot element.</summary>
         public void OnFinishRecursion()
         {
-            if (Count > 0)
+            if (_stack == null)
             {
-                throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(OnFinishRecursion)}). Cannot finish recursion when the snapshot stack is not empty.");
+                throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(OnFinishRecursion)}). Cannot finish snapshot generation. No snapshot is currently being generated.");
             }
-            Clear();
+            if (_stack.Count > 0)
+            {
+                throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(OnFinishRecursion)}). Cannot finish the operation while snapshots are still being generated.");
+            }
+            _stack = null;
         }
 
         /// <summary>Initialize the recursion stack before generating a full snapshot.</summary>
@@ -41,17 +69,19 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnBeforeGenerateSnapshot)}] '{profileUri}'");
             OnStartRecursion();
-            Push(profileUri);
+            _stack.Push(new SnapshotRecursionStackState(profileUri));
         }
 
         /// <summary>Verify and clear the recursion stack after generating a full snapshot.</summary>
         public void OnAfterGenerateSnapshot(string profileUri)
         {
-            var currentProfileUri = Pop();
+            validateStackIsNotEmpty(nameof(OnAfterGenerateSnapshot));
+            var currentState = _stack.Pop();
+            var currentProfileUri = currentState.ProfileUri;
             Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnAfterGenerateSnapshot)}] '{profileUri}'");
             if (profileUri != currentProfileUri)
             {
-                throw Error.InvalidOperation($"Invalid snapshot generator state. The specified profile Uri '{profileUri}' does not match the current state: '{CurrentProfileUri}'");
+                throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(OnAfterGenerateSnapshot)}). The specified profile Uri '{profileUri}' does not match the current state: '{CurrentProfileUri}'");
             }
             OnFinishRecursion();
         }
@@ -67,7 +97,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 );
             }
             Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnBeforeExpandTypeProfile)}] '{typeProfileUri}'");
-            Push(typeProfileUri);
+            _stack.Push(new SnapshotRecursionStackState(typeProfileUri));
 
         }
 
@@ -75,7 +105,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         public void OnAfterExpandTypeProfile(string typeProfileUri, string path)
         {
             Debug.Print($"[{nameof(SnapshotRecursionStack)}.{nameof(OnAfterExpandTypeProfile)}] '{typeProfileUri}'");
-            var currentProfileUri = Pop();
+            validateStackIsNotEmpty(nameof(OnAfterExpandTypeProfile));
+            var currentState = _stack.Pop();
+            var currentProfileUri = currentState.ProfileUri;
             if (currentProfileUri != typeProfileUri)
             {
                 throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(OnAfterExpandTypeProfile)}). The profile url '{typeProfileUri}' of the completed snapshot does not match the current state '{currentProfileUri}'.");
@@ -84,9 +116,44 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Returns the uri of the profile for which the snapshot component is currently being generated, or <c>null</c>.</summary>
-        public string CurrentProfileUri => Count > 0 ? Peek() : null;
+        public string CurrentProfileUri => _stack.Count > 0 ? _stack.Peek().ProfileUri : null;
+
+        public void RegisterSnapshotNavigator(string profileUri, ElementDefinitionNavigator navigator)
+        {
+            if (navigator == null) { throw Error.ArgumentNull(nameof(navigator)); }
+            validateStackIsNotEmpty(nameof(RegisterSnapshotNavigator));
+            var state = _stack.Peek();
+            if (state.ProfileUri != profileUri)
+            {
+                throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(RegisterSnapshotNavigator)}). The profile url '{profileUri}' of the completed snapshot does not match the current state '{state.ProfileUri}'.");
+            }
+            // Navigator reference is write-once
+            if (state.Navigator != null) { throw Error.InvalidOperation($"Invalid snapshot generator state ({nameof(RegisterSnapshotNavigator)}): The navigator for profile '{profileUri}' is already initialized."); }
+            state.Navigator = navigator;
+        }
+
+        public ElementDefinitionNavigator ResolveSnapshotNavigator(string profileUri)
+        {
+            var match = _stack.FirstOrDefault(state => state.ProfileUri == profileUri);
+            return match?.Navigator; // Returns null for default state (no match)
+        }
 
         /// <summary>Determines if the snapshot of the profile with the specified uri is being generated.</summary>
-        public bool IsGenerating(string profileUri) => this.Any(uri => uri == profileUri);
+        public bool IsGenerating(string profileUri) => _stack.Any(state => state.ProfileUri == profileUri);
+
+        public int RecursionDepth => _stack.Count;
+
+#if NET45
+        void validateStackIsNotEmpty([CallerMemberName] string memberName = "")
+#else
+        void validateStackIsNotEmpty(string memberName)
+#endif
+        {
+            if (_stack == null || _stack.Count == 0)
+            {
+                throw Error.InvalidOperation($"Invalid snapshot generator state ({memberName}). Cannot operate on empty recursion stack.");
+            }
+        }
     }
+
 }

@@ -887,9 +887,9 @@ namespace Hl7.Fhir.Specification.Tests
             // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatient");
             // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension1");
 
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
+            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
+            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Meta");
             // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Money");
 
@@ -916,9 +916,27 @@ namespace Hl7.Fhir.Specification.Tests
 
                 assertBaseDefs(expanded, settings);
 
-                // var sdId = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Id);
-                // generateSnapshotAndCompare(sdId, source, out expanded);
-                // assertBaseDefs(expanded, settings);
+                if (sd.Url != ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Element))
+                {
+                    // Element snapshot should be recursively expanded, as it is the fundamental base profile
+                    var sdElem = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Element);
+                    Assert.IsNotNull(sdElem);
+                    Assert.IsTrue(sdElem.HasSnapshot);
+                    Assert.IsTrue(sdElem.Snapshot.IsCreatedBySnapshotGenerator());
+                    assertBaseDefs(sdElem, settings);
+                }
+
+                if (sd.Url != ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Id))
+                {
+                    // Id snapshot should not be (re-)generated, as derived profiles don't force expansion
+                    var sdId = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Id);
+                    Assert.IsNotNull(sdId);
+                    Assert.IsTrue(sdId.HasSnapshot);
+                    Assert.IsFalse(sdId.Snapshot.IsCreatedBySnapshotGenerator());
+                    // Re-generate the snapshot and verify base references
+                    generateSnapshotAndCompare(sdId, out expanded);
+                    assertBaseDefs(expanded, settings);
+                }
 
                 if (sd.Url == @"http://example.org/fhir/StructureDefinition/MyPatient")
                 {
@@ -1214,6 +1232,7 @@ namespace Hl7.Fhir.Specification.Tests
             var duration = DateTime.Now.Subtract(start).TotalMilliseconds;
             var avg = duration / count;
             Debug.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
+            Console.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
         }
 
         bool testExpandResource(string url)

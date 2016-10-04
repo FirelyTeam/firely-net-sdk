@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             finally
             {
                 // On complete expansion, the recursion stack should be empty
-                Debug.Assert(result == null || _stack.Count == 1);
+                Debug.Assert(result == null || _stack.RecursionDepth == 1);
                 _stack.OnAfterGenerateSnapshot(structure.Url);
             }
             return result;
@@ -162,6 +162,177 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // ***** Private Interface *****
 
+
+        /// <summary>
+        /// Expand the differential component of the specified structure and return the expanded element list.
+        /// The given structure is not modified.
+        /// </summary>
+        List<ElementDefinition> generate(StructureDefinition structure)
+        {
+            List<ElementDefinition> result;
+            var differential = structure.Differential;
+            if (differential == null)
+            {
+                // [WMR 20160905] Or simply return the expanded base profile?
+                throw Error.Argument(nameof(structure), "Invalid input for snapshot generator. The specified StructureDefinition does not contain a differential component.");
+            }
+
+            // [WMR 20160902] Also handle core resource / datatype definitions
+            if (differential.Element == null || differential.Element.Count == 0)
+            {
+                // [WMR 20160905] Or simply return the expanded base profile?
+                throw Error.Argument(nameof(structure), "Invalid input for snapshot generator. The differential component of the specified StructureDefinition is empty.");
+            }
+
+            // [WMR 20160718] Also accept extension definitions (IsConstraint == false)
+            if (structure.IsConstraint && structure.Base == null)
+            {
+                throw Error.Argument(nameof(structure), "Invalid input for snapshot generator. The specified StructureDefinition represents a constraint on a FHIR core type or resource, but it does not specify a base profile url.");
+            }
+
+            StructureDefinition.SnapshotComponent snapshot = null;
+            if (structure.Base != null)
+            {
+                var baseStructure = _resolver.FindStructureDefinition(structure.Base);
+                if (!ensureSnapshot(baseStructure, structure.Base, ToNamedNode(differential.Element[0])))
+                {
+                    // Fatal error...
+                    return null;
+                }
+
+                // [WMR 20160817] Notify client about the resolved, expanded base profile
+                OnPrepareBaseProfile(structure, baseStructure);
+
+                snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
+
+                // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
+                snapshot.Element.RemoveAllChangedByDiff();
+
+                // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
+                if (!structure.IsConstraint)
+                {
+                    var rootElem = differential.Element.FirstOrDefault();
+                    if (!rootElem.IsRootElement())
+                    {
+                        // Fatal error...
+                        throw Error.Argument(nameof(structure), $"Internal error in snapshot generator. Base profile '{baseStructure.Url}' is not a constraint and the differential component does not start at the root element definition.");
+                    }
+                    snapshot.Rebase(rootElem.Path);
+                }
+
+                // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
+                // Always regenerate Base component! Cannot reuse cloned values
+                ensureBaseComponents(snapshot.Element, structure.Base, true);
+
+                // Notify observers
+                for (int i = 0; i < snapshot.Element.Count; i++)
+                {
+                    OnPrepareElement(snapshot.Element[i], baseStructure, baseStructure.Snapshot.Element[i]);
+                }
+            }
+            else
+            {
+                // No base; input is a core resource or datatype definition
+                snapshot = new StructureDefinition.SnapshotComponent();
+            }
+
+            var snap = new ElementDefinitionNavigator(snapshot.Element);
+
+#if CACHE_ROOT_ELEMDEF
+            _stack.RegisterSnapshotNavigator(structure.Url, snap);
+#endif
+
+            // Fill out the gaps (mostly missing parents) in the differential representation
+            var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
+            var diff = new ElementDefinitionNavigator(fullDifferential);
+
+            merge(snap, diff);
+
+            result = snap.ToListOfElements();
+
+            // [WMR 20160917] NEW: Re-generate all ElementId values
+            generateElementsId(result, true);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Expand the currently active element within the specified <see cref="ElementDefinitionNavigator"/> instance.
+        /// If the element has a name reference, then merge from the targeted element.
+        /// Otherwise, if the element has a custom type profile, then merge it.
+        /// </summary>
+        internal bool expandElement(ElementDefinitionNavigator nav)
+        {
+            if (nav.Current == null)
+            {
+                throw Error.Argument(nameof(nav), $"Internal error in snapshot generator ({nameof(expandElement)}): Navigator is not positioned on an element");
+            }
+
+            if (nav.HasChildren)
+            {
+                return true;     // already has children, we're not doing anything extra
+            }
+
+            var defn = nav.Current;
+
+            if (!String.IsNullOrEmpty(defn.NameReference))
+            {
+                var sourceNav = new ElementDefinitionNavigator(nav);
+                var success = sourceNav.JumpToNameReference(defn.NameReference);
+
+                if (!success)
+                {
+                    addIssueInvalidNameReference(defn, defn.NameReference);
+                    return false;
+                }
+
+                nav.CopyChildren(sourceNav);
+            }
+            else if (defn.Type == null || defn.Type.Count == 0)
+            {
+                // Element has neither a name reference or a type...?
+                if (!nav.Current.IsRootElement())
+                {
+                    addIssueNoTypeOrNameReference(defn);
+                }
+            }
+            else if (defn.Type.Count > 1)
+            {
+                addIssueInvalidChoiceConstraint(defn);
+            }
+
+            else // if (defn.Type.Count == 1)
+            {
+                // [WMR 20160720] Handle custom type profiles (GForge #9791)
+                StructureDefinition baseStructure = getStructureForElementType(defn, true);
+                if (baseStructure != null && baseStructure.HasSnapshot)
+                {
+                    var baseSnap = baseStructure.Snapshot;
+                    var baseNav = new ElementDefinitionNavigator(baseSnap.Element);
+                    baseNav.MoveToFirstChild();
+                    nav.CopyChildren(baseNav);
+
+                    // Fix the copied elements and notify observers
+                    var pos = nav.OrdinalPosition.Value;
+                    for (int i = 1; i < baseSnap.Element.Count; i++)
+                    {
+                        var elem = nav.Elements[pos + i];
+                        var baseElem = baseSnap.Element[i];
+
+                        // [WMR 20160826] Never inherit Changed extension from base profile!
+                        elem.RemoveAllChangedByDiff();
+
+                        // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
+                        // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
+                        elem.EnsureBaseComponent(baseElem, true);
+
+                        OnPrepareElement(elem, baseStructure, baseElem);
+                    }
+                }
+            }
+
+            return true;
+        }
 
         // Merge children of the currently selected element from differential into snapshot
         void merge(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
@@ -588,173 +759,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        /// <summary>
-        /// Expand the differential component of the specified structure and return the expanded element list.
-        /// The given structure is not modified.
-        /// </summary>
-        List<ElementDefinition> generate(StructureDefinition structure)
-        {
-            List<ElementDefinition> result;
-            var differential = structure.Differential;
-            if (differential == null)
-            {
-                // [WMR 20160905] Or simply return the expanded base profile?
-                throw Error.Argument(nameof(structure), "Invalid input for snapshot generator. The specified StructureDefinition does not contain a differential component.");
-            }
-
-            // [WMR 20160902] Also handle core resource / datatype definitions
-            if (differential.Element == null || differential.Element.Count == 0)
-            {
-                // [WMR 20160905] Or simply return the expanded base profile?
-                throw Error.Argument(nameof(structure), "Invalid input for snapshot generator. The differential component of the specified StructureDefinition is empty.");
-            }
-
-            // [WMR 20160718] Also accept extension definitions (IsConstraint == false)
-            if (structure.IsConstraint && structure.Base == null)
-            {
-                throw Error.Argument(nameof(structure), "Invalid input for snapshot generator. The specified StructureDefinition represents a constraint on a FHIR core type or resource, but it does not specify a base profile url.");
-            }
-
-            StructureDefinition.SnapshotComponent snapshot = null;
-            if (structure.Base != null)
-            {
-                var baseStructure = _resolver.FindStructureDefinition(structure.Base);
-                if (!ensureSnapshot(baseStructure, structure.Base, ToNamedNode(differential.Element[0])))
-                {
-                    // Fatal error...
-                    return null;
-                }
-
-                // [WMR 20160817] Notify client about the resolved, expanded base profile
-                OnPrepareBaseProfile(structure, baseStructure);
-
-                snapshot = (StructureDefinition.SnapshotComponent)baseStructure.Snapshot.DeepCopy();
-
-                // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
-                snapshot.Element.RemoveAllChangedByDiff();
-
-                // [WMR 20160902] Rebase the cloned base profile (e.g. DomainResource)
-                if (!structure.IsConstraint)
-                {
-                    var rootElem = differential.Element.FirstOrDefault();
-                    if (!rootElem.IsRootElement())
-                    {
-                        // Fatal error...
-                        throw Error.Argument(nameof(structure), $"Internal error in snapshot generator. Base profile '{baseStructure.Url}' is not a constraint and the differential component does not start at the root element definition.");
-                    }
-                    snapshot.Rebase(rootElem.Path);
-                }
-
-                // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
-                // Always regenerate Base component! Cannot reuse cloned values
-                ensureBaseComponents(snapshot.Element, structure.Base, true);
-
-                // Notify observers
-                for (int i = 0; i < snapshot.Element.Count; i++)
-                {
-                    OnPrepareElement(snapshot.Element[i], baseStructure, baseStructure.Snapshot.Element[i]);
-                }
-            }
-            else
-            {
-                // No base; input is a core resource or datatype definition
-                snapshot = new StructureDefinition.SnapshotComponent();
-            }
-
-            var snap = new ElementDefinitionNavigator(snapshot.Element);
-
-            // Fill out the gaps (mostly missing parents) in the differential representation
-            var fullDifferential = new DifferentialTreeConstructor(differential.Element).MakeTree();
-            var diff = new ElementDefinitionNavigator(fullDifferential);
-
-            merge(snap, diff);
-
-            result = snap.ToListOfElements();
-
-            // [WMR 20160917] NEW: Re-generate all ElementId values
-            generateElementsId(result, true);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Expand the currently active element within the specified <see cref="ElementDefinitionNavigator"/> instance.
-        /// If the element has a name reference, then merge from the targeted element.
-        /// Otherwise, if the element has a custom type profile, then merge it.
-        /// </summary>
-        internal bool expandElement(ElementDefinitionNavigator nav)
-        {
-            if (nav.Current == null)
-            {
-                throw Error.Argument(nameof(nav), $"Internal error in snapshot generator ({nameof(expandElement)}): Navigator is not positioned on an element");
-            }
-
-            if (nav.HasChildren)
-            {
-                return true;     // already has children, we're not doing anything extra
-            }
-
-            var defn = nav.Current;
-
-            if (!String.IsNullOrEmpty(defn.NameReference))
-            {
-                var sourceNav = new ElementDefinitionNavigator(nav);
-                var success = sourceNav.JumpToNameReference(defn.NameReference);
-
-                if (!success)
-                {
-                    addIssueInvalidNameReference(defn, defn.NameReference);
-                    return false;
-                }
-
-                nav.CopyChildren(sourceNav);
-            }
-            else if (defn.Type == null || defn.Type.Count == 0)
-            {
-                // Element has neither a name reference or a type...?
-                if (!nav.Current.IsRootElement())
-                {
-                    addIssueNoTypeOrNameReference(defn);
-                }
-            }
-            else if (defn.Type.Count > 1)
-            {
-                addIssueInvalidChoiceConstraint(defn);
-            }
-
-            else // if (defn.Type.Count == 1)
-            {
-                // [WMR 20160720] Handle custom type profiles (GForge #9791)
-                StructureDefinition baseStructure = getStructureForElementType(defn, true);
-                if (baseStructure != null && baseStructure.HasSnapshot)
-                {
-                    var baseSnap = baseStructure.Snapshot;
-                    var baseNav = new ElementDefinitionNavigator(baseSnap.Element);
-                    baseNav.MoveToFirstChild();
-                    nav.CopyChildren(baseNav);
-
-                    // Fix the copied elements and notify observers
-                    var pos = nav.OrdinalPosition.Value;
-                    for (int i = 1; i < baseSnap.Element.Count; i++)
-                    {
-                        var elem = nav.Elements[pos + i];
-                        var baseElem = baseSnap.Element[i];
-
-                        // [WMR 20160826] Never inherit Changed extension from base profile!
-                        elem.RemoveAllChangedByDiff();
-
-                        // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
-                        // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
-                        elem.EnsureBaseComponent(baseElem, true);
-
-                        OnPrepareElement(elem, baseStructure, baseElem);
-                    }
-                }
-            }
-
-            return true;
-        }
-
         StructureDefinition getStructureForElementType(ElementDefinition elementDef, bool ensureSnapshot)
         {
             Debug.Assert(elementDef != null);
@@ -937,11 +941,22 @@ namespace Hl7.Fhir.Specification.Snapshot
             var cachedRoot = sd.GetSnapshotRootElementAnnotation();
             if (cachedRoot != null) { return cachedRoot; }
 
-            // Return root element definition from existing snapshot, if it exists
+            // Return root element definition from existing (pre-generated) snapshot, if it exists
             if (sd.HasSnapshot && (sd.Snapshot.IsCreatedBySnapshotGenerator() || !_settings.ForceExpandAll))
             {
-                Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from snapshot");
+                Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from snapshot: #{sd.Snapshot.Element[0].GetHashCode()}");
+                // No need to save root ElemDef annotation, as the snapshot has already been fully expanded
                 return sd.Snapshot.Element[0];
+            }
+
+            // Try to resolve currently generating snapshots from recursion stack
+            var nav = _stack.ResolveSnapshotNavigator(sd.Url);
+            if (nav != null && nav.Elements != null && nav.Elements.Count > 0)
+            {
+                var recursiveRootElemDef = nav.Elements[0];
+                Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from generating snapshot: #{recursiveRootElemDef.GetHashCode()}");
+                // No need to save root ElemDef annotation, as the snapshot root element has already been expanded
+                return recursiveRootElemDef;
             }
 
             // Resolve root element definition from base profile and merge from differential
@@ -951,12 +966,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (baseProfileUri == null)
             {
                 // Structure has no base, i.e. core type definition => differential introduces & defines the root element
-                Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use root element definition from differential");
                 var clonedDiffRoot = (ElementDefinition)diffRoot.DeepCopy();
 #if CACHE_ROOT_ELEMDEF
                 clonedDiffRoot.EnsureBaseComponent(null, true);
                 sd.SetSnapshotRootElementAnnotation(clonedDiffRoot);
 #endif
+                Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use root element definition from differential: #{clonedDiffRoot.GetHashCode()}");
                 return clonedDiffRoot;
             }
 
@@ -985,6 +1000,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             rebasedRoot.EnsureBaseComponent(baseRoot, true);
             sd.SetSnapshotRootElementAnnotation(rebasedRoot);
 #endif
+
+            // Notify observers
+            OnPrepareElement(rebasedRoot, sdBase, baseRoot);
+
             return rebasedRoot;
         }
 
