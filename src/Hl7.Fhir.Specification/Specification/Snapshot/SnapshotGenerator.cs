@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Ensure that ElementDefinition.Base components in base StructureDef are propertly initialized
                 // Always regenerate Base component! Cannot reuse cloned values
-                generateElementsBase(snapshot.Element, structure.Base, true);
+                ensureBaseComponents(snapshot.Element, structure.Base, true);
 
                 // Notify observers
                 for (int i = 0; i < snapshot.Element.Count; i++)
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                         // [WMR 20160902] Initialize empty ElementDefinition.Base components if necessary
                         // [WMR 20160906] Always regenerate! Cannot reuse cloned base components
-                        ensureElementBase(elem, baseElem, true);
+                        elem.EnsureBaseComponent(baseElem, true);
 
                         OnPrepareElement(elem, baseStructure, baseElem);
                     }
@@ -910,7 +910,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 // Generating the element base components may also resolve StructureDefinitions and cause recursion!
-                generateSnapshotElementsBase(sd);
+                ensureSnapshotBaseComponents(sd);
 
                 // [WMR 20160906] TODO: Generate ElementDefinition.id
             }
@@ -1002,7 +1002,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use root element definition from differential");
                 var clonedDiffRoot = (ElementDefinition)diffRoot.DeepCopy();
 #if CACHE_ROOT_ELEMDEF
-                ensureElementBase(clonedDiffRoot, null, true);
+                clonedDiffRoot.EnsureBaseComponent(null, true);
                 sd.SetSnapshotRootElementAnnotation(clonedDiffRoot);
 #endif
                 return clonedDiffRoot;
@@ -1030,7 +1030,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - succesfully resolved root element definition: #{rebasedRoot.GetHashCode()}");
 #if CACHE_ROOT_ELEMDEF
-            ensureElementBase(rebasedRoot, baseRoot, true);
+            rebasedRoot.EnsureBaseComponent(baseRoot, true);
             sd.SetSnapshotRootElementAnnotation(rebasedRoot);
 #endif
             return rebasedRoot;

@@ -25,24 +25,24 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Initialize the <see cref="ElementDefinition.Base"/> components of the <see cref="StructureDefinition.Snapshot"/> component.</summary>
         /// <param name="structureDef">A <see cref="StructureDefinition"/> instance with a valid snapshot component.</param>
         /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
-        public void GenerateSnapshotElementsBase(StructureDefinition structureDef, bool force = false)
+        public void GenerateSnapshotBaseComponents(StructureDefinition structureDef, bool force = false)
         {
             if (structureDef == null) { throw Error.ArgumentNull(nameof(structureDef)); }
             if (!structureDef.HasSnapshot) { throw Error.Argument(nameof(structureDef), "The StructureDefinition.Snapshot component is null or empty."); }
             clearIssues();
-            generateSnapshotElementsBase(structureDef, force);
+            ensureSnapshotBaseComponents(structureDef, force);
         }
 
-        void generateSnapshotElementsBase(StructureDefinition structureDef, bool force = false)
+        void ensureSnapshotBaseComponents(StructureDefinition structureDef, bool force = false)
         {
-            generateElementsBase(structureDef.Snapshot.Element, structureDef.Base, force);
+            ensureBaseComponents(structureDef.Snapshot.Element, structureDef.Base, force);
         }
 
         /// <summary>(Re-)generate the <see cref="ElementDefinition.Base"/> components.</summary>
         /// <param name="elements">A list of <see cref="ElementDefinition"/> instances.</param>
         /// <param name="baseProfileUrl">The canonical url of the base profile, as defined by the <see cref="StructureDefinition.Base"/> property.</param>
         /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
-        void generateElementsBase(IList<ElementDefinition> elements, string baseProfileUrl, bool force = false)
+        void ensureBaseComponents(IList<ElementDefinition> elements, string baseProfileUrl, bool force = false)
         {
             var nav = new ElementDefinitionNavigator(elements);
             if (nav.MoveToFirstChild() && !string.IsNullOrEmpty(baseProfileUrl))
@@ -53,13 +53,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                     var baseNav = new ElementDefinitionNavigator(sd);
                     if (baseNav.MoveToFirstChild())
                     {
-                        ensureElementBase(nav.Current, baseNav.Current, force);
+                        nav.Current.EnsureBaseComponent(baseNav.Current, force);
 
                         if (nav.MoveToFirstChild() && baseNav.MoveToFirstChild())
                         {
                             do
                             {
-                                generateElementsBase(nav, baseNav, force);
+                                ensureBaseComponents(nav, baseNav, force);
                             } while (nav.MoveToNext());
                         }
                     }
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        void generateElementsBase(ElementDefinitionNavigator nav, ElementDefinitionNavigator baseNav, bool force = false)
+        void ensureBaseComponents(ElementDefinitionNavigator nav, ElementDefinitionNavigator baseNav, bool force = false)
         {
             // Debug.Print($"[nameof(generateElementBase)}] Path = '{nav.Path}'  Base = '{baseNav.Path}'");
             var elem = nav.Current;
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Match!
 
                 // Initialize Base component
-                ensureElementBase(elem, baseNav.Current, force);
+                elem.EnsureBaseComponent(baseNav.Current, force);
 
                 // Recurse child elements
                 var navBm = nav.Bookmark();
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     do
                     {
-                        generateElementsBase(nav, baseNav, force);
+                        ensureBaseComponents(nav, baseNav, force);
                     } while (nav.MoveToNext());
 
                     nav.ReturnToBookmark(navBm);
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         baseNav = new ElementDefinitionNavigator(baseDef);
                         if (baseNav.MoveToFirstChild())
                         {
-                            generateElementsBase(nav, baseNav, force);
+                            ensureBaseComponents(nav, baseNav, force);
                             return;
                         }
                     }
@@ -124,11 +124,16 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Debug.Print($"[nameof(generateElementBase)}] Path = '{nav.Path}'  (no base)");
         }
 
-        /// <summary>Assign the <see cref="ElementDefinition.Base"/> component if necessary.</summary>
+    }
+
+    /// <summary>Internal extension method for initializing the <see cref="ElementDefinition.Base"/> component.</summary>
+    static class SnapshotGeneratorBaseComponentExtensionMethods
+    {
+        /// <summary>Ensure that the <see cref="ElementDefinition.Base"/> component is properly initialized.</summary>
         /// <param name="elem">An <see cref="ElementDefinition"/> instance.</param>
         /// <param name="baseElem">The associated base <see cref="ElementDefinition"/> instance.</param>
         /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
-        void ensureElementBase(ElementDefinition elem, ElementDefinition baseElem, bool force = false)
+        public static void EnsureBaseComponent(this ElementDefinition elem, ElementDefinition baseElem, bool force = false)
         {
             Debug.Assert(elem != null);
 
@@ -191,7 +196,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             result.SetCreatedBySnapshotGenerator();
             return result;
         }
-
 
     }
 }
