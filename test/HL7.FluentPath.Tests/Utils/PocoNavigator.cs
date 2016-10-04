@@ -11,14 +11,11 @@ using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Hl7.Fhir.Support;
 using Hl7.FluentPath.Support;
 
-namespace Hl7.Fhir.FluentPath
+namespace Hl7.FluentPath
 {
-    public class PocoNavigator : IElementNavigator
+    internal class PocoNavigator : IElementNavigator
     {
         public PocoNavigator(Base model)
         {

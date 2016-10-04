@@ -132,27 +132,6 @@ namespace Hl7.FluentPath.Support
         }
 
         /// <summary>
-        /// Creates an <see cref="FormatException"/> with the provided properties.
-        /// </summary>
-        /// <param name="message">A string explaining the reason for the exception.</param>
-        /// <param name="pos">Optional line position information for the message</param>
-        /// <returns>The logged <see cref="Exception"/>.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Utility method that might become useful for future usecases")]
-        internal static FormatException Format(string message, IPositionInfo pos)
-        {
-            string excMessage;
-
-            if (pos != null)
-            {
-                excMessage = String.Format("At line {0}, pos {1}: {2}", pos.LineNumber, pos.LinePosition, message);
-            }
-            else
-                excMessage = Error.formatMessage(message);
-
-            return new FormatException(excMessage);
-        }
-
-        /// <summary>
         /// Creates an <see cref="NotImplementedException"/>.
         /// </summary>
         /// <param name="messageFormat">A composite format string explaining the reason for the exception.</param>

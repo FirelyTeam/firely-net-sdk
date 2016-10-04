@@ -15,7 +15,7 @@ using System.Xml;
 namespace Hl7.FluentPath
 {
 
-    //TODO: Merge with FhirDateTime from Model namespace?s
+    //TODO: Merge with FhirDateTime from Model namespace?
     public struct PartialDateTime
     {
         private string _value;

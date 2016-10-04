@@ -17,7 +17,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Introspection;
 using System.Reflection;
 
-namespace Hl7.Fhir.FluentPath
+namespace Hl7.FluentPath
 {
     internal class PocoElementNavigator : IValueProvider, ITypeNameProvider
     {

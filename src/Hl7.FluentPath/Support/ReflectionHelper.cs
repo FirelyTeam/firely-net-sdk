@@ -29,21 +29,21 @@ namespace Hl7.FluentPath.Support
 
         }
 
-        public static bool CanBeTreatedAsType(this Type CurrentType, Type TypeToCompareWith)
+        public static bool CanBeTreatedAsType(this Type currentType, Type typeToCompareWith)
         {
             // Always return false if either Type is null
-            if (CurrentType == null || TypeToCompareWith == null)
+            if (currentType == null || typeToCompareWith == null)
                 return false;
 
             // Return the result of the assignability test
 #if NETSTANDARD
             // Written out for debuggin purposes. --mh
-            var compare = TypeToCompareWith.GetTypeInfo();
-            var current = CurrentType.GetTypeInfo();
+            var compare = typeToCompareWith.GetTypeInfo();
+            var current = currentType.GetTypeInfo();
             bool assignable = compare.IsAssignableFrom(current);
             return assignable;
 #else
-            return TypeToCompareWith.IsAssignableFrom(CurrentType);
+            return typeToCompareWith.IsAssignableFrom(currentType);
 #endif
         }
 
@@ -63,7 +63,7 @@ namespace Hl7.FluentPath.Support
             var memInfo = type.GetField(enumVal.ToString());
 #endif
             var attributes = memInfo.GetCustomAttributes(typeof(T), false);
-            return (attributes.Count() > 0) ? (T)attributes.First() : null;
+            return (T)attributes.FirstOrDefault();
         }
 
 

@@ -22,7 +22,6 @@ using Hl7.ElementModel;
 using Xunit;
 using System.IO;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.FluentPath;
 using Hl7.FluentPath.Support;
 using Xunit.Abstractions;
 
