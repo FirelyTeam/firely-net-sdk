@@ -41,8 +41,8 @@ namespace Hl7.Fhir.Specification.Tests
             // Throw on unresolved profile references; must include in TestData folder
             ExpandExternalProfiles = true,
             ForceExpandAll = true,
-            MarkChanges = false,
-            MergeTypeProfiles = true
+            MarkChanges = false
+            // MergeTypeProfiles = true
         };
 
         [TestInitialize]
@@ -389,7 +389,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             dumpReferences(sd, true);
 
-            _settings.ExpandExternalProfiles = false;       // Don't generate missing snapshots
+            // Explicitly disable expansion of external snapshots
+            var settings = new SnapshotGeneratorSettings(_settings);
+            settings.ExpandExternalProfiles = false;       
+            _generator = new SnapshotGenerator(_testResolver, settings);
 
             StructureDefinition expanded;
             generateSnapshotAndCompare(sd, out expanded);
@@ -467,7 +470,6 @@ namespace Hl7.Fhir.Specification.Tests
 
         StructureDefinition generateSnapshot(StructureDefinition original)
         {
-            // var generator = new SnapshotGenerator(source, _settings);
             if (_generator == null)
             {
                 _generator = new SnapshotGenerator(_testResolver, _settings);
@@ -898,10 +900,7 @@ namespace Hl7.Fhir.Specification.Tests
             // dumpReferences(sd);
 
             var settings = new SnapshotGeneratorSettings(_settings);
-            settings.ExpandExternalProfiles = true;
-            settings.MergeTypeProfiles = true;
             settings.MarkChanges = true;
-            settings.ForceExpandAll = true;
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1258,13 +1257,7 @@ namespace Hl7.Fhir.Specification.Tests
             var source = new DirectorySource("TestData/snapshot-test", false);
             var resolver = new CachedResolver(source); // IMPORTANT!
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.ExpandExternalProfiles = true;
-            settings.MergeTypeProfiles = true;
-            // settings.MarkChanges = true;
-            // settings.ForceExpandAll = true;
-            _generator = new SnapshotGenerator(resolver, settings);
-
+            _generator = new SnapshotGenerator(resolver, _settings);
             _generator.PrepareElement += ElementHandler;
 
             try

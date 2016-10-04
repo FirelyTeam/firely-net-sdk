@@ -15,10 +15,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             ExpandExternalProfiles = true,
-            ForceExpandAll = false,             // Only enable this when using a cached source...
-            MarkChanges = false,                // Enabled by Simplifier
-
-            MergeTypeProfiles = true
+            ForceExpandAll = false,         // Only enable this when using a cached source...
+            MarkChanges = false,            // Enabled by Simplifier
+            // MergeTypeProfiles = true
         };
 
         /// <summary>Default ctor.</summary>
@@ -30,7 +29,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             ExpandExternalProfiles = settings.ExpandExternalProfiles;
             ForceExpandAll = settings.ForceExpandAll;
             MarkChanges = settings.MarkChanges;
-            MergeTypeProfiles = settings.MergeTypeProfiles;
+            // MergeTypeProfiles = settings.MergeTypeProfiles;
         }
 
         /// <summary>
@@ -59,13 +58,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         public bool MarkChanges { get; set; }
 
-        /// <summary>
-        /// EXPERIMENTAL!
-        /// Enable this setting in order to merge custom element type profiles.
-        /// If enabled (default), the snapshot generator first merges constraints from custom type profiles before merging constraints from the base profile.
-        /// If disabled, the snapshot generator ignores custom type profiles and merges constraints from the base profile.
-        /// </summary>
-        /// <remarks>See GForge #9791</remarks>
-        public bool MergeTypeProfiles { get; set; }
+        // [WMR 20161004] Always try to merge element type profiles
+
+        // <summary>
+        // Enable this setting in order to merge custom element type profiles.
+        // If enabled (default), the snapshot generator first merges constraints from custom type profiles before merging constraints from the base profile.
+        // If disabled, the snapshot generator ignores custom type profiles and merges constraints from the base profile.
+        // </summary>
+        // <remarks>See GForge #9791</remarks>
+        // public bool MergeTypeProfiles { get; set; }
     }
 }

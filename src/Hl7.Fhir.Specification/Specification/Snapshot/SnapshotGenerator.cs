@@ -309,10 +309,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             else
             {
                 // First merge constraints from element type profile, if it exists
-                if (_settings.MergeTypeProfiles)
-                {
-                    isValid = mergeTypeProfiles(snap, diff);
-                }
+                // [WMR 20161004] Remove configuration setting; always merge type profiles
+                // if (_settings.MergeTypeProfiles) 
+                // {
+                isValid = mergeTypeProfiles(snap, diff);
+                // }
 
                 // Then merge constraints from base profile
                 mergeElementDefinition(snap.Current, diff.Current);
@@ -817,8 +818,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // First try to resolve the custom element type profile, if specified
             var typeProfile = typeRef.Profile.FirstOrDefault();
-            if (!string.IsNullOrEmpty(typeProfile) && _settings.MergeTypeProfiles && !typeRef.IsReference())
-            // && !defn.IsExtension()
+            
+            // [WMR 20161004] Remove configuration setting; always merge type profiles
+            if (!string.IsNullOrEmpty(typeProfile) && !typeRef.IsReference()) // && _settings.MergeTypeProfiles
             {
                 // Try to resolve the custom element type profile reference
                 baseStructure = _resolver.FindStructureDefinition(typeProfile);
