@@ -29,11 +29,6 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Model;
-using System.Text.RegularExpressions;
 using Hl7.FluentPath;
 
 namespace Hl7.Fhir.Model
@@ -55,11 +50,19 @@ namespace Hl7.Fhir.Model
                                    TimeSpan.Zero));
         }
 
-
         public static Instant Now()
         {
             return new Instant(DateTimeOffset.Now);
         }
+
+        public Hl7.FluentPath.PartialDateTime? ToPartialDateTime()
+        {
+            if (Value != null)
+                return PartialDateTime.FromDateTime(Value.Value);
+            else
+                return null;
+        }
+
 
         public static bool IsValidValue(string value)
         {

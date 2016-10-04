@@ -42,6 +42,15 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{Value}}")]
     public partial class Time : IStringValue
     {
+        public Hl7.FluentPath.Time? ToTime()
+        {
+            if (Value != null)
+                return Hl7.FluentPath.Time.Parse(Value);
+            else
+                return null;
+        }
+
+
         public static bool IsValidValue(string value)
         {
             return Regex.IsMatch(value as string, "^" + Time.PATTERN + "$", RegexOptions.Singleline);

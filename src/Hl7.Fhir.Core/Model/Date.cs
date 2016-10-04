@@ -42,6 +42,14 @@ namespace Hl7.Fhir.Model
             return new Date(DateTime.Now.ToString("yyyy-MM-dd"));
         }
 
+        public Hl7.FluentPath.PartialDateTime? ToPartialDateTime()
+        {
+            if (Value != null)
+                return PartialDateTime.Parse(Value);
+            else
+                return null;
+        }
+
         public static bool IsValidValue(string value)
         {
             return Regex.IsMatch(value, "^" + Date.PATTERN + "$", RegexOptions.Singleline);

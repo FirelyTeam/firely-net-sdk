@@ -56,7 +56,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hl7.FluentPath, Version=0.3.1.0, Culture=neutral, PublicKeyToken=d706911480550fc3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha4\lib\netstandard1.0\Hl7.FluentPath.dll</HintPath>
+      <HintPath>..\packages\Hl7.FluentPath.0.3.1-alpha5\lib\netstandard1.0\Hl7.FluentPath.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
@@ -103,6 +103,8 @@
     <Compile Include="Model\Date.cs" />
     <Compile Include="Model\BackboneElement.cs" />
     <Compile Include="Model\Element.cs" />
+    <Compile Include="Model\ElementDefinition.cs" />
+    <Compile Include="Model\ElementDefinitionExtensions.cs" />
     <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Base64Binary.cs" />
     <Compile Include="Model\FhirString.cs" />
@@ -566,6 +568,7 @@
     <Compile Include="Model\Oid.cs" />
     <Compile Include="Model\OperationOutcome.cs" />
     <Compile Include="Model\PositiveInt.cs" />
+    <Compile Include="Model\Quantity.cs" />
     <Compile Include="Model\StructureDefinition.cs" />
     <Compile Include="Model\Time.cs" />
     <Compile Include="Model\UnsignedInt.cs" />

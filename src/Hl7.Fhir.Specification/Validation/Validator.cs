@@ -8,9 +8,7 @@
 
 using Hl7.ElementModel;
 using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
@@ -21,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Time = Hl7.FluentPath.Time;
 
 namespace Hl7.Fhir.Validation
 {
@@ -31,8 +30,7 @@ namespace Hl7.Fhir.Validation
         public event EventHandler<OnSnapshotNeededEventArgs> OnSnapshotNeeded;
         public event EventHandler<OnResolveResourceReferenceEventArgs> OnExternalResolutionNeeded;
 
-        internal ScopeTracker ScopeTracker = new ScopeTracker();
-
+        internal ScopeTracker ScopeTracker = new ScopeTracker();  
         public Validator(ValidationSettings settings)
         {
             Settings = settings;
@@ -41,7 +39,7 @@ namespace Hl7.Fhir.Validation
 
         public OperationOutcome Validate(IElementNavigator instance)
         {
-            var profiles = instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>();
+            var profiles = instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>().ToList();
 
             // If the Meta.profile specifies any profiles, use those, else use the base FHIR core profile for the type
             if (profiles.Any())
@@ -95,17 +93,20 @@ namespace Hl7.Fhir.Validation
 
         public OperationOutcome Validate(IElementNavigator instance, StructureDefinition structureDefinition)
         {
+            // New validation -> reset scope
+            //this.ScopeTracker = new ScopeTracker();
+
             var outcome = new OperationOutcome();
 
             if (!structureDefinition.HasSnapshot)
             {
-                // Note: this modifies an SD that is passed to us. If this comes from a cache that's
-                // kept across processes, this could mean trouble, so clone it first
-                structureDefinition = (StructureDefinition)structureDefinition.DeepCopy();
+                // Note: this modifies an SD that is passed to us and will alter a possibly cached
+                // object shared amongst other threads. This is generally useful and saves considerable
+                // time when the same snapshot is needed again, but may result in side-effects
 
-                // We'll call out to an external component, so catch any exceptions and include them in our report
                 try
                 {
+                    // We'll call out to an external component, so catch any exceptions and include them in our report
                     SnapshotNeeded(structureDefinition);
                 }
                 catch (Exception e)
@@ -375,34 +376,53 @@ namespace Hl7.Fhir.Validation
         internal OperationOutcome ValidateMinValue(ElementDefinition definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
+
             if (definition.MinValue != null)
             {
-                // Min/max are only defined for ordered types
-                if (outcome.Verify(() => definition.MinValue.GetType().IsOrderedFhirType(),
-                    "MinValue was given in ElementDefinition, but type '{0}' is not an ordered type".FormatWith(definition.MinValue.TypeName),
-                    Issue.PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE, instance))
-                {
-                    //TODO: Define <=, >= on FHIR types and use these
-                    //No, use "the" complex types (currently from the FP assembly), so read them into FluentPath.DateTime, then compare.
-                    //
-                    // return Definition.MinValue <= constructedValueFromNavigator
-                    // Or assume acutal implementer of interface is PocoNavigator and get value from there
-                    // Or just use Value and not support Quantity ;-)
+                var defType = definition.MinValue.GetType();
+
+                if (defType == typeof(Model.Quantity))
+                    outcome.Info("Comparing Quantities is not yet implemented", Issue.UNSUPPORTED_MIN_MAX_QUANTITY, instance);
+
+                if (instance.Value != null)
+                {              
+                    // Min/max are only defined for ordered types
+                    if (outcome.Verify(() => defType.IsOrderedFhirType(),
+                        "MinValue was given in ElementDefinition, but type '{0}' is not an ordered type".FormatWith(definition.MinValue.TypeName),
+                        Issue.PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE, instance))
+                    {
+                        if (defType == typeof(FhirDateTime) && instance.Value is PartialDateTime)
+                            messageSmallerThan(outcome, () => (PartialDateTime)instance.Value >= ((FhirDateTime)definition.MinValue).ToPartialDateTime(), instance, definition);
+                        else if (defType == typeof(Date) && instance.Value is PartialDateTime)
+                            messageSmallerThan(outcome, () => (PartialDateTime)instance.Value >= ((Date)definition.MinValue).ToPartialDateTime(), instance, definition);
+                        else if (defType == typeof(Instant) && instance.Value is PartialDateTime)
+                            messageSmallerThan(outcome, () => (PartialDateTime)instance.Value >= ((Instant)definition.MinValue).ToPartialDateTime(), instance, definition);
+                        else if (defType == typeof(Model.Time) && instance.Value is Hl7.FluentPath.Time)
+                            messageSmallerThan(outcome, () => (Hl7.FluentPath.Time)instance.Value >= ((Model.Time)definition.MinValue).ToTime(), instance, definition);
+                        else if (defType == typeof(FhirDecimal) && instance.Value is decimal)
+                            messageSmallerThan(outcome, () => (decimal)instance.Value >= ((FhirDecimal)definition.MinValue).Value, instance, definition);
+                        else if (defType == typeof(Integer) && instance.Value is long)
+                            messageSmallerThan(outcome, () => (long)instance.Value >= ((Integer)definition.MinValue).Value, instance, definition);
+                        else if (defType == typeof(FhirString) && instance.Value is string)
+                            messageSmallerThan(outcome, () => String.Compare((string)instance.Value, ((FhirString)definition.MinValue).Value) != -1, instance, definition);
+                        else
+                        {
+                            outcome.Info($"Min value '{definition.MinValue}' and instance value '{instance.Value}' are of incompatible types and can not be compared", Issue.CONTENT_ELEMENT_PRIMITIVE_VALUE_NOT_COMPARABLE, instance);
+                        }
+                    }
                 }
             }
 
             return outcome;
         }
 
-        // return t == typeof(FhirDateTime) ||
-        //t == typeof(Date) ||
-        //t == typeof(Instant) ||
-        //t == typeof(Model.Time) ||
-        //t == typeof(FhirDecimal) ||
-        //t == typeof(Integer) ||
-        //t == typeof(Quantity) ||
-        //t == typeof(FhirString);
+        private static void messageSmallerThan(OperationOutcome outcome, Condition comparer, IElementNavigator instance, ElementDefinition min)
+        {
+            outcome.Verify(comparer, 
+                    $"Instance value '{instance.Value}' is smaller than the minimal value '{min.MinValue}'", Issue.CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_SMALL, instance);
+        }
 
+        //  t == typeof(FhirString);
 
         internal OperationOutcome ValidateMaxLength(ElementDefinition definition, IElementNavigator instance)
         {
@@ -490,7 +510,7 @@ namespace Hl7.Fhir.Validation
                    t == typeof(Model.Time) ||
                    t == typeof(FhirDecimal) ||
                    t == typeof(Integer) ||
-                   t == typeof(Quantity) ||
+                   t == typeof(Model.Quantity) ||
                    t == typeof(FhirString);
         }
     }
