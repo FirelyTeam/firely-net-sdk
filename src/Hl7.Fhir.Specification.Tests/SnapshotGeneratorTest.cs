@@ -95,7 +95,16 @@ namespace Hl7.Fhir.Specification.Tests
 
             // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBasic");
 
-            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyObservation2");
+            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyObservation2");
+
+            // var tempPath = Path.GetTempPath();
+            // var validationTestProfiles = (new Validation.TestProfileArtifactSource()).TestProfiles;
+            // var sdHeightQty = validationTestProfiles.FirstOrDefault(s => s.Url == "http://validationtest.org/fhir/StructureDefinition/HeightQuantity");
+            // File.WriteAllText(Path.Combine(tempPath, "HeightQuantity.StructureDefinition.xml"), FhirSerializer.SerializeResourceToXml(sdHeightQty));
+            // var sdWeightQty = validationTestProfiles.FirstOrDefault(s => s.Url == "http://validationtest.org/fhir/StructureDefinition/WeightQuantity");
+            // File.WriteAllText(Path.Combine(tempPath, "WeightQuantity.StructureDefinition.xml"), FhirSerializer.SerializeResourceToXml(sdWeightQty));
+
+            var sd = _testResolver.FindStructureDefinition(@"http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
 
             Assert.IsNotNull(sd);
 
@@ -106,7 +115,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
-
         }
 
         [TestMethod]
