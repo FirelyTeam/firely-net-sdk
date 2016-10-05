@@ -146,8 +146,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+  	<FhirConformance Include="data\*.*" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="BeforeBuild">
+  <Target Name="BeforeBuild"
+		Inputs="@(FhirConformance)"
+		Outputs="specification.zip">
     <CleanSpecFiles DirectoryName="data" />
     <ZipDir ZipFileName="specification.zip" DirectoryName="data" />
   </Target>
