@@ -608,7 +608,6 @@
           </element>
           <element id="xhtml.value">
             <path value="xhtml.value" />
-            <representation value="xhtml" />
             <short value="Actual xhtml" />
             <definition value="Actual xhtml" />
             <min value="1" />
@@ -643,7 +642,6 @@
           </element>
           <element id="xhtml.value">
             <path value="xhtml.value" />
-            <representation value="xhtml" />
             <short value="Actual xhtml" />
             <definition value="Actual xhtml" />
             <min value="1" />
