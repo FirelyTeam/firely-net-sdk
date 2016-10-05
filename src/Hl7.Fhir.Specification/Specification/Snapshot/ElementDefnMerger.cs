@@ -12,19 +12,18 @@ using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
-using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
     public partial class SnapshotGenerator
     {
         /// <summary>
-        /// Private helper class for <see cref="SnapshotGenerator"/>.
+        /// Private static helper for <see cref="SnapshotGenerator"/>.
         /// Merge two <see cref="ElementDefinition"/> instances and all their properties.
         /// </summary>
-        private class ElementDefnMerger
+        struct ElementDefnMerger
         {
-            /// <summary>Merge the two specified <see cref="ElementDefinition"/> instances.</summary>
+            /// <summary>Merges two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
             public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff)
             {
                 var merger = new ElementDefnMerger(generator);
@@ -54,10 +53,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // if (snap.Path.Substring(0, snap.Path.Length - 3) + diff.Type.First().Code.ToString().Capitalize() != diff.Path)
                     if (!ElementDefinitionNavigator.IsCandidateBaseElementPath(snap.Path, diff.Path))
                     {
-                        throw Error.InvalidOperation(
-                            "Path cannot be changed from '{0}' to '{1}', since the type is sliced to '{2}'",
-                            snap.Path, diff.Path, diff.Type.First().Code
-                        );
+                        throw Error.InvalidOperation($"Invalid operation in snapshot generator. Path cannot be changed from '{snap.Path}' to '{diff.Path}', since the type is sliced to '{diff.Type.First().Code}'");
                     }
 
                     snap.PathElement = mergePrimitiveAttribute(snap.PathElement, diff.PathElement);
@@ -131,7 +127,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Constraints are cumulative, so they are always "new" (hence a constant false for the comparer)
                 // [WMR 20160917] Note: constraint keys must be unique. The validator will detect duplicate keys, so the derived
                 // profile author can correct the conflicting constraint key.
-                snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
+                // [WMR 20160918] MUST merge indentical constraints, otherwise each derived profile accumulates
+                // additional identical constraints inherited from e.g. BackboneElement.
+                // snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
+                snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => a.IsExactly(b));
 
                 // [WMR 20160907] merge conditions
                 snap.ConditionElement = mergeCollection(snap.ConditionElement, diff.ConditionElement, (a, b) => a.Value == b.Value);

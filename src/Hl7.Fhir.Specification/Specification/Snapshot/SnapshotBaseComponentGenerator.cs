@@ -22,49 +22,44 @@ namespace Hl7.Fhir.Specification.Snapshot
 
     partial class SnapshotGenerator
     {
-        /// <summary>
-        /// Initialize the <see cref="ElementDefinition.Base"/> components of the <see cref="StructureDefinition.Snapshot"/> component.
-        /// <br />
-        /// If <see cref="SnapshotGeneratorSettings.NormalizeElementBase"/> equals <c>true</c>, then Base is derived from the structure definition that originally introduces the element.
-        /// If <see cref="SnapshotGeneratorSettings.NormalizeElementBase"/> equals <c>false</c>, then Base is derived from the immediate base structure definition.
-        /// </summary>
+        /// <summary>Initialize the <see cref="ElementDefinition.Base"/> components of the <see cref="StructureDefinition.Snapshot"/> component.</summary>
         /// <param name="structureDef">A <see cref="StructureDefinition"/> instance with a valid snapshot component.</param>
         /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
-        public void GenerateSnapshotElementsBase(StructureDefinition structureDef, bool force = false)
+        public void GenerateSnapshotBaseComponents(StructureDefinition structureDef, bool force = false)
         {
-            if (structureDef == null) { throw Error.ArgumentNull("structureDef"); }
-            if (!structureDef.HasSnapshot) { throw Error.Argument("structureDef", "StructureDefinition.Snapshot component is null or empty."); }
+            if (structureDef == null) { throw Error.ArgumentNull(nameof(structureDef)); }
+            if (!structureDef.HasSnapshot) { throw Error.Argument(nameof(structureDef), "The StructureDefinition.Snapshot component is null or empty."); }
             clearIssues();
-            generateSnapshotElementsBase(structureDef, force);
+            ensureSnapshotBaseComponents(structureDef, force);
         }
 
-        private void generateSnapshotElementsBase(StructureDefinition structureDef, bool force = false)
+        void ensureSnapshotBaseComponents(StructureDefinition structureDef, bool force = false)
         {
-            generateElementsBase(structureDef.Snapshot.Element, structureDef.Base, force);
+            ensureBaseComponents(structureDef.Snapshot.Element, structureDef.Base, force);
         }
 
         /// <summary>(Re-)generate the <see cref="ElementDefinition.Base"/> components.</summary>
         /// <param name="elements">A list of <see cref="ElementDefinition"/> instances.</param>
         /// <param name="baseProfileUrl">The canonical url of the base profile, as defined by the <see cref="StructureDefinition.Base"/> property.</param>
         /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
-        private void generateElementsBase(IList<ElementDefinition> elements, string baseProfileUrl, bool force = false)
+        void ensureBaseComponents(IList<ElementDefinition> elements, string baseProfileUrl, bool force = false)
         {
             var nav = new ElementDefinitionNavigator(elements);
             if (nav.MoveToFirstChild() && !string.IsNullOrEmpty(baseProfileUrl))
             {
                 var sd = _resolver.FindStructureDefinition(baseProfileUrl);
-                if (verifyStructureDef(sd, baseProfileUrl))
+                if (ensureSnapshot(sd, baseProfileUrl))
                 {
                     var baseNav = new ElementDefinitionNavigator(sd);
                     if (baseNav.MoveToFirstChild())
                     {
-                        ensureElementBase(nav.Current, baseNav.Current, force);
+                        nav.Current.EnsureBaseComponent(baseNav.Current, force);
 
                         if (nav.MoveToFirstChild() && baseNav.MoveToFirstChild())
                         {
                             do
                             {
-                                generateElementsBase(nav, baseNav, force);
+                                ensureBaseComponents(nav, baseNav, force);
                             } while (nav.MoveToNext());
                         }
                     }
@@ -73,9 +68,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        private void generateElementsBase(ElementDefinitionNavigator nav, ElementDefinitionNavigator baseNav, bool force = false)
+        void ensureBaseComponents(ElementDefinitionNavigator nav, ElementDefinitionNavigator baseNav, bool force = false)
         {
-            // Debug.Print("[generateElementBase] Path = {0}  Base = {1}".FormatWith(nav.Path, baseNav.Path));
+            // Debug.Print($"[nameof(generateElementBase)}] Path = '{nav.Path}'  Base = '{baseNav.Path}'");
             var elem = nav.Current;
             Debug.Assert(elem != null);
 
@@ -85,7 +80,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Match!
 
                 // Initialize Base component
-                ensureElementBase(elem, baseNav.Current, force);
+                elem.EnsureBaseComponent(baseNav.Current, force);
 
                 // Recurse child elements
                 var navBm = nav.Bookmark();
@@ -94,7 +89,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     do
                     {
-                        generateElementsBase(nav, baseNav, force);
+                        ensureBaseComponents(nav, baseNav, force);
                     } while (nav.MoveToNext());
 
                     nav.ReturnToBookmark(navBm);
@@ -113,12 +108,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (baseUrl != null)
                 {
                     var baseDef = _resolver.FindStructureDefinition(baseUrl);
-                    if (verifyStructureDef(baseDef, baseUrl, ToNamedNode(elem)))
+                    if (ensureSnapshot(baseDef, baseUrl, ToNamedNode(elem)))
                     {
                         baseNav = new ElementDefinitionNavigator(baseDef);
                         if (baseNav.MoveToFirstChild())
                         {
-                            generateElementsBase(nav, baseNav, force);
+                            ensureBaseComponents(nav, baseNav, force);
                             return;
                         }
                     }
@@ -126,18 +121,29 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // No match... try base profile
-            // Debug.Print("[generateElementBase] Path = {0}  (no base)".FormatWith(nav.Path));
+            // Debug.Print($"[nameof(generateElementBase)}] Path = '{nav.Path}'  (no base)");
         }
 
-        /// <summary>Assign the <see cref="ElementDefinition.Base"/> component if necessary.</summary>
+    }
+
+    /// <summary>Internal extension method for initializing the <see cref="ElementDefinition.Base"/> component.</summary>
+    static class SnapshotGeneratorBaseComponentExtensionMethods
+    {
+        /// <summary>Ensure that the <see cref="ElementDefinition.Base"/> component is properly initialized.</summary>
         /// <param name="elem">An <see cref="ElementDefinition"/> instance.</param>
         /// <param name="baseElem">The associated base <see cref="ElementDefinition"/> instance.</param>
         /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
-        private void ensureElementBase(ElementDefinition elem, ElementDefinition baseElem, bool force = false)
+        public static void EnsureBaseComponent(this ElementDefinition elem, ElementDefinition baseElem, bool force = false)
         {
             Debug.Assert(elem != null);
-            var normalizeElementBase = _settings.NormalizeElementBase;
-            if (force || elem.Base == null || (normalizeElementBase && !isCreatedBySnapshotGenerator(elem.Base)))
+
+            // [WMR 20161004] HL7 WGM Baltimore: ElementDefinition.Base should be fully normalized
+            // i.e. ElementDefinition.Base references the element definition that originally introduces the element
+            // e.g. Patient.meta => Base.Path = Resource.meta
+
+            // var normalizeElementBase = _settings.NormalizeElementBase;
+            // if (force || elem.Base == null || (normalizeElementBase && !elem.Base.isCreatedBySnapshotGenerator()))
+            if (force || elem.Base == null || !elem.Base.IsCreatedBySnapshotGenerator())
             {
                 // [WMR 20160903] Explicitly exclude root types (Resource and Element), they have no base
                 if (isRootTypeElementPath(elem.Path))
@@ -147,7 +153,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 Debug.Assert(baseElem != null);
 
-                if (normalizeElementBase && baseElem.Base != null) //  && !isRootElement
+                // if (normalizeElementBase && baseElem.Base != null)
+                if (baseElem.Base != null)
                 {
                     // Inherit Base component from base element
                     elem.Base = createBaseComponent(
@@ -167,7 +174,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 // Debug.Print("[ensureElementBase] #{0} Path = {1}  Base = {2}".FormatWith(elem.GetHashCode(), elem.Path, elem.Base.Path));
-                Debug.Assert(elem.Base == null || isCreatedBySnapshotGenerator(elem.Base));
+                Debug.Assert(elem.Base == null || elem.Base.IsCreatedBySnapshotGenerator());
             }
         }
 
@@ -182,33 +189,12 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             var result = new ElementDefinition.BaseComponent()
             {
-                MaxElement = (FhirString)maxElement.DeepCopy(),
-                MinElement = (Integer)minElement.DeepCopy(),
-                PathElement = (FhirString)pathElement.DeepCopy(),
+                MaxElement = (FhirString)maxElement?.DeepCopy(),
+                MinElement = (Integer)minElement?.DeepCopy(),
+                PathElement = (FhirString)pathElement?.DeepCopy()
             };
-            setCreatedBySnapshotGenerator(result);
+            result.SetCreatedBySnapshotGenerator();
             return result;
-        }
-
-        // Custom annotation to mark generated elements, so we can prevent duplicate re-generation
-        class CreatedBySnapshotGeneratorAnnotation
-        {
-            private readonly DateTime _created;
-            public DateTime Created { get { return _created; } }
-            public CreatedBySnapshotGeneratorAnnotation() { _created = DateTime.Now; }
-        }
-
-        static void setCreatedBySnapshotGenerator(Element elem)
-        {
-            if (elem != null) { elem.AddAnnotation(new CreatedBySnapshotGeneratorAnnotation()); }
-        }
-
-        /// <summary>Determines if the specified element was created by the <see cref="SnapshotGenerator"/> class.</summary>
-        /// <param name="elem">A FHIR <see cref="Element"/>.</param>
-        /// <returns><c>true</c> if the element was created by the <see cref="SnapshotGenerator"/> class, or <c>false</c> otherwise.</returns>
-        static bool isCreatedBySnapshotGenerator(Element elem)
-        {
-            return elem != null && elem.Annotation<CreatedBySnapshotGeneratorAnnotation>() != null;
         }
 
     }

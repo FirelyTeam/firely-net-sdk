@@ -12,7 +12,6 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -64,7 +63,6 @@ namespace Hl7.Fhir.Specification.Navigation
         public ElementDefinitionNavigator(IList<ElementDefinition> elements) : this(elements, null)
         {
         }
-
 
         public static ElementDefinitionNavigator ForSnapshot(StructureDefinition sd)
         {

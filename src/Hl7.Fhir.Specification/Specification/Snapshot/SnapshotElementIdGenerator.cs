@@ -1,51 +1,63 @@
-﻿using Hl7.Fhir.Model;
+﻿/* 
+ * Copyright (c) 2016, Furore (info@furore.com) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
+ */
+
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
-    // [WMR 20160917] NEW
-    // Methods to generate ElementId values
+    // [WMR 20160917] NEW - (re-)generate ElementId values
+    // Syntax: [path[:name][.path[:name]...]]
+    // - Element.ElementId has the exact same number of components as Element.Path
+    // - Components are separated by the dot character "."
+    // - First part of each component equals the local path component, i.e. the FHIR element name
+    // - Second optional part of each component equals the slice name, if not empty, separated by a semi-colon ":"
+    // Notes:
+    // - slice name may not contain dot characters "." !
+    // - for re-slicing, the slice name can be of the form "OrignalSlice/Reslice"
 
     public partial class SnapshotGenerator
     {
         public void GenerateSnapshotElementsId(StructureDefinition structureDef, bool force = false)
         {
-            if (structureDef == null) { throw Error.ArgumentNull("structureDef"); }
-            if (!structureDef.HasSnapshot) { throw Error.Argument("structureDef", "StructureDefinition.Snapshot component is null or empty."); }
+            if (structureDef == null) { throw Error.ArgumentNull(nameof(structureDef)); }
+            if (!structureDef.HasSnapshot) { throw Error.Argument(nameof(structureDef), "The StructureDefinition.Snapshot component is null or empty."); }
             clearIssues();
             generateSnapshotElementsId(structureDef, force);
         }
 
-        void generateSnapshotElementsId(StructureDefinition structureDef, bool force = false)
+        static void generateSnapshotElementsId(StructureDefinition structureDef, bool force = false)
         {
             generateElementsId(structureDef.Snapshot.Element, force);
         }
 
-        void generateElementsId(IList<ElementDefinition> elements, bool force = false)
+        static void generateElementsId(IList<ElementDefinition> elements, bool force = false)
         {
             var nav = new ElementDefinitionNavigator(elements);
             generateChildElementsId(nav, force);
         }
 
         // (Re-)generate ElementId values for all children of the current element
-        void generateChildElementsId(ElementDefinitionNavigator nav, bool force = false)
+        static void generateChildElementsId(ElementDefinitionNavigator nav, bool force = false)
         {
             var parent = nav.Current;
-            Debug.Print("generateChildElementsId: '{0}'", parent != null ? parent.Path : "[root]");
+            Debug.Print($"[{nameof(generateChildElementsId)}] '{(parent != null ? parent.Path : "[root]")}'");
             var bm = nav.Bookmark();
             if (nav.MoveToFirstChild())
             {
                 do
                 {
                     var elem = nav.Current;
-                    if (force | string.IsNullOrEmpty(elem.ElementId))
+                    if (force || string.IsNullOrEmpty(elem.ElementId))
                     {
                         elem.ElementId = generateElementId(elem, parent);
                     }
@@ -56,16 +68,16 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // Generate an ElementId for the specified element and parent element
-        string generateElementId(ElementDefinition element, ElementDefinition parent)
+        static string generateElementId(ElementDefinition element, ElementDefinition parent)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
-            // parent is null for the resource root element
-            var id = parent != null ? parent.ElementId : null;
+            if (element == null) { throw new ArgumentNullException(nameof(element)); }
             // Add element name (last path component)
+            // parent is null for the resource root element
             var pathPart = ElementDefinitionNavigator.GetLastPathComponent(element.Path);
-            id = addIdComponent(id, ".", pathPart);
+            var id = addIdComponent(parent?.ElementId, ".", pathPart);
             // Add element slice name (user defined), if present
-            if (!string.IsNullOrEmpty(element.Name))
+            // [WMR 20160922] Except for root element, e.g. SimpleQuantity
+            if (parent != null && !string.IsNullOrEmpty(element.Name))
             {
                 // Chris Grenz generates compound names, e.g. [slice-name].[child-element-name]
                 // Only use the last part, and only if it differs from the xml element name
@@ -78,9 +90,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return id;
         }
 
-        string addIdComponent(string id, string separator, string component)
-        {
-            return string.IsNullOrEmpty(id) ? component : id + separator + component;
-        }
+        static string addIdComponent(string id, string separator, string component) => string.IsNullOrEmpty(id) ? component : id + separator + component;
+
     }
 }

@@ -94,14 +94,15 @@
     <Compile Include="Specification\Snapshot\DifferentialTreeConstructor.cs" />
     <Compile Include="Specification\Snapshot\ElementDefnMerger.cs" />
     <Compile Include="Specification\Snapshot\ElementMatcher.cs" />
-    <Compile Include="Specification\Snapshot\SnapshotElementBaseGenerator.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotBaseComponentGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotElementIdGenerator.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGenerator.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotGeneratorAnnotations.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorEvents.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorExtensions.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorOutcome.cs" />
     <Compile Include="Specification\Snapshot\SnapshotGeneratorSettings.cs" />
-    <Compile Include="Specification\Snapshot\SnapshotRecursionChecker.cs" />
+    <Compile Include="Specification\Snapshot\SnapshotRecursionStack.cs" />
     <Compile Include="Specification\Source\CachedResolver.cs" />
     <Compile Include="Specification\Source\DirectorySource.cs" />
     <Compile Include="Specification\Source\IArtifactSource.cs" />

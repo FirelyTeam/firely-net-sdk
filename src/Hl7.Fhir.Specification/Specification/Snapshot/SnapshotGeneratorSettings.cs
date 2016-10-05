@@ -6,20 +6,21 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Support;
+using System;
+
 namespace Hl7.Fhir.Specification.Snapshot
 {
     /// <summary>Configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
-    public sealed class SnapshotGeneratorSettings
+    public sealed class SnapshotGeneratorSettings : ICloneable
     {
         /// <summary>Default configuration settings for the <see cref="SnapshotGenerator"/> class.</summary>
         public static readonly SnapshotGeneratorSettings Default = new SnapshotGeneratorSettings()
         {
             ExpandExternalProfiles = true,
-            ForceExpandAll = false, // Only enable this when using a cached source...
-            MarkChanges = false,
-            // Following settings are proposed and await approval from HL7 WGM
-            MergeTypeProfiles = true,
-            NormalizeElementBase = true
+            ForceExpandAll = false,         // Only enable this when using a cached source...
+            MarkChanges = false,            // Enabled by Simplifier
+            // MergeTypeProfiles = true
         };
 
         /// <summary>Default ctor.</summary>
@@ -28,11 +29,21 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Clone ctor. Generates a new instance with the same state as the specified instance.</summary>
         public SnapshotGeneratorSettings(SnapshotGeneratorSettings settings)
         {
-            ExpandExternalProfiles = settings.ExpandExternalProfiles;
-            MarkChanges = settings.MarkChanges;
-            MergeTypeProfiles = settings.MergeTypeProfiles;
-            NormalizeElementBase = settings.NormalizeElementBase;
-            ForceExpandAll = settings.ForceExpandAll;
+            if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
+            settings.CopyTo(this);
+        }
+
+        /// <summary>Returns an exact clone of the current configuration settings instance.</summary>
+        public object Clone() => new SnapshotGeneratorSettings(this);
+
+        /// <summary>Copy all configuration settings to another instance.</summary>
+        public void CopyTo(SnapshotGeneratorSettings other)
+        {
+            if (other == null) { throw Error.ArgumentNull(nameof(other)); }
+            other.ExpandExternalProfiles = ExpandExternalProfiles;
+            other.ForceExpandAll = ForceExpandAll;
+            other.MarkChanges = MarkChanges;
+            // other.MergeTypeProfiles = MergeTypeProfiles;
         }
 
         /// <summary>
@@ -61,29 +72,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         public bool MarkChanges { get; set; }
 
-        /// <summary>
-        /// EXPERIMENTAL!
-        /// Enable this setting in order to merge custom element type profiles.
-        /// If enabled (default), the snapshot generator first merges constraints from custom type profiles before merging constraints from the base profile.
-        /// If disabled, the snapshot generator ignores custom type profiles and merges constraints from the base profile.
-        /// </summary>
-        /// <remarks>See GForge #9791</remarks>
-        public bool MergeTypeProfiles { get; set; }
+        // [WMR 20161004] Always try to merge element type profiles
 
-        /// <summary>
-        /// EXPERIMENTAL!
-        /// If enabled (default), then normalize the ElementDefinition.Base component of inherited elements in order to reference
-        /// the element definition in the defining profile that originally introduces the element.
-        /// If disabled, then the ElementDefinition.Base components are initialized from the associated element in the immediate base profile.
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// Path = "Patient.meta" => Base.Path = "Resource.meta" (derived from parent element Resource)
-        /// <br />
-        /// Path = "Patient.name.given" => Base.Path = "HumanName.given" (derived from parent element type = 'HumanName')
-        /// </code>
-        /// </example>
-        public bool NormalizeElementBase { get; set; }
-
+        // <summary>
+        // Enable this setting in order to merge custom element type profiles.
+        // If enabled (default), the snapshot generator first merges constraints from custom type profiles before merging constraints from the base profile.
+        // If disabled, the snapshot generator ignores custom type profiles and merges constraints from the base profile.
+        // </summary>
+        // <remarks>See GForge #9791</remarks>
+        // public bool MergeTypeProfiles { get; set; }
     }
 }

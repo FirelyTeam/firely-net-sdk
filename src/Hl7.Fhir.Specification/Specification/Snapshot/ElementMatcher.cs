@@ -1,4 +1,6 @@
-﻿/* 
+﻿// #define CHRIS_GRENZ
+
+/* 
  * Copyright (c) 2016, Furore (info@furore.com) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -32,14 +34,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                     throw Error.InvalidOperation("Found unreachable bookmark in matches");
                 }
 
-                var bPos = snapNav.Path + "[{0}]".FormatWith(snapNav.OrdinalPosition);
-                var dPos = diffNav.Path + "[{0}]".FormatWith(diffNav.OrdinalPosition);
+                var bPos = snapNav.Path + $"[{snapNav.OrdinalPosition}]";
+                var dPos = diffNav.Path + $"[{diffNav.OrdinalPosition}]";
 
                 // [WMR 20160719] Add name, if not null
-                if (snapNav.Current != null && snapNav.Current.Name != null) bPos += " '{0}'".FormatWith(snapNav.Current.Name);
-                if (diffNav.Current != null && diffNav.Current.Name != null) dPos += " '{0}'".FormatWith(diffNav.Current.Name);
+                if (snapNav.Current != null && snapNav.Current.Name != null) bPos += $" '{snapNav.Current.Name}'";
+                if (diffNav.Current != null && diffNav.Current.Name != null) dPos += $" '{diffNav.Current.Name}'";
 
-                Debug.WriteLine("B:{0} <--{1}--> D:{2}".FormatWith(bPos, match.Action.ToString(), dPos));
+                Debug.WriteLine($"B:{bPos} <--{match.Action.ToString()}--> D:{dPos}");
             }
 
             snapNav.ReturnToBookmark(sbm);
@@ -87,8 +89,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </remarks>
         public static List<MatchInfo> Match(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
-            // if (!snapNav.HasChildren) throw Error.Argument("snapNav", "Cannot match base to diff: element '{0}' in snap has no children".FormatWith(snapNav.Path));
-            if (!diffNav.HasChildren) throw Error.Argument("diffNav", "Cannot match base to diff: element '{0}' in diff has no children".FormatWith(diffNav.Path));
+            // if (!snapNav.HasChildren) throw Error.Argument(nameof(snapNav), $"Cannot match base to diff: element '{snapNav.Path}' in snap has no children");
+            if (!diffNav.HasChildren) throw Error.Argument(nameof(diffNav), $"Cannot match base to diff: element '{diffNav.Path}' in diff has no children");
 
             // These bookmarks are used only in the finally {} to make sure we don't alter the position of the navs when leaving the merger
             var baseStartBM = snapNav.Bookmark();
@@ -260,7 +262,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // If the differential contains a slicing entry, then it should also define at least a single slice.
                     if (!diffNav.MoveToNext())
                     {
+#if CHRIS_GRENZ
+                        // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
+#else
                         throw Error.InvalidOperation("Differential has a slicing entry for path '{0}', but no first actual slice", diffNav.Path);
+#endif
                     }
                 }
             }
@@ -322,6 +328,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             var slicingIntro = matchingSlice = snapNav.Bookmark();
             var result = false;
 
+#if CHRIS_GRENZ
+            var reslice = false;
+#endif
+
             // url, type@profile, @type + @profile
             if (IsTypeProfileDiscriminator(slicing.Discriminator))
             {
@@ -332,16 +342,31 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // => Match to base profile on child element with name 'question'
 
                 var diffProfiles = diffNav.Current.PrimaryTypeProfiles().ToArray();
+                // Handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
                 if (diffProfiles == null || diffProfiles.Length == 0)
                 {
-                    throw Error.InvalidOperation("Differential is reslicing on url, but resliced element has no type profile (path = '{0}').", diffNav.Path);
+#if CHRIS_GRENZ
+                    reslice = true;
+#else
+                    throw Error.InvalidOperation($"Differential is reslicing on url, but resliced element has no type profile (path = '{diffNav.Path}').");
+#endif
                 }
-                if (diffProfiles.Length > 1)
+                if (diffProfiles != null && diffProfiles.Length > 1)
                 {
-                    throw Error.NotSupported("Reslicing on complex discriminator is not supported (path = '{0}').", diffNav.Path);
+                    throw Error.NotSupported($"Reslicing on complex discriminator is not supported (path = '{diffNav.Path}').");
                 }
 
+
+#if CHRIS_GRENZ
+                // TOOO: Resolve profile from element Type
+                // => Needs a reference to the calling SnapshotGenerator
+                // var diffProfile = generator.getStructureForElementType(diffNav.Current).Url;
+
+                var diffProfile = diffProfiles.FirstOrDefault() ?? Validation.TypeRefExtensions.ProfileUri(snapNav.Current.PrimaryType());
+                
+#else
                 var diffProfile = diffProfiles.FirstOrDefault();
+#endif
                 var profileRef = ProfileReference.FromUrl(diffProfile);
                 while (snapNav.MoveToNext(snapNav.PathName))
                 {
@@ -349,7 +374,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                     result = profileRef.IsComplex
                         // Match on element name
                         ? snapNav.Current.Name == profileRef.ElementName
-                        // Match on profile(s)
+#if CHRIS_GRENZ
+                        // Match reslice on name
+                        : reslice ? snapNav.Current.Name == diffNav.Current.Name
+#endif
+                        // Match on type profile(s)
                         : baseProfiles.SequenceEqual(diffProfiles);
                     if (result)
                     {
@@ -364,7 +393,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             else
             {
-                throw Error.NotSupported("Reslicing on discriminator '{0}' is not supported yet (path = '{1}').", string.Join("|", slicing.Discriminator), snapNav.Path);
+                throw Error.NotSupported($"Reslicing on discriminator '{string.Join("|", slicing.Discriminator)}' is not supported yet (path = '{snapNav.Path}').");
             }
 
             snapNav.ReturnToBookmark(slicingIntro);
@@ -398,7 +427,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var ar = discriminators.ToArray();
                 if (ar.Length == 1)
                 {
-                    return ar[0] == "url" || ar[0] == "type@profile";
+                    return ar[0] == "url" || ar[0] == "type@profile"
+#if CHRIS_GRENZ
+                        // [WMR 20160919] Added to handle Chris Grenz example http://example.com/fhir/SD/patient-research-auth-reslice
+                        || ar[0] == "@profile"
+#endif
+                        ;
                 }
                 else if (ar.Length == 2)
                 {
@@ -437,7 +471,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 if (!diffNav.MoveToNext())
                 {
-                    throw Error.InvalidOperation("Differential has a slicing entry {0}, but no first actual slice", diffNav.Path);
+                    throw Error.InvalidOperation($"Differential has a slicing entry {diffNav.Path}, but no first actual slice");
                 }
             }
 
