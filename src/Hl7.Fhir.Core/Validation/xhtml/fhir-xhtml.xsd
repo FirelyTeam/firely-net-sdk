@@ -39,9 +39,9 @@
       FITNESS FOR A PARTICULAR PURPOSE.
     
   HL7:
-    The schema has been modified to remove the definitions of elements that 
+    The schema has been modified to remoce the definitions of elements that 
     are not allowed to be used in FHIR's restricted XHTML set. All modifications
-    are labeled with "fhir-remove"
+    are lablled with "fhir-remove"
     
     If the existence of a different schema with the same namespace is a problem,
     you can drop in the standard W3C schema (http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd)
@@ -331,7 +331,6 @@
 			</xs:simpleType>
 		</xs:attribute>
 	</xs:attributeGroup>
-<!--fhir-remove-   
 	<xs:attributeGroup name="events">
 		<xs:annotation>
 			<xs:documentation>
@@ -358,7 +357,6 @@
 		<xs:attribute name="onkeydown" type="Script"/>
 		<xs:attribute name="onkeyup" type="Script"/>
 	</xs:attributeGroup>
--->
 	<xs:attributeGroup name="focus">
 		<xs:annotation>
 			<xs:documentation>
@@ -371,17 +369,13 @@
 		</xs:annotation>
 		<xs:attribute name="accesskey" type="Character"/>
 		<xs:attribute name="tabindex" type="tabindexNumber"/>
-<!--fhir-remove-   
 		<xs:attribute name="onfocus" type="Script"/>
 		<xs:attribute name="onblur" type="Script"/>
--->
 	</xs:attributeGroup>
 	<xs:attributeGroup name="attrs">
 		<xs:attributeGroup ref="coreattrs"/>
 		<xs:attributeGroup ref="i18n"/>
-<!--fhir-remove-   
 		<xs:attributeGroup ref="events"/>
--->
 	</xs:attributeGroup>
 	<xs:annotation>
 		<xs:documentation>
@@ -405,9 +399,7 @@
 							<xs:element ref="bdo"/>
 							<xs:element ref="map"/>
 						</xs:choice>
-<!--fhir-remove-   
-					<xs:element ref="object"/>
--->
+						<xs:element ref="object"/>
 						<xs:element ref="img"/>
 					</xs:choice>
 					<xs:choice>
@@ -432,7 +424,6 @@
 						<xs:element ref="sub"/>
 						<xs:element ref="sup"/>
 					</xs:choice>
-<!--fhir-remove-   
 					<xs:choice>
 						<xs:element ref="input"/>
 						<xs:element ref="select"/>
@@ -440,15 +431,12 @@
 						<xs:element ref="label"/>
 						<xs:element ref="button"/>
 					</xs:choice>
--->
 				</xs:choice>
-<!--fhir-remove-   
 				<xs:choice>
 					<xs:element ref="ins"/>
 					<xs:element ref="del"/>
 					<xs:element ref="script"/>
 				</xs:choice>
--->
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
@@ -480,16 +468,11 @@
 						<xs:element ref="pre"/>
 						<xs:element ref="hr"/>
 						<xs:element ref="blockquote"/>
-<!--fhir-remove-   
 						<xs:element ref="address"/>
--->
 					</xs:choice>
-<!--fhir-remove-   
 					<xs:element ref="fieldset"/>
--->
 					<xs:element ref="table"/>
 				</xs:choice>
-<!--fhir-remove-   
 				<xs:element ref="form"/>
 				<xs:choice>
 					<xs:element ref="noscript"/>
@@ -499,7 +482,6 @@
 						<xs:element ref="script"/>
 					</xs:choice>
 				</xs:choice>
--->        
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
@@ -531,18 +513,12 @@
 						<xs:element ref="pre"/>
 						<xs:element ref="hr"/>
 						<xs:element ref="blockquote"/>
-<!--fhir-remove-   
 						<xs:element ref="address"/>
--->
 					</xs:choice>
-<!--fhir-remove-   
 					<xs:element ref="fieldset"/>
--->          
 					<xs:element ref="table"/>
 				</xs:choice>
-<!--fhir-remove-   
 				<xs:element ref="form"/>
--->
 				<xs:choice>
 					<xs:element ref="a"/>
 					<xs:choice>
@@ -552,9 +528,7 @@
 							<xs:element ref="bdo"/>
 							<xs:element ref="map"/>
 						</xs:choice>
-<!--fhir-remove-   
 						<xs:element ref="object"/>
--->            
 						<xs:element ref="img"/>
 					</xs:choice>
 					<xs:choice>
@@ -579,7 +553,6 @@
 						<xs:element ref="sub"/>
 						<xs:element ref="sup"/>
 					</xs:choice>
-<!--fhir-remove-   
 					<xs:choice>
 						<xs:element ref="input"/>
 						<xs:element ref="select"/>
@@ -587,9 +560,7 @@
 						<xs:element ref="label"/>
 						<xs:element ref="button"/>
 					</xs:choice>
--->          
 				</xs:choice>
-<!--fhir-remove-   
 				<xs:choice>
 					<xs:element ref="noscript"/>
 					<xs:choice>
@@ -598,7 +569,6 @@
 						<xs:element ref="script"/>
 					</xs:choice>
 				</xs:choice>
--->        
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
@@ -622,9 +592,7 @@
 						<xs:element ref="bdo"/>
 						<xs:element ref="map"/>
 					</xs:choice>
-<!--fhir-remove-   
 					<xs:element ref="object"/>
--->          
 					<xs:element ref="img"/>
 				</xs:choice>
 				<xs:choice>
@@ -649,7 +617,6 @@
 					<xs:element ref="sub"/>
 					<xs:element ref="sup"/>
 				</xs:choice>
-<!--fhir-remove-   
 				<xs:choice>
 					<xs:element ref="input"/>
 					<xs:element ref="select"/>
@@ -662,7 +629,6 @@
 					<xs:element ref="del"/>
 					<xs:element ref="script"/>
 				</xs:choice>
--->        
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
@@ -703,7 +669,6 @@
 					<xs:element ref="bdo"/>
 					<xs:element ref="map"/>
 				</xs:choice>
-<!--fhir-remove-   
 				<xs:choice>
 					<xs:element ref="ins"/>
 					<xs:element ref="del"/>
@@ -716,11 +681,9 @@
 					<xs:element ref="label"/>
 					<xs:element ref="button"/>
 				</xs:choice>
--->        
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
-<!--fhir-remove-   
 	<xs:complexType name="form.content">
 		<xs:annotation>
 			<xs:documentation>
@@ -838,13 +801,11 @@
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
--->  
 	<xs:annotation>
 		<xs:documentation>
 			================ Document Structure ==================================
 		</xs:documentation>
 	</xs:annotation>
-<!--fhir-remove-   
 	<xs:element name="html">
 		<xs:complexType>
 			<xs:sequence>
@@ -1048,13 +1009,11 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
--->
 	<xs:annotation>
 		<xs:documentation>
 			=================== Document Body ====================================
 		</xs:documentation>
 	</xs:annotation>
-<!--fhir-remove-   
 	<xs:element name="body">
 		<xs:complexType>
 			<xs:complexContent>
@@ -1066,7 +1025,6 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
--->  
 	<xs:element name="div">
 		<xs:annotation>
 			<xs:documentation>
@@ -1241,7 +1199,6 @@
 			=================== Address ==========================================
 		</xs:documentation>
 	</xs:annotation>
-<!--fhir-remove-   
 	<xs:element name="address">
 		<xs:annotation>
 			<xs:documentation>
@@ -1256,7 +1213,6 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
--->
 	<xs:annotation>
 		<xs:documentation>
 			=================== Horizontal Rule ==================================
@@ -1302,7 +1258,6 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
-<!--fhir-remove-   
 	<xs:annotation>
 		<xs:documentation>
 			=================== Inserted/Deleted Text ============================
@@ -1334,7 +1289,6 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
--->
 	<xs:annotation>
 		<xs:documentation>
 			================== The Anchor Element ================================
@@ -1393,9 +1347,7 @@
 			<xs:complexContent mixed="true">
 				<xs:extension base="Inline">
 					<xs:attributeGroup ref="coreattrs"/>
-<!--fhir-remove-   
 					<xs:attributeGroup ref="events"/>
--->          
 					<xs:attribute name="lang" type="LanguageCode"/>
 					<xs:attribute ref="xml:lang"/>
 					<xs:attribute name="dir" use="required">
@@ -1673,7 +1625,6 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
-<!--fhir-remove-   
 	<xs:annotation>
 		<xs:documentation>
 			==================== Object ======================================
@@ -1814,7 +1765,6 @@
 			<xs:attribute name="type" type="ContentType"/>
 		</xs:complexType>
 	</xs:element>
--->
 	<xs:annotation>
 		<xs:documentation>
 			=================== Images ===========================================
@@ -1885,15 +1835,11 @@
 								<xs:element ref="pre"/>
 								<xs:element ref="hr"/>
 								<xs:element ref="blockquote"/>
-<!--fhir-remove-   
 								<xs:element ref="address"/>
--->							</xs:choice>
-<!--fhir-remove-   
+							</xs:choice>
 							<xs:element ref="fieldset"/>
--->              
 							<xs:element ref="table"/>
 						</xs:choice>
-<!--fhir-remove-   
 						<xs:element ref="form"/>
 						<xs:choice>
 							<xs:element ref="noscript"/>
@@ -1903,15 +1849,12 @@
 								<xs:element ref="script"/>
 							</xs:choice>
 						</xs:choice>
--->            
 					</xs:choice>
 				</xs:sequence>
 				<xs:element maxOccurs="unbounded" ref="area"/>
 			</xs:choice>
 			<xs:attributeGroup ref="i18n"/>
-<!--fhir-remove-   
 			<xs:attributeGroup ref="events"/>
--->      
 			<xs:attribute name="id" type="xs:ID" use="required"/>
 			<xs:attribute name="class"/>
 			<xs:attribute name="style" type="StyleSheet"/>
@@ -1936,7 +1879,6 @@
 			<xs:attribute name="alt" type="Text" use="required"/>
 		</xs:complexType>
 	</xs:element>
-<!--fhir-remove-   
 	<xs:annotation>
 		<xs:documentation>
 			================ Forms ===============================================
@@ -2302,7 +2244,6 @@
 			</xs:complexContent>
 		</xs:complexType>
 	</xs:element>
--->
 	<xs:annotation>
 		<xs:documentation>
 			======================= Tables =======================================

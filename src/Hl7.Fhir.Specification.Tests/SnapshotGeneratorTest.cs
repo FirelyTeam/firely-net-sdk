@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Specification.Tests
 			// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
 		};
 
-        [TestMethod]
+        [TestMethod, Ignore]
         // [Ignore]
         public void GenerateSnapshot()
         {
@@ -569,7 +569,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void TestExpandChild()
         {
             var sd = _testResolver.FindStructureDefinitionForCoreType(FHIRDefinedType.Questionnaire);
@@ -1278,7 +1278,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Start at root type Element, then expand derived types (recursively)
         // This ensures that we can annotate valid references to base elements (generated previously)
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void TestExpandCoreTypes()
         {
             var result = true;

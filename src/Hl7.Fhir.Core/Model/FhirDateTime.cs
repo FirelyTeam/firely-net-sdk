@@ -99,6 +99,15 @@ namespace Hl7.Fhir.Model
             return dto;
         }
 
+
+        public Hl7.FluentPath.PartialDateTime? ToPartialDateTime()
+        {
+            if (Value != null)
+                return PartialDateTime.Parse(Value);
+            else
+                return null;
+        }
+
         public static bool IsValidValue(string value)
         {
             return Regex.IsMatch(value as string, "^" + FhirDateTime.PATTERN + "$", RegexOptions.Singleline);

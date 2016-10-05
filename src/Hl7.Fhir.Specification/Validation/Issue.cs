@@ -11,6 +11,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.ElementModel;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Validation
 {
@@ -45,9 +46,11 @@ namespace Hl7.Fhir.Validation
             ic.Details = ToCodeableConcept(message);
 
             if (path != null) ic.Location = new List<string> { path };
+            if (message != null) ic.Details = ToCodeableConcept(message);
 
             return ic;
         }
+
 
         /// <summary>Factory method.</summary>
         internal static Issue Create(int code, OperationOutcome.IssueSeverity severity, OperationOutcome.IssueType type)
@@ -70,9 +73,21 @@ namespace Hl7.Fhir.Validation
         public static readonly Issue CONTENT_ELEMENT_CHOICE_INVALID_INSTANCE_TYPE = Create(1011, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT = Create(1012, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT = Create(1013, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_REFERENCE_HAS_MULTIPLE_REFERENCES = Create(1014, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_REFERENCE_OF_INVALID_KIND = Create(1015, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_CONTAINED_REFERENCE_NOT_RESOLVABLE = Create(1016, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_UNPARSEABLE_REFERENCE = Create(1017, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_REFERENCE_NOT_RESOLVABLE = Create(1018, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_SMALL = Create(1019, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_ELEMENT_PRIMITIVE_VALUE_TOO_LARGE = Create(1020, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue CONTENT_ELEMENT_PRIMITIVE_VALUE_NOT_COMPARABLE = Create(1021, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
+
+        public static readonly Issue XSD_VALIDATION_ERROR = Create(1100, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue XSD_VALIDATION_WARNING = Create(1101, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue XSD_CONTENT_POCO_PARSING_FAILED = Create(1102, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
         // Profile problems
-        public static readonly Issue PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE = Create(2000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
+        public static readonly Issue PROFILE_ELEMENTDEF_MIN_MAX_USES_UNORDERED_TYPE = Create(2000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_MAX_USES_UNORDERED_TYPE = Create(2001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_MAXLENGTH_NEGATIVE = Create(2002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_ELEMENTDEF_CONTAINS_NULL_TYPE = Create(2003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
@@ -86,21 +101,24 @@ namespace Hl7.Fhir.Validation
 
         // Unsupported 
         public static readonly Issue UNSUPPORTED_SLICING_NOT_SUPPORTED = Create(3000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
-        public static readonly Issue UNSUPPORTED_NESTED_BUNDLES = Create(3001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
-        public static readonly Issue UNSUPPORTED_FOLLOWING_REFERENCES = Create(3002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
+        //public static readonly Issue UNSUPPORTED_NESTED_BUNDLES = Create(3001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
+        //public static readonly Issue UNSUPPORTED_FOLLOWING_EXTERNAL_REFERENCES = Create(3002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
         public static readonly Issue UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH = Create(3003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNSUPPORTED_MIN_MAX_QUANTITY = Create(3004, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNSUPPORTED_BINDING_NOT_SUPPORTED = Create(3005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Non-availability, incomplete data
         public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE = Create(4000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
         //public static readonly Issue UNAVAILABLE_ELEMENTDEF_WITHOUT_STRUCTDEF = def(4001, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_NEED_SNAPSHOT = Create(4002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNAVAILABLE_SNAPSHOT_GENERATION_FAILED = Create(4003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
-        // [WMR 20161003] Added for snapshot generator
         public static readonly Issue UNAVAILABLE_NEED_DIFFERENTIAL = Create(4004, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNAVAILABLE_EXTERNAL_REFERENCE = Create(4005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Processing information
         public static readonly Issue PROCESSING_PROGRESS = Create(5000, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);
         public static readonly Issue PROCESSING_CONSTRAINT_VALIDATION_INACTIVE = Create(5001, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);
+        public static readonly Issue PROCESSING_START_NESTED_VALIDATION = Create(5002, OperationOutcome.IssueSeverity.Information, OperationOutcome.IssueType.Informational);
     }
 
 }

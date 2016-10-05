@@ -69,22 +69,18 @@ namespace Hl7.Fhir.FluentPath
                     return _string;
 
                 if (_pocoElement is FhirDateTime)
-                    return Hl7.FluentPath.PartialDateTime.FromDateTime(((FhirDateTime)_pocoElement).ToDateTimeOffset());
+                    return ((FhirDateTime)_pocoElement).ToPartialDateTime();
                 else if (_pocoElement is Hl7.Fhir.Model.Time)
-                    return Hl7.FluentPath.Time.Parse(((Hl7.Fhir.Model.Time)_pocoElement).Value);
+                    return ((Hl7.Fhir.Model.Time)_pocoElement).ToTime();
                 else if ((_pocoElement is Hl7.Fhir.Model.Date))
-                    return Hl7.FluentPath.PartialDateTime.Parse(((Hl7.Fhir.Model.Date)_pocoElement).Value);
+                    return (((Hl7.Fhir.Model.Date)_pocoElement).ToPartialDateTime());
+                else if (_pocoElement is Hl7.Fhir.Model.Instant)
+                    return ((Hl7.Fhir.Model.Instant)_pocoElement).ToPartialDateTime();
                 else if ((_pocoElement is Integer))
                 {
                     if ((_pocoElement as Integer).Value.HasValue)
                         return (long)(_pocoElement as Integer).Value.Value;
                     return null;
-                }
-                else if (_pocoElement is Hl7.Fhir.Model.Instant)
-                {
-                    if (!((Hl7.Fhir.Model.Instant)_pocoElement).Value.HasValue)
-                        return null;
-                    return Hl7.FluentPath.PartialDateTime.Parse(((Hl7.Fhir.Model.Instant)_pocoElement).Value.Value.ToString("O"));
                 }
                 else if (_pocoElement is Primitive)
                     return ((Primitive)_pocoElement).ObjectValue;
@@ -104,7 +100,16 @@ namespace Hl7.Fhir.FluentPath
                 Console.WriteLine("Read TypeName '{0}' for Element '{1}' (value '{2}')".FormatWith(_mapping.Name, Name, Value ?? "(nothing)"));
 #endif
                 if (_string != null)
-                    return "string";
+                {
+                    if (Name == "url")
+                        return "uri";
+                    else if (Name == "id")
+                        return "id";
+                    else if (Name == "div")
+                        return "xhtml";
+                    else
+                        throw new NotSupportedException($"Don't know about primitive with name '{Name}'");
+                }
                 else
                 {
 

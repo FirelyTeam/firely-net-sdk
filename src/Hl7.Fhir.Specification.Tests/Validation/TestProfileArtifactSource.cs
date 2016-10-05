@@ -8,12 +8,13 @@ using Hl7.Fhir.Model;
 using System.IO;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Snapshot;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Validation
 {
     internal class TestProfileArtifactSource : IResourceResolver
     {
-        List<StructureDefinition> TestProfiles = new List<StructureDefinition>
+        public List<StructureDefinition> TestProfiles = new List<StructureDefinition>
         {
             buildIdentifierWithBSN(),
             buildIdentifierWithDriversLicense(),
@@ -21,7 +22,16 @@ namespace Hl7.Fhir.Validation
             buildQuestionnaireWithFixedType(),
             buildHeightQuantity(),
             buildWeightQuantity(),
-            buildWeightHeightObservation()
+            buildWeightHeightObservation(),
+            bundleWithSpecificEntries("Contained"),
+            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Contained }, "Contained"),
+            bundleWithSpecificEntries("ContainedBundled"),
+            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Contained, ElementDefinition.AggregationMode.Bundled }, "ContainedBundled"),
+            bundleWithSpecificEntries("Bundled"),
+            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Bundled }, "Bundled"),
+            bundleWithSpecificEntries("Referenced"),
+            patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Referenced }, "Referenced")
+
         };
 
 
@@ -132,9 +142,40 @@ namespace Hl7.Fhir.Validation
                 .OrType(FHIRDefinedType.Quantity, "http://validationtest.org/fhir/StructureDefinition/HeightQuantity")
                 .OrType(FHIRDefinedType.String));
 
+            Console.WriteLine(FhirSerializer.SerializeResourceToXml(result));
             return result;
         }
 
+
+        private static StructureDefinition bundleWithSpecificEntries(string prefix)
+        {
+            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWith{prefix}Entries", $"Bundle with specific {prefix} test entries",
+                    $"Bundle with just Organization or {prefix} Patient entries", FHIRDefinedType.Bundle);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Bundle").OfType(FHIRDefinedType.Bundle));
+            cons.Add(new ElementDefinition("Bundle.entry.resource")
+                .OfType(FHIRDefinedType.Organization)
+                .OrType(FHIRDefinedType.Patient, $"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization"));
+
+            return result;
+        }
+
+
+        private static StructureDefinition patientWithSpecificOrganization(IEnumerable<ElementDefinition.AggregationMode> aggregation, string prefix)
+        {
+            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization", $"Patient with {prefix} managing organization",
+                    $"Patient for which the managingOrganization reference is limited to {prefix} references", FHIRDefinedType.Patient);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Patient").OfType(FHIRDefinedType.Patient));
+            cons.Add(new ElementDefinition("Patient.managingOrganization")
+                .OfType(FHIRDefinedType.Reference, ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.Organization), aggregation));
+
+            return result;
+        }
 
         private static StructureDefinition createTestSD(string url, string name, string description, FHIRDefinedType constrainedType, string baseUri=null)
         {

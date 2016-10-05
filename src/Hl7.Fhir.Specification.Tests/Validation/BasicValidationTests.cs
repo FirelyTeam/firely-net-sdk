@@ -1,48 +1,43 @@
 ﻿using Hl7.ElementModel;
-using Hl7.Fhir.FluentPath;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Hl7.Fhir.Validation
 {
     [TestClass]
-    public class PrimitiveValidation
+    public class BasicValidationTests
     {
         [TestInitialize]
         public void SetupSource()
         {
-            source = new CachedResolver(
+            _source = new CachedResolver(
                 new MultiResolver(
                     new TestProfileArtifactSource(),
                     new ZipSource("specification.zip")));
 
-            var ctx = new ValidationContext() { ResourceResolver = source, GenerateSnapshot = true, Trace = true };
-            ctx.GenerateSnapshotSettings = Specification.Snapshot.SnapshotGeneratorSettings.Default;
-            ctx.GenerateSnapshotSettings.ExpandExternalProfiles = true;
-            validator = new Validator(ctx);
+            var ctx = new ValidationSettings() { ResourceResolver = _source, GenerateSnapshot = true, EnableXsdValidation = true, Trace = false };
+
+            _validator = new Validator(ctx);
         }
 
-        IResourceResolver source;
-        Validator validator;
+        IResourceResolver _source;
+        Validator _validator;
 
         [TestMethod]
         public void TestEmptyElement()
         {
-            var boolSD = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
+            var boolSd = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
             var data = ElementNode.Node("active").ToNavigator();
 
-            var result = validator.Validate(boolSD, data);
+            var result = _validator.Validate(data, boolSd);
             Assert.IsFalse(result.Success);
             Assert.IsTrue(result.ToString().Contains("must not be empty"));
         }
@@ -63,14 +58,14 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void PrimitiveChildMatching()
         {
-            var boolean = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
+            var boolean = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
             var boolDefNav = ElementDefinitionNavigator.ForSnapshot(boolean);
             boolDefNav.MoveToFirstChild();
 
             var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral(),
                     ElementNode.Node("extension",
                         ElementNode.Valued("value", 4, "integer")),
-                    ElementNode.Node("nonExistant")                                             
+                    ElementNode.Node("nonExistant")
                         ).ToNavigator();
 
             var matches = ChildNameMatcher.Match(boolDefNav, data);
@@ -90,16 +85,16 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void ValidatePrimitiveValue()
         {
-            var def = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Oid);
+            var def = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Oid);
 
             var instance = new Oid("1.2.3.4.q");
-            var report = validator.Validate(def, instance);
+            var report = _validator.Validate(instance, def);
             Assert.IsFalse(report.Success);
             Assert.AreEqual(1, report.Errors);
             Assert.AreEqual(0, report.Warnings);
 
             instance = new Oid("1.2.3.4");
-            report = validator.Validate(def, instance);
+            report = _validator.Validate(instance, def);
             Assert.IsTrue(report.Success);
             Assert.AreEqual(0, report.Errors);
             Assert.AreEqual(0, report.Warnings);
@@ -109,7 +104,7 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void ValidateCardinality()
         {
-            var boolSD = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
+            var boolSd = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.Boolean);
             var data = ElementNode.Valued("active", true, FHIRDefinedType.Boolean.GetLiteral(),
                         ElementNode.Valued("id", "myId1"),
                         ElementNode.Valued("id", "myId2"),
@@ -118,27 +113,27 @@ namespace Hl7.Fhir.Validation
                         ElementNode.Node("extension",
                             ElementNode.Valued("value", "world!", "string"))).ToNavigator();
 
-            var report = validator.Validate(boolSD, data);
+            var report = _validator.Validate(data, boolSd);
             Assert.AreEqual(3, report.ListErrors().Count());
         }
 
         [TestMethod]
         public void ValidateChoiceElement()
         {
-            var extensionSD = (StructureDefinition)source.FindStructureDefinitionForCoreType(FHIRDefinedType.Extension).DeepCopy();
+            var extensionSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Extension).DeepCopy();
 
             var extensionInstance = new Extension("http://some.org/testExtension", new Oid("1.2.3.4.5"));
 
-            var report = validator.Validate(extensionSD, extensionInstance);
+            var report = _validator.Validate(extensionInstance, extensionSd);
 
             Assert.AreEqual(0, report.Errors);
             Assert.AreEqual(0, report.Warnings);
 
             // Now remove the choice available for OID
-            var extValueDef = extensionSD.Snapshot.Element.Single(e => e.Path == "Extension.value[x]");
+            var extValueDef = extensionSd.Snapshot.Element.Single(e => e.Path == "Extension.value[x]");
             extValueDef.Type.RemoveAll(t => t.Code == FHIRDefinedType.Oid);
 
-            report = validator.Validate(extensionSD, extensionInstance);
+            report = _validator.Validate(extensionInstance, extensionSd);
 
             Assert.AreEqual(1, report.Errors);
             Assert.AreEqual(0, report.Warnings);
@@ -147,30 +142,30 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void AutoGeneratesDifferential()
         {
-            var identifierBSN = source.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN");
-            Assert.IsNotNull(identifierBSN);
+            var identifierBsn = _source.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN");
+            Assert.IsNotNull(identifierBsn);
 
             var instance = new Identifier("http://clearly.incorrect.nl/definition", "1234");
 
-            var validationContext = new ValidationContext { ResourceResolver = source, GenerateSnapshot = false };
+            var validationContext = new ValidationSettings { ResourceResolver = _source, GenerateSnapshot = false };
             var automatedValidator = new Validator(validationContext);
 
-            var report = automatedValidator.Validate(identifierBSN, instance);
+            var report = automatedValidator.Validate(instance, identifierBsn);
             Assert.IsTrue(report.ToString().Contains("does not include a snapshot"));
 
             validationContext.GenerateSnapshot = true;
-            report = automatedValidator.Validate(identifierBSN, instance);
+            report = automatedValidator.Validate(instance, identifierBsn);
             Assert.IsFalse(report.ToString().Contains("does not include a snapshot"));
 
             bool snapshotNeedCalled = false;
 
             // I disabled cloning of SDs in the validator, so the last call to Validate() will have added a snapshot
             // to our local identifierBSN
-            identifierBSN.Snapshot = null;
+            identifierBsn.Snapshot = null;
 
             automatedValidator.OnSnapshotNeeded += (object s, OnSnapshotNeededEventArgs a) => { snapshotNeedCalled = true;  /* change nothing, warning should return */ };
 
-            report = automatedValidator.Validate(identifierBSN, instance);
+            report = automatedValidator.Validate(instance, identifierBsn);
             Assert.IsTrue(snapshotNeedCalled);
             Assert.IsTrue(report.ToString().Contains("does not include a snapshot"));
         }
@@ -179,71 +174,71 @@ namespace Hl7.Fhir.Validation
         [TestMethod]
         public void ValidatesFixedValue()
         {
-            var patientSD = (StructureDefinition)source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
+            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
 
             var instance1 = new CodeableConcept("http://this.isa.test.nl/definition", "1234");
             instance1.Text = "This is fixed too";
 
-            var maritalStatusElement = patientSD.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
+            var maritalStatusElement = patientSd.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
             maritalStatusElement.Fixed = (CodeableConcept)instance1.DeepCopy();
 
             var patient = new Patient();
             patient.MaritalStatus = instance1;
 
-            var report = validator.Validate(patientSD, patient);
+            var report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(0, report.Errors);
 
             patient.MaritalStatus.Text = "This is incorrect";
-            report = validator.Validate(patientSD, patient);
+            report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(1, report.Errors);
 
             patient.MaritalStatus.Text = "This is fixed too";
-            report = validator.Validate(patientSD, patient);
+            report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(0, report.Errors);
 
             patient.MaritalStatus.Coding.Add(new Coding("http://this.isa.test.nl/definition", "5678"));
-            report = validator.Validate(patientSD, patient);
+            report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(1, report.Errors);
 
             patient.MaritalStatus.Coding.RemoveAt(1);
-            report = validator.Validate(patientSD, patient);
+            report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(0, report.Errors);
         }
 
         [TestMethod]
         public void ValidatesPatternValue()
         {
-            var patientSD = (StructureDefinition)source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
+            var patientSd = (StructureDefinition)_source.FindStructureDefinitionForCoreType(FHIRDefinedType.Patient);
 
             var instance1 = new CodeableConcept("http://this.isa.test.nl/definition", "1234");
 
-            var maritalStatusElement = patientSD.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
+            var maritalStatusElement = patientSd.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
             maritalStatusElement.Pattern = (CodeableConcept)instance1.DeepCopy();
 
             var patient = new Patient();
             patient.MaritalStatus = instance1;
 
-            var report = validator.Validate(patientSD, patient);
+            var report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(0, report.Errors);
 
             patient.MaritalStatus.Text = "This is irrelevant";
-            report = validator.Validate(patientSD, patient);
+            report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(0, report.Errors);
 
             ((CodeableConcept)maritalStatusElement.Pattern).Text = "Not anymore";
-            report = validator.Validate(patientSD, patient);
+            report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(1, report.Errors);
 
             patient.MaritalStatus.Text = "Not anymore";
-            report = validator.Validate(patientSD, patient);
+            report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(0, report.Errors);
 
-            patient.MaritalStatus.Coding.Insert(0,new Coding("http://this.isa.test.nl/definition", "5678"));
-            report = validator.Validate(patientSD, patient);
+            patient.MaritalStatus.Coding.Insert(0, new Coding("http://this.isa.test.nl/definition", "5678"));
+            report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(0, report.Errors);
 
             patient.MaritalStatus.Coding.RemoveAt(1);
-            report = validator.Validate(patientSD, patient);
+            report = _validator.Validate(patient, patientSd);
             Assert.AreEqual(1, report.Errors);
         }
 
@@ -255,34 +250,34 @@ namespace Hl7.Fhir.Validation
             Patient p = new Patient();
             p.Active = true;
 
-            var identifierBSN = new Identifier("urn:oid:2.16.840.1.113883.2.4.6.3", "1234");
-            var identifierDL = new Identifier("urn:oid:2.16.840.1.113883.2.4.6.12", "5678");
+            var identifierBsn = new Identifier("urn:oid:2.16.840.1.113883.2.4.6.3", "1234");
+            var identifierDl = new Identifier("urn:oid:2.16.840.1.113883.2.4.6.12", "5678");
 
             var dutchPatientUri = "http://validationtest.org/fhir/StructureDefinition/DutchPatient";
 
             // First, Patient without the required identifier
-            var report = validator.Validate(dutchPatientUri, p);
+            var report = _validator.Validate(p, dutchPatientUri);
             Assert.AreEqual(1, report.Errors);
             Assert.AreEqual(0, report.Warnings);
 
             // Now, with the required identifier
-            p.Identifier.Add(identifierBSN);
+            p.Identifier.Add(identifierBsn);
 
-            report = validator.Validate(dutchPatientUri, p);
+            report = _validator.Validate(p, dutchPatientUri);
             Assert.IsTrue(report.Success);
             Assert.AreEqual(0, report.Warnings);
 
             // Make the identifier incorrect
             p.Identifier[0].System = "http://wrong.system";
 
-            report = validator.Validate(dutchPatientUri, p);
+            report = _validator.Validate(p, dutchPatientUri);
             Assert.IsFalse(report.Success);
             Assert.AreEqual(0, report.Warnings);
 
             // Add the alternative
             p.Identifier.Clear();
-            p.Identifier.Add(identifierDL);
-            report = validator.Validate(dutchPatientUri, p);
+            p.Identifier.Add(identifierDl);
+            report = _validator.Validate(p, dutchPatientUri);
             Assert.IsTrue(report.Success);
             Assert.AreEqual(0, report.Warnings);
         }
@@ -295,16 +290,13 @@ namespace Hl7.Fhir.Validation
 
             var questionnaire = (new FhirXmlParser()).Parse<Questionnaire>(questionnaireXml);
             Assert.IsNotNull(questionnaire);
-            var questionnaireSD = source.FindStructureDefinitionForCoreType(FHIRDefinedType.Questionnaire);
 
-            var report = validator.Validate(questionnaireSD, questionnaire);
-            Assert.IsTrue(report.Success);
-
-            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType", questionnaire);
-
+            // the questionnaire instance references the profile to be validated:
+            //      http://validationtest.org/fhir/StructureDefinition/QuestionnaireWithFixedType
+            var report = _validator.Validate(questionnaire);
             Assert.IsFalse(report.Success);
             Assert.AreEqual(19, report.Errors);
-            Assert.AreEqual(4, report.Warnings);           // StructureDefinition/xhtml not found, 3x narrative constraint with no fluentpath
+            Assert.AreEqual(26, report.Warnings);           // StructureDefinition/xhtml not found, 3x narrative constraint with no fluentpath + 22 bindings
         }
 
 
@@ -316,29 +308,29 @@ namespace Hl7.Fhir.Validation
             obs.Code = new CodeableConcept("http://somesystem.org/codes", "AABB");
 
             obs.Value = new FhirString("I should be ok");
-            var report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
+            var report = _validator.Validate(obs, "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(0, report.Warnings);    // missing qty-3 fp invariant
+            Assert.AreEqual(1, report.Warnings);    // missing qty-3 fp invariant
 
             obs.Value = FhirDateTime.Now();
-            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
+            report = _validator.Validate(obs, "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(0, report.Warnings);   // missing qty-3 fp invariant
+            Assert.AreEqual(1, report.Warnings);   // missing qty-3 fp invariant
 
             obs.Value = new Quantity(78m, "kg");
-            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
+            report = _validator.Validate(obs, "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(0, report.Warnings);   // 2x missing qty-3 fp invariant
+            Assert.AreEqual(1, report.Warnings);   // 2x missing qty-3 fp invariant
 
             obs.Value = new Quantity(183m, "cm");
-            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
+            report = _validator.Validate(obs, "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(0, report.Warnings); // 2x missing qty-3 fp invariant
+            Assert.AreEqual(1, report.Warnings); // 2x missing qty-3 fp invariant
 
             obs.Value = new Quantity(300m, "in");
-            report = validator.Validate("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation", obs);
+            report = _validator.Validate(obs, "http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
             Assert.IsFalse(report.Success);
-            Assert.AreEqual(0, report.Warnings); // 3x missing qty-3 fp invariant
+            Assert.AreEqual(1, report.Warnings); // 3x missing qty-3 fp invariant
         }
 
 
@@ -349,11 +341,11 @@ namespace Hl7.Fhir.Validation
 
             var careplan = (new FhirXmlParser()).Parse<CarePlan>(careplanXml);
             Assert.IsNotNull(careplan);
-            var careplanSD = source.FindStructureDefinitionForCoreType(FHIRDefinedType.CarePlan);
+            var careplanSd = _source.FindStructureDefinitionForCoreType(FHIRDefinedType.CarePlan);
 
-            var report = validator.Validate(careplanSD, careplan);
+            var report = _validator.Validate(careplan, careplanSd);
             Assert.IsTrue(report.Success);
-            Assert.AreEqual(4, report.Warnings);            // 4x missing xhtml
+            Assert.AreEqual(46, report.Warnings);            // 4x missing xhtml + 42 missing bindings
         }
 
 
@@ -377,31 +369,92 @@ namespace Hl7.Fhir.Validation
         }
 
         [TestMethod]
-        public void TriggerFPValidationError()
+        public void TriggerFpValidationError()
         {
             // pat-1: SHALL at least contain a contact's details or a reference to an organization (xpath: f:name or f:telecom or f:address or f:organization)
             var p = new Patient();
 
             p.Active = true;
 
-            var report = validator.Validate(p);
+            var report = _validator.Validate(p);
             Assert.IsTrue(report.Success);
 
             p.Contact.Add(new Patient.ContactComponent { Gender = AdministrativeGender.Male });
 
-            report = validator.Validate(p);
+            report = _validator.Validate(p);
             Assert.IsFalse(report.Success);
 
-            validator.ValidationContext.SkipConstraintValidation = true;
-            report = validator.Validate(p);
+            _validator.Settings.SkipConstraintValidation = true;
+            report = _validator.Validate(p);
             Assert.IsTrue(report.Success);
 
-            validator.ValidationContext.SkipConstraintValidation = false;
+            _validator.Settings.SkipConstraintValidation = false;
 
             p.Contact.First().Address = new Address() { City = "Amsterdam" };
 
-            report = validator.Validate(p);
+            report = _validator.Validate(p);
             Assert.IsTrue(report.Success);
         }
+
+
+        [TestMethod]
+        public void ValidateBundle()
+        {
+            var bundleXml = File.ReadAllText("TestData\\validation\\bundle-contained-references.xml");
+
+            var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
+            Assert.IsNotNull(bundle);
+
+            var ctx = new ValidationSettings() { ResourceResolver = _source, GenerateSnapshot = true, ResolveExteralReferences=true, Trace = false };
+            bool hitResolution = false;
+
+            _validator = new Validator(ctx);
+            _validator.OnExternalResolutionNeeded += (s, a) => hitResolution = true;
+
+            var report = _validator.Validate(bundle);
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(2, report.Warnings);            // 1 unresolvable reference + 1 binding
+            Assert.IsTrue(hitResolution);
+
+            report = _validator.Validate(bundle, "http://validationtest.org/fhir/StructureDefinition/BundleWithContainedEntries");
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(2, report.Warnings);            // 1 unresolvable reference + 1 binding
+            Assert.AreEqual(4, report.Errors);            // 4 non-contained references
+
+            report = _validator.Validate(bundle, "http://validationtest.org/fhir/StructureDefinition/BundleWithContainedBundledEntries");
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(2, report.Warnings);            // 1 unresolvable reference + 1 binding
+            Assert.AreEqual(1, report.Errors);            // 1 external reference
+
+            report = _validator.Validate(bundle, "http://validationtest.org/fhir/StructureDefinition/BundleWithBundledEntries");
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(2, report.Warnings);            // 1 unresolvable reference + 1 binding
+            Assert.AreEqual(2, report.Errors);            // 1 external reference, 1 contained reference
+
+            report = _validator.Validate(bundle, "http://validationtest.org/fhir/StructureDefinition/BundleWithReferencedEntries");
+            Assert.IsFalse(report.Success);
+            Assert.AreEqual(2, report.Warnings);            // 1 unresolvable reference + 1 binding
+            Assert.AreEqual(4, report.Errors);            // 3 bundled reference, 1 contained reference
+        }
+
+        [TestMethod]
+        public void RunXsdValidation()
+        {
+            var careplanXml = File.ReadAllText("TestData\\validation\\careplan-example-integrated.xml");
+            var cpDoc = XDocument.Parse(careplanXml, LoadOptions.SetLineInfo);
+
+            var report = _validator.Validate(cpDoc.CreateReader());
+            Assert.IsTrue(report.Success);
+            Assert.AreEqual(46, report.Warnings);            // 4x missing xhtml + many "binding not supported"
+
+            // Damage the document by removing the mandated 'status' element
+            cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();
+
+            report = _validator.Validate(cpDoc.CreateReader());
+            Assert.IsFalse(report.Success);
+            Assert.IsTrue(report.ToString().Contains(".NET Xsd validation"));
+        }
+
     }
 }
+

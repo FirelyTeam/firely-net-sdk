@@ -8,7 +8,6 @@
 
 using Hl7.ElementModel;
 using Hl7.Fhir.FluentPath;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
@@ -20,103 +19,104 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Time = Hl7.FluentPath.Time;
 
 namespace Hl7.Fhir.Validation
 {
-    public class OnSnapshotNeededEventArgs : EventArgs
-    {
-        public OnSnapshotNeededEventArgs(StructureDefinition definition, IResourceResolver resolver)
-        {
-            Definition = definition;
-            Resolver = resolver;
-        }
-
-        public StructureDefinition Definition { get; private set; }
-
-        public IResourceResolver Resolver { get; private set; }
-    }
-
-
-    /// <summary>
-    /// TODO: When an extension is used in an instance (not necessarily mandated by the profile I am validating against), I should still trace
-    /// the Extension.url to validate it
-    /// </summary>
     public class Validator
     {
-        public ValidationContext ValidationContext { get; private set;  }
-            
+        public ValidationSettings Settings { get; private set; }
+
         public event EventHandler<OnSnapshotNeededEventArgs> OnSnapshotNeeded;
+        public event EventHandler<OnResolveResourceReferenceEventArgs> OnExternalResolutionNeeded;
 
-        private Stack<IElementNavigator> FluentPathContext = new Stack<IElementNavigator>();
-
-
-        public Validator(ValidationContext context)
+        internal ScopeTracker ScopeTracker = new ScopeTracker();  
+        public Validator(ValidationSettings settings)
         {
-            ValidationContext = context;
+            Settings = settings;
         }
 
-        public OperationOutcome Validate(string definitionUri, IElementNavigator instance)
+        public Validator() : this(ValidationSettings.Default)
         {
-            if (definitionUri == null) throw Error.ArgumentNull("definitionUri");
 
-            var outcome = new OperationOutcome();
-
-            StructureDefinition structureDefinition = ValidationContext.ResourceResolver.FindStructureDefinition(definitionUri);
-
-            if (outcome.Verify(() => structureDefinition != null, "Unable to resolve reference to profile '{0}'".FormatWith(definitionUri), Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance))
-                outcome.Add(Validate(structureDefinition, instance));
-
-            return outcome;
         }
 
-        public OperationOutcome Validate(IEnumerable<string> definitionUris, IElementNavigator instance, BatchValidationMode mode)
+        public OperationOutcome Validate(IElementNavigator instance)
         {
-            List<OperationOutcome> outcomes = new List<OperationOutcome>();
+            var profiles = instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>().ToList();
+
+            // If the Meta.profile specifies any profiles, use those, else use the base FHIR core profile for the type
+            if (profiles.Any())
+            {
+                return Validate(instance, profiles);
+            }
+            else
+            {
+                var uri = ModelInfo.CanonicalUriForFhirCoreType(instance.TypeName);
+                return Validate(instance, uri);
+            }
+        }
+
+        public OperationOutcome Validate(IElementNavigator instance, params string[] definitionUris)
+        {
+            return Validate(instance, (IEnumerable<string>)definitionUris);
+        }
+
+        public OperationOutcome Validate(IElementNavigator instance, IEnumerable<string> definitionUris)
+        {
+            var result = new OperationOutcome();
+            var sds = new List<StructureDefinition>();
 
             foreach (var uri in definitionUris)
-                outcomes.Add(Validate(uri, instance));
-
-            var outcome = new OperationOutcome();
-            outcome.Combine(outcomes, instance, mode);
-
-            return outcome;
-        }
-
-
-
-        public OperationOutcome Validate(IEnumerable<StructureDefinition> structureDefinitions, IElementNavigator instance, BatchValidationMode mode)
-        {
-            List<OperationOutcome> outcomes = new List<OperationOutcome>();
-
-            foreach (var sd in structureDefinitions)
-                outcomes.Add(Validate(sd, instance));
-
-            var outcome = new OperationOutcome();
-            outcome.Combine(outcomes, instance, mode);
-
-            return outcome;
-        }
-
-
-        public OperationOutcome Validate(StructureDefinition structureDefinition, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-
-            if (!structureDefinition.HasSnapshot && ValidationContext.ResourceResolver != null)
             {
-                // Note: this modifies an SD that is passed to us. If this comes from a cache that's
-                // kept across processes, this could mean trouble, so clone it first
-                structureDefinition = (StructureDefinition)structureDefinition.DeepCopy();
+                StructureDefinition structureDefinition = Settings.ResourceResolver.FindStructureDefinition(uri);
 
-                // We'll call out to an external component, so catch any exceptions and include them in our report
+                if (result.Verify(() => structureDefinition != null, $"Unable to resolve reference to profile '{uri}'", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance))
+                    sds.Add(structureDefinition);
+            }
+
+            result.Add(Validate(instance, sds));
+            return result;
+        }
+
+        public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
+        {
+            if (structureDefinitions.Count() == 1)
+                return Validate(instance, structureDefinitions.Single());
+            else
+            {
+                var validators = structureDefinitions.Select(sd => createValidator(sd, instance));
+                return this.Combine(BatchValidationMode.All, instance, validators);
+            }
+        }
+
+        private Func<OperationOutcome> createValidator(StructureDefinition sd, IElementNavigator instance)
+        {
+            return () => Validate(instance, sd);
+        }
+
+        public OperationOutcome Validate(IElementNavigator instance, StructureDefinition structureDefinition)
+        {
+            // New validation -> reset scope
+            //this.ScopeTracker = new ScopeTracker();
+
+            var outcome = new OperationOutcome();
+
+            if (!structureDefinition.HasSnapshot)
+            {
+                // Note: this modifies an SD that is passed to us and will alter a possibly cached
+                // object shared amongst other threads. This is generally useful and saves considerable
+                // time when the same snapshot is needed again, but may result in side-effects
+
                 try
                 {
-                    SnapshotNeeded(structureDefinition, ValidationContext.ResourceResolver);
+                    // We'll call out to an external component, so catch any exceptions and include them in our report
+                    SnapshotNeeded(structureDefinition);
                 }
                 catch (Exception e)
                 {
-                    Trace(outcome, "Snapshot generation failed for {0}. Message: {1}"
-                           .FormatWith(structureDefinition.Url, e.Message), Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, instance);
+                    Trace(outcome, $"Snapshot generation failed for {structureDefinition.Url}. Message: {e.Message}",
+                           Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, instance);
                 }
             }
 
@@ -137,41 +137,39 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal OperationOutcome ValidateElement(IEnumerable<ElementDefinitionNavigator> definitions, IElementNavigator instance, BatchValidationMode mode)
-        {
-            List<OperationOutcome> outcomes = new List<OperationOutcome>();
-
-            foreach (var def in definitions)
-                outcomes.Add(ValidateElement(def, instance));
-
-            var outcome = new OperationOutcome();
-            outcome.Combine(outcomes, instance, mode);
-
-            return outcome;
-        }
-
-
+     
         internal OperationOutcome ValidateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
-            bool isNewFPContext = definition.StructureDefinition.Kind == StructureDefinition.StructureDefinitionKind.Resource &&
-                                        definition.Current.IsRootElement();
 
             try
             {
                 Trace(outcome, "Start validation of ElementDefinition at path '{0}'".FormatWith(definition.QualifiedDefinitionPath()), Issue.PROCESSING_PROGRESS, instance);
 
-                if (isNewFPContext)
-                {
-                    Trace(outcome, "Enter validation context (type {0})".FormatWith(instance.TypeName), Issue.PROCESSING_PROGRESS, instance);
-                    FluentPathContext.Push(instance);
-                }
+                ScopeTracker.Enter(instance);
 
                 // Any node must either have a value, or children, or both (e.g. extensions on primitives)
                 if (!outcome.Verify(() => instance.Value != null || instance.HasChildren(), "Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance))
                     return outcome;
 
                 var elementConstraints = definition.Current;
+
+                // First, a basic check: is the instance type equal to the defined type
+                // Only do this when the underlying navigator has supplied a type (from the serialization)
+                if (instance.TypeName != null && elementConstraints.IsRootElement() && definition.StructureDefinition != null && definition.StructureDefinition.Id != null)
+                {
+                    var expected = definition.StructureDefinition.Id;
+
+                    if (!ModelInfo.IsCoreModelType(expected) || ModelInfo.IsProfiledQuantity(expected))
+                        expected = definition.StructureDefinition.ConstrainedType?.ToString();
+
+                    if (expected != null)
+                    {
+                        if (!outcome.Verify(() => instance.TypeName == expected, $"Type mismatch: instance value is of type '{instance.TypeName}', " +
+                                $"expected type '{expected}'", Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance))
+                            return outcome;     // Type mismatch, no use continuing validation
+                    }
+                }
 
                 if (elementConstraints.IsPrimitiveValueConstraint())
                 {
@@ -184,6 +182,7 @@ namespace Hl7.Fhir.Validation
                 {
                     // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
                     // so there's no point in also validating the <type> or <nameReference>
+                    // TODO: Check whether this is even true when the <type> has a profile?
                     outcome.Add(this.ValidateChildConstraints(definition, instance));
                 }
                 else
@@ -192,32 +191,28 @@ namespace Hl7.Fhir.Validation
                     if (outcome.Verify(() => elementConstraints.Type != null || elementConstraints.NameReference != null,
                             "ElementDefinition has no child, nor does it specify a type or nameReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance))
                     {
-                        outcome.Add(ValidateType(elementConstraints, instance));
+                        outcome.Add(this.ValidateType(elementConstraints, instance));
                         outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
                     }
                 }
 
                 outcome.Add(ValidateSlices(definition, instance));
-                // Min/max (cardinality) has been validated by parent, we cannot know down here
+
                 outcome.Add(this.ValidateFixed(elementConstraints, instance));
                 outcome.Add(this.ValidatePattern(elementConstraints, instance));
-                outcome.Add(ValidateMinValue(elementConstraints, instance));
-                // outcome.Add(ValidateMaxValue(elementConstraints, instance));
+                outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
                 outcome.Add(ValidateMaxLength(elementConstraints, instance));
-
-                // Validate Binding
-
                 outcome.Add(ValidateConstraints(elementConstraints, instance));
+                outcome.Add(ValidateBinding(elementConstraints, instance));
+
+                // If the report only has partial information, no use to show the hierarchy, so flatten it.
+                if (Settings.Trace == false) outcome.Flatten();
 
                 return outcome;
             }
             finally
             {
-                if (isNewFPContext)
-                {
-                    var context = FluentPathContext.Pop();
-                    Trace(outcome, "Leave validation context (type {0})".FormatWith(context.TypeName), Issue.PROCESSING_PROGRESS, instance);                    
-                }
+                ScopeTracker.Leave(instance);
             }
         }
 
@@ -226,8 +221,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            var context = FluentPathContext.Any() ? FluentPathContext.Peek() : null;
-
+            var context = ScopeTracker.ResourceContext(instance);
 
             // <constraint>
             //  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
@@ -243,10 +237,10 @@ namespace Hl7.Fhir.Validation
             foreach (var constraintElement in definition.Constraint)
             {
                 var fpExpression = constraintElement.GetFluentPathConstraint();
-                if(outcome.Verify(() => fpExpression != null, "Encountered an invariant ({0}) that has no FluentPath expression, skipping validation of this constraint"
+                if (outcome.Verify(() => fpExpression != null, "Encountered an invariant ({0}) that has no FluentPath expression, skipping validation of this constraint"
                             .FormatWith(constraintElement.Key), Issue.UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH, instance))
                 {
-                    if (ValidationContext.SkipConstraintValidation)
+                    if (Settings.SkipConstraintValidation)
                         outcome.Verify(() => true, "Instance was not validated against invariant {0}, because constraint validation is disabled", Issue.PROCESSING_CONSTRAINT_VALIDATION_INACTIVE, instance);
                     else
                     {
@@ -272,7 +266,7 @@ namespace Hl7.Fhir.Validation
                     }
                 }
             }
-        
+
             return outcome;
         }
 
@@ -290,6 +284,24 @@ namespace Hl7.Fhir.Validation
                 // For now, we do not handle slices
                 outcome.Verify(() => definition.Current.Slicing == null, "ElementDefinition uses slicing, which is not yet supported. Instance has not been validated against " +
                             "any of the slices", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance);
+            }
+
+            return outcome;
+        }
+
+
+        internal OperationOutcome ValidateBinding(ElementDefinition definition, IElementNavigator instance)
+        {
+            var outcome = new OperationOutcome();
+
+            if (definition.Binding != null)
+            {
+                var binding = definition.Binding;
+                var shouldCheck = binding.Strength == BindingStrength.Required || binding.Strength == BindingStrength.Preferred;
+
+                if(shouldCheck)
+                    outcome.Info("ElementDefinition has a binding, which is not yet supported. Instance has not been validated against this binding",
+                        Issue.UNSUPPORTED_BINDING_NOT_SUPPORTED, instance);
             }
 
             return outcome;
@@ -315,87 +327,8 @@ namespace Hl7.Fhir.Validation
 
             return outcome;
         }
-
-        internal OperationOutcome ValidateType(ElementDefinition definition, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-
-            Trace(outcome, "Validating against constraints specified by the element's defined type", Issue.PROCESSING_PROGRESS, instance);
-
-            outcome.Verify(() => !definition.Type.Select(tr => tr.Code).Contains(null), "ElementDefinition contains a type with an empty type code", Issue.PROFILE_ELEMENTDEF_CONTAINS_NULL_TYPE, instance);
-
-            // Check if this is a choice: there are multiple distinct Codes to choose from
-            var types = definition.Type.Where(tr => tr.Code != null);
-            var choices = types.Select(tr => tr.Code.Value).Distinct();
-            var hasPolymorphicType = choices.Any(tr => ModelInfo.IsCoreSuperType(tr));       // typerefs like Resource, Element are actually a choice
-
-            if (choices.Count() > 1 || hasPolymorphicType)
-            {
-                if (outcome.Verify(() => instance.TypeName != null, "ElementDefinition is a choice or contains a polymorphic type constraint, but the instance does not indicate its actual type",
-                    Issue.CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE, instance))
-                {
-                    // This is a choice type, find out what type is present in the instance data
-                    // (e.g. deceased[Boolean], or _resourceType in json). This is exposed by IElementNavigator.TypeName.
-                    var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.TypeName);
-                    if (outcome.Verify(() => instanceType != null, "Instance indicates the element is of type '{0}', which is not a known FHIR core type."
-                                .FormatWith(instance.TypeName), Issue.CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE, instance))
-                    {
-                        var applicableChoices = types.Where(tr => ModelInfo.IsInstanceTypeFor(tr.Code.Value, instanceType.Value));
-
-                        // Instance typename must be one of the applicable types in the choice
-                        if (outcome.Verify(() => applicableChoices.Any(), "Type specified in the instance ('{0}') is not one of the allowed choices ({1})"
-                                    .FormatWith(instance.TypeName, String.Join(",", choices.Select(t => "'" + t.GetLiteral() + "'"))), Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance))
-                        {
-                            var actualChoices = applicableChoices;
-
-                            if (hasPolymorphicType)
-                            {
-                                // Now, rewrite the typerefs to validate so it will always contain the actual instance type instead of the
-                                // abstract super type, e.g. validate Patient, not Resource if the instance is a Patient.
-                                actualChoices = applicableChoices
-                                    .Select(tr => new ElementDefinition.TypeRefComponent { Code = instanceType, Profile = tr.Profile });
-
-                            }
-
-                            outcome.Include(ValidateTypeReferences(actualChoices, instance));
-                        }
-                    }
-                }
-            }
-            else if (choices.Count() == 1)
-            {
-                // Only one type present in list of typerefs, all of the typerefs are candidates
-                outcome.Include(ValidateTypeReferences(types, instance));
-            }
-
-            return outcome;
-        }
-
-
-        internal OperationOutcome ValidateTypeReferences(IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-            var normalUris = typeRefs.Where(tr => tr.Code !=  FHIRDefinedType.Reference).Select(tr => tr.ProfileUri());
-            var referenceUris = typeRefs.Where(tr => tr.Code == FHIRDefinedType.Reference).Select(tr => tr.ProfileUri());
-
-            if(referenceUris.Any() && ValidationContext.ValidateReferencedResources != ReferenceKind.None)
-            {
-                //TODO: 1) Create a new Validator, pass it our context
-                // 2) Use an event or resolution mechanism to fetch the resource and determine the kind of reference
-                // 3) Validate the kind of reference to the aggregation mode
-                // 4) Start validation of the referenced resource
-                outcome.Verify(() => true, "Validator does not yet support following references", Issue.UNSUPPORTED_FOLLOWING_REFERENCES, instance);
-            }
- 
-            if(normalUris.Any())
-            {
-                outcome.Add(Validate(normalUris, instance, BatchValidationMode.Any));
-            }
-
-            return outcome;
-        }
-
-        public OperationOutcome VerifyPrimitiveContents(ElementDefinition definition, IElementNavigator instance)
+        
+        internal OperationOutcome VerifyPrimitiveContents(ElementDefinition definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
 
@@ -431,66 +364,6 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
-        {
-            if (ValidationContext.Trace)
-                outcome.Info(message, issue, location);
-        }
-
-        private string toStringRepresentation(IValueProvider vp)
-        {
-            if (vp == null || vp.Value == null) return null;
-
-            var val = vp.Value;
-
-            if (val is string)
-                return (string)val;
-            else if (val is long)
-                return XmlConvert.ToString((long)val);
-            else if (val is decimal)
-                return XmlConvert.ToString((decimal)val);
-            else if (val is bool)
-                return (bool)val ? "true" : "false";
-            else if (val is Hl7.FluentPath.Time)
-                return ((Hl7.FluentPath.Time)val).ToString();
-            else if (val is Hl7.FluentPath.PartialDateTime)
-                return ((Hl7.FluentPath.PartialDateTime)val).ToString();
-            else
-                return val.ToString();
-        }
-
-
-        internal OperationOutcome ValidateMinValue(ElementDefinition definition, IElementNavigator instance)
-        {
-            var outcome = new OperationOutcome();
-            if (definition.MinValue != null)
-            {
-                // Min/max are only defined for ordered types
-                if (outcome.Verify(() => definition.MinValue.GetType().IsOrderedFhirType(),
-                    "MinValue was given in ElementDefinition, but type '{0}' is not an ordered type".FormatWith(definition.MinValue.TypeName),
-                    Issue.PROFILE_ELEMENTDEF_MIN_USES_UNORDERED_TYPE, instance))
-                {
-                    //TODO: Define <=, >= on FHIR types and use these
-                    //No, use "the" complex types (currently from the FP assembly), so read them into FluentPath.DateTime, then compare.
-                    //
-                    // return Definition.MinValue <= constructedValueFromNavigator
-                    // Or assume acutal implementer of interface is PocoNavigator and get value from there
-                    // Or just use Value and not support Quantity ;-)
-                }
-            }
-
-            return outcome;
-        }
-
-        // return t == typeof(FhirDateTime) ||
-        //t == typeof(Date) ||
-        //t == typeof(Instant) ||
-        //t == typeof(Model.Time) ||
-        //t == typeof(FhirDecimal) ||
-        //t == typeof(Integer) ||
-        //t == typeof(Quantity) ||
-        //t == typeof(FhirString);
-
 
         internal OperationOutcome ValidateMaxLength(ElementDefinition definition, IElementNavigator instance)
         {
@@ -517,24 +390,77 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal void SnapshotNeeded(StructureDefinition definition, IResourceResolver resolver)
+
+        internal void Trace(OperationOutcome outcome, string message, Issue issue, IElementNavigator location)
         {
+            if (Settings.Trace || issue.Severity != OperationOutcome.IssueSeverity.Information)
+                outcome.Info(message, issue, location);
+        }
+
+        private string toStringRepresentation(IValueProvider vp)
+        {
+            if (vp == null || vp.Value == null) return null;
+
+            var val = vp.Value;
+
+            if (val is string)
+                return (string)val;
+            else if (val is long)
+                return XmlConvert.ToString((long)val);
+            else if (val is decimal)
+                return XmlConvert.ToString((decimal)val);
+            else if (val is bool)
+                return (bool)val ? "true" : "false";
+            else if (val is Hl7.FluentPath.Time)
+                return ((Hl7.FluentPath.Time)val).ToString();
+            else if (val is Hl7.FluentPath.PartialDateTime)
+                return ((Hl7.FluentPath.PartialDateTime)val).ToString();
+            else
+                return val.ToString();
+        }
+
+        internal IElementNavigator ExternalReferenceResolutionNeeded(string reference)
+        {
+            if (!Settings.ResolveExteralReferences) return null;
+
+
+            // Default implementation: call event
+            if (OnExternalResolutionNeeded != null)
+            {
+                var args = new OnResolveResourceReferenceEventArgs(reference);
+                OnExternalResolutionNeeded(this, args);
+                return args.Result;
+            }
+
+            // Else, try to resolve using the given ResourceResolver
+            if (Settings.ResourceResolver != null)
+            {
+                return new PocoNavigator(Settings.ResourceResolver.ResolveByUri(reference));
+            }
+
+            return null;        // Sorry, nothing worked
+        }
+
+        internal void SnapshotNeeded(StructureDefinition definition)
+        {
+            if (!Settings.GenerateSnapshot) return;
+
             // Default implementation: call event
             if (OnSnapshotNeeded != null)
             {
-                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, resolver));
+                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, Settings.ResourceResolver));
                 return;
             }
 
             // Else, expand, depending on our configuration
-            if (ValidationContext.GenerateSnapshot)
+            if (Settings.ResourceResolver != null)
             {
-                SnapshotGeneratorSettings settings = ValidationContext.GenerateSnapshotSettings;
+                SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings;
 
                 if (settings == null)
                     settings = SnapshotGeneratorSettings.Default;
 
-                var gen = new SnapshotGenerator(resolver, settings);
+                var gen = new SnapshotGenerator(Settings.ResourceResolver, settings);
                 gen.Update(definition);
             }
         }
@@ -553,53 +479,42 @@ namespace Hl7.Fhir.Validation
                    t == typeof(Model.Time) ||
                    t == typeof(FhirDecimal) ||
                    t == typeof(Integer) ||
-                   t == typeof(Quantity) ||
+                   t == typeof(Model.Quantity) ||
                    t == typeof(FhirString);
         }
     }
 
-    internal static class ElementDefinitionNavigatorExtensions
+
+    public class OnSnapshotNeededEventArgs : EventArgs
     {
-        public static string GetFluentPathConstraint(this ElementDefinition.ConstraintComponent cc)
+        public OnSnapshotNeededEventArgs(StructureDefinition definition, IResourceResolver resolver)
         {
-            return cc.GetStringExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-expression");
+            Definition = definition;
+            Resolver = resolver;
         }
 
-        public static bool IsPrimitiveValueConstraint(this ElementDefinition ed)
-        {
-            var path = ed.Path;
-            return path.Count(c => c == '.') == 1 &&
-                        path.EndsWith(".value") &&
-                        Char.IsLower(path[0]);
-        }
+        public StructureDefinition Definition { get; }
 
-        public static string ConstraintDescription(this ElementDefinition.ConstraintComponent cc)
-        {
-            var desc = cc.Key;
-
-            if (cc.Human != null)
-                desc += " \"" + cc.Human + "\"";
-
-            return desc;
-        }
-
-
-        public static string QualifiedDefinitionPath(this ElementDefinitionNavigator nav)
-        {
-            string path = "";
-
-            if (nav.StructureDefinition != null && nav.StructureDefinition.Url != null)
-                path = "{" + nav.StructureDefinition.Url + "}";
-
-            path += nav.Path;
-
-            return path;
-        }
+        public IResourceResolver Resolver { get; }
     }
+
+    public class OnResolveResourceReferenceEventArgs : EventArgs
+    {
+        public OnResolveResourceReferenceEventArgs(string reference)
+        {
+            Reference = reference;
+        }
+
+        public string Reference { get; }
+
+        public IElementNavigator Result { get; set; }
+    }
+
 
     public enum BatchValidationMode
     {
         All,
-        Any
+        Any,
+        Once
     }
 }

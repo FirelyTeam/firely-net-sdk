@@ -117,6 +117,11 @@
     </div>
   </text>
   <contained>
+    <Patient>
+      <id value="patient1"/>
+    </Patient>
+  </contained>
+  <contained>
     <!--  Conditions could be further encoded and detailed.  
       Could also be handled as references to external resources.
       And not essential to have them captured at all.
@@ -124,7 +129,7 @@
     <Condition>
       <id value="p1"/>
       <patient>
-        <reference value="Patient/1"/>
+        <reference value="#patient1"/>
         <display value="Eve Everywoman"/>
       </patient>
       <code>
@@ -137,7 +142,7 @@
     <Condition>
       <id value="p2"/>
       <patient>
-        <reference value="Patient/1"/>
+        <reference value="#patient1"/>
         <display value="Eve Everywoman"/>
       </patient>
       <code>
@@ -150,7 +155,7 @@
     <Condition>
       <id value="p3"/>
       <patient>
-        <reference value="Patient/1"/>
+        <reference value="#patient1"/>
         <display value="Eve Everywoman"/>
       </patient>
       <code>
@@ -163,7 +168,7 @@
     <Goal>
       <id value="g1"/>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="#patient1"/>
         <display value="Eve Everywoman"/>
       </subject>
       <description value="Eve will lose weight and reduce her GERDS symptoms by improving her diet"/>
@@ -174,7 +179,7 @@
     <Goal>
       <id value="g2"/>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="#patient1"/>
         <display value="Eve Everywoman"/>
       </subject>
       <description value="Eve will improve her GERDS symptoms"/>
@@ -185,7 +190,7 @@
     <Goal>
       <id value="g3"/>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="#patient1"/>
         <display value="Eve Everywoman"/>
       </subject>
       <description value="Eve will increase her energy by being more active"/>
@@ -196,7 +201,7 @@
     <Goal>
       <id value="g4"/>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="#patient1"/>
         <display value="Eve Everywoman"/>
       </subject>
       <description value="Eve will set up her medications and take as prescribed"/>
@@ -207,7 +212,7 @@
     <Goal>
       <id value="g5"/>
       <subject>
-        <reference value="Patient/1"/>
+        <reference value="#patient1"/>
         <display value="Eve Everywoman"/>
       </subject>
       <description value="Eve will restart her light treatments"/>
@@ -215,7 +220,7 @@
     </Goal>
   </contained>
   <subject>
-    <reference value="Patient/1"/>
+    <reference value="#patient1"/>
     <display value="Eve Everywoman"/>
   </subject>
   <status value="active"/>
