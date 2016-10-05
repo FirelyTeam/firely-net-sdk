@@ -42,6 +42,8 @@ namespace Hl7.Fhir.Model
         List<ElementDefinition> Element { get; set; }
     }
 
+    // [WMR 20161005] Added specific debugger display attribute that includes the canonical url
+    [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}} Url={Url}")]
     public partial class StructureDefinition
     {
         public partial class SnapshotComponent : IElementList {}
