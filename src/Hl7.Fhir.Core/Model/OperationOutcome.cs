@@ -51,25 +51,22 @@ namespace Hl7.Fhir.Model
                 return Text.Div;
             }
 
+            var text = Success ?
+                "Overall result: SUCCESS" + Environment.NewLine :
+                $"Overall result: FAILURE ({Errors + Fatals} errors and {Warnings} warnings)" + Environment.NewLine;
+
             if (Issue.Any())
             {
-                var text = "";
+                text += Environment.NewLine;
 
                 foreach (var issue in Issue)
                 {
                     var indent = new string(' ', issue.HierarchyLevel * 2);
                     text += indent + issue.ToString() + Environment.NewLine;
                 }
-
-                if (Success)
-                    text += "Overall result: SUCCESS" + Environment.NewLine;
-                else
-                    text += $"Overall result: FAILURE ({Errors} errors and {Warnings} warnings)" + Environment.NewLine;
-
-                return text;
             }
 
-            return "(no outcomes to report)";
+            return text;
         }
 
         [NotMapped]

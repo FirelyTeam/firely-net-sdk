@@ -72,12 +72,18 @@ namespace Hl7.Fhir.Validation
 
         internal static OperationOutcome ValidatedParseXml(this Validator me, XmlReader instance, out Resource poco)
         {
-            var doc = XDocument.Load(instance, LoadOptions.SetLineInfo);
-            var result = me.ValidateXml(doc);
+            var result = new OperationOutcome();
+
+            if (me.Settings.EnableXsdValidation)
+            {
+                var doc = XDocument.Load(instance, LoadOptions.SetLineInfo);
+                result.Add(me.ValidateXml(doc));
+                instance = doc.CreateReader();
+            }
 
             try
             {
-                poco = (Resource)(new FhirXmlParser()).Parse(doc.ToString(), typeof(Resource));
+                poco = (Resource)(new FhirXmlParser()).Parse(instance, typeof(Resource));
             }
             catch(Exception e)
             {
@@ -94,11 +100,8 @@ namespace Hl7.Fhir.Validation
         {
             var result = new OperationOutcome();
 
-            if (me.Settings.EnableXsdValidation)
-            {
-                ValidationEventHandler veh = (o, args) => result.AddIssue(ToIssueComponent(args));
-                instance.Validate(SchemaCollection.ValidationSchemaSet, veh);
-            }
+            ValidationEventHandler veh = (o, args) => result.AddIssue(ToIssueComponent(args));
+            instance.Validate(SchemaCollection.ValidationSchemaSet, veh);
 
             return result;
         }

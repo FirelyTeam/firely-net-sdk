@@ -68,24 +68,34 @@ namespace Hl7.Fhir.FluentPath
                 if (_string != null)
                     return _string;
 
-                if (_pocoElement is FhirDateTime)
-                    return ((FhirDateTime)_pocoElement).ToPartialDateTime();
-                else if (_pocoElement is Hl7.Fhir.Model.Time)
-                    return ((Hl7.Fhir.Model.Time)_pocoElement).ToTime();
-                else if ((_pocoElement is Hl7.Fhir.Model.Date))
-                    return (((Hl7.Fhir.Model.Date)_pocoElement).ToPartialDateTime());
-                else if (_pocoElement is Hl7.Fhir.Model.Instant)
-                    return ((Hl7.Fhir.Model.Instant)_pocoElement).ToPartialDateTime();
-                else if ((_pocoElement is Integer))
+                try
                 {
-                    if ((_pocoElement as Integer).Value.HasValue)
-                        return (long)(_pocoElement as Integer).Value.Value;
-                    return null;
+                    if (_pocoElement is FhirDateTime)
+                        return ((FhirDateTime)_pocoElement).ToPartialDateTime();
+                    else if (_pocoElement is Hl7.Fhir.Model.Time)
+                        return ((Hl7.Fhir.Model.Time)_pocoElement).ToTime();
+                    else if ((_pocoElement is Hl7.Fhir.Model.Date))
+                        return (((Hl7.Fhir.Model.Date)_pocoElement).ToPartialDateTime());
+                    else if (_pocoElement is Hl7.Fhir.Model.Instant)
+                        return ((Hl7.Fhir.Model.Instant)_pocoElement).ToPartialDateTime();
+                    else if ((_pocoElement is Integer))
+                    {
+                        if ((_pocoElement as Integer).Value.HasValue)
+                            return (long)(_pocoElement as Integer).Value.Value;
+                        return null;
+                    }
+                    else if (_pocoElement is Primitive)
+                        return ((Primitive)_pocoElement).ObjectValue;
+                    else
+                        return null;
                 }
-                else if (_pocoElement is Primitive)
-                    return ((Primitive)_pocoElement).ObjectValue;
-                else
-                    return null;
+                catch(FormatException fe)
+                {
+                    // If it fails, just return the unparsed shit
+                    // Todo: add sentinel class!
+                    return (_pocoElement as Primitive)?.ObjectValue;
+                }
+
             }
         }
 

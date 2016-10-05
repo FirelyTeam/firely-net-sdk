@@ -97,6 +97,20 @@ namespace Hl7.Fhir.Validation
 
         public OperationOutcome Validate(IElementNavigator instance, StructureDefinition structureDefinition)
         {
+            try
+            {
+                return internalValidate(instance, structureDefinition);
+            }
+            catch(Exception e)
+            {
+                var outcome = new OperationOutcome();
+                outcome.Info($"Internal logic failure: {e.Message}", Issue.PROCESSING_CATASTROPHIC_FAILURE, instance);
+                return outcome; 
+            }
+        }
+
+        private OperationOutcome internalValidate(IElementNavigator instance, StructureDefinition structureDefinition)
+        {
             // New validation -> reset scope
             //this.ScopeTracker = new ScopeTracker();
 
@@ -137,7 +151,6 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-     
         internal OperationOutcome ValidateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();

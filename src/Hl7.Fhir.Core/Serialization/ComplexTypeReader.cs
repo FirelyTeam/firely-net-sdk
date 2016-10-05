@@ -90,12 +90,17 @@ namespace Hl7.Fhir.Serialization
 
                     // For primitive members we can save time by not calling the getter
                     if (!mappedProperty.IsPrimitive)
+                    {
                         value = mappedProperty.GetValue(existing);
+
+                        if (value != null && !mappedProperty.IsCollection)
+                            throw Error.Format($"Element '{mappedProperty.Name}' must not repeat", _current);
+                    }
 
                     var reader = new DispatchingReader(memberData.Item2, Settings, arrayMode: false);
                     value = reader.Deserialize(mappedProperty, memberName, value);
 
-                    if(mappedProperty.RepresentsValueElement && mappedProperty.ElementType.IsEnum() && value is String)
+                    if (mappedProperty.RepresentsValueElement && mappedProperty.ElementType.IsEnum() && value is String)
                     {
                         if (!Settings.AllowUnrecognizedEnums)
                         {
@@ -104,12 +109,14 @@ namespace Hl7.Fhir.Serialization
                         }
 
                         ((Primitive)existing).ObjectValue = value;
-                            //var prop = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
-                            //prop.SetValue(existing, value, null);
-                            //mappedProperty.SetValue(existing, null);                           
+                        //var prop = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
+                        //prop.SetValue(existing, value, null);
+                        //mappedProperty.SetValue(existing, null);                           
                     }
                     else
-                        mappedProperty.SetValue(existing, value);                       
+                    {
+                        mappedProperty.SetValue(existing, value);
+                    }
                 }
                 else
                 {
