@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(2, _report.ListErrors().Count());
             Assert.AreEqual(3, _report.Where(severity: OperationOutcome.IssueSeverity.Warning).Count());
             Assert.AreEqual(2, _report.Where(type: OperationOutcome.IssueType.BusinessRule).Count());
-            Assert.AreEqual(1, _report.Where(issueCode: 2008).Count());
+            Assert.AreEqual(1, _report.Where(issueCode: Issue.PROFILE_ELEMENTDEF_CARDINALITY_MISSING.Code).Count());
             Assert.AreEqual(1, _report.Where(severity: OperationOutcome.IssueSeverity.Warning, type: OperationOutcome.IssueType.BusinessRule, issueCode: 2008).Count());
             Assert.AreEqual(0, _report.Where(severity: OperationOutcome.IssueSeverity.Error, type: OperationOutcome.IssueType.BusinessRule, issueCode: 2008).Count());
         }

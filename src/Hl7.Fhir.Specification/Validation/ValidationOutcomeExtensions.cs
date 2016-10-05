@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Validation
 
             if (severity != null) result = result.Where(i => i.Severity == severity);
             if (type != null) result = result.Where(i => i.Code == type);
-            if (issueCode != null) result = result.Where(i => i.Details.IsExactly(Issue.ToCodeableConcept(issueCode.Value)));
+            if (issueCode != null) result = result.Where(i => i.Details.Matches(Issue.ToCodeableConcept(issueCode.Value)));
 
             return result;
         }

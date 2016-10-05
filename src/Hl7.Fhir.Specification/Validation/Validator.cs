@@ -182,6 +182,7 @@ namespace Hl7.Fhir.Validation
                 {
                     // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
                     // so there's no point in also validating the <type> or <nameReference>
+                    // TODO: Check whether this is even true when the <type> has a profile?
                     outcome.Add(this.ValidateChildConstraints(definition, instance));
                 }
                 else
@@ -196,15 +197,13 @@ namespace Hl7.Fhir.Validation
                 }
 
                 outcome.Add(ValidateSlices(definition, instance));
-                // Min/max (cardinality) has been validated by parent, we cannot know down here
+
                 outcome.Add(this.ValidateFixed(elementConstraints, instance));
                 outcome.Add(this.ValidatePattern(elementConstraints, instance));
                 outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
                 outcome.Add(ValidateMaxLength(elementConstraints, instance));
-
-                // Validate Binding
-
                 outcome.Add(ValidateConstraints(elementConstraints, instance));
+                outcome.Add(ValidateBinding(elementConstraints, instance));
 
                 // If the report only has partial information, no use to show the hierarchy, so flatten it.
                 if (Settings.Trace == false) outcome.Flatten();
@@ -285,6 +284,24 @@ namespace Hl7.Fhir.Validation
                 // For now, we do not handle slices
                 outcome.Verify(() => definition.Current.Slicing == null, "ElementDefinition uses slicing, which is not yet supported. Instance has not been validated against " +
                             "any of the slices", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance);
+            }
+
+            return outcome;
+        }
+
+
+        internal OperationOutcome ValidateBinding(ElementDefinition definition, IElementNavigator instance)
+        {
+            var outcome = new OperationOutcome();
+
+            if (definition.Binding != null)
+            {
+                var binding = definition.Binding;
+                var shouldCheck = binding.Strength == BindingStrength.Required || binding.Strength == BindingStrength.Preferred;
+
+                if(shouldCheck)
+                    outcome.Info("ElementDefinition has a binding, which is not yet supported. Instance has not been validated against this binding",
+                        Issue.UNSUPPORTED_BINDING_NOT_SUPPORTED, instance);
             }
 
             return outcome;

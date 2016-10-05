@@ -1251,7 +1251,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Start at root type Element, then expand derived types (recursively)
         // This ensures that we can annotate valid references to base elements (generated previously)
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void TestExpandCoreTypes()
         {
             var result = true;

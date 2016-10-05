@@ -11,6 +11,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Hl7.Fhir.Model;
 using Hl7.ElementModel;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Validation
 {
@@ -32,19 +33,23 @@ namespace Hl7.Fhir.Validation
 
         public OperationOutcome.IssueComponent ToIssueComponent(string message, INamedNode location)
         {
+            if (location == null) throw Error.ArgumentNull(nameof(location));
             return ToIssueComponent(message, location.Path);
         }
 
-        public OperationOutcome.IssueComponent ToIssueComponent(string message, string location)
+        public OperationOutcome.IssueComponent ToIssueComponent(string message, string location = null)
         {
             // https://www.hl7.org/fhir/operationoutcome-definitions.html#OperationOutcome.issue.details
             // Comments: "A human readable description of the error issue SHOULD be placed in details.text."
 
             // var ic = new OperationOutcome.IssueComponent() { Severity = this.Severity, Code = this.Type, Diagnostics = message };
             var ic = new OperationOutcome.IssueComponent() { Severity = this.Severity, Code = this.Type };
-            ic.Details = ToCodeableConcept(message);
 
-            ic.Location = new List<string> { location };
+            if(message != null)
+                ic.Details = ToCodeableConcept(message);
+
+            if(location != null)
+                ic.Location = new List<string> { location };
 
             return ic;
         }
@@ -81,6 +86,7 @@ namespace Hl7.Fhir.Validation
 
         public static readonly Issue XSD_VALIDATION_ERROR = Create(1100, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
         public static readonly Issue XSD_VALIDATION_WARNING = Create(1101, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Invalid);
+        public static readonly Issue XSD_CONTENT_POCO_PARSING_FAILED = Create(1102, OperationOutcome.IssueSeverity.Error, OperationOutcome.IssueType.Invalid);
 
         // Profile problems
         public static readonly Issue PROFILE_ELEMENTDEF_MIN_MAX_USES_UNORDERED_TYPE = Create(2000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
@@ -101,6 +107,7 @@ namespace Hl7.Fhir.Validation
         //public static readonly Issue UNSUPPORTED_FOLLOWING_EXTERNAL_REFERENCES = Create(3002, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.NotSupported);
         public static readonly Issue UNSUPPORTED_CONSTRAINT_WITHOUT_FLUENTPATH = Create(3003, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue UNSUPPORTED_MIN_MAX_QUANTITY = Create(3004, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
+        public static readonly Issue UNSUPPORTED_BINDING_NOT_SUPPORTED = Create(3005, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
 
         // Non-availability, incomplete data
         public static readonly Issue UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE = Create(4000, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);

@@ -27,47 +27,68 @@ namespace Hl7.Fhir.Validation
     {
         public static OperationOutcome Validate(this Validator me, XmlReader instance)
         {
-            var doc = XDocument.Load(instance, LoadOptions.SetLineInfo);
-            var result = me.ValidateXml(doc);
-            
-            var poco = (new FhirXmlParser()).Parse(doc.ToString(), typeof(Resource));
-            result.Add(me.Validate(poco));
+            Resource poco;
+            var result = me.ValidatedParseXml(instance, out poco);
+
+            if (poco != null)
+                result.Add(me.Validate(poco));
 
             return result;
         }
 
         public static OperationOutcome Validate(this Validator me, XmlReader instance, params string[] definitionUris)
         {
-            var doc = XDocument.Load(instance, LoadOptions.SetLineInfo);
-            var result = me.ValidateXml(doc);
+            Resource poco;
+            var result = me.ValidatedParseXml(instance, out poco);
 
-            var poco = (new FhirXmlParser()).Parse(doc.ToString(), typeof(Resource));
-            result.Add(me.Validate(poco, definitionUris));
+            if (poco != null)
+                result.Add(me.Validate(poco, definitionUris));
 
             return result;
         }
 
         public static OperationOutcome Validate(this Validator me, XmlReader instance, StructureDefinition structureDefinition)
         {
-            var doc = XDocument.Load(instance, LoadOptions.SetLineInfo);
-            var result = me.ValidateXml(doc);
+            Resource poco;
+            var result = me.ValidatedParseXml(instance, out poco);
 
-            var poco = (new FhirXmlParser()).Parse(doc.ToString(), typeof(Resource));
-            result.Add(me.Validate(poco, structureDefinition));
+            if (poco != null)
+                result.Add(me.Validate(poco, structureDefinition));
 
             return result;
         }
 
         public static OperationOutcome Validate(this Validator me, XmlReader instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            var doc = XDocument.Load(instance, LoadOptions.SetLineInfo);
-            var result = me.ValidateXml(doc);
+            Resource poco;
+            var result = me.ValidatedParseXml(instance, out poco);
 
-            var poco = (new FhirXmlParser()).Parse(doc.ToString(), typeof(Resource));
-            result.Add(me.Validate(poco, structureDefinitions));
+            if(poco != null)
+                result.Add(me.Validate(poco, structureDefinitions));
 
             return result;
         }
+
+
+        internal static OperationOutcome ValidatedParseXml(this Validator me, XmlReader instance, out Resource poco)
+        {
+            var doc = XDocument.Load(instance, LoadOptions.SetLineInfo);
+            var result = me.ValidateXml(doc);
+
+            try
+            {
+                poco = (Resource)(new FhirXmlParser()).Parse(doc.ToString(), typeof(Resource));
+            }
+            catch(Exception e)
+            {
+                result.Info($"Parsing of Xml into a FHIR Poco failed: {e.Message}", Issue.XSD_CONTENT_POCO_PARSING_FAILED, (string)null);
+                poco = null;
+            }
+
+            return result;
+        }
+
+
 
         internal static OperationOutcome ValidateXml(this Validator me, XDocument instance)
         {
