@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// If the element has a name reference, then merge from the targeted element.
         /// Otherwise, if the element has a custom type profile, then merge it.
         /// </summary>
-        internal bool expandElement(ElementDefinitionNavigator nav)
+        bool expandElement(ElementDefinitionNavigator nav)
         {
             if (nav.Current == null)
             {

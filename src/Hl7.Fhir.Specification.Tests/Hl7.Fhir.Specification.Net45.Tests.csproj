@@ -826,7 +826,7 @@
     <Content Include="TestData\snapshot-test\WMR\MyLocationExtension.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\snapshot-test\WMR\MyObservation.structuredefinition - Copy.xml">
+    <Content Include="TestData\snapshot-test\WMR\MyObservation.structuredefinition.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\snapshot-test\WMR\MyObservation2.structuredefinition.xml">

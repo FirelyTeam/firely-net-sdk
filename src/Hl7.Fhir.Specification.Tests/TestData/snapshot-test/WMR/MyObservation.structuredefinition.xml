@@ -1463,6 +1463,17 @@
       <max value="*" />
       <type>
         <code value="Extension" />
+        <profile value="http://example.org/fhir/StructureDefinition/MyMissingExtension" />
+      </type>
+    </element>
+    <element>
+      <path value="Observation.extension" />
+      <name value="MyExtension" />
+      <definition value="Optional Extensions Element - found in all resources." />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Extension" />
         <profile value="http://example.org/fhir/StructureDefinition/MyExtensionNoSnapshot" />
       </type>
     </element>
