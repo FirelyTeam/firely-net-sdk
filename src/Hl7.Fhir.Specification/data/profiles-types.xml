@@ -540,6 +540,134 @@
     </resource>
   </entry>
   <entry>
+    <fullUrl value="http://hl7.org/fhir/StructureDefinition/xhtml" />
+    <resource>
+      <StructureDefinition>
+        <id value="xhtml" />
+        <meta>
+          <lastUpdated value="2016-08-15T16:12:42.052+10:00" />
+        </meta>
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/StructureDefinition/xhtml" />
+        <name value="xhtml" />
+        <status value="draft" />
+        <publisher value="HL7 FHIR Standard" />
+        <contact>
+          <telecom>
+            <system value="other" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <date value="2016-08-15T16:12:42+10:00" />
+        <description value="Base StructureDefinition for xhtml Type" />
+        <fhirVersion value="1.0.2" />
+        <kind value="datatype" />
+        <abstract value="false" />
+        <base value="http://hl7.org/fhir/StructureDefinition/Element" />
+        <snapshot>
+          <element id="xhtml">
+            <path value="xhtml" />
+            <short value="Primitive Type xhtml" />
+            <definition value="XHTML" />
+            <min value="0" />
+            <max value="*" />
+          </element>
+          <element id="xhtml.id">
+            <path value="xhtml.id" />
+            <representation value="xmlAttr" />
+            <short value="xml:id (or equivalent in JSON)" />
+            <definition value="unique id for the element within a resource (for internal references)" />
+            <min value="0" />
+            <max value="1" />
+            <type>
+              <code value="id" />
+            </type>
+          </element>
+          <element id="xhtml.extension">
+            <path value="xhtml.extension" />
+            <short value="Additional Content defined by implementations" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the resource. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
+            <comments value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <min value="0" />
+            <max value="0" />
+            <base>
+              <path value="xhtml.extension" />
+              <min value="0" />
+              <max value="*" />
+            </base>
+            <type>
+              <code value="Extension" />
+            </type>
+          </element>
+          <element id="xhtml.value">
+            <path value="xhtml.value" />
+            <representation value="xhtml" />
+            <short value="Actual xhtml" />
+            <definition value="Actual xhtml" />
+            <min value="1" />
+            <max value="1" />
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <type>
+              <code>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type">
+                  <valueString value="string" />
+                </extension>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type">
+                  <valueString value="xhtml:div" />
+                </extension>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type">
+                  <valueString value="string" />
+                </extension>
+              </code>
+            </type>
+          </element>
+        </snapshot>
+        <differential>
+          <element id="xhtml">
+            <path value="xhtml" />
+            <short value="Primitive Type xhtml" />
+            <definition value="XHTML" />
+            <min value="0" />
+            <max value="*" />
+          </element>
+          <element id="xhtml.extension">
+            <path value="xhtml.extension" />
+            <max value="0" />
+          </element>
+          <element id="xhtml.value">
+            <path value="xhtml.value" />
+            <representation value="xhtml" />
+            <short value="Actual xhtml" />
+            <definition value="Actual xhtml" />
+            <min value="1" />
+            <max value="1" />
+            <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+            <type>
+              <code>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type">
+                  <valueString value="string" />
+                </extension>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type">
+                  <valueString value="xhtml:div" />
+                </extension>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type">
+                  <valueString value="string" />
+                </extension>
+              </code>
+            </type>
+          </element>
+        </differential>
+      </StructureDefinition>
+    </resource>
+  </entry>
+  <entry>
     <fullUrl value="http://hl7.org/fhir/StructureDefinition/integer" />
     <resource>
       <StructureDefinition>
