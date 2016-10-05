@@ -645,8 +645,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var typeRootElem = getSnapshotRootElement(typeStructure, primaryDiffTypeProfile, diffNode);
                 if (typeRootElem == null) { return false; }
 
+                // Rebase before merging
+                var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
+                rebasedRootElem.Path = diff.Path;
+
                 // Merge the type profile root element; no need to expand children
-                mergeElementDefinition(snap.Current, typeRootElem);
+                mergeElementDefinition(snap.Current, rebasedRootElem);
 
             }
             return true;
