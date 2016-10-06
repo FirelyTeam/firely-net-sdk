@@ -80,6 +80,9 @@ namespace Hl7.Fhir.Validation
         {
             //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
             //and validating non-references is cheaper
+            //TODO: For each choice, we will currently try to resolve the reference. If it fails, you'll get multiple errors and probably
+            //better separate the fetching of the instance from the validation, so we do not run the rest of the validation (multiple times!)
+            //when a reference cannot be resolved.  (this happens in a choice type where there are multiple references with multiple profiles)
 
             IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTypeRef(validator, instance,tr));
 

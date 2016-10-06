@@ -41,22 +41,6 @@ namespace Hl7.Fhir.Validation
 
         }
 
-        public OperationOutcome Validate(IElementNavigator instance)
-        {
-            var profiles = instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>().ToList();
-
-            // If the Meta.profile specifies any profiles, use those, else use the base FHIR core profile for the type
-            if (profiles.Any())
-            {
-                return Validate(instance, profiles);
-            }
-            else
-            {
-                var uri = ModelInfo.CanonicalUriForFhirCoreType(instance.TypeName);
-                return Validate(instance, uri);
-            }
-        }
-
         public OperationOutcome Validate(IElementNavigator instance, params string[] definitionUris)
         {
             return Validate(instance, (IEnumerable<string>)definitionUris);
@@ -64,94 +48,96 @@ namespace Hl7.Fhir.Validation
 
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<string> definitionUris)
         {
-            var result = new OperationOutcome();
-            var sds = new List<StructureDefinition>();
+            var outcome = new OperationOutcome();
 
-            foreach (var uri in definitionUris)
+            // If no uris were passed in, check whether the instance itself has profiles in its meta.
+            // Failing that, try to find the "core" profile for this type.  If even that fails, give up.
+            if (!definitionUris.Any())
             {
-                StructureDefinition structureDefinition = Settings.ResourceResolver.FindStructureDefinition(uri);
-
-                if (result.Verify(() => structureDefinition != null, $"Unable to resolve reference to profile '{uri}'", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance))
-                    sds.Add(structureDefinition);
+                var meta = extractMetaUris(instance);
+                if (!meta.Any())
+                {
+                    if (instance.TypeName != null)
+                        definitionUris = definitionUris.Concat(new[] { ModelInfo.CanonicalUriForFhirCoreType(instance.TypeName) });
+                    else
+                    {
+                        outcome.Info("There is no definition to validate against - nothing to validate", Issue.PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST, instance);
+                        return outcome;
+                    }
+                }
             }
+           
+            var definitionNavs = ProfileResolutionNeeded(definitionUris, outcome, instance);
+            outcome.Add(Validate(instance, definitionNavs));
 
-            result.Add(Validate(instance, sds));
-            return result;
-        }
-
-        public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
-        {
-            if (structureDefinitions.Count() == 1)
-                return Validate(instance, structureDefinitions.Single());
-            else
-            {
-                var validators = structureDefinitions.Select(sd => createValidator(sd, instance));
-                return this.Combine(BatchValidationMode.All, instance, validators);
-            }
-        }
-
-        private Func<OperationOutcome> createValidator(StructureDefinition sd, IElementNavigator instance)
-        {
-            return () => Validate(instance, sd);
+            return outcome;
         }
 
         public OperationOutcome Validate(IElementNavigator instance, StructureDefinition structureDefinition)
         {
-            try
-            {
-                return internalValidate(instance, structureDefinition);
-            }
-            catch(Exception e)
-            {
-                var outcome = new OperationOutcome();
-                outcome.Info($"Internal logic failure: {e.Message}", Issue.PROCESSING_CATASTROPHIC_FAILURE, instance);
-                return outcome; 
-            }
+            return Validate(instance, new[] { structureDefinition });
         }
 
-        private OperationOutcome internalValidate(IElementNavigator instance, StructureDefinition structureDefinition)
+        public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            // New validation -> reset scope
-            //this.ScopeTracker = new ScopeTracker();
-
             var outcome = new OperationOutcome();
 
-            if (!structureDefinition.HasSnapshot)
-            {
-                // Note: this modifies an SD that is passed to us and will alter a possibly cached
-                // object shared amongst other threads. This is generally useful and saves considerable
-                // time when the same snapshot is needed again, but may result in side-effects
+            var definitionNavs = structureDefinitions.Select(sd => navigatorFromStructureDefinition(sd, outcome, instance)).Where(nav => nav != null);
 
-                try
+            outcome.Add(Validate(instance, definitionNavs));
+
+            return outcome;
+        }
+
+
+        internal OperationOutcome Validate(IElementNavigator instance, ElementDefinitionNavigator definition)
+        {
+            return Validate(instance, new[] { definition });
+        }
+
+
+        // This is the one and only main internal entry point for all validations
+        internal OperationOutcome Validate(IElementNavigator instance, IEnumerable<ElementDefinitionNavigator> definitions)
+        {
+            var outcome = new OperationOutcome();
+
+            try
+            {
+                List<ElementDefinitionNavigator> allDefinitions = new List<ElementDefinitionNavigator>(definitions);
+
+                var metaUris = extractMetaUris(instance);
+                if (metaUris.Any())
+                    allDefinitions.AddRange(ProfileResolutionNeeded(metaUris, outcome, instance));
+
+                if (allDefinitions.Count() == 1)
+                    outcome.Add(validateElement(allDefinitions.Single(), instance));
+                else
                 {
-                    // We'll call out to an external component, so catch any exceptions and include them in our report
-                    SnapshotNeeded(structureDefinition);
-                }
-                catch (Exception e)
-                {
-                    Trace(outcome, $"Snapshot generation failed for {structureDefinition.Url}. Message: {e.Message}",
-                           Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, instance);
+                    var validators = allDefinitions.Select(nav => createValidator(nav, instance));
+                    outcome.Add(this.Combine(BatchValidationMode.All, instance, validators));
                 }
             }
-
-            if (outcome.Verify(() => structureDefinition.HasSnapshot,
-                "Profile '{0}' does not include a snapshot. Instance data has not been validated.".FormatWith(structureDefinition.Url), Issue.UNAVAILABLE_NEED_SNAPSHOT, instance))
+            catch (Exception e)
             {
-                var nav = new ElementDefinitionNavigator(structureDefinition);
-
-                // If the definition has no data, there's nothing to validate against, so we'll consider it "valid"
-                if (outcome.Verify(() => !nav.AtRoot || nav.MoveToFirstChild(), "Profile '{0}' has no content in snapshot"
-                        .FormatWith(structureDefinition.Url), Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance))
-                {
-                    outcome.Add(ValidateElement(nav, instance));
-                }
-
+                outcome.Info($"Internal logic failure: {e.Message}", Issue.PROCESSING_CATASTROPHIC_FAILURE, instance);
             }
 
             return outcome;
         }
 
-        internal OperationOutcome ValidateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
+        private List<string> extractMetaUris(IElementNavigator instance)
+        {
+            // This is only for resources, but I don't bother checking, since this will return empty anyway
+            return instance.GetChildrenByName("meta").ChildrenValues("profile").Cast<string>().ToList();
+        }
+
+        private Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav, IElementNavigator instance)
+        {
+            return () => validateElement(nav, instance);
+        }
+
+
+        private OperationOutcome validateElement(ElementDefinitionNavigator definition, IElementNavigator instance)
         {
             var outcome = new OperationOutcome();
 
@@ -334,7 +320,7 @@ namespace Hl7.Fhir.Validation
                         "ElementDefinition uses a non-existing nameReference '{0}'".FormatWith(definition.NameReference),
                         Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance))
                 {
-                    outcome.Include(ValidateElement(referencedPositionNav, instance));
+                    outcome.Include(Validate(instance, referencedPositionNav));
                 }
             }
 
@@ -454,27 +440,88 @@ namespace Hl7.Fhir.Validation
             return null;        // Sorry, nothing worked
         }
 
-        internal void SnapshotNeeded(StructureDefinition definition)
+        internal List<ElementDefinitionNavigator> ProfileResolutionNeeded(IEnumerable<string> canonicals, OperationOutcome outcome, IElementNavigator instance)
+        {
+            var result = new List<ElementDefinitionNavigator>();
+
+            foreach (var uri in canonicals)
+            {
+                StructureDefinition structureDefinition = null;
+
+                try
+                {
+                    // Once FindStructureDefinition() gets an overload to resolve multiple at the same time,
+                    // use that one
+                    structureDefinition = Settings.ResourceResolver.FindStructureDefinition(uri);
+                }
+                catch (Exception e)
+                {
+                    outcome.Info($"Resolution of profile at '{uri}' failed: {e.Message}", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance);
+                    continue;
+                }
+
+                if (outcome.Verify(() => structureDefinition != null, $"Unable to resolve reference to profile '{uri}'", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance))
+                {
+                    result.Add(navigatorFromStructureDefinition(structureDefinition, outcome, instance));
+                }
+            }
+
+            return result;
+        }
+
+        private ElementDefinitionNavigator navigatorFromStructureDefinition(StructureDefinition definition, OperationOutcome outcome, IElementNavigator instance)
+        {
+            if (!definition.HasSnapshot)
+                SnapshotGenerationNeeded(definition, outcome, instance);
+
+            if (outcome.Verify(() => definition.HasSnapshot,
+                "Profile '{0}' does not include a snapshot. Instance data has not been validated.".FormatWith(definition.Url), Issue.UNAVAILABLE_NEED_SNAPSHOT, instance))
+            {
+                var nav = new ElementDefinitionNavigator(definition);
+
+                // If the definition has no data, there's nothing to validate against, so we'll consider it "valid"
+                if (outcome.Verify(() => !nav.AtRoot || nav.MoveToFirstChild(), "Profile '{0}' has no content in snapshot"
+                        .FormatWith(definition.Url), Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance))
+                {
+                    return nav;
+                }
+            }
+
+            return null;
+        }
+
+        // Note: this modifies an SD that is passed to us and will alter a possibly cached
+        // object shared amongst other threads. This is generally useful and saves considerable
+        // time when the same snapshot is needed again, but may result in side-effects
+        internal void SnapshotGenerationNeeded(StructureDefinition definition, OperationOutcome outcome, IElementNavigator instance)
         {
             if (!Settings.GenerateSnapshot) return;
 
-            // Default implementation: call event
-            if (OnSnapshotNeeded != null)
+            try
             {
-                OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, Settings.ResourceResolver));
-                return;
+                // Default implementation: call event
+                if (OnSnapshotNeeded != null)
+                {
+                    OnSnapshotNeeded(this, new OnSnapshotNeededEventArgs(definition, Settings.ResourceResolver));
+                    return;
+                }
+
+                // Else, expand, depending on our configuration
+                if (Settings.ResourceResolver != null)
+                {
+                    SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings;
+
+                    if (settings == null)
+                        settings = SnapshotGeneratorSettings.Default;
+
+                    var gen = new SnapshotGenerator(Settings.ResourceResolver, settings);
+                    gen.Update(definition);
+                }
             }
-
-            // Else, expand, depending on our configuration
-            if (Settings.ResourceResolver != null)
+            catch (Exception e)
             {
-                SnapshotGeneratorSettings settings = Settings.GenerateSnapshotSettings;
-
-                if (settings == null)
-                    settings = SnapshotGeneratorSettings.Default;
-
-                var gen = new SnapshotGenerator(Settings.ResourceResolver, settings);
-                gen.Update(definition);
+                Trace(outcome, $"Snapshot generation failed for '{definition.Url}'. Message: {e.Message}",
+                       Issue.UNAVAILABLE_SNAPSHOT_GENERATION_FAILED, instance);
             }
         }
     }

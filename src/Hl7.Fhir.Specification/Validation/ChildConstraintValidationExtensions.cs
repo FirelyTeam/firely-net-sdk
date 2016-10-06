@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Validation
             {
                 foreach (IElementNavigator element in match.InstanceElements)
                 {
-                    outcome.Include(validator.ValidateElement(match.Definition, element));
+                    outcome.Include(validator.Validate(element, match.Definition));
                 }
             }
 
