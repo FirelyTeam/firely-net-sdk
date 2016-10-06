@@ -49,31 +49,29 @@ namespace Hl7.Fhir.Validation
                             mode == BatchValidationMode.All && failures == 0 ||
                             mode == BatchValidationMode.Once && successes == 1;
 
-            // If the batch validation is a failure, or we simply want to trace all results,
-            // add details information about each of the validation runs in the batch
-            if (success == false || validator.Settings.Trace)
+
+            // Now, build final report
+
+            for (var index = 0; index < results.Count; index++)
             {
-                // Now, build final report
-                for (var index = 0; index < results.Count; index++)
+                var result = results[index];
+                combinedResult.Info($"Report {index}: {(result.Success ? "SUCCESS" : "FAILURE")}", Issue.PROCESSING_PROGRESS, instance);
+
+                if (success)
                 {
-                    var result = results[index];
-                    combinedResult.Info($"Report {index}: {(result.Success ? "SUCCESS" : "FAILURE")}", Issue.PROCESSING_PROGRESS, instance);
-
-                    if (success)
-                    {
-                        // We'd like to include all results of the combined reports, but if the total result is a success,
-                        // any errors in failing runs should just be informational
-                        if (!result.Success) result.MakeInformational();
-                    }
-
-                    combinedResult.Include(result);
+                    // We'd like to include all results of the combined reports, but if the total result is a success,
+                    // any errors in failing runs should just be informational
+                    if (!result.Success) result.MakeInformational();
                 }
+
+                combinedResult.Include(result);
             }
 
             if (success)
                 validator.Trace(combinedResult, "Combined validation succeeded", Issue.PROCESSING_PROGRESS, instance);
             else
-                combinedResult.Info($"Combined validation failed, {failures} child validation runs failed, {successes} succeeded", Issue.PROCESSING_PROGRESS, instance);
+                combinedResult.Info($"Combined {modeLabel} validation failed, {failures} child validation runs failed, {successes} succeeded", Issue.PROCESSING_PROGRESS, instance);
+
 
             return combinedResult;
         }
