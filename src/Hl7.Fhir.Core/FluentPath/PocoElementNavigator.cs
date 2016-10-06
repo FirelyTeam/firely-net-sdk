@@ -89,7 +89,7 @@ namespace Hl7.Fhir.FluentPath
                     else
                         return null;
                 }
-                catch(FormatException fe)
+                catch(FormatException)
                 {
                     // If it fails, just return the unparsed shit
                     // Todo: add sentinel class!
@@ -98,7 +98,6 @@ namespace Hl7.Fhir.FluentPath
 
             }
         }
-
 
         private static string[] quantitySubtypes = { "SimpleQuantity", "Age", "Count", "Distance", "Duration", "Money" };
 

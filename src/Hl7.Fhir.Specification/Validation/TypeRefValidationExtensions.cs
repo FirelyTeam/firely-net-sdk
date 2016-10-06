@@ -32,13 +32,16 @@ namespace Hl7.Fhir.Validation
             // Check if this is a choice: there are multiple distinct Codes to choose from
             var types = definition.Type.Where(tr => tr.Code != null);
             var choices = types.Select(tr => tr.Code.Value).Distinct();
-            var hasPolymorphicType = choices.Any(tr => ModelInfo.IsCoreSuperType(tr));       // typerefs like Resource, Element are actually a choice
 
-            if (choices.Count() > 1 || hasPolymorphicType)
+            if (choices.Count() > 1)
             {
                 if (outcome.Verify(() => instance.TypeName != null, "ElementDefinition is a choice or contains a polymorphic type constraint, but the instance does not indicate its actual type",
                     Issue.CONTENT_ELEMENT_CHOICE_WITH_NO_ACTUAL_TYPE, instance))
                 {
+                    // In fact, the next statements are just an optimalization, without them, we would do an ANY validation
+                    // against *all* choices, what we do here is pre-filtering for sensible choices, and report of there isn't
+                    // any.
+                    
                     // This is a choice type, find out what type is present in the instance data
                     // (e.g. deceased[Boolean], or _resourceType in json). This is exposed by IElementNavigator.TypeName.
                     var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.TypeName);
@@ -51,17 +54,7 @@ namespace Hl7.Fhir.Validation
                         if (outcome.Verify(() => applicableChoices.Any(), "Type specified in the instance ('{0}') is not one of the allowed choices ({1})"
                                     .FormatWith(instance.TypeName, String.Join(",", choices.Select(t => "'" + t.GetLiteral() + "'"))), Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance))
                         {
-                            var actualChoices = applicableChoices;
-
-                            if (hasPolymorphicType)
-                            {
-                                // Now, rewrite the typerefs to validate so it will always contain the actual instance type instead of the
-                                // abstract super type, e.g. validate Patient, not Resource if the instance is a Patient.
-                                actualChoices = applicableChoices
-                                    .Select(tr => new ElementDefinition.TypeRefComponent { Code = instanceType, Profile = tr.Profile });
-                            }
-
-                            outcome.Include(validator.ValidateTypeReferences(actualChoices, instance));
+                            outcome.Include(validator.ValidateTypeReferences(applicableChoices, instance));
                         }
                     }
                 }
@@ -91,10 +84,12 @@ namespace Hl7.Fhir.Validation
 
         private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, IElementNavigator instance, ElementDefinition.TypeRefComponent tr)
         {
+            // In STU3, we need to do BOTH
+            // First, call Validate() against the profile (which is then a profile on Reference) THEN validate the referenced resource
             if (tr.Code == FHIRDefinedType.Reference)
                 return () => validator.ValidateResourceReference(instance, tr);
             else
-                return () => validator.Validate(instance, tr.ProfileUri());
+                return () => validator.Validate(instance, tr.Profile);
         }
 
         internal static OperationOutcome ValidateResourceReference(this Validator validator, IElementNavigator instance, ElementDefinition.TypeRefComponent typeRef)
@@ -145,12 +140,12 @@ namespace Hl7.Fhir.Validation
                 // In both cases, the outcome is included in the result.
                 if (encounteredKind != ElementDefinition.AggregationMode.Referenced)
                 {
-                    outcome.Include(validator.Validate(referencedResource, typeRef.ProfileUri()));
+                    outcome.Include(validator.Validate(referencedResource, typeRef.Profile));
                 }
                 else
                 {
                     var newValidator = new Validator(validator.Settings);
-                    outcome.Include(newValidator.Validate(referencedResource, typeRef.ProfileUri()));
+                    outcome.Include(newValidator.Validate(referencedResource, typeRef.Profile));
                 }
             }
 

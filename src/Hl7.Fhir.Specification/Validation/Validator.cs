@@ -50,24 +50,9 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            // If no uris were passed in, check whether the instance itself has profiles in its meta.
-            // Failing that, try to find the "core" profile for this type.  If even that fails, give up.
-            if (!definitionUris.Any())
-            {
-                var meta = extractMetaUris(instance);
-                if (!meta.Any())
-                {
-                    if (instance.TypeName != null)
-                        definitionUris = definitionUris.Concat(new[] { ModelInfo.CanonicalUriForFhirCoreType(instance.TypeName) });
-                    else
-                    {
-                        outcome.Info("There is no definition to validate against - nothing to validate", Issue.PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST, instance);
-                        return outcome;
-                    }
-                }
-            }
-           
-            var definitionNavs = ProfileResolutionNeeded(definitionUris, outcome, instance);
+            var allDefinitions = collectApplicableProfiles(outcome, instance, references: definitionUris);
+            var definitionNavs = allDefinitions.Select(sd => navigatorFromStructureDefinition(sd, outcome, instance)).Where(nav => nav != null);
+
             outcome.Add(Validate(instance, definitionNavs));
 
             return outcome;
@@ -82,13 +67,72 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            var definitionNavs = structureDefinitions.Select(sd => navigatorFromStructureDefinition(sd, outcome, instance)).Where(nav => nav != null);
+            var allDefinitions = collectApplicableProfiles(outcome, instance, sds: structureDefinitions);
+            var definitionNavs = allDefinitions.Select(sd => navigatorFromStructureDefinition(sd, outcome, instance)).Where(nav => nav != null);
 
             outcome.Add(Validate(instance, definitionNavs));
 
             return outcome;
         }
 
+
+        private List<StructureDefinition> collectApplicableProfiles(OperationOutcome outcome, IElementNavigator instance, 
+                    IEnumerable<StructureDefinition> sds=null, IEnumerable<string> references=null)
+        {
+            if (sds == null) sds = Enumerable.Empty<StructureDefinition>();
+            if (references == null) references = Enumerable.Empty<string>();
+
+            var metaUris = extractMetaUris(instance);
+            var sdUris = sds.Select(sd => sd.Url).ToList();
+            var allUris = metaUris
+                            .Concat(sdUris)
+                            .Concat(references)
+                            .Concat(instance.TypeName != null ? new[] { ModelInfo.CanonicalUriForFhirCoreType(instance.TypeName) }  : Enumerable.Empty<string>())
+                            .Distinct();
+
+            // Avoid fetching sds that we have already been passed (though they may have been cached anyway, it's good behaviour)
+            var urisToFetch = allUris.Where(uri => !sdUris.Contains(uri));
+            var fetchedSds = ProfileResolutionNeeded(urisToFetch, outcome, instance);
+
+            // Create the full list of unique SDs that might be applicable. We will purge this list later and return it,
+            // so create a new list, don't alter any of the stuff we have been passed.
+            var applicableSds = sds.Concat(fetchedSds).ToList();
+
+            // TODO: Now, do consistency checks
+            // * The profiles may not be inconsistent (for different resources/datatype/not abstract base for....)
+            // * Purge duplicates (base for derived)
+
+            // If done correctly, the previous will make sure this code is not needed anymore
+            // First, a basic check: is the instance type equal to the defined type
+            // Only do this when the underlying navigator has supplied a type (from the serialization)
+            //if (instance.TypeName != null && elementConstraints.IsRootElement() && definition.StructureDefinition != null && definition.StructureDefinition.Id != null)
+            //{
+            //    var expected = definition.StructureDefinition.Id;
+
+            //    if (!ModelInfo.IsCoreModelType(expected) || ModelInfo.IsProfiledQuantity(expected))
+            //        expected = definition.StructureDefinition.ConstrainedType?.ToString();
+
+            //    if (expected != null)
+            //    {
+            //        if (!outcome.Verify(() => instance.TypeName == expected, $"Type mismatch: instance value is of type '{instance.TypeName}', " +
+            //                $"expected type '{expected}'", Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance))
+            //            return outcome;     // Type mismatch, no use continuing validation
+            //    }
+            //}
+
+            // For now, a quick algorithm
+            applicableSds.RemoveAll(sd => sd.Abstract == true);
+            if (applicableSds.Count > 1)
+                applicableSds.RemoveAll(sd => ModelInfo.IsCoreModelType(sd.Id));
+
+            if (!applicableSds.Any())
+            {
+               outcome.Info("There is no definition to validate against - nothing to validate", Issue.PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST, instance);
+                return applicableSds;
+            }
+
+            return applicableSds;
+        }
 
         internal OperationOutcome Validate(IElementNavigator instance, ElementDefinitionNavigator definition)
         {
@@ -104,10 +148,6 @@ namespace Hl7.Fhir.Validation
             try
             {
                 List<ElementDefinitionNavigator> allDefinitions = new List<ElementDefinitionNavigator>(definitions);
-
-                var metaUris = extractMetaUris(instance);
-                if (metaUris.Any())
-                    allDefinitions.AddRange(ProfileResolutionNeeded(metaUris, outcome, instance));
 
                 if (allDefinitions.Count() == 1)
                     outcome.Add(validateElement(allDefinitions.Single(), instance));
@@ -152,23 +192,6 @@ namespace Hl7.Fhir.Validation
                     return outcome;
 
                 var elementConstraints = definition.Current;
-
-                // First, a basic check: is the instance type equal to the defined type
-                // Only do this when the underlying navigator has supplied a type (from the serialization)
-                if (instance.TypeName != null && elementConstraints.IsRootElement() && definition.StructureDefinition != null && definition.StructureDefinition.Id != null)
-                {
-                    var expected = definition.StructureDefinition.Id;
-
-                    if (!ModelInfo.IsCoreModelType(expected) || ModelInfo.IsProfiledQuantity(expected))
-                        expected = definition.StructureDefinition.ConstrainedType?.ToString();
-
-                    if (expected != null)
-                    {
-                        if (!outcome.Verify(() => instance.TypeName == expected, $"Type mismatch: instance value is of type '{instance.TypeName}', " +
-                                $"expected type '{expected}'", Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance))
-                            return outcome;     // Type mismatch, no use continuing validation
-                    }
-                }
 
                 if (elementConstraints.IsPrimitiveValueConstraint())
                 {
@@ -440,9 +463,9 @@ namespace Hl7.Fhir.Validation
             return null;        // Sorry, nothing worked
         }
 
-        internal List<ElementDefinitionNavigator> ProfileResolutionNeeded(IEnumerable<string> canonicals, OperationOutcome outcome, IElementNavigator instance)
+        internal List<StructureDefinition> ProfileResolutionNeeded(IEnumerable<string> canonicals, OperationOutcome outcome, IElementNavigator instance)
         {
-            var result = new List<ElementDefinitionNavigator>();
+            var result = new List<StructureDefinition>();
 
             foreach (var uri in canonicals)
             {
@@ -453,16 +476,17 @@ namespace Hl7.Fhir.Validation
                     // Once FindStructureDefinition() gets an overload to resolve multiple at the same time,
                     // use that one
                     structureDefinition = Settings.ResourceResolver.FindStructureDefinition(uri);
+
+                    if (outcome.Verify(() => structureDefinition != null, $"Unable to resolve reference to profile '{uri}'", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance))
+                    {
+                        result.Add(structureDefinition);
+                    }
+
                 }
                 catch (Exception e)
                 {
                     outcome.Info($"Resolution of profile at '{uri}' failed: {e.Message}", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance);
                     continue;
-                }
-
-                if (outcome.Verify(() => structureDefinition != null, $"Unable to resolve reference to profile '{uri}'", Issue.UNAVAILABLE_REFERENCED_PROFILE_UNAVAILABLE, instance))
-                {
-                    result.Add(navigatorFromStructureDefinition(structureDefinition, outcome, instance));
                 }
             }
 
