@@ -32,11 +32,63 @@ namespace Hl7.Fhir.Specification.Tests
     public class SnapshotGeneratorTest
 #endif
     {
-        private SnapshotGenerator _generator;
-        private IResourceResolver _testResolver;
-        private IConformanceSource _source;
+        class TimingSource : IConformanceSource
+        {
+            IConformanceSource _source;
+            TimeSpan _duration = TimeSpan.Zero;
 
-        private readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
+            public TimingSource(IConformanceSource source) { _source = source; }
+
+            public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null) 
+                => measureDuration(() => _source.FindConceptMaps(sourceUri, targetUri));
+
+            public NamingSystem FindNamingSystem(string uniqueid) => measureDuration(() => _source.FindNamingSystem(uniqueid));
+
+            public ValueSet FindValueSetBySystem(string system) => measureDuration(() => _source.FindValueSetBySystem(system));
+
+            public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?)) => _source.ListResourceUris(filter);
+                // => measureDuration(() => _source.ListResourceUris(filter));
+
+            public Resource ResolveByCanonicalUri(string uri) => measureDuration(() => _source.ResolveByCanonicalUri(uri));
+
+            public Resource ResolveByUri(string uri) => measureDuration(() => _source.ResolveByUri(uri));
+
+            T measureDuration<T>(Func<T> f)
+            {
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+                var result = f();
+                sw.Stop();
+                _duration += sw.Elapsed;
+                return result;
+            }
+
+            public TimeSpan Duration => _duration;
+
+            public void Reset() { _duration = TimeSpan.Zero; }
+
+            public void ShowDuration(int count, TimeSpan totalDuration)
+            {
+                var totalMs = totalDuration.TotalMilliseconds;
+                var resolverMs = _duration.TotalMilliseconds;
+                var resolverFraction = resolverMs / totalMs;
+                var snapshotMs = totalMs - resolverMs;
+                var snapshotFraction = snapshotMs / totalMs;
+                // Debug.Print($"Generated {count} snapshots in {totalMs} ms = {sourceMs} ms (resolver) + {snapshotMs} (snapshot) ({perc:2}%), on average {avg} ms per snapshot.");
+                Console.WriteLine($"Generated {count} snapshots in {totalMs} ms = {resolverMs} ms (resolver) ({resolverFraction:P0}) + {snapshotMs} (snapshot) ({snapshotFraction:P0}).");
+                var totalAvg = totalMs / count;
+                var resolverAvg = resolverMs / count;
+                var snapshotAvg = snapshotMs / count;
+                Console.WriteLine($"Average per resource: {totalAvg} = {resolverAvg} ms (resolver) + {snapshotAvg} ms (snapshot)");
+            }
+
+        }
+
+        SnapshotGenerator _generator;
+        IResourceResolver _testResolver;
+        TimingSource _source;
+
+        readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
         {
             // Throw on unresolved profile references; must include in TestData folder
             ExpandExternalProfiles = true,
@@ -47,7 +99,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
-            _source = new DirectorySource("TestData/snapshot-test", includeSubdirectories: true);
+            var dirSource = new DirectorySource("TestData/snapshot-test", includeSubdirectories: true);
+            _source = new TimingSource(dirSource);
             _testResolver = new CachedResolver(_source);
         }
 
@@ -450,12 +503,14 @@ namespace Hl7.Fhir.Specification.Tests
         // [Ignore]
         public void GenerateSnapshot()
         {
-            var start = DateTime.Now;
+            var sw = new Stopwatch();
             int count = 0;
+            _source.Reset();
+            sw.Start();
 
             foreach (var original in findConstraintStrucDefs()
-                // [WMR 20160721] Skip invalid profiles
-                // .Where(sd => !skippedProfiles.Contains(sd.Url))
+            // [WMR 20160721] Skip invalid profiles
+            // .Where(sd => !skippedProfiles.Contains(sd.Url))
             )
             {
                 // nothing to test, original does not have a snapshot
@@ -467,9 +522,8 @@ namespace Hl7.Fhir.Specification.Tests
                 count++;
             }
 
-            var duration = DateTime.Now.Subtract(start).TotalMilliseconds;
-            var avg = duration / count;
-            Debug.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
+            sw.Stop();
+            _source.ShowDuration(count, sw.Elapsed);
         }
 
         //private void forDoc()
@@ -1249,18 +1303,18 @@ namespace Hl7.Fhir.Specification.Tests
 
         void testExpandResources(string[] profileUris)
         {
+            var sw = new Stopwatch();
             int count = profileUris.Length;
-            var start = DateTime.Now;
+            _source.Reset();
+            sw.Start();
 
             for (int i = 0; i < count; i++)
             {
                 testExpandResource(profileUris[i]);
             }
 
-            var duration = DateTime.Now.Subtract(start).TotalMilliseconds;
-            var avg = duration / count;
-            Debug.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
-            Console.WriteLine("Expanded {0} profiles in {1} ms = {2} ms per profile on average.".FormatWith(count, duration, avg));
+            sw.Stop();
+            _source.ShowDuration(count, sw.Elapsed);
         }
 
         bool testExpandResource(string url)

@@ -926,12 +926,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // Returns the snapshot root element of the specified profile
-        // Resolve from snapshot, if it exists and is valid
+        // Try to resolve from existing snapshot, if it exists and is valid
+        // Try to resolve from partial snapshot, if it is currently being generated (higher up on the stack)
         // Otherwise recursively resolve the associated base profile root element definition (if it exists) and merge with differential root
         ElementDefinition getSnapshotRootElement(StructureDefinition sd, string profileUri, INamedNode location)
         {
-            // TODO: Save root elements as annotation, use pre-generated root when generating full snapshot
-
             // Debug.Print("[SnapshotGenerator.getSnapshotRootElement] profileUri = '{0}' - resolving root element definition...", profileUri);
             if (!verifyStructure(sd, profileUri, location)) { return null; }
 
@@ -941,11 +940,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return null;
             }
 
-            // Return previously generated, cached root element definition, if present
+            // 1. Return previously generated, cached root element definition, if it exists
             var cachedRoot = sd.GetSnapshotRootElementAnnotation();
             if (cachedRoot != null) { return cachedRoot; }
 
-            // Return root element definition from existing (pre-generated) snapshot, if it exists
+            // 2. Return root element definition from existing (pre-generated) snapshot, if it exists
             if (sd.HasSnapshot && (sd.Snapshot.IsCreatedBySnapshotGenerator() || !_settings.ForceExpandAll))
             {
                 Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use existing root element definition from snapshot: #{sd.Snapshot.Element[0].GetHashCode()}");
@@ -953,7 +952,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return sd.Snapshot.Element[0];
             }
 
-            // Try to resolve currently generating snapshots from recursion stack
+            // 3. Try to resolve root element definition from currently generating (partial) snapshot on recursion stack
+            // If the recursion stack contains the target profile, then the snapshot root element has already been generated
             var nav = _stack.ResolveSnapshotNavigator(sd.Url);
             if (nav != null && nav.Elements != null && nav.Elements.Count > 0)
             {
@@ -963,13 +963,15 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return recursiveRootElemDef;
             }
 
-            // Resolve root element definition from base profile and merge from differential
+            // 4. We still need to expand the root element definition
+            // Resolve root element definition from base profile and merge differential constraints (recursively)
             var diffRoot = sd.Differential.Element[0];
 
             var baseProfileUri = sd.Base;
             if (baseProfileUri == null)
             {
                 // Structure has no base, i.e. core type definition => differential introduces & defines the root element
+                // No need to rebase, nothing to merge
                 var clonedDiffRoot = (ElementDefinition)diffRoot.DeepCopy();
 #if CACHE_ROOT_ELEMDEF
                 clonedDiffRoot.EnsureBaseComponent(null, true);
@@ -979,10 +981,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return clonedDiffRoot;
             }
 
-            // Resolve root element definition from base profile
+            // Recursively resolve root element definition from base profile
             Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - recursively resolve root element definition from base profile '{baseProfileUri}' ...");
             var sdBase = _resolver.FindStructureDefinition(baseProfileUri);
-            var baseRoot = getSnapshotRootElement(sdBase, baseProfileUri, ToNamedNode(diffRoot));
+            var baseRoot = getSnapshotRootElement(sdBase, baseProfileUri, ToNamedNode(diffRoot)); // Recursion!
             if (baseRoot == null)
             {
                 addIssueSnapshotGenerationFailed(baseProfileUri);
@@ -996,11 +998,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Merge differential constraints onto base root element definition
             mergeElementDefinition(rebasedRoot, diffRoot);
 
-            // TODO: Save the generated snapshot root element definition as annotation on StructureDefinition.Snapshot component
-            // When generating the full snapshot, re-use the previously generated root element definition
 
             Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - succesfully resolved root element definition: #{rebasedRoot.GetHashCode()}");
+
 #if CACHE_ROOT_ELEMDEF
+            // Save the generated snapshot root element definition as annotation on StructureDefinition.Snapshot component
+            // When generating the full snapshot, re-use the previously generated root element definition
             rebasedRoot.EnsureBaseComponent(baseRoot, true);
             sd.SetSnapshotRootElementAnnotation(rebasedRoot);
 #endif
