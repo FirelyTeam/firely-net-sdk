@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Validation
                 outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
                 outcome.Add(ValidateMaxLength(elementConstraints, instance));
                 outcome.Add(ValidateConstraints(elementConstraints, instance));
-                outcome.Add(ValidateBinding(elementConstraints, instance));
+           //     outcome.Add(ValidateBinding(elementConstraints, instance));
 
                 // If the report only has partial information, no use to show the hierarchy, so flatten it.
                 if (Settings.Trace == false) outcome.Flatten();
@@ -441,23 +441,39 @@ namespace Hl7.Fhir.Validation
                 return val.ToString();
         }
 
-        internal IElementNavigator ExternalReferenceResolutionNeeded(string reference)
+        internal IElementNavigator ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, IElementNavigator instance)
         {
             if (!Settings.ResolveExteralReferences) return null;
 
-
-            // Default implementation: call event
-            if (OnExternalResolutionNeeded != null)
+            try
             {
-                var args = new OnResolveResourceReferenceEventArgs(reference);
-                OnExternalResolutionNeeded(this, args);
-                return args.Result;
+                // Default implementation: call event
+                if (OnExternalResolutionNeeded != null)
+                {
+                    var args = new OnResolveResourceReferenceEventArgs(reference);
+                    OnExternalResolutionNeeded(this, args);
+                    return args.Result;
+                }
+            }
+            catch(Exception e)
+            {
+                outcome.Info("External resolution of '{reference}' caused an error: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
             }
 
-            // Else, try to resolve using the given ResourceResolver
+            // Else, try to resolve using the given ResourceResolver 
+            // (note: this also happens when the external resolution above threw an exception)
             if (Settings.ResourceResolver != null)
             {
-                return new PocoNavigator(Settings.ResourceResolver.ResolveByUri(reference));
+                try
+                {
+                    var poco = Settings.ResourceResolver.ResolveByUri(reference);
+                    if(poco != null)
+                        return new PocoNavigator(poco);
+                }
+                catch(Exception e)
+                {
+                    outcome.Info($"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_EXTERNAL_REFERENCE, instance);
+                }
             }
 
             return null;        // Sorry, nothing worked

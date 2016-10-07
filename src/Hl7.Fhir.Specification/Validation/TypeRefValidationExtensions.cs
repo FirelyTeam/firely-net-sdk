@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Validation
             {
                 try
                 {
-                    referencedResource = validator.ExternalReferenceResolutionNeeded(reference);
+                    referencedResource = validator.ExternalReferenceResolutionNeeded(reference, outcome, instance);
                 }
                 catch (Exception e)
                 {
